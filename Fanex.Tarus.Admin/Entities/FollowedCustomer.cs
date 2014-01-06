@@ -21,6 +21,8 @@ namespace Fanex.Tarus.Admin.Entities
 
         public string Username { get; set; }
 
+        public string Follower { get; set; }
+
         public int SourceId { get; set; }
 
         public string Source { get; set; }

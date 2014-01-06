@@ -18,6 +18,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
     {
         public string Username { get; set; }
 
+        public string Follower { get; set; }
+
         public int BAStatus { get; set; }
 
         public int Source { get; set; }
@@ -39,7 +41,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
         public Hashtable GetStoreProcedureParams()
         {
             var storeProcedureParams = new Hashtable();
-            storeProcedureParams.Add("username", string.IsNullOrEmpty(Username) ? string.Empty : Username);
+            storeProcedureParams.Add("username", Username ?? string.Empty);
+            storeProcedureParams.Add("follower", Follower ?? string.Empty);
             storeProcedureParams.Add("source", Source);
             storeProcedureParams.Add("bastatus", BAStatus);
             storeProcedureParams.Add("followlive", LiveStatus);

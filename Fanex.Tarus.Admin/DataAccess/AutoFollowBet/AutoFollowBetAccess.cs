@@ -46,6 +46,8 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
                 listFollowedCustomer.Add(new FollowedCustomer
                 {
                     Username = CastAide.AsString(row["username"]),
+                    Follower = CastAide.AsString(row["follower"]),
+
                     Rate = CastAide.AsDouble(row["rate"]),
                     BAStatus = CastAide.AsBoolean(row["isba"]),
 

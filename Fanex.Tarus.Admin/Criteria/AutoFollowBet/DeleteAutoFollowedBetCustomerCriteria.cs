@@ -10,6 +10,8 @@
 namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 {
     using System.Collections;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Helper;
 
     /// <summary>
     /// Delete Auto Follow Bet Criteria.
@@ -17,6 +19,22 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
     public class DeleteAutoFollowedBetCustomerCriteria
     {
         public string Username { get; set; }
+
+        public int EditorId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
+
+        public string IP
+        {
+            get
+            {
+                return Utils.GetClientIP();
+            }
+        }
 
         public int ErrorCode { get; set; }
 
@@ -26,6 +44,9 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
         {
             var storeProcedureParams = new Hashtable();
             storeProcedureParams.Add("username", Username);
+         
+            storeProcedureParams.Add("userid", EditorId);
+            storeProcedureParams.Add("ip", IP);
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
             return storeProcedureParams;

@@ -11,6 +11,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 {
     using System;
     using System.Collections;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Helper;
 
     /// <summary>
     /// Add Auto Follow Bet Criteria.
@@ -18,6 +20,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
     public class AddAutoFollowedBetCustomerCriteria
     {
         public string Username { get; set; }
+
+        public string Follower { get; set; }
 
         public decimal Rate { get; set; }
 
@@ -33,6 +37,22 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public int Followed1stOverUnder { get; set; }
 
+        public int EditorId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
+
+        public string IP
+        {
+            get
+            {
+                return Utils.GetClientIP();
+            }
+        }
+
         /// <summary>
         /// Gets the store procedure parameters.
         /// </summary>
@@ -40,13 +60,17 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
         public Hashtable GetStoreProcedureParams()
         {
             var storeProcedureParams = new Hashtable();
-            storeProcedureParams.Add("username", string.IsNullOrEmpty(Username) ? string.Empty : Username);
+            storeProcedureParams.Add("username", Username ?? string.Empty);
+            storeProcedureParams.Add("follower", Follower ?? string.Empty);
             storeProcedureParams.Add("rate", Rate);
             storeProcedureParams.Add("followlive", LiveStatus);
             storeProcedureParams.Add("handicap", FollowedHDP);
             storeProcedureParams.Add("1sthandicap", Followed1stHDP);
             storeProcedureParams.Add("overunder", FollowedOverUnder);
             storeProcedureParams.Add("1stoverunder", Followed1stOverUnder);
+
+            storeProcedureParams.Add("userid", EditorId);
+            storeProcedureParams.Add("ip", IP);
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
             return storeProcedureParams;
@@ -62,7 +86,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
             return !string.IsNullOrEmpty(Username) &&
                 (decimal)0.3 <= Rate &&
                 Rate <= 3 &&
-                Math.Round(Rate, 2) == Rate;
+                Math.Round(Rate, 2) == Rate &&
+                !string.IsNullOrEmpty(Follower);
         }
     }
 }

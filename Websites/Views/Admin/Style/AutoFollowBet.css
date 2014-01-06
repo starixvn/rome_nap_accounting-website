@@ -21,7 +21,8 @@
     width: 150px;
 }
 
-#textbox-username
+#textbox-username,
+#textbox-follower
 {
     width: 140px;
 }
@@ -62,7 +63,8 @@
     display: none;
 }
 
-.td-labelrate
+.td-labelrate,
+.td-labelfollower
 {
     text-align: center;
 }
@@ -70,6 +72,12 @@
 .textboxrate
 {
     width: 75px;
+    text-align: center;
+}
+
+.textboxfollower
+{
+    width: 115px;
     text-align: center;
 }
 
@@ -107,6 +115,8 @@
 .filter-adddialog
 {
     border-collapse: collapse;
+    margin-left: 105px;
+    margin-top: 10px;
 }
 
 .filter-adddialog .title2

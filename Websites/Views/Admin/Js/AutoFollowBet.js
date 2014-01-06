@@ -42,6 +42,7 @@ var autoFollowBet = {
     Tables: {
         dropdownFollowType: null,
         TextboxUsername: null,
+        TextboxFollower: null,
         dropdownSource: null,
         dropdownBAEnabled: null,
         errorMessage: null,
@@ -60,6 +61,7 @@ var autoFollowBet = {
         deleteIcon: '../App_Themes/Images/icn_del.png',
         getListInfoParams: {
             Username: null,
+            Follower: null,
             BAStatus: null,
             Source: null,
             LiveStatus: null,
@@ -76,6 +78,7 @@ var autoFollowBet = {
         updateInfoParams: {
             RowId: null,
             Username: null,
+            Follower: null,
             SourceId: null,
             Source: null,
             Rate: null,
@@ -86,7 +89,7 @@ var autoFollowBet = {
             Followed1stOverUnder: null
         },
         gridHeight: $(window).height() - 150,
-        gridWidth: 913,
+        gridWidth: 1038,
         pageIndex: 0,
         totalItems: 0,
         pageSize: 50
@@ -149,6 +152,7 @@ var autoFollowBet = {
     getListInfoParams: function () {
         return {
             Username: autoFollowBet.Tables.TextboxUsername.val(),
+            Follower: autoFollowBet.Tables.TextboxFollower.val(),
             BAStatus: autoFollowBet.Tables.dropdownBAEnabled.val(),
             Source: autoFollowBet.Tables.dropdownSource.val(),
             LiveStatus: autoFollowBet.GetLiveStatusParam(),
@@ -162,9 +166,9 @@ var autoFollowBet = {
     GetLiveStatusParam: function () {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         var groupId = "#dropdown-followType" + followTypeEnums.LiveStatus;
-        if ($(groupId).attr("checked")) {
-            return followTypeEnums.LiveStatus_All.toString();
-        }
+        //        if ($(groupId).attr("checked")) {
+        //            return followTypeEnums.LiveStatus_All.toString();
+        //        }
 
         var paramList = [];
         if ($(groupId + "_" + followTypeEnums.LiveStatus_Both).attr("checked")) {
@@ -286,7 +290,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 911px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 1036px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -350,7 +354,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 911px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 1036px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -404,6 +408,9 @@ var autoFollowBet = {
                         <input class="_1stoverunderstatus editablefield" type="checkbox" disabled="disabled"' +
                             (followInfo.Followed1stOverUnder == followTypeEnums._1stOverUnder_Follow ? checked = "checked" : '') + '/>\
                    </td>';
+        strRow += '<td class="td-labelfollower col120">\
+                        <div class="c labelfollower">' + followInfo.Follower + '</div>\
+                   </td>';
         strRow += '<td class="col60 c"><div class="col35 ' + (followInfo.BAStatus ? 'checkBA' : '') + '"></div></td>';
 
         strRow += '<td>';
@@ -445,6 +452,12 @@ var autoFollowBet = {
         tdLabelRate.html('<input class="textboxrate txt" maxlength="4" type="text"' +
             'onkeyup="autoFollowBet.onEditFollowInfo(event ,\'' + rowId + '\');" editor="true"/>');
         rowInfo.find('.textboxrate').val(rate);
+
+        var follower = rowInfo.find('.labelfollower').html();
+        var tdLabelFollower = rowInfo.find('.td-labelfollower');
+        tdLabelFollower.html('<input class="textboxfollower txt" maxlength="50" type="text"' +
+            'onkeyup="autoFollowBet.onEditFollowInfo(event ,\'' + rowId + '\');" editor="true"/>');
+        rowInfo.find('.textboxfollower').val(follower);
     },
     generateDropdownLiveStatusOptions: function (liveStatus) {
         var option = '';
@@ -473,6 +486,10 @@ var autoFollowBet = {
         var rate = rowInfo.find('.labelrate').html();
         var tdLabelRate = rowInfo.find('.td-labelrate');
         tdLabelRate.html('<div class="col80 c labelrate">' + followInfo.Rate + '</div>');
+
+        var follower = rowInfo.find('.labelfollower').html();
+        var tdLabelFollower = rowInfo.find('.td-labelfollower');
+        tdLabelFollower.html('<div class="col120 c labelfollower">' + followInfo.Follower + '</div>');
 
         var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
         dropdownLiveStatus.find('option[value=' + followInfo.LiveStatus + ']').attr('selected', 'selected');
@@ -509,6 +526,12 @@ var autoFollowBet = {
     },
     renderDeleteFollowInfoResult: function (rs) {
         var rowId = autoFollowBet.CachedData.deleteInfoParams.RowId;
+        if (rs == null) {
+            showAlertMessage("errormessage", "", 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(390);
+            return;
+        }
+
         if (parseInt(rs.ErrorCode) != 0) {
             showAlertMessage("errormessage", rs.ErrorMessage, 1);
             autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(390);
@@ -558,6 +581,7 @@ var autoFollowBet = {
         var iconSave = rowInfo.find('.saveicon');
         var iconUndo = rowInfo.find('.undoicon');
         var rate = rowInfo.find('.textboxrate').val();
+        var follower = rowInfo.find('.textboxfollower').val();
         var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
         var hdpStatus = rowInfo.find('.hdpstatus');
         var _1stHDPStatus = rowInfo.find('._1sthdpstatus');
@@ -567,6 +591,7 @@ var autoFollowBet = {
         return {
             RowId: rowId,
             Username: followInfo.Username,
+            Follower: follower,
             SourceId: followInfo.SourceId,
             Source: followInfo.Source,
             Rate: rate,
@@ -609,10 +634,23 @@ var autoFollowBet = {
             return false;
         }
 
+        if ($.trim(postParams.Follower) == '') {
+            showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidFollower_Empty, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(maxMessageWidth);
+            rowInfo.find('.textboxfollower').focus();
+            return false;
+        }
+
         autoFollowBet.Tables.errorMessage.empty().addClass("display-none");
         return true;
     },
     renderUpdateFollowInfoResult: function (result) {
+        if (result == null) {
+            showAlertMessage("errormessage", "", 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            return;
+        }
+
         if (parseInt(result.ErrorCode) != 0) {
             showAlertMessage("errormessage", result.ErrorMessage, 1);
             autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
@@ -640,6 +678,9 @@ var autoFollowBet = {
         var tdLabelRate = rowInfo.find('.td-labelrate');
         tdLabelRate.html('<div class="col80 c labelrate">' + autoFollowBet.CachedData.updateInfoParams.Rate + '</div>');
 
+        var tdLabelFollower = rowInfo.find('.td-labelfollower');
+        tdLabelFollower.html('<div class="col120 c labelfollower">' + autoFollowBet.CachedData.updateInfoParams.Follower + '</div>');
+
         autoFollowBet.CachedData.FollowedCustomerList[rowId].Rate = autoFollowBet.CachedData.updateInfoParams.Rate;
         autoFollowBet.CachedData.FollowedCustomerList[rowId].LiveStatus = autoFollowBet.CachedData.updateInfoParams.LiveStatus;
         autoFollowBet.CachedData.FollowedCustomerList[rowId].FollowedHDP = autoFollowBet.CachedData.updateInfoParams.FollowedHDP;
@@ -657,7 +698,7 @@ var autoFollowBet = {
                 title: viewResources.Add_New_Followed_Customer,
                 autoOpen: false,
                 height: 200,
-                width: 420,
+                width: 600,
                 modal: true
             });
 
@@ -676,6 +717,7 @@ var autoFollowBet = {
     },
     cacheDOMElement: function () {
         autoFollowBet.Tables.TextboxUsername = $("#textbox-username");
+        autoFollowBet.Tables.TextboxFollower = $("#textbox-follower");
         autoFollowBet.Tables.dropdownSource = $("#dropdown-source");
         autoFollowBet.Tables.dropdownBAEnabled = $("#dlStatus");
         autoFollowBet.Tables.errorMessage = $("#errormessage");
@@ -689,6 +731,7 @@ var autoFollowBet = {
         autoFollowBet.Tables.resultMessage_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('#resultmessage-adddialog');
         autoFollowBet.Tables.textboxUsername_AddDialog = $('#textbox-username-addnewdialog');
         autoFollowBet.Tables.textboxRate_AddDialog = $('#textbox-rate-addnewdialog');
+        autoFollowBet.Tables.textboxFollower_AddDialog = $('#textbox-follower-addnewdialog');
         autoFollowBet.Tables.buttonSubmit_AddDialog = $('#buttonsubmit-addnewdialog');
 
         autoFollowBet.Tables.dropdownLiveStatus_AddDialog = $('#dropdown-livestatus-adddialog');
@@ -817,6 +860,7 @@ var autoFollowBet = {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         autoFollowBet.Tables.resultMessage_AddDialog.addClass("display-none");
         autoFollowBet.Tables.textboxUsername_AddDialog.val('');
+        autoFollowBet.Tables.textboxFollower_AddDialog.val('');
         autoFollowBet.Tables.textboxRate_AddDialog.val('');
 
         autoFollowBet.Tables.dropdownLiveStatus_AddDialog.find('option[value=' + followTypeEnums.LiveStatus_Both + ']').attr('selected', 'selected');
@@ -847,6 +891,7 @@ var autoFollowBet = {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         return {
             Username: autoFollowBet.Tables.textboxUsername_AddDialog.val(),
+            Follower: autoFollowBet.Tables.textboxFollower_AddDialog.val(),
             Rate: autoFollowBet.Tables.textboxRate_AddDialog.val(),
             LiveStatus: autoFollowBet.Tables.dropdownLiveStatus_AddDialog.val(),
             FollowedHDP: autoFollowBet.Tables.hdpStatus_AddDialog.attr("checked") ?
@@ -879,6 +924,13 @@ var autoFollowBet = {
             return false;
         }
 
+        if ($.trim(postParams.Follower) == '') {
+            showAlertMessage("resultmessage-adddialog", viewResources.Error_Admin_AutoFollowBetManagement_InvalidFollower_Empty, 1);
+            autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
+            autoFollowBet.Tables.textboxFollower_AddDialog.focus();
+            return false;
+        }
+
         if (!$.isNumeric(postParams.Rate)) {
             showAlertMessage("resultmessage-adddialog", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Number, 1);
             autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
@@ -906,6 +958,12 @@ var autoFollowBet = {
     },
     renderAddFollowInfoResult: function (rs) {
         var maxMessageWidth = 367;
+        if (rs == null) {
+            showAlertMessage("resultmessage-adddialog", "", 1);
+            autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
+            return;
+        }
+
         if (parseInt(rs.ErrorCode) != 0) {
             showAlertMessage("resultmessage-adddialog", rs.ErrorMessage, 1);
             autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);

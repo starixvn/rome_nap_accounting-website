@@ -105,6 +105,8 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
                     var followedCustomer = new FollowedCustomer
                     {
                         Username = data.Username,
+                        Follower = data.Follower,
+
                         Rate = data.Rate,
                         BAStatus = data.BAStatus,
 
