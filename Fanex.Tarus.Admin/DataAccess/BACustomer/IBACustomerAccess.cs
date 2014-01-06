@@ -22,7 +22,7 @@ using Fanex.Tarus.Admin.Entities;
 
         DataTable GetBACustomerList(int LicenseeId, int Status, string Username);
 
-        Result InsBACustomerList(string strCustId, string Rate, int userId, string IP);
+        Result InsBACustomerList(string strCustId, string Rate, int userId, string IP, string follower);
      
     }
 

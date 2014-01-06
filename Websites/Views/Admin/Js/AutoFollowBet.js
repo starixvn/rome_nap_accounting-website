@@ -92,7 +92,8 @@ var autoFollowBet = {
         gridWidth: 1038,
         pageIndex: 0,
         totalItems: 0,
-        pageSize: 50
+        pageSize: 50,
+        defaultFollowerName: "BARM001"
     },
 
     GetAutoFollowedBet: function () {
@@ -863,7 +864,7 @@ var autoFollowBet = {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         autoFollowBet.Tables.resultMessage_AddDialog.addClass("display-none");
         autoFollowBet.Tables.textboxUsername_AddDialog.val('');
-        autoFollowBet.Tables.textboxFollower_AddDialog.val('');
+        autoFollowBet.Tables.textboxFollower_AddDialog.val(autoFollowBet.CachedData.defaultFollowerName);
         autoFollowBet.Tables.textboxRate_AddDialog.val('');
 
         autoFollowBet.Tables.dropdownLiveStatus_AddDialog.find('option[value=' + followTypeEnums.LiveStatus_Both + ']').attr('selected', 'selected');

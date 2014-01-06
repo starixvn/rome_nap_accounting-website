@@ -21,6 +21,6 @@ namespace Fanex.Tarus.Admin.Business.BACustomer
 
         FollowedCustomerDTO SelBACustomerList(int LicenseeId, int Status, string Username, int pageSize, int pageIndex, int fromCache);
 
-        Result InsBACustomerList(string strCustId, string Rate);
+        Result InsBACustomerList(string strCustId, string Rate, string follower);
     }
 }

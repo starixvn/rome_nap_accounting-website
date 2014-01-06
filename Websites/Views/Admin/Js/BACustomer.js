@@ -148,9 +148,12 @@ var BACustomer = {
             showAlertMessage("errMsgDig", "Invalid Rate! Rate must be greater than or equal to 0.3 and less than or equal to 3.", 1);
             $("#errMsgDig").show().find("div:first").width(350);
             return;
+        } else if ($.trim($("#textbox-follower").val()) == '') {
+            showAlertMessage("errMsgDig", "Please input follower!", 1);
+            $("#errMsgDig").show().find("div:first").width(350);
         }
         else {
-            var data = { strCustId: str, Rate: $('#txtRate').val() };
+            var data = { strCustId: str, Rate: $('#txtRate').val(), Follower: $.trim($("#textbox-follower").val()) };
             $.ajax({
                 type: "POST",
                 url: "InsMultiBACustomer",
@@ -183,7 +186,7 @@ $(function () {
         title: "Add Rate for BA Customers",
         autoOpen: false,
         height: 140,
-        width: 370,
+        width: 550,
         modal: true
     });
 
@@ -230,7 +233,7 @@ function checkenableBtnFollowedBet() {
         $('#cbxIsFol').attr("checked", true);
         return false;
     }
-   
+
 }
 
 function isPositiveDouble(rate) {
@@ -245,6 +248,7 @@ function isPositiveDouble(rate) {
 function showPopup() {
     $('#errMsgDig').hide();
     $('#txtRate').val('');
+    $('#textbox-follower').val('BARM001');
     $('#addMultiBACustomers').removeClass("hidden").dialog("open");
 }
 
@@ -256,7 +260,7 @@ function changeDlStatus() {
     }
     else {
         $('#cbxIsFol').attr("disabled", false);
-       
+
     }
 }
 
