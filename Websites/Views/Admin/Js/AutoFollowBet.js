@@ -973,5 +973,8 @@ var autoFollowBet = {
 
         showAlertMessage("resultmessage-adddialog", viewResources.Success_Admin_AutoFollowBetManagement_AddFollowInfo, 0);
         autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
+        var t = setTimeout(function () {
+            autoFollowBet.Tables.resultMessage_AddDialog.addClass("display-none").empty();
+        }, 3000);
     }
 };
