@@ -167,10 +167,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                             _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["SuperMaxTransfer"]));
                         }
                     }
-                    
-                    var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);
-                    _custSetting.PTByGameType = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameType"]));
-                    _custSetting.PTByGameKind = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameKind"]));
+
+                    if (_custSetting.CasinoSync)
+                    {
+                        var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);
+                        _custSetting.PTByGameType = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameType"]));
+                        _custSetting.PTByGameKind = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameKind"]));
+                    }
+                    else
+                    {
+                        _custSetting.PTByGameType = false;
+                        _custSetting.PTByGameKind = true;
+                    }
                     _custSetting.NoIBCData = false;
                 }
                 Globals.IBCSetting.Casino.UseWebConfigProviderType = true;
