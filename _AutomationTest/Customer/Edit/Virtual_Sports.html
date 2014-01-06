@@ -1,0 +1,2244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>Virtual Sports</title>
+</head>
+<body>
+<h1>Virtual Sports</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Suite Setup</td>
+<td>Init</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Suite Teardown</td>
+<td>Close browser</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Force Tags</td>
+<td>Sanity</td>
+<td>EditVS</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Test Template</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILogin.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/ui_main.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILeftPanel.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/common_actions.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/Customer/uieditvs.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/Customer/vs.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="variable">
+<tr>
+<th class="name" colspan="5">Variables</th>
+</tr>
+<tr>
+<td class="name">${VSSuperName}</td>
+<td>supertestIQCAuto01</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${VSMasterName}</td>
+<td>supertestIQCAuto0101</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${VSAgentName}</td>
+<td>supertestIQCAuto010101</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${VSMemberName}</td>
+<td>supertestIQCAuto010101001</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="testcase">
+<tr>
+<th class="name" colspan="5">Test Cases</th>
+</tr>
+<tr>
+<td class="name"><a name="test_Super">Super</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super &gt;&gt; Edit Virtual Sports\n<br>
+\n<br>
+2. Update Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Soccer \n<br>
+\n<br>
+\ \ + Minbet: 10\n<br>
+\n<br>
+\ \ + Maxbet: 100\n<br>
+\n<br>
+\ \ + Maxpermatch: 1000\n<br>
+\n<br>
+\ \ + maxPT: 0.9\n<br>
+\n<br>
+3. Check current Super Virtual Sport bet setting\n<br>
+\n<br>
+4. Reset Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Soccer \n<br>
+\n<br>
+\ \ + Minbet: 0\n<br>
+\n<br>
+\ \ + Maxbet: 0\n<br>
+\n<br>
+\ \ + Maxpermatch: 0\n<br>
+\n<br>
+\ \ + maxPT: 0.8\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSSuperName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.9</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.9</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Super Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Soccer</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Master">Master</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.8 \ \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.8</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Master Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Soccer</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Agent">Agent</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.7</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.7</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Agent Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Soccer</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Member">Member</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Member &gt;&gt; Edit Virtual Sports \ \ \n<br>
+\ \ \n<br>
+2. Update Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \n<br>
+\ \ \n<br>
+\ \ + Minbet: 10 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 100 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \n<br>
+\ \ \n<br>
+3. Check current Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+4. Reset Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport: Virtual Soccer \ \ \ \n<br>
+\ \ \n<br>
+\ \ + Minbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.5 \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Member Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.6</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Member Virtual Soccer bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Soccer</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Motor Racing Super">Virtual Motor Racing Super</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super &gt;&gt; Edit Virtual Sports\n<br>
+\n<br>
+2. Update Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Motor Racing\n<br>
+\n<br>
+\ \ + Minbet: 10\n<br>
+\n<br>
+\ \ + Maxbet: 100\n<br>
+\n<br>
+\ \ + Maxpermatch: 1000\n<br>
+\n<br>
+\ \ + maxPT: 0.9\n<br>
+\n<br>
+3. Check current Super Virtual Sport bet setting\n<br>
+\n<br>
+4. Reset Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Motor Racing\n<br>
+\n<br>
+\ \ + Minbet: 0\n<br>
+\n<br>
+\ \ + Maxbet: 0\n<br>
+\n<br>
+\ \ + Maxpermatch: 0\n<br>
+\n<br>
+\ \ + maxPT: 0.8\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>supertestIQCAuto01</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVStxtVirtualSoccerMinBet}</td>
+<td>30</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.9</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.9</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Super Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Motor Racing</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Motor Racing Master">Virtual Motor Racing Master</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Motor Racing\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.8 \ \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual \ Motor Racing\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.8</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Master Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Motor Racing</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Motor Racing Agent">Virtual Motor Racing Agent</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual \ Motor Racing\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual \ Motor Racing\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.7</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.7</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Agent Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Motor Racing</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Motor Racing Member">Virtual Motor Racing Member</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Member &gt;&gt; Edit Virtual Sports \ \ \n<br>
+\ \ \n<br>
+2. Update Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport: Virtual \ Motor Racing\n<br>
+\ \ \n<br>
+\ \ + Minbet: 10 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 100 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \n<br>
+\ \ \n<br>
+3. Check current Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+4. Reset Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport: Virtual Motor Racing\n<br>
+\ \ \n<br>
+\ \ + Minbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.5 \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Member Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Motor Racing</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.6</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Member Virtual Motor Racing bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Motor Racing</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Greyhounds Super">Virtual Greyhounds Super</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super &gt;&gt; Edit Virtual Sports\n<br>
+\n<br>
+2. Update Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\n<br>
+\ \ + Minbet: 10\n<br>
+\n<br>
+\ \ + Maxbet: 100\n<br>
+\n<br>
+\ \ + Maxpermatch: 1000\n<br>
+\n<br>
+\ \ + maxPT: 0.9\n<br>
+\n<br>
+3. Check current Super Virtual Sport bet setting\n<br>
+\n<br>
+4. Reset Super Virtual Sport bet setting\n<br>
+\n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\n<br>
+\ \ + Minbet: 0\n<br>
+\n<br>
+\ \ + Maxbet: 0\n<br>
+\n<br>
+\ \ + Maxpermatch: 0\n<br>
+\n<br>
+\ \ + maxPT: 0.8\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>supertestIQCAuto01</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVStxtVirtualSoccerMinBet}</td>
+<td>30</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.9</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.9</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Super Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Super</td>
+<td>Virtual Greyhounds</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Greyhounds Master">Virtual Greyhounds Master</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.8 \ \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Master Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.8</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Master Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Master</td>
+<td>Virtual Greyhounds</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Greyhounds Agent">Virtual Greyhounds Agent</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent &gt;&gt; Edit Virtual Sports \ \ \ \n<br>
+\ \ \ \n<br>
+2. Update Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 10 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 100 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.7 \ \ \n<br>
+\ \ \ \n<br>
+3. Check current Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+4. Reset Agent Virtual Sport bet setting \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\ \ \ \n<br>
+\ \ + Minbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxbet: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \ \n<br>
+\ \ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.7</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.7</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Agent Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Agent</td>
+<td>Virtual Greyhounds</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Virtual Greyhounds Member">Virtual Greyhounds Member</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Member &gt;&gt; Edit Virtual Sports \ \ \n<br>
+\ \ \n<br>
+2. Update Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport:Virtual Greyhounds\n<br>
+\ \ \n<br>
+\ \ + Minbet: 10 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 100 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 1000 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.6 \ \ \n<br>
+\ \ \n<br>
+3. Check current Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+4. Reset Member Virtual Sport bet setting \ \ \n<br>
+\ \ \n<br>
+\ \ + Sport: Virtual Greyhounds\n<br>
+\ \ \n<br>
+\ \ + Minbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxbet: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + Maxpermatch: 0 \ \ \n<br>
+\ \ \n<br>
+\ \ + maxPT: 0.5 \ \ \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${VSMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${EVSbtnUpdate}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Contain</td>
+<td>${msg}</td>
+<td>Successfully</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Member Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditVirtualSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Greyhounds</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1,000</td>
+<td>0.6</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Member Virtual Greyhounds bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Virtual Sport Bet Setting</td>
+<td>Member</td>
+<td>Virtual Greyhounds</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0.5</td>
+</tr>
+</table>
+</body>
+</html>

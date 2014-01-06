@@ -1,0 +1,1014 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>Common Actions</title>
+</head>
+<body>
+<h1>Common Actions</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Selenium2Library</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../Interfaces/ui_main.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>String</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Collections</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>OperatingSystem</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="keyword">
+<tr>
+<th class="name" colspan="5">Keywords</th>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Login">Login</a></td>
+<td>[Arguments]</td>
+<td>${username}</td>
+<td>${pwd}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${txtUsername}</td>
+<td>10s</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${txtUsername}</td>
+<td>${username}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Password</td>
+<td>${txtPwd}</td>
+<td>${pwd}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnLogin}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Logout">Logout</a></td>
+<td>Select Window</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Frame</td>
+<td>${frameContent}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Link</td>
+<td>${lnkLogout}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_String Check Contain">String Check Contain</a></td>
+<td>[Arguments]</td>
+<td>${arg_str}</td>
+<td>${arg_search_str}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output} =</td>
+<td>Execute Javascript</td>
+<td>var str1 = new String ("${arg_str}");var str2 = new String ("${arg_search_str}");str1 = str1.toLowerCase(); str2=str2.toLowerCase(); var pos = str1.indexOf(str2); if (pos &lt;0 ) return false; return true;</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Convert string to number">Convert string to number</a></td>
+<td>[Arguments]</td>
+<td>${strNumber}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to convert a string value to a number \n<br>
+\n<br>
+${strNumber}: the string contain value</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpStr}=</td>
+<td>Replace String Using Regexp</td>
+<td>${strNumber}</td>
+<td>[^0-9-.]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${EMPTY}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpNum}=</td>
+<td>Convert To Number</td>
+<td>${tmpStr}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${index}=</td>
+<td>Evaluate</td>
+<td>int(${tmpStr.find('.')})</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpInt}=</td>
+<td>Run Keyword If</td>
+<td>${index} &lt; 0</td>
+<td>Convert To Integer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpStr}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Set Variable if</td>
+<td>${index} &lt; 0</td>
+<td>${tmpInt}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpNum}</td>
+<td></td>
+<td>.</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Create Sporttype Bettype Tote Dictionary">Create Sporttype Bettype Tote Dictionary</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to create global Dictionary variable to store sporttype, bettype and Tote\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set value for Sporttype Dict</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSporttypeDict}=</td>
+<td>Create Dictionary</td>
+<td>Soccer</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Basketball</td>
+<td>2</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Football</td>
+<td>3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Tennis</td>
+<td>5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Baseball</td>
+<td>8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Golf</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Motorsports</td>
+<td>11</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Other Sports</td>
+<td>99</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Mix Sports Parlay</td>
+<td>99</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>HR Fixed Odds</td>
+<td>154</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>HR</td>
+<td>151</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Greyhound</td>
+<td>152</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Harness</td>
+<td>153</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Number Game</td>
+<td>161</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Soccer</td>
+<td>180</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Horse Racing</td>
+<td>181</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Tennis</td>
+<td>186</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Greyhounds</td>
+<td>182</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Motor Racing</td>
+<td>184</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Speedway</td>
+<td>183</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpSporttypeDict}</td>
+<td>Virtual Cycling</td>
+<td>185</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set global</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${SporttypeDict}</td>
+<td>${tmpSporttypeDict}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set value for bettype Dict</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpBettypeDict}=</td>
+<td>Create Dictionary</td>
+<td>Handicap</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Odd/Even</td>
+<td>2</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Over/Under</td>
+<td>3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>1x2</td>
+<td>5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>1st Handicap</td>
+<td>7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>1st Odd/Even</td>
+<td>12</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>1st Over/Under</td>
+<td>8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>1st 1x2</td>
+<td>15</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Correct Score</td>
+<td>4</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Total Goal</td>
+<td>6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Mix Parlay</td>
+<td>9</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Outright</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Money Line</td>
+<td>20</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>HR Fixed Odds Money Line</td>
+<td>20</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Number Game 1st Last Over/Under</td>
+<td>81</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Number Game 1st Last Odd/Event</td>
+<td>83</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpBettypeDict}</td>
+<td>Number Game Warrior</td>
+<td>88</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set global</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${BettypeDict}</td>
+<td>${tmpBettypeDict}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set value for Tote Dict</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpToteDict}=</td>
+<td>Create Dictionary</td>
+<td>SA</td>
+<td>31</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpToteDict}</td>
+<td>UK/Irish</td>
+<td>41</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set To Dictionary</td>
+<td>${tmpToteDict}</td>
+<td>Aust</td>
+<td>51</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set global</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${ToteDict}</td>
+<td>${tmpToteDict}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Init">Init</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">Reason :\n<br>
+- Initial for begin run (config value stored in Config.py)\n<br>
+- Open browser with URL input\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Selenium Implicit Wait</td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Selenium Speed</td>
+<td>0.5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Selenium Timeout</td>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Get config variable from Config.py file</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpAdmin}</td>
+<td>Set Variable If</td>
+<td>'${cfEnviroment}'=='1'</td>
+<td>pgmIQCAutoTest</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>pgmjerry</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPwd}</td>
+<td>Set Variable If</td>
+<td>'${cfEnviroment}'=='1'</td>
+<td>pgmjerry</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1234aa</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Set Global variable</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfUrl}</td>
+<td>${Url}/SignIn.aspx</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Set Global Variable</td>
+<td>${cfBrowser}</td>
+<td>${tmpBrowser}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfAdmin}</td>
+<td>${tmpAdmin}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfPwd}</td>
+<td>${tmpPwd}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpUrl}=</td>
+<td>Replace String</td>
+<td>${cfUrl}</td>
+<td>SignIn.aspx</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Report/index.aspx</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfReportUrl}</td>
+<td>${tmpUrl}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfReportDate}</td>
+<td>Now -2 day</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfTimeout}</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Set Global Variable</td>
+<td>${cfAccountPrefix}</td>
+<td>Supertest</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Open Browser and navigate to login page</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Open Browser</td>
+<td>${cfUrl}</td>
+<td>${cfBrowser}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Maximize Browser Window</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Login or not</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>'${cfIsLogin}'=='1'</td>
+<td>Login</td>
+<td>${cfAdmin}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${cfPwd}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Create Sporttype Bettype Tote Dictionary</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Create Sporttype Bettype Tote Dictionary</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get value in file">Get value in file</a></td>
+<td>[Arguments]</td>
+<td>${filepath}</td>
+<td>${key}</td>
+<td>${separator}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get value of key in file \n<br>
+\n<br>
+${filepath}: the file path \n<br>
+\n<br>
+${key}: the key name that need to get value\n<br>
+\n<br>
+${separator}: the delimiter value \n<br>
+\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpline}=</td>
+<td>Grep File</td>
+<td>${filepath}</td>
+<td>${key}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Replace String</td>
+<td>${tmpline}</td>
+<td>${key}${separator}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${EMPTY}</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Wait Until Element Contains Text">Wait Until Element Contains Text</a></td>
+<td>[Arguments]</td>
+<td>${control}</td>
+<td>${text}</td>
+<td>${timeout}=10</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to wait until element having specific text\n<br>
+\n<br>
+${control}: the control \n<br>
+\n<br>
+${text}: specific text that need to check\n<br>
+\n<br>
+${timeout}: timeout value\n<br>
+\n<br>
+\n<br>
+\n<br>
+\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${index}</td>
+<td>IN RANGE</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${timeout}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmptext} =</td>
+<td>Get Text</td>
+<td>${control}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Run Keyword If</td>
+<td>'${tmptext.upper()}'=='${text.upper()}'</td>
+<td>Exit For Loop</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>sleep</td>
+<td>1s</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get value and convert to Int">Get value and convert to Int</a></td>
+<td>[Arguments]</td>
+<td>${control}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get value of control then convert it to Integer\n<br>
+\n<br>
+${control}: the control that need to get its value\n<br>
+\n<br>
+${output}: the integer value</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Get Value</td>
+<td>${control}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Convert string to number</td>
+<td>${output}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>

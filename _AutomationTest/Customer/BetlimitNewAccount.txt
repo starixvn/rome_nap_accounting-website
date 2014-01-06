@@ -1,0 +1,7 @@
+AccountType|Sporttype|Bettype|Liveindicator|Minbet;Maxbet;Maxpermatch;maxperball|PT;UplinePresetPT
+Master|Soccer|Handicap|0|15;95;995|0.7;0.2
+Master|Number Game|1st Last Over/Under|0|18;80;880;180|0.5;0.3
+Agent|Soccer|Handicap|0|15;95;995|0.5;0.1
+Agent|Number Game|1st Last Over/Under|0|18;80;880;180|0.4;0.1
+Member|Soccer|Handicap|0|15;95;995|0.45
+Member|Number Game|1st Last Over/Under|0|18;80;880;180|0.25

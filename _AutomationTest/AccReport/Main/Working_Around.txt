@@ -1,0 +1,12 @@
+*** Settings ***
+Suite Setup       Init
+Force Tags        RWA
+Resource          ../../Interfaces/Reports/uireport.html
+Resource          ../../Actions/common_actions.html
+Resource          ../../Actions/report.html
+Resource          ../../Interfaces/UILogin.html
+
+*** Test Cases ***
+Daily Win Loss 2h
+
+Win Loss Summary 2d

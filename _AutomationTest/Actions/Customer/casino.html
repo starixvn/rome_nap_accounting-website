@@ -1,0 +1,686 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>Casino</title>
+</head>
+<body>
+<h1>Casino</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Selenium2Library</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Collections</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="keyword">
+<tr>
+<th class="name" colspan="5">Keywords</th>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit Casino Bet Setting">Edit Casino Bet Setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${maxtransfer}</td>
+<td>${RnGMaxPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${RnGComm}</td>
+<td>${MiniMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit Casino bet setting. Just use it when current frame is Edit Casino page\n<br>
+\n<br>
+${type}: account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+${maxTransfer}: the max transfer credit value\n<br>
+\n<br>
+${RnGMaxPT}: RNG max PT value\n<br>
+\n<br>
+${RnGcomm}: the RnG comm value\n<br>
+\n<br>
+\n<br>
+${MiniMaxPT}: Mini max PT value\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPrefix}=</td>
+<td>Get Substring</td>
+<td>${type}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGMaxPT}=</td>
+<td>Replace String</td>
+<td>${ECScboRnGMaxPT}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGComm}=</td>
+<td>Replace String</td>
+<td>${ECScboRnGComm}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMiniMaxPT}=</td>
+<td>Replace String</td>
+<td>${ECScboMiniMaxPT}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGMaxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboRnGMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpRnGMaxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGComm}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboRnGCommMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpRnGComm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMiniMaxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboMiniMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMiniMaxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${ECStxtMaxTransferCredit}</td>
+<td>${maxtransfer}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Checkbox</td>
+<td>${ECSchkRnGGroupSetting}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${tmpRnGMaxPT}</td>
+<td>${RnGMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${tmpRnGComm}</td>
+<td>${RnGComm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${tmpMiniMaxPT}</td>
+<td>${MiniMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${ECSlblUsername}</td>
+<td>${ECSbtnUpdate}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg}</td>
+<td>Get Edit Msg</td>
+<td>${ECSdivMsg}</td>
+<td>${cfTimeout} * 3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>5s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Casino Game type">Get Casino Game type</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${isCheck}=1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to check/uncheck all bet limit checkbox and return the list Casino game type and . Just use it when current frame is Edit Casino page\n<br>
+\n<br>
+\n<br>
+${type}: RnG Game or Mini Game\n<br>
+\n<br>
+\n<br>
+${isCheck}: 0/1 \ (0: means uncheck)</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRowNo}=</td>
+<td>Get Element Attribute</td>
+<td>${ECStblSetting}//td[text()='${type}']@rowspan</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRowNo}=</td>
+<td>Convert To Integer</td>
+<td>${tmpRowNo}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRow}</td>
+<td>Set Variable</td>
+<td>${ECStblSetting}//td[text()='${type}']/parent::tr/following::tr[not(@id)]</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}</td>
+<td>Create List</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${index}</td>
+<td>IN RANGE</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpRowNo}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmptr}=</td>
+<td>Set Variable</td>
+<td>${tmpRow}[${index}]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmptd}=</td>
+<td>Set Variable</td>
+<td>${tmptr}/td[1]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${cell1}=</td>
+<td>Get Text</td>
+<td>${tmptd}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmptd}=</td>
+<td>Set Variable</td>
+<td>${tmptr}/td[2]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${cell2}=</td>
+<td>Get Text</td>
+<td>${tmptd}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Select Unselect All Casino game type</td>
+<td>${tmptr}/td[2]/input</td>
+<td>${isCheck}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Append To List</td>
+<td>${output}</td>
+<td>${cell1};${cell2}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Select Unselect All Casino game type">Select Unselect All Casino game type</a></td>
+<td>[Arguments]</td>
+<td>${control}</td>
+<td>${isCheck}=1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to select or unselect all bet limit of a specific Casino Game. Just use it when current frame is Edit Casino page\n<br>
+\n<br>
+\n<br>
+{control}: the control that containing list check box neeed to check in\n<br>
+\n<br>
+\n<br>
+{isCheck}: 0/1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpControl}=</td>
+<td>Replace String</td>
+<td>${control}</td>
+<td>xpath=</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${EMPTY}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpchkNo}=</td>
+<td>Get Matching Xpath Count</td>
+<td>${tmpControl}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpchkNo}=</td>
+<td>Evaluate</td>
+<td>int(${tmpchkNo} + 1)</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpKeyword}</td>
+<td>Set Variable If</td>
+<td>'${isCheck}'=='0'</td>
+<td>Unselect Checkbox</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Select Checkbox</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${i}</td>
+<td>IN RANGE</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpchkNo}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>${tmpKeyword}</td>
+<td>${tmpControl}[${i}]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Casino Bet Setting">Get Casino Bet Setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get Casino bet setting. Just use it when current frame is Edit Casino page\n<br>
+\n<br>
+${type}: account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+${outputlist}: the output list containing maxTransfer, RnGmaxPT,RnGComm,MinimaxPT</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPrefix}=</td>
+<td>Get Substring</td>
+<td>${type}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGMaxPT}=</td>
+<td>Replace String</td>
+<td>${ECScboRnGMaxPT}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGComm}=</td>
+<td>Replace String</td>
+<td>${ECScboRnGComm}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMiniMaxPT}=</td>
+<td>Replace String</td>
+<td>${ECScboMiniMaxPT}</td>
+<td>S</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPrefix}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGMaxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboRnGMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpRnGMaxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpRnGComm}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboRnGCommMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpRnGComm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMiniMaxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ECScboMiniMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMiniMaxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxtransfer}</td>
+<td>Get Value</td>
+<td>${ECStxtMaxTransferCredit}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${RnGMaxPT}</td>
+<td>Get Selected List Label</td>
+<td>${tmpRnGMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${RnGComm}</td>
+<td>Get Selected List Label</td>
+<td>${tmpRnGComm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${MiniMaxPT}</td>
+<td>Get Selected List Label</td>
+<td>${tmpMiniMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}</td>
+<td>Create List</td>
+<td>${maxtransfer}</td>
+<td>${RnGMaxPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${RnGComm}</td>
+<td>${MiniMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>

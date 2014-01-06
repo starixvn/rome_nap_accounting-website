@@ -1,0 +1,3130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>SB</title>
+</head>
+<body>
+<h1>SB</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Selenium2Library</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Collections</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>OperatingSystem</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="keyword">
+<tr>
+<th class="name" colspan="5">Keywords</th>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit Sport bet limit">Edit Sport bet limit</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${min}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${max}</td>
+<td>${maxPM}</td>
+<td>${isGetMsg}=1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit one SB sport bet setting.Just use it when current frame is Edit Position taking page\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${sport}: the Sport name (eg, Soccer/Basketball/...)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${min}: the min bet value\n<br>
+\n<br>
+\n<br>
+${max}: the max bet value\n<br>
+\n<br>
+\n<br>
+\n<br>
+${maxPM}: the max per match value \n<br>
+\n<br>
+\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Define element</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}</td>
+<td>Set Variable</td>
+<td>${ESBtxtSoccerMin}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMax}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxPMSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}=</td>
+<td>String.Replace String</td>
+<td>${tmpMin}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>String.Replace String</td>
+<td>${tmpMax}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>String.Replace String</td>
+<td>${tmpMaxPM}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpName}=</td>
+<td>Replace String</td>
+<td>${ESBlblSuperName}</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Set new bet limit values</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMin}</td>
+<td>${min}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMax}</td>
+<td>${max}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMaxPM}</td>
+<td>${maxPM}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${tmpName}</td>
+<td>${ESBbtnUpdate}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg} =</td>
+<td>Run Keyword If</td>
+<td>'${isGetMsg}'=='1'</td>
+<td>Get Edit Msg</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBdivMsg}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit Soccer Bet Setting">Edit Soccer Bet Setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${comm}</td>
+<td>${min}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${max}</td>
+<td>${maxPM}</td>
+<td>${MaxPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit Soccer bet setting.Just use it when current frame is Edit Position taking page\n<br>
+\ \ \n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${comm}: the Group A comm value\n<br>
+\n<br>
+${min}: the Soccer min bet value \n<br>
+\n<br>
+${max}: the Soccer max bet value\n<br>
+\n<br>
+${maxPM}: the Soccer max per match value \n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>comment</td>
+<td>set control value based on account type</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_GroupA}=</td>
+<td>Set Variable</td>
+<td>${ESBcboGroupA}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_GroupA}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ESBcboCommHDPMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_GroupA}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_min}=</td>
+<td>Set Variable</td>
+<td>${ESBtxtSoccerMin}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_max}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMax}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPM}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxPMSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable</td>
+<td>${ESBcboMaxPTSuper}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Master'</td>
+<td>${ESBcboMaxPTMaster}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Agent'</td>
+<td>${ESBcboMaxPTAgent}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ESBcboMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_name}=</td>
+<td>Replace String</td>
+<td>${ESBlblSuperName}</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>comment</td>
+<td>Update value</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List</td>
+<td>${tmp_GroupA}</td>
+<td>${comm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmp_min}</td>
+<td>${min}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmp_max}</td>
+<td>${max}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmp_maxPM}</td>
+<td>${maxPM}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List</td>
+<td>${tmp_maxPT}</td>
+<td>${maxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${tmp_name}</td>
+<td>${ESBbtnUpdate}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg} =</td>
+<td>Get Edit Msg</td>
+<td>${ESBdivMsg}</td>
+<td>${cfTimeout}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>3s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Check Sport bet limit">Check Sport bet limit</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${isRange}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${min}</td>
+<td>${max}</td>
+<td>${maxPM}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to check a specific SB sport current bet limit or bet limit range. Just use it when current frame is Edit Position taking page \n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${sport}: the Sport name (eg, Soccer/Basketball/...)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${min}: the min bet value\n<br>
+\n<br>
+\n<br>
+${max}: the max bet value\n<br>
+\n<br>
+\n<br>
+\n<br>
+${maxPM}: the max per match value \n<br>
+\n<br>
+\n<br>
+\n<br>
+${result}: the True/False output value\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplist}=</td>
+<td>Create List</td>
+<td>${min}</td>
+<td>${max}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${maxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplistcurrent}=</td>
+<td>Get Sport bet limit</td>
+<td>${type}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${isRange}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${tmplist}</td>
+<td>${tmplistcurrent}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Sport bet limit">Get Sport bet limit</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${isRange}=0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get a specific sport current bet limit value or bet limit range. Just use it when current frame is Edit Position taking page \n<br>
+\n<br>
+Therre is no bet limit range for super level so not using this action with ${type}= Super and ${isRange} = 1 \n<br>
+\n<br>
+\ \n<br>
+${type}: the account type (Master, Agent or Member)\n<br>
+\ \n<br>
+\n<br>
+${sport}: the Sport name (eg, Soccer/Basketball/...)\n<br>
+\n<br>
+\n<br>
+${isRange}: 0/1 (identify bet limit or bet limit range)\n<br>
+\n<br>
+\n<br>
+${outputlist}: the output value containing min, max and maxpermatch</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#Define element</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}</td>
+<td>Set Variable If</td>
+<td>'${isRange}'=='1'</td>
+<td>${ESBtxtSoccerMinRange}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMin}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMax}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxPMSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}</td>
+<td>Set Variable If</td>
+<td>'${isRange}'=='1'</td>
+<td>${ESBtxtSoccerMaxRange}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMax}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}</td>
+<td>Set Variable If</td>
+<td>'${isRange}'=='1'</td>
+<td>${ESBtxtSoccerMaxPMRange}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}=</td>
+<td>String.Replace String</td>
+<td>${tmpMin}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>String.Replace String</td>
+<td>${tmpMax}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>String.Replace String</td>
+<td>${tmpMaxPM}</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${sport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpKeyword}</td>
+<td>Set Variable If</td>
+<td>'${isRange}'=='1'</td>
+<td>Get Text</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Get Value</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMin}=</td>
+<td>Set Variable</td>
+<td>${EMPTY}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMax}=</td>
+<td>Set Variable</td>
+<td>${EMPTY}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMaxPM}=</td>
+<td>Set Variable</td>
+<td>${EMPTY}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get element value or text</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMin}=</td>
+<td>Run Keyword</td>
+<td>${tmpKeyword}</td>
+<td>${tmpMin}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMax}=</td>
+<td>Run Keyword</td>
+<td>${tmpKeyword}</td>
+<td>${tmpMax}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentMaxPM}=</td>
+<td>Run Keyword</td>
+<td>${tmpKeyword}</td>
+<td>${tmpMaxPM}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Output data</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}</td>
+<td>Create List</td>
+<td>${currentMin}</td>
+<td>${currentMax}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${currentMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Soccer Bet Setting">Get Soccer Bet Setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get Soccer bet setting ( Group A comm,Soccer min max maxpermatch, max PT). Just use it when current frame is Edit Position taking page \n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${outputlist}: the Soccer min max maxpermatch, Group A comm, max PT output value\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#set control value based on account type</td>
+<td>set control value based on account type</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_GroupA}=</td>
+<td>Set Variable</td>
+<td>${ESBcboGroupA}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_GroupA}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ESBcboCommHDPMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_GroupA}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_min}=</td>
+<td>Set Variable</td>
+<td>${ESBtxtSoccerMin}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_max}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMax}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPM}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${ESBtxtSoccerMaxPMSuper}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBtxtSoccerMaxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable</td>
+<td>${ESBcboMaxPTSuper}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Master'</td>
+<td>${ESBcboMaxPTMaster}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Agent'</td>
+<td>${ESBcboMaxPTAgent}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmp_maxPT}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+<td>${ESBcboMaxPTMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${commA}=</td>
+<td>Get Selected List Label</td>
+<td>${tmp_GroupA}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${min}=</td>
+<td>Get Value</td>
+<td>${tmp_min}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${max}=</td>
+<td>Get Value</td>
+<td>${tmp_max}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxPM}=</td>
+<td>Get Value</td>
+<td>${tmp_maxPM}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxPT}=</td>
+<td>Get Selected List Label</td>
+<td>${tmp_maxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}</td>
+<td>Create List</td>
+<td>${commA}</td>
+<td>${min}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${max}</td>
+<td>${maxPM}</td>
+<td>${maxPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit Sport Min PT">Edit Sport Min PT</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${minPT}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit sport min PT.Just use it when current frame is Edit Min/MaxPT SB page\n<br>
+\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${sport}: the Sport name (eg, Soccer/Basketball/...)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${bettype}: the bettype name\n<br>
+\n<br>
+\n<br>
+${minPT}: the min PT value\n<br>
+\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${typelist}=</td>
+<td>Create List</td>
+<td>Member</td>
+<td>Agent</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Master</td>
+<td>Super</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptype}=</td>
+<td>Get Index From List</td>
+<td>${typelist}</td>
+<td>${type}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptype}=</td>
+<td>Evaluate</td>
+<td>${tmptype} + 1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSportID}=</td>
+<td>Get From Dictionary</td>
+<td>${SporttypeDict}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpbettypename}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} &gt; 99</td>
+<td>${sport} ${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${bettype}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpBettypetID}=</td>
+<td>Get From Dictionary</td>
+<td>${BettypeDict}</td>
+<td>${tmpbettypename}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMinPT}=</td>
+<td>Set Variable</td>
+<td>xpath=//select[@id='n${tmptype}\$${tmpSportID}\$${tmpBettypetID}\$0']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpName}=</td>
+<td>Replace String</td>
+<td>${ESBlblSuperName}</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplbSport}=</td>
+<td>Set Variable</td>
+<td>//div[@class='PTSport']/div[text()='${sport}']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>${tmpSportID} &gt; 1</td>
+<td>Click Element</td>
+<td>${tmplbSport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Value</td>
+<td>${tmpMinPT}</td>
+<td>${minPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${tmpName}</td>
+<td>${ESBbtnUpdate}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg} =</td>
+<td>Get Edit Msg</td>
+<td>${ESBdivMsg}</td>
+<td>${cfTimeout} * 3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>5s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Sport Min PT">Get Sport Min PT</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get sport min PT.Just use it when current frame is Edit Min/MaxPT SB page\n<br>
+\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${sport}: the Sport name (eg, Soccer/Basketball/...)\n<br>
+\n<br>
+\n<br>
+\n<br>
+${bettype}: the bettype name\n<br>
+\n<br>
+\n<br>
+\ ${output}: the minPT value</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${typelist}=</td>
+<td>Create List</td>
+<td>${EMPTY}</td>
+<td>Member</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Agent</td>
+<td>Master</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptype}=</td>
+<td>Get Index From List</td>
+<td>${typelist}</td>
+<td>${type}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSportID}=</td>
+<td>Get From Dictionary</td>
+<td>${SporttypeDict}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpbettypename}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} &gt; 99</td>
+<td>${sport} ${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${bettype}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpBettypetID}=</td>
+<td>Get From Dictionary</td>
+<td>${BettypeDict}</td>
+<td>${tmpbettypename}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMinPT}=</td>
+<td>Set Variable</td>
+<td>xpath=//select[@id='n${tmptype}\$${tmpSportID}\$${tmpBettypetID}\$0']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>${output}=</td>
+<td>Get Selected List Value</td>
+<td>${tmpMinPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Get Value</td>
+<td>${tmpMinPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Add new account">Add new account</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${pwd}</td>
+<td>${listSporttypeBettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${fileBetlimit}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to add new account\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${listSporttypeBettype}: the list sporttype and bettype (eg, Soccer|Handicap;Number Game|1st Last Over/Under;..)\n<br>
+\n<br>
+\n<br>
+${fileBetlimit}: the path of file that contains new data\n<br>
+\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set name</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpname}=</td>
+<td>Generate account name</td>
+<td>${type}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplist}=</td>
+<td>Split String</td>
+<td>${listSporttypeBettype}</td>
+<td>;</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplen}=</td>
+<td>Get Length</td>
+<td>${tmplist}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${ESBtxtUsername}</td>
+<td>${tmpname}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Password</td>
+<td>${ESBtxtPassword}</td>
+<td>${pwd}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${tmpIndex}</td>
+<td>IN RANGE</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmplen}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sportbettype}=</td>
+<td>Get From List</td>
+<td>${tmplist}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpIndex}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Grep File</td>
+<td>${fileBetlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${type}|${sportbettype}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Split String</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sport}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${bettype}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${betlimit}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${PTlist}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Enter Sport bet setting</td>
+<td>${type}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${bettype}</td>
+<td>${betlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${PTlist}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${ESBlblAddNew}</td>
+<td>${ESBbtnAdd}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg} =</td>
+<td>Get Edit Msg</td>
+<td>${ESBdivMsg}</td>
+<td>${cfTimeout}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>5s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Generate account name">Generate account name</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to generate account name\n<br>
+\n<br>
+${type}: account type (Master/Agent/Member)\n<br>
+\n<br>
+${output}: the account name</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Account name structure</td>
+<td>&lt;Supertest&gt;&lt;type&gt;&lt;year month day hour minute second&gt;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptime}=</td>
+<td>Get Time</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptime}=</td>
+<td>Replace String Using Regexp</td>
+<td>${tmptime}</td>
+<td>[^0-9]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${EMPTY}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${output}=</td>
+<td>Set Variable</td>
+<td>Supertest${type}${tmptime}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${output}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit Reset Sport Bet Setting By File">Edit Reset Sport Bet Setting By File</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${listSporttypeBettype}</td>
+<td>${fileBetlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${isReset}=0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit bet limit and PT data on SB page. The new data is stored in a text file\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super,Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${listSporttypeBettype}: the list sporttype and bettype (eg, Soccer|Handicap;Number Game|1st Last Over/Under;..)\n<br>
+\n<br>
+\n<br>
+${fileBetlimit}: the list containing bet limit, PT and comm value\n<br>
+\n<br>
+${isReset}: Reset or Edit (0 by default)\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button\n<br>
+\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set sporttype bettype list</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplist}=</td>
+<td>Split String</td>
+<td>${listSporttypeBettype}</td>
+<td>;</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplen}=</td>
+<td>Get Length</td>
+<td>${tmplist}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpReset}=</td>
+<td>Set Variable If</td>
+<td>'${isReset}'=='1'</td>
+<td>Reset</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Edit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpname}=</td>
+<td>Replace String</td>
+<td>${ESBlblSuperName}</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${tmpIndex}</td>
+<td>IN RANGE</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmplen}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sportbettype}=</td>
+<td>Get From List</td>
+<td>${tmplist}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpIndex}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Grep File</td>
+<td>${fileBetlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpReset}${type}|${sportbettype}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Split String</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sport}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${bettype}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${betlimit}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${PTlist}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${comm}=</td>
+<td>Get From List</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Enter Sport bet setting</td>
+<td>${type}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${bettype}</td>
+<td>${betlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${PTlist}</td>
+<td>${comm}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${tmpname}</td>
+<td>${ESBbtnAdd}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg} =</td>
+<td>Get Edit Msg</td>
+<td>${ESBdivMsg}</td>
+<td>${cfTimeout}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>5s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Check Sport Bet Setting By File">Check Sport Bet Setting By File</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${listSporttypeBettype}</td>
+<td>${fileBetlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${isReset}=0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to check bet limit and PT data on SB page. The checked data is stored in a text file\n<br>
+\n<br>
+\n<br>
+${type}: the account type (Super,Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${listSporttypeBettype}: the list sporttype and bettype (eg, Soccer|Handicap;Number Game|1st Last Over/Under;..)\n<br>
+\n<br>
+\n<br>
+${fileBetlimit}: the list containing bet limit, PT and comm value\n<br>
+\n<br>
+${isReset}: Reset or Edit (0 by default) (used to check Reset data or Edit data)\n<br>
+\n<br>
+\n<br>
+\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set sporttype bettype list</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplist}=</td>
+<td>Split String</td>
+<td>${listSporttypeBettype}</td>
+<td>;</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplen}=</td>
+<td>Get Length</td>
+<td>${tmplist}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpReset}=</td>
+<td>Set Variable If</td>
+<td>'${isReset}'=='1'</td>
+<td>Reset</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Edit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>: FOR</td>
+<td>${tmpIndex}</td>
+<td>IN RANGE</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmplen}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sportbettype}=</td>
+<td>Get From List</td>
+<td>${tmplist}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpIndex}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Grep File</td>
+<td>${fileBetlimit}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpReset}${type}|${sportbettype}|0|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Replace String</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${tmpReset}${type}|${sportbettype}|0|</td>
+<td>${EMPTY}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${checkeddata}=</td>
+<td>Split String</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${sport}=</td>
+<td>Fetch From Left</td>
+<td>${sportbettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${bettype}=</td>
+<td>Fetch From Right</td>
+<td>${sportbettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${tmpdata}=</td>
+<td>Split String</td>
+<td>${tmpdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>|</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>${currentdata}=</td>
+<td>Get Sport bet setting</td>
+<td>${type}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentdata}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td>...</td>
+<td>${checkeddata}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Sport Control">Get Sport Control</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to fill in sport bet setting (SB and NG)\n<br>
+\n<br>
+${type}: account type (Master/Agent/Member)\n<br>
+\n<br>
+${sport}: sporttype name \n<br>
+\n<br>
+${bettype}: bettype name\n<br>
+\n<br>
+${outputlist}: contains SportID,Sport label, Bet limit controls (minbet, maxbet, maxpermatch, maxperball), PT control (MaxPT, UplinePresetPT) and Comm control\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get sport bettye</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${typelist}=</td>
+<td>Create List</td>
+<td>${EMPTY}</td>
+<td>Member</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Agent</td>
+<td>Master</td>
+<td>Super</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmptype}=</td>
+<td>Get Index From List</td>
+<td>${typelist}</td>
+<td>${type}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSportID}=</td>
+<td>Get From Dictionary</td>
+<td>${SporttypeDict}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpbettypename}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} &gt; 99</td>
+<td>${sport} ${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${bettype}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpBettypetID}=</td>
+<td>Get From Dictionary</td>
+<td>${BettypeDict}</td>
+<td>${tmpbettypename}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get sport bettye</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpBettypetID}=</td>
+<td>Get From Dictionary</td>
+<td>${BettypeDict}</td>
+<td>${tmpbettypename}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set bet setting control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${Sportbetsetting}=</td>
+<td>Set Variable</td>
+<td>//div[@id='divBettingLimit']//div[text()='${sport}']/following-sibling::*</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpposMin}</td>
+<td>Set Variable if</td>
+<td>${tmpSportID} == 161</td>
+<td>5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpStep}</td>
+<td>Set Variable if</td>
+<td>'${type}'=='Super'</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpposMax}</td>
+<td>Evaluate</td>
+<td>(int) (${tmpposMin} + ${tmpStep})</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpposMaxPM}</td>
+<td>Evaluate</td>
+<td>(int) (${tmpposMax}+ ${tmpStep})</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpposMaxPB}</td>
+<td>Evaluate</td>
+<td>${tmpposMaxPM}+ ${tmpStep}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}</td>
+<td>Set Variable</td>
+<td>${Sportbetsetting}[${tmpposMin}]/input</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>Set Variable</td>
+<td>${Sportbetsetting}[${tmpposMax}]/input</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>Set Variable</td>
+<td>${Sportbetsetting}[${tmpposMaxPM}]/input</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPB}=</td>
+<td>Set Variable</td>
+<td>${Sportbetsetting}[${tmpposMaxPB}]/input</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set Comm control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} &gt; 99</td>
+<td>${ESBcboComm${tmpSportID}}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ESBcboComm1}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} &lt;= 99 and '${type}'=='Member'</td>
+<td>${ESBcboCommHDPMember}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpComm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set PT control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPrefixList}=</td>
+<td>Create List</td>
+<td>${EMPTY}</td>
+<td>a</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>${tmPrefix}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Member'</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>a</td>
+<td>m</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>${tmPrefix}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>s</td>
+<td>${tmPrefix}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>${tmPrefixUpline}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Master'</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>s</td>
+<td>m</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpTypeUpline}=</td>
+<td>Evaluate</td>
+<td>${tmptype} + 1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmPrefix}=</td>
+<td>Get From List</td>
+<td>${tmpPrefixList}</td>
+<td>${tmptype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmPrefixUpline}=</td>
+<td>Get From List</td>
+<td>${tmpPrefixList}</td>
+<td>${tmpTypeUpline}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpUplinePreset}=</td>
+<td>Set Variable</td>
+<td>xpath=//select[@id='${tmPrefixUpline}${tmptype}\$${tmpSportID}\$${tmpBettypetID}\$0']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPT}=</td>
+<td>Set Variable</td>
+<td>xpath=//select[@id='${tmPrefix}${tmptype}\$${tmpSportID}\$${tmpBettypetID}\$0']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplbSport}=</td>
+<td>Set Variable</td>
+<td>//div[@class='PTSport']/div[text()='${sport}']</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Return ouput list</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPB}=</td>
+<td>Set Variable If</td>
+<td>${tmpSportID} == 161</td>
+<td>${tmpMaxPB}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${EMPTY}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpUplinePreset}=</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>${EMPTY}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpUplinePreset}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}=</td>
+<td>Create List</td>
+<td>${tmpSportID}</td>
+<td>${tmplbSport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMin}</td>
+<td>${tmpMax}</td>
+<td>${tmpMaxPM}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMaxPB}</td>
+<td>${tmpPT}</td>
+<td>${tmpUplinePreset}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpComm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Enter Sport bet setting">Enter Sport bet setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimit}</td>
+<td>${PTlist}</td>
+<td>${comm}=${Empty}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to fill in sport bet setting (SB and NG)\n<br>
+\n<br>
+${type}: account type (Master/Agent/Member)\n<br>
+\n<br>
+${sport}: sporttype name \n<br>
+\n<br>
+${bettype}: bettype name\n<br>
+\n<br>
+${betlimit}: contains minbet, maxbet, maxpermatch, maxperball (optional) seperated by ";"\n<br>
+\n<br>
+${PTlist}: contains PT value and upline Preset PT (optional) seperated by ";"\n<br>
+\n<br>
+${comm}: the commission value (optional)\n<br>
+\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${controllist}=</td>
+<td>Get Sport Control</td>
+<td>${type}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${bettype}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSportID}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplbSport}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>2</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>4</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPB}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPT}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPTuplinePreset}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#Get inputed value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpbetlimit}=</td>
+<td>Split String</td>
+<td>${betlimit}</td>
+<td>;</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${minbet}=</td>
+<td>Get From List</td>
+<td>${tmpbetlimit}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxbet}=</td>
+<td>Get From List</td>
+<td>${tmpbetlimit}</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxPM}=</td>
+<td>Get From List</td>
+<td>${tmpbetlimit}</td>
+<td>2</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxperball}=</td>
+<td>Run Keyword If</td>
+<td>${tmpSportID} ==161</td>
+<td>Get From List</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpbetlimit}</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPTlist}=</td>
+<td>Split String</td>
+<td>${PTlist}</td>
+<td>;</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplen}=</td>
+<td>Get Length</td>
+<td>${tmpPTlist}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${PT}</td>
+<td>Get From List</td>
+<td>${tmpPTlist}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${PTuplinePreset}</td>
+<td>Run Keyword If</td>
+<td>${tmplen}&gt;1</td>
+<td>Get From List</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpPTlist}</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set bet setting value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMin}</td>
+<td>${minbet}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMax}</td>
+<td>${maxbet}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Input Text</td>
+<td>${tmpMaxPM}</td>
+<td>${maxPM}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>${tmpSportID} == 161</td>
+<td>Input Text</td>
+<td>${tmpMaxPB}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${maxperball}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set Comm value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>'${comm}'&lt;&gt; '${EMPTY}'</td>
+<td>Select From List By Value</td>
+<td>${tmpComm}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${comm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set PT value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>${tmpSportID} &gt; 1</td>
+<td>Click Element</td>
+<td>${tmplbSport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>'${type}' &lt;&gt; 'Member' and '${type}' &lt;&gt; 'Super' and ${tmplen}&gt;1</td>
+<td>Select From List By Value</td>
+<td>${tmpPTuplinePreset}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${PTuplinePreset}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Value</td>
+<td>${tmpPT}</td>
+<td>${PT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get Sport bet setting">Get Sport bet setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${sport}</td>
+<td>${bettype}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get Sport bet setting value\n<br>
+\n<br>
+${type}: account type (Master/Agent/Member)\n<br>
+\n<br>
+${sport}: sporttype name \n<br>
+\n<br>
+${bettype}: bettype name\n<br>
+\n<br>
+${outputlist}: contains minbet, maxbet, maxpermatch, maxperball (optional),MaxPT, UplinePresetPT (optional) and Comm\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${controllist}=</td>
+<td>Get Sport Control</td>
+<td>${type}</td>
+<td>${sport}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${bettype}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpSportID}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmplbSport}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>1</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMin}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>2</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMax}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPM}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>4</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPB}=</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>5</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpPT}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>6</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpUplinePreset}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>7</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}</td>
+<td>Get From List</td>
+<td>${controllist}</td>
+<td>8</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#Get value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${minbet}=</td>
+<td>Get value and convert to Int</td>
+<td>${tmpMin}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxbet}=</td>
+<td>Get value and convert to Int</td>
+<td>${tmpMax}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxPM}=</td>
+<td>Get value and convert to Int</td>
+<td>${tmpMaxPM}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxperball}=</td>
+<td>Run Keyword If</td>
+<td>${tmpSportID} == 161</td>
+<td>Get value and convert to Int</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpMaxPB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${PT}=</td>
+<td>Get Selected List Value</td>
+<td>${tmpPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${PTuplinePreset}=</td>
+<td>Run Keyword If</td>
+<td>'${type}' &lt;&gt; 'Member' and '${type}' &lt;&gt; 'Super'</td>
+<td>Get Selected List Value</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${tmpUplinePreset}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${comm}=</td>
+<td>Get Selected List Value</td>
+<td>${tmpComm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Return output</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimit}=</td>
+<td>Set Variable if</td>
+<td>${tmpSportID} == 161</td>
+<td>${minbet};${maxbet};${maxPM};${maxperball}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${minbet};${maxbet};${maxPM}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>${PTlist}=</td>
+<td>Set Variable if</td>
+<td>'${type}' &lt;&gt; 'Member' and '${type}' &lt;&gt; 'Super'</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${PT};${PTuplinePreset}</td>
+<td>${PT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}=</td>
+<td>create list</td>
+<td>${betlimit}</td>
+<td>${PT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${comm}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>
