@@ -508,6 +508,7 @@ var autoFollowBet = {
         var isDelete = confirm(viewResources.Warning_Admin_AutoFollowBetManagement_DeleteFollowInfo);
         if (!isDelete) {
             autoFollowBet.unblockUI();
+            return;
         }
 
         var postParams = {
