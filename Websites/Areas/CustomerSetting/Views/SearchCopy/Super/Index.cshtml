@@ -9,10 +9,28 @@
 }
 @section Scripts
 {
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=20140107_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=20140107_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=20140107_1")"></script>
 }
+
+<script type="text/javascript">
+
+    function toUrl(relativeUrl) {
+        return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
+    };
+
+    function setFrameLoaded() {
+        try {
+            if ($(this).attr('src') != "") {
+                PTSetting.SportType.SetFrameLoaded();
+            }
+        }
+        catch (err) {
+        }
+    };
+</script>
+
 <div id="divSearchCopy" ng-controller="SearchCopyController">
     <input type="hidden" id="currentUserId" value= '@ViewBag.CurrentUserId' />
     <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
@@ -47,7 +65,7 @@
                     </select>
                 </div>
             </div>
-            <div class="settingInfo" style="overflow: auto;margin-top:-2px;">
+            <div class="settingInfo" style="overflow: auto;margin-top:-1px;">
                 @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
                 <div id="divSport" class="bg_table" style="width: 99%">
                     <iframe id="frmSportbook" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
@@ -89,16 +107,3 @@
         </div>
     }
 </div>
-<script type="text/javascript">
-
-    function toUrl(relativeUrl) {
-        return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
-    };
-
-    function setFrameLoaded() {
-        if ($(this).attr('src') != "") {
-            PTSetting.SportType.SetFrameLoaded();
-        }
-    };
-
-</script>

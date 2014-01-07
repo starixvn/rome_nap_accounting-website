@@ -301,10 +301,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     $("#checkExisted").removeClass('not_success');
                     $("#checkExisted").addClass('success');
 
-                    //step2                                        
-                    $scope.sports = angular.copy(sports);
-                    $scope.selectedSport = $scope.sports[0];
-
                     $scope.getCustomerInfoByUserId(custid);
 
                     if (callback) {
@@ -339,13 +335,13 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             type: "POST",
             url: toUrl("Super/GetCustomerInfoByUserId"),
             contentType: "application/json; charset=utf-8",
-            dataType: "json",            
+            dataType: "json",
             data: JSON.stringify(param),
             success: function (custInfo) {
                 message.hideAlertMessage("errorMsg");
 
                 $scope.existedUser.selectedSite.SiteName = custInfo.Site;
-                $scope.existedUser.maxCredit = numeral(custInfo.Credit).format("0,0");
+                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
@@ -364,7 +360,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     HideBingo: $scope.existedUser.syncBingo == "1" ? false : true,
                     HideLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? false : true
                 };
-                $scope.disableSports(statusSports);
+
+                $scope.$apply(function () {      
+                    $scope.sports = angular.copy(sports);
+                    $scope.selectedSport = $scope.sports[0];
+                    $scope.disableSports(statusSports);
+                });
 
             }
                 , error: function (xhr, ajaxOptions, thrownError) {

@@ -20,10 +20,11 @@ PTSetting.SportType = new function () {
                 $content.find(".tblcollapse tr:eq(0)").remove();
             }
             //disable edit
-            $content.find('input:text').attr('disabled', true);            
-            $content.find('.selectcomm').attr('disabled', 'disabled');
-            $content.find('.PTSelect').attr('disabled', 'disabled');
-        }, delayTime);
+            $content.find('input:text').attr('disabled', true);
+            $content.find('.selectcomm').attr('disabled', true);            
+            $content.find('.PTSelect').attr('disabled', true);
+            $content.find('input:button').attr('disabled', true);
+        }, 3*delayTime);
     };
 
     var RemoveSportBookMinPT = function () {
@@ -54,11 +55,13 @@ PTSetting.SportType = new function () {
 
     var RemoveRacingMinPT = function () {
         var $content = $("#frmRacingMinPT").contents();
-        
+
         setTimeout(function () {
+            for (var i = 0; i < 4; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
             $content.find('.maincontent_box').remove();
-            $content = $content.find('#SettingContent');
-            $content.find('.tblcollapse')[0].remove();
+            $content = $content.find('#SettingContent');            
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('select').attr('disabled', true);
