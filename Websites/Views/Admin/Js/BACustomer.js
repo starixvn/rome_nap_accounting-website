@@ -134,50 +134,62 @@ var BACustomer = {
                 strCustId += $(this).val() + ",";
         });
         var str = strCustId.substr(0, strCustId.length - 1);
+
         var rate = $("#txtRate").val();
         if (rate == '') {
             showAlertMessage("errMsgDig", "Please input Rate!", 1);
             $("#errMsgDig").show().find("div:first").width(350);
+            return;
         }
-        else if (!isPositiveDouble(rate) || parseFloat(rate) <= 0 || rate == ".") {
+
+        if (!isPositiveDouble(rate) || parseFloat(rate) <= 0 || rate == ".") {
             showAlertMessage("errMsgDig", "Invalid Rate . Please input positive double value!", 1);
             $("#errMsgDig").show().find("div:first").width(350);
             return;
         }
-        else if (parseFloat(rate) < 0.3 || parseFloat(rate) > 3) {
-            showAlertMessage("errMsgDig", "Invalid Rate! Rate must be greater than or equal to 0.3 and less than or equal to 3.", 1);
+
+        if (parseFloat(rate) < 0.3 || parseFloat(rate) > 3) {
+            showAlertMessage("errMsgDig", "Invalid Rate! Rate must range between 0.3 and 3.", 1);
             $("#errMsgDig").show().find("div:first").width(350);
             return;
-        } else if ($.trim($("#textbox-follower").val()) == '') {
+        }
+
+        var rate = parseFloat(rate);
+        if (parseFloat(rate.toFixed(2)) != rate) {
+            showAlertMessage("errMsgDig", 'Invalid Rate! Don\'t enter the number with more than 2 decimal places.', 1);
+            $("#errMsgDig").show().find("div:first").width(470);
+            return false;
+        }
+
+        if ($.trim($("#textbox-follower").val()) == '') {
             showAlertMessage("errMsgDig", "Please input follower!", 1);
             $("#errMsgDig").show().find("div:first").width(350);
+            return;
         }
-        else {
-            var data = { strCustId: str, Rate: $('#txtRate').val(), Follower: $.trim($("#textbox-follower").val()) };
-            $.ajax({
-                type: "POST",
-                url: "InsMultiBACustomer",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                data: JSON.stringify(data),
-                success: function (rs) {
-                    if (parseInt(rs.ErrorCode) != 0) {
-                        showAlertMessage("errMsgDig", rs.ErrorMessage, 1);
-                        $("#errMsgDig").show().find("div:first").width(350);
-                    }
-                    else {
 
-                        showAlertMessage("errMsgDig", rs.ErrorMessage, 0);
-                        $("#errMsgDig").show().find("div:first").width(350);
-                        BACustomer.getBACustomerList(0);
-                        $('#btnFollowedBet').attr("disabled", true);
-
-                    }
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
+        var data = { strCustId: str, Rate: $('#txtRate').val(), Follower: $.trim($("#textbox-follower").val()) };
+        $.ajax({
+            type: "POST",
+            url: "InsMultiBACustomer",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            data: JSON.stringify(data),
+            success: function (rs) {
+                if (parseInt(rs.ErrorCode) != 0) {
+                    showAlertMessage("errMsgDig", rs.ErrorMessage, 1);
+                    $("#errMsgDig").show().find("div:first").width(350);
                 }
-            });
-        }
+                else {
+                    showAlertMessage("errMsgDig", rs.ErrorMessage, 0);
+                    $("#errMsgDig").show().find("div:first").width(350);
+                    BACustomer.getBACustomerList(0);
+                    $('#btnFollowedBet').attr("disabled", true);
+                }
+
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
     }
 
 };
