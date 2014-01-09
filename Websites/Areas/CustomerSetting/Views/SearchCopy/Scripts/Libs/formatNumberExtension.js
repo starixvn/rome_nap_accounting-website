@@ -1,4 +1,12 @@
-﻿function formatNumber(id, val, isFloat) {
+﻿function ReplaceAll(src, args, replace) {
+        while (src.indexOf(args) != -1) {
+            src = src.replace(args, replace);
+        }
+
+        return src;
+}
+
+function formatNumber(id, val, isFloat) {
     var obj = document.getElementById(id);
     var value = val;
 
@@ -25,7 +33,12 @@
     return num;
 }
 
-function formatExt(obj, isFloat) {
+function formatExt(event, ele, isFloat) {
+    var evt = event ? event : window.event; // Fix for IE7
+
+    if (evt.keyCode === 9) return true; // Ignore TAB key
+
+    var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
     var value = obj.value;
 
     if (value == '') return true;
@@ -64,7 +77,7 @@ function setCaret(oField, iCaretPos) {
         oField.focus();
         // Create empty selection range
         var oSel = document.selection.createRange();
-        // Move selection start and end to desired position
+        // Move selection start and end to desired position        
         oSel.moveStart('character', iCaretPos);
         oSel.moveEnd('character', iCaretPos - oField.value.length);
         oSel.select();

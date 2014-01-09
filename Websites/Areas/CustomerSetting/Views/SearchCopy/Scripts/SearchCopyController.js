@@ -42,7 +42,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $scope.newUser = angular.copy(user);
         $("#step2").hide();
         $scope.addEvents();
-        $("#maxCredit").ForceDecimalOnly().ForceCurrencyOnly();
+        //$("#maxCredit").ForceDecimalOnly().ForceCurrencyOnly();        
     };
 
     $scope.resize = function (frameId) {
@@ -152,7 +152,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#errorMsg").width("700");
             validate.setRequired("#maxCredit");
             return false;
-        }
+        }       
 
         return true;
     };
@@ -341,7 +341,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
 
                 $scope.existedUser.selectedSite.SiteName = custInfo.Site;
-                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
+                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);                
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
@@ -361,7 +361,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     HideLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? false : true
                 };
 
-                $scope.$apply(function () {      
+                $scope.$apply(function () {
                     $scope.sports = angular.copy(sports);
                     $scope.selectedSport = $scope.sports[0];
                     $scope.disableSports(statusSports);
@@ -413,7 +413,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             MobilePhone: $scope.newUser.mobilephone,
             Site: $scope.existedUser.selectedSite.SiteName,
             Fax: $scope.newUser.fax,
-            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
+            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),            
             IsInternal: $scope.newUser.internaluser,
             CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,
