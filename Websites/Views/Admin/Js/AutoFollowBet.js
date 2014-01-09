@@ -89,7 +89,7 @@ var autoFollowBet = {
             Followed1stOverUnder: null
         },
         gridHeight: $(window).height() - 150,
-        gridWidth: 1038,
+        gridWidth: 978,
         pageIndex: 0,
         totalItems: 0,
         pageSize: 50,
@@ -289,7 +289,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 1036px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 976px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -357,7 +357,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 1036px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 976px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -385,12 +385,12 @@ var autoFollowBet = {
         var cssClass = isEvenRow ? 'bgeven' : '';
         var strRow = '';
         strRow += '<tr class="' + cssClass + ' followInfo_' + rowId + '">';
-        strRow += '<td><div class="col120 c">' + followInfo.Username + '</div></td>';
+        strRow += '<td><div class="col100 c">' + followInfo.Username + '</div></td>';
         strRow += '<td><div class="col80 c">' + followInfo.Source + '</div></td>';
         strRow += '<td class="td-labelrate col80">\
                         <div class="c labelrate">' + followInfo.Rate + '</div>\
                    </td>';
-        strRow += '<td class="c col140">\
+        strRow += '<td class="c col100">\
                         <select class="dropdown-livestatus editablefield" disabled="disabled">' +
                             autoFollowBet.generateDropdownLiveStatusOptions(followInfo.LiveStatus) +
                         '</select>\

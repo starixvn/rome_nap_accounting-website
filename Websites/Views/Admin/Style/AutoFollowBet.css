@@ -21,13 +21,18 @@
     width: 150px;
 }
 
-#textbox-username,
-#textbox-follower
+#textbox-username, #textbox-follower
 {
-    width: 140px;
+    width: 100px;
 }
 
-#dropdown-source, #dropdown-followtype
+#dropdown-source
+{
+    vertical-align: middle;
+    width: 80px;
+}
+
+#dropdown-followtype
 {
     vertical-align: middle;
     width: 150px;
@@ -63,8 +68,7 @@
     display: none;
 }
 
-.td-labelrate,
-.td-labelfollower
+.td-labelrate, .td-labelfollower
 {
     text-align: center;
 }
@@ -77,13 +81,13 @@
 
 .textboxfollower
 {
-    width: 115px;
+    width: 114px;
     text-align: center;
 }
 
 .dropdown-livestatus
 {
-    width: 120px;
+    width: 80px;
 }
 
 #errormessage
