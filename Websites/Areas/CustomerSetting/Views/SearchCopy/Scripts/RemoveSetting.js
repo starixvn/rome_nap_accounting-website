@@ -1,7 +1,7 @@
 ﻿var PTSetting = PTSetting || {};
 PTSetting.SportType = new function () {
 
-    var delayTime = 1000;
+    var delayTime = 2000;
 
     var RemoveButtons = function (frameId) {
         var $content = $(frameId).contents();
@@ -24,7 +24,7 @@ PTSetting.SportType = new function () {
             $content.find('.selectcomm').attr('disabled', true);            
             $content.find('.PTSelect').attr('disabled', true);
             $content.find('input:button').attr('disabled', true);
-        }, 3*delayTime);
+        }, 1.5*delayTime);
     };
 
     var RemoveSportBookMinPT = function () {
