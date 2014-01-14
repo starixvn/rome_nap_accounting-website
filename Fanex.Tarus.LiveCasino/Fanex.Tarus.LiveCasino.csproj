@@ -52,17 +52,20 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting">
+    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\Dependency\Fanex\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.resources">
       <HintPath>..\Dependency\Fanex\FluentValidation.resources.dll</HintPath>
     </Reference>
-    <Reference Include="NotifyPropertyChanged">
-      <HintPath>..\Dependency\Fanex\NotifyPropertyChanged.dll</HintPath>
+    <Reference Include="NotifyPropertyChanged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasino\NotifyPropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="RemotingRef">
       <HintPath>..\Dependency\RemotingRef.dll</HintPath>
