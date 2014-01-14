@@ -56,7 +56,7 @@
       <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation">
-      <HintPath>..\Dependency\Fanex\FluentValidation.dll</HintPath>
+      <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.resources">
       <HintPath>..\Dependency\Fanex\FluentValidation.resources.dll</HintPath>

@@ -96,7 +96,7 @@
             }
             return false;
         }, casinoManager.casinoVM);
-        casinoManager.casinoVM.isAllowUpdateWinLimit = ko.dependentObservable(function () {            
+        casinoManager.casinoVM.isAllowUpdateWinLimit = ko.dependentObservable(function () {
             if (casinoManager.casinoVM.WinLimitSetting.Limits() && casinoManager.casinoVM.WinLimitSetting.Limits().length > 0) {
                 if ((casinoManager.casinoVM.CustomerInfo.CustomerId > 0 && !casinoManager.casinoVM.CustomerInfo.IsSyncLiveCasino))
                     return true;
@@ -105,7 +105,7 @@
                 var MaxWinLiveCasino = casinoManager.casinoVM.WinLimitSetting.MaxWinLiveCasino();
                 for (var i = 0; i < totalLimits; i++) {
                     var item = casinoManager.casinoVM.WinLimitSetting.Limits()[i];
-                    if (item.IsSelected && item.Id != MaxWinLiveCasino) {                        
+                    if (item.IsSelected && item.Id != MaxWinLiveCasino) {
                         return true;
                     }
                 }
@@ -152,13 +152,13 @@ var editSuper = {
     superId: 0,
     isReloaded: false,
     isFirstSuccess: true,
-    exchangeId: 0,    
+    exchangeId: 0,
     msgUncheckBettingLimit: '',
     requestContext: { UserId: 0, CustId: 0, SubAccId: 0, UplineId: 0, Ip: '', Language: '', IsAddNewSuper: false, AgentId: 0, MasterId: 0, SuperId: 0, UplineRoleId: 0 },
     getSettings: function () {
         try { parent.BlockUI(); } catch (e) { }
         var param = {
-            custId: editSuper.superId,             
+            custId: editSuper.superId,
             exchangeId: editSuper.exchangeId
         };
 
@@ -194,7 +194,7 @@ var editSuper = {
             }
         }
         if (ok) {
-            editSuper.updateCustomerSyncInfo();
+            //            editSuper.updateCustomerSyncInfo();
             var t = setTimeout(function () {
                 editSuper.getSettings();
             }, 3000);
@@ -203,7 +203,7 @@ var editSuper = {
     updateLiveCasino: function (typeUpdate) {
 
         if (casinoManager.casinoVM.CustomerInfo.CustomerId > 0 && !casinoManager.casinoVM.CustomerInfo.IsSyncLiveCasino) {
-            typeUpdate = 0;//Update All
+            typeUpdate = 0; //Update All
         }
 
         switch (typeUpdate) {
