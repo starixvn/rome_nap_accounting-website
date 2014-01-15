@@ -1,9 +1,18 @@
 ﻿
 1. Dependencies
+• WebGrease.dll
 • _Core.dll
 • Fanex.Data.dll
 • Fanex.Common.dll
+• Fanex.NAP.Core.dll
 • Fanex.NAP.Framework.dll
+• CasinoLibrary.dll
+• LiveCasinoLibrary.dll
+• Fanex.Tarus.Customer.dll
+• Fanex.CustomerSetting.Module.Core.dll
+• Fanex.CustomerSetting.Security.dll
+• Fanex.CustomerSetting.Module.SearchCopy.dll
+
 
 2. Configuration 
 • Setting

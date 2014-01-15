@@ -284,8 +284,7 @@
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBAGE.bodb02.bodbAdminNet"/>
+  <Function Name="SearchCopy">    
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>        
   </Function>
 	<Function Name="External Betting Limit">
