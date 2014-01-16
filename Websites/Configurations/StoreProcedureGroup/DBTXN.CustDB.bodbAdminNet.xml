@@ -233,7 +233,7 @@
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.CustDB.bodbAdminNet_ex" Plain="0" />
-  </Function>
+  </Function>  
 
   <Function Name="Login - internal">
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>

@@ -1,0 +1,60 @@
+﻿
+1. Dependencies
+• WebGrease.dll
+• _Core.dll
+• Fanex.Data.dll
+• Fanex.Common.dll
+• Fanex.NAP.Core.dll
+• Fanex.NAP.Framework.dll
+• CasinoLibrary.dll
+• LiveCasinoLibrary.dll
+• Fanex.Tarus.Customer.dll
+• Fanex.CustomerSetting.Module.Core.dll
+• Fanex.CustomerSetting.Security.dll
+• Fanex.CustomerSetting.Module.SearchCopy.dll
+
+
+2. Configuration 
+• Setting
+- Additional below config inner configuration tag.
+<configuration>
+
+  <appSettings> 
+	<add key="AccIdSessionName" value="AccId"/>   
+    <add key="CurrentURL" value="http://localhost:53906/Websites"/>
+  </appSettings>
+
+
+</configuration>
+
+- Copy Racing configuration files from Fanex.Toco.Website\Areas\CustomerSetting\Views\SearchCopy\Config\ 
+
+• Store procedure
+
+
+<configuration>
+
+<configSections>
+    
+<section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data"/>
+
+</configSections>
+
+<Fanex.Data.DbSettingProvider default="XmlDbSettingProvider">
+    <providers>
+      <add name="XmlDbSettingProvider" type="Fanex.Data.Configuration.XmlDbSettingProvider2, Fanex.Data" resourcePath="~/Web.Configuration/Store/" enableWatching="1"/>
+    </providers>
+  </Fanex.Data.DbSettingProvider>
+
+
+
+</configuration>
+
+- Copy Racing store procedure definition from Areas\CustomerSetting\Views\SearchCopy\Config\Store
+
+
+3. Action in detail
+
+• Super Setting
+- customersetting/searchcopy/super/index
+

@@ -172,9 +172,9 @@ ans.addNewSuper = function () {
                     else {
                         showAlertMessage("err", "Inserted Super Successfully!", 0);
                         //redirect to update page and clear timeout
-                        var redirectString = result.ErrorMessage;
+                        var redirectString = "../" + result.ErrorMessage;
                         var timeOutId = setTimeout(function () {
-                            parent.parent.$("#centerFr").attr("src", redirectString);
+                            parent.$("#frmSearchCopyAddNewSuper").attr("src", redirectString);
                             clearTimeout(timeOutId);
                         }, 2000);
                     }

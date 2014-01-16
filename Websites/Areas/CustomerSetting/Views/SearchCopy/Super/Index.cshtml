@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Search and Copy Super";
+    Layout = "~/Areas/CustomerSetting/Views/SearchCopy/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step1.css")" />
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />
+}
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=20140107_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=20140109_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=20140107_1")"></script>
+}
+
+<script type="text/javascript">
+
+    function toUrl(relativeUrl) {
+        return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
+    };
+
+    function setFrameLoaded() {
+        try {
+            if ($(this).attr('src') != "") {
+                PTSetting.SportType.SetFrameLoaded();
+            }
+        }
+        catch (err) {
+        }
+    };
+</script>
+
+<div id="divSearchCopy" ng-controller="SearchCopyController">
+    <input type="hidden" id="currentUserId" value= '@ViewBag.CurrentUserId' />
+    <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
+    <div id="errorMsg" class="errMsg maincontent_box" style="width: 700px;">
+    </div>
+    <div class="formPanel">
+        <div id="panelStep1" ng-click="step2Back();">
+            <span id="spanstep1" class="step step1-active">Step 1: <span style="font-weight: bold">
+                Search Existing Super</span> </span>
+        </div>
+        <div id="panelStep2" ng-click="step1Next();">
+            <span id="spanstep2" class="step step2-inactive">Step 2: <span style="font-weight: bold">
+                Enter Information</span></span></div>
+    </div>
+    @using (Html.BeginForm("Home", "Index", FormMethod.Post, new { id = "formSearchExistingSupper", @novalidate = "" }))
+    {                                 
+        <div id="step1">
+            <div style="clear: both; height: 1px">
+                &nbsp;</div>
+            @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/SearchForm.cshtml")
+        </div>
+        <div id="step2">
+            <div style="clear: both; height: 1px">
+                &nbsp;</div>
+            <div class="row tabsports">
+                <div id="tabGenealInformation" class="tab-active" ng-click="showSetting('tabGenealInformation');">
+                    <span>General Information</span></div>
+                <div id="tabSports" class="tab-inactive">
+                    <font class="b" ng-click="showSetting('tabSports');">&nbsp;Preview settings: </font>
+                    <select id="listSports" ng-model="selectedSport" ng-options="s.sportname for s in sports"
+                        ng-change="showSetting();" name="listType">
+                    </select>
+                </div>
+            </div>
+            <div class="settingInfo" style="overflow: auto;margin-top:-1px;">
+                @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
+                <div id="divSport" class="bg_table" style="width: 99%">
+                    <iframe id="frmSportbook" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmSportbook"></iframe>
+                    <iframe id="frmSportbookMinPT" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmSportbookMinPT"></iframe>
+                    <iframe id="frmRacing" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmRacing"></iframe>
+                    <iframe id="frmRacingMinPT" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmRacingMinPT"></iframe>
+                    <iframe id="frmCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmCasino"></iframe>
+                    <iframe id="frmVirtualSports" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmVirtualSports"></iframe>
+                    <iframe id="frmBingo" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmBingo"></iframe>
+                    <iframe id="frmLiveCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
+                        class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
+                        marginwidth="0" src="" name="frmLiveCasino"></iframe>
+                </div>
+            </div>
+            <div class="newline">
+                &nbsp;</div>
+            <div class="btnNextR hand grid3" ng-click="step2Back();">
+                <div class="btnNextL">
+                    <span>< Previous</span></div>
+            </div>
+            <div class="btnNextR hand grid3" ng-click="step2Submit();">
+                <div class="btnNextL">
+                    <span>Submit</span></div>
+            </div>
+        </div>
+    }
+</div>

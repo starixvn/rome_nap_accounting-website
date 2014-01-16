@@ -167,7 +167,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                             _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["SuperMaxTransfer"]));
                         }
                     }
-
+                    
                     if (_custSetting.CasinoSync)
                     {
                         var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);

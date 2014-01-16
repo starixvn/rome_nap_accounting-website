@@ -1,0 +1,137 @@
+﻿body
+{
+    font-family: Tahoma,Arial ,helvetica ,sans-serif;
+    font-size: 8pt;
+    margin: 0px;
+}
+
+body.wait *, body.wait 
+{
+    cursor:wait !important;
+}
+
+/*form*/
+.form550
+{
+    width: 550px;
+    border: 1px solid #B6C4D1;
+    background: #E6E9F0;
+    padding: 0 0 20px 0;
+    zoom: 1;
+    display: block;
+    margin-top:-1px;
+}
+
+.formPanel
+{
+    width: auto;
+    /*border: 1px solid #cfcfcf;
+    background: #E6E9F0;*/
+    padding-bottom: 23px;
+    zoom: 1;
+    display: block;
+    margin-top:2px;
+}
+
+.newline
+{
+    clear: both;
+    height: 10px;
+}
+
+.newdoubleline
+{
+    clear: both;
+    height: 20px;
+}
+
+.btnNextL
+{
+    background:transparent url(styles/images/btnLeft.png) no-repeat left center; height:20px; cursor:pointer; text-align:center; padding-top:7px;
+}
+
+.btnNextR
+{
+    background:transparent url(styles/images/btnRight.png) no-repeat center right; text-align:left; width:96px;font-size:10pt; font-weight:bold; color:#fff;cursor:pointer; margin-left:0px !important;
+}
+
+.btnStep
+{
+    background: transparent url(Styles/Images/btUpdateR.gif) no-repeat top left;
+    text-align: center;
+    width: 96px;
+    padding-left: 12px;
+    height: 24px;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+/*divSearchCopy*/
+
+#divSearchCopy
+{
+    min-width: 600px;
+    clear: both;
+    zoom: 1;
+    padding: 2px 0px 0px 2px;
+}
+
+#divSearchCopy .step
+{    
+    display: inline;
+    float: left;    
+    padding: 8px 10px 10px;
+    font-size: 12px;    
+    margin-top:-2px;
+    height: 6px;
+    width: 183px;
+    background-image: url("Styles/Images/bgSteps.png");
+}
+
+#divSearchCopy .step1-active
+{        
+    background-position: -8px 0px;       
+    font-weight: bold;
+    color:White;    
+}
+
+#divSearchCopy .step1-inactive
+{     
+    background-position: -8px -25px;     
+    font-weight: normal;
+    color:Black;
+}
+
+.step1-inactive:hover
+{        
+    background-position: -8px -50px !important;       
+    font-weight: bold !important;
+    color:Black !important;
+    cursor:pointer !important;
+}
+
+#divSearchCopy .step2-active
+{        
+    background-position: -8px -75px;       
+    margin-left:-7px;
+    font-weight: bold;
+    color:White;
+}
+
+#divSearchCopy .step2-inactive
+{        
+    background-position: -8px -100px;       
+    margin-left:-7px;
+    font-weight: normal;
+    color:Black;
+}
+
+.step2-inactive:hover
+{        
+    background-position: -8px -125px !important;   
+    margin-left:-10px !important;        
+    color:Black !important;
+    cursor:pointer !important;
+}

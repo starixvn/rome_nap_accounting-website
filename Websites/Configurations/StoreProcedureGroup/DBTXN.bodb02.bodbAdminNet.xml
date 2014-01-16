@@ -10,7 +10,7 @@
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function> 
   <Function Name="Customer Status">
-    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="UserControl">
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/>
@@ -116,5 +116,9 @@
     <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
+
+  <Function Name="SearchCopy">    
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>    
+  </Function>
   
 </Functions>
