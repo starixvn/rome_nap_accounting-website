@@ -98,7 +98,9 @@
                 }
             }
             if (gameTypes.length > 0) {
-                showAlertMessage('err1', gameTypes.join(', ') + ' ' + superEditOnMember.msgUncheckBettingLimit, 2);
+                //showAlertMessage('err1', gameTypes.join(', ') + ' ' + superEditOnMember.msgUncheckBettingLimit, 2);
+                showAlertMessage('err1', gameTypes.clean(undefined).clean("").join(', ') + ' ' + superEditOnMember.msgUncheckBettingLimit, 2);
+
                 return true;
             }
             else {
