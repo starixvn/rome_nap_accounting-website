@@ -57,7 +57,7 @@
       <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
       <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.resources">
