@@ -71,11 +71,8 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
-      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
+      <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -92,7 +89,8 @@
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="LiveCasinoLibrary, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Bingo\LiveCasinoLibrary.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -465,6 +463,14 @@
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
       <Name>Fanex.Tarus.BetList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
+      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
+      <Name>Fanex.Tarus.DataAccess.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Interface\Fanex.Tarus.DataAccess.Interface.csproj">
+      <Project>{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}</Project>
+      <Name>Fanex.Tarus.DataAccess.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>

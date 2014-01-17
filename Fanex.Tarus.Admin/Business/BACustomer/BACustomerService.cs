@@ -16,15 +16,16 @@ namespace Fanex.Tarus.Admin.Business.BACustomer
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class BACustomerService: IBACustomerService
+    public class BACustomerService : IBACustomerService
     {
 
         private readonly IBACustomerAccess _baCustomerAccess;
         private string _keySelBACustomer = AppSession.Username + ".SelBACustomer";
 
-        public BACustomerService():this(null)
+        public BACustomerService()
+            : this(null)
         {
-            
+
         }
 
         public BACustomerService(IBACustomerAccess baCustomerAccess)
@@ -72,21 +73,22 @@ namespace Fanex.Tarus.Admin.Business.BACustomer
         /// <returns></returns>
         public List<FollowedCustomer> SelBACustomerListFromDB(int LicenseeId, int Status, string Username)
         {
-            
+
             var followedCustomerList = new List<FollowedCustomer>();
             try
             {
                 var datatable = _baCustomerAccess.GetBACustomerList(LicenseeId, Status, Username);
                 foreach (DataRow row in datatable.Rows)
                 {
-                    followedCustomerList.Add(new FollowedCustomer { 
-                         CustId = CastAide.AsString(row["custid"]),
-                         Username = row["username"].ToString(),
-                         IsFollowed = CastAide.AsBoolean(row["isfollowed"]),
-                         Licensee = CastAide.AsString(row["licenseename"])
+                    followedCustomerList.Add(new FollowedCustomer
+                    {
+                        CustId = CastAide.AsString(row["custid"]),
+                        Username = row["username"].ToString(),
+                        IsFollowed = CastAide.AsBoolean(row["isfollowed"]),
+                        Licensee = CastAide.AsString(row["licenseename"])
                     });
                 }
-               
+
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelBACustomer, followedCustomerList);
             }
             catch (Exception ex)
@@ -122,10 +124,10 @@ namespace Fanex.Tarus.Admin.Business.BACustomer
         }
 
 
-        public Result InsBACustomerList(string strCustId, string Rate)
+        public Result InsBACustomerList(string strCustId, string Rate, string follower)
         {
             var result = new Result();
-            result = _baCustomerAccess.InsBACustomerList(strCustId, Rate, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
+            result = _baCustomerAccess.InsBACustomerList(strCustId, Rate, AppSession.AccId, HttpContext.Current.Request.UserHostAddress, follower);
             return result;
         }
     }

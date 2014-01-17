@@ -1,0 +1,805 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="EditLicenseeRepository.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Xml;
+    using Fanex.Data;
+    using Fanex.Tarus.Customer.Criteria.EditLicensee;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.EditLicensee;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Infrastructure.Helper;
+    using Sunplus.Accounting.Core.Configurations;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class EditLicenseeRepository : IEditLicenseeRepository
+    {
+        private const string NotApplyBetType = "NA";
+
+        /// <summary>
+        /// Gets the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <returns>Licensee Info.</returns>
+        public LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria, ref Hashtable outputParams)
+        {
+            DataSet dataset;
+            Hashtable param = new Hashtable();
+            param.Add("licenseename", criteria.LicenseeName);
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(param);
+                dataset = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            LicenseeInfo licenseeInfo = null;
+            DataTable dataTable = new DataTable();
+            if (dataset != null && dataset.Tables.Count == 0)
+            {
+                return licenseeInfo;
+            }
+
+            dataTable = dataset.Tables[0];
+            licenseeInfo = new LicenseeInfo
+            {
+                Site = "12bet1",
+                Currency = "UUS1",
+                EnableNumberGame = true
+            };
+
+            var settingInfo = new List<SettingInfo>();
+            GetLicenseeInfo_Sportsbook(
+                criteria,
+                outputParams,
+                ref settingInfo);
+
+            GetLicenseeInfo_NumberGame(
+                criteria,
+                outputParams,
+                ref settingInfo);
+
+            GetLicenseeInfo_Racing(
+                criteria,
+                outputParams,
+                ref settingInfo);
+
+            licenseeInfo.SettingInfo = settingInfo;
+            licenseeInfo.VirtualSportsSettingInfo = GetLicenseeInfo_VirtualSports(
+                criteria,
+                outputParams,
+                ref settingInfo);
+            return licenseeInfo;
+        }
+
+        /// <summary>
+        /// Gets the licensee info sports book.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_Sportsbook(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
+            string paramName;
+            string sportId;
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, Sports.NumberGame.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                paramName = "minbetv" + sportId;
+                settingInfo.Add(new SettingInfo
+                {
+                    Name = paramName,
+                    Value = fakeSettingValue
+                });
+
+                paramName = "maxbetv" + sportId;
+                settingInfo.Add(new SettingInfo
+                {
+                    Name = paramName,
+                    Value = fakeSettingValue
+                });
+
+                paramName = "maxpermatchv" + sportId;
+                settingInfo.Add(new SettingInfo
+                {
+                    Name = paramName,
+                    Value = fakeSettingValue
+                });
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    paramName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    paramName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    paramName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    if (string.Equals(sportId, Sports.Soccer.ToString()))
+                    {
+                        paramName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the licensee info number game.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_NumberGame(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
+            var sports = SportsSection.Instance.Sports;
+            var sportId = Sports.NumberGame.ToString();
+            var paramName = "minbetv" + sportId;
+            settingInfo.Add(new SettingInfo
+            {
+                Name = paramName,
+                Value = fakeSettingValue
+            });
+
+            paramName = "maxbetv" + sportId;
+            settingInfo.Add(new SettingInfo
+            {
+                Name = paramName,
+                Value = fakeSettingValue
+            });
+
+            paramName = "maxpermatchv" + sportId;
+            settingInfo.Add(new SettingInfo
+            {
+                Name = paramName,
+                Value = fakeSettingValue
+            });
+
+            paramName = "maxperballv" + sportId;
+            settingInfo.Add(new SettingInfo
+            {
+                Name = paramName,
+                Value = fakeSettingValue
+            });
+
+            var levelType = new string[] 
+            { 
+                SMALevelNameConstants.Super,
+                SMALevelNameConstants.Master,
+                SMALevelNameConstants.Agent
+            };
+
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        paramName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the licensee info racing.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_Racing(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
+            string paramName;
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = fakeSettingValue
+                    });
+
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+                    var betTypes = tote.BetType.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + racing.Id + "discount_" + betType;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+
+                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                        settingInfo.Add(new SettingInfo
+                        {
+                            Name = paramName,
+                            Value = fakeSettingValue
+                        });
+                    }
+
+                    paramName = "disable" + racing.Id + "_" + tote.Id;
+                    settingInfo.Add(new SettingInfo
+                    {
+                        Name = paramName,
+                        Value = true
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the licensee info virtual sports.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        /// <returns> List VirtualSportsSettingInfo.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public List<VirtualSportsSettingInfo> GetLicenseeInfo_VirtualSports(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+            string sportId;
+
+            var paramName = "disablevirtualsports";
+            settingInfo.Add(new SettingInfo
+            {
+                Name = paramName,
+                Value = false
+            });
+
+            Dictionary<string, bool> activeVirtualSportsInfo = new Dictionary<string, bool>();
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                sportId = sport.Id;
+                if (activeVirtualSportsInfo.ContainsKey(sportId))
+                {
+                    continue;
+                }
+
+                activeVirtualSportsInfo.Add(sportId, sport.Active);
+            }
+
+            var virtualSportsParams = string.Empty;
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(virtualSportsParams);
+            string xpath = "/products/product";
+            var virtualSportsNodes = xmlDoc.SelectNodes(xpath);
+            List<VirtualSportsSettingInfo> virtualSportsSettingInfoList = new List<VirtualSportsSettingInfo>();
+            foreach (XmlNode childrenNode in virtualSportsNodes)
+            {
+                sportId = childrenNode.Attributes["SportType"].Value;
+                if (!activeVirtualSportsInfo.ContainsKey(sportId) ||
+                    !activeVirtualSportsInfo[sportId])
+                {
+                    continue;
+                }
+
+                VirtualSportsSettingInfo virtualSportsSettingInfo = new VirtualSportsSettingInfo
+                {
+                    Id = sportId,
+                    Name = CacheRef.GetSportName(sportId),
+                    SettingInfo = new List<SettingInfo>()
+                };
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxbetv" + sportId,
+                    Value = childrenNode.Attributes["MaxBet"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "minbetv" + sportId,
+                    Value = childrenNode.Attributes["MinBet"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxpermatchv" + sportId,
+                    Value = childrenNode.Attributes["MaxPerMatch"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "v" + sportId + "spositiontaking",
+                    Value = childrenNode.Attributes["sPositionTaking"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "v" + sportId + "mpositiontaking",
+                    Value = childrenNode.Attributes["mPositionTaking"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "v" + sportId + "apositiontaking",
+                    Value = childrenNode.Attributes["aPositionTaking"].Value
+                });
+
+                virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);
+            }
+
+            return virtualSportsSettingInfoList;
+        }
+
+        /// <summary>
+        /// Updates the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Result.</returns>
+        public Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
+        {
+            var hashtableParams = GetUpdateSettingsHashtableParams(criteria);
+            Result result;
+            Hashtable outputParams;
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(hashtableParams);
+                objDb.ExecuteNonQuery();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            result = new Result
+            {
+                ErrorCode = 0,
+                ErrorMessage = "Something is wrong!"
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the update settings dictionary.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Settings Dictionary.</returns>
+        private Dictionary<string, object> GetUpdateSettingsDictionary(UpdateLicenseeInfoCriteria criteria)
+        {
+            Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
+            string paramName;
+            foreach (var param in criteria.SettingInfo)
+            {
+                paramName = param.Name.ToLower();
+                if (dictionaryParams.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                dictionaryParams.Add(paramName, param.Value);
+            }
+
+            foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
+            {
+                foreach (var param in sportsSettingInfo.SettingInfo)
+                {
+                    paramName = param.Name.ToLower();
+                    if (dictionaryParams.ContainsKey(paramName))
+                    {
+                        continue;
+                    }
+
+                    dictionaryParams.Add(paramName, param.Value);
+                }
+            }
+
+            return dictionaryParams;
+        }
+
+        /// <summary>
+        /// Gets the update settings hash table parameters sports book.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
+        private void GetUpdateSettingsHashTableParams_Sportsbook(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId;
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, Sports.NumberGame.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                settingName = "minbetv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                settingName = "maxbetv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                settingName = "maxpermatchv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    settingName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                    if (string.Equals(sportId, Sports.Soccer.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        settingName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                        settingName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                        settingName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the update settings hash table parameters number game.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
+        private void GetUpdateSettingsHashTableParams_NumberGame(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId = Sports.NumberGame.ToString();
+            var sports = SportsSection.Instance.Sports;
+            settingName = "minbetv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+            settingName = "maxbetv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+            settingName = "maxperballv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+            var levelType = new string[] 
+            { 
+                SMALevelNameConstants.Super,
+                SMALevelNameConstants.Master,
+                SMALevelNameConstants.Agent
+            };
+
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        settingName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                        settingName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    }
+                }
+            }
+
+            hashtableParams.Add("disablenumber", criteria.EnableNumberGame);
+        }
+
+        /// <summary>
+        /// Gets the update settings hash table parameters racing.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
+        private void GetUpdateSettingsHashTableParams_Racing(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    settingName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+                    settingName = "v" + racing.Id + "discount_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "spositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "mpositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "apositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "ibcpositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                    settingName = "disable" + racing.Id + "_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the update settings hash table parameters virtual sports.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
+        private void GetUpdateSettingsHashTableParams_VirtualSports(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId;
+            var virtualSports = criteria.VirtualSportsSettingInfo;
+
+            settingName = "disablevirtualsports";
+            hashtableParams.Add(settingName, criteria.EnableVirtualSports);
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsSettingInfo sport in virtualSports)
+            {
+                sportId = sport.Id;
+                virtualSportsParams += string.Format(
+                    "<product SportType=\"{0}\"" +
+                    " MinBet=\"{1}\"" +
+                    " MaxBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    updateSettingsDictionary["minbetv" + sportId],
+                    updateSettingsDictionary["maxbetv" + sportId],
+                    updateSettingsDictionary["maxpermatchv" + sportId],
+                    updateSettingsDictionary["v" + sportId + "spositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "mpositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashtableParams.Add("virtualsportlist", virtualSportsParams);
+        }
+
+        /// <summary>
+        /// Gets the update settings hash table parameters.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Settings Hash Table Parameters.</returns>
+        private Hashtable GetUpdateSettingsHashtableParams(UpdateLicenseeInfoCriteria criteria)
+        {
+            Hashtable hashtableParams = new Hashtable();
+            Dictionary<string, object> updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
+            hashtableParams.Add("creator", criteria.Editor);
+            hashtableParams.Add("ip", Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
+            GetUpdateSettingsHashTableParams_Sportsbook(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            GetUpdateSettingsHashTableParams_NumberGame(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            GetUpdateSettingsHashTableParams_Racing(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            GetUpdateSettingsHashTableParams_VirtualSports(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            return hashtableParams;
+        }
+    }
+}

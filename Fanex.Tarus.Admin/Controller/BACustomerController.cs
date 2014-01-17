@@ -52,10 +52,10 @@ using Fanex.Tarus.Admin.Entities;
         }
 
         [AuthenticateHost]
-        public JsonResult InsMultiBACustomer(string strCustId, string Rate)
+        public JsonResult InsMultiBACustomer(string strCustId, string Rate, string follower)
         {
             var result = new Result();
-            result = _baCustomerService.InsBACustomerList(strCustId, Rate);
+            result = _baCustomerService.InsBACustomerList(strCustId, Rate, follower);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

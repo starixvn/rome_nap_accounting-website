@@ -1,92 +1,123 @@
-﻿using System.Data;
-using Fanex.Data;
-using Fanex.Tarus.Admin.Entities;
-using DNAide.Core;
-using System;
-using Sunplus.Accounting.Core.Extensions;
+﻿// --------------------------------------------------------------------------
+// <copyright file="AutoFollowBetAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
 namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
 {
+    using System.Collections.Generic;
+    using System.Data;
+    using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
+    using Fanex.Tarus.Admin.Entities;
+
+    /// <summary>
+    /// Auto Follow Bet Access.
+    /// </summary>
     public class AutoFollowBetAccess : IAutoFollowBetAccess
     {
-    
-
-
-        #region IAutoFollowBetAccess Members
-
-        public DataTable AutoFollowBetSelCustomer(int status)
+        /// <summary>
+        /// Gets the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
+        public List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria)
         {
             var datatable = new DataTable();
-            try
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                
-                using (var dbContext = new ObjectDb("Acc_AutoFollowBetSelCustomer"))
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                var dataset = databaseContext.ExecuteDataSet();
+                if (dataset.Tables.Count > 0)
                 {
-                    dbContext.AddInParameter("status", DbType.Int32, status);
-                    var ds = dbContext.ExecuteDataSet();
-                    if (ds.Tables.Count > 0)
-                        datatable = ds.Tables[0];
+                    datatable = dataset.Tables[0];
                 }
-                
             }
 
-            catch (Exception ex)
+            var listFollowedCustomer = new List<FollowedCustomer>();
+            datatable.DefaultView.Sort = "username DESC";
+            foreach (DataRow row in datatable.Rows)
             {
-                LogExtensions.ExceptionHandler(ex);
+                listFollowedCustomer.Add(new FollowedCustomer
+                {
+                    Username = CastAide.AsString(row["username"]),
+                    Follower = CastAide.AsString(row["follower"]),
+
+                    Rate = CastAide.AsDouble(row["rate"]),
+                    BAStatus = CastAide.AsBoolean(row["isba"]),
+
+                    SourceId = CastAide.AsInt32(row["src"]),
+                    LiveStatus = CastAide.AsInt32(row["FollowLive"]),
+                    FollowedHDP = CastAide.AsInt32(row["Follow1"]),
+                    Followed1stHDP = CastAide.AsInt32(row["Follow7"]),
+                    FollowedOverUnder = CastAide.AsInt32(row["Follow3"]),
+                    Followed1stOverUnder = CastAide.AsInt32(row["Follow8"])
+                });
             }
-            return datatable;
-            
+
+            return listFollowedCustomer;
         }
 
-        public Result AutoFollowBetDelCustomer(string username)
+        /// <summary>
+        /// Deletes the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
+        public Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria)
         {
             var result = new Result();
-            using (var dbContext = new ObjectDb("Acc_AutoFollowBetDelCustomer"))
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                dbContext.AddInParameter("username", DbType.String, username);
-                dbContext.AddOutParameter("ErrMsg", DbType.String, 4000);
-                dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-                
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
             }
+
             return result;
         }
 
-        public Result AutoFollowBetInsCustomer(string username, double rate)
+        /// <summary>
+        /// Updates the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
+        public Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria)
         {
             var result = new Result();
-            using (var dbContext = new ObjectDb("Acc_AutoFollowBetInsCustomer"))
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                dbContext.AddInParameter("username", DbType.String, username);
-                dbContext.AddInParameter("rate", DbType.Double, rate);
-                dbContext.AddOutParameter("ErrMsg", DbType.String, 4000);
-                dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
             }
+
             return result;
         }
 
-        public Result AutoFollowBetUpdCustomer(string username, double rate)
+        /// <summary>
+        /// Adds the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
+        public Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria)
         {
             var result = new Result();
-            using (var dbContext = new ObjectDb("Acc_AutoFollowBetUpdCustomer"))
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                dbContext.AddInParameter("username", DbType.String, username);
-                dbContext.AddInParameter("rate", DbType.Double, rate);
-                dbContext.AddOutParameter("ErrMsg", DbType.String, 4000);
-                dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
             }
+
             return result;
         }
-
-        #endregion
     }
 }

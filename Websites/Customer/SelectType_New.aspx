@@ -83,7 +83,8 @@
                 parent.document.body.rows = "30,*";
                 //f.location.href="AddNewSuper.aspx";
                 //f.location.href = "V2/AddNewSuper.aspx"; //<-- Khoa.Tran add new v2
-                f.location.href = "../AddNewSuper/AddNewSuperPage";
+                //f.location.href = "../AddNewSuper/AddNewSuperPage";// <-- Thai.Tran remove this one to add Search_Copy function
+                f.location.href = "../AddNewSuper/SearchCopyAddNewSuperPage"; // <-- Thai.Tran add this one
             }
             document.getElementById('fSelectType').submit();
         }

@@ -24,13 +24,10 @@
     <Setting Key="LicWinlossDetail_AgV2" SpName="Acc_Rpt_LicWinlossDetail_Ag2" DbName="DBEXT.bodb02.bodbAdminNet"  />
     <Setting Key="LicGetTotalTicket" SpName="Lbs_Rpt_GetTotalTicket" DbName="DBEXT.bodb02.bodbAdminNet"  />
   </Function>
-
-  <Function Name="PT Setting">
-    <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="DBEXT.bodb02.bodbAdminNet" />
+	<Function Name="Report - NumberGame">
+		<Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="DBEXT.bodb02.bodbAdminNet"  />
+	</Function>
+  <Function Name="PT Setting">            
     <Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMaster_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMaster_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
@@ -68,6 +65,9 @@
     <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet"  />
     <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
   </Function>
-  
-  
+
+  <Function Name="Customer NewLicensee">
+    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
+	<Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet"/>
+  </Function>
 </Functions>

@@ -32,10 +32,11 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
         private readonly ILogWriterService _logService;
         private readonly ILimitSettingManager _limitSettingManager;
         bool IsUpdatedStatus = false;
-        
-        public SettingManager():this(null, null, null, null)
+
+        public SettingManager()
+            : this(null, null, null, null)
         {
-            
+
         }
 
         public SettingManager(ISettingService settingService, IGameSettingService gameSettingService, ILogWriterService logService, ILimitSettingManager limitSettingManager)
@@ -46,7 +47,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             _limitSettingManager = limitSettingManager ?? new LimitSettingManager();
         }
 
-       public LiveCasinoSettingDTO GetSuperSetting(int custId, int exchangeId)
+        public LiveCasinoSettingDTO GetSuperSetting(int custId, int exchangeId)
         {
             var result = new LiveCasinoSettingDTO();
             try
@@ -54,7 +55,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 var superGameSetting = _gameSettingService.GetByCustomerId(custId);
                 if (superGameSetting.Count > 0)
                     exchangeId = 0;
-                
+
                 var setting = _settingService.GetSuperSetting(custId, exchangeId);
 
                 #region customer info
@@ -72,8 +73,8 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     ExchangeId = setting.CustomerInfo.ExChangeId,
                     IsSyncLiveCasino = setting.CustomerInfo.IsSyncLiveCasino,
                     Site = setting.CustomerInfo.Site,
-                    
-                    
+
+
                 };
                 #endregion
 
@@ -111,7 +112,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                                 IsSelected = limit.IsSelected,
                                 Text = limit.Text
                             });
-                        
+
                         }
                         result.GameSetting.Add(new GameType()
                         {
@@ -122,7 +123,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                         });
                     }
                 }
-            
+
                 #endregion
 
                 #region Win Limit Setting
@@ -130,10 +131,10 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 result.WinLimitSetting.IsAutoResetLiveCasino = setting.CustomerInfo.Limit.IsDailyAutoReset;
                 result.WinLimitSetting.UplineIsAutoResetLiveCasino = setting.CustomerInfo.Limit.IsDailyAutoResetUpline;
 
-                result.WinLimitSetting.Limits= _limitSettingManager.SelWinLimitSetting(setting.CustomerInfo.Limit.MaxWinLimit, setting.CustomerInfo.Limit.MaxWinLimitUpline);
+                result.WinLimitSetting.Limits = _limitSettingManager.SelWinLimitSetting(setting.CustomerInfo.Limit.MaxWinLimit, setting.CustomerInfo.Limit.MaxWinLimitUpline);
                 #endregion
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
@@ -163,7 +164,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     IsSyncLiveCasino = setting.CustomerInfo.IsSyncLiveCasino,
                     ExchangeId = setting.CustomerInfo.ExChangeId,
                     uplineId = uplineId,
-                    
+
                 };
                 #endregion
 
@@ -185,7 +186,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                             PresetPT = uplineSetting.PresetPT,
                             AutoPresetPT = uplineSetting.AutoPresetPT,
                             IsAutoPresetPT = uplineSetting.IsAutoPresetPT,
-                            
+
                         }
                     };
                 }
@@ -420,14 +421,14 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                         });
                         if (!isHasSetting && bettingLimit.Count > 0)
                             result.GameSetting[gameSettingIndex].BettingLimit[0].IsSelected = true;
-                      
-                        
+
+
 
                         gameSettingIndex++;
                     }
                 }
 
-                
+
                 #endregion
 
                 #region Win Limit Setting
@@ -490,7 +491,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                                     AutoPresetPT = superSetting != null ? superSetting.AutoPresetPT : 0,
                                     IsAutoPresetPT = superSetting != null ? superSetting.IsAutoPresetPT : false,
                                     MaxAutoPresetPT = superSetting != null ? superSetting.MaxAutoPresetPT : 0
-                                    
+
                                 }
                             }
                         }
@@ -714,11 +715,11 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 }
             }
 
-          
+
 
             return resultDto;
         }
-        
+
         public ResultDTO UpdateSuperPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -757,7 +758,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                             ptSetting.PropertiesChangedList.Add(ar.PropertyName);
                         }
 
-                        
+
                     };
 
                 requestContext.SignUpIp = setting.requestContext.Ip;
@@ -769,7 +770,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 ptSetting.MaxPT = setting.PTSetting.MaxPT;
                 ptSetting.MinPT = setting.PTSetting.MinPT;
                 ptSetting.Comm = setting.PTSetting.Comm;
-                
+
                 LiveCasinoSetting.Model.Result result = _settingService.UpdateSuperPTSetting(requestContext, ptSetting);
 
                 resultDto = GetResultDTO(result, ptSetting);
@@ -778,11 +779,11 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
             return resultDto;
 
         }
-        
+
         public ResultDTO UpdateGameSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO result = new ResultDTO();
@@ -857,7 +858,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                                 if (stakeSetting != null && stakeSetting.Count() > 0)
                                 {
                                     stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
-                                }                                
+                                }
                             }
                         }
                     }
@@ -896,85 +897,109 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
                 #region UpdateGameSetting
                 var totalErr = 0;
-                
 
-                    var liveCsAccess = new BaseDataAccess();
-                    CustomerStatusInfo _customerStatusInfo =
-                        liveCsAccess.SelCustStatusInfo(setting.CustomerInfo.CustomerId, setting.CustomerInfo.UserName,
-                                                       setting.requestContext.UserId);
+                var liveCsAccess = new BaseDataAccess();
+                CustomerStatusInfo _customerStatusInfo =
+                    liveCsAccess.SelCustStatusInfo(setting.CustomerInfo.CustomerId, setting.CustomerInfo.UserName,
+                                                   setting.requestContext.UserId);
 
-                    var request = new InsertAccountRequest()
+                var request = new InsertAccountRequest()
+                {
+                    CustId = setting.CustomerInfo.CustomerId,
+                    AgentId = setting.requestContext.AgentId,
+                    CustUserName = setting.CustomerInfo.UserName,
+                    ExchangeId = setting.CustomerInfo.ExchangeId,
+                    SignUpIp = setting.requestContext.Ip,
+                    IsDisabledLiveCasino = _customerStatusInfo.DisableLiveCs,
+                    IsEnableDownline = _customerStatusInfo.IsEnableDownLines,
+                    Language = "E",
+                    MasterId = setting.requestContext.MasterId,
+                    RoleId = setting.CustomerInfo.RoleId,
+                    CustSite = setting.CustomerInfo.RoleId == 4 ? setting.CustomerInfo.Site : string.Empty,
+                    UserName = AppSession.AccUserName,
+                    SignUpForm = 1,
+                    SubAccId = 0,
+                    SuperId = setting.requestContext.SuperId,
+                    UserId = setting.requestContext.UserId,
+                    IsAutoInsert = false
+
+                };
+
+                var _result = _gameSettingService.UpdateGameSetting(setting.requestContext.UplineRoleId, gameTypeList, request);
+
+                foreach (KeyValuePair<int, LiveCasinoSetting.Model.Result> keyValuePair in _result)
+                {
+                    bool NotExistedMsg = result.ErrorHandler.Where(s => s.Key == "-123456").Count() == 0;
+                    if (keyValuePair.Value.ErrorCode.Length == 0 && NotExistedMsg)
                     {
-                        CustId = setting.CustomerInfo.CustomerId,
-                        AgentId = setting.requestContext.AgentId,
-                        CustUserName = setting.CustomerInfo.UserName,
-                        ExchangeId = setting.CustomerInfo.ExchangeId,
-                        SignUpIp = setting.requestContext.Ip,
-                        IsDisabledLiveCasino = _customerStatusInfo.DisableLiveCs,
-                        IsEnableDownline = _customerStatusInfo.IsEnableDownLines,
-                        Language = "E",
-                        MasterId = setting.requestContext.MasterId,
-                        RoleId = setting.CustomerInfo.RoleId,
-                        CustSite = setting.CustomerInfo.RoleId == 4 ? setting.CustomerInfo.Site : string.Empty,
-                        UserName = AppSession.AccUserName,
-                        SignUpForm = 1,
-                        SubAccId = 0,
-                        SuperId = setting.requestContext.SuperId,
-                        UserId = setting.requestContext.UserId,
-                        IsAutoInsert = false
-
-                    };
-
-                    var _result = _gameSettingService.UpdateGameSetting(setting.requestContext.UplineRoleId, gameTypeList, request);
-                    
-                    foreach (KeyValuePair<int, LiveCasinoSetting.Model.Result> keyValuePair in _result)
+                        string msg = string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "UpdateLiveCasinoGameSettingSuccess"), CacheRef.GetBettype(keyValuePair.Key));
+                        result.ErrorHandler.Add(new Result()
+                                                    {
+                                                        Key = keyValuePair.Value.ErrorCode,
+                                                        Value = msg
+                                                    });
+                    }
+                    else if (keyValuePair.Value.ErrorCode.ToLower() == "gs0000")
                     {
-                        bool NotExistedMsg = result.ErrorHandler.Where(s => s.Key == "-123456").Count() == 0;
-                        if (keyValuePair.Value.ErrorCode.Length == 0 && NotExistedMsg)
+                        continue;
+                    }
+                    else if (keyValuePair.Value.ErrorMessage.Length > 0)
+                    {
+                        result.ErrorHandler.Add(new Result()
+                                                    {
+                                                        Key = "1200",
+                                                        Value = keyValuePair.Value.ErrorMessage
+                                                    });
+                        totalErr++;
+                    }
+                }
+
+                #region WriteLogUpdateStakeLevel
+
+                var oldSettings = new List<LiveCasinoSetting.Model.GameType>();
+                var newSettings = new List<LiveCasinoSetting.Model.GameType>();
+                for (var i = 0; i < oldValues.Count && i < gameTypeList.Count; i++)
+                {
+                    var oldGameTypeValue = oldValues[i];
+                    var newGameTypeValue = gameTypeList[i];
+
+                    var isDifferent = false;
+                    for (var j = 0; j < oldGameTypeValue.BettingLimit.Count &&
+                        j < newGameTypeValue.BettingLimit.Count; j++)
+                    {
+                        var oldSelectedValue = oldGameTypeValue.BettingLimit[j].IsSelected;
+                        var newSelectedValue = newGameTypeValue.BettingLimit[j].IsSelected;
+                        if (oldSelectedValue != newSelectedValue)
                         {
-                            string msg = string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "UpdateLiveCasinoGameSettingSuccess"), CacheRef.GetBettype(keyValuePair.Key));
-                            result.ErrorHandler.Add(new Result()
-                                                        {
-                                                            Key = keyValuePair.Value.ErrorCode,
-                                                            Value = msg
-                                                        });
-                        }
-                        else if (keyValuePair.Value.ErrorCode.ToLower() == "gs0000")
-                        {
-                            continue;
-                        }
-                        else if (keyValuePair.Value.ErrorMessage.Length > 0)
-                        {
-                            result.ErrorHandler.Add(new Result()
-                                                        {
-                                                            Key = "1200",
-                                                            Value = keyValuePair.Value.ErrorMessage
-                                                        });
-                            totalErr++;
+                            isDifferent = true;
+                            break;
                         }
                     }
 
-                    #region WriteLogUpdateStakeLevel
+                    if (isDifferent)
+                    {
+                        oldSettings.Add(oldGameTypeValue);
+                        newSettings.Add(newGameTypeValue);
+                    }
+                }
 
-                    WriteLogUpdateStakeLevel(oldValues, gameTypeList, _result, setting);
+                WriteLogUpdateStakeLevel(oldSettings, newSettings, _result, setting);
 
-                    #endregion
-                
+                #endregion
+                #endregion
 
-                #endregion 
-            
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-           
+
 
             return result;
         }
 
-      
+
         public ResultDTO UpdateMasterPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -1061,7 +1086,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             return resultDto;
         }
 
-      
+
 
         public ResultDTO UpdateAgentPTSetting(LiveCasinoSettingDTO setting)
         {
@@ -1139,7 +1164,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 }
 
                 ptSetting.Upline = uplinePT;
-                
+
                 var result = _settingService.UpdateAgentPTSetting(requestContext, ptSetting);
                 resultDto = GetResultDTO(result, ptSetting);
 
@@ -1152,7 +1177,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             return resultDto;
         }
 
-    
+
         public ResultDTO UpdatememberPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -1213,7 +1238,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
                 var result = _settingService.UpdateMemberPTSetting(requestContext, ptSetting);
 
-                
+
                 resultDto = GetResultDTO(result, ptSetting);
 
                 #region Update Status
@@ -1237,12 +1262,12 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 LogExtensions.ExceptionHandler(ex);
             }
 
-          
+
             return resultDto;
         }
 
-    
-        
+
+
         public ResultDTO SuperUpdateMemberPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -1317,13 +1342,13 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            
+
 
             return resultDto;
         }
 
-     
-        
+
+
         public ResultDTO MasterUpdateMemberPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -1413,25 +1438,25 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 var request = new InsertAccountRequest()
                 {
                     CustId = custInfo.CustId,
-                    AgentId = custInfo.AgentId ,
+                    AgentId = custInfo.AgentId,
                     CustUserName = custInfo.CustName,
                     ExchangeId = custInfo.ExchangeId,
                     SignUpIp = custInfo.Ip,
                     IsDisabledLiveCasino = custInfo.DisableLiveCs,
                     IsEnableDownline = custInfo.IsEnableDownLines,
                     Language = custInfo.Language,
-                    MasterId = custInfo.MasterId ,
+                    MasterId = custInfo.MasterId,
                     RoleId = custInfo.RoleId,
                     UserName = adminUserName,
                     SignUpForm = signupFrom,
                     SubAccId = 0,
-                    SuperId = custInfo.SuperId ,
+                    SuperId = custInfo.SuperId,
                     UserId = adminUserId,
                     IsAutoInsert = true
 
                 };
                 DataTable dtResult = new DataTable();
-                var setting = _gameSettingService.InsertAccount( request, ref dtResult);
+                var setting = _gameSettingService.InsertAccount(request, ref dtResult);
                 string errCode = setting.ErrorCode ?? string.Empty;
                 string errMsg = setting.ErrorMessage ?? string.Empty;
                 WriteLogAutoInsertAccount(request, dtResult, errCode, errMsg);
@@ -1457,26 +1482,26 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 var request = new InsertAccountRequest()
                 {
                     CustId = custInfo.CustId,
-                    AgentId = custInfo.AgentId ,
+                    AgentId = custInfo.AgentId,
                     CustUserName = custInfo.CustName,
                     ExchangeId = custInfo.ExchangeId,
                     SignUpIp = custInfo.Ip,
                     IsDisabledLiveCasino = custInfo.DisableLiveCs,
                     IsEnableDownline = custInfo.IsEnableDownLines,
                     Language = custInfo.Language,
-                    MasterId = custInfo.MasterId ,
+                    MasterId = custInfo.MasterId,
                     RoleId = custInfo.RoleId,
                     UserName = userName,
                     SignUpForm = signupFrom,
                     SubAccId = 0,
-                    SuperId = custInfo.SuperId ,
+                    SuperId = custInfo.SuperId,
                     UserId = userId,
                     IsAutoInsert = false
 
                 };
 
                 result = _gameSettingService.InsertAccount(request);
-                
+
                 WriteLogManualInsertAccount(request);
 
                 #endregion
@@ -1494,7 +1519,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
         #region write log
         void WriteLogAutoInsertAccount(InsertAccountRequest request, DataTable dtResult, string errCode, string errMsg)
         {
-            try 
+            try
             {
                 LogAutoInsertAccount log = new LogAutoInsertAccount();
                 log.UserId = request.UserId;
@@ -1538,16 +1563,16 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
 
                 _logService.WriteLog((ILogData)log);
-                
+
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
         }
 
-        void WriteLogManualInsertAccount(InsertAccountRequest request )
+        void WriteLogManualInsertAccount(InsertAccountRequest request)
         {
             try
             {
@@ -1590,19 +1615,21 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
 
                 _logService.WriteLog((ILogData)log);
-                
+
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
         }
 
-        void WriteLogUpdateStakeLevel(List<LiveCasinoSetting.Model.GameType> oldGameTypeValues, List<LiveCasinoSetting.Model.GameType> newGameTypeValues
-            , Dictionary<int, LiveCasinoSetting.Model.Result> resultDictionary, LiveCasinoSettingDTO setting)
+        void WriteLogUpdateStakeLevel(
+            List<LiveCasinoSetting.Model.GameType> oldGameTypeValues,
+            List<LiveCasinoSetting.Model.GameType> newGameTypeValues,
+            Dictionary<int, LiveCasinoSetting.Model.Result> resultDictionary,
+            LiveCasinoSettingDTO setting)
         {
-
             try
             {
                 LogUpdateStakeLevel log = new LogUpdateStakeLevel(oldGameTypeValues, newGameTypeValues, resultDictionary);
@@ -1634,18 +1661,18 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);    
+                LogExtensions.ExceptionHandler(ex);
             }
 
-           
+
         }
 
         #endregion
 
         public Result UpdateCustomerSyncInfo(LiveCasinoSettingDTO currentSetting)
         {
-            
-            
+
+
 
             var result = new Result();
             try
@@ -1663,7 +1690,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 result.Key = setting.ErrorCode;
                 result.Value = setting.ErrorMessage;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
@@ -1677,7 +1704,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             {
                 return liveCsAccess.GetSyncLiveCasinoStatus(custId, userName, userId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
                 return false;
@@ -1694,7 +1721,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);    
+                LogExtensions.ExceptionHandler(ex);
             }
             return settingView;
         }
@@ -1733,7 +1760,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 string key = rs.ErrorCode;
                 string value = rs.ErrorMessage;
 
-                if(key.Length==0)
+                if (key.Length == 0)
                 {
                     key = "-100";
                     value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "UpdateLiveCasinoStatusSuccess");
@@ -1743,7 +1770,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     key = "100";
                     value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "UpdateLiveCasinoStatusUnSuccess");
                 }
-                
+
                 resultDto.ErrorHandler = new List<Result>();
                 resultDto.ErrorHandler.Add(new Result()
                                                {
@@ -1792,7 +1819,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 {
                     result.ErrorHandler.AddRange(UpdateGameSetting(setting).ErrorHandler);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -1890,7 +1917,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     {
                         result.ErrorHandler.AddRange(UpdateGameSetting(setting).ErrorHandler);
                     }
-                    
+
                 }
 
             }
@@ -1953,7 +1980,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     {
                         result.ErrorHandler.AddRange(UpdateWinlimitSetting(setting).ErrorHandler);
                     }
-                    
+
                 }
 
             }
@@ -2041,7 +2068,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             return result;
         }
 
-        
+
 
         public ResultDTO UpdateMasterOnMemberLiveCasino(LiveCasinoSettingDTO setting)
         {
@@ -2073,7 +2100,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 {
                     result.ErrorHandler.AddRange(UpdateGameSetting(setting).ErrorHandler);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -2083,7 +2110,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             return result;
         }
 
-        
+
 
         public ResultDTO UpdateSuperOnMemberLiveCasino(LiveCasinoSettingDTO setting)
         {
@@ -2115,7 +2142,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 {
                     result.ErrorHandler.AddRange(UpdateGameSetting(setting).ErrorHandler);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -2124,9 +2151,9 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             return result;
 
-         
+
         }
 
-        
+
     }
 }

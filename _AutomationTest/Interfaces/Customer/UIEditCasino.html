@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>UIEditCasino</title>
+</head>
+<body>
+<h1>UIEditCasino</h1>
+<table border="1" id="variable">
+<tr>
+<th class="name" colspan="5">Variables</th>
+</tr>
+<tr>
+<td class="name">${ECSlblUsername}</td>
+<td>xpath=//form[@id='frmUpdatePT']//td[text()[contains(.,'Username')]]/following-sibling::*[1]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECSchkEnableCasino}</td>
+<td>xpath=//input[@id='chkDisabledCasino']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECStxtMaxTransferCredit}</td>
+<td>xpath=//input[@id='txtMaxTransferCredit']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECSchkRnGGroupSetting}</td>
+<td>xpath=//input[@id='9_ChkGroupSetting']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboRnGMaxPT}</td>
+<td>xpath=//select[@id='9_0_SPre']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboRnGMinPT}</td>
+<td>xpath=//select[@id='9_0_SMin']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboRnGComm}</td>
+<td>xpath=//select[@id='9_0_SComm']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboMiniMaxPT}</td>
+<td>xpath=//td[text()='Mini Game']/parent::*//select[@class='select-pt' and contains(@id,'_0_SPre')]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboMiniMinPT}</td>
+<td>xpath=xpath=//td[text()='Mini Game']/parent::*//select[@class='select-pt' and contains(@id,'_0_SMin')]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboMiniComm}</td>
+<td>xpath=//td[text()='Mini Game']/parent::*//select[@class='selectcomm' and contains(@id,'_0_SComm')]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECSbtnUpdate}</td>
+<td>xpath=//td[@id='btnAdd']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECSdivMsg}</td>
+<td>xpath=//div/span[@id='err']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboRnGCommMember}</td>
+<td>xpath=//select[@id='9_0_MemComm']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboRnGMaxPTMember}</td>
+<td>xpath=//select[@id='9_0_APre']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECScboMiniMaxPTMember}</td>
+<td>xpath=//td[text()='Mini Game']/parent::*//select[@class='select-pt' and contains(@id,'_0_APre')]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${ECStblSetting}</td>
+<td>xpath=//form[@id='frmUpdatePT']/table[@class='tblcollapse']</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>

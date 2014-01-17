@@ -26,14 +26,14 @@ namespace Fanex.Tarus.Admin.DataAccess.BACustomer
             DataTable datatable = null;
             try
             {
-                
+
                 using (var dbContext = new ObjectDb("LicenseeSelAll"))
                 {
                     var ds = dbContext.ExecuteDataSet();
                     if (ds.Tables.Count > 0)
                         datatable = ds.Tables[0];
                 }
-                
+
             }
 
             catch (Exception ex)
@@ -69,35 +69,34 @@ namespace Fanex.Tarus.Admin.DataAccess.BACustomer
         }
 
 
-        public Result InsBACustomerList(string strCustId, string Rate, int userId, string IP)
+        public Result InsBACustomerList(string strCustId, string Rate, int userId, string IP, string follower)
         {
             var result = new Result();
             var totalRow = 0;
             string[] arr = strCustId.Split(new char[] { ',' });
             try
             {
-
                 using (var dbContext = new ObjectDb("AutoFollowBetInsBACus"))
                 {
                     dbContext.AddInParameter("strCustID", DbType.String, strCustId);
                     dbContext.AddInParameter("Rate", DbType.Double, CastAide.AsDouble(Rate));
                     dbContext.AddInParameter("UserID", DbType.Int32, userId);
                     dbContext.AddInParameter("IP", DbType.String, IP);
+                    dbContext.AddInParameter("follower", DbType.String, follower);
                     dbContext.AddOutParameter("totalRows", DbType.Int32, sizeof(int));
                     dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
                     dbContext.AddOutParameter("ErrMsg", DbType.String, 1000);
                     dbContext.ExecuteNonQuery();
                     result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
                     result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-                    
+
                     totalRow = CastAide.AsInt32(dbContext.GetParameterValue("totalRows"));
                     if (result.ErrorCode == 0 && totalRow == 1)
                         result.ErrorMessage = totalRow + " customer has been added successfully!";
-                    else if(result.ErrorCode == 0 && totalRow > 1)
+                    else if (result.ErrorCode == 0 && totalRow > 1)
                         result.ErrorMessage = totalRow + " customers have been added successfully!";
                 }
             }
-
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);

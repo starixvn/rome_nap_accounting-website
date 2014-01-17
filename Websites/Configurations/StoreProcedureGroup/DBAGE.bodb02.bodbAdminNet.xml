@@ -3,7 +3,7 @@
 
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet"  />
-   </Function>
+  </Function>
 
   <Function Name="Balance Up Day">
     <Setting Key="Core_ReportService_GetBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -11,7 +11,7 @@
 
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Gaming">
@@ -23,7 +23,7 @@
     <Setting Key="SelHRComm_Company" SpName="Acc_SelHRComm_Company" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelHRCommbyPartner" SpName="Acc_SelHRCommbyPartner" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelHRCommbyPartner_Details" SpName="Acc_SelHRCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    
+
   </Function>
 
   <Function Name="Others">
@@ -68,19 +68,15 @@
     <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Age_BetList_SelMatchResultFinance" SpName="Age_BetList_SelMatchResultFinance" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
-  <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  <Function Name="Customer - New Customer (NEW)">                
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
   <Function Name="Customer - Enable Number Game">
@@ -99,12 +95,7 @@
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="Customer - Customer List">
-    <Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-  </Function>
+  
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
@@ -113,15 +104,15 @@
     <Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 
-  <Function Name="Sepcial Delete - Sportbook">    
+  <Function Name="Sepcial Delete - Sportbook">
     <Setting Key="BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="GetEarlyKOBet" SpName="Acc_BettransSelSpecialDel_EarlyKO" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Special_Outright" SpName="Acc_BettransSelDelSpecial_Outright" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Special_OutrightSel" SpName="Acc_BettransDelSpecial_OutrightSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BettransDelSpecial_LeagueSelOutright" SpName="Acc_BettransDelSpecial_LeagueSelOutright" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  
-  <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">    
+
+  <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">
     <Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Sepcial Delete - Core">
@@ -137,8 +128,8 @@
   </Function>
   <Function Name="Sepcial Delete - Mixparlay">
     <Setting Key="Acc_BettransSelDelSpecial_MixParlay" SpName="Acc_BettransSelDelSpecial_MixParlay" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_BettransSelSpecialDel_MixParlay" SpName="Acc_BettransSelSpecialDel_MixParlay" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />   
-    
+    <Setting Key="Acc_BettransSelSpecialDel_MixParlay" SpName="Acc_BettransSelSpecialDel_MixParlay" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+
   </Function>
   <Function Name="Customer - Finance Super List">
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -148,10 +139,10 @@
   </Function>
   <Function Name="Bet List - Score Information">
     <Setting Key="SportingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM" DbName="DBAGE.bodb02.bodbAdminNet"  />    
-    
+    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
   </Function>
-  
+
   <Function Name="Finance - Cross Transfer">
     <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -166,12 +157,7 @@
 
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
-
-    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />            
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
   <Function Name="Left Panel - Customer Info">
@@ -202,6 +188,7 @@
     <Setting Key="CustGroupIns" SpName="Acc_CustGroupIns" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBAGE.bodb02.bodbAdminNet"/>
+	<Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="User Control">
@@ -213,9 +200,9 @@
     <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    
+
   </Function>
-  
+
   <Function Name="Betlist Casino">
     <Setting Key="CasinoSynchronise" SpName="Acc_Rpt_CasinoSynchronise" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
@@ -223,7 +210,7 @@
   <Function Name="Helper">
     <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="P2P Control">
@@ -249,7 +236,7 @@
     <Setting Key="GetPartnerList" SpName="Acc_SelRacingPartner" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetPartnerDetail" SpName="Acc_SelRacingCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CustomerSelMinMaxBetHR" SpName="Acc_CustomerSelMinMaxBetHR" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="CustomerSelCommissionHR" SpName="Acc_CustomerSelCommissionHR" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="CustomerSelCommissionHR" SpName="Acc_CustomerSelCommissionHR" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Report - ParlayWon">
@@ -280,7 +267,7 @@
 
   <Function Name="Live Casino - Report">
     <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Login">
@@ -291,17 +278,32 @@
     <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
-    
+  </Function>
+  <Function Name="SearchCopy">    
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>        
+  </Function>
+	<Function Name="External Betting Limit">
+		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+		<Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
   </Function>
 
-  <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
-  </Function>
+  <Function Name="Customer - Finance Edit">
+    <Setting Key="CustomerSelFIEditSuper" SpName="Acc_CustomerSelFIEditCustomer_Com" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIEditMaster" SpName="Acc_CustomerSelFIEditCustomer_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIEditAgent" SpName="Acc_CustomerSelFIEditCustomer_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIEditMember" SpName="Acc_CustomerSelFIEditCustomer_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIMasterEditMember" SpName="Acc_CustomerSelFIEditMember_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFISuperEditMember" SpName="Acc_CustomerSelFIEditMember_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFISuperGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
+	</Function>
+ 
+  
 </Functions>
 

@@ -45,6 +45,16 @@
         }
 
         /// <summary>
+        /// This funtion will return a result binding to view
+        /// </summary>
+        /// <returns></returns>
+        [AuthenticateRead]
+        public ActionResult SearchCopyAddNewSuperPage()
+        {            
+            return View("~/Views/Customer/CreditCustomer/SearchCopyAddNewSuper.cshtml");
+        }        
+
+        /// <summary>
         /// Get Customer
         /// </summary>
         /// <param name="requestContext">Constext Of Get customer</param>
@@ -62,7 +72,8 @@
                 GroupD = (decimal)0.01,
                 Discount1x2 = (decimal)0.0025,
                 DiscountCS = (decimal)0.01,
-                DiscountNumber = (decimal)0.0025
+                DiscountNumber = (decimal)0.0025,
+                DiscountHRFixedOdds = (decimal)0.01
             };
             return customerObject;
         }

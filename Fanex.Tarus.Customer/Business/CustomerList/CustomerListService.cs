@@ -439,8 +439,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         result.Add(new Currency()
                         {
                             Value = CastAide.AsInt32(row["ExchangeID"]),
-                            Name = CastAide.AsString(row["Currency"]),
-
+                            Name = CastAide.AsString(row["Currency"])
                         });
                     }
                 }

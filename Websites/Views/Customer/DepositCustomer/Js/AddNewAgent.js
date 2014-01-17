@@ -21,7 +21,7 @@ addNewAgent.fillSportbookSettingAndPT = function (dataJson) {
         var minBet = parseFloat(dataJson["minbetv" + id]);
         var maxBet = parseFloat(dataJson["maxbetv" + id]);
         var maxPerMatch = parseFloat(dataJson["maxpermatchv" + id]);
-        
+
         if (minBet == 0) {
             if (this.roleId == 2) {
                 minBet = parseFloat(dataJson["minbetv" + id + "_min"]);
@@ -295,8 +295,10 @@ addNewAgent.fillRacingSettingAndPT = function (dataJson) {
             var uplineValMax;
             uplineValMax = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]);
             if (isNaN(uplineValMax)) uplineValMax = 0;
+
+            var maxRacingComm = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal();
             $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
-                if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
+                if (parseFloat($(this).val()) > maxRacingComm) $(this).remove();
             });
             $("#v" + racing.Id + "discount_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
 
@@ -340,7 +342,7 @@ addNewAgent.fillRacingSettingAndPT = function (dataJson) {
 addNewAgent.fillData = function () {
     this.fillSportbookSettingAndPT(window.dataJson);
     this.fillNumberGameSettingAndPT(window.dataJson);
-    this.fillRacingSettingAndPT(window.dataJson);    
+    this.fillRacingSettingAndPT(window.dataJson);
 };
 
 addNewAgent.assignSportbookSettingAndPT = function (params) {
@@ -425,7 +427,7 @@ addNewAgent.assignNumberGamePT = function (params) {
         var type = arr[i];
 
         var bettypes = window.arrNumberGameBettypes;
-        
+
         for (var j = 0; j < bettypes.length; j++) {
             params.push({
                 Name: "v" + id + type + "positiontaking_" + bettypes[j]
@@ -461,7 +463,7 @@ addNewAgent.assignRacingBetSettingComPT = function (params) {
                 Name: "v" + racing.Id + "maxpermatch_" + tote.Id
                     , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
             });
-            
+
             for (var i = 0; i < tote.Bettype.length; i++) {
                 //commision
                 params.push({
@@ -489,7 +491,7 @@ addNewAgent.assignRacingBetSettingComPT = function (params) {
                     });
                 }
             }
-            
+
             //enable
             params.push({
                 Name: "disable" + racing.Id + "_" + tote.Id
@@ -584,7 +586,7 @@ addNewAgent.submit = function () {
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
                         if (parseInt(data.ErrorCode) != 0) {
-                            common.showErr(data.ErrorMessage);                        
+                            common.showErr(data.ErrorMessage);
                         }
                         else {
                             common.showSuccess("Add new master " + $("#tbxUserNameAddNew").val() + " successfully!");

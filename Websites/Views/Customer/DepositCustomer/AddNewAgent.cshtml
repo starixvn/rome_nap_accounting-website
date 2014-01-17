@@ -9,7 +9,7 @@
 <script src="~/js/jQuery/Number/jquery.setcaretposition.js" type="text/javascript"></script>
 <script src="~/Views/Customer/DepositCustomer/Js/PTRenderManager.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script src="~/Views/Customer/DepositCustomer/Js/Common.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
-<script src="~/Views/Customer/DepositCustomer/Js/AddNewAgent.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+<script src="~/Views/Customer/DepositCustomer/Js/AddNewAgent.js?version=100" type="text/javascript"></script>
 @helper GenerateBetSettingSportsbook()
     {
         var sports = Sunplus.Accounting.Core.Configurations.SportsSection.Instance.Sports;
@@ -222,8 +222,10 @@ var arrRacing = [];
 </script>
 <script type="text/javascript">
     var dataJsonStr = '@Model.DataJson';
-    dataJsonStr = dataJsonStr.replace(/&quot;/g, '"');
+    dataJsonStr = dataJsonStr.replace(/&quot;&quot;/g, '"');
     var dataJson = jQuery.parseJSON(dataJsonStr);
+    dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
+    dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
 </script>
 <input id="hiddenAccID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.AccId"/>
 <input id="hiddenCustID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.CustID"/>

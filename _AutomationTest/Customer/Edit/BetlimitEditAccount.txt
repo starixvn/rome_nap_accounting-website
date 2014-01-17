@@ -1,0 +1,38 @@
+Edit/Reset|AccountType|Sporttype|Bettype|Liveindicator|Minbet;Maxbet;Maxpermatch;maxperball|PT;UplinePresetPT|Comm
+
+EditSuper|Soccer|Handicap|0|10;100;1000|0.9|0.002
+EditSuper|Number Game|1st Last Over/Under|0|10;100;1000;50|0.9|0.002
+EditSuper|HR Fixed Odds|Money Line|0|10;100;1000|0.9|0.009
+
+EditMaster|Soccer|Handicap|0|10;100;1000|0.7|0.002
+EditMaster|Number Game|1st Last Over/Under|0|10;100;1000;50|0.7|0.002
+EditMaster|HR Fixed Odds|Money Line|0|10;100;1000|0.7|0.009
+
+EditAgent|Soccer|Handicap|0|10;100;1000|0.5|0.002
+EditAgent|Number Game|1st Last Over/Under|0|10;100;1000;50|0.5|0.002
+EditAgent|HR Fixed Odds|Money Line|0|10;100;1000|0.5|0.009
+
+
+EditMember|Soccer|Handicap|0|10;100;1000|0.3|0.002
+EditMember|Number Game|1st Last Over/Under|0|10;100;1000;50|0.3|0.002
+EditMember|HR Fixed Odds|Money Line|0|10;100;1000|0.3|0.009
+
+
+
+ResetSuper|Soccer|Handicap|0|0;0;0|0.8|0.0025
+ResetSuper|Number Game|1st Last Over/Under|0|0;0;0;0|0.8|0.0025
+ResetSuper|HR Fixed Odds|Money Line|0|0;0;0|0.8|0.01
+
+ResetMaster|Soccer|Handicap|0|0;0;0|0.6|0.0025
+ResetMaster|Number Game|1st Last Over/Under|0|0;0;0;0|0.6|0.0025
+ResetMaster|HR Fixed Odds|Money Line|0|0;0;0|0.6|0.01
+
+ResetAgent|Soccer|Handicap|0|0;0;0|0.4|0.0025
+ResetAgent|Number Game|1st Last Over/Under|0|0;0;0;0|0.4|0.0025
+ResetAgent|HR Fixed Odds|Money Line|0|0;0;0|0.4|0.01
+
+
+
+ResetMember|Soccer|Handicap|0|0;0;0|0.2|0.0025
+ResetMember|Number Game|1st Last Over/Under|0|0;0;0;0|0.2|0.0025
+ResetMember|HR Fixed Odds|Money Line|0|0;0;0|0.2|0.01

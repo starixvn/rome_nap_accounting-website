@@ -1,0 +1,741 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>LiveCasino</title>
+</head>
+<body>
+<h1>LiveCasino</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Suite Setup</td>
+<td>Init</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Suite Teardown</td>
+<td>Close browser</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Force Tags</td>
+<td>Sanity</td>
+<td>EditLCS</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/common_actions.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILogin.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILeftPanel.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/ui_main.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/Customer/UIEditLiveCasino.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/Customer/livecasino.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="variable">
+<tr>
+<th class="name" colspan="5">Variables</th>
+</tr>
+<tr>
+<td class="name">${LCSSuperName}</td>
+<td>supertestIQCAuto02</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${LCSMasterName}</td>
+<td>supertestIQCAuto0201</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${LCSAgentName}</td>
+<td>supertestIQCAuto020101</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${LCSMemberName}</td>
+<td>supertestIQCAuto020101001</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="testcase">
+<tr>
+<th class="name" colspan="5">Test Cases</th>
+</tr>
+<tr>
+<td class="name"><a name="test_Super">Super</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super name &gt;&gt; Edit Live Casino\n<br>
+\n<br>
+2. Edit Super Live casino bet setting\n<br>
+\n<br>
+\ \ \ + Max PT : 0.95\n<br>
+\n<br>
+\ \ \ + Comm: 0.008\n<br>
+\n<br>
+\ \ \ + Uncheck checkbox Party Baccarat bet limit 1-100\n<br>
+\n<br>
+3. Check current \ Super Live casino bet setting\n<br>
+\n<br>
+4. Reset Super data\n<br>
+\n<br>
+\ \ \ + Max PT : 0.9\n<br>
+\n<br>
+\ \ \ + Comm: 0.007\n<br>
+\n<br>
+\ \ \ +Check in checkbox Party Baccarat bet limit 1-100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${LCSSuperName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Super</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.008</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Live casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get LiveCasino Bet setting</td>
+<td>Super</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>0.95</td>
+<td>0.008</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Super Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Super</td>
+<td>0.9</td>
+<td>0.007</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Master">Master</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master name &gt;&gt; Edit Live Casino\n<br>
+\n<br>
+2. Edit MasterLive casino bet setting\n<br>
+\n<br>
+\ \ \ + Max PT : 0.85\n<br>
+\n<br>
+\ \ \ + Comm: 0.007\n<br>
+\n<br>
+\ \ \ + Uncheck checkbox Party Baccarat bet limit 1-100\n<br>
+\n<br>
+3. Check current \ Master Live casino bet setting\n<br>
+\n<br>
+4. Reset Master data\n<br>
+\n<br>
+\ \ \ + Max PT : 0.8\n<br>
+\n<br>
+\ \ \ + Comm: 0.006\n<br>
+\n<br>
+\ \ \ +Check in checkbox Party Baccarat bet limit 1-100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${LCSMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Master</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.007</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Live casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get LiveCasino Bet setting</td>
+<td>Master</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>0.85</td>
+<td>0.007</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Master Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Master</td>
+<td>0.8</td>
+<td>0.006</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Agent">Agent</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent name &gt;&gt; Edit Live Casino\n<br>
+\n<br>
+2. Edit Agent Live casino bet setting\n<br>
+\n<br>
+\ \ \ + Max PT : 0.75\n<br>
+\n<br>
+\ \ \ + Comm: 0.006\n<br>
+\n<br>
+\ \ \ + Uncheck checkbox Party Baccarat bet limit 1-100\n<br>
+\n<br>
+3. Check current \ Agent Live casino bet setting\n<br>
+\n<br>
+4. Reset Agent data\n<br>
+\n<br>
+\ \ \ + Max PT : 0.7\n<br>
+\n<br>
+\ \ \ + Comm: 0.005\n<br>
+\n<br>
+\ \ \ +Check in checkbox Party Baccarat bet limit 1-100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${LCSAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Agent</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.006</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Live casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get LiveCasino Bet setting</td>
+<td>Agent</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>0.75</td>
+<td>0.006</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Agent Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Agent</td>
+<td>0.7</td>
+<td>0.005</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Member">Member</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Member name &gt;&gt; Edit Live Casino\n<br>
+\n<br>
+2. Edit Member Live casino bet setting\n<br>
+\n<br>
+\ \ \ + Max PT : 0.65\n<br>
+\n<br>
+\ \ \ + Comm: 0.004\n<br>
+\n<br>
+\ \ \ + Uncheck checkbox Party Baccarat bet limit 1-100\n<br>
+\n<br>
+3. Check current \ Member Live casino bet setting\n<br>
+\n<br>
+4. Reset Member data\n<br>
+\n<br>
+\ \ \ + Max PT : 0.6\n<br>
+\n<br>
+\ \ \ + Comm: 0.003\n<br>
+\n<br>
+\ \ \ +Check in checkbox Party Baccarat bet limit 1-100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${LCSMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Member</td>
+<td>0.65</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.004</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Member Live casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditLiveCasino}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfTimeout}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentlist}=</td>
+<td>Get LiveCasino Bet setting</td>
+<td>Member</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${list}=</td>
+<td>Create List</td>
+<td>0.65</td>
+<td>0.004</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Lists Should Be Equal</td>
+<td>${currentlist}</td>
+<td>${list}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Live Casino bet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit LiveCasino Bet setting</td>
+<td>Member</td>
+<td>0.6</td>
+<td>0.003</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>

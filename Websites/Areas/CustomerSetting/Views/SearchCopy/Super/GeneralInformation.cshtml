@@ -1,0 +1,90 @@
+﻿<div id="divGeneralInformation">
+    <table class="tblcollapse" style="width: 700px; margin-bottom: 10px;">
+        <tr class="title">
+            <td colspan="4">
+                General Information
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                UserName
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" id="username"  ng-model="newUser.username" size="30" required />
+            </td>
+            <td class="l" style="width: 12%">
+                Password
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="password" id="password"  ng-model="newUser.password" size="30" required />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                First Name
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.firstname" size="30" />
+            </td>
+            <td class="l" style="width: 12%">
+                Last Name
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.lastname" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Phone
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.phone" size="30" />
+            </td>
+            <td class="l" style="width: 12%">
+                Mobile Phone
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.mobilephone" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Site
+            </td>
+            <td class="l" style="width: 38%">
+                <select id="listSite" ng-model="existedUser.selectedSite" ng-options="s.SiteName for s in existedUser.sites">                
+                </select>                
+            </td>            
+            <td class="l" style="width: 12%">
+                Fax
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.fax" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Max Credit
+            </td>
+            <td class="l" style="width: 38%">
+                <input id="maxCredit" type="text" ng-model="existedUser.maxCredit" onkeyup="formatExt(event, this, true)" size="30" maxlength="18" />
+            </td>            
+            <td class="l" style="width: 12%">
+                Currency
+            </td>
+            <td class="l" style="width: 38%">
+                <select id="listCurrency" disabled>
+                    <option value="{{existedUser.selectedCurrency}}">{{existedUser.selectedCurrency}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Internal User
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="checkbox" ng-model="newUser.internaluser">
+            </td>
+        </tr>
+    </table>
+</div>

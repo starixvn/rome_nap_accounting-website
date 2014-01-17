@@ -58,10 +58,22 @@
             url: window.rootUrl + "BetList/GetBetListByCustInfo_SystemParLayTab",
             data: BetListByCustInfo.paramGetBetlistSystemParlay,
             success: function (result) {
+
                 BetListByCustInfo.gridOpts.isShowPager = false;
                 $("#betListSystemParlayContent").html(result);
                 $("#BetlistSystemParlay").initGrid(BetListByCustInfo.gridOpts);
-                $('#BetlistSystemParlay').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
+                $('#BetlistSystemParlay').removeClass("display-none").gridScroller({
+                    tblContentId: 'tblContent',
+                    manualCopyHeader: true,
+                    isShowPager: true,
+                    fullWidth: true,
+                    fullHeight: false,
+                    gridWidth: 980,
+                    gridHeight: 500,
+                    freezeWidth: 0,
+                    numberFreezeCol: 0
+                });
+
                 BetListByCustInfo.initPager(_length,
                     BetListByCustInfo.paramGetBetBetlist.pageSize,
                     BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);

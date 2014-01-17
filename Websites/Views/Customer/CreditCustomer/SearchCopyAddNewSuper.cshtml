@@ -1,0 +1,47 @@
+﻿<link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
+
+<div class="maincontent">
+    <div class="box_header" style="width: 100%;">
+        <div id="left_tab1" class="left_tab" style="width: 100%">
+            <ul>
+                <li id="tabSearchCopy" class="current"><a onclick="ShowSearchCopy();" href="javascript:;"><span>Search & Copy</span></a></li>
+                <li id="tabFullMode" ><a onclick="ShowFullMode();"href="javascript:;"><span>Full Mode</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <iframe id="frmSearchCopyAddNewSuper" scrolling="auto" frameborder="0" style="width: 100%;
+        height: 770px;" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="../customersetting/searchcopy/super/index"
+        name="frmSearchCopyAddNewSuper"></iframe>
+</div>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        pre_resize();
+        //Add events to page
+        $(window).resize(function () {
+            pre_resize();
+        });
+    });
+
+    function pre_resize() {
+        var windowHeight = $(window).height();
+        var height = windowHeight - 50;
+
+        $("#frmSearchCopyAddNewSuper").height(height + "px");
+    }
+ 
+    function ShowSearchCopy() {
+        $("#tabSearchCopy").addClass("current");
+        $("#tabFullMode").removeClass("current");
+
+        $("#frmSearchCopyAddNewSuper").attr('src', "../customersetting/searchcopy/super/index")
+    }
+    function ShowFullMode() {
+        $("#tabFullMode").addClass("current");        
+        $("#tabSearchCopy").removeClass("current");
+
+        $("#frmSearchCopyAddNewSuper").attr('src', "../AddNewSuper/AddNewSuperPage")
+    }
+</script>

@@ -1,0 +1,2007 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>SmokeTest</title>
+</head>
+<body>
+<h1>SmokeTest</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Suite Setup</td>
+<td>Init</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Suite Teardown</td>
+<td>Close browser</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Force Tags</td>
+<td>SanityReport</td>
+<td>Sanity</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../Actions/common_actions.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../Interfaces/Reports/uireport.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>String</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../Interfaces/UILogin.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../Actions/report.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Collections</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="testcase">
+<tr>
+<th class="name" colspan="5">Test Cases</th>
+</tr>
+<tr>
+<td class="name"><a name="test_2a">2a</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Main Reports &gt;&gt; Match Win Loss (2a) \n<br>
+\n<br>
+3. Click on Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click Report button \n<br>
+\n<br>
+5. Wait for the Grand Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Main Reports</td>
+<td>Match Win Loss (2a)</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Generate 2a Report data</td>
+<td>${cfReportDate}</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_2h">2h</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+\n<br>
+2. Select Main Reports &gt;&gt;Daily Win Loss (2h) \n<br>
+\n<br>
+\n<br>
+3. Click on Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+4. Click Genereate button \n<br>
+\n<br>
+\n<br>
+5. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Main Reports</td>
+<td>Daily Win Loss (2h)</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${2htxtDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${2hdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_2h Soccer">2h Soccer</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+\n<br>
+2. Select Main Reports &gt;&gt;Daily Win Loss (2h) Soccer \n<br>
+\n<br>
+\n<br>
+3. Click on Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+4. Click Generate button \n<br>
+\n<br>
+\n<br>
+5. Wait for the Grand Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Main Reports</td>
+<td>Daily Win Loss (2h) Soccer</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${2htxtDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${2hdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_2h Other Sports">2h Other Sports</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+\n<br>
+2. Select Main Reports &gt;&gt;Daily Win Loss (2h) Other Sports \n<br>
+\n<br>
+\n<br>
+3. Click on Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+4. Click Generate button \n<br>
+\n<br>
+\n<br>
+5. Wait for the Grand Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Main Reports</td>
+<td>Daily Win Loss (2h) Other Sports</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${2htxtDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${2hdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_2d">2d</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+\n<br>
+2. Select Main Reports &gt;&gt; WinLoss Summary) \n<br>
+\n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+\n<br>
+6. Wait for the Grand Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Main Reports</td>
+<td>WinLoss Summary</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${2ddivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_WL - Daily MP WL">WL - Daily MP WL</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Win/Loss &gt;&gt; Daily Mix Parlay Win Loss) \n<br>
+\n<br>
+3. Select \ Parlay Win Loss by Product as Report type \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Win/Loss</td>
+<td>Daily Mix Parlay Win Loss</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${DailyMPWLcboReport}</td>
+<td>Parlay Win Loss by Product</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${DailyMPWLcboSite}</td>
+<td>Credit</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${DailyMPWLdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Balance - Direct Balance">Balance - Direct Balance</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Balance&gt;&gt; Direct Balance \n<br>
+\n<br>
+3. Select Direct Master as Report type \n<br>
+\n<br>
+4. Click Generate button \n<br>
+\n<br>
+5. Wait for the Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Balance</td>
+<td>Direct Balance</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${DirectBalancecboReport}</td>
+<td>Direct Master</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${DirectBalancedivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - Bingo WL">Gaming - Bingo WL</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming&gt;&gt; Bingo Win Loss \n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Bingo Win Loss</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${BingoWLdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - Bingo Statistic">Gaming - Bingo Statistic</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming &gt;&gt; Bingo Statistic \n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Bingo Statistic</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${BingoStatictisdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - Bingo Outstanding">Gaming - Bingo Outstanding</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming &gt;&gt; Bingo Outstanding \n<br>
+\n<br>
+3. Click Generate button \n<br>
+\n<br>
+4. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Bingo Outstanding</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${BingoOutstandingdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - LCS Financial">Gaming - LCS Financial</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming &gt;&gt; Live Casino Game Financial Report \n<br>
+\n<br>
+3. Click Report button \n<br>
+\n<br>
+4. Wait for the Grand Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Live Casino Game Financial Report</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnReport}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LCSFinancialdivGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - NG WL">Licensee - NG WL</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Number Game Win Loss \n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Number Game Win Loss</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseeNGWLdivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - VS WL">Licensee - VS WL</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Virtual Sport Win Loss \n<br>
+\n<br>
+3. Click Generate button \n<br>
+\n<br>
+4. Wait for the Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Virtual Sport Win Loss</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseeNGWLdivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - Total Transactions">Licensee - Total Transactions</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Total Transaction by Licensee \n<br>
+\n<br>
+3. Click Generate button \n<br>
+\n<br>
+4. Wait for the Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Total Transactions by Licensee</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseeTotalTransactiondivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - Win Loss By Licensee">Licensee - Win Loss By Licensee</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Win Loss By Licensee\n<br>
+\n<br>
+3. Select 12bet as Licensee value \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Total data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Win Loss By Licensee</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${LicenseeWLcboLicensee}</td>
+<td>12Bet</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseeWLdivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - Negative Balance">Licensee - Negative Balance</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Negative Balance \n<br>
+\n<br>
+3. Click Generate button \n<br>
+\n<br>
+4. Wait for the list members displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Negative Balance</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseeNegativeBalancedivNo}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Licensee - Peak Concurrent Users">Licensee - Peak Concurrent Users</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+\n<br>
+2. Select Licensee &gt;&gt; Peak Concurrent Users \n<br>
+\n<br>
+3. Select 12bet as Licensee value \ \n<br>
+\n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+\n<br>
+7. Wait for the Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Licensee</td>
+<td>Peak Concurrent Users</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Label</td>
+<td>${LicenseePeakConcurrentcboSite}</td>
+<td>12Bet</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${LicenseePeakConcurrentdivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Special - Special Match Analysis">Special - Special Match Analysis</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Special Report &gt;&gt; Special Match Analysis \n<br>
+\n<br>
+3. Click on Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on League control then check in All Leagues checkbox \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Match data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Special Report</td>
+<td>Special Match Analysis</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${txtDate}</td>
+<td>15</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Element</td>
+<td>${SpecialMatchAnalysistxtLeague}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Checkbox</td>
+<td>${SpecialMatchAnalysischkAllLeagues}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${SpecialMatchAnalysistblMatch}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Special - Special Parlay Won">Special - Special Parlay Won</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Specia Report &gt;&gt; Parlay Won \n<br>
+\n<br>
+3. Select System parlay as bettype \n<br>
+\n<br>
+4. Select Other Sports as sporttyep \n<br>
+\n<br>
+5. Click Genereate button \n<br>
+\n<br>
+5. Wait for the Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Special Report</td>
+<td>Parlay Won</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${txtDate}</td>
+<td>15</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Select Date</td>
+<td>${txtDate}</td>
+<td>${cfReportDate}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Element</td>
+<td>${SpecialParlayWonlblSystemParlay}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Element</td>
+<td>${SpecialParlayWonlblOtherSports}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${SpecialParlayWondivTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Special - Special Check Bet">Special - Special Check Bet</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Special Report &gt;&gt; Check Bet \n<br>
+\n<br>
+3. Click Generate button \n<br>
+\n<br>
+4. Wait for the Bet data displayed \n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Special Report</td>
+<td>Check Bet</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${txtDate}</td>
+<td>15</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Select Date</td>
+<td>${txtDate}</td>
+<td>${cfReportDate}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${SpecialCheckBettblBet}/tbody/tr</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - NG WL By Date">Gaming - NG WL By Date</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming &gt;&gt; Bingo Statistic \n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Number Game Win Loss by Date</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Gaming - NG WL By Currency">Gaming - NG WL By Currency</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Gaming &gt;&gt; Bingo Statistic \n<br>
+\n<br>
+3. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+4. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+5. Click Generate button \n<br>
+\n<br>
+6. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Gaming</td>
+<td>Number Game Win Loss by Currency</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Misc - Bet Count">Misc - Bet Count</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Win/Loss &gt;&gt; Daily Mix Parlay Win Loss) \n<br>
+\n<br>
+3. Select \ Parlay Win Loss by Product as Report type \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Navigate to Report</td>
+<td>Misc</td>
+<td>Bet Count</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Others</td>
+<td>Bet Count</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Element</td>
+<td>xpath=//a[@id='ddlProduct']/input</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Unselect Checkbox</td>
+<td>xpath=//input[@title='Sportsbook']</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Checkbox</td>
+<td>xpath=//input[@title='Virtual Sports']</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>10s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Misc - Daily Created Customers">Misc - Daily Created Customers</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Win/Loss &gt;&gt; Daily Mix Parlay Win Loss) \n<br>
+\n<br>
+3. Select \ Parlay Win Loss by Product as Report type \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Navigate to Report</td>
+<td>Misc</td>
+<td>Daily Created Customers</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Others</td>
+<td>Daily Created Customers</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Special - Punter Analysis">Special - Punter Analysis</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Win/Loss &gt;&gt; Daily Mix Parlay Win Loss) \n<br>
+\n<br>
+3. Select \ Parlay Win Loss by Product as Report type \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Comment</td>
+<td>Navigate to Report</td>
+<td>Misc</td>
+<td>Punter Analysis</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Others</td>
+<td>Punter Analysis</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtFromDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtToDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_WL - League WL">WL - League WL</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1 Go to report link \n<br>
+\n<br>
+2. Select Win/Loss &gt;&gt; Daily Mix Parlay Win Loss) \n<br>
+\n<br>
+3. Select \ Parlay Win Loss by Product as Report type \n<br>
+\n<br>
+4. Click on From Date control then select a specific date (the day before yesterday) \n<br>
+\n<br>
+5. Click on To Date control then select a specific date (the day before yesterday) \ \n<br>
+\n<br>
+6. Click Generate button \n<br>
+\n<br>
+7. Wait for the Grand Total data displayed \n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Go To</td>
+<td>${cfReportUrl}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Report</td>
+<td>Win/Loss</td>
+<td>League Win Loss</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select Date</td>
+<td>${txtDate}</td>
+<td>${cfReportDate}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Button</td>
+<td>${btnGenerate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Wait Until Page Contains Element</td>
+<td>${TotalGrandTotal}</td>
+<td>60</td>
+</tr>
+</table>
+</body>
+</html>

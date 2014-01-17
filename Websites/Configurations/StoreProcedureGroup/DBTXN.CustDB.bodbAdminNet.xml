@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Racing - PT Setting">
     <Setting Key="Racing_UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
@@ -9,16 +9,30 @@
     <Setting Key="Acc_CustomerUpdMemberHR_SAg" SpName="Acc_CustomerUpdMemberHR_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdMemberHR_MAg" SpName="Acc_CustomerUpdMemberHR_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="UpdateStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBTXN.CustDB.bodbAdminNet"/>    
-  </Function>
+    <Setting Key="UpdateStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBTXN.CustDB.bodbAdminNet"/>
+	  <Setting Key="Acc_CustomerUpdMember_CommissionHR" SpName="Acc_CustomerUpdMember_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+	  <Setting Key="Acc_CustomerUpdAgent_CommissionHR" SpName="Acc_CustomerUpdAgent_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+	  <Setting Key="Acc_CustomerUpdMaster_CommissionHR" SpName="Acc_CustomerUpdMaster_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+	  <Setting Key="Acc_CustomerUpdSuper_CommissionHR" SpName="Acc_CustomerUpdSuper_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
 
+    
+  </Function>
+  <Function Name="Helper">
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>
+
+  </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBTXN.CustDB.bodbAdminNet"/>	  
+
+    <Setting Key="Acc_CustomerUpdMember_CommissionHR" SpName="Acc_CustomerUpdMember_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdAgent_CommissionHR" SpName="Acc_CustomerUpdAgent_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMaster_CommissionHR" SpName="Acc_CustomerUpdMaster_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdSuper_CommissionHR" SpName="Acc_CustomerUpdSuper_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
   <Function Name="Live Casino">
@@ -31,8 +45,12 @@
     <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="UpdateSuperLiveCSComm" SpName="Acc_CustomerUpdSuperLiveCS_CommissionForAllLevels" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
+
+	<Function Name="Customer Status">
+		<Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+	</Function>
 
   <Function Name="Pocker">
     <Setting Key="Acc_CustomerUpdDisableP2P" SpName="Acc_CustomerUpdDisableP2P" DbName="DBTXN.CustDB.bodbAdminNet"/>
@@ -48,11 +66,15 @@
     <Setting Key="Acc_CustomerUpdP2PSuper_Commission" SpName="Acc_CustomerUpdP2PSuper_Commission" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBTXN.CustDB.bodbAdminNet"  />
-    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.CustDB.bodbAdminNet"  />
+	<Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
 
   <Function Name="RNG Casino">
-    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBTXN.CustDB.bodbAdminNet"/>  
+  </Function>
+
+  <Function Name="Customer Status">
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Virtual Sport">
@@ -68,7 +90,7 @@
     <Setting Key="Acc_CustomerUpdSuperVS_Positiontaking" SpName="Acc_CustomerUpdSuperVS_Positiontaking" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+	<Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Sportbook">
@@ -122,8 +144,7 @@
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBTXN.CustDB.bodbAdminNet"  />
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBTXN.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup" DbName="DBTXN.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBTXN.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBTXN.CustDB.bodbAdminNet" />    
   </Function>
 
   <Function Name="Move Customer">
@@ -154,14 +175,14 @@
   </Function>
 
   <Function Name="Admin-AutoFollowBet">
-    <Setting Key="Acc_AutoFollowBetDelCustomer" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetInsCustomer" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetSelCustomer" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetUpdCustomer" SpName="Acc_AutoFollowBetUpdRate" DbName="DBTXN.CustDB.bodbAdminNet"/>    
+    <Setting Key="Admin_AutoFollowBetManagement_Select" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Admin_AutoFollowBetManagement_Delete" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Admin_AutoFollowBetManagement_Update" SpName="Acc_AutoFollowBetUpdRate" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
-
+  
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.CustDB.bodbAdminNet"  />
@@ -197,7 +218,24 @@
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.CustDB.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.CustDB.bodbAdminNet" />
-    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBTXN.CustDB.bodbAdminNet"  />
+	<Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
-    
+	
+ <Function Name="Finance">
+    <Setting Key="Acc_CustOverrideUpdFI" SpName="Acc_CustOverrideUpdFI" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberFI_All" SpName="Acc_CustomerUpdMemberFI_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdAgentFI_All" SpName="Acc_CustomerUpdAgentFI_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMasterFI_All" SpName="Acc_CustomerUpdMasterFI_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdSuperFI_All" SpName="Acc_CustomerUpdSuperFI_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdDisableFI" SpName="Acc_CustomerUpdDisableFI" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.CustDB.bodbAdminNet_ex" Plain="0" />
+  </Function>  
+
+  <Function Name="Login - internal">
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
 </Functions>
