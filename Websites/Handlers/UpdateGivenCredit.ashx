@@ -46,12 +46,15 @@ public class UpdateGivenCredit :BaseHandler {
             //    }
             //}
 
-
-            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Credit.CustomerUpdateCredit(_accid, _custid, amount);
-            StringBuilder s = new StringBuilder();
-            s.Append("parent.document.getElementById('spanGivenCredit').innerHTML ='" + string.Format("{0:n}", amount) + "';");
-            s.Append("parent.ChangeGivenCredit();");
-            context.Response.Write("<script type='text/javascript'>" + s.ToString() + "</script>");
+            bool isallowupdategivencredit = Sunplus.Accounting.Business.Security.Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+            if (isallowupdategivencredit == true)
+            {
+                Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Credit.CustomerUpdateCredit(_accid, _custid, amount);
+                StringBuilder s = new StringBuilder();
+                s.Append("parent.document.getElementById('spanGivenCredit').innerHTML ='" + string.Format("{0:n}", amount) + "';");
+                s.Append("parent.ChangeGivenCredit();");
+                context.Response.Write("<script type='text/javascript'>" + s.ToString() + "</script>");
+            }
 
         }        
         catch (AccException ex)
