@@ -177,7 +177,10 @@ var ExterSite = {
                 }
                 else {
                     $('#nodata').show();
-                    showAlertMessage("nodata", "Username does not belong to "+groupname+" group.", 1);
+                    if (username != '') {
+                        $('#err_nodata').show();
+                    }
+                    showAlertMessage("err_nodata", "Username does not belong to " + groupname + " group.", 1);
                     gridExAccControl.hide();
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 }
@@ -252,7 +255,7 @@ var ExterSite = {
         });
 
     },
-    SubmitData: function() {
+    SubmitData: function () {
         isResfresh = false;
         ExterSite.getCustInfo();
     },

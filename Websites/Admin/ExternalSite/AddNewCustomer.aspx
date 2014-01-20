@@ -67,8 +67,14 @@
                 </table>
             </div>
             <div style="display: none; width:801px" id="nodata">
-                <div id="err_nodata">
+                <div id="err_nodata" style="display:none">
                 </div>
+                <div class="content-toolbox bgtitle">                           
+                    <div class="btngroup">
+                    <input type="button" title="Add Existing Super" class="btnAdd" id="btnAdd2" name="btnAdd2" value="  " onclick="showPopup();"/>
+                        <input type="button" title="Refresh" class="btnRefresh" id="btnRefresh2" name="btnRefresh2" value="  " onclick="ExterSite.refreshPage();"/>                           
+                    </div>
+                </div>                
             </div>
           
             <div id="gridExAccControl" class="content-warper hidden">
