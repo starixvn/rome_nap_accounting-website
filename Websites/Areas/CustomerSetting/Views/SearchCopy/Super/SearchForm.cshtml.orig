@@ -1,0 +1,36 @@
+﻿<div class="form550">
+    <div style="height: 30px; background-color: #B6C4D1">
+    </div>
+    <div class="row username">
+        <div class="grid2">
+            <span style="margin-left: 13px">Username</span></div>
+        <div class="grid6">
+            <input id="existedUserName" type="text" ng-model="existedUser.username" size="30"
+                required />
+            <span id="checkExisted" class="success" style="display: none"></span>
+        </div>
+    </div>
+    <div class="newdoubleline">
+        &nbsp;</div>
+    <div class="row">
+        <div class="grid8">
+<<<<<<< HEAD
+            <span class="start" style="font-weight: bold">All settings will be copied from entered username.</span>
+=======
+            <span class="start" style="font-weight: bold">All settings will be copied from username
+                entered.</span>
+>>>>>>> origin/master
+            <br />
+            <span class="start" style="font-weight: bold">Special, AutoSuspend and Internal status
+                will not be copied from the existing super.</span>
+        </div>
+    </div>
+    <div class="newdoubleline">
+        &nbsp;</div>
+</div>
+<div class="newline">
+    &nbsp;</div>
+<div  class="btnNextR hand"  ng-mousedown="step1Next();">
+    <div class="btnNextL">
+    <span>Next ></span></div>
+</div>
