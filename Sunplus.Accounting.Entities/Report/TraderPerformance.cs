@@ -18,6 +18,21 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string MatchNo { get; set; }
 
+        [DataMember]
+        public int Major { get; set; }
+
+        [DataMember]
+        public int Minor1 { get; set; }
+
+        [DataMember]
+        public int Minor2 { get; set; }
+
+        [DataMember]
+        public int Minor3 { get; set; }
+
+        [DataMember]
+        public int Others { get; set; }
+
         #region Turn Over
 
         [DataMember]
