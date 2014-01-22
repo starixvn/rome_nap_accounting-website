@@ -98,6 +98,26 @@
                                                     <div class="col40 table-cell" style="height: 61px;">
                                                         Match</div>
                                                 </th>
+                                                <th>
+                                                    <div class="col40 table-cell" style="height: 61px;">
+                                                        Major</div>
+                                                </th>
+                                                <th>
+                                                    <div class="col40 table-cell" style="height: 61px;">
+                                                        Minor1</div>
+                                                </th>
+                                                <th>
+                                                    <div class="col40 table-cell" style="height: 61px;">
+                                                        Minor2</div>
+                                                </th>
+                                                <th>
+                                                    <div class="col40 table-cell" style="height: 61px;">
+                                                        Minor3</div>
+                                                </th>
+                                                <th>
+                                                    <div class="col40 table-cell" style="height: 61px;">
+                                                        Others</div>
+                                                </th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -118,6 +138,26 @@
                                                     <th>
                                                         <div class="col40 table-cell" style="height: 61px;">
                                                             Match</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="col40 table-cell" style="height: 61px;">
+                                                            Major</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="col40 table-cell" style="height: 61px;">
+                                                            Minor1</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="col40 table-cell" style="height: 61px;">
+                                                            Minor2</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="col40 table-cell" style="height: 61px;">
+                                                            Minor3</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="col40 table-cell" style="height: 61px;">
+                                                            Others</div>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -141,6 +181,26 @@
                                                     </th>
                                                     <th rowspan="2">
                                                         <div class="col40 table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
                                                         </div>
                                                     </th>
                                                     <th colspan="15">
@@ -489,6 +549,26 @@
                                                     </th>
                                                     <th rowspan="2">
                                                         <div class="col40 table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
+                                                        </div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="col40 c table-cell" style="height: 61px;">
                                                         </div>
                                                     </th>
                                                     <th colspan="15">

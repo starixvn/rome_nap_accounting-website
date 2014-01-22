@@ -54,6 +54,12 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     var totalMatch = 0;
 
+                    int major = 0,
+                        minor1 = 0,
+                        minor2 = 0,
+                        minor3 = 0,
+                        others = 0;
+
                     #region wl
 
                     decimal wlHdpTotal = 0,
@@ -191,6 +197,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             {
                                 UserName = CastAide.AsString(dr["username"]),
                                 MatchNo = CastAide.AsString(dr["matchno"]),
+                                Major = CastAide.AsInt32(dr["Major"]),
+                                Minor1 = CastAide.AsInt32(dr["Minor1"]),
+                                Minor2 = CastAide.AsInt32(dr["Minor2"]),
+                                Minor3 = CastAide.AsInt32(dr["Minor3"]),
+                                Others = CastAide.AsInt32(dr["Others"]),
 
                                 #region win-lost
 
@@ -901,6 +912,91 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                                 startColumnIndex + (nextHeaderColumn++)).Value =
                 "Match";
 
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                     startRowIndex - 1,
+                                                     startColumnIndex + (nextHeaderColumn)).Merged =
+             true;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style =
+                bgHeaderFormat;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style.VerticalAlignment =
+                VerticalAlignmentStyle.Center;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn++)).Value =
+                "Major";
+
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                     startRowIndex - 1,
+                                                     startColumnIndex + (nextHeaderColumn)).Merged =
+             true;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style =
+                bgHeaderFormat;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style.VerticalAlignment =
+                VerticalAlignmentStyle.Center;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn++)).Value =
+                "Minor1";
+
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                     startRowIndex - 1,
+                                                     startColumnIndex + (nextHeaderColumn)).Merged =
+             true;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style =
+                bgHeaderFormat;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style.VerticalAlignment =
+                VerticalAlignmentStyle.Center;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn++)).Value =
+                "Minor2";
+
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                     startRowIndex - 1,
+                                                     startColumnIndex + (nextHeaderColumn)).Merged =
+             true;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style =
+                bgHeaderFormat;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style.VerticalAlignment =
+                VerticalAlignmentStyle.Center;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn++)).Value =
+                "Minor3";
+
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                     startRowIndex - 1,
+                                                     startColumnIndex + (nextHeaderColumn)).Merged =
+             true;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style =
+                bgHeaderFormat;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn)).Style.VerticalAlignment =
+                VerticalAlignmentStyle.Center;
+            wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
+                                                                startRowIndex - 1,
+                                                                startColumnIndex + (nextHeaderColumn++)).Value =
+                "Others";
+
             wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2,
                                                                 startColumnIndex + (nextHeaderColumn),
                                                                 startRowIndex - 2,
@@ -1012,6 +1108,11 @@ namespace Sunplus.Accounting.Business.Report.Other
             wsTraderPerformanceReport.Rows[startRowIndex - 1].Height = 400;
             wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
             wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 4000;
+            wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
+            wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
+            wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
+            wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
+            wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
             wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
 
             #region group header
@@ -1235,6 +1336,111 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = reportDetail.MatchNo;
+
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
+                       =
+                       (nextRow % 2 == 0
+                            ? ExcelFormat(Color.FromArgb(248, 248, 248),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false)
+                            : ExcelFormat(Color.FromArgb(217, 232, 235),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (CastAide.AsInt32(reportDetail.Major) == 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        null;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        reportDetail.Major;
+                    }
+
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
+                       =
+                       (nextRow % 2 == 0
+                            ? ExcelFormat(Color.FromArgb(248, 248, 248),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false)
+                            : ExcelFormat(Color.FromArgb(217, 232, 235),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (CastAide.AsInt32(reportDetail.Minor1) == 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        null;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        reportDetail.Minor1;
+                    }
+
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
+                       =
+                       (nextRow % 2 == 0
+                            ? ExcelFormat(Color.FromArgb(248, 248, 248),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false)
+                            : ExcelFormat(Color.FromArgb(217, 232, 235),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (CastAide.AsInt32(reportDetail.Minor2) == 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        null;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        reportDetail.Minor2;
+                    }
+
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
+                       =
+                       (nextRow % 2 == 0
+                            ? ExcelFormat(Color.FromArgb(248, 248, 248),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false)
+                            : ExcelFormat(Color.FromArgb(217, 232, 235),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (CastAide.AsInt32(reportDetail.Minor3) == 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        null;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        reportDetail.Minor3;
+                    }
+
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
+                       =
+                       (nextRow % 2 == 0
+                            ? ExcelFormat(Color.FromArgb(248, 248, 248),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false)
+                            : ExcelFormat(Color.FromArgb(217, 232, 235),
+                                          HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (CastAide.AsInt32(reportDetail.Others) == 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        null;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                        Value =
+                        reportDetail.Others;
+                    }
 
                     #endregion group1: No; Trader; Match
 
@@ -2291,6 +2497,31 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         reportFooter.MatchNo;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
+                        footerTextStyleSheet;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                        null;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
+                        footerTextStyleSheet;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                        null;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
+                        footerTextStyleSheet;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                        null;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
+                        footerTextStyleSheet;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                        null;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
+                        footerTextStyleSheet;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                        null;
 
                     #endregion group 1
 
@@ -3254,10 +3485,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                 //                                                      startColumnIndex + 2).Style =
                 //      bgFormat;
 
-                wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex + (3), nextRow + startRowIndex, startColumnIndex + (3)).Merged = true;
-                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (3)].Style.Font.Weight = ExcelFont.BoldWeight;
-                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (3)].Style.Font.Color = Color.Red;
-                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (3)].
+                wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex + (8), nextRow + startRowIndex, startColumnIndex + (3)).Merged = true;
+                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (8)].Style.Font.Weight = ExcelFont.BoldWeight;
+                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (8)].Style.Font.Color = Color.Red;
+                wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (8)].
                     Value = "There is no information available.";
             }
 

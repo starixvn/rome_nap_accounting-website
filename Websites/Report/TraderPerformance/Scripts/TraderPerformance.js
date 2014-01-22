@@ -216,9 +216,9 @@ var traderPerformanceManager = {
             fullHeight: true,
             gridHeight: 200,
             gridWidth: 710,
-            freezeWidth: 180,
+            freezeWidth: 405,
             freezeHeight: 56,
-            numberFreezeCol: 3
+            numberFreezeCol: 8
         };
 
         traderPerformanceManager.traderPerformanceReport.gridScroller(gridOpts);
@@ -256,9 +256,9 @@ var traderPerformanceManager = {
             colspan = 46;
         }
         var html = "";
-        frozenHtml = '<tr><td style="height:17px;" colspan="3">&nbsp</td></tr>';
+        frozenHtml = '<tr><td style="height:17px;" colspan="8">&nbsp</td></tr>';
         $("#traderPerformanceReport_RowHeader tbody").empty().append(frozenHtml);
-        html = '<tr><td style="height:17px;" colspan="3">&nbsp</td><td class="l b" style="height:17px;" colspan="' + colspan + '">There is no information available.</td></tr>';
+        html = '<tr><td style="height:17px;" colspan="8">&nbsp</td><td class="l b" style="height:17px;" colspan="' + colspan + '">There is no information available.</td></tr>';
 
         traderPerformanceManager.traderPerformanceReport.find(".row_footer_content thead").empty();
         traderPerformanceManager.traderPerformanceReport.find(".col_footer_content thead").empty();
@@ -267,20 +267,41 @@ var traderPerformanceManager = {
     },
     renderEachRowFrozen: function (i, n) {
         var row = "";
+        var major = parseInt(n.Major) == 0 ? '&nbsp;' : n.Major;
+        var minor1 = parseInt(n.Minor1) == 0 ? '&nbsp;' : n.Minor1;
+        var minor2 = parseInt(n.Minor2) == 0 ? '&nbsp;' : n.Minor2;
+        var minor3 = parseInt(n.Minor3) == 0 ? '&nbsp;' : n.Minor3;
+        var others = parseInt(n.Others) == 0 ? '&nbsp;' : n.Others;
+
         row += '<tr class="' + ((i + 1) % 2 == 0 ? 'evenrow' : 'oddrow') + '">';
         row += '<td><div class="col30 l">' + (i + 1) + '</div></td>';
         row += '<td><div class="col100 l">' + n.UserName + '</div></td>';
         row += '<td><div class="col40 r">' + n.MatchNo + '</div></td>';
+        row += '<td><div class="col40 r">' + major + '</div></td>';
+        row += '<td><div class="col40 r">' + minor1 + '</div></td>';
+        row += '<td><div class="col40 r">' + minor2 + '</div></td>';
+        row += '<td><div class="col40 r">' + minor3 + '</div></td>';
+        row += '<td><div class="col40 r">' + others + '</div></td>';
         row += '</tr>';
         return row;
     },
     renderEachRowScroll: function (n, isSoccer, i) {
+        var major = parseInt(n.Major) == 0 ? '&nbsp;' : n.Major;
+        var minor1 = parseInt(n.Minor1) == 0 ? '&nbsp;' : n.Minor1;
+        var minor2 = parseInt(n.Minor2) == 0 ? '&nbsp;' : n.Minor2;
+        var minor3 = parseInt(n.Minor3) == 0 ? '&nbsp;' : n.Minor3;
+        var others = parseInt(n.Others) == 0 ? '&nbsp;' : n.Others;
         var row = "";
         row += '<tr class="' + ((i + 1) % 2 == 0 ? 'evenrow' : 'oddrow') + '">';
 
         row += '<td><div class="col30 l">' + (i + 1) + '</div></td>';
         row += '<td><div class="col100 l">' + n.UserName + '</div></td>';
         row += '<td><div class="col40 r">' + n.MatchNo + '</div></td>';
+        row += '<td><div class="col40 r">' + major + '</div></td>';
+        row += '<td><div class="col40 r">' + minor1 + '</div></td>';
+        row += '<td><div class="col40 r">' + minor2 + '</div></td>';
+        row += '<td><div class="col40 r">' + minor3 + '</div></td>';
+        row += '<td><div class="col40 r">' + others + '</div></td>';
 
         row += '<td class="a3"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1st1x2) < 0 ? '<font style="color:#f11">(' + n.WinLost1st1x2 + ')</font>' : (n.WinLost1st1x2 == 0 ? '' : n.WinLost1st1x2)) + '</div></td>';
         row += '<td class="a3"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1x2) < 0 ? '<font style="color:#f11">(' + n.WinLost1x2 + ')</font>' : (n.WinLost1x2 == 0 ? '' : n.WinLost1x2)) + '</div></td>';
@@ -414,6 +435,11 @@ var traderPerformanceManager = {
         headerHtml += '<tr>';
         headerHtml += '<th rowspan="2"><div class="col30 c" style="height: 61px;">&nbsp</div></th>';
         headerHtml += '<th rowspan="2"><div class="col100 c" style="height: 61px;">&nbsp</div></th>';
+        headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
+        headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
+        headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
+        headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
+        headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
         headerHtml += '<th rowspan="2"><div class="col40" style="height: 61px;">&nbsp</div></th>';
         headerHtml += '<th colspan="' + colspanOfEachType + '"><div class="colHeaderSoccer c table-cell" style="height: 17px;">Winlost</div></th>';
         headerHtml += '<th colspan="' + colspanOfEachType + '"><div class="colHeaderSoccer c table-cell" style="height: 17px;">Turnover</div></th>';
@@ -550,6 +576,11 @@ var traderPerformanceManager = {
         row += '<th><div class="col30 c">&nbsp;</div></th>';
         row += '<th><div class="col100 l">Total</div></th>';
         row += '<th><div class="col40 r">' + n.MatchNo + '</div></th>';
+        row += '<th><div class="col40 r">&nbsp;</div></th>';
+        row += '<th><div class="col40 r">&nbsp;</div></th>';
+        row += '<th><div class="col40 r">&nbsp;</div></th>';
+        row += '<th><div class="col40 r">&nbsp;</div></th>';
+        row += '<th><div class="col40 r">&nbsp;</div></th>';
         row += '</tr>';
 
         return row;
@@ -560,7 +591,12 @@ var traderPerformanceManager = {
 
         row += '<th><div class="col30 c">&nbsp;</div></td>';
         row += '<th><div class="col100 l">Total</div></td>';
-        row += '<th><div class="col40 r">' + n.MatchNo + '</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
+        row += '<th><div class="col40 r">&nbsp;</div></td>';
 
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1st1x2) < 0 ? '<font style="color:#f11">(' + n.WinLost1st1x2 + ')</font>' : (n.WinLost1st1x2 == 0 ? '' : n.WinLost1st1x2)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1x2) < 0 ? '<font style="color:#f11">(' + n.WinLost1x2 + ')</font>' : (n.WinLost1x2 == 0 ? '' : n.WinLost1x2)) + '</div></th>';
