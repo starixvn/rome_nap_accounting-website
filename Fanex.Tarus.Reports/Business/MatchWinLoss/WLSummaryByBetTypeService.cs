@@ -93,6 +93,8 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 case Fanex.Tarus.Reports.Constants.BetType.TotalGoalVS:
                 case Fanex.Tarus.Reports.Constants.BetType.DoubleChanceVS:
                 case Fanex.Tarus.Reports.Constants.BetType.Bingo:
+                case Fanex.Tarus.Reports.Constants.BetType.LiveBaccarat:
+                case Fanex.Tarus.Reports.Constants.BetType.LiveRoulette:
                 case RowType.ThirdParty:
                     result = true;
                     break;

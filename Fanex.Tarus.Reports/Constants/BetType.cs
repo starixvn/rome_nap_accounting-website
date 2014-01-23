@@ -34,6 +34,8 @@ namespace Fanex.Tarus.Reports.Constants
         public const int P2PGames = 1000;
         public const int Baccarat = 1101;
         public const int Roulette = 1102;
+        public const int LiveBaccarat = 1103;
+        public const int LiveRoulette = 1104;
 
         public const int MixParlay = 9;
         public const int SystemParlay = 29;
