@@ -139,6 +139,7 @@ var ExterSite = {
         $('#trMsg').hide();
         $('#nodata').hide();
         $('#pagination').show();
+        $('#err_nodata').hide();
 
         $.ajax({
             type: "POST",
