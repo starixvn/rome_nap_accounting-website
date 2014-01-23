@@ -572,15 +572,20 @@ var traderPerformanceManager = {
     },
     renderTraderPerformanceReportFooterFrozen: function (n, isSoccer) {
         var row = "";
+        var major = parseInt(n.Major) == 0 ? '&nbsp;' : n.Major;
+        var minor1 = parseInt(n.Minor1) == 0 ? '&nbsp;' : n.Minor1;
+        var minor2 = parseInt(n.Minor2) == 0 ? '&nbsp;' : n.Minor2;
+        var minor3 = parseInt(n.Minor3) == 0 ? '&nbsp;' : n.Minor3;
+        var others = parseInt(n.Others) == 0 ? '&nbsp;' : n.Others;
         row += '<tr>';
         row += '<th><div class="col30 c">&nbsp;</div></th>';
         row += '<th><div class="col100 l">Total</div></th>';
         row += '<th><div class="col40 r">' + n.MatchNo + '</div></th>';
-        row += '<th><div class="col40 r">&nbsp;</div></th>';
-        row += '<th><div class="col40 r">&nbsp;</div></th>';
-        row += '<th><div class="col40 r">&nbsp;</div></th>';
-        row += '<th><div class="col40 r">&nbsp;</div></th>';
-        row += '<th><div class="col40 r">&nbsp;</div></th>';
+        row += '<th><div class="col40 r">' + major + '</div></th>';
+        row += '<th><div class="col40 r">' + minor1 + '</div></th>';
+        row += '<th><div class="col40 r">' + minor2 + '</div></th>';
+        row += '<th><div class="col40 r">' + minor3 + '</div></th>';
+        row += '<th><div class="col40 r">' + others + '</div></th>';
         row += '</tr>';
 
         return row;

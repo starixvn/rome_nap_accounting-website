@@ -54,11 +54,11 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     var totalMatch = 0;
 
-                    int major = 0,
-                        minor1 = 0,
-                        minor2 = 0,
-                        minor3 = 0,
-                        others = 0;
+                    int majorTotal = 0,
+                        minor1Total = 0,
+                        minor2Total = 0,
+                        minor3Total = 0,
+                        othersTotal = 0;
 
                     #region wl
 
@@ -390,6 +390,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             #region assign GrandTotal data
 
                             totalMatch += CastAide.AsInt16Invariant(dr["matchno"]);
+                            majorTotal += CastAide.AsInt16Invariant(dr["Major"]);
+                            minor1Total += CastAide.AsInt16Invariant(dr["Minor1"]);
+                            minor2Total += CastAide.AsInt16Invariant(dr["Minor2"]);
+                            minor3Total += CastAide.AsInt16Invariant(dr["Minor3"]);
+                            othersTotal += CastAide.AsInt16Invariant(dr["Others"]);
 
                             #region win-lost
 
@@ -597,6 +602,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                     {
                         MatchNo = totalMatch.ToString(),
                         UserName = string.Empty,
+                        Major = majorTotal,
+                        Minor1 = minor1Total,
+                        Minor2 = minor2Total,
+                        Minor3 = minor3Total,
+                        Others = othersTotal,
 
                         #region win-lost
 
@@ -2496,32 +2506,72 @@ namespace Sunplus.Accounting.Business.Report.Other
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
-                        reportFooter.MatchNo;
+                        CastAide.AsInt16Invariant(reportFooter.MatchNo);
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
-                        null;
+                    if (reportFooter.Major != 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            reportFooter.Major;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            null;
+                    }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                    if (reportFooter.Minor1 != 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            reportFooter.Minor1;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         null;
+                    }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                    if (reportFooter.Minor2 != 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            reportFooter.Minor2;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         null;
+                    }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                    if (reportFooter.Minor3 != 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            reportFooter.Minor3;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         null;
+                    }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                    if (reportFooter.Others != 0)
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
+                            reportFooter.Others;
+                    }
+                    else
+                    {
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         null;
+                    }
 
                     #endregion group 1
 
