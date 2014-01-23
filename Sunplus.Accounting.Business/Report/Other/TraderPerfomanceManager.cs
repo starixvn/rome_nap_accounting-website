@@ -1345,7 +1345,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                            HorizontalAlignmentStyle.Center, ExcelFont.NormalWeight, false, false));
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                        Value = reportDetail.MatchNo;
+                        Value = CastAide.AsInt16Invariant(reportDetail.MatchNo);
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
                        =
