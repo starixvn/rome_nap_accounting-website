@@ -674,7 +674,7 @@ var traderPerformanceManager = {
 
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1st1x2) < 0 ? '<font style="color:#f11">(' + n.Margin1st1x2 + '%)</font>' : (n.Margin1st1x2 == 0 ? '' : n.Margin1st1x2 + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1x2) < 0 ? '<font style="color:#f11">(' + n.Margin1x2 + '%)</font>' : (n.Margin1x2 == 0 ? '' : n.Margin1x2 + '%')) + '</div></th>';
-        row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stHdp) < 0 ? '<font style="color:#f11">(' + n.Margin1stHdp + ')</font>' : (n.Margin1stHdp == 0 ? '' : n.Margin1stHdp + '%')) + '</div></th>';
+        row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stHdp) < 0 ? '<font style="color:#f11">(' + n.Margin1stHdp + '%)</font>' : (n.Margin1stHdp == 0 ? '' : n.Margin1stHdp + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginHdp) < 0 ? '<font style="color:#f11">(' + n.MarginHdp + '%)</font>' : (n.MarginHdp == 0 ? '' : n.MarginHdp + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stOu) < 0 ? '<font style="color:#f11">(' + n.Margin1stOu + '%)</font>' : (n.Margin1stOu == 0 ? '' : n.Margin1stOu + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginOu) < 0 ? '<font style="color:#f11">(' + n.MarginOu + '%)</font>' : (n.MarginOu == 0 ? '' : n.MarginOu + '%')) + '</div></th>';
