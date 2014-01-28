@@ -16,7 +16,7 @@ namespace Sunplus.Accounting.Core.Cache
         {
             get
             {
-                try
+                try 
                 {
                     return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("acctrader." + AppSession.Username));
                 }
