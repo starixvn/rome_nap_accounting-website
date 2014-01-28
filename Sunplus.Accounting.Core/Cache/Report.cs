@@ -25,7 +25,7 @@ namespace Sunplus.Accounting.Core.Cache
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
-                    return string.Empty;
+                    return string.Empty; 
                 }
             }
             set
