@@ -13,7 +13,7 @@ public partial class ExcelData : System.Web.UI.Page
                 
         try
         {
-            Response.Write(TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours);
+            Response.Write(DNAide.Data.DbConnSettings.GetDbConnection("main").ConnectionString);
         }
         catch (Exception ex)
         {
