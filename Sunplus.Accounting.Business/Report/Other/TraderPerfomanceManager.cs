@@ -1903,87 +1903,87 @@ namespace Sunplus.Accounting.Business.Report.Other
                     {
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.Margin15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin15minOu);
+                                Value = CastAide.AsDecimal(reportDetail.Margin15minOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.Margin10minsOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin10minsOu);
+                                Value = CastAide.AsDecimal(reportDetail.Margin10minsOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginSingleTeamOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginSingleTeamOu);
+                                Value = CastAide.AsDecimal(reportDetail.MarginSingleTeamOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners);
+                                Value = CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNoOfCorners);
+                                Value = CastAide.AsDecimal(reportDetail.MarginNoOfCorners) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginCorners15minsOU);
+                                Value = CastAide.AsDecimal(reportDetail.MarginCorners15minsOU) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNextCorner);
+                                Value = CastAide.AsDecimal(reportDetail.MarginNextCorner) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.Margin1stTotalBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin1stTotalBookings);
+                                Value = CastAide.AsDecimal(reportDetail.Margin1stTotalBookings) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginTotalBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.MarginTotalBookings);
@@ -1993,20 +1993,20 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginTotalBookings15minsOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginTotalBookings15minsOu);
+                                Value = CastAide.AsDecimal(reportDetail.MarginTotalBookings15minsOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormat;
+                            = bgFormatPercent;
                         if (CastAide.AsDecimal(reportDetail.MarginNextBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNextBookings);
+                                Value = CastAide.AsDecimal(reportDetail.MarginNextBookings) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -2913,110 +2913,110 @@ namespace Sunplus.Accounting.Business.Report.Other
                     {
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.Margin15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin15minOu);
+                                Value = CastAide.AsDecimal(reportFooter.Margin15minOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.Margin10minsOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin10minsOu);
+                                Value = CastAide.AsDecimal(reportFooter.Margin10minsOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginSingleTeamOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginSingleTeamOu);
+                                Value = CastAide.AsDecimal(reportFooter.MarginSingleTeamOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners);
+                                Value = CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNoOfCorners);
+                                Value = CastAide.AsDecimal(reportFooter.MarginNoOfCorners) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginCorners15minsOU);
+                                Value = CastAide.AsDecimal(reportFooter.MarginCorners15minsOU) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNextCorner);
+                                Value = CastAide.AsDecimal(reportFooter.MarginNextCorner) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.Margin1stTotalBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin1stTotalBookings);
+                                Value = CastAide.AsDecimal(reportFooter.Margin1stTotalBookings) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginTotalBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings);
+                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginTotalBookings15minsOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings15minsOu);
+                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings15minsOu) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
                             Style
-                            = footerStyleSheet;
+                            = footerStyleSheetPercent;
                         if (CastAide.AsDecimal(reportFooter.MarginNextBookings) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNextBookings);
+                                Value = CastAide.AsDecimal(reportFooter.MarginNextBookings) / 100;
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
