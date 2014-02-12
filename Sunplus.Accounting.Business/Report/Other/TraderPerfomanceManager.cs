@@ -390,12 +390,15 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                             #region assign GrandTotal data
 
-                            totalMatch += CastAide.AsInt16Invariant(dr["matchno"]);
-                            majorTotal += CastAide.AsInt16Invariant(dr["Major"]);
-                            minor1Total += CastAide.AsInt16Invariant(dr["Minor1"]);
-                            minor2Total += CastAide.AsInt16Invariant(dr["Minor2"]);
-                            minor3Total += CastAide.AsInt16Invariant(dr["Minor3"]);
-                            othersTotal += CastAide.AsInt16Invariant(dr["Others"]);
+                            if (CastAide.AsInt32(dr["custid"]) > 0 || CastAide.AsDecimal(dr["overall_st"], 0) > 0)
+                            {
+                                totalMatch += CastAide.AsInt16Invariant(dr["matchno"]);
+                                majorTotal += CastAide.AsInt16Invariant(dr["Major"]);
+                                minor1Total += CastAide.AsInt16Invariant(dr["Minor1"]);
+                                minor2Total += CastAide.AsInt16Invariant(dr["Minor2"]);
+                                minor3Total += CastAide.AsInt16Invariant(dr["Minor3"]);
+                                othersTotal += CastAide.AsInt16Invariant(dr["Others"]);
+                            }
 
                             #region win-lost
 
