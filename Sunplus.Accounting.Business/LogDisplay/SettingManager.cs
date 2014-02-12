@@ -580,10 +580,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     }
                     else
                     {
+                        rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                         sportVals = (from attr in attrs
                                      where !GetMixedSportTag(attr.Name.ToString()) &&
-                                         attr.Name.ToString().EndsWith("v1") &&
+                                         (attr.Name.ToString().EndsWith("v1") &&
                                          !hidden.Contains<string>(attr.Name.ToString())
+                                         || !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower()))
                                      select LogFormater.FormatElement(attr)).ToList();
                     }
                 }
