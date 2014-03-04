@@ -153,124 +153,124 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss2aV3
                 decimal virtualLineTotal_Others_Total = 0;
 
                 #endregion InitTotalValue
-                foreach (DataRow dataRow in summaryByBetTypeTable.Rows)
-                {
-                    betType = CastAide.AsInt32(dataRow["bettype"]);
-                    if ((betType == RowType.BARM && !_barmUtils.IsActive) ||
-                        (betType == RowType.EightRM && !_eightRMUtils.IsActive))
+                    foreach (DataRow dataRow in summaryByBetTypeTable.Rows)
                     {
-                        continue;
-                    }
-
-                    reportDetail = new Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType();
-                    reportDetail.BetTypeId = betType;
-
-                    #region LineTotal_Soccer
-
-                    var lineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["LineTotal_soccer_live"]);
-                    var lineTotal_Soccer = CastAide.AsDecimal(dataRow["LineTotal_soccer"]);
-                    var lineTotal_Others_Live = CastAide.AsDecimal(dataRow["LineTotal_others_live"]);
-                    var lineTotal_Others = CastAide.AsDecimal(dataRow["LineTotal_others"]);
-                    var turnover = CastAide.AsDecimal(dataRow["IBCTurnover"]);
-
-                    reportDetail.LineTotal_Soccer_Live = NumberFormat.DecFormat(lineTotal_Soccer_Live, 2);
-                    reportDetail.LineTotal_Soccer = NumberFormat.DecFormat(lineTotal_Soccer, 2);
-                    reportDetail.LineTotal_Others_Live = NumberFormat.DecFormat(lineTotal_Others_Live, 2);
-                    reportDetail.LineTotal_Others = NumberFormat.DecFormat(lineTotal_Others, 2);
-
-                    if (betType == 71 || betType == 73) // Casino && Bingo
-                    {
-                        turnover = 0;
-                        reportDetail.Turnover = _notAvailableString;
-                    }
-                    else
-                    {
-                        reportDetail.Turnover = NumberFormat.DecFormat(turnover, 2);
-                    }
-
-                    #endregion LineTotal_Soccer
-                    #region VirtualLineTotal
-
-                    if (IsExcludeVirtualLineTotal(betType))
-                    {
-                        reportDetail.VirtualLineTotal_Soccer_Live = _notAvailableString;
-                        reportDetail.VirtualLineTotal_Soccer = _notAvailableString;
-                        reportDetail.VirtualLineTotal_Others_Live = _notAvailableString;
-                        reportDetail.VirtualLineTotal_Others = _notAvailableString;
-
-                        reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
-                            lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
-                        reportDetail.LineTotalVirtual = _notAvailableString;
-                        reportDetail.Variance = _notAvailableString;
-                    }
-                    else
-                    {
-                        var virtualLineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer_live"]);
-                        var virtualLineTotal_Soccer = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer"]);
-                        var virtualLineTotal_Others_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_others_live"]);
-                        var virtualLineTotal_Others = CastAide.AsDecimal(dataRow["VirtualLineTotal_others"]);
-
-                        reportDetail.VirtualLineTotal_Soccer_Live =
-                            NumberFormat.DecFormat(virtualLineTotal_Soccer_Live, 2);
-                        reportDetail.VirtualLineTotal_Soccer =
-                            NumberFormat.DecFormat(virtualLineTotal_Soccer, 2);
-                        reportDetail.VirtualLineTotal_Others_Live =
-                            NumberFormat.DecFormat(virtualLineTotal_Others_Live, 2);
-                        reportDetail.VirtualLineTotal_Others =
-                            NumberFormat.DecFormat(virtualLineTotal_Others, 2);
-                        reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
-                       lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
-                        reportDetail.LineTotalVirtual = NumberFormat.DecFormat(
-                            virtualLineTotal_Soccer_Live + virtualLineTotal_Soccer +
-                            virtualLineTotal_Others_Live + virtualLineTotal_Others, 2);
-
-                        reportDetail.Variance = NumberFormat.DecFormat(
-                            CastAide.AsDecimal(reportDetail.LineTotalReal) -
-                            CastAide.AsDecimal(reportDetail.LineTotalVirtual), 2);
-                        virtualLineTotal_Soccer_Live_Total += virtualLineTotal_Soccer_Live;
-                        virtualLineTotal_Soccer_Total += virtualLineTotal_Soccer;
-                        virtualLineTotal_Others_Live_Total += virtualLineTotal_Others_Live;
-                        virtualLineTotal_Others_Total += virtualLineTotal_Others;
-                        variance_Total +=
-                            (lineTotal_Soccer_Live + lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others) -
-                            (virtualLineTotal_Soccer_Live + virtualLineTotal_Soccer + virtualLineTotal_Others_Live + virtualLineTotal_Others);
-                    }
-
-                    reportDetail.Margin = this.CalculateMargin(lineTotal_Soccer_Live +
-                       lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others,
-                       turnover);
-
-                    lineTotal_Soccer_Live_Total += lineTotal_Soccer_Live;
-                    lineTotal_Soccer_Total += lineTotal_Soccer;
-                    lineTotal_Others_Live_Total += lineTotal_Others_Live;
-                    lineTotal_Others_Total += lineTotal_Others;
-                    turnover_Total += turnover;
-
-                    #endregion VirtualLineTotal
-                    #region ThirdParty
-
-                    string betTypeName = GetBetTypeName(betType) + (!string.IsNullOrEmpty(CastAide.AsString(dataRow["Hedge"])) ? " " + dataRow["Hedge"] : string.Empty);
-                    reportDetail.BetType = betTypeName;
-
-                    #endregion ThirdParty
-                    #region InsertReportDetail
-
-                    if (betType == Fanex.Tarus.Reports.Constants.BetType.SystemParlay && mixParlayRowIndex != -1)
-                    {
-                        wLSummaryByBetTypeReport.ReportDetails.Insert(mixParlayRowIndex, reportDetail);
-                    }
-                    else
-                    {
-                        if (betType == Fanex.Tarus.Reports.Constants.BetType.MixParlay)
+                        betType = CastAide.AsInt32(dataRow["bettype"]);
+                        if ((betType == RowType.BARM && !_barmUtils.IsActive) ||
+                            (betType == RowType.EightRM && !_eightRMUtils.IsActive))
                         {
-                            mixParlayRowIndex = currentRowIndex + 1;
+                            continue;
                         }
-                        wLSummaryByBetTypeReport.ReportDetails.Add(reportDetail);
-                    }
-                    currentRowIndex++;
 
-                    #endregion InsertReportDetail
-                }
+                        reportDetail = new Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType();
+                        reportDetail.BetTypeId = betType;
+
+                        #region LineTotal_Soccer
+
+                        var lineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["LineTotal_soccer_live"]);
+                        var lineTotal_Soccer = CastAide.AsDecimal(dataRow["LineTotal_soccer"]);
+                        var lineTotal_Others_Live = CastAide.AsDecimal(dataRow["LineTotal_others_live"]);
+                        var lineTotal_Others = CastAide.AsDecimal(dataRow["LineTotal_others"]);
+                        var turnover = CastAide.AsDecimal(dataRow["IBCTurnover"]);
+
+                        reportDetail.LineTotal_Soccer_Live = NumberFormat.DecFormat(lineTotal_Soccer_Live, 2);
+                        reportDetail.LineTotal_Soccer = NumberFormat.DecFormat(lineTotal_Soccer, 2);
+                        reportDetail.LineTotal_Others_Live = NumberFormat.DecFormat(lineTotal_Others_Live, 2);
+                        reportDetail.LineTotal_Others = NumberFormat.DecFormat(lineTotal_Others, 2);
+
+                        if (betType == 71 || betType == 73) // Casino && Bingo
+                        {
+                            turnover = 0;
+                            reportDetail.Turnover = _notAvailableString;
+                        }
+                        else
+                        {
+                            reportDetail.Turnover = NumberFormat.DecFormat(turnover, 2);
+                        }
+
+                        #endregion LineTotal_Soccer
+                        #region VirtualLineTotal
+
+                        if (IsExcludeVirtualLineTotal(betType))
+                        {
+                            reportDetail.VirtualLineTotal_Soccer_Live = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Soccer = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Others_Live = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Others = _notAvailableString;
+
+                            reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
+                                lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
+                            reportDetail.LineTotalVirtual = _notAvailableString;
+                            reportDetail.Variance = _notAvailableString;
+                        }
+                        else
+                        {
+                            var virtualLineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer_live"]);
+                            var virtualLineTotal_Soccer = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer"]);
+                            var virtualLineTotal_Others_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_others_live"]);
+                            var virtualLineTotal_Others = CastAide.AsDecimal(dataRow["VirtualLineTotal_others"]);
+
+                            reportDetail.VirtualLineTotal_Soccer_Live =
+                                NumberFormat.DecFormat(virtualLineTotal_Soccer_Live, 2);
+                            reportDetail.VirtualLineTotal_Soccer =
+                                NumberFormat.DecFormat(virtualLineTotal_Soccer, 2);
+                            reportDetail.VirtualLineTotal_Others_Live =
+                                NumberFormat.DecFormat(virtualLineTotal_Others_Live, 2);
+                            reportDetail.VirtualLineTotal_Others =
+                                NumberFormat.DecFormat(virtualLineTotal_Others, 2);
+                            reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
+                           lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
+                            reportDetail.LineTotalVirtual = NumberFormat.DecFormat(
+                                virtualLineTotal_Soccer_Live + virtualLineTotal_Soccer +
+                                virtualLineTotal_Others_Live + virtualLineTotal_Others, 2);
+
+                            reportDetail.Variance = NumberFormat.DecFormat(
+                                CastAide.AsDecimal(reportDetail.LineTotalReal) -
+                                CastAide.AsDecimal(reportDetail.LineTotalVirtual), 2);
+                            virtualLineTotal_Soccer_Live_Total += virtualLineTotal_Soccer_Live;
+                            virtualLineTotal_Soccer_Total += virtualLineTotal_Soccer;
+                            virtualLineTotal_Others_Live_Total += virtualLineTotal_Others_Live;
+                            virtualLineTotal_Others_Total += virtualLineTotal_Others;
+                            variance_Total +=
+                                (lineTotal_Soccer_Live + lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others) -
+                                (virtualLineTotal_Soccer_Live + virtualLineTotal_Soccer + virtualLineTotal_Others_Live + virtualLineTotal_Others);
+                        }
+
+                        reportDetail.Margin = this.CalculateMargin(lineTotal_Soccer_Live +
+                           lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others,
+                           turnover);
+
+                        lineTotal_Soccer_Live_Total += lineTotal_Soccer_Live;
+                        lineTotal_Soccer_Total += lineTotal_Soccer;
+                        lineTotal_Others_Live_Total += lineTotal_Others_Live;
+                        lineTotal_Others_Total += lineTotal_Others;
+                        turnover_Total += turnover;
+
+                        #endregion VirtualLineTotal
+                        #region ThirdParty
+
+                        string betTypeName = GetBetTypeName(betType) + (!string.IsNullOrEmpty(CastAide.AsString(dataRow["Hedge"])) ? " " + dataRow["Hedge"] : string.Empty);
+                        reportDetail.BetType = betTypeName;
+
+                        #endregion ThirdParty
+                        #region InsertReportDetail
+
+                        if (betType == Fanex.Tarus.Reports.Constants.BetType.SystemParlay && mixParlayRowIndex != -1)
+                        {
+                            wLSummaryByBetTypeReport.ReportDetails.Insert(mixParlayRowIndex, reportDetail);
+                        }
+                        else
+                        {
+                            if (betType == Fanex.Tarus.Reports.Constants.BetType.MixParlay)
+                            {
+                                mixParlayRowIndex = currentRowIndex + 1;
+                            }
+                            wLSummaryByBetTypeReport.ReportDetails.Add(reportDetail);
+                        }
+                        currentRowIndex++;
+
+                        #endregion InsertReportDetail
+                    }
 
                 #region Total
 
@@ -1437,6 +1437,11 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss2aV3
                     break;
             }
 
+            if (1501 <= betTypeId && betTypeId <= 1599)
+            {
+                betTypeName = Resource.BetType.Keno;
+            }
+
             return betTypeName;
         }
 
@@ -1447,6 +1452,7 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss2aV3
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.LiveCasino.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.VirtualSports.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Bingo.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Keno.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.P2P.ToLower()));
         }
 
@@ -1502,6 +1508,12 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss2aV3
             }
 
             if (1201 <= betType && betType <= 1299)
+            {
+                result = true;
+            }
+
+            //Bettype 1501-1599: Virtual Turnover/Winlost/Variance values of Keno: "N/A"
+            if (1501 <= betType && betType <= 1599)
             {
                 result = true;
             }

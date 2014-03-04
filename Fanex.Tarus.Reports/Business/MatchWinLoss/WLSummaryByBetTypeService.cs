@@ -110,6 +110,12 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 result = true;
             }
 
+            //Bettype 1501-1599: Virtual Turnover/Winlost/Variance values of Keno: "N/A"
+            if (1501 <= betType && betType <= 1599)
+            {
+                result = true;
+            }
+
             return result;
         }
 
@@ -148,6 +154,11 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 default:
                     betTypeName = CacheRef.GetBettype(betTypeId);
                     break;
+            }
+
+            if (1501 <= betTypeId && betTypeId <= 1599)
+            {
+                betTypeName = Resource.BetType.Keno;
             }
           
             return betTypeName;
