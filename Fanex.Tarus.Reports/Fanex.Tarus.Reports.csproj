@@ -415,6 +415,7 @@
     <EmbeddedResource Include="Resource\BetType.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BetType.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource\Language.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
