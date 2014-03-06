@@ -736,6 +736,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
                                 }
 
+                                bool isShowKenoStatus = ConfigurationManager.AppSettings["EnableKeno"] == "1";
+                                if (!isShowKenoStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
+                                }
+
                                 #endregion Progressive Bonus
 
                                 #region Abnormal

@@ -268,11 +268,11 @@
         	var height = 190;
         	parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
      }
-     function showhideCasinoBonus(id, roleid, username) {
+     function showhideKeno(id, uplineid, roleid) {
          var title = 'Update Enable Keno';
-         var url = 'CustomerSetting/ProgressiveBonus/CasinoBonus/Index?custId=' + id;
-         var width = 500;
-         var height = 190;
+         var url = 'CustomerSetting/keno/enablestatus/index?id=' + id + '&uplineId=' + uplineid + '&roleId=' + roleid;
+         var width = 480;
+         var height = 400;
          parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
      }
          function updateAutoSuspendStatus(id, roleIds) {
