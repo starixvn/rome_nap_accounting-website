@@ -741,6 +741,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
                                 }
+                                else {
+                                    TemplateHandler.Assign(ref htmlcontent, "{CustId}", custId);
+                                    TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId);
+                                    TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
+                                }
 
                                 #endregion Progressive Bonus
 
