@@ -10,7 +10,7 @@
     </div>
     <table class="tableInfo" cellpadding="0" cellspacing="0" border="0">
         <tr class="title">
-            <td colspan="2" class="bold enableTitle"><div><div style="float: left"><input id="chkAll" type="checkbox" data-ng-click="CheckAll()" />@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.All</div><div style="text-align: center">{{model.roleID == 4 ? 'Super: ' : model.roleID == 3 ? 'Master: ' : model.roleID == 2 ? 'Agent: ' : 'Member: '}}&nbsp;{{model.userName}}</div></div></td>
+            <td colspan="2" class="bold enableTitle"><div><div style="float: left"><input id="chkAll" data-ng-model="isCheckeddAll" type="checkbox" data-ng-click="CheckAll()" data-ng-disabled="isDisabledAll" />@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.All</div><div style="text-align: center">{{model.roleID == 4 ? 'Super: ' : model.roleID == 3 ? 'Master: ' : model.roleID == 2 ? 'Agent: ' : 'Member: '}}&nbsp;{{model.userName}}</div></div></td>
         </tr>
         <tr data-ng-repeat="item in betTypes" data-ng-hide="item.isHide" data-ng-init="item.disable = false; item.enable = !item.isDisabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.isDisabledDownlines; item.preValDownline = item.enableDownline">
             <td style="width: 50%">
@@ -27,7 +27,7 @@
                 <tr>
                     <td class="custBtn1">
                     </td>
-                    <td id="btnAdd" class="custBtn2 hand" data-ng-click="Update()">
+                    <td id="btnAdd" class="custBtn2 hand" data-ng-click="Update();">
                         Update
                     </td>
                 </tr>
