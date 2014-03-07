@@ -75,8 +75,12 @@ function KenoStatusController($scope) {
     };
 
     $scope.Update = function () {
-        //parent.Fanex.ExtAcc.BlockUI();
-
+        if (parent.BlockUI) {
+            try { parent.BlockUI(); } catch (e) { }
+        }
+        for (var i = 0; i < model.betTypeStatusList.length; i++) {
+            model.betTypeStatusList[i].isDisabledDownlines = model.betTypeStatusList[i].enableDownline;
+        }
         $.ajax({
             dataType: 'json',
             type: 'post',
@@ -117,6 +121,9 @@ function KenoStatusController($scope) {
                 $('#errMsg').attr('class', 'errMsg');
                 $('#errMsg').html(message.formatErrorMessage());
                 $('#errMsg').show();
+            }
+            if (parent && parent.jQuery && parent.jQuery.unblockUI) {
+                parent.jQuery.unblockUI();
             }
 
             //parent.Fanex.ExtAcc.UnBlockUI();
