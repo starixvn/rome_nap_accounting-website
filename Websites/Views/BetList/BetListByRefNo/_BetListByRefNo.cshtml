@@ -17,7 +17,7 @@
         string[] result = new string[2];
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71)
+            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202)
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
