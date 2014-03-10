@@ -5,18 +5,11 @@ angular.element($('#ng-app')).ready(function () {
 });
 
 function KenoStatusController($scope) {
-    
     $scope.model = model;
     $scope.betTypes = $scope.model.betTypeStatusList;
-    $scope.isDisabledAll = true;
+    $scope.isDisabledAll = IsDisabledAll(model);
     $scope.isCheckeddAll = true;
-    var length = $scope.model.betTypeStatusList.length;
-    for (var i = 0; i < length; i++) {
-        if (!$scope.model.betTypeStatusList[i].isDisabledUpline) {
-            $scope.isDisabledAll = false;
-            break;
-        }
-    }
+ 
 
     $scope.CheckStatus = function (preVal, scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
@@ -83,17 +76,13 @@ function KenoStatusController($scope) {
             }
         }
     };
-    $scope.isDisabledAll = true;
-    $scope.isCheckeddAll = true;
-    var length = $scope.model.betTypeStatusList.length;
-    for (var i = 0; i < length; i++) {
-        if (!$scope.model.betTypeStatusList[i].isDisabledUpline)
-            $scope.isDisabledAll = false;
-        break;
-    }
+ 
+   
 
     $scope.Update = function () {
-
+        if (IsDisabledAll(model)) {
+            return;
+        }
         if (parent.BlockUI) {
             try { parent.BlockUI(); } catch (e) { }
         }
@@ -211,3 +200,13 @@ function KenoStatusController($scope) {
         }
     }, true);
 };
+
+function IsDisabledAll(model){
+    var length = model.betTypeStatusList.length;
+    for (var i = 0; i < length; i++) {
+        if (!model.betTypeStatusList[i].isDisabledUpline) {
+            return false;
+        }
+    }
+    return true;
+}
