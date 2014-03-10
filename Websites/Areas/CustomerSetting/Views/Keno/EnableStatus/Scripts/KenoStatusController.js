@@ -9,7 +9,19 @@ function KenoStatusController($scope) {
     $scope.betTypes = $scope.model.betTypeStatusList;
     $scope.isDisabledAll = IsDisabledAll(model);
     $scope.isCheckeddAll = true;
- 
+
+    $scope.Init = function () {
+        var allChecked = true;
+        for (var i = 0; i < $scope.betTypes.length; i++) {
+            if ($scope.betTypes[i].isDisabled) {
+                allChecked = false;
+                break;
+            }
+        }
+
+        if (allChecked)
+            document.getElementById('chkAll').checked = true;
+    };
 
     $scope.CheckStatus = function (preVal, scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
@@ -25,7 +37,7 @@ function KenoStatusController($scope) {
                 scope.item.isDisabledDownlines = false;
 
                 for (var i = 0; i < betTypesCheckboxes.length; i++) {
-                    if (!betTypesCheckboxes[i].checked) {
+                    if (!betTypesCheckboxes[i].checked && !betTypesCheckboxes[i].disabled) {
                         allChecked = false;
                         break;
                     }
@@ -55,7 +67,7 @@ function KenoStatusController($scope) {
                 scope.item.isDisabledDownlines = false;
 
                 for (var i = 0; i < betTypesCheckboxes.length; i++) {
-                    if (!betTypesCheckboxes[i].checked) {
+                    if (!betTypesCheckboxes[i].checked && !betTypesCheckboxes[i].disabled) {
                         allChecked = false;
                         break;
                     }
@@ -188,17 +200,17 @@ function KenoStatusController($scope) {
         }
     };
 
-    $scope.$watch('model', function () {
-        var length = $scope.model.betTypeStatusList.length;
-        $scope.isCheckeddAll = true;
-        for (var i = 0; i < length; i++) {
-            var bettypeTmp = $scope.model.betTypeStatusList[i];
-            if (bettypeTmp.isDisabled) {
-                $scope.isCheckeddAll = false;
-                return;
-            }
-        }
-    }, true);
+//    $scope.$watch('model', function () {
+//        var length = $scope.model.betTypeStatusList.length;
+//        $scope.isCheckeddAll = true;
+//        for (var i = 0; i < length; i++) {
+//            var bettypeTmp = $scope.model.betTypeStatusList[i];
+//            if (bettypeTmp.isDisabled) {
+//                $scope.isCheckeddAll = false;
+//                return;
+//            }
+//        }
+//    }, true);
 };
 
 function IsDisabledAll(model){
