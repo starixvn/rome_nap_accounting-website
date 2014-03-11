@@ -8,7 +8,6 @@ function KenoStatusController($scope) {
     $scope.model = model;
     $scope.betTypes = $scope.model.betTypeStatusList;
     $scope.isDisabledAll = true;
-    $scope.isCheckeddAll = true;
 
     var length = $scope.model.betTypeStatusList.length;
     for (var i = 0; i < length; i++) {
@@ -30,7 +29,7 @@ function KenoStatusController($scope) {
         if (allChecked)
             document.getElementById('chkAll').checked = true;
     };
-
+ 
     $scope.CheckStatus = function (preVal, scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
