@@ -7,8 +7,16 @@ angular.element($('#ng-app')).ready(function () {
 function KenoStatusController($scope) {
     $scope.model = model;
     $scope.betTypes = $scope.model.betTypeStatusList;
-    $scope.isDisabledAll = IsDisabledAll(model);
+    $scope.isDisabledAll = true;
     $scope.isCheckeddAll = true;
+
+    var length = $scope.model.betTypeStatusList.length;
+    for (var i = 0; i < length; i++) {
+        if (!$scope.model.betTypeStatusList[i].isDisabledUpline) {
+            $scope.isDisabledAll = false;
+            break;
+        }
+    }
 
     $scope.Init = function () {
         var allChecked = true;
@@ -88,13 +96,8 @@ function KenoStatusController($scope) {
             }
         }
     };
- 
-   
 
     $scope.Update = function () {
-        if (IsDisabledAll(model)) {
-            return;
-        }
         if (parent.BlockUI) {
             try { parent.BlockUI(); } catch (e) { }
         }
@@ -199,26 +202,4 @@ function KenoStatusController($scope) {
             }
         }
     };
-
-//    $scope.$watch('model', function () {
-//        var length = $scope.model.betTypeStatusList.length;
-//        $scope.isCheckeddAll = true;
-//        for (var i = 0; i < length; i++) {
-//            var bettypeTmp = $scope.model.betTypeStatusList[i];
-//            if (bettypeTmp.isDisabled) {
-//                $scope.isCheckeddAll = false;
-//                return;
-//            }
-//        }
-//    }, true);
 };
-
-function IsDisabledAll(model){
-    var length = model.betTypeStatusList.length;
-    for (var i = 0; i < length; i++) {
-        if (!model.betTypeStatusList[i].isDisabledUpline) {
-            return false;
-        }
-    }
-    return true;
-}
