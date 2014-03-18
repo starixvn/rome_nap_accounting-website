@@ -20,7 +20,7 @@ function KenoStatusController($scope) {
     $scope.Init = function () {
         var allChecked = true;
         for (var i = 0; i < $scope.betTypes.length; i++) {
-            if ($scope.betTypes[i].isDisabled) {
+            if ($scope.betTypes[i].isDisabled && !$scope.betTypes[i].isDisabledUpline) {
                 allChecked = false;
                 break;
             }
@@ -29,7 +29,7 @@ function KenoStatusController($scope) {
         if (allChecked)
             document.getElementById('chkAll').checked = true;
     };
- 
+
     $scope.CheckStatus = function (preVal, scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
