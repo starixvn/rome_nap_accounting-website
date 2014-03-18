@@ -998,6 +998,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         Subject = "Deleted " + productType + " Bets Report for {site} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
 
                         string tplMatch = tplMatchAll.Clone().ToString();
+                        string ticketsEachLicensee = "";
 
                         TemplateHandler.Assign(ref tplMatch, "Code", drMatch["matchcode"]);
 
@@ -1046,9 +1047,10 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                     if (_rows.Count() == 0)
                                         continue;
 
-                                    var body = AssignData(dtUsers, dtChoice, dr["site"].ToString(), "site", tplUser, ref tplMatch, ref site, IsNumberGame, IsLiveCasino);
+                                    ticketsEachLicensee = tplMatch.Clone().ToString();
+                                    var body = AssignData(dtUsers, dtChoice, dr["site"].ToString(), "site", tplUser, ref ticketsEachLicensee, ref site, IsNumberGame, IsLiveCasino);
 
-                                    TemplateHandler.Assign(ref tplMatch, "Rows", body.ToString());
+                                    TemplateHandler.Assign(ref ticketsEachLicensee, "Rows", body.ToString());
 
                                     ToMailCSD = SplitMailList(dr["tolist"].ToString());
                                     CC = SplitMailList(dr["cclist"].ToString());
@@ -1058,7 +1060,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
 
                                     // send mail via gmail system
-                                    bool f = SendMailExtension.AccSendMail(ToMailCSD, CC, BCC, _subject, _subject, tplMatch, null);
+                                    bool f = SendMailExtension.AccSendMail(ToMailCSD, CC, BCC, _subject, _subject, ticketsEachLicensee, null); 
                                     string msg = "";
                                     if (f)
                                     {
@@ -1089,12 +1091,13 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                 foreach (SpecialDeleteElement subElement in subCollections)
                                 {
                                     site = string.Empty;
-                                    var body = AssignData(dtUsers, dtChoice, subElement.Alias, subElement.Name, tplUser, ref tplMatch, ref site, IsNumberGame, IsLiveCasino);
+                                    ticketsEachLicensee = tplMatch.Clone().ToString();
+                                    var body = AssignData(dtUsers, dtChoice, subElement.Alias, subElement.Name, tplUser, ref ticketsEachLicensee, ref site, IsNumberGame, IsLiveCasino);
 
                                     if (body.Length == 0)
                                         continue;
 
-                                    TemplateHandler.Assign(ref tplMatch, "Rows", body.ToString());
+                                    TemplateHandler.Assign(ref ticketsEachLicensee, "Rows", body.ToString());
 
                                     #region send email
                                     ToMailCSD = subElement.To;
@@ -1105,7 +1108,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
 
                                     // send mail via gmail system
-                                    bool f = SendMailExtension.AccSendMail(ToMailCSD, CC, BCC, _subject, _subject, tplMatch, null);
+                                    bool f = SendMailExtension.AccSendMail(ToMailCSD, CC, BCC, _subject, _subject, ticketsEachLicensee, null); 
                                     string msg = "";
                                     if (f)
                                     {
