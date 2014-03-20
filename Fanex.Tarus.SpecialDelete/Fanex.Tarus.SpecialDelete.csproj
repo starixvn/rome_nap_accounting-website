@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DNAide">
-      <HintPath>..\Websites\Bin\DNAide.dll</HintPath>
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=1.0.4875.18837, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
