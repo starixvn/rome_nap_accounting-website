@@ -75,6 +75,7 @@
 
   <Function Name="Customer Status">
     <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Virtual Sport">
@@ -237,5 +238,8 @@
 
   <Function Name="Login - internal">
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+  <Function Name="SearchCopy">
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 </Functions>

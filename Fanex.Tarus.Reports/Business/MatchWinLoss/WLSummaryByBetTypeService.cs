@@ -94,6 +94,8 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 case Fanex.Tarus.Reports.Constants.BetType.TotalGoalVS:
                 case Fanex.Tarus.Reports.Constants.BetType.DoubleChanceVS:
                 case Fanex.Tarus.Reports.Constants.BetType.Bingo:
+                case Fanex.Tarus.Reports.Constants.BetType.LiveBaccarat:
+                case Fanex.Tarus.Reports.Constants.BetType.LiveRoulette:
                 case RowType.ThirdParty:
                     result = true;
                     break;
@@ -104,6 +106,12 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
             }
 
             if (1201 <= betType && betType <= 1299)
+            {
+                result = true;
+            }
+
+            //Bettype 1501-1599: Virtual Turnover/Winlost/Variance values of Keno: "N/A"
+            if (1501 <= betType && betType <= 1599)
             {
                 result = true;
             }
@@ -146,6 +154,11 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 default:
                     betTypeName = CacheRef.GetBettype(betTypeId);
                     break;
+            }
+
+            if (1501 <= betTypeId && betTypeId <= 1599)
+            {
+                betTypeName = Resource.BetType.Keno;
             }
           
             return betTypeName;

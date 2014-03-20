@@ -17,7 +17,7 @@
         string[] result = new string[2];
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71)
+            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202)
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -54,7 +54,7 @@
             </div>
         </td>
         <td class='r bl_evt'>
-            <div  id="choice_right" class="width270  table-cell">
+            <div  id="choice_right" class="width250  table-cell">
                 <div>
                     @Html.Raw(betdetail.ChoiceHtml)
                 </div>
@@ -68,7 +68,7 @@
             </div>
         </td>
         <td class='r bl_underdog'>
-            <div id="odd"  class="width60 table-cell">
+            <div id="odd"  class="width50 table-cell">
                 @Html.Partial("~/Views/BetList/_Odds.cshtml", betdetail)
             </div>
         </td>
@@ -129,11 +129,11 @@
                                 Date</div>
                         </th>
                         <th>
-                            <div class="width270 height34 table-cell">
+                            <div class="width250 height34 table-cell">
                                 Choice</div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
+                            <div class="width50 height34 table-cell">
                                 Odds</div>
                         </th>
                         <th>
@@ -185,11 +185,11 @@
                                 Date</div>
                         </th>
                         <th>
-                            <div class="width270 height34 table-cell">
+                            <div class="width250 height34 table-cell">
                                 Choice</div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
+                            <div class="width50 height34 table-cell">
                                 Odds</div>
                         </th>
                         <th>

@@ -141,4 +141,7 @@
   <data name="VirtualSports" xml:space="preserve">
     <value>Virtual Sports</value>
   </data>
+  <data name="Keno" xml:space="preserve">
+    <value>Keno</value>
+  </data>
 </root>

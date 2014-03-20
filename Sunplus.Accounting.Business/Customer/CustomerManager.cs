@@ -11,7 +11,10 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.Tarus.LiveCasino.Distributor;
 using Fanex.Tarus.LiveCasino.Entities;
 using IBCUtils.Objects;
@@ -30,8 +33,6 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 
 
 /// <summary>
@@ -734,6 +735,17 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (!isAllowProgressiveBonus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
+                                }
+
+                                bool isShowKenoStatus =KenoSection.Instance.Enable;
+                                if (!isShowKenoStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
+                                }
+                                else {
+                                    TemplateHandler.Assign(ref htmlcontent, "{CustId}", custId);
+                                    TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId);
+                                    TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
                                 }
 
                                 #endregion Progressive Bonus

@@ -992,6 +992,12 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                 betTypeName += " (" + Fanex.Tarus.Reports.Resource.Language.VirtualSportsName + ")";
             }
 
+            if (1501 <= betTypeId && betTypeId <= 1599)
+            {
+                betTypeName = Resource.BetType.Keno;
+            }			
+			
+
             return betTypeName;
         }
 
@@ -1002,6 +1008,7 @@ namespace Fanex.Tarus.Reports.Business.MatchWinLoss
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.LiveCasino.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.VirtualSports.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Bingo.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Keno.ToLower()) ||
                    betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.P2P.ToLower()));
         }
 
