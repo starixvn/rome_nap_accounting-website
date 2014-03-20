@@ -411,6 +411,10 @@ var RacingSetting = {
             sport = RacingSettingObj.RacingSportType[i];
             for (var j = 0; j < sport.Totes.length; j++) {
                 tote = sport.Totes[j];
+
+                console.log(tote.Visible);
+                if (!tote.Visible) continue;
+
                 tote.Enable = $("#" + tote.Id + "_" + chkEnable).attr("checked");
                 tote.EnableDownline = $("#" + tote.Id + "_" + chkEnableDownline).attr("checked");
 
@@ -491,6 +495,7 @@ var RacingSetting = {
                 for (var k = 0; k < tote.Bettypes.length; k++) {
                     bettype = tote.Bettypes[k];
                     id = sport.Id + "_" + bettype.Id;
+
                     switch (Roles.CurrRole) {
                         case Roles.Super: //*******Super params*****
                             if (i == 0 && j == 0 && k == 0) {
@@ -962,6 +967,9 @@ var RacingSetting = {
             sport = RacingSettingObj.RacingSportType[i];
             for (var j = 0; j < sport.Totes.length; j++) {
                 tote = sport.Totes[j];
+                
+                if (!tote.Visible) continue;
+
                 for (var k = 0; k < tote.Bettypes.length; k++) {
                     bettype = tote.Bettypes[k];
                     id = sport.Id + "_" + bettype.Id;

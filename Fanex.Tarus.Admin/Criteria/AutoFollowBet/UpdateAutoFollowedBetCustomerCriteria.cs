@@ -38,6 +38,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public int Followed1stOverUnder { get; set; }
 
+        public decimal Odds { get; set; }
+
         public int EditorId
         {
             get
@@ -74,6 +76,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
             storeProcedureParams.Add("ip", IP);
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
+            storeProcedureParams.Add("odds", Odds);
+
             return storeProcedureParams;
         }
 

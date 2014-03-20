@@ -57,7 +57,8 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
                     FollowedHDP = CastAide.AsInt32(row["Follow1"]),
                     Followed1stHDP = CastAide.AsInt32(row["Follow7"]),
                     FollowedOverUnder = CastAide.AsInt32(row["Follow3"]),
-                    Followed1stOverUnder = CastAide.AsInt32(row["Follow8"])
+                    Followed1stOverUnder = CastAide.AsInt32(row["Follow8"]),
+                    Odds = CastAide.AsDouble(row["odds"])
                 });
             }
 

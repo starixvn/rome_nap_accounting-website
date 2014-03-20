@@ -116,7 +116,8 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
                         FollowedHDP = data.FollowedHDP,
                         Followed1stHDP = data.Followed1stHDP,
                         FollowedOverUnder = data.FollowedOverUnder,
-                        Followed1stOverUnder = data.Followed1stOverUnder
+                        Followed1stOverUnder = data.Followed1stOverUnder,
+                        Odds = data.Odds
                     };
 
                     followedCustomer.Source = GetSourceTypeName(followedCustomer.SourceId);

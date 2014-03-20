@@ -45,5 +45,7 @@ namespace Fanex.Tarus.Admin.Entities
         public int Followed1stOverUnder { get; set; }
 
         public bool IsFollowed { get; set; }
+
+        public double Odds { get; set; }
     }
 }

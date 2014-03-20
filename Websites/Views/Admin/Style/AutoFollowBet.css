@@ -1,8 +1,7 @@
 ﻿.checkBA
 {
-    background: transparent url(Images/check.png) no-repeat scroll 0; /*cursor: pointer;*/
-    height: 18px;
-    margin-left: 25px;
+    background: url("Images/check.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    height: 18px;    
     margin-top: 0px;
 }
 
