@@ -104,7 +104,7 @@ function KenoStatusController($scope) {
             try { parent.BlockUI(); } catch (e) { }
         }
         for (var i = 0; i < model.betTypeStatusList.length; i++) {
-            model.betTypeStatusList[i].isDisabledDownlines = model.betTypeStatusList[i].enableDownline;
+            model.betTypeStatusList[i].isDisabledDownlines = !model.betTypeStatusList[i].enableDownline;
         }
         $.ajax({
             dataType: 'json',
