@@ -36,7 +36,7 @@ function KenoStatusController($scope) {
 
         if (preVal) {
             if (scope.item.enable) {
-                scope.item.enableDownline = $scope.betTypes[i].preValDownline;
+                scope.item.enableDownline = scope.item.preValDownline;
                 scope.item.disableDownline = true;
 
                 scope.item.isDisabled = false;
