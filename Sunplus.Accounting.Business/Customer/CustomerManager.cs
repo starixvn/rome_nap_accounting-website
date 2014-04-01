@@ -808,6 +808,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var liveCasinoSetting = "";
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
+                                var kenoSetting = string.Empty;
                                 switch (roleId)
                                 {
                                     case 1: // member
@@ -871,6 +872,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditSuper.aspx?custId={0}&exchangeId={1}", custId, CastAide.AsInt32(row1["exchangeid"]));
                                         VirtualSportsSetting = string.Format("VirtualSportSuperPT/EditSuper?custId={0}&uname={1}", custId, userName);
+                                        kenoSetting = string.Format("kenosetting/EditSuper?custId={0}", custId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         break;
@@ -914,6 +916,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
                                 }
                                 TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
                                 TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
@@ -921,6 +924,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
 
                                 string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                                 //AppSession.GroupID
