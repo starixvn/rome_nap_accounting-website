@@ -8,7 +8,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     $scope.confirmIsAutoArray = [];
     $scope.errors = {};
 
-//    console.log($scope.kenoSetting);
+    console.log($scope.kenoSetting);
 
     $scope.$watch(function () {
         if ($scope.isUpdatePT && $scope.isUpdateBetSetting) {
@@ -55,18 +55,18 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     $scope.getUrlUpdated = function () {
         var url = "";
         switch (kenoRepositories.kenoSetting.customerInformation.actionType) {
-            case 4: url = 'customersetting/KenoSetting/kenosetting/EditSuper';
+            case 4: url = 'customersetting/KenoSetting/kenosetting/UpdateSuper';
                 break;
-            case 3: url = 'customersetting/KenoSetting/kenosetting/EditMaster';
+            case 3: url = 'customersetting/KenoSetting/kenosetting/UpdateMaster';
                 break;
-            case 2: url = 'customersetting/KenoSetting/kenosetting/EditAgent';
+            case 2: url = 'customersetting/KenoSetting/kenosetting/UpdateAgent';
                 break;
-            case 21: url = 'customersetting/KenoSetting/kenosetting/AgentEditMember';
+            case 21: url = 'customersetting/KenoSetting/kenosetting/UpdateAgentOnMember';
                 break;
-            case 41: url = 'customersetting/KenoSetting/kenosetting/SuperEditMember';
+            case 41: url = 'customersetting/KenoSetting/kenosetting/UpdateSuperOnMember';
                 break;
-            case 31: url = 'customersetting/KenoSetting/kenosetting/MasterEditMember';
-                break;     
+            case 31: url = 'customersetting/KenoSetting/kenosetting/UpdateMasterOnMember';
+                break;
             default:
                 break;
         }
@@ -92,9 +92,9 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                     }
 
                     if (!isError) {
-                        var html = '<div class="alertsuccess">Updated successful.</div>';
-                        $("#divShowInfo").append(html);
                         $timeout(function () {
+                            var html = '<div class="alertsuccess">Updated successful.</div>';
+                            $("#divShowInfo").append(html);
                             commonService.unblockUI();
                             location.reload();
                             parent.frames["centerFr"].location.reload();
