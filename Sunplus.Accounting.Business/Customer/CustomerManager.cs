@@ -861,7 +861,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditSuper.aspx?custId={0}&exchangeId={1}", custId, CastAide.AsInt32(row1["exchangeid"]));
                                         VirtualSportsSetting = string.Format("VirtualSportSuperPT/EditSuper?custId={0}&uname={1}", custId, userName);
-                                        kenoSetting = string.Format("kenosetting/EditSuper?custId={0}", custId);
+                                        kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditSuper?custId={0}", custId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         break;
@@ -984,6 +984,10 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                                 }
 
+                                if (!isShowKenoStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
+                                }
                                 #endregion MenuDetail
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
