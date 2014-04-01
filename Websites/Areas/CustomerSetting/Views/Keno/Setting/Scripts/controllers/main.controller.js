@@ -8,7 +8,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     $scope.confirmIsAutoArray = [];
     $scope.errors = {};
 
-    console.log($scope.kenoSetting);
+//    console.log($scope.kenoSetting);
 
     $scope.$watch(function () {
         if ($scope.isUpdatePT && $scope.isUpdateBetSetting) {
@@ -55,17 +55,17 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     $scope.getUrlUpdated = function () {
         var url = "";
         switch (kenoRepositories.kenoSetting.customerInformation.actionType) {
-            case 4: url = 'customersetting/keno/kenosetting/EditSuper';
+            case 4: url = 'customersetting/KenoSetting/kenosetting/EditSuper';
                 break;
-            case 3: url = 'customersetting/keno/kenosetting/EditMaster';
+            case 3: url = 'customersetting/KenoSetting/kenosetting/EditMaster';
                 break;
-            case 2: url = 'customersetting/keno/kenosetting/EditAgent';
+            case 2: url = 'customersetting/KenoSetting/kenosetting/EditAgent';
                 break;
-            case 21: url = 'customersetting/keno/kenosetting/AgentEditMember';
+            case 21: url = 'customersetting/KenoSetting/kenosetting/AgentEditMember';
                 break;
-            case 41: url = 'customersetting/keno/kenosetting/SuperEditMember';
+            case 41: url = 'customersetting/KenoSetting/kenosetting/SuperEditMember';
                 break;
-            case 31: url = 'customersetting/keno/kenosetting/MasterEditMember';
+            case 31: url = 'customersetting/KenoSetting/kenosetting/MasterEditMember';
                 break;     
             default:
                 break;
