@@ -8,7 +8,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     $scope.confirmIsAutoArray = [];
     $scope.errors = {};
 
-    console.log($scope.kenoSetting);
+//    console.log($scope.kenoSetting);
 
     $scope.$watch(function () {
         if ($scope.isUpdatePT && $scope.isUpdateBetSetting) {
@@ -96,8 +96,8 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                             var html = '<div class="alertsuccess">Updated successful.</div>';
                             $("#divShowInfo").append(html);
                             commonService.unblockUI();
-                            location.reload();
-                            parent.frames["centerFr"].location.reload();
+//                            location.reload();
+//                            parent.frames["centerFr"].location.reload();
                         }, 5000);
                     } else {
                         commonService.unblockUI();
