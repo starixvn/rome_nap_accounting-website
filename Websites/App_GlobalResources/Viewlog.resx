@@ -3468,4 +3468,25 @@
   <data name="oldabnormal" xml:space="preserve">
     <value>Abnormal (Old)</value>
   </data>
+  <data name="Disable202_1501" xml:space="preserve">
+    <value>Disabled Australia Acttab</value>
+  </data>
+  <data name="Disable202_1503" xml:space="preserve">
+    <value>Disabled Slovakia Eklub</value>
+  </data>
+  <data name="Disable202_1504" xml:space="preserve">
+    <value>Disabled Canada Keno</value>
+  </data>
+  <data name="Disable202_1505" xml:space="preserve">
+    <value>Disabled West Canada Keno</value>
+  </data>
+  <data name="Disable202_1507" xml:space="preserve">
+    <value>Disabled Massac</value>
+  </data>
+  <data name="Disable202_1508" xml:space="preserve">
+    <value>Disabled Ohio</value>
+  </data>
+  <data name="Disable202_1509" xml:space="preserve">
+    <value>Disabled Malta</value>
+  </data>
 </root>
