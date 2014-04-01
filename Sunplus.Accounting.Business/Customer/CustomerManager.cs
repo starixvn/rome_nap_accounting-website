@@ -1330,7 +1330,7 @@ namespace Sunplus.Accounting.Business.Customer
 						}
 					}
 
-                    if (!isShowKenoStatus)
+                    if (isShowKenoStatus)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Keno</a>";
                     }
@@ -1364,7 +1364,7 @@ namespace Sunplus.Accounting.Business.Customer
 						}
 					}
 
-                    if (!isShowKenoStatus)
+                    if (isShowKenoStatus)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Keno</a>";
                     }
