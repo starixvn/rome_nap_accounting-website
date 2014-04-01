@@ -7,7 +7,7 @@ KenoModule.directive('superPositionTakingElement', ['commonService', function (c
             positionTaking: "=ngModel",
             index: "=index"
         },
-        templateUrl: domain +'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/SuperPositionTaking.htm',
+        templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/SuperPositionTaking.htm',
         link: function ($scope, elem, attr, ctrl) {
             $scope.originalPositionTaking = angular.copy($scope.positionTaking);
 
@@ -21,7 +21,7 @@ KenoModule.directive('superPositionTakingElement', ['commonService', function (c
                 else {
                     $scope.positionTaking.isUpdatePT = false;
                 }
-                $scope.$emit('positionTakingRow');
+                $scope.$emit('totallyChecking');
             };
 
             $scope.$watch('positionTaking.s4', function () {

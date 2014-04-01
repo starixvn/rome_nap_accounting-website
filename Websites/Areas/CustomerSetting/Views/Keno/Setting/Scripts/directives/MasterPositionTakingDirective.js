@@ -28,7 +28,7 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
                     $scope.positionTaking.isUpdatePT = false;
                 }
 
-                $scope.$emit('positionTakingRow');
+                $scope.$emit('totallyChecking');
             };
 
             $scope.$watch('[positionTaking.s3, positionTaking.uS3, positionTaking.iS3]', function () {

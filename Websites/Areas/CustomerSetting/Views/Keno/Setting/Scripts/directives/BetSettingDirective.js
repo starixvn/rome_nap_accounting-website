@@ -8,7 +8,7 @@ KenoModule.directive('betSettingElement', function () {
             betSetting: "=ngModel",
             index: "=index"
         },
-        templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/BetSetting/BetSetting.htm',
+        templateUrl: domain +  'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/BetSetting/BetSetting.htm',
         controller: ['$scope',
             function ($scope) {
                 $scope.originalBetSetting = angular.copy($scope.betSetting);

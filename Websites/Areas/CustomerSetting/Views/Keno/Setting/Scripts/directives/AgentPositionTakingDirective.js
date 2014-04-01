@@ -21,13 +21,14 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', function (c
             $scope.monitorSaveButton = function () {
                 if ($scope.positionTaking.isUpdateUM2
                     || $scope.positionTaking.isUpdateM2
-                    || $scope.positionTaking.isUpdateN2) {
+                    || $scope.positionTaking.isUpdateN2
+                    || $scope.positionTaking.isUpdateA2) {
                     $scope.positionTaking.isUpdatePT = true;
                 }
                 else {
                     $scope.positionTaking.isUpdatePT = false;
                 }
-                $scope.$emit('positionTakingRow');
+                $scope.$emit('totallyChecking');
             };
 
             $scope.$watch('[positionTaking.m2, positionTaking.uM2, positionTaking.iM2]', function () {
