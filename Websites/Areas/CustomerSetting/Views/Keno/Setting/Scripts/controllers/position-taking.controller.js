@@ -10,7 +10,8 @@ KenoModule.controller('positionTakingController', function ($scope, kenoReposito
     $scope.copyAll = function (isCopy, betTypeId) {
         $scope.isCopyAll = isCopy;
         $scope.positionTakingCopyAll.betTypeId = isCopy == true ? betTypeId : -1; ;
-        $scope.positionTakingCopyAll.isCopiedAll = isCopy
+        $scope.positionTakingCopyAll.isCopiedAll = isCopy;
+        $scope.$broadcast('totallyChecking');
     };
 
     $scope.setValueAllMember = function (isUpdateAllMember) {
@@ -31,25 +32,13 @@ KenoModule.controller('positionTakingController', function ($scope, kenoReposito
     $scope.$on('updateAllMember', function (event) {
         if ($scope.confirmIsAutoArray.length > 0) {
             ngDialog.open({
-                template: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Partial/PositionTaking/ConfirmUpdateAllMembers.htm',
+                template: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/ConfirmUpdateAllMembers.htm',
                 scope: $scope,
                 closeByCloseButton: true
             });
         }
     });
 
-    $scope.$on('positionTakingRow', function (event) {
-        var length = $scope.positionTakingList.length;
-        for (var i = 0; i < length; i++) {
-            var positionTakingTmp = $scope.positionTakingList[i];
-            if (positionTakingTmp.isUpdatePT) {
-                $scope.isPositionTakingPartial = true;
-                return true;
-            }
-        }
-
-        $scope.isPositionTakingPartial = false;
-    });
 
     $scope.$on('confirmIsAuto', function (event, data) {
         var index = $scope.$parent.confirmIsAutoArray.indexOf(data.betTypeId);
@@ -65,20 +54,25 @@ KenoModule.controller('positionTakingController', function ($scope, kenoReposito
         return false;
     });
 
-    $scope.$watch('isCopyAll', function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            if ($scope.isCopyAll) {
-                $scope.isPositionTakingPartial = true;
-            }
-            else {
-                $scope.$broadcast('positionTakingRow');
-            }
-        }
-    }, true);
+    $scope.$on('totallyChecking', function (event) {
+        var length = $scope.positionTakingList.length;
 
-    $scope.$watch('isPositionTakingPartial', function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            $scope.$emit('positionTakingPartial', $scope.isPositionTakingPartial);
+        $scope.isPositionTakingPartial = false;
+
+        if ($scope.isCopyAll) {
+            $scope.isPositionTakingPartial = true;
         }
-    }, true);
+        else {
+            for (var i = 0; i < length; i++) {
+                var positionTakingTmp = $scope.positionTakingList[i];
+                if (positionTakingTmp.isUpdatePT) {
+                    $scope.isPositionTakingPartial = true;
+                    break;
+                }
+            }
+        }
+
+        $scope.$emit('positionTakingPartial', $scope.isPositionTakingPartial);
+    });
+
 });

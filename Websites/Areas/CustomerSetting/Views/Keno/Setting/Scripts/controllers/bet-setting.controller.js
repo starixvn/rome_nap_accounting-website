@@ -24,6 +24,8 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
         var length = $scope.betSettingList.length;
         var updatedCount = 0;
 
+        $scope.isBetSettingPartial = false;
+
         if (isCopiedAll) {
             $scope.isBetSettingPartial = $scope.betSettingList[0].isValid;
             return true;
@@ -44,12 +46,8 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
 
             $scope.isBetSettingPartial = updatedCount > 0 ? true : false;
         }
-    });
 
-    $scope.$watch('isBetSettingPartial', function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
-        }
-    }, true);
+        $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
+    });
 
 });

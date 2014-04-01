@@ -25,7 +25,7 @@ KenoModule.directive('memberPositionTakingElement', ['commonService', function (
 
                 $scope.positionTaking.isUpdateA1 = $scope.originalPositionTaking.a1 != $scope.positionTaking.a1 ? true : false;
                 $scope.positionTaking.isUpdatePT = $scope.positionTaking.isUpdateA1;
-                $scope.$emit('positionTakingRow');
+                $scope.$emit('totallyChecking');
             }, true);
         }
     };
