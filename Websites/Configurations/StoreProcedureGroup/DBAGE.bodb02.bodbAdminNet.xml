@@ -304,9 +304,17 @@
     <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
 	</Function>
-
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+
+  <Function Name="Keno Setting">
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>
 
