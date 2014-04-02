@@ -998,7 +998,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                                 }
 
-                                if (!isShowKenoStatus)
+                                bool isShowSetting = KenoSection.Instance.ShowSetting;
+                                if (!isShowSetting)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
                                 }
@@ -1283,7 +1284,7 @@ namespace Sunplus.Accounting.Business.Customer
 			string minMaxPtUrl = "";
 			var minMaxPtRenovationUrl = string.Empty;
 			string masterPtUrl = "";
-            bool isShowKenoStatus = KenoSection.Instance.Enable;
+            bool isShowSetting = KenoSection.Instance.ShowSetting;
 			switch (roleId)
 			{
 				case 1: // member
@@ -1330,7 +1331,7 @@ namespace Sunplus.Accounting.Business.Customer
 						}
 					}
 
-                    if (isShowKenoStatus)
+                    if (isShowSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Keno</a>";
                     }
@@ -1364,7 +1365,7 @@ namespace Sunplus.Accounting.Business.Customer
 						}
 					}
 
-                    if (isShowKenoStatus)
+                    if (isShowSetting)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Keno</a>";
                     }

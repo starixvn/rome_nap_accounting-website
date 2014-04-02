@@ -22,31 +22,26 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
 
     $scope.$on('totallyChecking', function (event, isCopiedAll) {
         var length = $scope.betSettingList.length;
-        var updatedCount = 0;
 
         $scope.isBetSettingPartial = false;
 
         if (isCopiedAll) {
             $scope.isBetSettingPartial = $scope.betSettingList[0].isValid;
+            $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
+            return true;
         }
         else {
             for (var i = 0; i < length; i++) {
                 var betSettingTmp = $scope.betSettingList[i];
                 if (!betSettingTmp.isValid) {
                     $scope.isBetSettingPartial = false;
-                    break;
-                }
-                else {
-                    if (betSettingTmp.isBetSettingUpdated || betSettingTmp.isStatusUpdated) {
-                        updatedCount = updatedCount + 1;
-                    }
+                    $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
+                    return true;
                 }
             }
-
-            $scope.isBetSettingPartial = updatedCount > 0 ? true : false;
+            $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
+            return true;
         }
-
-        $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
     });
 
 });
