@@ -5,13 +5,13 @@
             ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}" type="button" />
      </div>
 </td>
-<td class="formatCol">
+<td class="formatCol betSetting">
         <input bet-setting-input  ng-model="betSetting.minBet" 
              value-range = "{'minName': '{{betSetting.upline.minBet}}' , 'min':{{betSetting.upline.minBet}}, 'maxName': 'Max Bet', 'max':{{betSetting.maxBet}}, 'model' :'Min Bet' }"
              ng-disabled="isDisabledByCopyAll"  class="r col50percent" type="text"title =""/>
         <span ng-model="betSetting.upline.minBet" bet-setting-constrain="1"></span>
 </td>
-<td class="formatCol" ng-switch="$parent.$parent.roleId">
+<td class="formatCol betSetting" ng-switch="$parent.$parent.roleId">
         <div ng-switch-when="4">
             <input bet-setting-input ng-model="betSetting.maxBet" ng-disabled="isDisabledByCopyAll" 
              value-range = "{ 'minName': '' , 'min':-1, 'maxName': 'Max Per Match', 'max':{{betSetting.maxPerMatch}}, 'model' :'Max Bet'}"
@@ -25,7 +25,7 @@
         </div>
         
 </td>
-<td class=" formatCol " ng-switch="$parent.$parent.roleId">
+<td class=" formatCol betSetting" ng-switch="$parent.$parent.roleId">
     <div ng-switch-when="4">
          <input bet-setting-input ng-model="betSetting.maxPerMatch" 
          value-range = "{ 'minName': '', 'min':-1,'maxName': '', 'max':-1, 'model' :'Max Per Match' }"
@@ -38,11 +38,11 @@
                  <span ng-model="betSetting.upline.maxPerMatch"  bet-setting-constrain="2"></span>
         </div>
 </td>
-<td class="formatCol c">
+<td class="formatCol c betSetting">
     <input ng-disabled="($parent.$parent.isCopyAll  && index != 0) || isStatusUIDisabled"
         type="checkbox" ng-model="betSetting.isEnabled" />
 </td>
-<td ng-if="$parent.roleId != 1" class="formatCol c">
+<td ng-if="$parent.roleId != 1" class="formatCol c betSetting">
     <input ng-disabled="($parent.$parent.isCopyAll  && index != 0) || isDownlinechkDisabled"
         type="checkbox" ng-model="betSetting.isDownlinesEnabled" />
 </td>
