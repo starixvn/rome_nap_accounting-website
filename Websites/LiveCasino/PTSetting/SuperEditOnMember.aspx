@@ -80,7 +80,7 @@
                                 <td><select class="pt comm" data-bind="enable:isNotAutoReset, options: getPtValues(PTSetting.Upline.Upline.Upline.MinPT,PTSetting.Upline.Upline.Upline.MaxPT, PTSetting.Upline.Upline.Upline.PresetPT()), value:PTSetting.Upline.Upline.Upline.PresetPT" h="${PTSetting.Upline.Upline.Upline.PresetPT}" /></td>
                             {{/if}}
                         {{/if}}
-                        <td><input type="checkbox" data-bind="checked: PTSetting.Upline.Upline.Upline.IsAutoPresetPT" /><select class="pt comm" data-bind="enable:isAutoReset, options: getPtValues(0,PTSetting.Upline.Upline.Upline.MaxAutoPresetPT, PTSetting.Upline.Upline.Upline.AutoPresetPT()), value:PTSetting.Upline.Upline.Upline.AutoPresetPT" h="${PTSetting.Upline.Upline.Upline.AutoPresetPT}" /></td>
+                        <td><input type="checkbox" data-bind="checked: PTSetting.Upline.Upline.Upline.IsAutoPresetPT" /><select class="pt comm" data-bind="enable:isAutoReset, options: getPtValues(PTSetting.Upline.Upline.Upline.MinPT,PTSetting.Upline.Upline.Upline.MaxAutoPresetPT, PTSetting.Upline.Upline.Upline.AutoPresetPT()), value:PTSetting.Upline.Upline.Upline.AutoPresetPT" h="${PTSetting.Upline.Upline.Upline.AutoPresetPT}" /></td>
                         
                         <td><label>${PTSetting.Upline.Upline.PresetPT}</label></td>
                         <td><label>${PTSetting.Upline.PresetPT}</label></td>                        
