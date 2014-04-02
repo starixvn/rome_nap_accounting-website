@@ -28,16 +28,16 @@
             <td class="formatCol l header">
                 <span ng-bind="betSetting.betTypeName"></span>
             </td>
-            <td class="c formatCol">
+            <td class="c formatCol betSetting">
                 <span ng-bind="betSetting.minBet | number : 0"></span>
             </td>
-            <td class="c formatCol">
+            <td class="c formatCol betSetting">
                 <span ng-bind="betSetting.maxBet | number : 0"></span>
             </td>
-            <td class="c formatCol ">
+            <td class="c formatCol betSetting">
                 <span ng-bind="betSetting.maxPerMatch | number : 0"></span>
             </td>
-            <td class="formatCol c">
+            <td class="formatCol c betSetting">
                 <input ng-disabled="true " type="checkbox" ng-model="betSetting.isEnabled" />
             </td>
         </tr>

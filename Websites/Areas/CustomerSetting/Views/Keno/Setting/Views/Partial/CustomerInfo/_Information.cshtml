@@ -1,7 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
 <table class="tableColor tableWidth" ng-controller="customerInfoController">
     <tr>
-        <td colspan="4" class="header c b" >
+        <td colspan="4" class="header c b " >
            <div class=" divInline" ng-switch="customerInfo.roleId">
                 <span ng-switch-when="4">@LayoutTexts.Super: </span>
                 <span ng-switch-when="3">@LayoutTexts.Master: </span>
@@ -12,43 +12,43 @@
         </td>
     </tr>
     <tr>
-        <td class="col15percent formatCol r b">
+        <td class="col15percent formatCol r b betSetting">
             @LayoutTexts.FirstName
         </td>
-        <td class="col35percent formatCol l">
+        <td class="col35percent formatCol l betSetting">
             <span ng-bind="customerInfo.firstName"></span>
         </td>
-        <td class="col15percent formatCol r b">
+        <td class="col15percent formatCol r b betSetting">
             @LayoutTexts.LastName
         </td>
-        <td class="col35percent formatCol l">
+        <td class="col35percent formatCol l betSetting">
             <span ng-bind="customerInfo.lastName"></span>
         </td>
     </tr>
     <tr>
-        <td class="formatCol r b">
+        <td class="formatCol r b betSetting">
             @LayoutTexts.Phone
         </td>
-        <td class="formatCol l">
+        <td class="formatCol l betSetting">
             <span ng-bind="customerInfo.phone"></span>
         </td>
         <td class="formatCol r b">
             @LayoutTexts.MobilePhone
         </td>
-        <td class="formatCol l">
+        <td class="formatCol l betSetting">
             <span ng-bind="customerInfo.mobilePhone"></span>
         </td>
     </tr>
     <tr>
-        <td class="formatCol r b">
+        <td class="formatCol r b betSetting">
             @LayoutTexts.Fax
         </td>
-        <td class="formatCol l">
+        <td class="formatCol l betSetting">
             <span ng-bind="customerInfo.fax"></span>
         </td>
-        <td class="formatCol r b">
+        <td class="formatCol r b betSetting">
         </td>
-        <td class="formatCol l">
+        <td class="formatCol l betSetting">
         </td>
     </tr>
 </table>
