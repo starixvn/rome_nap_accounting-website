@@ -309,6 +309,10 @@
                 , "customersetting/betsetting/sportsbook/index/" + custId + "/" + uplineId + "/" + accId + "/" + groupName
                 , 0, 0, 900, 680, false, 2000, null);
     },
+    kenoSetting: function (custId) {
+        showPopup(""
+                , "customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custId, 0, 0, 900, 480, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {

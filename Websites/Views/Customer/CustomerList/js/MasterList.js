@@ -325,6 +325,10 @@
                 , "VirtualSportMasterPT/EditMaster?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
     },
+    kenoSetting: function (custId) {
+        showPopup(""
+                , "customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custId, 0, 0, 900, 480, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {
