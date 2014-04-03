@@ -15,8 +15,13 @@ KenoModule.directive('betSettingElement', function () {
 
                 $scope.isStatuschkDisabled = false;
                 $scope.isDownlinechkDisabled = true;
-
                 $scope.isCopyAll = false;
+
+                if ($scope.betSetting.upline.minBet == 0
+                    && $scope.betSetting.upline.maxBet == 0
+                    && $scope.betSetting.upline.maxPerMatch == 0) {
+                    $scope.betSetting.upline.minBet = $scope.betSetting.upline.maxBet = $scope.betSetting.upline.maxPerMatch = Number.MAX_VALUE;
+                }
 
                 $scope.valids = {
                     "minBet": true,
@@ -153,13 +158,13 @@ KenoModule.directive('betSettingInput', ['$filter', '$parse',
                     var minValue = eval(valueRange.min);
                     var maxValue = eval(valueRange.max);
 
-                    if (ctrl.$modelValue < minValue && minValue > -1) {
+                    if (ctrl.$modelValue < minValue && minValue > 0 && minValue < Number.MAX_VALUE) {
                         scope.createTooltip("The " + valueRange.model + " should be more than or equal to " + valueRange.minName);
                         scope.emitToParent(false);
                         return false;
                     }
 
-                    if (ctrl.$modelValue > maxValue && maxValue > -1) {
+                    if (ctrl.$modelValue > maxValue && maxValue > 0 && maxValue < Number.MAX_VALUE) {
                         scope.createTooltip("The " + valueRange.model + " should be less than or equal to " + valueRange.maxName);
                         scope.emitToParent(false);
                         return false;
@@ -193,7 +198,7 @@ KenoModule.directive('betSettingConstrain', ['$filter',
 
                 var valueModel = eval("scope." + attrs.ngModel);
 
-                if (valueModel > 0) {
+                if (valueModel > 0 && valueModel < Number.MAX_VALUE) {
                     var symbol = attrs.betSettingConstrain == 1 ? " >= " : " <= ";
 
                     element.text(symbol + scope.formatNumber(valueModel));
