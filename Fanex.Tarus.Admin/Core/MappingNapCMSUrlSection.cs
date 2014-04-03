@@ -1,0 +1,170 @@
+//Sample license text.
+
+namespace Fanex.Tarus.Admin.Core.Configurations
+{
+    using System;
+    using System.Configuration;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class MappingNapCMSUrlSection : ConfigurationSection
+    {
+        [ConfigurationProperty("NapCMSUrl", IsDefaultCollection = true)]
+        [ConfigurationCollection(typeof(NapCMSUrlCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public NapCMSUrlCollection NapCMSUrl
+        {
+            get
+            {
+                var urlCollection =
+                    (NapCMSUrlCollection)base["NapCMSUrl"];
+                return urlCollection;
+            }
+        }
+
+        public static MappingNapCMSUrlSection Instance
+        {
+            get
+            {
+                var spSection =
+                 ConfigurationManager.GetSection("MappingNapCMSUrlSection") as MappingNapCMSUrlSection;
+                return spSection;
+            }
+        }
+    }
+
+    public class NapCMSUrlCollection : ConfigurationElementCollection
+    {
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
+            }
+        }
+
+        public void Add(NapCMSUrlElement NapCMSUrlElement)
+        {
+            BaseAdd(NapCMSUrlElement);
+        }
+
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
+
+        public void Remove(NapCMSUrlElement ReportUrlElement)
+        {
+            if (BaseIndexOf(ReportUrlElement) >= 0)
+                BaseRemove(ReportUrlElement.Name);
+        }
+
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+
+        public void Remove(string alias)
+        {
+            BaseRemove(alias);
+        }
+
+        public void Clear()
+        {
+            BaseClear();
+        }
+
+        public NapCMSUrlElement this[int index]
+        {
+            get
+            {
+                return (NapCMSUrlElement)BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+
+        public new NapCMSUrlElement this[string name]
+        {
+            get
+            {
+                return (NapCMSUrlElement)BaseGet(name);
+            }
+        }
+
+        public int IndexOf(NapCMSUrlElement ReportUrlElement)
+        {
+            return BaseIndexOf(ReportUrlElement);
+        }
+
+        protected override sealed ConfigurationElement CreateNewElement()
+        {
+            return new NapCMSUrlElement();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((NapCMSUrlElement)element).Name;
+        }
+    }
+
+    public class NapCMSUrlElement : ConfigurationElement
+    {        
+        [ConfigurationProperty("name", DefaultValue = "NA", IsRequired = true, IsKey = false)]
+        public string Name
+        {
+            get { return (string)this["name"]; }
+            set { this["name"] = value; }
+        }
+
+        [ConfigurationProperty("active", DefaultValue = true, IsRequired = true, IsKey = true)]
+        public bool Active
+        {
+            get
+            {
+                return (bool)this["active"];
+            }
+            set
+            {
+                this["active"] = value;
+            }
+        }
+
+        [ConfigurationProperty("accurl", DefaultValue = "", IsRequired = true, IsKey = true)]
+        public String AccUrl
+        {
+            get
+            {
+                var accUrl = (String)this["accurl"];
+                return string.IsNullOrWhiteSpace(accUrl) ? string.Empty : accUrl.Trim();
+            }
+            set
+            {
+                this["accurl"] = value;
+            }
+        }
+
+        [ConfigurationProperty("napurl", DefaultValue = "", IsRequired = true, IsKey = true)]
+        public String NapUrl
+        {
+            get
+            {
+                var napUrl = (String)this["napurl"];
+                return string.IsNullOrWhiteSpace(napUrl) ? string.Empty : napUrl.Trim();
+            }
+            set
+            {
+                this["napurl"] = value;
+            }
+        }
+    }
+}
