@@ -28,7 +28,7 @@ public partial class NapCMS_Redirect : System.Web.UI.Page
                 if (getMappingConfig != null && getMappingConfig.Count() > 0)
                 {
                     var napUrl = getMappingConfig.First().NapUrl;
-                    var url = string.Format("{0}?username={1}&onuserid={2}&redirectUrl={3}", ConfigurationManager.AppSettings["NapCMSLoginUrl"], userName, onuserId, napUrl);
+                    var url = string.Format("{0}?username={1}&onlineUserId={2}&redirectUrl={3}", ConfigurationManager.AppSettings["NapCMSLoginUrl"], userName, onuserId, napUrl);
                     Response.Redirect(url);
                 }
             }
