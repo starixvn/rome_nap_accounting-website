@@ -21,9 +21,21 @@
             heightTmp = 200;
             widthTmp = 750;
             break;
+        case 183:
+            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sport=183";
+            title = "Virtual Speedway";
+            heightTmp = 200;
+            widthTmp = 750;
+            break;
         case 184:
             URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Virtual Motor Racing";
+            heightTmp = 200;
+            widthTmp = 750;
+            break;
+        case 185:
+            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sport=185";
+            title = "Virtual Cycling";
             heightTmp = 200;
             widthTmp = 750;
             break;
