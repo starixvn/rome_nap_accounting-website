@@ -4,6 +4,9 @@
 @using Sunplus.Bingo.Core;
 @using System.Collections;
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
+@using Sunplus.Accounting.Core.Common;
+
+
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
@@ -678,4 +681,5 @@
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
+    var _userId = @AppSession.AccId;
 </script>
