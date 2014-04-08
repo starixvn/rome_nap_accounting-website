@@ -18,6 +18,8 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
             $scope.minPTRange = {};
             $scope.positionTaking.memberNewValueRange = {};
 
+            $scope.fixIECount = 0;
+
             $scope.monitorSaveButton = function () {
                 if ($scope.positionTaking.isUpdateUS3
                     || $scope.positionTaking.isUpdateS3
@@ -29,6 +31,7 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
                     $scope.positionTaking.isUpdatePT = false;
                 }
 
+                $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
 
@@ -79,7 +82,7 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
                 }
 
                 $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l3, $scope.positionTaking.n3);
-                
+
                 $scope.monitorSaveButton();
             }, true);
 
@@ -102,3 +105,4 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
         }
     };
 } ]);
+
