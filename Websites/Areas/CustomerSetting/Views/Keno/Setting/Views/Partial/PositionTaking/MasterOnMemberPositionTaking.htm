@@ -7,14 +7,14 @@
             type="button" /></div>
 </td>
 <td class="formatCol c b betSetting">
-    <select  ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
     </select>
-    <select ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1" class="col60" ng-model="positionTaking.uM1"
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1" class="col60" ng-model="positionTaking.uM1"
         ng-options="value for value in uM1Range">
     </select>
 </td>
 <td class="formatCol c b betSetting" ng-hide="positionTaking.isDisabledMPT">
-    <input  ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox" ng-model="positionTaking.iM1" />
+    <input   ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox" ng-model="positionTaking.iM1" />
 </td>
 <td class="formatCol c betSetting">
     <span ng-bind="positionTaking.a1"></span>

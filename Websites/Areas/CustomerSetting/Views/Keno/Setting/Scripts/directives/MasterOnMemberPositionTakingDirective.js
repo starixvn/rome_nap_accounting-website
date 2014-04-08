@@ -7,7 +7,7 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', fu
             positionTaking: "=ngModel",
             index: "=index"
         },
-        templateUrl: domain +  'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/MasterOnMemberPositionTaking.htm',
+        templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/MasterOnMemberPositionTaking.htm',
         link: function ($scope, elem, attr, ctrl) {
             console.log($scope.positionTaking);
 
@@ -15,6 +15,8 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', fu
 
             $scope.isAutoPTCount = 0;
             $scope.ptCount = 0;
+
+            $scope.fixIECount = 0;
 
             $scope.m1Range = commonService.getRangePTValue($scope.positionTaking.m1Max, $scope.positionTaking.m1UM1Min);
             $scope.uM1Range = commonService.getRangePTValue($scope.positionTaking.m3, $scope.positionTaking.m1UM1Min);
@@ -62,6 +64,7 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', fu
                     $scope.positionTaking.isUpdatePT = false;
                 }
 
+                $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
 

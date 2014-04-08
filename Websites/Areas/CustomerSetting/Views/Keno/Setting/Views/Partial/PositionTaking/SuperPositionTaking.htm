@@ -5,10 +5,10 @@
             ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)" type="button" /></div>
 </td>
 <td class="formatCol c betSetting">
-    <select ng-disabled="$parent.$parent.isCopyAll && index != 0"  class="col60" ng-model="positionTaking.s4" ng-options="value for value in maxPTRange">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0"  class="col60" ng-model="positionTaking.s4" ng-options="value for value in maxPTRange">
     </select>
 </td>
 <td class="formatCol c betSetting">
-    <select  ng-disabled="$parent.$parent.isCopyAll && index != 0"  class="col60" ng-model="positionTaking.n4" ng-options="value for value in minPTRange">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0"  class="col60" ng-model="positionTaking.n4" ng-options="value for value in minPTRange">
     </select>
 </td>

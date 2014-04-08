@@ -12,6 +12,7 @@ KenoModule.directive('superPositionTakingElement', ['commonService', function (c
             $scope.originalPositionTaking = angular.copy($scope.positionTaking);
 
             $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l4, 0);
+            $scope.fixIECount = 0;
 
             $scope.monitorSaveButton = function () {
                 if ($scope.positionTaking.isUpdateS4
@@ -21,6 +22,8 @@ KenoModule.directive('superPositionTakingElement', ['commonService', function (c
                 else {
                     $scope.positionTaking.isUpdatePT = false;
                 }
+
+                $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
 

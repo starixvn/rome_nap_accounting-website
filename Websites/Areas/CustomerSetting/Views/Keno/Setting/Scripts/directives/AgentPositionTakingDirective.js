@@ -18,6 +18,8 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', function (c
             $scope.minPTRange = {};
             $scope.positionTaking.memberNewValueRange = {};
 
+            $scope.fixIECount = 0;
+
             $scope.monitorSaveButton = function () {
                 if ($scope.positionTaking.isUpdateUM2
                     || $scope.positionTaking.isUpdateM2
@@ -28,6 +30,8 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', function (c
                 else {
                     $scope.positionTaking.isUpdatePT = false;
                 }
+
+                $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
 

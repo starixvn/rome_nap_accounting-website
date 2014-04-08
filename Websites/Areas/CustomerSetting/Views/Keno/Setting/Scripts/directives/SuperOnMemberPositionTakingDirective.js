@@ -15,6 +15,7 @@ KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', fun
 
             $scope.isAutoPTCount = 0;
             $scope.ptCount = 0;
+            $scope.fixIECount = 0;
 
             $scope.s1Range = commonService.getRangePTValue($scope.positionTaking.s1Max, $scope.positionTaking.s1US1Min);
             $scope.uS1Range = commonService.getRangePTValue($scope.positionTaking.s4, $scope.positionTaking.s1US1Min);
@@ -62,6 +63,7 @@ KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', fun
                     $scope.positionTaking.isUpdatePT = false;
                 }
 
+                $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
 
