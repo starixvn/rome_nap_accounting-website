@@ -1,5 +1,5 @@
 ﻿"use strict";
-
+var MAX_VALUE = Math.pow(2, 53); 
 KenoModule.directive('betSettingElement', function () {
     return {
         restrict: 'EA',
@@ -20,7 +20,7 @@ KenoModule.directive('betSettingElement', function () {
                 if ($scope.betSetting.upline.minBet == 0
                     && $scope.betSetting.upline.maxBet == 0
                     && $scope.betSetting.upline.maxPerMatch == 0) {
-                    $scope.betSetting.upline.minBet = $scope.betSetting.upline.maxBet = $scope.betSetting.upline.maxPerMatch = Number.MAX_VALUE;
+                    $scope.betSetting.upline.minBet = $scope.betSetting.upline.maxBet = $scope.betSetting.upline.maxPerMatch = MAX_VALUE;
                 }
 
                 $scope.valids = {
@@ -158,13 +158,13 @@ KenoModule.directive('betSettingInput', ['$filter', '$parse',
                     var minValue = eval(valueRange.min);
                     var maxValue = eval(valueRange.max);
 
-                    if (ctrl.$modelValue < minValue && minValue > 0 && minValue < Number.MAX_VALUE) {
+                    if (ctrl.$modelValue < minValue && minValue > 0 && minValue < MAX_VALUE) {
                         scope.createTooltip("The " + valueRange.model + " should be more than or equal to " + valueRange.minName);
                         scope.emitToParent(false);
                         return false;
                     }
 
-                    if (ctrl.$modelValue > maxValue && maxValue > 0 && maxValue < Number.MAX_VALUE) {
+                    if (ctrl.$modelValue > maxValue && maxValue > 0 && maxValue < MAX_VALUE) {
                         scope.createTooltip("The " + valueRange.model + " should be less than or equal to " + valueRange.maxName);
                         scope.emitToParent(false);
                         return false;
@@ -198,7 +198,7 @@ KenoModule.directive('betSettingConstrain', ['$filter',
 
                 var valueModel = eval("scope." + attrs.ngModel);
 
-                if (valueModel > 0 && valueModel < Number.MAX_VALUE) {
+                if (valueModel > 0 && valueModel < MAX_VALUE) {
                     var symbol = attrs.betSettingConstrain == 1 ? " >= " : " <= ";
 
                     element.text(symbol + scope.formatNumber(valueModel));
@@ -207,3 +207,29 @@ KenoModule.directive('betSettingConstrain', ['$filter',
         };
     }
 ]);
+
+
+    KenoModule.directive('ieSelectFix', ['$document',
+    function ($document) {
+        "use strict";
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attributes) {
+                var isIE = $document[0] && $document[0].attachEvent, control;
+                if (!isIE) {
+                    return;
+                }
+
+                control = element[0];
+                //to fix IE8 issue with parent and detail controller, we need to depend on the parent controller
+                scope.$watch(attributes.ieSelectFix, function () {
+                    //this will add and remove the options to trigger the rendering in IE8
+                    var option = document.createElement("option");
+                    control.add(option, null);
+                    control.remove(control.options.length - 1);
+                });
+            }
+        };
+    }
+  ]);

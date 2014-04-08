@@ -9,6 +9,13 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
     $scope.isCopyAll = false;
     $scope.isValid = false;
 
+    if ($scope.roleId == 4) {
+        var length = $scope.betSettingList.length;
+        for (var i = 0; i < length; i++) {
+            var betSetting = $scope.betSettingList[i];
+            betSetting.upline.maxBet = betSetting.upline.maxPerMatch = Number.MAX_VALUE;
+            } 
+    }
     //    console.log($scope.betSettingList);
 
     $scope.copyAll = function (isCopy, betTypeId) {
