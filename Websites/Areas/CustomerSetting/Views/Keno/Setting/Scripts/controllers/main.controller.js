@@ -74,45 +74,43 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
         return domain + url;
     }
 
-    $scope.doUpdated = function (url) {
+    $scope.showMesseges = function (html) {
+        $("#divShowInfo").append(html);
+        commonService.unblockUI();
+    }
 
+    $scope.doUpdated = function (url) {
         commonService.blockUI();
         kenoRepositories.save(url, $scope.kenoSetting).then(
             function (results) {
                 $("#divShowInfo").empty();
+                var html = "";
                 if (typeof results != 'undefined') {
                     var length = results.length;
                     var isError = false;
                     for (var i = 0; i < length; i++) {
                         if (results[i].ErrorCode > 0) {
-                            var html = '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
-                            $("#divShowInfo").append(html);
                             isError = true;
+                            html = '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
                         }
                     }
 
                     if (!isError) {
                         $timeout(function () {
-                            var html = '<div class="alertsuccess">Updated successful.</div>';
-                            $("#divShowInfo").append(html);
-                            commonService.unblockUI();
+                            $scope.showMesseges('<div class="alertsuccess">' + resources.successful + '</div>');
                             location.reload();
                             parent.frames["centerFr"].location.reload();
                         }, 5000);
                     } else {
-                        commonService.unblockUI();
+                        $scope.showMesseges(html);
                     }
                 }
                 else {
-                    var html = '<div class="alerterror">Updated fail.</div>';
-                    $("#divShowInfo").append(html);
-                    commonService.unblockUI();
+                    $scope.showMesseges('<div class="alerterror">' + resources.failed + '<</div>');
                 }
             },
             function () {
-                var html = '<div class="alerterror">Updated fail.</div>';
-                $("#divShowInfo").append(html);
-                commonService.unblockUI();
+                $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>');
             });
     };
 });
