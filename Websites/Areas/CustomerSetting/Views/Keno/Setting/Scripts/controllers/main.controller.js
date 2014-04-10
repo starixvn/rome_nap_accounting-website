@@ -75,7 +75,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
     }
 
     $scope.showMesseges = function (html) {
-        $("#divShowInfo").append(html);
+        $("#divShowInfo").append(html).show();
         commonService.unblockUI();
     }
 
