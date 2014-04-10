@@ -83,6 +83,10 @@
 <script type="text/javascript">
     var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@KenoSetting'));
     var domain = '@Url.Content("~")';
+    var resources = {
+        successful: "@Messages.Msg_0",
+        failed :  "@Messages.UpdatedFail",
+    };
 </script>
 @RenderSection("scripts", required: false)
 </html>
