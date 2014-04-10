@@ -229,7 +229,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 int custId = GetCustIDByUsername(custName);
                 string logType = "login";
-                int totalRow = 0;
                 var param = new Hashtable();
                 param.Add("userid", custId);
                 param.Add("username", custName);
@@ -297,7 +296,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 int custId = GetCustIDByUsername(custName);
                 string logType = "credit";
-                int totalRow = 0;
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("custname", custName);
