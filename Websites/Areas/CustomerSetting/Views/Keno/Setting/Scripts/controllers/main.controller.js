@@ -91,7 +91,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                     for (var i = 0; i < length; i++) {
                         if (results[i].ErrorCode > 0) {
                             isError = true;
-                            html = '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
+                            html += '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
                         }
                     }
 
