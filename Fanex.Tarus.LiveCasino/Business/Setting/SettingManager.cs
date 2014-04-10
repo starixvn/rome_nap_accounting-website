@@ -1393,19 +1393,19 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 upPtSetting.IsAutoPresetPT = setting.PTSetting.Upline.Upline.IsAutoPresetPT;
                 upPtSetting.AutoPresetPT = setting.PTSetting.Upline.Upline.AutoPresetPT;
 
-                if (upPtSetting.IsDisabledAutoPresetPT)
-                {
-                    upPtSetting.IsAutoPresetPT = false;
-                    upPtSetting.AutoPresetPT = 0;
-                }
-                else if (upPtSetting.IsAutoPresetPT)
-                {
-                    upPtSetting.PresetPT = upPtSetting.AutoPresetPT;
-                }
-                else
-                {
-                    upPtSetting.AutoPresetPT = 0;
-                }
+                //if (upPtSetting.IsDisabledAutoPresetPT)
+                //{
+                //    upPtSetting.IsAutoPresetPT = false;
+                //    upPtSetting.AutoPresetPT = 0;
+                //}
+                //else if (upPtSetting.IsAutoPresetPT)
+                //{
+                //    upPtSetting.PresetPT = upPtSetting.AutoPresetPT;
+                //}
+                //else
+                //{
+                //    upPtSetting.AutoPresetPT = 0;
+                //}
 
                 ptSetting.Upline.Upline = upPtSetting;
 
