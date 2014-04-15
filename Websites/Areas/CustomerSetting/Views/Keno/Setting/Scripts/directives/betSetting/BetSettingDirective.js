@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-KenoModule.directive('betSettingElement',['$templateCache', function ($templateCache) {
+KenoModule.directive('betSettingElement', ['$templateCache', function ($templateCache) {
     return {
         restrict: 'EA',
         priority: 1,
@@ -19,8 +19,16 @@ KenoModule.directive('betSettingElement',['$templateCache', function ($templateC
                 $scope.unlimited = false;
                 $scope.isDownlinechkDisabled = true;
 
-                if ($scope.betSetting.upline.minBet == 0 && $scope.betSetting.upline.maxBet == 0 && $scope.betSetting.upline.maxPerMatch == 0) {
-                    $scope.betSetting.upline.minBet = $scope.betSetting.upline.maxBet = $scope.betSetting.upline.maxPerMatch = MAX_VALUE;
+                if ($scope.betSetting.upline.minBet == 0) {
+                    $scope.betSetting.upline.minBet = MAX_VALUE;
+                }
+
+                if ($scope.betSetting.upline.maxBet == 0) {
+                    $scope.betSetting.upline.maxBet = MAX_VALUE;
+                }
+
+                if ($scope.betSetting.upline.maxPerMatch == 0) {
+                    $scope.betSetting.upline.maxPerMatch = MAX_VALUE;
                 }
 
                 $scope.disabledInput = function (element) {
@@ -89,4 +97,4 @@ KenoModule.directive('betSettingElement',['$templateCache', function ($templateC
             }
         ]
     };
-}]);
+} ]);
