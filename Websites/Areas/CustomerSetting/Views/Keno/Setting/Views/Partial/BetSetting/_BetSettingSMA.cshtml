@@ -1,4 +1,5 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+
 <table class="tableColor tableWidth" ng-controller="betSettingController">
     <thead>
         <tr>
@@ -9,7 +10,7 @@
             </td>
             <td colspan="2" class="header c b">
                 <span>@LayoutTexts.EnableStatus</span>
-                <input ng-class-name="btnSave" check-disable-element ng-model="isBetSettingPartial"
+                <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
                     ng-click="updated(true, 'BetSetting')" type="button" />
             </td>
         </tr>
@@ -29,14 +30,13 @@
                 <span class="col8percent" ng-switch-when="2">@LayoutTexts.Agent </span>
                 <span class="col17percent" ng-switch-default>@LayoutTexts.Member</span>
             </td>
-            <td ng-if="roleId != 1" class=" formatCol c b header col8percent">
+            <td ng-if="roleId > 1" class=" formatCol c b header col8percent">
                 <span>@LayoutTexts.Downlines</span>
             </td>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="betSetting in betSettingList track by $index" bet-setting-element
-            ng-model="betSetting" index="$index" ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}">
+        <tr ng-repeat="betSetting in betSettingList track by $index" bet-setting-element >
         </tr>
     </tbody>
 </table>

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-KenoModule.directive('masterPositionTakingElement', ['commonService', function (commonService) {
+KenoModule.directive('masterPositionTakingElement', ['commonService', '$templateCache', function (commonService, $templateCache) {
     return {
         restrict: 'A',
         scope: {
@@ -8,7 +8,7 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', function (
             index: "=index"
         },
         transclude: true,
-        templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/MasterPositionTaking.htm',
+        templateUrl: $templateCache.get('masterPositionTakingTemplate'),
         link: function ($scope, elem, attr, ctrl) {
 
             $scope.originalPositionTaking = angular.copy($scope.positionTaking);

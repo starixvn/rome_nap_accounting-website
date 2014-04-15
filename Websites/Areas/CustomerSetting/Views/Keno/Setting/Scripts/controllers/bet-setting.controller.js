@@ -1,62 +1,49 @@
 ﻿"use strict";
 
 KenoModule.controller('betSettingController', function ($scope, kenoRepositories) {
-    $scope.betSettingList = kenoRepositories.kenoSetting.betSettings;
-    $scope.roleId = kenoRepositories.kenoSetting.customerInformation.roleId;
+    kenoRepositories.getData().then(function () {
+        $scope.roleId = $scope.$parent.customerInformation.roleId;
+        $scope.isValid = false;
 
-    $scope.betSettingCopyAll = kenoRepositories.kenoSetting.betSettingCopyAll;
-    $scope.isBetSettingPartial = false;
-    $scope.isCopyAll = false;
-    $scope.isValid = false;
-
-    if ($scope.roleId == 4) {
-        var length = $scope.betSettingList.length;
-        for (var i = 0; i < length; i++) {
-            var betSetting = $scope.betSettingList[i];
-            betSetting.upline.maxBet = betSetting.upline.maxPerMatch = Number.MAX_VALUE;
-            } 
-    }
-    //    console.log($scope.betSettingList);
-
-    $scope.copyAll = function (isCopy, betTypeId) {
-        $scope.isCopyAll = isCopy;
-        $scope.betSettingCopyAll.betTypeId = isCopy == true ? betTypeId : -1;
-        $scope.betSettingCopyAll.isCopiedAll = isCopy;
-
-        $scope.$broadcast('totallyChecking', isCopy);
-        $scope.$broadcast('inputDisabledChecking', isCopy);
-    };
-
-    $scope.$on('totallyChecking', function (event, isCopiedAll) {
-        var length = $scope.betSettingList.length;
-        var updatedCount = 0;
-
-        if (isCopiedAll) {
-            $scope.isBetSettingPartial = $scope.betSettingList[0].isValid;
-            return true;
-        }
-        else {
+        if ($scope.roleId == 4) {
+            var length = $scope.betSettingList.length;
             for (var i = 0; i < length; i++) {
-                var betSettingTmp = $scope.betSettingList[i];
-                if (!betSettingTmp.isValid) {
-                    $scope.isBetSettingPartial = false;
-                    return false;
-                }
-                else {
-                    if (betSettingTmp.isBetSettingUpdated || betSettingTmp.isStatusUpdated) {
-                        updatedCount = updatedCount + 1;
+                var betSetting = $scope.betSettingList[i];
+                betSetting.upline.maxBet = betSetting.upline.maxPerMatch = MAX_VALUE;
+            }
+        }
+
+        $scope.copyAllBetSetting = function (isCopy, betTypeId) {
+            $scope.betSettingCopyAll.betTypeId = isCopy == true ? betTypeId : -1;
+            $scope.betSettingCopyAll.isCopiedAll = isCopy;
+
+            $scope.$broadcast('totallyChecking');
+            $scope.$broadcast('inputDisabledChecking', isCopy);
+        };
+
+        $scope.$on('totallyChecking', function (event) {
+            var length = $scope.betSettingList.length;
+            var updatedCount = 0;
+
+            if ($scope.betSettingCopyAll.isCopiedAll) {
+                $scope.$parent.isBetSettingPartial = $scope.betSettingList[0].isValid;
+                return true;
+            } else {
+                for (var i = 0; i < length; i++) {
+                    var betSettingTmp = $scope.betSettingList[i];
+                    if (!betSettingTmp.isValid) {
+                        $scope.$parent.isBetSettingPartial = false;
+                        return false;
+                    } else {
+                        if (betSettingTmp.isBetSettingUpdated || betSettingTmp.isStatusUpdated) {
+                            updatedCount = updatedCount + 1;
+                        }
                     }
                 }
+
+                $scope.$parent.isBetSettingPartial = updatedCount > 0 ? true : false;
             }
+        });
 
-            $scope.isBetSettingPartial = updatedCount > 0 ? true : false;
-        }
-    });
-
-    $scope.$watch('isBetSettingPartial', function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            $scope.$emit('betSettingPartial', $scope.isBetSettingPartial);
-        }
-    }, true);
-
+    }, function (reason) { }, function (update) { });
 });

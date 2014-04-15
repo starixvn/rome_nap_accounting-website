@@ -1,13 +1,13 @@
 ﻿"use strict";
 
-KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', function (commonService) {
+KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', '$templateCache', function (commonService, $templateCache) {
     return {
         restrict: 'A',
         scope: {
             positionTaking: "=ngModel",
             index: "=index"
         },
-        templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/SuperOnMemberPositionTaking.htm',
+        templateUrl: $templateCache.get('superOnMemberPositionTakingTemplate'),
         link: function ($scope, elem, attr, ctrl) {
             //            console.log($scope.positionTaking);
 

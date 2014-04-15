@@ -1,12 +1,14 @@
 ﻿"use strict";
-var MAX_VALUE = Math.pow(2, 53); 
+var MAX_VALUE = Math.pow(2, 53);
+
 KenoModule.directive('betSettingElement', function () {
     return {
         restrict: 'EA',
         priority: 1,
         scope: {
             betSetting: "=ngModel",
-            index: "=index"
+            index: "=index",
+            copyAll : "=copyAll"
         },
         templateUrl: domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/BetSetting/BetSetting.htm',
         controller: ['$scope',
@@ -29,9 +31,15 @@ KenoModule.directive('betSettingElement', function () {
                     "maxPerMatch": true
                 };
 
+                $scope.unlimited = false;
+
                 if (!$scope.betSetting.upline.isEnabled || !$scope.betSetting.upline.isDownlinesEnabled) {
                     $scope.isStatuschkDisabled = true;
                 }
+
+                $scope.$on('inputDisabledChecking', function (event, isCopiedAll) {
+                    $scope.isCopyAll = isCopiedAll;
+                });
 
                 $scope.$on('betSetting.minBet', function (event, isValid) {
                     $scope.valids.minBet = isValid;
@@ -45,25 +53,16 @@ KenoModule.directive('betSettingElement', function () {
                     $scope.valids.maxPerMatch = isValid;
                 });
 
-                $scope.$on('inputDisabledChecking', function (event, isCopiedAll) {
-                    $scope.isCopyAll = isCopiedAll;
-                });
+                $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function (newValue, oldValue) {
+                    $scope.unlimited = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0 && $scope.betSetting.maxPerMatch == 0;
 
-                $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch, valids]', function (newValue, oldValue) {
-                    if ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch) {
-                        $scope.betSetting.isValid = true;
-                    } else {
-                        $scope.betSetting.isValid = false;
-                    }
+                    $scope.betSetting.isValid = ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch) || $scope.unlimited;
 
-                    if (($scope.betSetting.minBet != $scope.originalBetSetting.minBet) || ($scope.betSetting.maxBet != $scope.originalBetSetting.maxBet) || ($scope.betSetting.maxPerMatch != $scope.originalBetSetting.maxPerMatch)) {
-                        $scope.betSetting.isBetSettingUpdated = true;
-                    } else {
-                        $scope.betSetting.isBetSettingUpdated = false;
-                    }
+                    $scope.betSetting.isBetSettingUpdated = ($scope.betSetting.minBet != $scope.originalBetSetting.minBet)
+                                                                || ($scope.betSetting.maxBet != $scope.originalBetSetting.maxBet)
+                                                                || ($scope.betSetting.maxPerMatch != $scope.originalBetSetting.maxPerMatch);
 
-                    $scope.$emit('totallyChecking', $scope.isCopyAll);
-
+                    $scope.$emit('totallyChecking');
                 }, true);
 
                 $scope.$watch('betSetting.isEnabled', function (newValue, oldValue) {
@@ -84,7 +83,7 @@ KenoModule.directive('betSettingElement', function () {
                             $scope.isDownlinechkDisabled = $scope.betSetting.isEnabled == false;
                         }
 
-                        $scope.$emit('totallyChecking', $scope.isCopyAll);
+                        $scope.$emit('totallyChecking');
                     }
                 }, true);
             }
@@ -92,8 +91,7 @@ KenoModule.directive('betSettingElement', function () {
     };
 });
 
-
-KenoModule.directive('betSettingInput', ['$filter', '$parse',
+    KenoModule.directive('betSettingInput', ['$filter', '$parse',
     function ($filter, $parse) {
         return {
             require: '^ngModel',
@@ -145,27 +143,24 @@ KenoModule.directive('betSettingInput', ['$filter', '$parse',
                     };
 
                     scope.emitToParent = function (isValid) {
-                        if (isValid) {
-                            element.removeClass('invalidValue');
-                            scope.$emit(attrs.ngModel, true);
-                        } else {
-                            element.addClass('invalidValue');
-                            scope.$emit(attrs.ngModel, false);
-                        }
+                        //                        scope.valids[attrs.ngModel] = isValid;
+                        scope.$emit(attrs.ngModel, isValid);
+                        isValid == true ? element.removeClass('invalidValue') : element.addClass('invalidValue');
                     };
 
                     var valueRange = scope.$eval(attrs.valueRange);
                     var minValue = eval(valueRange.min);
                     var maxValue = eval(valueRange.max);
+                    var unlimited = eval(valueRange.unlimited);
 
-                    if (ctrl.$modelValue < minValue && minValue > -1 && minValue < MAX_VALUE) {
-                        scope.createTooltip("The " + valueRange.model + " should be more than or equal to " + valueRange.minName);
+                    if (ctrl.$modelValue < minValue && minValue > -1 && minValue < MAX_VALUE && !unlimited) {
+                        scope.createTooltip(scope.betSetting.betTypeName + " - " + valueRange.model + " " + resources.more_than + " " + valueRange.minName);
                         scope.emitToParent(false);
                         return false;
                     }
 
-                    if (ctrl.$modelValue > maxValue && maxValue > -1 && maxValue < MAX_VALUE) {
-                        scope.createTooltip("The " + valueRange.model + " should be less than or equal to " + valueRange.maxName);
+                    if (ctrl.$modelValue > maxValue && maxValue > -1 && maxValue < MAX_VALUE && !unlimited) {
+                        scope.createTooltip(scope.betSetting.betTypeName + " - " + valueRange.model + " " + resources.less_than + " " + valueRange.maxName);
                         scope.emitToParent(false);
                         return false;
                     }
@@ -174,7 +169,7 @@ KenoModule.directive('betSettingInput', ['$filter', '$parse',
                     scope.emitToParent(true);
                 }
 
-                scope.$watch(attrs.ngModel, function (newValue, oldValue) {
+                scope.$watch(attrs.ngModel, function () {
                     scope.setConstrain();
                 }, true);
 
