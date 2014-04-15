@@ -8,8 +8,7 @@ KenoModule.service('commonService', function () {
                 rangeValueArray.push(max);
                 max = Math.round((max - stepValue) * roundValue) / roundValue;
             }
-        }
-        else {
+        } else {
             rangeValueArray = [];
         }
         return rangeValueArray;
@@ -33,44 +32,19 @@ KenoModule.service('commonService', function () {
         return getRangeValue(max, min, commValues.stepValue, commValues.roundValue);
     };
 
-    this.regIsDigit = function (input) {
-        var reg = new RegExp("^[0-9,]+$");
-        return (reg.test(input));
-    };
-
-    this.formatInputNumber = function (input) {
-        return parseInt(input.toString().replace(/,/gi, ''));
-    };
-
-    this.reformatInputNumberForControl = function (input) {
-        input = input.toString().replace(/,/gi, '');
-        var result = "";
-
-        if (input.length > 3) {
-            for (var i = input.length - 3; i > 0; i = i - 3) {
-                var end = i + 3;
-                result = ',' + input.substring(i, end) + result;
+    this.createTooltip = function (element, titleTootip) {
+        element.attr('title', titleTootip);
+        element.attr('original-title', titleTootip);
+        element.tipsy({
+            delayIn: 0,
+            delayOut: 0,
+            gravity: "s",
+            opacity: 1,
+            autoHide: {
+                isAuto: true,
+                timeOut: 7
             }
-
-            result = input.substring(0, i + 3) + result;
-        }
-        else {
-            result = input;
-        }
-
-        return result;
-    };
-
-    this.composeChangedPositiongTakingSections = function (positionTakings, commissionSettings) {
-        var changedData = [];
-        for (var i = 0; i < positionTakings.length; i++) {
-            changedData.push({
-                PositionTaking: positionTakings[i],
-                CommissionSetting: commissionSettings[i]
-            });
-        }
-
-        return changedData;
+        });
     };
 
     this.validateNumber = function (event) {
@@ -90,7 +64,9 @@ KenoModule.service('commonService', function () {
     this.blockUI = function () {
 
         if (parent.BlockUI) {
-            try { parent.BlockUI(); } catch (e) { }
+            try {
+                parent.BlockUI();
+            } catch (e) { }
         }
         //Called inside a frame set (#centerFr)
         else {

@@ -1,45 +1,33 @@
 ﻿<td class="formatCol l header">
     <span ng-bind="betSetting.betTypeName"></span>
-    <div style="display: inline-block; float: right;" ng-switch="index == 0">
-        <input ng-model="$parent.$parent.isCopyAll" ng-switch-when="true" ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, betSetting.betTypeId)"
-            ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}"
+    <div style="display: inline-block; float: right;" ng-switch="$index == 0">
+        <input ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
+            ng-class="{'btnCopyAll' : betSettingCopyAll.isCopiedAll, 'btnUnCopyAll' : !betSettingCopyAll.isCopiedAll}"
             type="button" />
     </div>
 </td>
-<td class="formatCol betSetting" ng-switch="$parent.$parent.roleId">
-    <input bet-setting-input ng-model="betSetting.minBet" value-range="{'minName': '{{betSetting.upline.minBet}}' , 'min':{{betSetting.upline.minBet}}, 'maxName': 'Max Bet', 'max':{{betSetting.maxBet}}, 'model' :'Min Bet' }"
-        ng-disabled="isDisabledByCopyAll" class="r col50percent" type="text" title="" />
+<td class="formatCol betSetting">
+    <input min-bet-input ng-model="betSetting.minBet" class="r col50percent" type="text"
+        title="" />
     <span ng-model="betSetting.upline.minBet" bet-setting-constrain="1"></span>
 </td>
-<td class="formatCol betSetting" ng-switch="$parent.$parent.roleId">
-    <div ng-switch-when="4">
-        <input bet-setting-input ng-model="betSetting.maxBet" ng-disabled="isDisabledByCopyAll"
-            value-range="{ 'minName': '' , 'min':-1, 'maxName': 'Max Per Match', 'max':{{betSetting.maxPerMatch}}, 'model' :'Max Bet'}"
-            class="r col50percent" type="text" title="" />
-    </div>
-    <div ng-switch-default>
-        <input bet-setting-input ng-model="betSetting.maxBet" ng-disabled="isDisabledByCopyAll"
-            value-range="{ 'minName': '' , 'min':-1, 'maxName': 'Max Per Match', 'max':'Math.min({{betSetting.upline.maxBet}},{{betSetting.maxPerMatch}})', 'model' :'Max Bet'}"
-            class="r col50percent" type="text" title="" />
-        <span ng-model="betSetting.upline.maxBet" bet-setting-constrain="2"></span>
-    </div>
+<td class="formatCol betSetting">
+    <input max-bet-input ng-model="betSetting.maxBet" class="r col50percent" type="text"
+        title="" />
+    <span ng-switch="roleId < 4" ng-model="betSetting.upline.maxBet"
+        bet-setting-constrain="2"></span>
 </td>
-<td class=" formatCol betSetting" ng-switch="$parent.$parent.roleId">
-    <div ng-switch-when="4">
-        <input bet-setting-input ng-model="betSetting.maxPerMatch" value-range="{ 'minName': '', 'min':-1,'maxName': '', 'max':-1, 'model' :'Max Per Match' }"
-            class="r col50percent" type="text" title="" />
-    </div>
-    <div ng-switch-default>
-        <input bet-setting-input ng-model="betSetting.maxPerMatch" value-range="{ 'minName': '', 'min':-1,'maxName': {{betSetting.upline.maxPerMatch}}, 'max':'{{betSetting.upline.maxPerMatch}}' , 'model' :'Max Per Match' }"
-            class="r col50percent" type="text" title="" />
-        <span ng-model="betSetting.upline.maxPerMatch" bet-setting-constrain="2"></span>
-    </div>
+<td class=" formatCol betSetting">
+    <input max-per-match-input ng-model="betSetting.maxPerMatch" class="r col50percent"
+        type="text" title="" />
+    <span ng-switch="roleId < 4" ng-model="betSetting.upline.maxPerMatch"
+        bet-setting-constrain="2"></span>
 </td>
 <td class="formatCol c betSetting">
-    <input ng-disabled="($parent.$parent.isCopyAll  && index != 0) || isStatusUIDisabled"
-        type="checkbox" ng-model="betSetting.isEnabled" />
+    <input ng-disabled="(betSettingCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"
+        ng-model="betSetting.isEnabled" />
 </td>
-<td ng-if="$parent.roleId != 1" class="formatCol c betSetting">
-    <input ng-disabled="($parent.$parent.isCopyAll  && index != 0) || isDownlinechkDisabled"
+<td ng-if="roleId > 1" class="formatCol c betSetting">
+    <input ng-disabled="(betSettingCopyAll.isCopiedAll  && $index != 0) || isDownlinechkDisabled"
         type="checkbox" ng-model="betSetting.isDownlinesEnabled" />
 </td>
