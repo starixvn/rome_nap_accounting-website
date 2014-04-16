@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>SignIn</title>
-    <link rel="stylesheet" type="text/css" id="linkLogin" /> 
+    <link rel="stylesheet" type="text/css" id="linkLogin" />     
     <script type="text/javascript">
         
     </script>
@@ -14,6 +14,20 @@
     <center>
         <div id="table_main">
         </div>
+        <div class="content" id="message">
+        <div class="icon-killer"></div>
+        <div class="announcement">
+            <div class="msg-title">ANNOUNCEMENT</div>
+            <div class="line"></div>
+            <div class="text">
+                Dear valued customers, <br />
+                Please kindly switch to use dedicated External Accounting System at 
+                <a href="http://www.726872.com">http://www.726872.com</a> since we are no longer maintaining this site, it has been
+                closed since Apr 17,2014. You will be redirected to the new site after <span id="countDown">30</span> seconds 
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
     </center>
     </form>
      
@@ -22,7 +36,7 @@
         var plsInputUserNameErr = '<%=Resources.ErrorMsg.lblPlsEnterUserName %>';
         var plsInputPassErr = '<%=Resources.ErrorMsg.lblPlsEnterPassword %>';
         var theme = '<%=LoginTheme%>';
-        
+
         var signIn = {
             system: '',
             TplDefaulLoginTheme: '<div class="contents_box"><div class="lgLeft"></div><div class="key"></div><div class="lgRight"></div><div class="lgRp"><div class="war_box"><div class="title"></div></div><div class="war_box"><div class="comment" id="ErrorMessage" style="visibility: hidden;">The New Password is required</div></div><div class="form_log"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0"><tr><td width="91" height="40" class="log_text">Username</td><td width="266"><input type="text" name="TxtUsername" id="TxtUsername" autocomplete="off" style="width: 180px;" /></td></tr><tr><td height="40" class="log_text">Password</td><td><input type="password" name="TxtPassword" id="TxtPassword" autocomplete="off" style="width: 180px;" /></td></tr><tr><td height="40"></td><td><input value="" onclick="return signIn.login();" class="log_button" type="submit" /></td></tr></table></div></div></div><div class="text_copyright"><div style="float: left; !padding-left: 12px;"><table border="0px" cellpadding="0px" cellspacing="0px" class="bestview"><tr><td>Best view in</td><td class="viewIE"></td><td class="viewFF"></td></tr></table></div></div>',
@@ -33,14 +47,27 @@
                 var links = document.getElementsByTagName('link');
                 document.getElementById('table_main').innerHTML = '';
 
-                if (this.system == 'login') {                    
+                if (this.system == 'login') {
                     getTheme = this.TplDefaulLoginTheme;
                 }
-                else {                    
-                    getTheme = this.TplExtLoginTheme;
+                else {
+                    getTheme = ''; //this.TplExtLoginTheme;
+                    document.getElementById('message').style.display = "block";
+                    document.getElementById('table_main').style.display = "none";
+                    var countDown = 30;
+                    var interval = setInterval(function () {
+                        if (countDown == 0) {
+                            clearInterval(interval);
+                            document.location.href = "https://www.726872.com";
+                        }
+                        else {
+                            document.getElementById('countDown').innerHTML = countDown;
+                            --countDown;
+                        }
+                    }, 1000);
                 }
                 document.getElementById('table_main').innerHTML = getTheme;
-                document.getElementById("TxtUsername").focus();
+                //document.getElementById("TxtUsername").focus();
             },
             login: function () {
                 document.getElementById('ErrorMessage').style.visibility = "hidden";
@@ -63,7 +90,7 @@
             }
         }
 
-        signIn.system = theme.toLowerCase() ;
+        signIn.system = theme.toLowerCase();
         signIn.bindingLoginTheme();
     </script>
     

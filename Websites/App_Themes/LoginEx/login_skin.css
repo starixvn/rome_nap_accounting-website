@@ -232,3 +232,56 @@ background:transparent url(images/btn_login_over.PNG) no-repeat ;
 	font-size:12px;
 	line-height:25px;
 }
+body 
+{
+    background: url(images/background.png) repeat;
+    min-width: 1024px;
+    min-height: 600px;
+}
+.content 
+{
+    margin: 100px 100px 0 100px;
+    height: 290px;	
+	text-align: left !important;
+}
+#countDown
+{
+    color: #ff0000;
+	font-weight: bold;
+}
+.content .icon-killer {
+	background: url(images/icon.png) no-repeat;
+	width: 290px;
+	height: 234px;
+	float: left;
+	margin-top: 55px;
+}
+.announcement
+{
+    float: left;
+    margin-left: 20px;
+    width:60%;
+} 
+.announcement .msg-title  
+{
+    font: bold 24px "Trebuchet MS";
+    color: #aa0f01;
+    margin-left: 10px;
+}
+.line {
+	border-top: 3px solid #aa0f01;
+}
+.text {
+	color: #000;
+	margin: 10px 0;
+	padding: 10px;
+	height: 210px;	
+	font-family: "Trebuchet MS";
+	font-weight: bold;
+	font-size: 15px;
+	
+}
+.clear 
+{
+    clear: both ;
+}

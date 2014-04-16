@@ -84,9 +84,16 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     }
                 }
                 #endregion checking - denied systems
-                
+
                 if (system.ToUpper() != "ACCOUNTING")
+                {
                     system = "EXTERNAL";
+                    context.Session.Clear();
+                    FormsAuthentication.SignOut();
+					context.Response.Clear();
+                    context.Response.Write("<script type='text/javascript'>top.location.href='https://www.726872.com/accext';</script>");
+					return;
+                }
 
                 AppSession.CurrentSystemNAME = Enumerations.ToAccountingSystem(system);
                 AppSession.OnAccId = Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLoginAdminOnuser(custId, WebSettings.ServerId, context.Request.UserHostAddress);
