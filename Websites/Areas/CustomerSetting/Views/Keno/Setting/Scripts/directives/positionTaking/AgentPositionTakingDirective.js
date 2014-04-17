@@ -80,7 +80,13 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                     $scope.positionTaking.a2 = $scope.positionTaking.l2;
                 }
 
-                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l2, $scope.positionTaking.n2);
+                var min = Math.round(($scope.positionTaking.n3 - ($scope.positionTaking.iM2 ? $scope.positionTaking.uM2 : $scope.positionTaking.m2)) * 100) / 100;
+                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l2, Math.max($scope.positionTaking.n2, min));
+
+                if ($scope.positionTaking.a2 < min) {
+                    $scope.maxPTRange.push($scope.positionTaking.a2);
+                }
+
                 $scope.monitorSaveButton();
             }, true);
 
@@ -97,7 +103,6 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
 
             $scope.$watch('positionTaking.n2', function () {
                 $scope.positionTaking.isUpdateN2 = $scope.originalPositionTaking.n2 != $scope.positionTaking.n2 ? true : false;
-                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l2, $scope.positionTaking.n2);
                 $scope.monitorSaveButton();
             }, true)
         }
