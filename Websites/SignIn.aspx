@@ -9,12 +9,12 @@
         
     </script>
 </head>
-<body>
+<body onload="signIn.bindingLoginTheme()">
     <form action="PreLogIn/ProcessLogin.ashx" method="post" id="LoginForm" target="controlFr">
     <center>
         <div id="table_main">
         </div>
-        <div class="content" id="message">
+        <div class="content" id="message" style="display: none">
         <div class="icon-killer"></div>
         <div class="announcement">
             <div class="msg-title">ANNOUNCEMENT</div>
@@ -55,14 +55,16 @@
                     document.getElementById('message').style.display = "block";
                     document.getElementById('table_main').style.display = "none";
                     var countDown = 30;
+
                     var interval = setInterval(function () {
                         if (countDown == 0) {
                             clearInterval(interval);
                             document.location.href = "https://www.726872.com";
+                            countDown = 30;
                         }
                         else {
                             document.getElementById('countDown').innerHTML = countDown;
-                            --countDown;
+                            countDown--;
                         }
                     }, 1000);
                 }

@@ -240,9 +240,11 @@ body
 }
 .content 
 {
-    margin: 100px 100px 0 100px;
-    height: 290px;	
-	text-align: left !important;
+    padding-top: 150px;
+    height: 290px;
+    margin: auto;
+    width: 65%;
+	text-align: left !important;	
 }
 #countDown
 {
@@ -250,17 +252,16 @@ body
 	font-weight: bold;
 }
 .content .icon-killer {
-	background: url(images/icon.png) no-repeat;
-	width: 290px;
-	height: 234px;
+	background: url(images/icon_s.png) no-repeat;
+	width: 260px;
+	height: 210px;
 	float: left;
-	margin-top: 55px;
 }
 .announcement
 {
     float: left;
-    margin-left: 20px;
-    width:60%;
+    margin: 30px 0 0 15px;
+    width:58%;
 } 
 .announcement .msg-title  
 {
@@ -272,9 +273,9 @@ body
 	border-top: 3px solid #aa0f01;
 }
 .text {
-	color: #000;
-	margin: 10px 0;
-	padding: 10px;
+	color: #232420;
+	margin: 10px 0 10px 10px;
+	padding: 10px 0;
 	height: 210px;	
 	font-family: "Trebuchet MS";
 	font-weight: bold;
