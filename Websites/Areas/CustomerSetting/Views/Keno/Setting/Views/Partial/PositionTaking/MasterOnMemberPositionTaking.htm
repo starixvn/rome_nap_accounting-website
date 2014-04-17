@@ -7,7 +7,7 @@
             type="button" /></div>
 </td>
 <td class="formatCol c b betSetting">
-    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="($parent.$parent.isCopyAll && index != 0) || positionTaking.iM2" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
     </select>
     <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1" class="col60" ng-model="positionTaking.uM1"
         ng-options="value for value in uM1Range">

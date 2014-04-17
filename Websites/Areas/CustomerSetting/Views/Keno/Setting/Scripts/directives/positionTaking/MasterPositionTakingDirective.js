@@ -37,7 +37,6 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', '$template
 
             $scope.$watch('[positionTaking.s3, positionTaking.uS3, positionTaking.iS3]', function () {
                 if ($scope.originalPositionTaking.iS3) { // Load in case within isAuto
-                    //                    $("confirm").html();
                     if ($scope.positionTaking.iS3) {
                         $scope.positionTaking.l3 = $scope.positionTaking.s4;
                         $scope.positionTaking.isUpdateS3 = false;
@@ -76,12 +75,17 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', '$template
                 $scope.monitorSaveButton();
             }, true);
 
-            $scope.$watch('positionTaking.l3', function () {
+            $scope.$watch('positionTaking.l3', function (newValue, oldValue) {
                 if ($scope.positionTaking.l3 < $scope.positionTaking.m3) {
                     $scope.positionTaking.m3 = $scope.positionTaking.l3;
                 }
 
-                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l3, $scope.positionTaking.n3);
+                var min = Math.round(($scope.positionTaking.n4 - ($scope.positionTaking.iS3 ? $scope.positionTaking.uS3 : $scope.positionTaking.s3)) * 100) / 100;
+                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l3, Math.max($scope.positionTaking.n3, min));
+
+                if ($scope.positionTaking.m3 < min) {
+                        $scope.maxPTRange.push($scope.positionTaking.m3);
+                    }
 
                 $scope.monitorSaveButton();
             }, true);
@@ -99,7 +103,6 @@ KenoModule.directive('masterPositionTakingElement', ['commonService', '$template
 
             $scope.$watch('positionTaking.n3', function () {
                 $scope.positionTaking.isUpdateN3 = $scope.originalPositionTaking.n3 != $scope.positionTaking.n3 ? true : false;
-                $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l3, $scope.positionTaking.n3);
                 $scope.monitorSaveButton();
             }, true)
         }
