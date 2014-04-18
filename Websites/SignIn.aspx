@@ -49,6 +49,8 @@
 
                 if (this.system == 'login') {
                     getTheme = this.TplDefaulLoginTheme;
+                    document.getElementById('table_main').innerHTML = getTheme;
+                    document.getElementById("TxtUsername").focus();
                 }
                 else {
                     getTheme = ''; //this.TplExtLoginTheme;
@@ -67,9 +69,7 @@
                             countDown--;
                         }
                     }, 1000);
-                }
-                document.getElementById('table_main').innerHTML = getTheme;
-                //document.getElementById("TxtUsername").focus();
+                }                
             },
             login: function () {
                 document.getElementById('ErrorMessage').style.visibility = "hidden";
