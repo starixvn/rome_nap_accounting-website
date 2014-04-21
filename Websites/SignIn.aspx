@@ -9,7 +9,7 @@
         
     </script>
 </head>
-<body onload="signIn.bindingLoginTheme()">
+<body onload="signIn.bindingLoginTheme()" onpostback="signIn.bindingLoginTheme()">
     <form action="PreLogIn/ProcessLogin.ashx" method="post" id="LoginForm" target="controlFr">
     <center>
         <div id="table_main">
@@ -69,7 +69,7 @@
                             countDown--;
                         }
                     }, 1000);
-                }                
+                }
             },
             login: function () {
                 document.getElementById('ErrorMessage').style.visibility = "hidden";
@@ -93,7 +93,7 @@
         }
 
         signIn.system = theme.toLowerCase();
-        signIn.bindingLoginTheme();
+        //signIn.bindingLoginTheme();
     </script>
     
 </body>
