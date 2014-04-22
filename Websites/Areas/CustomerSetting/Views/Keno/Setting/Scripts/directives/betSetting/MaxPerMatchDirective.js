@@ -14,7 +14,7 @@ KenoModule.directive('maxPerMatchInput', ['$filter', '$parse', 'commonService',
                 })
 
                 $scope.setConstrainMaxPerMatch = function () {
-                    var modelValue = parseFloat(ctrl.$modelValue);
+                    var modelValue = isNaN(ctrl.$modelValue) == true ? $scope.betSetting.maxPerMatch : parseFloat(ctrl.$modelValue);
                     var maxValue = $scope.betSetting.upline.maxPerMatch;
 
                     if (modelValue > maxValue && maxValue < MAX_VALUE && !$scope.unlimited) {

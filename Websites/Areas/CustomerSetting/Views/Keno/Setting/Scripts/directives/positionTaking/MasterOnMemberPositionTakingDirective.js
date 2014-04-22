@@ -9,14 +9,11 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', '$
         },
         templateUrl: $templateCache.get('masterOnMemberPositionTakingTemplate'),
         link: function ($scope, elem, attr, ctrl) {
-            console.log($scope.positionTaking);
-
             $scope.originalPositionTaking = angular.copy($scope.positionTaking);
 
-            $scope.isAutoPTCount = 0;
-            $scope.ptCount = 0;
-
             $scope.fixIECount = 0;
+            $scope.isAutoPTFirstChanged = false;
+            $scope.isPTFirstChange = false;
 
             $scope.m1Range = commonService.getRangePTValue($scope.positionTaking.m1Max, $scope.positionTaking.m1UM1Min);
             $scope.uM1Range = commonService.getRangePTValue($scope.positionTaking.m3, $scope.positionTaking.m1UM1Min);
@@ -41,29 +38,20 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', '$
 
             $scope.setRangePTWhenInit();
 
-            $scope.setRangePTAfterChosen = function () {
-                if ($scope.isAutoPTCount == 1) {
-                    if ($scope.positionTaking.m3 >= $scope.positionTaking.uM1 || $scope.positionTaking.m1UM1Min <= $scope.positionTaking.uM1) {
-                        $scope.uM1Range = commonService.getRangePTValue($scope.positionTaking.m3, $scope.positionTaking.m1UM1Min);
-                    }
+            $scope.setRangePTIfFirstChange = function () {
+                if (($scope.originalPositionTaking.uM1 != $scope.positionTaking.uM1 && !$scope.isAutoPTFirstChanged)) {
+                    $scope.uM1Range = commonService.getRangePTValue($scope.positionTaking.m3, $scope.positionTaking.m1UM1Min);
+                    $scope.isAutoPTFirstChanged = true;
                 }
 
-                if ($scope.ptCount == 1) {
-                    if ($scope.positionTaking.m1Max >= $scope.positionTaking.m1 || $scope.positionTaking.m1UM1Min <= $scope.positionTaking.m1) {
-                        $scope.m1Range = commonService.getRangePTValue($scope.positionTaking.m1Max, $scope.positionTaking.m1UM1Min);
-                    }
+                if (($scope.originalPositionTaking.m1 != $scope.positionTaking.m1 && !$scope.isPTFirstChange)) {
+                    $scope.m1Range = commonService.getRangePTValue($scope.positionTaking.m1Max, $scope.positionTaking.m1UM1Min);
+                    $scope.isPTFirstChange = true;
                 }
             };
 
             $scope.monitorSaveButton = function () {
-                if ($scope.positionTaking.isUpdateM1
-                    || $scope.positionTaking.isUpdateUM1) {
-                    $scope.positionTaking.isUpdatePT = true;
-                }
-                else {
-                    $scope.positionTaking.isUpdatePT = false;
-                }
-
+                $scope.positionTaking.isUpdatePT = $scope.positionTaking.isUpdateM1 || $scope.positionTaking.isUpdateUM1;
                 $scope.fixIECount++;
                 $scope.$emit('totallyChecking');
             };
@@ -74,7 +62,7 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', '$
                         if ($scope.positionTaking.iM1) {
                             $scope.positionTaking.isUpdateM1 = false;
                             $scope.positionTaking.isUpdateUM1 = (($scope.originalPositionTaking.uM1 != $scope.positionTaking.uM1)
-                                                    || ($scope.originalPositionTaking.iM1 != $scope.positionTaking.iM1)) == true ? true : false;
+                                                    || ($scope.originalPositionTaking.iM1 != $scope.positionTaking.iM1)) == true;
                         }
                         else {
                             $scope.positionTaking.isUpdateM1 = true;
@@ -87,20 +75,12 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', '$
                             $scope.positionTaking.isUpdateUM1 = true;
                         }
                         else {
-                            $scope.positionTaking.isUpdateM1 = $scope.originalPositionTaking.m1 != $scope.positionTaking.m1 ? true : false;
+                            $scope.positionTaking.isUpdateM1 = $scope.originalPositionTaking.m1 != $scope.positionTaking.m1;
                             $scope.positionTaking.isUpdateUM1 = false;
                         }
                     }
 
-                    if ($scope.originalPositionTaking.uM1 != $scope.positionTaking.uM1) {
-                        $scope.isAutoPTCount++;
-                    }
-
-                    if ($scope.originalPositionTaking.m1 != $scope.positionTaking.m1) {
-                        $scope.ptCount++;
-                    }
-
-                    $scope.setRangePTAfterChosen();
+                    $scope.setRangePTIfFirstChange();
                     $scope.monitorSaveButton();
                 }
             }, true);

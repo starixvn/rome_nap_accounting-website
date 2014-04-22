@@ -70,23 +70,23 @@
 3. Action in detail
 
 • Super Setting
-- /customersetting/KenoSetting/kenosetting/EditSuper?custid=14305719&userid=8
+- /customersetting/KenoSetting/kenosetting/EditSuper?custid=14395074&userid=8
 
 • Master Setting
-- /customersetting/KenoSetting/kenosetting/EditMaster?custid=14305720&userid=8
+- /customersetting/KenoSetting/kenosetting/EditMaster?custid=14395075&userid=8
 
 • Agent Setting
-- /customersetting/KenoSetting/kenosetting/EditAgent?custid=14305721&userid=8
+- /customersetting/KenoSetting/kenosetting/EditAgent?custid=14395076&userid=8
 
 • Agent Edit Member
-- /customersetting/KenoSetting/kenosetting/AgentEditMember?custid=14305722&userid=8
+- /customersetting/KenoSetting/kenosetting/AgentEditMember?custid=14395077&userid=8
 
 • Super Edit member
-- /customersetting/KenoSetting/kenosetting/SuperEditMember?custid=14305722&userid=8
+- /customersetting/KenoSetting/kenosetting/SuperEditMember?custid=14395077&userid=8
 D:\EXTERNAL SITE\GITLAB-CustomerSetting\customer-setting\Fanex.Toco\Module\Keno\Keno\Controllers\KenoSettingController.cs
 
 • Master Edit Member
-- /customersetting/KenoSetting/kenosetting/MasterEditMember?custid=14305722&userid=8
+- /customersetting/KenoSetting/kenosetting/MasterEditMember?custid=14395077&userid=8
 
 • Edit Keno Status
 - /customersetting/keno/enablestatus/index?id=xxx&uplineId=yyy&roleId=zzz (xxx, yyy, zzz is integer occording to custId, uplineId, roleId)

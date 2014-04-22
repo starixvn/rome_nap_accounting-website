@@ -9,9 +9,13 @@ KenoModule.service('commonService', function () {
                 max = Math.round((max - stepValue) * roundValue) / roundValue;
             }
         } else {
-            rangeValueArray = [];
+            rangeValueArray = [0];
         }
         return rangeValueArray;
+    }
+
+    this.roundPTValue = function (value) {
+        return Math.round(value * 100) / 100;
     }
 
     this.getRangePTValue = function (max, min) {
