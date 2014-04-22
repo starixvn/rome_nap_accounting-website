@@ -118,7 +118,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                                 $scope.showMesseges(html);
                             }
                         } else {
-                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '<</div>');
+                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>');
                         }
                     },
                     function () {
