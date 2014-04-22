@@ -62,8 +62,7 @@ KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', '$t
                     if ($scope.originalPositionTaking.iS1) { // Load in case within isAuto
                         if ($scope.positionTaking.iS1) {
                             $scope.positionTaking.isUpdateS1 = false;
-                            $scope.positionTaking.isUpdateUS1 = (($scope.originalPositionTaking.uS1 != $scope.positionTaking.uS1)
-                                                    || ($scope.originalPositionTaking.iS1 != $scope.positionTaking.iS1)) == true;
+                            $scope.positionTaking.isUpdateUS1 = ($scope.originalPositionTaking.uS1 != $scope.positionTaking.uS1) || ($scope.originalPositionTaking.iS1 != $scope.positionTaking.iS1);
                         }
                         else {
                             $scope.positionTaking.isUpdateS1 = true;
