@@ -14,7 +14,7 @@ KenoModule.directive('minBetInput', ['$filter', '$parse', 'commonService',
                 });
 
                 $scope.setConstrainMinBet = function () {
-                    var modelValue = parseFloat(ctrl.$modelValue);
+                    var modelValue = isNaN(ctrl.$modelValue) == true ? $scope.betSetting.minBet : parseFloat(ctrl.$modelValue);
                     var minValue = $scope.betSetting.upline.minBet;
                     var maxValue = $scope.betSetting.maxBet;
 

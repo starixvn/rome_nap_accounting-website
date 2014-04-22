@@ -13,11 +13,18 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
             $scope.$broadcast('inputDisabledChecking', isCopy);
         };
 
+        $scope.copyAllStatus = function (isCopy, betTypeId) {
+            $scope.statusCopyAll.betTypeId = isCopy == true ? betTypeId : -1;
+            $scope.statusCopyAll.isCopiedAll = isCopy;
+
+            $scope.$broadcast('totallyChecking');
+        };
+
         $scope.$on('totallyChecking', function (event) {
             var length = $scope.betSettingList.length;
             var updatedCount = 0;
 
-            if ($scope.betSettingCopyAll.isCopiedAll) {
+            if ($scope.betSettingCopyAll.isCopiedAll || $scope.statusCopyAll.isCopiedAll) {
                 $scope.$parent.isBetSettingPartial = $scope.betSettingList[0].isValid;
                 return true;
             } else {

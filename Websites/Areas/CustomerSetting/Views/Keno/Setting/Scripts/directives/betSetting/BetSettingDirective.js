@@ -58,7 +58,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                     });
                 }
 
-                $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function (newValue, oldValue) {
+                $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function () {
                     $scope.unlimited = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0 && $scope.betSetting.maxPerMatch == 0;
 
                     $scope.betSetting.isValid = ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch) || $scope.unlimited;

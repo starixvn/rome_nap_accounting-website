@@ -10,6 +10,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
             $scope.betSettingCopyAll = $scope.kenoSetting.betSettingCopyAll;
             $scope.positionTakingList = $scope.kenoSetting.positionTakings;
             $scope.positionTakingCopyAll = $scope.kenoSetting.positionTakingCopyAll;
+            $scope.statusCopyAll = $scope.kenoSetting.statusCopyAll;
 
             $scope.isUpdatedKeno = false;
             $scope.isPositionTakingPartial = false;

@@ -24,10 +24,10 @@
         bet-setting-constrain="2"></span>
 </td>
 <td class="formatCol c betSetting">
-    <input ng-disabled="(betSettingCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"
+    <input ng-disabled="(statusCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"
         ng-model="betSetting.isEnabled" />
 </td>
 <td ng-if="roleId > 1" class="formatCol c betSetting">
-    <input ng-disabled="(betSettingCopyAll.isCopiedAll  && $index != 0) || isDownlinechkDisabled"
+    <input ng-disabled="(statusCopyAll.isCopiedAll  && $index != 0) || isDownlinechkDisabled"
         type="checkbox" ng-model="betSetting.isDownlinesEnabled" />
 </td>
