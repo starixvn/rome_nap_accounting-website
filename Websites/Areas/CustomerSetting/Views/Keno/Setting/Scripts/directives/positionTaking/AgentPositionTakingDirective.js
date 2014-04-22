@@ -51,8 +51,7 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                     if ($scope.originalPositionTaking.iM2) { // Load in case within isAuto
                         if ($scope.positionTaking.iM2) {
                             $scope.positionTaking.isUpdateM2 = false;
-                            $scope.positionTaking.isUpdateUM2 = (($scope.originalPositionTaking.uM2 != $scope.positionTaking.uM2)
-                                                    || ($scope.originalPositionTaking.iM2 != $scope.positionTaking.iM2)) == true;
+                            $scope.positionTaking.isUpdateUM2 = ($scope.originalPositionTaking.uM2 != $scope.positionTaking.uM2) || ($scope.originalPositionTaking.iM2 != $scope.positionTaking.iM2);
 
                             $scope.positionTaking.isConfirmIsAuto = false;
                             $scope.$emit('confirmIsAuto', { "betTypeId": $scope.positionTaking.betTypeId, "isAdd": false });
@@ -61,12 +60,7 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                             $scope.positionTaking.isUpdateM2 = true;
                             $scope.positionTaking.isUpdateUM2 = true;
 
-                            if ($scope.positionTaking.l2 <= 0) {
-                                $scope.positionTaking.memberNewValueRange = [0];
-                            }
-                            else {
-                                $scope.positionTaking.memberNewValueRange = commonService.getRangePTValue($scope.positionTaking.l2, 0);
-                            }
+                            $scope.positionTaking.memberNewValueRange = $scope.positionTaking.l2 <= 0 ? [0] : commonService.getRangePTValue($scope.positionTaking.l2, 0);
                             $scope.positionTaking.isConfirmIsAuto = true;
                             $scope.$emit('confirmIsAuto', { "betTypeId": $scope.positionTaking.betTypeId, "isAdd": true });
                         }
