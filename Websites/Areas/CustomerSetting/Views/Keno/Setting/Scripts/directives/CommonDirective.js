@@ -35,7 +35,7 @@ KenoModule.directive('ieSelectFix', function ($timeout) {
                 });
         }
     }
-    });
+});
 
 KenoModule.directive('betSettingConstrain', ['$filter',
     function ($filter) {
@@ -45,7 +45,7 @@ KenoModule.directive('betSettingConstrain', ['$filter',
                 if (!ctrl) return;
 
                 var valueModel = eval("$scope." + attrs.ngModel);
-
+                var MAX_VALUE = Math.pow(2, 53);
                 if (valueModel > 0 && valueModel < MAX_VALUE) {
                     var symbol = attrs.betSettingConstrain == 1 ? " >= " : " <= ";
 
