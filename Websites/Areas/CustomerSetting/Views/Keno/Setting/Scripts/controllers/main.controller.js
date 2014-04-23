@@ -1,5 +1,4 @@
 ﻿"use strict";
-var MAX_VALUE = Math.pow(2, 53);
 
 KenoModule.controller('mainController', function ($scope, $timeout, kenoRepositories, ngDialog, commonService) {
     kenoRepositories.getData().then(
