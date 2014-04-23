@@ -187,7 +187,7 @@ namespace Fanex.Tarus.Admin.Business.SecurityCode
                         {
                             switch (cell.CellType)
                             {
-                                case CellType.NUMERIC:
+                                case CellType.Numeric:
                                     dr[i + 1] = cell.NumericCellValue;
                                     break;
                                 default:

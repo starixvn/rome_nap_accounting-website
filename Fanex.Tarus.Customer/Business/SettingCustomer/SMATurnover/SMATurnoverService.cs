@@ -326,7 +326,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     {
                         switch (cell.CellType)
                         {
-                            case CellType.NUMERIC:
+                            case CellType.Numeric:
                                 //dr[i] = cell.NumericCellValue;
                                 dr[i] = cell.ToString();
                                 break;
