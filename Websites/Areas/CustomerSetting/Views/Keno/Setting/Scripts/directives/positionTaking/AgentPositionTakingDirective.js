@@ -60,7 +60,10 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                             $scope.positionTaking.isUpdateM2 = true;
                             $scope.positionTaking.isUpdateUM2 = true;
 
-                            $scope.positionTaking.memberNewValueRange = $scope.positionTaking.l2 <= 0 ? [0] : commonService.getRangePTValue($scope.positionTaking.l2, 0);
+                            var minOfMemberNewValueRange = Math.max(0, commonService.roundPTValue($scope.positionTaking.n3 - $scope.positionTaking.a2));
+                            var maxOfMemberNewValueRange = commonService.roundPTValue($scope.positionTaking.m3 - $scope.positionTaking.a2);
+                            $scope.positionTaking.newMemberPT = $scope.positionTaking.m2;
+                            $scope.positionTaking.memberNewValueRange = maxOfMemberNewValueRange <= 0 ? [0] : commonService.getRangePTValue(maxOfMemberNewValueRange, minOfMemberNewValueRange);
                             $scope.positionTaking.isConfirmIsAuto = true;
                             $scope.$emit('confirmIsAuto', { "betTypeId": $scope.positionTaking.betTypeId, "isAdd": true });
                         }
