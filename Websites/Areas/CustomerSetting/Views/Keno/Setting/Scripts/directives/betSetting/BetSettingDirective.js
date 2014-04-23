@@ -9,7 +9,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
         controller: ['$scope', '$filter', '$parse',
             function ($scope, $filter, $parse) {
                 $scope.originalBetSetting = angular.copy($scope.betSetting);
-
+                $scope.MAX_VALUE = Math.pow(2, 53);
                 $scope.valids = {
                     "minBet": true,
                     "maxBet": true,
@@ -20,15 +20,15 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                 $scope.isDownlinechkDisabled = true;
 
                 if ($scope.betSetting.upline.minBet == 0) {
-                    $scope.betSetting.upline.minBet = MAX_VALUE;
+                    $scope.betSetting.upline.minBet = $scope.MAX_VALUE;
                 }
 
                 if ($scope.betSetting.upline.maxBet == 0) {
-                    $scope.betSetting.upline.maxBet = MAX_VALUE;
+                    $scope.betSetting.upline.maxBet = $scope.MAX_VALUE;
                 }
 
                 if ($scope.betSetting.upline.maxPerMatch == 0) {
-                    $scope.betSetting.upline.maxPerMatch = MAX_VALUE;
+                    $scope.betSetting.upline.maxPerMatch = $scope.MAX_VALUE;
                 }
 
                 $scope.disabledInput = function (element) {
