@@ -9,11 +9,11 @@
 <td class="formatCol c b betSetting">
     <select ie-select-fix = "{{fixIECount}}" ng-disabled="($parent.$parent.isCopyAll && index != 0) || positionTaking.iM2" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
     </select>
-    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1" class="col60" ng-model="positionTaking.uM1"
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1 && !$parent.isDisableAutoMPT" class="col60" ng-model="positionTaking.uM1"
         ng-options="value for value in uM1Range">
     </select>
 </td>
-<td class="formatCol c b betSetting" ng-hide="positionTaking.isDisabledMPT">
+<td class="formatCol c b betSetting" ng-hide="$parent.isDisableAutoMPT">
     <input   ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox" ng-model="positionTaking.iM1" />
 </td>
 <td class="formatCol c betSetting">

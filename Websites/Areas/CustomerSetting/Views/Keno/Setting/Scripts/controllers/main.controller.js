@@ -86,16 +86,25 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                 return domain + url;
             }
 
-            $scope.showMesseges = function (html) {
-                $("#divShowInfo").append(html).show();
-                commonService.unblockUI();
+            $scope.showMesseges = function (html, isSuccess) {
+                if (isSuccess) {
+                    $timeout(function () {
+                        $("#divShowInfo").append(html);
+                        commonService.unblockUI();
+                    }, 4000);
+                }
+                else {
+                    $("#divShowInfo").append(html);
+                    commonService.unblockUI();
+                }
             }
 
             $scope.doUpdated = function (url) {
                 commonService.blockUI();
                 kenoRepositories.save(url, $scope.kenoSetting).then(
                     function (results) {
-                        $("#divShowInfo").empty();
+                        $("#divShowInfo").empty().show();
+
                         var html = "";
                         if (typeof results != 'undefined') {
                             var length = results.length;
@@ -108,20 +117,20 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                             }
 
                             if (!isError) {
+                                $scope.showMesseges('<div class="alertsuccess">' + resources.successful + '</div>', true);
                                 $timeout(function () {
-                                    $scope.showMesseges('<div class="alertsuccess">' + resources.successful + '</div>');
                                     location.reload();
                                     parent.frames["centerFr"].location.reload();
                                 }, 5000);
                             } else {
-                                $scope.showMesseges(html);
+                                $scope.showMesseges(html, false);
                             }
                         } else {
-                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>');
+                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
                         }
                     },
                     function () {
-                        $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>');
+                        $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
                     });
             };
         }, function (reason) { }, function (update) { });

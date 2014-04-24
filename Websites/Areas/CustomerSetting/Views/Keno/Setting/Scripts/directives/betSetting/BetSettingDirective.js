@@ -94,6 +94,14 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                         $scope.$emit('totallyChecking');
                     }
                 }, true);
+
+                $scope.$watch('isDownlinechkDisabled', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        if ($scope.isDownlinechkDisabled) {
+                            $scope.betSetting.isDownlinesEnabled = false;
+                        }
+                    }
+                }, true);
             }
         ]
     };
