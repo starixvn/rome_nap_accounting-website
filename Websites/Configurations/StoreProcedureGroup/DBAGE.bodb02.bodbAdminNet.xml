@@ -69,7 +69,7 @@
     <Setting Key="Age_BetList_SelMatchResultFinance" SpName="Age_BetList_SelMatchResultFinance" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet"  />
 
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet"  />

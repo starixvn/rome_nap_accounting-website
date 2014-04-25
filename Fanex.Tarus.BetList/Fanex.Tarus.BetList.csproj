@@ -42,7 +42,7 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Accounting.dll</HintPath>
     </Reference>

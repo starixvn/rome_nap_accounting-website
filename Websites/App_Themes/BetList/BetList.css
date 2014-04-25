@@ -116,6 +116,23 @@ height:10px;
 padding:0 4px;
 width:14px;
 }
+.fhFirstGoal
+{
+    background: transparent url(../Images/1F.gif) no-repeat scroll center center;
+    display: inline;
+    height: 10px;
+    padding: 0 4px;
+    width: 14px;
+}
+
+.fhLastGoal
+{
+    background: transparent url(../Images/1L.gif) no-repeat scroll center center;
+    display: inline;
+    height: 10px;
+    padding: 0 4px;
+    width: 14px;
+}
 
 .exrate2
 {
