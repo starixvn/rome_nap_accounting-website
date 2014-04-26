@@ -1705,20 +1705,22 @@ namespace Sunplus.Accounting.Business.BetList
                     {
                         string[] _betStatus = r["betstatus"].ToString().Split(';');
 
-                        if (_betStatus.Length >= 2)
+                        if (_betStatus.Length >= 2)//first hafl
                         {
-                            char _1st_fg = _betStatus[1][4];
-                            char _1st_lg = _betStatus[1][6];
+                            string firstHaflBetStatus = _betStatus[1].Trim();
+                            char _1st_fg = firstHaflBetStatus[4];
+                            char _1st_lg = firstHaflBetStatus[6];
                             if (_1st_fg == '1') TemplateHandler.Assign(ref _s, "h1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
                             if (_1st_fg == '2') TemplateHandler.Assign(ref _s, "a1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
                             if (_1st_lg == '1') TemplateHandler.Assign(ref _s, "h1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
                             if (_1st_lg == '2') TemplateHandler.Assign(ref _s, "a1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
                         }
 
-                        if (_betStatus.Length >= 3)
+                        if (_betStatus.Length >= 3)//second hafl
                         {
-                            char _fg = _betStatus[2][3];
-                            char _lg = _betStatus[2][5];
+                            string secondHaflBetStatus = _betStatus[2].Trim();
+                            char _fg = secondHaflBetStatus[3];
+                            char _lg = secondHaflBetStatus[5];
                             if (_fg == '1') TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); // TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
                             if (_fg == '2') TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
                             if (_lg == '1') TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
@@ -1772,63 +1774,6 @@ namespace Sunplus.Accounting.Business.BetList
                 TemplateHandler.Assign(ref _s, "{homeFScore}", ftHome);
                 TemplateHandler.Assign(ref _s, "{awayFScore}", ftAway);
             }
-        }
-
-        private static string FillBetStatusForSoccer(string _s, DataRow r)
-        {
-            string[] _betStatus = r["betstatus"].ToString().Trim().Split(';');
-            int index = _betStatus[0].Contains("Refund") ? 1 : 0;
-
-            if (_betStatus.Length == index +1)
-            {
-                if (_betStatus[index].StartsWith("FL"))//format: "FL:x-y" OR "Refund FT;FL:x-y" (old format)
-                {
-                    string secondHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillSecondHalfForSoccer(_s, secondHaflBetStatus);
-                }
-                else if (_betStatus[index].StartsWith("1FL"))//format: "1FL:x-y" OR "Refund FT;1FL:x-y"
-                {
-                    string firstHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillFirstHalfForSoccer(_s, firstHaflBetStatus);
-                }
-            }
-            else if (_betStatus.Length == index + 2)//format: "1FL:a-b;FL:x-y"  OR "Refund FT;1FL:a-b;FL:x-y"
-            {
-                if (_betStatus[index +1].StartsWith("FL"))
-                {
-                    string secondHaflBetStatus = _betStatus[index + 1].Trim();
-                    _s = FillSecondHalfForSoccer(_s, secondHaflBetStatus);
-                }
-                if (_betStatus[index].StartsWith("1FL"))
-                {
-                    string firstHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillFirstHalfForSoccer(_s, firstHaflBetStatus);
-                }
-            }
-           
-            return _s;
-        }
-
-        private static string FillFirstHalfForSoccer(string _s, string firstHaflBetStatus)
-        {
-            char _1st_fg = firstHaflBetStatus[4];
-            char _1st_lg = firstHaflBetStatus[6];
-            if (_1st_fg == '1') TemplateHandler.Assign(ref _s, "h1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
-            if (_1st_fg == '2') TemplateHandler.Assign(ref _s, "a1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
-            if (_1st_lg == '1') TemplateHandler.Assign(ref _s, "h1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
-            if (_1st_lg == '2') TemplateHandler.Assign(ref _s, "a1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
-            return _s;
-        }
-
-        private static string FillSecondHalfForSoccer(string _s, string secondHaflBetStatus)
-        {
-            char _fg = secondHaflBetStatus[3];
-            char _lg = secondHaflBetStatus[5];
-            if (_fg == '1') TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); // TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
-            if (_fg == '2') TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
-            if (_lg == '1') TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
-            if (_lg == '2') TemplateHandler.Assign(ref _s, "algoal", "<div class='LastGoal'>&nbsp;</div>");
-            return _s;
         }
 
         public string GetStatusStr(string _eventstatus, params string[] options)
@@ -1956,31 +1901,31 @@ namespace Sunplus.Accounting.Business.BetList
                 {
                     bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
                     bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);                    
-                    
                     if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
-                    {                        
+                    {
                         string[] _betStatus = r["betstatus"].ToString().Split(';');
 
-
-                        if (_betStatus.Length >= 2)
+                        if (_betStatus.Length >= 2)//first hafl
                         {
-                            char _1st_fg = _betStatus[1][4];
-                            char _1st_lg = _betStatus[1][6];
+                            string firstHaflBetStatus = _betStatus[1].Trim();
+                            char _1st_fg = firstHaflBetStatus[4];
+                            char _1st_lg = firstHaflBetStatus[6];
                             if (_1st_fg == '1') TemplateHandler.Assign(ref _s, "h1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
                             if (_1st_fg == '2') TemplateHandler.Assign(ref _s, "a1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
                             if (_1st_lg == '1') TemplateHandler.Assign(ref _s, "h1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
                             if (_1st_lg == '2') TemplateHandler.Assign(ref _s, "a1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
                         }
 
-                        if (_betStatus.Length >= 3)
+                        if (_betStatus.Length >= 3)//second hafl
                         {
-                            char _fg = _betStatus[2][3];
-                            char _lg = _betStatus[2][5];
+                            string secondHaflBetStatus = _betStatus[2].Trim();
+                            char _fg = secondHaflBetStatus[3];
+                            char _lg = secondHaflBetStatus[5];
                             if (_fg == '1') TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); // TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
                             if (_fg == '2') TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
                             if (_lg == '1') TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
                             if (_lg == '2') TemplateHandler.Assign(ref _s, "algoal", "<div class='LastGoal'>&nbsp;</div>");
-                        }                        
+                        }          
                     }
                 }
                 TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
