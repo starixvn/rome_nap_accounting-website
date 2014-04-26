@@ -1704,6 +1704,14 @@ namespace Sunplus.Accounting.Business.BetList
                     if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
                     {
                         _s = FillBetStatusForSoccer(_s, r);
+                        if (_betStatus.Length >= 2)//first hafl
+                            string firstHaflBetStatus = _betStatus[1].Trim();
+                            char _1st_fg = firstHaflBetStatus[4];
+                            char _1st_lg = firstHaflBetStatus[6];
+                        if (_betStatus.Length >= 3)//second hafl
+                            string secondHaflBetStatus = _betStatus[2].Trim();
+                            char _fg = secondHaflBetStatus[3];
+                            char _lg = secondHaflBetStatus[5];
                     }
                 }
                 TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
@@ -1939,6 +1947,15 @@ namespace Sunplus.Accounting.Business.BetList
                     if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
                     {                        
                         _s = FillBetStatusForSoccer(_s, r); 
+                        if (_betStatus.Length >= 2)//first hafl
+                            string firstHaflBetStatus = _betStatus[1].Trim();
+                            char _1st_fg = firstHaflBetStatus[4];
+                            char _1st_lg = firstHaflBetStatus[6];
+                        if (_betStatus.Length >= 3)//second hafl
+                            string secondHaflBetStatus = _betStatus[2].Trim();
+                            char _fg = secondHaflBetStatus[3];
+                            char _lg = secondHaflBetStatus[5];
+                        }          
                     }
                 }
                 TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
