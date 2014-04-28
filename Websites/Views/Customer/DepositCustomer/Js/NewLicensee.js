@@ -14,6 +14,10 @@ newLic.init = function () {
     $("#btnResetUsenName").click(function () {
         newLic.ResetUsenName();
     });
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.initPage();
+    }
 };
 
 newLic.verifyData = function () {
@@ -283,6 +287,11 @@ newLic.getPostParam = function () {
     if (typeof vsSuperSetting != 'undefined') {
         vsSuperSetting.assignVirtualSportsSettings(params);
     }
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.getSettings(params);
+    }
+
     return {
         postParam: {
             SuperName: $("#tbxSuperName").val(),
@@ -359,6 +368,7 @@ newLic.GenerateSampleName = function () {
     var dummyAgentName = $("#tbxDummyAgentName").val();
     var dummyMemberName = $("#tbxDummyMemberName").val();
 
+    var suffix = "_4";
     if (!common.isEmpty(superName) ||
         !common.isEmpty(masterName) ||
         !common.isEmpty(agentName) ||
@@ -368,17 +378,17 @@ newLic.GenerateSampleName = function () {
         return;
     }
 
-    $("#tbxSuperName").val(siteName + "Super" + currencyName);
-    $("#tbxMasterName").val(siteName + currencyName);
-    $("#tbxAgentName").val(siteName + currencyName + "01");
+    $("#tbxSuperName").val(siteName + "Super" + currencyName + suffix);
+    $("#tbxMasterName").val(siteName + currencyName + suffix);
+    $("#tbxAgentName").val(siteName + currencyName + "01" + suffix);
 
-    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyName);
-    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyName + "01");
+    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyName + suffix);
+    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyName + "01" + suffix);
 
-    var dummyMemberName = siteName + "Transfer" + currencyName + "," +
-                          siteName + "Charges" + currencyName + "," +
-                          siteName + "Bonus" + currencyName + "," +
-                          siteName + "Withdrawal" + currencyName;
+    var dummyMemberName = siteName + "Transfer" + currencyName + suffix + "," +
+                          siteName + "Charges" + currencyName + suffix + "," +
+                          siteName + "Bonus" + currencyName + suffix + "," +
+                          siteName + "Withdrawal" + currencyName + suffix;
     $("#tbxDummyMemberName").val(dummyMemberName);
 };
 

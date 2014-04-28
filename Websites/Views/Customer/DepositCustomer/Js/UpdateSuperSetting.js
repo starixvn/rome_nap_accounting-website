@@ -11,6 +11,10 @@ updSuperSetting.init = function () {
     if (this.roleId == 3 || this.roleId == 2 || this.roleId == 1) {
         common.initConstraint();
     }
+
+    if (window.kenoSettingsManager) {
+        kenoSettingsManager.initPage();
+    }
 };
 
 updSuperSetting.fillSportbookSettingAndPT = function (dataJson) {
@@ -393,10 +397,15 @@ updSuperSetting.getPostParam = function () {
         }
     }
 
+    if (window.kenoSettingsManager) {
+        kenoBetTypesSettingInfo = window.kenoSettingsManager.getSettings();
+    }
+
     return {
         postParam: {
             PostParams: params,
-            VirtualSportsSettingInfo: virtualSportsSettingInfo
+            VirtualSportsSettingInfo: virtualSportsSettingInfo,
+            KenoBetTypesSettingInfo: kenoBetTypesSettingInfo
         }
     };
 };

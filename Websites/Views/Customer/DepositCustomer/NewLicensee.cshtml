@@ -610,6 +610,12 @@ var arrRacing = [];
                 @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/AddNewSuper.cshtml")
             }
             <!--/Virtual Sports-->
+            <!--Keno-->
+            @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                @Html.Partial("~/Views/Customer/DepositCustomer/NewLicensee/KenoSettings.cshtml")
+            }
+            <!--/Keno-->
             <table id="tblAdd" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
                 <tbody>
                     <tr>

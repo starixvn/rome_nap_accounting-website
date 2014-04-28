@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Admin\AgentAccess.cs" />
     <Compile Include="Admin\QuickLink.cs" />
+    <Compile Include="Customer\DepositCustomer\KenoBetTypesSettingInfo.cs" />
     <Compile Include="Customer\DepositCustomer\SettingInfo.cs" />
     <Compile Include="Customer\DepositCustomer\VirtualSportsSettingInfo.cs" />
     <Compile Include="Report\FilterCommon.cs" />

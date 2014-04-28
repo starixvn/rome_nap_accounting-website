@@ -19,6 +19,41 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
     public class DepositCustomerAccess : BaseAccess, IDepositCustomerAccess
     {
+        private string GetKenoBetTypesParams(
+            Dictionary<string, object> dictionaryParams,
+            bool isDummy)
+        {
+            var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
+            var kenoParams = "<bettypes>";
+            foreach (KenoBetTypesElement betType in kenoBetTypes)
+            {
+                if (!betType.Active)
+                {
+                    continue;
+                }
+
+                var betTypeId = betType.Id;
+
+                kenoParams += string.Format("<bettype Id=\"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></bettype>",
+                    betTypeId,
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "maxbet"],
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "minbet"],
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "maxpermatch"],
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "spositiontaking"],
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "mpositiontaking"],
+                    isDummy ? 0 : dictionaryParams["v" + betTypeId + "apositiontaking"]);
+            }
+
+            kenoParams += "</bettypes>";
+            return kenoParams;
+        }
+
         private Hashtable GetAddNewHashTableParams(NewLicenseePostParam newLicenseePostParam)
         {
             string paramName;
@@ -220,6 +255,11 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             hashParams.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
+
+            if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                hashParams.Add("kenobettypelist", GetKenoBetTypesParams(dictionaryParams, false));
+            }
 
             foreach (var param in newLicenseePostParam.PostParams)
             {
@@ -437,6 +477,11 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             hashParam.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
+
+            if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                hashParam.Add("kenobettypelist", GetKenoBetTypesParams(dictionaryParam, true));
+            }
 
             foreach (var param in newLicenseePostParam.PostParams)
             {

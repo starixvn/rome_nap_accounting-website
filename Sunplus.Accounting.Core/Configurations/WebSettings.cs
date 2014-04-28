@@ -492,5 +492,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferHorseRacingFixedOdds"] == "1");
             }
         }
+
+        public static bool EnableKeno
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableKeno"] == "1");
+            }
+        }
     }
 }

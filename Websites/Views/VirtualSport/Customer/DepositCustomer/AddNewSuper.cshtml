@@ -2,6 +2,7 @@
 @helper GenerateBetSettingVirtualSports()
     {
         var virtualSports = VirtualSportsSection.Instance.Sports;
+        var isFirstSport = true;
         foreach (VirtualSportsElement sport in virtualSports)
         {
             if (!sport.Active)
@@ -11,20 +12,22 @@
             var minBetv = "minbetv" + @sport.Id.ToLower();
             var maxBetv = "maxbetv" + @sport.Id.ToLower();
             var maxPerMatchv = "maxpermatchv" + @sport.Id.ToLower();
-        
-        
+
+            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : string.Empty;
+            var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
+            isFirstSport = false;
     <tr>
         <td align="left" style="padding-left: 4px">
-            <span>@sport.Name</span>
+            <span>@sport.Name</span>@Html.Raw(buttonCopyAll)
         </td>
         <td>
-            <input id="@minBetv" minbet="true" type="text"  style="width: 128px; text-align: right" value="@sport.Minbet" />
+            <input id="@minBetv" @copyDirection minbet="true" type="text"  style="width: 128px; text-align: right" value="@sport.Minbet" />
         </td>
         <td>
-            <input id="@maxBetv" maxbet="true" type="text"  style="width: 128px; text-align: right" value="@sport.Maxbet" />
+            <input id="@maxBetv" @copyDirection maxbet="true" type="text"  style="width: 128px; text-align: right" value="@sport.Maxbet" />
         </td>
         <td>
-            <input id="@maxPerMatchv" maxpermatch="true" type="text"  style="width: 128px; text-align: right" value="@sport.Maxpermatch" />
+            <input id="@maxPerMatchv" @copyDirection maxpermatch="true" type="text"  style="width: 128px; text-align: right" value="@sport.Maxpermatch" />
         </td>
     </tr>
         }

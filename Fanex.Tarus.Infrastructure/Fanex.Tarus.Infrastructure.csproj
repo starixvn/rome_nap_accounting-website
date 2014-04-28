@@ -85,6 +85,9 @@
     <Compile Include="Configurations\Admin_AutoFollowBetSection\Admin_AutoFollowBetElement.cs" />
     <Compile Include="Configurations\Admin_AutoFollowBetSection\Admin_AutoFollowBetSection.cs" />
     <Compile Include="Configurations\AppSettings.cs" />
+    <Compile Include="Configurations\KenoBetTypes\KenoBetTypesCollection.cs" />
+    <Compile Include="Configurations\KenoBetTypes\KenoBetTypesElement.cs" />
+    <Compile Include="Configurations\KenoBetTypes\KenoBetTypesSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />
