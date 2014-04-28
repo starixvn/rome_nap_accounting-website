@@ -221,6 +221,9 @@ var arrRacing = [];
     var dataJson = jQuery.parseJSON(dataJsonStr);
     dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
     dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
+
+    dataJson.KenoBetTypesSettingInfo = dataJson.KenoBetTypesSettingInfo.replace(/&quot;/g, '"');
+    dataJson.KenoBetTypesSettingInfo = jQuery.parseJSON(dataJson.KenoBetTypesSettingInfo);
 </script>
 <input id="hiddenAccID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.AccId"/>
 <input id="hiddenCustID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.CustID"/>
@@ -271,7 +274,8 @@ var arrRacing = [];
                                 <input id="cbxCopyAllSportsBook" type="checkbox" />
                             </td>
                             <td>
-                                <span style="font-weight: bold">Copy all Bet Setting from Soccer (Excluding Number Game)</span>
+                                <label style="font-weight: bold" for="cbxCopyAllSportsBook">
+                                    Copy all Bet Setting from Soccer (Excluding Number Game)</label>
                             </td>
                         </tr>
                     </tbody>
@@ -392,8 +396,8 @@ var arrRacing = [];
                                 <input id="cbxCopyRacing" type="checkbox" />
                             </td>
                             <td>
-                                <span style="font-weight: bold">Copy all Bet Setting, Commission & Position Taking from
-                                    Horse Racing UK/Irish Tote</span>
+                                <label style="font-weight: bold" for="cbxCopyRacing">
+                                    Copy all Bet Setting, Commission & Position Taking from Horse Racing UK/Irish Tote</label>
                             </td>
                         </tr>
                     </tbody>
@@ -442,13 +446,32 @@ var arrRacing = [];
                 @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/EditSuper.cshtml")
             }
             <!--/Virtual Sports-->
-            <table id="tblUpdate" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
+            <!--Keno-->
+            @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                @Html.Partial("~/Views/Customer/DepositCustomer/EditLicensee/KenoSettings.cshtml")
+            }
+            <!--/Keno-->
+            <table id="tblUpdate" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px; display: inline-block;">
                 <tbody>
                     <tr>
                         <td class="custBtn1">
                         </td>
                         <td class="custBtn2 hand">
                             Update
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table border="0"  style="display: none;">
+                <tbody>
+                    <tr>
+                        <td align="left">
+                            <input id="cbxCopySettingsToMasterAgent" type="checkbox" />
+                        </td>
+                        <td>
+                            <label style="font-weight: bold" for="cbxCopySettingsToMasterAgent">
+                                Copy all settings to master and agent</label>
                         </td>
                     </tr>
                 </tbody>

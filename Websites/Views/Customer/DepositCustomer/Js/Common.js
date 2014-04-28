@@ -37,7 +37,7 @@ common.init = function () {
     this.arrSelectCopyToWinplacept_Racing = $("#divRacingContainer").find("select[copyto][winplacept]");
     this.arrSelectCopyToHouseautopt_Racing = $("#divRacingContainer").find("select[copyto][houseautopt]");
     this.arrCheckBoxEnable_Racing = $("#divRacingContainer").find("input[type='checkbox'][copyto]");
-    
+
     $("#divSBNGContainer").find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
     $("#divSBNGContainer").find("input[type='text'][soccer][minbet]").keyup(function () {
         if ($("#cbxCopyAllSportsBook").is(":checked")) {
@@ -199,6 +199,11 @@ common.resetValues = function () {
     if (typeof vsCommon != 'undefined') {
         vsCommon.resetValues();
     }
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.resetValues();
+    }
+
     $(document).find("input[type='checkbox']").each(function () {
         this.checked = false;
         $(this).removeAttr("disabled");
@@ -233,6 +238,10 @@ common.initConstraint = function () {
             $(this).parent().find("span").html("<=" + parseFloat(this.uplineVal).formatMoneyFromVal());
         }
     });
+    
+    if (window.kenoSettingsManager) {
+        kenoSettingsManager.initConstraints();
+    }
 };
 
 common.isNumber = function (n) {
@@ -322,10 +331,16 @@ common.verifyDataContrain = function () {
     var setMsg11 = function (val) {
         common.errMsg = "Min Bet must be less than " + val + " (Max Per Match)";
     };
+
     //virutal sports
     if (typeof vsCommon != 'undefined') {
         vsCommon.verifyDataContrain(valid, job, setMsg1, setMsg2, setMsg3, setMsg4, setMsg5, setMsg6, setMsg7, setMsg8, setMsg9, setMsg10, setMsg11);
     }
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.verifyDataContrains(valid, job, setMsg1, setMsg2, setMsg3, setMsg4, setMsg5, setMsg6, setMsg7, setMsg8, setMsg9, setMsg10, setMsg11);
+    }
+
     $("#divSBNGContainer").find("input[type='text']").css("border-color", "").each(function () {
         var currentVal = parseFloat($(this).getNumberValue());
         if (valid) {
@@ -407,7 +422,6 @@ common.verifyDataContrain = function () {
             }
         }
     });
-
     $("#divRacingContainer").find("input[type='text']").css("border-color", "").each(function () {
         var currentVal = parseFloat($(this).getNumberValue());
         if (valid) {
@@ -473,7 +487,6 @@ common.verifyDataContrain = function () {
         }
     });
 
-
     return valid;
 };
 
@@ -481,7 +494,7 @@ common.reloadPage = function (url) {
     var timerId = setTimeout(function () {
         parent.gotoURL('centerFr', url);
         clearTimeout(timerId);
-    }, 2000);
+    }, 5000);
 };
 
 $(document).ready(function () {

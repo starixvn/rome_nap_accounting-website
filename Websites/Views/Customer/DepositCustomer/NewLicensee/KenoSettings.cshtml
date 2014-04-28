@@ -1,0 +1,121 @@
+﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<link rel="stylesheet" type="text/css" href="~/Views/Customer/DepositCustomer/NewLicensee/Styles/NewLicensee.css" />
+@helper GenerateBetSettingKenoBetTypes()
+    {
+        var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
+        for (var i = 0; i < kenoBetTypes.Count; i++)
+        {
+            var kenoBetType = kenoBetTypes[i];
+            if (!kenoBetType.Active)
+            {
+                continue;
+            }
+
+            var minBetv = "minbetv" + @kenoBetType.Id.ToLower();
+            var maxBetv = "maxbetv" + @kenoBetType.Id.ToLower();
+            var maxPerMatchv = "maxpermatchv" + @kenoBetType.Id.ToLower();
+            var enablev = "enablev" + @kenoBetType.Id.ToLower();
+            var isSourceOfCopy = i == 0;
+            var buttonCopyAll = isSourceOfCopy ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : string.Empty;
+            var copyDirection = isSourceOfCopy ? "source=\"true\"" : "target=\"true\""; 
+    <tr>
+        <td class="bettypename">
+            <span>@kenoBetType.Name</span>@Html.Raw(buttonCopyAll)
+        </td>
+        <td>
+            <input id="@minBetv" @copyDirection minbet="true" type="text" class="minbet" value="@kenoBetType.Minbet" />
+        </td>
+        <td>
+            <input id="@maxBetv" @copyDirection maxbet="true" type="text" class="maxbet" value="@kenoBetType.Maxbet" />
+        </td>
+        <td>
+            <input id="@maxPerMatchv" @copyDirection maxpermatch="true" type="text" class="maxpermatch" value="@kenoBetType.Maxpermatch" />
+        </td>
+        <td>
+            <input id="@enablev" @copyDirection type="checkbox" class="button-enable" />
+        </td>
+    </tr>
+        }
+}
+<table id="table-kenosport" cellspacing="0" cellpadding="0" border="0" class="tblPTheader">
+    <tbody>
+        <tr id="btntop">
+            <td class="btnleft">
+            </td>
+            <td class="btnmiddle">
+                <span class="mp">Keno</span>
+            </td>
+            <td class="md2 r btncollapse" arrow="true">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div id="div-kenosport-container">
+    <table class="tblcollapse table-kenosport-betsetting">
+        <tbody>
+            <tr class="title">
+                <td colspan="5">
+                    <span>Bet Setting</span>
+                </td>
+            </tr>
+            <tr class="title">
+                <td class="headercolumn">&nbsp;
+                </td>
+                <td class="headercolumn">
+                    <span>Min Bet</span>
+                </td>
+                <td class="headercolumn">
+                    <span>Max Bet</span>
+                </td>
+                <td class="headercolumn">
+                    <span>Max Per Match</span>
+                </td>
+                <td class="column-status">
+                    <span>Status</span>
+                </td>
+            </tr>
+            @GenerateBetSettingKenoBetTypes()
+        </tbody>
+    </table>
+    <table class="tblcollapse table-kenosport-positionsetting">
+        <tbody>
+            <tr class="title headercolumn">
+                <td colspan="2">
+                    <span>Position Taking</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="sportname">
+                    <span>Keno</span>
+                </td>
+                <td align="left">
+                    <select class="dropdown-pt">
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@{
+    var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
+}
+<script type="text/javascript">
+    var kenoBetTypes = [];
+    var kenoPositionTaking_Max = @WebSettings.KenoPositionTaking_Max;
+    (function () {
+    @{
+        @:var betType;
+        foreach (KenoBetTypesElement betType in kenoBetTypes)
+        {
+            if (!betType.Active)
+            {
+                continue;
+            }
+
+            @:betType = {Id: '@betType.Id.ToLower()', Bettype: [], Name: '@betType.Name'};           
+            @:window.kenoBetTypes.push(betType);
+        }
+    }
+    })();
+</script>
+<script type="text/javascript" src="~/Views/Customer/DepositCustomer/NewLicensee/Scripts/KenoSettings.js"></script>

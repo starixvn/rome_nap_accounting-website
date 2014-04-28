@@ -428,15 +428,17 @@ var arrRacing = [];
                                 <input id="cbxCopyAllSportsBook" type="checkbox" />
                             </td>
                             <td>
-                                <span style="font-weight: bold">Copy all Bet Setting from Soccer (Excluding Number Game)</span>
+                                <label style="font-weight: bold" for="cbxCopyAllSportsBook">
+                                    Copy all Bet Setting from Soccer (Excluding Number Game)</label>
                             </td>
                         </tr>
                         <tr>
                             <td align="left">
                                 <input id="cbxEnableNumberGame" type="checkbox" />
                             </td>
-                            <td style="font-weight: bold">
-                                Enable Number Game
+                            <td>
+                                <label style="font-weight: bold" for="cbxEnableNumberGame">
+                                    Enable Number Game</label>
                             </td>
                         </tr>
                     </tbody>
@@ -557,8 +559,8 @@ var arrRacing = [];
                                 <input id="cbxCopyRacing" type="checkbox" />
                             </td>
                             <td>
-                                <span style="font-weight: bold">Copy all Bet Setting, Commission & Position Taking from
-                                    Horse Racing UK/Irish Tote</span>
+                                <label style="font-weight: bold" for="cbxCopyRacing">
+                                    Copy all Bet Setting, Commission & Position Taking from Horse Racing UK/Irish Tote</label>
                             </td>
                         </tr>
                     </tbody>
@@ -610,6 +612,12 @@ var arrRacing = [];
                 @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/AddNewSuper.cshtml")
             }
             <!--/Virtual Sports-->
+            <!--Keno-->
+            @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                @Html.Partial("~/Views/Customer/DepositCustomer/NewLicensee/KenoSettings.cshtml")
+            }
+            <!--/Keno-->
             <table id="tblAdd" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
                 <tbody>
                     <tr>

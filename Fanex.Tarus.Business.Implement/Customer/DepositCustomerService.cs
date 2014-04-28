@@ -296,13 +296,159 @@ namespace Fanex.Tarus.Business.Implement.Customer
             return virtualSportsSettingInfoList;
         }
 
+        private List<KenoBetTypesSettingInfo> GetKenoBetTypesSettingInfoList(
+            string kenoBetTypesParams,
+            int roleId,
+            bool isAddNew)
+        {
+            var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
+            Dictionary<string, bool> activeKenoBetTypesInfo = new Dictionary<string, bool>();
+            string betTypeId;
+            foreach (KenoBetTypesElement betType in kenoBetTypes)
+            {
+                betTypeId = betType.Id;
+                if (activeKenoBetTypesInfo.ContainsKey(betTypeId))
+                {
+                    continue;
+                }
+
+                activeKenoBetTypesInfo.Add(betTypeId, betType.Active);
+            }
+
+            string roleName = string.Empty;
+            switch (roleId)
+            {
+                case RoleIdConstants.Super:
+                    roleName = SMALevelNameConstants.Super;
+                    break;
+                case RoleIdConstants.Master:
+                    roleName = SMALevelNameConstants.Master;
+                    break;
+                case RoleIdConstants.Agent:
+                    roleName = isAddNew ? SMALevelNameConstants.Master : SMALevelNameConstants.Agent;
+                    break;
+                case RoleIdConstants.Member:
+                    roleName = SMALevelNameConstants.Agent;
+                    break;
+                default:
+                    roleName = string.Empty;
+                    break;
+            }
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(kenoBetTypesParams);
+            string xpath = "/products/product";
+            var kenoBetTypesNodes = xmlDoc.SelectNodes(xpath);
+            List<KenoBetTypesSettingInfo> kenoBetTypesSettingInfoList = new List<KenoBetTypesSettingInfo>();
+            double positionTakingValue = 0;
+            double positionTakingValue_Min = 0;
+            double positionTakingValue_Max = 0;
+            foreach (XmlNode childrenNode in kenoBetTypesNodes)
+            {
+                betTypeId = childrenNode.Attributes["BetType"].Value;
+                if (!activeKenoBetTypesInfo.ContainsKey(betTypeId) ||
+                    !activeKenoBetTypesInfo[betTypeId])
+                {
+                    continue;
+                }
+
+                KenoBetTypesSettingInfo kenoBetTypesSettingInfo = new KenoBetTypesSettingInfo
+                {
+                    Id = betTypeId,
+                    Name = CacheRef.GetBettype(betTypeId),
+                    SettingInfo = new List<SettingInfo>()
+                };
+
+                kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxbetv" + betTypeId,
+                    Value = childrenNode.Attributes["MaxBet"].Value
+                });
+
+                kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "minbetv" + betTypeId,
+                    Value = childrenNode.Attributes["MinBet"].Value
+                });
+
+                kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxpermatchv" + betTypeId,
+                    Value = childrenNode.Attributes["MaxPerMatch"].Value
+                });
+
+                if (string.Equals(betTypeId, WebSettings.KenoPositionTaking_BetTypeRepresentative.ToString()))
+                {
+                    positionTakingValue = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking"].Value);
+                    switch (roleId)
+                    {
+                        case RoleIdConstants.Master:
+                            positionTakingValue_Min = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Min"].Value);
+                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+                            break;
+                        case RoleIdConstants.Agent:
+                        case RoleIdConstants.Member:
+                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    betTypeId = kenoBetTypesSettingInfo.Id;
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + betTypeId + roleName + "positiontaking",
+                        Value = positionTakingValue
+                    });
+
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + betTypeId + roleName + "positiontaking_min",
+                        Value = positionTakingValue_Min
+                    });
+
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + betTypeId + roleName + "positiontaking_max",
+                        Value = positionTakingValue_Max
+                    });
+                }
+
+                if (roleId != RoleIdConstants.Super)
+                {
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "minbetv" + betTypeId + "_max",
+                        Value = childrenNode.Attributes["MinBet_Max"].Value
+                    });
+
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "maxbetv" + betTypeId + "_min",
+                        Value = childrenNode.Attributes["MaxBet_Min"].Value
+                    });
+
+                    kenoBetTypesSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "maxpermatchv" + betTypeId + "_max",
+                        Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
+                    });
+                }
+
+                kenoBetTypesSettingInfoList.Add(kenoBetTypesSettingInfo);
+            }
+
+            return kenoBetTypesSettingInfoList;
+        }
+
         private string BuildSettingJsonDataString(DataRow row, DataTable tbl, int roleId)
         {
             var listProp = new List<string>();
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                if (columName == "VirtualSportList")
+                if (columName == "VirtualSportList" ||
+                    columName == "KenoList")
                 {
                     continue;
                 }
@@ -313,6 +459,11 @@ namespace Fanex.Tarus.Business.Implement.Customer
             var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
             var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, false);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
+
+            var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
+            var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, false);
+            listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
+
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
 
@@ -398,7 +549,8 @@ namespace Fanex.Tarus.Business.Implement.Customer
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                if (columName == "VirtualSportList")
+                if (columName == "VirtualSportList" ||
+                    columName == "KenoList")
                 {
                     continue;
                 }
@@ -409,6 +561,11 @@ namespace Fanex.Tarus.Business.Implement.Customer
             var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
             var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
+
+            var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
+            var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, true);
+            listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
+
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
 

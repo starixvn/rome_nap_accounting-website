@@ -579,7 +579,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     {
                         rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                         sportVals = (from attr in attrs
-                                     where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                     where !rex.IsMatch(attr.Name.ToString()) &&
+                                     !hidden.Contains<string>(attr.Name.ToString().ToLower())
                                      select LogFormater.FormatElement(attr)).ToList();
                     }
                     else
@@ -601,9 +602,20 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
                 else if (180 <= sport.Id && sport.Id <= 186)
                 {
-                    rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
+                    rex = new Regex("v" + sport.Id, RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
-                                 where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 where rex.IsMatch(attr.Name.ToString()) &&
+                                 !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                }
+                else if (sport.Id == 202)
+                {
+                    var strId = "v" + sport.Id;
+                    rex = new Regex(strId, RegexOptions.IgnoreCase);
+                    sportVals = (from attr in attrs
+                                 where !GetKenoSportTag(attr.Name.ToString()) &&
+                                     rex.IsMatch(attr.Name.ToString()) &&
+                                     !hidden.Contains<string>(attr.Name.ToString())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
                 else
@@ -611,8 +623,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     var strId = "v" + sport.Id;
                     rex = new Regex(strId, RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
-                                 //where GetMixedSportTag(attr.Name.ToString().ToLower()) != attr.Name.ToString().ToLower() && attr.Name.ToString().ToLower().IndexOf(strId.ToLower()) != -1 && !hidden.Contains<string>(attr.Name.ToString())
-                                 where !GetMixedSportTag(attr.Name.ToString()) && rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString())
+                                 where !GetMixedSportTag(attr.Name.ToString()) &&
+                                    IsBelongToSport(attr, strId) &&
+                                    !hidden.Contains<string>(attr.Name.ToString())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
 
@@ -638,6 +651,39 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (matches.Count > 0)
                 return true;
             return false;
+        }
+
+        private bool GetKenoSportTag(string attr)
+        {
+            var mixedSport = attr.ToLower();
+            var pattern = @"[\w]+99[a-zA-z]+_9";
+            var pattern2 = @"[\w]+99mp|99mp[a-zA-Z]_9";
+            var pattern3 = @"[\w]+99[a-zA-z]+_[0-8]";
+            var myRegex = new Regex(pattern3, RegexOptions.IgnoreCase);
+            if (myRegex.IsMatch(attr))
+            {
+                return false;
+            }
+
+            myRegex = new Regex(pattern, RegexOptions.IgnoreCase);
+            var matches = myRegex.IsMatch(attr) ? myRegex.Matches(attr) : new Regex(pattern2, RegexOptions.IgnoreCase).Matches(attr);
+            if (matches.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsBelongToSport(XAttribute attr, string vSportId)
+        {
+            var attrName = attr.Name.ToString();
+            var isExactSportId = vSportId.Length < attrName.Length &&
+                (attrName[vSportId.Length] < '0' ||
+                '9' < attrName[vSportId.Length]);
+
+            return (isExactSportId && attrName.StartsWith(vSportId)) ||
+                attrName.EndsWith(vSportId);
         }
 
         private TrackingNode AssignGroupAttribute(XElement node,

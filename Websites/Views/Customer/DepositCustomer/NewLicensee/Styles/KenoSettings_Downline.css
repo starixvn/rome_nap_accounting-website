@@ -1,0 +1,109 @@
+﻿#table-kenosport
+{
+    margin-top: 15px;
+}
+
+#table-kenosport #btntop
+{
+    cursor: pointer;
+}
+
+#table-kenosport #btnmiddle
+{
+    width: 80px;
+    text-align: left;
+}
+
+#table-kenosport #btncollapse
+{
+    width: 20px;
+}
+
+#div-kenosport-container .bettypename
+{
+    text-align: left;
+    padding-left: 4px;
+}
+
+#div-kenosport-container .minbet
+{
+    width: 128px;
+    text-align: right;
+}
+
+#div-kenosport-container .maxbet
+{
+    width: 128px;
+    text-align: right;
+}
+
+#div-kenosport-container .maxpermatch
+{
+    width: 128px;
+    text-align: right;
+}
+
+.table-kenosport-betsetting
+{
+    width: 720px;
+    margin-left: 7px;
+    margin-top: 10px;
+}
+
+.table-kenosport-betsetting .headercolumn
+{
+    width: 185px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-kenosport-betsetting .bettypeheader
+{
+    width: 130px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-kenosport-betsetting .column-status
+{
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-kenosport-betsetting .button-enable
+{
+    width: 60px;
+    text-align: center;
+}
+
+.table-kenosport-positionsetting
+{
+    width: 720px;
+    margin-left: 7px;
+    margin-top: 15px;
+}
+
+.table-kenosport-positionsetting .headercolumn
+{
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-kenosport-positionsetting .sportname
+{
+    text-align: left;
+    padding-left: 4px;
+    width: 100px;
+}
+
+.table-kenosport-positionsetting .dropdown-pt
+{
+    width: 60px;
+    text-align: left;
+}
+
+.display-none
+{
+    display: none;
+}

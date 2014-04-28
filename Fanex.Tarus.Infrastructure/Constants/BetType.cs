@@ -26,5 +26,7 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int StartSetX_BetTypeRange = 1311;
         public const int EndSetX_BetTypeRange = 1334;
         public const int WinUKTote = 41;
+
+        public const int AustraliaActtab = 1501;
     }
 }

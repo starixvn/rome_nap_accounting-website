@@ -11,6 +11,10 @@ addNewAgent.init = function () {
     if (this.roleId == 3 || this.roleId == 2 || this.roleId == 1) {
         common.initConstraint();
     }
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.initPage();
+    }
 };
 
 addNewAgent.fillSportbookSettingAndPT = function (dataJson) {
@@ -524,6 +528,11 @@ addNewAgent.getPostParam = function () {
     if (typeof vsDownlineSettings != 'undefined') {
         vsDownlineSettings.assignVirtualSportsSettings(params);
     }
+
+    if (window.kenoSettingsManager) {
+        kenoSettingsManager.getSettings(params);
+    }
+
     var postParam = {
         MasterName: $("#tbxUserNameAddNew").val()
         , AgentName: $("#tbxUserNameAddNew").val()

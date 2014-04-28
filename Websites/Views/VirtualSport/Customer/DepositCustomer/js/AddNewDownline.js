@@ -2,6 +2,9 @@
     roleId: 0,
     roleName: '',
     isUpdateCompleted: false,
+    domElements: {
+        sportsContainer: null
+    },
     getSettingInfoDictionary: function (custSettings) {
         var settingInfoDictionary = {};
         var virtualSportsLength = custSettings.VirtualSportsSettingInfo.length;
@@ -75,20 +78,23 @@
                 maxPerMatch = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
             }
 
+            var isFirstSport = i == 0;
+            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
+            var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
             var html = '<tr>\
                                 <td align="left" style="padding-left: 4px">\
-                                    <span>' + sport.Name + '</span>\
-                                </td>\
+                                    <span>' + sport.Name + '</span>' + buttonCopyAll +
+                                '</td>\
                                 <td>\
-                                    <input id="' + minBetv + '" minbet="true" type="text"  style="width: 120px; text-align: right" value="' + minBet.formatMoneyFromVal() + '" />\
+                                    <input id="' + minBetv + '"' + copyDirection + ' minbet="true" type="text"  style="width: 120px; text-align: right" value="' + minBet.formatMoneyFromVal() + '" />\
                                     <span></span>\
                                 </td>\
                                 <td>\
-                                    <input id="' + maxBetv + '" maxbet="true" type="text"  style="width: 120px; text-align: right" value="' + maxBet.formatMoneyFromVal() + '" />\
+                                    <input id="' + maxBetv + '"' + copyDirection + ' maxbet="true" type="text"  style="width: 120px; text-align: right" value="' + maxBet.formatMoneyFromVal() + '" />\
                                     <span></span>\
                                 </td>\
                                 <td>\
-                                    <input id="' + maxPerMatchv + '" maxpermatch="true" type="text"  style="width: 120px; text-align: right" value="' + maxPerMatch.formatMoneyFromVal() + '" />\
+                                    <input id="' + maxPerMatchv + '"' + copyDirection + ' maxpermatch="true" type="text"  style="width: 120px; text-align: right" value="' + maxPerMatch.formatMoneyFromVal() + '" />\
                                     <span></span>\
                                 </td>\
                             </tr>'
@@ -104,7 +110,7 @@
             else {
                 $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
                 $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
-            
+
                 $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
             }
 
@@ -150,7 +156,7 @@
         $("#selVirtualSportsPT").removeAttr("selected").find("option[value='" + selectedValue + "']").attr("selected", "selected");
 
         vsCommon.initConstraint();
-
+        vsDownlineSettings.bindEventCopyAllSetting();
     },
     assignVirtualSportsSettings: function (params) {
         var totalSports = window.virtualSports.length;
@@ -305,6 +311,62 @@
     updateMultipleSports: function (customerId) {
         this.isUpdateCompleted = false;
         this.assignVirtualSportsSettingsAndAddNew(customerId);
+    },
+    bindEventCopyAllSetting: function () {
+        var sportsContainer = $("#divVirtualSportsContainer");
+        sportsContainer.find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
+        vsDownlineSettings.domElements.sportsContainer = sportsContainer;
+        vsDownlineSettings.domElements.buttonCopySetting = sportsContainer.find(".button-copysetting");
+        vsDownlineSettings.domElements.sourceMinBetSettings = sportsContainer.find("input[type='text'][minbet][source]");
+        vsDownlineSettings.domElements.targetMinBetSettings = sportsContainer.find("input[type='text'][minbet][target]");
+        vsDownlineSettings.domElements.sourceMaxBetSettings = sportsContainer.find("input[type='text'][maxbet][source]");
+        vsDownlineSettings.domElements.targetMaxBetSettings = sportsContainer.find("input[type='text'][maxbet][target]");
+        vsDownlineSettings.domElements.sourceMaxPerMatchSettings = sportsContainer.find("input[type='text'][maxpermatch][source]");
+        vsDownlineSettings.domElements.targetMaxPerMatchSettings = sportsContainer.find("input[type='text'][maxpermatch][target]");
+        vsDownlineSettings.domElements.buttonCopySetting.click(function () {
+            vsDownlineSettings.enableCopySetting();
+        });
+    },
+    enableCopySetting: function () {
+        var isCopySetting = vsDownlineSettings.domElements.buttonCopySetting.is(":checked");
+        if (isCopySetting) {
+            vsDownlineSettings.copyMinBetSetting(vsDownlineSettings.domElements.sourceMinBetSettings.val());
+            vsDownlineSettings.copyMaxBetSetting(vsDownlineSettings.domElements.sourceMaxBetSettings.val());
+            vsDownlineSettings.copyMaxPerMatchSetting(vsDownlineSettings.domElements.sourceMaxPerMatchSettings.val());
+
+            vsDownlineSettings.domElements.targetMinBetSettings.attr("disabled", "disabled");
+            vsDownlineSettings.domElements.targetMaxBetSettings.attr("disabled", "disabled");
+            vsDownlineSettings.domElements.targetMaxPerMatchSettings.attr("disabled", "disabled");
+
+            vsDownlineSettings.domElements.sourceMinBetSettings.keyup(function () {
+                vsDownlineSettings.copyMinBetSetting($(this).val());
+            });
+
+            vsDownlineSettings.domElements.sourceMaxBetSettings.keyup(function () {
+                vsDownlineSettings.copyMaxBetSetting($(this).val());
+            });
+
+            vsDownlineSettings.domElements.sourceMaxPerMatchSettings.keyup(function () {
+                vsDownlineSettings.copyMaxPerMatchSetting($(this).val());
+            });
+        } else {
+            vsDownlineSettings.domElements.sourceMinBetSettings.unbind("keyup");
+            vsDownlineSettings.domElements.sourceMaxBetSettings.unbind("keyup");
+            vsDownlineSettings.domElements.sourceMaxPerMatchSettings.unbind("keyup");
+
+            vsDownlineSettings.domElements.targetMinBetSettings.attr("disabled", null);
+            vsDownlineSettings.domElements.targetMaxBetSettings.attr("disabled", null);
+            vsDownlineSettings.domElements.targetMaxPerMatchSettings.attr("disabled", null);
+        }
+    },
+    copyMinBetSetting: function (minBet) {
+        vsDownlineSettings.domElements.targetMinBetSettings.val(minBet);
+    },
+    copyMaxBetSetting: function (maxBet) {
+        vsDownlineSettings.domElements.targetMaxBetSettings.val(maxBet);
+    },
+    copyMaxPerMatchSetting: function (maxPerMatch) {
+        vsDownlineSettings.domElements.targetMaxPerMatchSettings.val(maxPerMatch);
     }
 };
 

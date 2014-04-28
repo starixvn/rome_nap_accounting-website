@@ -1,0 +1,82 @@
+﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<link rel="stylesheet" type="text/css" href="~/Views/Customer/DepositCustomer/NewLicensee/Styles/KenoSettings_Downline.css" />
+<table id="table-kenosport" cellspacing="0" cellpadding="0" border="0" class="tblPTheader">
+    <tbody>
+        <tr id="btntop">
+            <td class="btnleft">
+            </td>
+            <td class="btnmiddle">
+                <span class="mp">Keno</span>
+            </td>
+            <td class="md2 r btncollapse" arrow="true">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div id="div-kenosport-container">
+    <table class="tblcollapse table-kenosport-betsetting">
+        <tbody>
+            <tr class="title">
+                <td colspan="4" class="headercolumn">
+                    <span>Bet Setting</span>
+                </td>
+            </tr>
+            <tr class="title">
+                <td class="headercolumn">
+                </td>
+                <td class="headercolumn">
+                    <span>Min Bet</span>
+                </td>
+                <td class="headercolumn">
+                    <span>Max Bet</span>
+                </td>
+                <td class="headercolumn">
+                    <span>Max Per Match</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tblcollapse table-kenosport-positionsetting">
+        <tbody>
+            <tr class="title headercolumn">
+                <td colspan="2">
+                    <span>Position Taking</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="sportname">
+                    <span>Keno</span>
+                </td>
+                <td align="left">
+                    <select class="dropdown-pt">
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@{
+    var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
+    var kenoPositionTaking_BetTypeRepresentative = WebSettings.KenoPositionTaking_BetTypeRepresentative;
+}
+<script type="text/javascript">
+    var kenoBetTypes = [];
+    var kenoPositionTaking_BetTypeRepresentative = @kenoPositionTaking_BetTypeRepresentative;
+    var kenoPositionTaking_Max = @WebSettings.KenoPositionTaking_Max;
+    (function () {
+    @{
+        @:var betType;
+        foreach (KenoBetTypesElement betType in kenoBetTypes)
+        {
+            if (!betType.Active)
+            {
+                continue;
+            }
+
+            @:betType = {Id: '@betType.Id.ToLower()', Bettype: [], Name: '@betType.Name'};           
+            @:window.kenoBetTypes.push(betType);
+        }
+    }
+    })();
+</script>
+<script type="text/javascript" src="~/Views/Customer/DepositCustomer/NewLicensee/Scripts/KenoSettings_DownLine.js"></script>
