@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
     using System;
     using System.Collections;
     using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Infrastructure.Helper;
 
     /// <summary>
@@ -88,8 +89,9 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public bool IsValid()
         {
-            return (decimal)0.3 <= Rate &&
-                Rate <= 3 &&
+            var rateConfig = Admin_AutoFollowBetSection.Instance.Configs["Rate"];
+            return (decimal)rateConfig.Min <= Rate &&
+                Rate <= rateConfig.Max &&
                 Math.Round(Rate, 2) == Rate &&
                 !string.IsNullOrEmpty(Follower);
         }

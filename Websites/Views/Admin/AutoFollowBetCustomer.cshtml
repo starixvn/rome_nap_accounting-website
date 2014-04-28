@@ -1,4 +1,5 @@
 ﻿@using Fanex.Tarus.Admin.Business.AutoFollowBet;
+@using Fanex.Tarus.Infrastructure.Configurations;
 @model IList<Fanex.Tarus.Admin.Entities.FollowedCustomer>
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
@@ -23,8 +24,15 @@
 <script type="text/javascript" src="~/js/MultipleSelect/jquery.multiselect.js"></script>
 <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script type="text/javascript" src="~/Views/Admin/Js/AutoFollowBet.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+@{
+    var minRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Min;
+    var maxRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Max;
+}
 <script type="text/javascript">
     window.rootUrl = '@Url.Content("~")';
+    var minRate = @minRate;
+    var maxRate = @maxRate;
+
     var viewResources = {
         All: 'All',
         No_type_found: 'No type found.',
@@ -41,7 +49,7 @@
 
         Error_Admin_AutoFollowBetManagement_InvalidRate_Empty: 'Please input rate value!',
         Error_Admin_AutoFollowBetManagement_InvalidRate_Number: 'Invalid Rate! Please input rate with number value!',
-        Error_Admin_AutoFollowBetManagement_InvalidRate_Range: 'Invalid Rate! Rate must range between 0.3 and 3.',
+        Error_Admin_AutoFollowBetManagement_InvalidRate_Range: 'Invalid Rate! Rate must range between ' + minRate.toFixed(2) + ' and ' + maxRate + '.',
         Error_Admin_AutoFollowBetManagement_InvalidRate_DecimalDigit: 'Invalid Rate! Don\'t enter the number with more than 2 decimal places.',
         Success_Admin_AutoFollowBetManagement_UpdateFollowInfo: 'Member is updated successfully!',
 

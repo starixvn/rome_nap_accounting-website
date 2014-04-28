@@ -42,6 +42,20 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        [ConfigurationProperty("Configs", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(Admin_AutoFollowBetConfigCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public Admin_AutoFollowBetConfigCollection Configs
+        {
+            get
+            {
+                var configSection = (Admin_AutoFollowBetConfigCollection)base["Configs"];
+                return configSection;
+            }
+        }
+
         public Admin_AutoFollowBetCollection this[string name]
         {
             get
@@ -49,8 +63,8 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 var configSection = (Admin_AutoFollowBetCollection)this.GetType().GetProperty(name.ToString()).GetValue(
                         this,
                         BindingFlags.GetField,
-                        null, 
-                        null, 
+                        null,
+                        null,
                         null);
                 return configSection;
             }

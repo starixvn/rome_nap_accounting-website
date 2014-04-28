@@ -656,7 +656,7 @@ var autoFollowBet = {
         }
 
         var rate = parseFloat(postParams.Rate);
-        if (rate < 0.3 || 3 < rate) {
+        if (rate < minRate || maxRate < rate) {
             showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Range, 1);
             autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(maxMessageWidth);
             rowInfo.find('.textboxrate').focus();
@@ -978,7 +978,7 @@ var autoFollowBet = {
         }
 
         var rate = parseFloat(postParams.Rate);
-        if (rate < 0.3 || 3 < rate) {
+        if (rate < minRate || maxRate < rate) {
             showAlertMessage("resultmessage-adddialog", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Range, 1);
             autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
             autoFollowBet.Tables.textboxRate_AddDialog.focus();

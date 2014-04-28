@@ -148,8 +148,8 @@ var BACustomer = {
             return;
         }
 
-        if (parseFloat(rate) < 0.3 || parseFloat(rate) > 3) {
-            showAlertMessage("errMsgDig", "Invalid Rate! Rate must range between 0.3 and 3.", 1);
+        if (parseFloat(rate) < minRate || maxRate < parseFloat(rate)) {
+            showAlertMessage("errMsgDig", "Invalid Rate! Rate must range between " + minRate.toFixed(2) + " and " + maxRate + ".", 1);
             $("#errMsgDig").show().find("div:first").width(350);
             return;
         }

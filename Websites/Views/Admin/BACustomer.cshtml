@@ -1,4 +1,5 @@
-﻿<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
 <link href="~/js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
 <link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
 <script src="~/js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
@@ -13,7 +14,13 @@
 <script src="~/js/jQuery/gridscroller.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script src="~/js/jQuery/Pager/jpager.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script src="~/Views/Admin/Js/BACustomer.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+@{
+    var minRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Min;
+    var maxRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Max;
+}
 <script type="text/javascript">
+    var minRate = @minRate;
+    var maxRate = @maxRate;
     BACustomer.model =  @Html.Raw(Json.Encode(Model));
 </script>
 <div class="main">
