@@ -222,6 +222,9 @@ var arrRacing = [];
     var dataJson = jQuery.parseJSON(dataJsonStr);
     dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
     dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
+
+    dataJson.KenoBetTypesSettingInfo = dataJson.KenoBetTypesSettingInfo.replace(/&quot;/g, '"');
+    dataJson.KenoBetTypesSettingInfo = jQuery.parseJSON(dataJson.KenoBetTypesSettingInfo);
 </script>
 <input id="hiddenAccID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.AccId"/>
 <input id="hiddenCustID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.CustID"/>
@@ -444,6 +447,12 @@ var arrRacing = [];
                 @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/EditDownline.cshtml")
             }
             <!--/Virtual Sports-->
+            <!--Keno-->
+            @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
+            {
+                @Html.Partial("~/Views/Customer/DepositCustomer/EditLicensee/KenoSettings_Downline.cshtml")
+            }
+            <!--/Keno-->
             <table id="tblUpdate" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
                 <tbody>
                     <tr>

@@ -1009,6 +1009,20 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
             }
 
+            foreach (var betTypeSettingInfo in criteria.KenoBetTypesSettingInfo)
+            {
+                foreach (var param in betTypeSettingInfo.SettingInfo)
+                {
+                    paramName = param.Name.ToLower();
+                    if (dictionaryParams.ContainsKey(paramName))
+                    {
+                        continue;
+                    }
+
+                    dictionaryParams.Add(paramName, param.Value);
+                }
+            }
+
             return dictionaryParams;
         }
 
@@ -1044,6 +1058,38 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             hashtableParams.Add("virtualsportlist", virtualSportsParams);
         }
 
+        private void GetUpdateSettingsHashTableParams_KenoBetTypes(
+            NewLicenseePostParam criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string betTypeId;
+            var kenoBetTypes = criteria.KenoBetTypesSettingInfo;
+
+            var kenoBetTypesParams = "<bettypes>";
+            foreach (KenoBetTypesSettingInfo sport in kenoBetTypes)
+            {
+                betTypeId = sport.Id;
+                kenoBetTypesParams += string.Format("<bettype Id=\"{0}\"" +
+                    " MinBet=\"{1}\"" +
+                    " MaxBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></bettype>",
+                    betTypeId,
+                    updateSettingsDictionary["v" + betTypeId + "minbet"],
+                    updateSettingsDictionary["v" + betTypeId + "maxbet"],
+                    updateSettingsDictionary["v" + betTypeId + "maxpermatch"],
+                    updateSettingsDictionary["v" + betTypeId + "spositiontaking"],
+                    updateSettingsDictionary["v" + betTypeId + "mpositiontaking"],
+                    updateSettingsDictionary["v" + betTypeId + "apositiontaking"]);
+            }
+
+            kenoBetTypesParams += "</bettypes>";
+            hashtableParams.Add("kenobettypeslist", kenoBetTypesParams);
+        }
+
         private Hashtable GetUpdateSettingsHashTableParams(NewLicenseePostParam criteria)
         {
             var updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
@@ -1054,6 +1100,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
 
             GetUpdateSettingsHashTableParams_VirtualSports(criteria, updateSettingsDictionary, ref hashtableParams);
+            GetUpdateSettingsHashTableParams_KenoBetTypes(criteria, updateSettingsDictionary, ref hashtableParams);
             return hashtableParams;
         }
 

@@ -428,6 +428,7 @@
     };
 
     self.initConstraints = function () {
+        self.domElements.sportsContainer = $("#div-kenosport-container");
         self.domElements.sportsContainer.find("input[type='text']").each(function () {
             if ($(this).attr("minbet") != null &&
                 typeof $(this).attr("minbet") != "undefined" &&

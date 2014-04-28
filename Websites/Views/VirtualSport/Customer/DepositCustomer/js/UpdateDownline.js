@@ -11,7 +11,7 @@
                                     </td>\
                                 </tr>\
                                 <tr class="title">\
-                                    <td style="width: 100px">&nbsp;\
+                                    <td style="width: 130px">&nbsp;\
                                     </td>\
                                     <td style="width: 185px" align="center">\
                                         <span style="font-weight: bold">Min Bet</span>\
@@ -126,7 +126,7 @@
                                     </td>\
                                 </tr>\
                                 <tr class="title">\
-                                    <td style="width: 100px">&nbsp;\
+                                    <td style="width: 130px">&nbsp;\
                                     </td>\
                                     <td style="width: 185px" align="center">\
                                         <span style="font-weight: bold">Min Bet</span>\

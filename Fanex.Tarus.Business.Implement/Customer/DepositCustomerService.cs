@@ -549,7 +549,8 @@ namespace Fanex.Tarus.Business.Implement.Customer
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                if (columName == "VirtualSportList")
+                if (columName == "VirtualSportList" ||
+                    columName == "KenoBetTypeList")
                 {
                     continue;
                 }
@@ -560,6 +561,11 @@ namespace Fanex.Tarus.Business.Implement.Customer
             var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
             var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
+
+            var kenoBetTypesParams = CastAide.AsString(row["VirtualSportList"]);
+            var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, false);
+            listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
+
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
 

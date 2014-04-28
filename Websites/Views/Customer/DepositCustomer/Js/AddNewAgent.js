@@ -11,6 +11,10 @@ addNewAgent.init = function () {
     if (this.roleId == 3 || this.roleId == 2 || this.roleId == 1) {
         common.initConstraint();
     }
+
+    if (window.kenoSettingsManager) {
+        window.kenoSettingsManager.initPage();
+    }
 };
 
 addNewAgent.fillSportbookSettingAndPT = function (dataJson) {
