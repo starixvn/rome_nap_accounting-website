@@ -21,9 +21,9 @@
 
     self.initPage = function () {
         self.cacheElements();
+        self.renderDropdownPT();
         self.renderBetSettings(window.dataJson);
         self.bindEvent();
-        self.renderDropdownPT();
     };
     self.cacheElements = function () {
         self.domElements.groupTab = $("#table-kenosport");
