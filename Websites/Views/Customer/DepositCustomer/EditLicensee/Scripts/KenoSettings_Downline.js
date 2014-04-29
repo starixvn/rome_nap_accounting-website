@@ -141,7 +141,7 @@
     self.triggerDropdownPT = function (settingInfoDictionary) {
         self.cachedData.roleId = parseInt($("#hiddenRoleID").val());
         var uplineValMax, seletedValue, minPt;
-        if (vsDownlineSettings.roleId == 3) {
+        if (self.cachedData.roleId == 3) {
             uplineValMax = parseFloat(settingInfoDictionary["v180mpositiontaking_max"]);
             minPt = parseFloat(settingInfoDictionary["v180mpositiontaking_min"]);
             seletedValue = parseFloat(settingInfoDictionary["v180mpositiontaking"]).formatMoneyFromVal();

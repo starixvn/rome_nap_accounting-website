@@ -563,7 +563,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
 
             var kenoBetTypesParams = CastAide.AsString(row["VirtualSportList"]);
-            var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, false);
+            var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, true);
             listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
 
             return "{" + string.Join(",", listProp.ToArray()) + "}";
