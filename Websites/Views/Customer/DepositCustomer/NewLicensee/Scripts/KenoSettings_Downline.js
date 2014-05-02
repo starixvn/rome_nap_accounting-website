@@ -32,6 +32,7 @@
         self.domElements.tableBetSetting = $("#div-kenosport-container .table-kenosport-betsetting");
 
         self.domElements.dropdownPT = $("#div-kenosport-container .dropdown-pt");
+        self.domElements.roleId = $("#hiddenRoleID");
     };
     self.bindEvent = function () {
         self.domElements.sportsContainer.find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
@@ -63,7 +64,7 @@
     },
     self.renderBetSettings = function (custSettings) {
         self.cachedData.custSettings = custSettings;
-        self.cachedData.roleId = parseInt($("#hiddenRoleID").val());
+        self.cachedData.roleId = parseInt(self.domElements.roleId.val());
         var settingInfoDictionary = self.getSettingInfoDictionary(custSettings);
         self.domElements.tableBetSetting.html('');
         var htmlTilte =
@@ -415,8 +416,6 @@
 
         var custSettings = self.cachedData.custSettings;
         var kenoBetTypesLength = custSettings.KenoBetTypesSettingInfo.length;
-        var settingInfoList = [];
-
         for (var i = 0; i < kenoBetTypesLength; i++) {
             var betType = custSettings.KenoBetTypesSettingInfo[i];
             var id = parseInt(betType.Id);
@@ -445,22 +444,20 @@
                     break;
             }
 
-            var betTypeSettings = [];
-
             settingName = "v" + kenoBetTypeId + "minbet";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
                 Value: self.domElements.tableBetSetting.find("#" + "minbetv" + id).getNumberValue()
             });
 
             settingName = "v" + kenoBetTypeId + "maxbet";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
                 Value: self.domElements.tableBetSetting.find("#" + "maxbetv" + id).getNumberValue()
             });
 
             settingName = "v" + kenoBetTypeId + "maxpermatch";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
                 Value: self.domElements.tableBetSetting.find("#" + "maxpermatchv" + id).getNumberValue()
             });
@@ -469,30 +466,24 @@
             var positionTakingValue = self.domElements.dropdownPT.val();
 
             settingName = "v" + kenoBetTypeId + "spositiontaking";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
                 Value: positionTakingValue
             });
 
             settingName = "v" + kenoBetTypeId + "mpositiontaking";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
-                Value: positionTakingValue
+                Value: (self.cachedData.roleId >= 3 ? positionTakingValue : 0)
+
             });
 
             settingName = "v" + kenoBetTypeId + "apositiontaking";
-            betTypeSettings.push({
+            params.push({
                 Name: settingName,
                 Value: positionTakingValue
             });
-
-            settingInfoList.push({
-                Id: kenoBetTypeId,
-                SettingInfo: betTypeSettings
-            });
         }
-
-        return settingInfoList;
     };
     self.initConstraints = function () {
         self.domElements.sportsContainer = $("#div-kenosport-container");

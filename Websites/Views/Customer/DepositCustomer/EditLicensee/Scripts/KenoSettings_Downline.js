@@ -32,6 +32,7 @@
         self.domElements.tableBetSetting = $("#div-kenosport-container .table-kenosport-betsetting");
 
         self.domElements.dropdownPT = $("#div-kenosport-container .dropdown-pt");
+        self.domElements.roleId = $("#hiddenRoleID");
     };
     self.bindEvent = function () {
         self.domElements.sportsContainer.find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
@@ -139,7 +140,7 @@
     };
 
     self.triggerDropdownPT = function (settingInfoDictionary) {
-        self.cachedData.roleId = parseInt($("#hiddenRoleID").val());
+        self.cachedData.roleId = parseInt(self.domElements.roleId.val());
         var uplineValMax, seletedValue, minPt;
         if (self.cachedData.roleId == 3) {
             uplineValMax = parseFloat(settingInfoDictionary["v180mpositiontaking_max"]);
@@ -450,7 +451,7 @@
             settingName = "v" + kenoBetTypeId + "mpositiontaking";
             betTypeSettings.push({
                 Name: settingName,
-                Value: positionTakingValue
+                Value: (self.cachedData.roleId >= 3 ? positionTakingValue : 0)
             });
 
             settingName = "v" + kenoBetTypeId + "apositiontaking";

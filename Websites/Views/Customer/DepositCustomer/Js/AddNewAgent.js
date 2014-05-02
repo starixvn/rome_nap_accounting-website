@@ -528,6 +528,11 @@ addNewAgent.getPostParam = function () {
     if (typeof vsDownlineSettings != 'undefined') {
         vsDownlineSettings.assignVirtualSportsSettings(params);
     }
+
+    if (window.kenoSettingsManager) {
+        kenoSettingsManager.getSettings(params);
+    }
+
     var postParam = {
         MasterName: $("#tbxUserNameAddNew").val()
         , AgentName: $("#tbxUserNameAddNew").val()
