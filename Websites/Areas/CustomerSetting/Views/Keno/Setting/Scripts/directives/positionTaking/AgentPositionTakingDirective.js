@@ -31,13 +31,19 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                 $scope.$emit('totallyChecking');
             };
 
+            $scope.arangeMemberRange = function () {
+                var minOfMemberNewValueRange = Math.max(0, commonService.roundPTValue($scope.positionTaking.n3 - $scope.positionTaking.a2));
+                var maxOfMemberNewValueRange = commonService.roundPTValue($scope.positionTaking.m3 - $scope.positionTaking.a2);
+                $scope.positionTaking.newMemberPT = $scope.positionTaking.m2;
+                $scope.positionTaking.memberNewValueRange = maxOfMemberNewValueRange <= 0 ? [0] : commonService.getRangePTValue(maxOfMemberNewValueRange, minOfMemberNewValueRange);
+            };
+
             $scope.$watch('[positionTaking.m2, positionTaking.uM2, positionTaking.iM2]', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     $scope.positionTaking.l2 = $scope.positionTaking.iM2 ? $scope.positionTaking.m3 : commonService.roundPTValue($scope.positionTaking.m3 - $scope.positionTaking.m2);
 
                     var minRange = commonService.roundPTValue($scope.positionTaking.n3 - ($scope.positionTaking.iM2 ? $scope.positionTaking.uM2 : $scope.positionTaking.m2));
                     $scope.maxPTRange = commonService.getRangePTValue($scope.positionTaking.l2, Math.max(minRange, 0));
-                    //                    //$scope.positionTaking.a2 =  commonService.roundPTValue($scope.positionTaking.m3 - ($scope.positionTaking.iM2 ? $scope.positionTaking.uM2 : $scope.positionTaking.m2));
 
                     if ($scope.positionTaking.iM2) {
                         if ($scope.positionTaking.a2 < minRange || $scope.positionTaking.a2 > $scope.positionTaking.l2) {
@@ -68,10 +74,7 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                             $scope.positionTaking.isUpdateUM2 = false;
                         }
 
-                        var minOfMemberNewValueRange = Math.max(0, commonService.roundPTValue($scope.positionTaking.n3 - $scope.positionTaking.a2));
-                        var maxOfMemberNewValueRange = commonService.roundPTValue($scope.positionTaking.m3 - $scope.positionTaking.a2);
-                        $scope.positionTaking.newMemberPT = $scope.positionTaking.m2;
-                        $scope.positionTaking.memberNewValueRange = maxOfMemberNewValueRange <= 0 ? [0] : commonService.getRangePTValue(maxOfMemberNewValueRange, minOfMemberNewValueRange);
+                        $scope.arangeMemberRange();
                         $scope.positionTaking.isConfirmIsAuto = true;
                         $scope.$emit('confirmIsAuto', { "betTypeId": $scope.positionTaking.betTypeId, "isAdd": true });
                     }
@@ -88,6 +91,7 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                         $scope.positionTaking.n2 = $scope.positionTaking.a2;
                     }
 
+                    $scope.arangeMemberRange();
                     $scope.minPTRange = commonService.getRangePTValue($scope.positionTaking.a2, 0);
                     $scope.monitorSaveButton();
                 }
