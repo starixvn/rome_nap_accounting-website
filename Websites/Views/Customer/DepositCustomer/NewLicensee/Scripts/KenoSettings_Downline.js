@@ -12,6 +12,8 @@
         targetMaxBetSettings: null,
         sourceMaxPerMatchSettings: null,
         targetMaxPerMatchSettings: null,
+        sourceEnableSettings: null,
+        targetEnableSettings: null,
 
         tableBetSetting: null
     };
@@ -69,7 +71,7 @@
         self.domElements.tableBetSetting.html('');
         var htmlTilte =
             '<tr class="title">\
-                <td colspan="4" class="bettypeheader">\
+                <td colspan="5" class="bettypeheader">\
                     <span>Bet Setting</span>\
                 </td>\
             </tr>\
@@ -84,6 +86,9 @@
                 <td class="headercolumn">\
                     <span>Max Per Match</span>\
                 </td>\
+                <td class="column-status">\
+                    <span>Status</span>\
+                </td>\
             </tr>';
         self.domElements.tableBetSetting.append(htmlTilte);
 
@@ -94,6 +99,7 @@
             var minBetv = "minbetv" + betType.Id;
             var maxBetv = "maxbetv" + betType.Id;
             var maxPerMatchv = "maxpermatchv" + betType.Id;
+            var enablev = "enablev" + betType.Id;
 
             var minBetVal = parseFloat(settingInfoDictionary[minBetv]).formatMoneyFromVal();
             var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
@@ -105,6 +111,7 @@
             var isFirstSport = i == 0;
             var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : "";
             var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
+            var isEnable = false;
 
             bodyHtml = '<tr>\
                             <td class="bettypename">\
@@ -121,6 +128,9 @@
                             <td>\
                                 <input id="' + maxPerMatchv + '"' + copyDirection + ' maxpermatch="true" type="text" class="maxpermatch" value="' + maxPerMacthVal + '" />\
                                 <span></span>\
+                            </td>\
+                            <td>\
+                                <input id="' + enablev + '"' + copyDirection + ' type="checkbox" class="button-enable"' + (isEnable ? ' checked="checked"' : '') + ' />\
                             </td>\
                         </tr>';
             self.domElements.tableBetSetting.append(bodyHtml);
@@ -158,6 +168,8 @@
         self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
         self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
         self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
+        self.domElements.sourceEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][source]");
+        self.domElements.targetEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][target]");
 
         self.initConstraints();
     };
@@ -220,6 +232,7 @@
             self.domElements.targetMinBetSettings.attr("disabled", "disabled");
             self.domElements.targetMaxBetSettings.attr("disabled", "disabled");
             self.domElements.targetMaxPerMatchSettings.attr("disabled", "disabled");
+            self.domElements.targetEnableSettings.attr("disabled", "disabled");
 
             self.domElements.sourceMinBetSettings.keyup(function () {
                 self.copyMinBetSetting($(this).val());
@@ -232,14 +245,20 @@
             self.domElements.sourceMaxPerMatchSettings.keyup(function () {
                 self.copyMaxPerMatchSetting($(this).val());
             });
+
+            self.domElements.sourceEnableSettings.click(function () {
+                self.copyEnableSetting($(this).is(":checked"));
+            });
         } else {
             self.domElements.sourceMinBetSettings.unbind("keyup");
             self.domElements.sourceMaxBetSettings.unbind("keyup");
             self.domElements.sourceMaxPerMatchSettings.unbind("keyup");
+            self.domElements.sourceEnableSettings.unbind("click");
 
             self.domElements.targetMinBetSettings.attr("disabled", null);
             self.domElements.targetMaxBetSettings.attr("disabled", null);
             self.domElements.targetMaxPerMatchSettings.attr("disabled", null);
+            self.domElements.targetEnableSettings.attr("disabled", null);
         }
     };
     self.copyMinBetSetting = function (minBet) {
@@ -250,6 +269,9 @@
     };
     self.copyMaxPerMatchSetting = function (maxPerMatch) {
         self.domElements.targetMaxPerMatchSettings.val(maxPerMatch);
+    };
+    self.copyEnableSetting = function (isEnable) {
+        self.domElements.targetEnableSettings.attr("checked", isEnable ? "checked" : null);
     };
     self.renderDropdownPT = function () {
         self.domElements.dropdownPT.empty().append(self.getPTOptions());
@@ -374,6 +396,7 @@
     };
     self.resetValues = function () {
         self.domElements.sportsContainer.find("input[type='text']").val("0");
+        self.domElements.sportsContainer.find("input[type='checkbox']").attr("checked", null);
         self.domElements.sportsContainer.find("select").find("option[value='0']").attr("selected", "selected");
     };
 
@@ -460,6 +483,12 @@
             params.push({
                 Name: settingName,
                 Value: self.domElements.tableBetSetting.find("#" + "maxpermatchv" + id).getNumberValue()
+            });
+
+            settingName = "v" + kenoBetTypeId + "enable";
+            params.push({
+                Name: settingName,
+                Value: self.domElements.tableBetSetting.find("#" + "enablev" + id).is(":checked")
             });
 
             //Position taking

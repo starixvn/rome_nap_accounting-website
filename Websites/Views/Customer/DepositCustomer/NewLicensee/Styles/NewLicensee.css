@@ -45,7 +45,7 @@
 
 .table-kenosport-betsetting
 {
-    width: 520px;
+    width: 590px;
     margin-left: 7px;
     margin-top: 10px;
 }
@@ -55,6 +55,19 @@
     width: 130px;
     text-align: center;
     font-weight: bold;
+}
+
+.table-kenosport-betsetting .column-status
+{
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-kenosport-betsetting .button-enable
+{
+    width: 60px;
+    text-align: center;
 }
 
 .table-kenosport-positionsetting
@@ -77,6 +90,7 @@
     width: 100px;
 }
 
+
 .table-kenosport-positionsetting .dropdown-pt
 {
     width: 60px;
@@ -87,3 +101,4 @@
 {
     display: none;
 }
+

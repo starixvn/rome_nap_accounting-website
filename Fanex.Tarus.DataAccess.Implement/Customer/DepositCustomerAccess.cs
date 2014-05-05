@@ -38,13 +38,15 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     " MaxBet=\"{1}\"" +
                     " MinBet=\"{2}\"" +
                     " MaxPerMatch=\"{3}\"" +
-                    " sPositionTaking=\"{4}\"" +
-                    " mPositionTaking=\"{5}\"" +
-                    " aPositionTaking=\"{6}\"></bettype>",
+                    " Enable=\"{4}\"" +
+                    " sPositionTaking=\"{5}\"" +
+                    " mPositionTaking=\"{6}\"" +
+                    " aPositionTaking=\"{7}\"></bettype>",
                     betTypeId,
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "maxbet"],
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "minbet"],
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "maxpermatch"],
+                    dictionaryParams["v" + betTypeId + "enable"],
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "spositiontaking"],
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "mpositiontaking"],
                     isDummy ? 0 : dictionaryParams["v" + betTypeId + "apositiontaking"]);

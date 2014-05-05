@@ -11,7 +11,9 @@
         sourceMaxBetSettings: null,
         targetMaxBetSettings: null,
         sourceMaxPerMatchSettings: null,
-        targetMaxPerMatchSettings: null
+        targetMaxPerMatchSettings: null,
+        sourceEnableSettings: null,
+        targetEnableSettings: null
     };
     self.cachedData = {
     };
@@ -32,6 +34,8 @@
         self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
         self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
         self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
+        self.domElements.sourceEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][source]");
+        self.domElements.targetEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][target]");
 
         self.domElements.dropdownPT = $("#div-kenosport-container .dropdown-pt");
     };
@@ -68,6 +72,7 @@
             self.domElements.targetMinBetSettings.attr("disabled", "disabled");
             self.domElements.targetMaxBetSettings.attr("disabled", "disabled");
             self.domElements.targetMaxPerMatchSettings.attr("disabled", "disabled");
+            self.domElements.targetEnableSettings.attr("disabled", "disabled");
 
             self.domElements.sourceMinBetSettings.keyup(function () {
                 self.copyMinBetSetting($(this).val());
@@ -80,14 +85,20 @@
             self.domElements.sourceMaxPerMatchSettings.keyup(function () {
                 self.copyMaxPerMatchSetting($(this).val());
             });
+
+            self.domElements.sourceEnableSettings.click(function () {
+                self.copyEnableSetting($(this).is(":checked"));
+            });
         } else {
             self.domElements.sourceMinBetSettings.unbind("keyup");
             self.domElements.sourceMaxBetSettings.unbind("keyup");
             self.domElements.sourceMaxPerMatchSettings.unbind("keyup");
+            self.domElements.sourceEnableSettings.unbind("click");
 
             self.domElements.targetMinBetSettings.attr("disabled", null);
             self.domElements.targetMaxBetSettings.attr("disabled", null);
             self.domElements.targetMaxPerMatchSettings.attr("disabled", null);
+            self.domElements.targetEnableSettings.attr("disabled", null);
         }
     };
     self.copyMinBetSetting = function (minBet) {
@@ -98,6 +109,9 @@
     };
     self.copyMaxPerMatchSetting = function (maxPerMatch) {
         self.domElements.targetMaxPerMatchSettings.val(maxPerMatch);
+    };
+    self.copyEnableSetting = function (isEnable) {
+        self.domElements.targetEnableSettings.attr("checked", isEnable ? "checked" : null);
     };
     self.renderDropdownPT = function () {
         self.domElements.dropdownPT.empty().append(self.getPTOptions());
@@ -222,6 +236,7 @@
     };
     self.resetValues = function () {
         self.domElements.sportsContainer.find("input[type='text']").val("0");
+        self.domElements.sportsContainer.find("input[type='checkbox']").attr("checked", null);
         self.domElements.sportsContainer.find("select").find("option[value='0']").attr("selected", "selected");
     };
 
@@ -240,6 +255,11 @@
         params.push({
             Name: "v" + id + "maxpermatch",
             Value: $("#" + "maxpermatchv" + id).getNumberValue()
+        });
+
+        params.push({
+            Name: "v" + id + "enable",
+            Value: $("#" + "enablev" + id).is(":checked")
         });
     };
     self.getPT = function (params, betType, positionTaking) {
