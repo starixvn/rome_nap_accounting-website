@@ -1,8 +1,8 @@
 ﻿<div class="ngdialog-message">
     Confirm Update Members's PT
 </div>
-<div style="padding-left: 15px;">
-    You have changed this Master not to take auto position taking.</div>
+<div style="padding-left: 15px;" ng-switch="roleId">
+     You have changed this <span ng-switch-when="3">Super </span> <span ng-switch-default>Master </span> position taking.</div>
 <div style="padding-left: 15px;">
     Do you want to update all member's position taking to:</div>
 <div ng-repeat="positionTaking in positionTakingList " ng-model="positionTaking">
