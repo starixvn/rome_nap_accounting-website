@@ -26,12 +26,14 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
 
             if ($scope.betSettingCopyAll.isCopiedAll || $scope.statusCopyAll.isCopiedAll) {
                 $scope.$parent.isBetSettingPartial = $scope.betSettingList[0].isValid;
+                $scope.$parent.isBetSettingValid = $scope.betSettingList[0].isValid;
                 return true;
             } else {
                 for (var i = 0; i < length; i++) {
                     var betSettingTmp = $scope.betSettingList[i];
                     if (!betSettingTmp.isValid) {
                         $scope.$parent.isBetSettingPartial = false;
+                        $scope.$parent.isBetSettingValid = false;
                         return false;
                     } else {
                         if (betSettingTmp.isBetSettingUpdated || betSettingTmp.isStatusUpdated) {
@@ -40,6 +42,7 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
                     }
                 }
 
+                $scope.$parent.isBetSettingValid = true;
                 $scope.$parent.isBetSettingPartial = updatedCount > 0 ? true : false;
             }
         });
