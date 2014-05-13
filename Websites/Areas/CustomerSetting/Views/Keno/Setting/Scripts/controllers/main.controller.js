@@ -14,6 +14,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
             $scope.isUpdatedKeno = false;
             $scope.isPositionTakingPartial = false;
             $scope.isBetSettingPartial = false;
+            $scope.isBetSettingValid = false;
             $scope.confirmIsAutoArray = [];
             $scope.errors = {};
 
@@ -30,7 +31,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
 
             $scope.$watch('[isBetSettingPartial, isPositionTakingPartial]', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    $scope.isUpdatedKeno = $scope.isPositionTakingPartial && $scope.isBetSettingPartial;
+                    $scope.isUpdatedKeno = ($scope.isPositionTakingPartial || $scope.isBetSettingPartial) && $scope.isBetSettingValid;
                 }
             }, true);
 
