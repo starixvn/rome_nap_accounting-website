@@ -208,9 +208,7 @@
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
-  <Function Name="Admin-Max new member">
-    <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
-  </Function>
+  
 
   <Function Name="Customer - Login">
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.CustDB.bodbAdminNet"  />    
