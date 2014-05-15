@@ -65,10 +65,9 @@
 
                         if (countDown == 0) {
                             running = false;
-
-                            clearInterval(interval);
-                            document.location.href = "https://www.726872.com";
                             countDown = 30;
+                            clearInterval(interval);
+                            document.location.href = "https://www.726872.com";                            
                         }
                         else {
                             document.getElementById('countDown').innerHTML = countDown;

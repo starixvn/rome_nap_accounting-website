@@ -126,7 +126,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                     {
                         switch (cell.CellType)
                         {
-                            case CellType.NUMERIC:
+                            case CellType.Numeric:
                                 dr[i + 1] = cell.NumericCellValue;
                                 break;
                             default:

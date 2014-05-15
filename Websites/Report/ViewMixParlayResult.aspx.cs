@@ -95,7 +95,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 {
                     string row = rowTemplate;
                     match["goalrecord"] = String.Empty; //not display goalrecord
-                    bool isExistFGLG = CastAide.AsString(match["betstatus"] + string.Empty).Contains("FL");
+                    bool isExistFGLG = CastAide.AsString(match["betstatus"] + string.Empty).Contains("FL") || CastAide.AsString(match["betstatus"] + string.Empty).Contains("1FL");
                     betlist.FillDataForSoccer(ref row, match, isExistFGLG);
                     rowCollection += row;
                 }

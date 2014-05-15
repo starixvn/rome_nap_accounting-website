@@ -959,29 +959,36 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
                 var oldSettings = new List<LiveCasinoSetting.Model.GameType>();
                 var newSettings = new List<LiveCasinoSetting.Model.GameType>();
-                for (var i = 0; i < oldValues.Count && i < gameTypeList.Count; i++)
+                if (oldValues.Count > 0)
                 {
-                    var oldGameTypeValue = oldValues[i];
-                    var newGameTypeValue = gameTypeList[i];
-
-                    var isDifferent = false;
-                    for (var j = 0; j < oldGameTypeValue.BettingLimit.Count &&
-                        j < newGameTypeValue.BettingLimit.Count; j++)
+                    for (var i = 0; i < oldValues.Count && i < gameTypeList.Count; i++)
                     {
-                        var oldSelectedValue = oldGameTypeValue.BettingLimit[j].IsSelected;
-                        var newSelectedValue = newGameTypeValue.BettingLimit[j].IsSelected;
-                        if (oldSelectedValue != newSelectedValue)
+                        var oldGameTypeValue = oldValues[i];
+                        var newGameTypeValue = gameTypeList[i];
+
+                        var isDifferent = false;
+                        for (var j = 0; j < oldGameTypeValue.BettingLimit.Count &&
+                            j < newGameTypeValue.BettingLimit.Count; j++)
                         {
-                            isDifferent = true;
-                            break;
+                            var oldSelectedValue = oldGameTypeValue.BettingLimit[j].IsSelected;
+                            var newSelectedValue = newGameTypeValue.BettingLimit[j].IsSelected;
+                            if (oldSelectedValue != newSelectedValue)
+                            {
+                                isDifferent = true;
+                                break;
+                            }
+                        }
+
+                        if (isDifferent)
+                        {
+                            oldSettings.Add(oldGameTypeValue);
+                            newSettings.Add(newGameTypeValue);
                         }
                     }
-
-                    if (isDifferent)
-                    {
-                        oldSettings.Add(oldGameTypeValue);
-                        newSettings.Add(newGameTypeValue);
-                    }
+                }
+                else
+                {
+                    newSettings = gameTypeList;
                 }
 
                 WriteLogUpdateStakeLevel(oldSettings, newSettings, _result, setting);
