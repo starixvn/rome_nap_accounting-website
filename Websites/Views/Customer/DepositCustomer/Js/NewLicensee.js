@@ -368,7 +368,7 @@ newLic.GenerateSampleName = function () {
     var dummyAgentName = $("#tbxDummyAgentName").val();
     var dummyMemberName = $("#tbxDummyMemberName").val();
 
-    var suffix = "_8";
+    var suffix = "";
     if (!common.isEmpty(superName) ||
         !common.isEmpty(masterName) ||
         !common.isEmpty(agentName) ||

@@ -52,7 +52,7 @@
             var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
 
             var isFirstSport = i == 0;
-            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : "";
+            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
             var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
 
             var html = '<tr>\

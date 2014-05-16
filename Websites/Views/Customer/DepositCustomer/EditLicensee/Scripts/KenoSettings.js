@@ -97,7 +97,7 @@
             var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
 
             var isFirstSport = i == 0;
-            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : "";
+            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
             var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
 
             bodyHtml += '<tr>\
@@ -118,8 +118,9 @@
 
         self.domElements.tableBetSetting.append(bodyHtml);
 
-        var positionTakingValue = settingInfoDictionary["v180spositiontaking"] ?
-            parseFloat(settingInfoDictionary["v180spositiontaking"]).formatMoneyFromVal() :
+        var representBetType = kenoPositionTaking_BetTypeRepresentative;
+        var positionTakingValue = settingInfoDictionary["v" + representBetType + "spositiontaking"] ?
+            parseFloat(settingInfoDictionary["v" + representBetType + "spositiontaking"]).formatMoneyFromVal() :
             0;
         self.domElements.dropdownPT.removeAttr("selected").find("option[value='" + positionTakingValue + "']").attr("selected", "selected");
 
@@ -188,7 +189,7 @@
     self.getPTOptions = function () {
         var options = "";
 
-        var pt = 0.9;
+        var pt = 0.85;
         var val;
         while (pt > 0) {
             val = parseFloat(pt.toFixed(2));
@@ -353,30 +354,6 @@
             var betType = custSettings.KenoBetTypesSettingInfo[i];
             var id = parseInt(betType.Id);
             var kenoBetTypeId = id;
-            switch (id) {
-                case 180:
-                    kenoBetTypeId = 1501;
-                    break;
-                case 181:
-                    kenoBetTypeId = 1503;
-                    break;
-                case 182:
-                    kenoBetTypeId = 1504;
-                    break;
-                case 183:
-                    kenoBetTypeId = 1505;
-                    break;
-                case 184:
-                    kenoBetTypeId = 1507;
-                    break;
-                case 185:
-                    kenoBetTypeId = 1508;
-                    break;
-                case 186:
-                    kenoBetTypeId = 1509;
-                    break;
-            }
-
             var betTypeSettings = [];
 
             settingName = "v" + kenoBetTypeId + "minbet";
@@ -446,6 +423,25 @@
                 $(this).parent().find("span").html("<=" + parseFloat(this.uplineVal).formatMoneyFromVal());
             }
         });
+    };
+    self.wrapBetTypeIdForTesting = function (betTypeId) {
+        // Using Virtual Sports for testing
+        switch (betTypeId) {
+            case 180:
+                return 1501;
+            case 181:
+                return 1503;
+            case 182:
+                return 1504;
+            case 183:
+                return 1505;
+            case 184:
+                return 1507;
+            case 185:
+                return 1508;
+            case 186:
+                return 1509;
+        }
     };
 };
 

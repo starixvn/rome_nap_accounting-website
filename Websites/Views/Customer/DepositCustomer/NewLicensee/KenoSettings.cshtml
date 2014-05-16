@@ -16,7 +16,7 @@
             var maxPerMatchv = "maxpermatchv" + @kenoBetType.Id.ToLower();
             var enablev = "enablev" + @kenoBetType.Id.ToLower();
             var isSourceOfCopy = i == 0;
-            var buttonCopyAll = isSourceOfCopy ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : string.Empty;
+            var buttonCopyAll = isSourceOfCopy ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : string.Empty;
             var copyDirection = isSourceOfCopy ? "source=\"true\"" : "target=\"true\""; 
     <tr>
         <td class="bettypename">

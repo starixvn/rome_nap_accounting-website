@@ -39,12 +39,12 @@
 
   <Function Name="Customer - New Licensee">
     <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo_15368" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
 
   <Function Name="Admin-BACustomer">

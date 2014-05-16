@@ -119,7 +119,7 @@
     self.getPTOptions = function () {
         var options = "";
 
-        var pt = 0.9;
+        var pt = 0.85;
         var val;
         while (pt > 0) {
             val = parseFloat(pt.toFixed(2));

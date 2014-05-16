@@ -9,11 +9,12 @@
             {
                 continue;
             }
+            
             var minBetv = "minbetv" + @sport.Id.ToLower();
             var maxBetv = "maxbetv" + @sport.Id.ToLower();
             var maxPerMatchv = "maxpermatchv" + @sport.Id.ToLower();
+            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : string.Empty;
 
-            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" /></span>" : string.Empty;
             var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
             isFirstSport = false;
     <tr>

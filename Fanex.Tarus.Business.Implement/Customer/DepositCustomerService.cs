@@ -301,10 +301,10 @@ namespace Fanex.Tarus.Business.Implement.Customer
             int roleId,
             bool isAddNew)
         {
-            var kenoBetTypes = VirtualSportsSection.Instance.Sports;
+            var kenoBetTypes = KenoBetTypesSection.Instance.BetTypes;
             Dictionary<string, bool> activeKenoBetTypesInfo = new Dictionary<string, bool>();
             string betTypeId;
-            foreach (VirtualSportsElement betType in kenoBetTypes)
+            foreach (KenoBetTypesElement betType in kenoBetTypes)
             {
                 betTypeId = betType.Id;
                 if (activeKenoBetTypesInfo.ContainsKey(betTypeId))
@@ -345,7 +345,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             double positionTakingValue_Max = 0;
             foreach (XmlNode childrenNode in kenoBetTypesNodes)
             {
-                betTypeId = childrenNode.Attributes["SportType"].Value;
+                betTypeId = childrenNode.Attributes["BetType"].Value;
                 if (!activeKenoBetTypesInfo.ContainsKey(betTypeId) ||
                     !activeKenoBetTypesInfo[betTypeId])
                 {
@@ -355,7 +355,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 KenoBetTypesSettingInfo kenoBetTypesSettingInfo = new KenoBetTypesSettingInfo
                 {
                     Id = betTypeId,
-                    Name = CacheRef.GetSportName(betTypeId),
+                    Name = CacheRef.GetBettype(betTypeId),
                     SettingInfo = new List<SettingInfo>()
                 };
 
@@ -377,7 +377,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                     Value = childrenNode.Attributes["MaxPerMatch"].Value
                 });
 
-                if (string.Equals(betTypeId, Sports.VirtualSoccer.ToString()))
+                if (string.Equals(betTypeId, WebSettings.KenoPositionTaking_BetTypeRepresentative.ToString()))
                 {
                     positionTakingValue = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking"].Value);
                     switch (roleId)
@@ -448,7 +448,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             {
                 var columName = tbl.Columns[i].ColumnName;
                 if (columName == "VirtualSportList" ||
-                    columName == "KenoBetTypeList")
+                    columName == "KenoList")
                 {
                     continue;
                 }
@@ -460,7 +460,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, false);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
 
-            var kenoBetTypesParams = CastAide.AsString(row["VirtualSportList"]);
+            var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
             var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, false);
             listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
 
@@ -550,7 +550,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             {
                 var columName = tbl.Columns[i].ColumnName;
                 if (columName == "VirtualSportList" ||
-                    columName == "KenoBetTypeList")
+                    columName == "KenoList")
                 {
                     continue;
                 }
@@ -562,7 +562,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
 
-            var kenoBetTypesParams = CastAide.AsString(row["VirtualSportList"]);
+            var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
             var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, true);
             listProp.Add("\"\"KenoBetTypesSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(kenoBetTypesSettingInfoList) + "\"\"");
 

@@ -171,7 +171,7 @@ namespace Sunplus.Accounting.Core.Configurations
 
                 _isShowCustomerSettingRenovation = CastAide.AsInt32(ConfigurationManager.AppSettings["IsShowCustomerSettingRenovation"]);
 
-				EnableProgressiveBonus = (ConfigurationManager.AppSettings["EnableProgressiveBonus"] == "1");
+                EnableProgressiveBonus = (ConfigurationManager.AppSettings["EnableProgressiveBonus"] == "1");
             }
             catch (Exception ex)
             {
@@ -467,7 +467,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
             }
         }
-	public static bool EnableProgressiveBonus { get; set; }
+        public static bool EnableProgressiveBonus { get; set; }
 
         public static string ExternalBettingLimitConfig
         {
@@ -498,6 +498,14 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return (ConfigurationManager.AppSettings["EnableKeno"] == "1");
+            }
+        }
+
+        public static int KenoPositionTaking_BetTypeRepresentative
+        {
+            get
+            {
+                return Convert.ToInt32(ConfigurationManager.AppSettings["KenoPositionTaking_BetTypeRepresentative"]);
             }
         }
     }

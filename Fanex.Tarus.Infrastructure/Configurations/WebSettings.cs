@@ -42,6 +42,14 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             get { return _getDateMixparlayDailyWL; }
         }
 
+        public static int KenoPositionTaking_BetTypeRepresentative
+        {
+            get
+            {
+                return Convert.ToInt32(ConfigurationManager.AppSettings["KenoPositionTaking_BetTypeRepresentative"]);
+            }
+        }
+
         /// <summary>
         /// Description
         /// As agreement between IBC and 3rd party, IBC will not take any position taking on racing tickets. But in fact we already get something.
