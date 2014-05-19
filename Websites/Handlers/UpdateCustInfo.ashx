@@ -73,7 +73,7 @@ public class UpdateCustInfo : BaseHandler {
                 }
                 ht.Add("refcode1", context.Request["txtRefcode1"]);
                 ht.Add("refcode2", context.Request["txtRefcode2"]);
-                ht.Add("remark", custDetail.Remark);
+                ht.Add("remark", context.Request["txtRemark"]);
                 if (String.IsNullOrEmpty(context.Request.Form["chkImportant"]))
                 {
                     ht.Add("important", 0);
