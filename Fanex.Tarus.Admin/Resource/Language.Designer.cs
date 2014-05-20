@@ -115,6 +115,15 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -142,7 +151,7 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super not found!.
+        ///   Looks up a localized string similar to Invalid Super!.
         /// </summary>
         public static string SuperNotFound {
             get {

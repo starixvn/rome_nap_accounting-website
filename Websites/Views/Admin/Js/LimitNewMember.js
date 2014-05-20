@@ -139,19 +139,6 @@
                 txtMaxPerDay.removeAttr('disabled');
             }
         });
-
-        $('#tblTabConfiguration').click(function () {
-            var tabConfiguration = $(this);
-            $('#divConfigurationContainer').slideToggle('fast', function () {
-                var tdArrow = tabConfiguration.find('td[arrow]');
-                if (!$(this).is(':visible')) {
-                    tdArrow.removeClass('md2').addClass('md3');
-                }
-                else {
-                    tdArrow.removeClass('md3').addClass('md2');
-                }
-            });
-        });
     }
 
     return {

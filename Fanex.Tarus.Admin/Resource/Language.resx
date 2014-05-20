@@ -135,6 +135,9 @@
   <data name="MaxPerDayInvalid" xml:space="preserve">
     <value>Invalid Max per day!</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
@@ -145,7 +148,7 @@
     <value>Please input Super!</value>
   </data>
   <data name="SuperNotFound" xml:space="preserve">
-    <value>Super not found!</value>
+    <value>Invalid Super!</value>
   </data>
   <data name="Unlimited" xml:space="preserve">
     <value>Unlimited</value>
