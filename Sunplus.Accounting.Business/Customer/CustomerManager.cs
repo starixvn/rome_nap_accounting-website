@@ -253,7 +253,7 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
 
-                            if (!_smartPunterService.IsViewSmartPunter(custId))
+                            if (_smartPunterService.IsDeniedViewSmartPunter(custId))
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
                                 arrcontent.Add("strcontent", htmlcontent);
