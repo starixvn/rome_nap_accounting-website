@@ -6,22 +6,22 @@
 
 namespace Fanex.Tarus.Security.Services.Implement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Data;
-    using Fanex.Tarus.Security.Criteria;
-    using Fanex.Tarus.Security.Services.Interface;
-    using Fanex.Data;
     using System.Collections;
     using Fanex.Common;
+    using Fanex.Data;
+    using Fanex.Tarus.Security.Criteria;
+    using Fanex.Tarus.Security.Services.Interface;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class CheckSmartPunterService : ICheckSmartPunterService
     {
+        /// <summary>
+        /// Check smart punter service.
+        /// </summary>
+        /// <param name="criteria">Check smart punter criteria.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool CheckSmartPunter(CheckSmartPunterCriteria criteria)
         {
             bool isSmartPunter = false;
