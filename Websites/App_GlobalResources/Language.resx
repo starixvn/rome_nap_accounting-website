@@ -2431,4 +2431,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="HorseRacingFixedOdds" xml:space="preserve">
     <value>Horse Racing Fixed Odds</value>
   </data>
+  <data name="smartPunterAtuthorized" xml:space="preserve">
+    <value>You are not authorized to view this page.</value>
+  </data>
 </root>

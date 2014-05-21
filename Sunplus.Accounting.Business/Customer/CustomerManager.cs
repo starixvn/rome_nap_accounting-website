@@ -33,7 +33,7 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-
+using Fanex.Tarus.Security.Permission;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -44,14 +44,17 @@ namespace Sunplus.Accounting.Business.Customer
 	{
 		public ICustomerDAO _customerDAO;
 
+        public ISmartPunterPermissionService _smartPunterService;
+
 		public CustomerManager()
-			: this(null)
+			: this(null, null)
 		{
 		}
 
-		public CustomerManager(ICustomerDAO customerDAO)
+        public CustomerManager(ICustomerDAO customerDAO, ISmartPunterPermissionService smartPunterService)
 		{
 			_customerDAO = customerDAO ?? new CustomerDAO();
+            _smartPunterService = smartPunterService ?? new SmartPunterPermissionService();
 		}
 
 		public CustDetail GetCustomerInfo(string username)
@@ -184,7 +187,6 @@ namespace Sunplus.Accounting.Business.Customer
             Hashtable arrcontent = new Hashtable();
             try
             {
-
                 string htmlcontent = "";
                 if (string.IsNullOrEmpty(userName))
                 {
@@ -236,6 +238,7 @@ namespace Sunplus.Accounting.Business.Customer
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
 
+
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
                             Hashtable jsparam = new Hashtable();
@@ -248,6 +251,15 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
+
+
+                            if (!_smartPunterService.IsViewSmartPunter(custId))
+                            {
+                                htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
+                                arrcontent.Add("strcontent", htmlcontent);
+                                return arrcontent;
+                            }
+
 
                             string firstname = Convert.IsDBNull(row1["firstname"]) ? "" : row1["firstname"].ToString();
                             string lastname = Convert.IsDBNull(row1["lastname"]) ? "" : row1["lastname"].ToString();

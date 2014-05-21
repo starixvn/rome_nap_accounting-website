@@ -484,6 +484,10 @@
       <Project>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</Project>
       <Name>Fanex.Tarus.LiveCasino</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
+      <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
+      <Name>Fanex.Tarus.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
       <Project>{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}</Project>
       <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>

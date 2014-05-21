@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,8 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,10 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
+    <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
+    <Compile Include="Permission\ISmartPunterPermissionService.cs" />
+    <Compile Include="Permission\SmartPunterPermissionService.cs" />
     <Compile Include="Permission\IPermissionService.cs" />
     <Compile Include="Permission\PermissionService.cs" />
+    <Compile Include="Services\Implement\CheckSmartPunterService.cs" />
+    <Compile Include="Services\Interface\ICheckSmartPunterService.cs" />
     <Compile Include="Web\AppSessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

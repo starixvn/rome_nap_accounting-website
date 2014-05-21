@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CheckSmartPunter.cs" company="Microsoft">
+// <copyright file="CheckSmartPunterCriteria.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace Fanex.Tarus.Security.Criteria
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CheckSmartPunter : CriteriaBase
+    public class CheckSmartPunterCriteria : CriteriaBase
     {
         public int CustID { get; set; }
 
