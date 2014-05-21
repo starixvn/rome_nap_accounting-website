@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Permission\ISmartPunterPermissionService.cs" />
@@ -67,6 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
+      <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
+      <Name>Fanex.AuthenticationFilter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
