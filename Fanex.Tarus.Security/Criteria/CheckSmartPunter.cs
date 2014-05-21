@@ -1,0 +1,32 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="CheckSmartPunter.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Security.Criteria
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.NAP.Framework.Data;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class CheckSmartPunter : CriteriaBase
+    {
+        public int CustID { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "Acc_CustomerSelCheckSmartPunter";
+        }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
+    }
+}
