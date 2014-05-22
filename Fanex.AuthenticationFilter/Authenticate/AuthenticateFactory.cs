@@ -7,6 +7,7 @@
 
 using System;
 using Fanex.AuthenticationFilter.Configurations;
+using System.Collections;
 
 namespace Fanex.AuthenticationFilter
 {
@@ -21,7 +22,7 @@ namespace Fanex.AuthenticationFilter
         /// Create authenticate factory
         /// </summary>
         /// <returns></returns>
-        public static IAuthenticate Create(AuthenticateSmartPunterAction.AuthenticationType actionType = AuthenticateSmartPunterAction.AuthenticationType.Read, AuthenticateSmartPunterAction.ParamType paramType = AuthenticateSmartPunterAction.ParamType.CustId, string paramName = null)
+        public static IAuthenticate Create(AuthenticateSmartPunterAction.AuthenticationType actionType = AuthenticateSmartPunterAction.AuthenticationType.Read, Hashtable paramHastable = null)
         {
             var authenticationSetting = AuthenticationFilterSection.Instance;
             var authenticateFactory = (authenticationSetting == null ||
@@ -34,9 +35,8 @@ namespace Fanex.AuthenticationFilter
             {
                 _authenticateFactory = item as IAuthenticate;
                 _authenticateFactory.Policy = actionType;
-                _authenticateFactory.ParamType = paramType;
-                _authenticateFactory.ParamName = paramName;
-                
+
+                _authenticateFactory.ParamHastable = paramHastable;
                 return _authenticateFactory;
             }
 

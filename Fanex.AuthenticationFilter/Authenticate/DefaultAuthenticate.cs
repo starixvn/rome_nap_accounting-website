@@ -5,6 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections;
 namespace Fanex.AuthenticationFilter
 {
     /// <summary>
@@ -28,16 +29,10 @@ namespace Fanex.AuthenticationFilter
             set;
         }
 
-        public AuthenticateSmartPunterAction.ParamType ParamType
-        {
-            get;
-            set;
-        }
-        
-        public string ParamName
-        {
-            get;
-            set;
+        public Hashtable ParamHastable 
+        { 
+            get; 
+            set; 
         }
     }
 }

@@ -42,11 +42,11 @@ namespace Fanex.Tarus.Security.Permission
         /// </summary>
         /// <param name="custID">Customer identify.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool IsDeniedViewSmartPunter(int custID, string userName)
+        public bool IsDeniedViewSmartPunter(int? custID, string userName)
         {
             return !PermissionService.HasPermission(this._smartPunterFunctionName) || _smartPunterService.CheckSmartPunter(new CheckSmartPunterCriteria
             {
-                CustID = custID,
+                CustID = custID.HasValue ? custID : null,
                 UserName = userName
             });
         }

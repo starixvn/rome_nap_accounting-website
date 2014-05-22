@@ -17,6 +17,8 @@ namespace Fanex.Tarus.Security.Authenticate
     using Fanex.Tarus.Security.Permission;
     using Fanex.Tarus.Security.Web;
     using System.Web;
+    using Fanex.Common;
+    using System.Collections;
 
     /// <summary>
     /// Class CustomerSettingAttribute.
@@ -36,16 +38,6 @@ namespace Fanex.Tarus.Security.Authenticate
         }
 
         /// <summary>
-        /// Gets or sets the function.
-        /// </summary>
-        /// <value>The function.</value>
-        public string ParamName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the policy.
         /// </summary>
         /// <value>The policy.</value>
@@ -56,14 +48,10 @@ namespace Fanex.Tarus.Security.Authenticate
         }
 
         /// <summary>
-        /// Gets or sets the policy.
+        /// Params to check.
         /// </summary>
-        /// <value>The policy.</value>
-        public AuthenticateSmartPunterAction.ParamType ParamType
-        {
-            get;
-            set;
-        }
+        public Hashtable ParamHastable { get; set; }
+
         /// <summary>
         /// Allows the read.
         /// </summary>
@@ -71,21 +59,14 @@ namespace Fanex.Tarus.Security.Authenticate
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool AllowRead()
         {
-            switch (this.ParamType)
+            if(this.ParamHastable.ContainsKey("custId"))
             {
-                case AuthenticateSmartPunterAction.ParamType.CustId:
-                    {
-            var request = HttpContext.Current.Request;
-            //if (HttpContext.Current.Request.Form[custID] != null)
-            //{
-            //    username = HttpContext.Current.Request.Form[UserNameParam].ToString(CultureInfo.InvariantCulture);
-            //}
-            //else
-            //{
-            //    username = HttpContext.Current.Request.QueryString[UserNameParam];
-            //}
-                    return true;
+                int custId = Converter.To<int>(this.ParamHastable["custId"]);
+                return !_permissionService.IsDeniedViewSmartPunter(custId, string.Empty);
             }
+
+            var username = Converter.ToString2(this.ParamHastable["username"]);
+            return !_permissionService.IsDeniedViewSmartPunter(null, username);
         }
 
         /// <summary>
