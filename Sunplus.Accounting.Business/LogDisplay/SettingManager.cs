@@ -452,6 +452,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     #endregion sporttypes
 
+                    #region limit new member
+
+                    trackingVal = ReplaceUnlimited(trackingVal);
+
+                    #endregion
+
                     xmlLoad = XElement.Parse(trackingVal);
 
                     if (xmlLoad == null) { return tracking; }
@@ -814,6 +820,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
             }
             return custId;
+        }
+
+        private string ReplaceUnlimited(string log)
+        {
+            if (log.Contains("acc_customermaxnewmemperday_sag"))
+            {
+                log = log.Replace("newvalue=\"-1\"", "newvalue=\"Unlimited\"")
+                    .Replace("oldvalue=\"-1\"", "oldvalue=\"Unlimited\"");
+            }
+
+            return log;
         }
     }
 }
