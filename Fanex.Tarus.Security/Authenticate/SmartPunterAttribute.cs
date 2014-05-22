@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Security.Authenticate
     using Fanex.AuthenticationFilter;
     using Fanex.Tarus.Security.Permission;
     using Fanex.Tarus.Security.Web;
+    using System.Web;
 
     /// <summary>
     /// Class CustomerSettingAttribute.
@@ -74,10 +75,15 @@ namespace Fanex.Tarus.Security.Authenticate
             {
                 case AuthenticateSmartPunterAction.ParamType.CustId:
                     {
-                        int custId=123456;
-                        return _permissionService.IsDeniedViewSmartPunter(custId);
-                    }
-                default:
+            var request = HttpContext.Current.Request;
+            //if (HttpContext.Current.Request.Form[custID] != null)
+            //{
+            //    username = HttpContext.Current.Request.Form[UserNameParam].ToString(CultureInfo.InvariantCulture);
+            //}
+            //else
+            //{
+            //    username = HttpContext.Current.Request.QueryString[UserNameParam];
+            //}
                     return true;
             }
         }

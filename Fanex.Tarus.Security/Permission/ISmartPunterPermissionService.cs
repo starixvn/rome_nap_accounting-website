@@ -22,6 +22,6 @@ namespace Fanex.Tarus.Security.Permission
         /// </summary>
         /// <param name="custID">Customer identify.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        bool IsDeniedViewSmartPunter(int custID);
+        bool IsDeniedViewSmartPunter(int custID, string userName);
     }
 }
