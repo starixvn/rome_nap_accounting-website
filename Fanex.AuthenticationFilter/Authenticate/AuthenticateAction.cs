@@ -4,10 +4,11 @@ using System.Web.Mvc;
 
 namespace Fanex.AuthenticationFilter
 {
-    public class AuthenticateAction : ActionFilterAttribute
+    public class AuthenticateSmartPunterAction : ActionFilterAttribute
     {
         private readonly AuthenticationType _authenticationType;
-        private readonly string _mainAction;
+        private readonly ParamType _paramType;
+        private readonly string _mainParam;
         
         public enum AuthenticationType
         {
@@ -15,29 +16,34 @@ namespace Fanex.AuthenticationFilter
             Host
         }
 
-        public AuthenticateAction(AuthenticationType authenticationType, string functionName)
+        public enum ParamType
+        {
+            CustId,
+            UserName
+        }
+
+        public AuthenticateSmartPunterAction(AuthenticationType authenticationType, ParamType paramType, string paraName)
         {
             _authenticationType = authenticationType;
-            _mainAction = functionName;
+            _paramType = paramType;
+            _mainParam = paraName;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var controlName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            var actionPath = controlName + "/" + _mainAction;
-            var authenticateFactory = AuthenticateFactory.Create(_authenticationType, _mainAction);
+            var authenticateFactory = AuthenticateFactory.Create(_authenticationType,_paramType, _mainParam);
             
             switch (_authenticationType)
             {
-                case AuthenticationType.Read:                    
-                    if (!authenticateFactory.AllowRead(actionPath))
+                case AuthenticationType.Read:
+                    if (!authenticateFactory.AllowRead())
                     {
                         ActionDenied(filterContext);
                         return;
                     }
                     break;
                 case AuthenticationType.Host:
-                    if (!authenticateFactory.AllowUpdate(actionPath))
+                    if (!authenticateFactory.AllowUpdate())
                     {
                         ActionDenied(filterContext);
                         return;

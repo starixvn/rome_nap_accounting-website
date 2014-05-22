@@ -12,23 +12,29 @@ namespace Fanex.AuthenticationFilter
     /// </summary>
     public class DefaultAuthenticate: IAuthenticate
     {
-        public bool AllowRead(string action)
+        public bool AllowRead()
         {
             return true;
         }
 
-        public bool AllowUpdate(string action)
+        public bool AllowUpdate()
         {
             return true;
         }
 
-        public AuthenticateAction.AuthenticationType Policy
+        public AuthenticateSmartPunterAction.AuthenticationType Policy
+        {
+            get;
+            set;
+        }
+
+        public AuthenticateSmartPunterAction.ParamType ParamType
         {
             get;
             set;
         }
         
-        public string Function
+        public string ParamName
         {
             get;
             set;

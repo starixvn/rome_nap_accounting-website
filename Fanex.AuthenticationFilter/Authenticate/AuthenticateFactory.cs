@@ -21,7 +21,7 @@ namespace Fanex.AuthenticationFilter
         /// Create authenticate factory
         /// </summary>
         /// <returns></returns>
-        public static IAuthenticate Create(AuthenticateAction.AuthenticationType actionType = AuthenticateAction.AuthenticationType.Read, string functionName = null)
+        public static IAuthenticate Create(AuthenticateSmartPunterAction.AuthenticationType actionType = AuthenticateSmartPunterAction.AuthenticationType.Read, AuthenticateSmartPunterAction.ParamType paramType = AuthenticateSmartPunterAction.ParamType.CustId, string paramName = null)
         {
             var authenticationSetting = AuthenticationFilterSection.Instance;
             var authenticateFactory = (authenticationSetting == null ||
@@ -34,7 +34,8 @@ namespace Fanex.AuthenticationFilter
             {
                 _authenticateFactory = item as IAuthenticate;
                 _authenticateFactory.Policy = actionType;
-                _authenticateFactory.Function = functionName;
+                _authenticateFactory.ParamType = paramType;
+                _authenticateFactory.ParamName = paramName;
                 
                 return _authenticateFactory;
             }

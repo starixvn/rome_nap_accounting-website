@@ -25,7 +25,7 @@ namespace Fanex.Tarus.Security.Authenticate
         /// <summary>
         /// The _permission service.
         /// </summary>
-        //private readonly IPermissionService _permissionService = new PermissionService();
+        private readonly ISmartPunterPermissionService _permissionService = new SmartPunterPermissionService();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerSettingAttribute"/> class.
@@ -38,7 +38,7 @@ namespace Fanex.Tarus.Security.Authenticate
         /// Gets or sets the function.
         /// </summary>
         /// <value>The function.</value>
-        public string Function
+        public string ParamName
         {
             get;
             set;
@@ -48,20 +48,38 @@ namespace Fanex.Tarus.Security.Authenticate
         /// Gets or sets the policy.
         /// </summary>
         /// <value>The policy.</value>
-        public AuthenticateAction.AuthenticationType Policy
+        public AuthenticateSmartPunterAction.AuthenticationType Policy
         {
             get;
             set;
         }
 
         /// <summary>
+        /// Gets or sets the policy.
+        /// </summary>
+        /// <value>The policy.</value>
+        public AuthenticateSmartPunterAction.ParamType ParamType
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// Allows the read.
         /// </summary>
         /// <param name="action">The action.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool AllowRead(string action)
+        public bool AllowRead()
         {
-            return true;
+            switch (this.ParamType)
+            {
+                case AuthenticateSmartPunterAction.ParamType.CustId:
+                    {
+                        int custId=123456;
+                        return _permissionService.IsDeniedViewSmartPunter(custId);
+                    }
+                default:
+                    return true;
+            }
         }
 
         /// <summary>
@@ -69,7 +87,7 @@ namespace Fanex.Tarus.Security.Authenticate
         /// </summary>
         /// <param name="action">The action.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool AllowUpdate(string action)
+        public bool AllowUpdate()
         {
             return true;
         }

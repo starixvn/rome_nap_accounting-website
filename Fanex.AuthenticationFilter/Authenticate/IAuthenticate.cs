@@ -8,24 +8,29 @@ namespace Fanex.AuthenticationFilter
         /// </summary>
         /// <param name="action">full path to action (ex: Home/Contact)</param>
         /// <returns></returns>
-        bool AllowRead(string action);
+        bool AllowRead();
 
         /// <summary>
         /// Allow to update 
         /// </summary>
         /// <param name="action">full path to action (ex: Home/Contact)</param>
         /// <returns></returns>
-        bool AllowUpdate(string action);
+        bool AllowUpdate();
 
         /// <summary>
         /// Gets or sets current authentication type
         /// </summary>
-        AuthenticateAction.AuthenticationType Policy { get; set; }
+        AuthenticateSmartPunterAction.AuthenticationType Policy { get; set; }
 
         /// <summary>
-        /// Gets or sets current function need to authenticate
+        /// Gets or sets current parameter type
         /// </summary>
-        string Function { get; set; }
+        AuthenticateSmartPunterAction.ParamType ParamType { get; set; }
+
+        /// <summary>
+        /// Gets or sets current parameter name 
+        /// </summary>
+        string ParamName { get; set; }
 
        
     }
