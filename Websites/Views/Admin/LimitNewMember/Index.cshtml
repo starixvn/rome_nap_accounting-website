@@ -1,0 +1,64 @@
+﻿@using Fanex.Tarus.Admin.Resource;
+@*<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Configure Max New Members</title>
+</head>
+<body>*@
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">@Language.ConfigureMaxNewMembers</td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+        <div id="sectionMessage" class="hide" style="margin-right:4px;"></div>
+        <div class="bg_table">
+            <table border="0">
+                @using (Html.BeginForm("SearchSuper", "LimitNewMember", FormMethod.Get, new { id = "frmSearchSuper" }))
+                {
+                    <tr>
+                        <td><span class="b">@Language.Super</span></td>
+                        <td colspan="2"><input type="text" id="super" name="super" style="width:95%" tabindex="1" /></td>
+                        <td><input type="submit" class="btn" value="@Language.Search" /></td>
+                        <td style="width:20%;"><div></div></td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5"><div style="background-color:#7C98A4;height:1px;margin:10px 0 5px 0;"></div></td>
+                </tr>
+                @using (Html.BeginForm("UpdateLimitNewMember", "LimitNewMember", FormMethod.Post, new { id = "frmUpdateMaxPerDay" }))
+                {
+                    <tr>
+                        <td><span class="b">@Language.MaxPerDay</span></td>
+                        <td><input type="text" id="txtMaxPerDay" style="width:95%" tabindex="2" maxlength="4" onkeypress="return limitNewMember.isNumberKey(event)" /></td>
+                        <td>
+                            <input type="checkbox" id="chkUnlimited" />
+                            <label for="chkUnlimited"><span class="b">@Language.Unlimited</span></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"><span style="font-style:italic;">@Language.MaxPerDayHint</span></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td><input id="btnUpdateMaxPerDay" type="submit" class="btn" value="@Language.Submit" disabled /></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="@Url.Content("~/js/common.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/Js/LimitNewMember.js")"></script>
+    <script type="text/javascript">
+        var limitNewMemberResource = {
+            SuperEmpty: '@Language.SuperEmpty',
+            SuperNotFound: '@Language.SuperNotFound',
+            MaxPerDayEmpty: '@Language.MaxPerDayEmpty',
+            MaxPerDayInvalid: '@Language.MaxPerDayInvalid'
+        };
+    </script>
+@*</body>
+</html>*@

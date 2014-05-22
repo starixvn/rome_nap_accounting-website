@@ -76,6 +76,8 @@
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
+    <Compile Include="Business\LimitNewMember\ILimitNewMemberService.cs" />
+    <Compile Include="Business\LimitNewMember\LimitNewMemberService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\Admin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListService.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
     <Compile Include="Business\SMAManagement\SMAManagementService.cs" />
+    <Compile Include="Controller\LimitNewMemberController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\AutoFollowBetController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Criteria\AutoFollowBet\DeleteAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\AutoFollowBet\GetAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\AutoFollowBet\UpdateAutoFollowedBetCustomerCriteria.cs" />
+    <Compile Include="Criteria\LimitNewMember\LimitNewMemberCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
@@ -106,6 +110,8 @@
     <Compile Include="DataAccess\AutoFollowBet\IAutoFollowBetAccess.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
+    <Compile Include="DataAccess\LimitNewMember\ILimitNewMemberAccess.cs" />
+    <Compile Include="DataAccess\LimitNewMember\LimitNewMemberAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\Admin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListDataAccess.cs" />
@@ -120,6 +126,7 @@
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
     <Compile Include="Entities\Licensee.cs" />
+    <Compile Include="Entities\LimitMember.cs" />
     <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
     <Compile Include="Entities\RacingDefaultSetting.cs" />
     <Compile Include="Entities\Result.cs" />
@@ -145,7 +152,7 @@
       <LastGenOutput>Error.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource\Language.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
