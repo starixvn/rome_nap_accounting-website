@@ -68,6 +68,7 @@
             self.copyMinBetSetting(self.domElements.sourceMinBetSettings.val());
             self.copyMaxBetSetting(self.domElements.sourceMaxBetSettings.val());
             self.copyMaxPerMatchSetting(self.domElements.sourceMaxPerMatchSettings.val());
+            self.copyEnableSetting(self.domElements.sourceEnableSettings.is(":checked"));
 
             self.domElements.targetMinBetSettings.attr("disabled", "disabled");
             self.domElements.targetMaxBetSettings.attr("disabled", "disabled");
