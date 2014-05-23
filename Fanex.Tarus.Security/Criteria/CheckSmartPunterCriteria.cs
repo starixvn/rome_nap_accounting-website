@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Security.Criteria
     {
         public int? CustID { get; set; }
 
-        public string UserName { get; set;}
+        public string UserName { get; set; }
 
         public override string GetSettingKey()
         {

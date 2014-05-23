@@ -24,8 +24,9 @@ namespace Fanex.AuthenticationFilter
         AuthenticateSmartPunterAction.AuthenticationType Policy { get; set; }
 
         /// <summary>
-        /// Params to check.
+        /// Gets or sets the policy parameters.
         /// </summary>
+        /// <value>The hash table of parameters.</value>
         Hashtable ParamHastable { get; set; }
     }
 }

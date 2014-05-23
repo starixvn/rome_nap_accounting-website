@@ -64,9 +64,15 @@ namespace Fanex.Tarus.Security.Authenticate
                 int custId = Converter.To<int>(this.ParamHastable["custId"]);
                 return !_permissionService.IsDeniedViewSmartPunter(custId, string.Empty);
             }
-
-            var username = Converter.ToString2(this.ParamHastable["username"]);
-            return !_permissionService.IsDeniedViewSmartPunter(null, username);
+            else if (this.ParamHastable.ContainsKey("username"))
+            {
+                var username = Converter.ToString2(this.ParamHastable["username"]);
+                return !_permissionService.IsDeniedViewSmartPunter(null, username);
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
