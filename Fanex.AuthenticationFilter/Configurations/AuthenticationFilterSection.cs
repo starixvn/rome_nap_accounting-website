@@ -27,7 +27,14 @@ namespace Fanex.AuthenticationFilter.Configurations
             }
         }
 
-      
+        [ConfigurationProperty("deniedViewPath", IsRequired = false)]
+        public string DeniedView
+        {
+            get
+            {
+                return (string)base["deniedViewPath"];
+            }
+        }
         /// <summary>
         /// Customer Setting Section instance
         /// </summary>

@@ -9,6 +9,7 @@ namespace Fanex.AuthenticationFilter
 {
     using System.Collections;
     using System.Web.Mvc;
+    using Fanex.AuthenticationFilter.Configurations;
 
     /// <summary>
     /// Smart punter authentication.
@@ -80,9 +81,9 @@ namespace Fanex.AuthenticationFilter
         /// <param name="filterContext">Action executed context.</param>
         private static void ActionDenied(ActionExecutedContext filterContext)
         {
-            filterContext.Result = new ViewResult
+            filterContext.Result = new PartialViewResult
             {
-                ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+                ViewName = AuthenticationFilterSection.Instance.DeniedView 
             };
         }
     }
