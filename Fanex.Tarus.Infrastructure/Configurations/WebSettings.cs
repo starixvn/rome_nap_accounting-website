@@ -50,6 +50,14 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        public static decimal KenoPositionTaking_Max
+        {
+            get
+            {
+                return Convert.ToDecimal(ConfigurationManager.AppSettings["KenoPositionTaking_Max"]);
+            }
+        }
+
         /// <summary>
         /// Description
         /// As agreement between IBC and 3rd party, IBC will not take any position taking on racing tickets. But in fact we already get something.

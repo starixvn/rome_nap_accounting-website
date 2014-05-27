@@ -231,7 +231,7 @@
     self.getPTOptions = function () {
         var options = "";
 
-        var pt = 0.85;
+        var pt = kenoPositionTaking_Max;
         var val;
         while (pt > 0) {
             val = parseFloat(pt.toFixed(2));

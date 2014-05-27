@@ -508,5 +508,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return Convert.ToInt32(ConfigurationManager.AppSettings["KenoPositionTaking_BetTypeRepresentative"]);
             }
         }
+
+        public static decimal KenoPositionTaking_Max
+        {
+            get
+            {
+                return Convert.ToDecimal(ConfigurationManager.AppSettings["KenoPositionTaking_Max"]);
+            }
+        }
     }
 }
