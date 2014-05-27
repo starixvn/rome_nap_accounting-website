@@ -494,7 +494,7 @@ common.reloadPage = function (url) {
     var timerId = setTimeout(function () {
         parent.gotoURL('centerFr', url);
         clearTimeout(timerId);
-    }, 2000);
+    }, 5000);
 };
 
 $(document).ready(function () {
