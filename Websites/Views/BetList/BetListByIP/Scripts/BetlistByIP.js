@@ -143,14 +143,16 @@ var BetListByIP_SportType = {
             success: function (result) {
                 $("#BetlistByIP_Username").remove();
                 $("#betListContent").html(result);
+
+                if (typeof _lengthSprortype === 'undefined') _lengthSprortype = 0;
                 BetListByIP_SportType.gridOpts_Soccer.isShowPager = _lengthSprortype == 0 ? false : true;
                 $("#BetlistByIP_Soccer").initGrid(BetListByIP_SportType.gridOpts_Soccer);
                 $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
                 BetListByIP_SportType.initPager(_lengthSprortype,
-                    BetListByIP_SportType.params_SportType.pageSize, 
+                    BetListByIP_SportType.params_SportType.pageSize,
                     BetListByIP_SportType.params_SportType.pageIndex - 1);
 
-//                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
+                //                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
