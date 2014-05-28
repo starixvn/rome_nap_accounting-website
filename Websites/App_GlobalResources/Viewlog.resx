@@ -3489,10 +3489,178 @@
   <data name="Disable202_1509" xml:space="preserve">
     <value>Disabled Malta</value>
   </data>
-  <data name="Disable202_1511" xml:space="preserve">
-    <value>Disabled Kentucky</value>
+  <data name="keno" xml:space="preserve">
+    <value>Keno</value>
   </data>
   <data name="Disable202_1513" xml:space="preserve">
     <value>Disabled Michigan</value>
+  </data>
+  <data name="v202apt_1502" xml:space="preserve">
+    <value>Bejing Keno 8</value>
+  </data>
+  <data name="v202apt_1503" xml:space="preserve">
+    <value>Slovakia Eklub</value>
+  </data>
+  <data name="v202apt_1504" xml:space="preserve">
+    <value>Canada Keno</value>
+  </data>
+  <data name="v202apt_1505" xml:space="preserve">
+    <value>West Canada Keno</value>
+  </data>
+  <data name="v202apt_1506" xml:space="preserve">
+    <value>Taiwan Bingo Bingo</value>
+  </data>
+  <data name="v202apt_1507" xml:space="preserve">
+    <value>Massac</value>
+  </data>
+  <data name="v202apt_1508" xml:space="preserve">
+    <value>Ohio</value>
+  </data>
+  <data name="v202apt_1509" xml:space="preserve">
+    <value>Malta</value>
+  </data>
+  <data name="v202maxbv1501" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v202minbv1501" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v202mpmv1501" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v202mpt_1501" xml:space="preserve">
+    <value>Australia Acttab</value>
+  </data>
+  <data name="v202mpt_1502" xml:space="preserve">
+    <value>Bejing Keno 8</value>
+  </data>
+  <data name="v202mpt_1503" xml:space="preserve">
+    <value>Slovakia Eklub</value>
+  </data>
+  <data name="v202mpt_1504" xml:space="preserve">
+    <value>Canada Keno</value>
+  </data>
+  <data name="v202mpt_1505" xml:space="preserve">
+    <value>West Canada Keno</value>
+  </data>
+  <data name="v202mpt_1506" xml:space="preserve">
+    <value>Taiwan Bingo Bingo</value>
+  </data>
+  <data name="v202mpt_1507" xml:space="preserve">
+    <value>Massac</value>
+  </data>
+  <data name="v202mpt_1508" xml:space="preserve">
+    <value>Ohio</value>
+  </data>
+  <data name="v202mpt_1509" xml:space="preserve">
+    <value>Malta</value>
+  </data>
+  <data name="v202spt_1501" xml:space="preserve">
+    <value>Australia Acttab</value>
+  </data>
+  <data name="v202spt_1502" xml:space="preserve">
+    <value>Bejing Keno 8</value>
+  </data>
+  <data name="v202spt_1503" xml:space="preserve">
+    <value>Slovakia Eklub</value>
+  </data>
+  <data name="v202spt_1504" xml:space="preserve">
+    <value>Canada Keno</value>
+  </data>
+  <data name="v202spt_1505" xml:space="preserve">
+    <value>West Canada Keno</value>
+  </data>
+  <data name="v202spt_1506" xml:space="preserve">
+    <value>Taiwan Bingo Bingo</value>
+  </data>
+  <data name="v202spt_1507" xml:space="preserve">
+    <value>Massac</value>
+  </data>
+  <data name="v202spt_1508" xml:space="preserve">
+    <value>Ohio</value>
+  </data>
+  <data name="v202spt_1509" xml:space="preserve">
+    <value>Malta</value>
+  </data>
+  <data name="MaxBv202_1501" xml:space="preserve">
+    <value>Max Bet - Australia Acttab</value>
+  </data>
+  <data name="MaxBv202_1502" xml:space="preserve">
+    <value>Max Bet - Bejing Keno 8</value>
+  </data>
+  <data name="MaxBv202_1503" xml:space="preserve">
+    <value>Max Bet - Slovakia Eklub</value>
+  </data>
+  <data name="MaxBv202_1504" xml:space="preserve">
+    <value>Max Bet - Canada Keno</value>
+  </data>
+  <data name="MaxBv202_1505" xml:space="preserve">
+    <value>Max Bet - West Canada Keno</value>
+  </data>
+  <data name="MaxBv202_1506" xml:space="preserve">
+    <value>Max Bet - Taiwan Bingo Bingo</value>
+  </data>
+  <data name="MaxBv202_1507" xml:space="preserve">
+    <value>Max Bet - Massac</value>
+  </data>
+  <data name="MaxBv202_1508" xml:space="preserve">
+    <value>Max Bet - Ohio</value>
+  </data>
+  <data name="MaxBv202_1509" xml:space="preserve">
+    <value>Max Bet - Malta</value>
+  </data>
+  <data name="MinBv202_1501" xml:space="preserve">
+    <value>Min Bet - Australia Acttab</value>
+  </data>
+  <data name="MinBv202_1502" xml:space="preserve">
+    <value>Min Bet - Bejing Keno 8</value>
+  </data>
+  <data name="MinBv202_1503" xml:space="preserve">
+    <value>Min Bet - Slovakia Eklub</value>
+  </data>
+  <data name="MinBv202_1504" xml:space="preserve">
+    <value>Min Bet - Canada Keno</value>
+  </data>
+  <data name="MinBv202_1505" xml:space="preserve">
+    <value>Min Bet - West Canada Keno</value>
+  </data>
+  <data name="MinBv202_1506" xml:space="preserve">
+    <value>Min Bet - Taiwan Bingo Bingo</value>
+  </data>
+  <data name="MinBv202_1507" xml:space="preserve">
+    <value>Min Bet - Massac</value>
+  </data>
+  <data name="MinBv202_1508" xml:space="preserve">
+    <value>Min Bet - Ohio</value>
+  </data>
+  <data name="MinBv202_1509" xml:space="preserve">
+    <value>Min Bet - Malta</value>
+  </data>
+  <data name="MPMv202_1501" xml:space="preserve">
+    <value>Max Per match - Australia Acttab</value>
+  </data>
+  <data name="MPMv202_1502" xml:space="preserve">
+    <value>Max Per Match - Bejing Keno 8</value>
+  </data>
+  <data name="MPMv202_1503" xml:space="preserve">
+    <value>Max Per Match - Slovakia Eklub</value>
+  </data>
+  <data name="MPMv202_1504" xml:space="preserve">
+    <value>Max Per Match - Canada Keno</value>
+  </data>
+  <data name="MPMv202_1505" xml:space="preserve">
+    <value>Max Per Match - West Canada Keno</value>
+  </data>
+  <data name="MPMv202_1506" xml:space="preserve">
+    <value>Max Per Match - Taiwan Bingo Bingo</value>
+  </data>
+  <data name="MPMv202_1507" xml:space="preserve">
+    <value>Max Per Match - Massac</value>
+  </data>
+  <data name="MPMv202_1508" xml:space="preserve">
+    <value>Max Per Match - Ohio</value>
+  </data>
+  <data name="MPMv202_1509" xml:space="preserve">
+    <value>Max Per Match - Malta</value>
   </data>
 </root>
