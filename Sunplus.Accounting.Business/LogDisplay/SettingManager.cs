@@ -602,9 +602,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
                 else if (180 <= sport.Id && sport.Id <= 186)
                 {
-                    rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
+                    rex = new Regex("v" + sport.Id, RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
-                                 where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 where rex.IsMatch(attr.Name.ToString()) &&
+                                 !hidden.Contains<string>(attr.Name.ToString().ToLower())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
                 else if (sport.Id == 202)
