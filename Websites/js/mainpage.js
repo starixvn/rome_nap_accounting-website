@@ -32,8 +32,13 @@ function submitSearch(username) {
 }
 
 
-function gotoURL(frmName, url) {   
-   $('#' + frmName).attr({ src: encodeURI(url) });
+function gotoURL(frmName, url) {
+    if (url.toString().indexOf("_blank")!=-1) {
+        window.open(url, "_blank");
+     }
+    else {
+        $('#' + frmName).attr({ src: encodeURI(url) });
+    }
 }
  
 function BlockUI(msg) {    
