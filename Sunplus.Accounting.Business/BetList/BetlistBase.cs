@@ -1692,20 +1692,22 @@ namespace Sunplus.Accounting.Business.BetList
             }
             else
             {
-                if ((string.IsNullOrEmpty(htHome) || htHome == "0") && (string.IsNullOrEmpty(htAway) || htAway == "0")
-                && (string.IsNullOrEmpty(ftHome) || ftHome == "0") && (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
+                if ((string.IsNullOrEmpty(htHome) || htHome == "0") &&
+                    (string.IsNullOrEmpty(htAway) || htAway == "0") &&
+                    (string.IsNullOrEmpty(ftHome) || ftHome == "0") &&
+                    (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
                 {
                     TemplateHandler.Assign(ref _s, "{isdisable}", "disabled='disabled'");
                 }
-                else
+
+                bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                if (!Convert.IsDBNull(r["betstatus"]) &&
+                    !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
                 {
-                    bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
-                    bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);                    
-                    if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
-                    {
-                        _s = FillBetStatusForSoccer(_s, r);
-                    }
+                    _s = FillBetStatusForSoccer(_s, r);
                 }
+
                 TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
                 TemplateHandler.Assign(ref _s, "{fgHomeChecked}", string.Empty);
                 TemplateHandler.Assign(ref _s, "{fgAwayChecked}", string.Empty);
@@ -1756,58 +1758,37 @@ namespace Sunplus.Accounting.Business.BetList
 
         private static string FillBetStatusForSoccer(string _s, DataRow r)
         {
-            string[] _betStatus = r["betstatus"].ToString().Trim().Split(';');
-            int index = _betStatus[0].Contains("Refund") ? 1 : 0;
-
-            if (_betStatus.Length == index +1)
-            {
-                if (_betStatus[index].StartsWith("FL"))//format: "FL:x-y" OR "Refund FT;FL:x-y" (old format)
-                {
-                    string secondHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillSecondHalfForSoccer(_s, secondHaflBetStatus);
-                }
-                else if (_betStatus[index].StartsWith("1FL"))//format: "1FL:x-y" OR "Refund FT;1FL:x-y"
-                {
-                    string firstHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillFirstHalfForSoccer(_s, firstHaflBetStatus);
-                }
-            }
-            else if (_betStatus.Length == index + 2)//format: "1FL:a-b;FL:x-y"  OR "Refund FT;1FL:a-b;FL:x-y"
-            {
-                if (_betStatus[index +1].StartsWith("FL"))
-                {
-                    string secondHaflBetStatus = _betStatus[index + 1].Trim();
-                    _s = FillSecondHalfForSoccer(_s, secondHaflBetStatus);
-                }
-                if (_betStatus[index].StartsWith("1FL"))
-                {
-                    string firstHaflBetStatus = _betStatus[index].Trim();
-                    _s = FillFirstHalfForSoccer(_s, firstHaflBetStatus);
-                }
-            }
-           
+            BetStatusParser betStatusParser = new BetStatusParser(r);
+            FillFirstHalfForSoccer(ref _s, betStatusParser);
+            FillSecondHalfForSoccer(ref _s, betStatusParser);
             return _s;
         }
 
-        private static string FillFirstHalfForSoccer(string _s, string firstHaflBetStatus)
+        private static string FillFirstHalfForSoccer(ref string _s, BetStatusParser betStatusParser)
         {
-            char _1st_fg = firstHaflBetStatus[4];
-            char _1st_lg = firstHaflBetStatus[6];
-            if (_1st_fg == '1') TemplateHandler.Assign(ref _s, "h1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
-            if (_1st_fg == '2') TemplateHandler.Assign(ref _s, "a1stfgoal", "<div class='fhFirstGoal'>&nbsp;</div>");
-            if (_1st_lg == '1') TemplateHandler.Assign(ref _s, "h1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
-            if (_1st_lg == '2') TemplateHandler.Assign(ref _s, "a1stlgoal", "<div class='fhLastGoal'>&nbsp;</div>");
+            var h1stfgoal = betStatusParser.IsHomeScoreHTFirstGoal ? "<div class='fhFirstGoal'>&nbsp;</div>" : string.Empty;
+            var a1stfgoal = betStatusParser.IsAwayScoreHTFirstGoal ? "<div class='fhFirstGoal'>&nbsp;</div>" : string.Empty;
+            var h1stlgoal = betStatusParser.IsHomeScoreHTLastGoal ? "<div class='fhLastGoal'>&nbsp;</div>" : string.Empty;
+            var a1stlgoal = betStatusParser.IsAwayScoreHTLastGoal ? "<div class='fhLastGoal'>&nbsp;</div>" : string.Empty;
+
+            TemplateHandler.Assign(ref _s, "h1stfgoal", h1stfgoal);
+            TemplateHandler.Assign(ref _s, "a1stfgoal", a1stfgoal);
+            TemplateHandler.Assign(ref _s, "h1stlgoal", h1stlgoal);
+            TemplateHandler.Assign(ref _s, "a1stlgoal", a1stlgoal);
             return _s;
         }
 
-        private static string FillSecondHalfForSoccer(string _s, string secondHaflBetStatus)
+        private static string FillSecondHalfForSoccer(ref string _s, BetStatusParser betStatusParser)
         {
-            char _fg = secondHaflBetStatus[3];
-            char _lg = secondHaflBetStatus[5];
-            if (_fg == '1') TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); // TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
-            if (_fg == '2') TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
-            if (_lg == '1') TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
-            if (_lg == '2') TemplateHandler.Assign(ref _s, "algoal", "<div class='LastGoal'>&nbsp;</div>");
+            var hfgoal = betStatusParser.IsHomeScoreFirstGoal ? "<div class='FirstGoal'>&nbsp;</div>" : string.Empty;
+            var afgoal = betStatusParser.IsAwayScoreFirstGoal ? "<div class='FirstGoal'>&nbsp;</div>" : string.Empty;
+            var hlgoal = betStatusParser.IsHomeScoreLastGoal ? "<div class='LastGoal'>&nbsp;</div>" : string.Empty;
+            var algoal = betStatusParser.IsAwayScoreLastGoal ? "<div class='LastGoal'>&nbsp;</div>" : string.Empty;
+
+            TemplateHandler.Assign(ref _s, "hfgoal", hfgoal);
+            TemplateHandler.Assign(ref _s, "afgoal", afgoal);
+            TemplateHandler.Assign(ref _s, "hlgoal", hlgoal);
+            TemplateHandler.Assign(ref _s, "algoal", algoal);
             return _s;
         }
 
@@ -1927,20 +1908,22 @@ namespace Sunplus.Accounting.Business.BetList
             }
             else
             {
-                if ((string.IsNullOrEmpty(htHome) || htHome == "0") && (string.IsNullOrEmpty(htAway) || htAway == "0")
-                && (string.IsNullOrEmpty(ftHome) || ftHome == "0") && (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
+                if ((string.IsNullOrEmpty(htHome) || htHome == "0") &&
+                    (string.IsNullOrEmpty(htAway) || htAway == "0") &&
+                    (string.IsNullOrEmpty(ftHome) || ftHome == "0") &&
+                    (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
                 {
                     TemplateHandler.Assign(ref _s, "{isdisable}", "disabled='disabled'");
                 }
-                else
+
+                bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                if (!Convert.IsDBNull(r["betstatus"]) &&
+                    !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
                 {
-                    bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
-                    bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);                    
-                    if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
-                    {                        
-                        _s = FillBetStatusForSoccer(_s, r); 
-                    }
+                    _s = FillBetStatusForSoccer(_s, r);
                 }
+
                 TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
                 TemplateHandler.Assign(ref _s, "{fgHomeChecked}", string.Empty);
                 TemplateHandler.Assign(ref _s, "{fgAwayChecked}", string.Empty);
