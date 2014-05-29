@@ -42,6 +42,7 @@
     },
     CustomerInfo: function (c) {
         this.CustomerId = c.CustomerId;
+        this.ExchangeId = c.ExchangeId;
         this.RoleId = c.RoleId;
         this.UserName = c.UserName;
         this.NickName = c.NickName;
