@@ -1110,6 +1110,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         public Result UpdateSuperSetting(NewLicenseePostParam newLicenseePostParam)
         {
             var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add(
+                "updateall",
+                newLicenseePostParam.IsCopySettingsToMasterAgent ? "1" : "0");
+
             hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
             hashtableParams.Add("errcode", 0);
             hashtableParams.Add("errmsg", string.Empty);

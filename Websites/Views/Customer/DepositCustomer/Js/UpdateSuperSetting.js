@@ -405,7 +405,8 @@ updSuperSetting.getPostParam = function () {
         postParam: {
             PostParams: params,
             VirtualSportsSettingInfo: virtualSportsSettingInfo,
-            KenoBetTypesSettingInfo: kenoBetTypesSettingInfo
+            KenoBetTypesSettingInfo: kenoBetTypesSettingInfo,
+            IsCopySettingsToMasterAgent: $("#cbxCopySettingsToMasterAgent").is(":checked")
         }
     };
 };

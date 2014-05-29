@@ -452,13 +452,26 @@ var arrRacing = [];
                 @Html.Partial("~/Views/Customer/DepositCustomer/EditLicensee/KenoSettings.cshtml")
             }
             <!--/Keno-->
-            <table id="tblUpdate" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
+            <table id="tblUpdate" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px; display: inline-block;">
                 <tbody>
                     <tr>
                         <td class="custBtn1">
                         </td>
                         <td class="custBtn2 hand">
                             Update
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table border="0"  style="display: inline-block;">
+                <tbody>
+                    <tr>
+                        <td align="left">
+                            <input id="cbxCopySettingsToMasterAgent" type="checkbox" />
+                        </td>
+                        <td>
+                            <label style="font-weight: bold" for="cbxCopySettingsToMasterAgent">
+                                Copy all settings to master and agent</label>
                         </td>
                     </tr>
                 </tbody>

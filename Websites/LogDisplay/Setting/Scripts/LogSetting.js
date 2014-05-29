@@ -161,7 +161,7 @@
                     trShow = '';
                     //if (tracking.Level != 3) {
                     tpl_tracking += '<tr class="headerDetailNormal">'
-			                        + '<td colspan="6"><span style="float:left; cursor: pointer" onclick="LogPT.showHide(\'' + rel + '\')">' + node_name + '</span>'
+			                        + '<td colspan="6" onclick="LogPT.showHide(\'' + rel + '\')"  style="cursor: pointer"><span style="float: left;">' + node_name + '</span>'
 		                        + '</td></tr>';
                     //}
                     // fetch vals
