@@ -19,7 +19,8 @@ namespace Fanex.Tarus.BetList.Controller
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
-    
+    using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
+
     using Sunplus.Accounting.Core.Common;
 
     using DNAide.Core;
@@ -74,6 +75,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// <param name="PageIndex"></param>
         /// <param name="IsCache"></param>
         /// <returns></returns>
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, bool IsCache)
         {
             int quantity = 0;
@@ -81,6 +83,12 @@ namespace Fanex.Tarus.BetList.Controller
             var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity, IsCache);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
+
+            Hashtable paramHastable = new Hashtable();
+            paramHastable.Add("custId", CustID);
+
+            TempData["paramHastable"] = paramHastable;
+
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "FROM_DATE", FromDate);
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "TO_DATE", ToDate);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
