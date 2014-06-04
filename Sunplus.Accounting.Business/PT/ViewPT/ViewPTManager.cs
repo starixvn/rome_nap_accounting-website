@@ -24,6 +24,7 @@ using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Result = Sunplus.Bingo.Entities.Result;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
@@ -238,8 +239,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 if (sportId == Constants.Sport.Casino || sportId == Constants.Sport.BingoGame)
                     return CasinoPositionTaking(userName, sportId, bettypeId);
                 if (sportId == Constants.Sport.LiveCasino)
-                    return LiveCasinoPositionTaking(userName);
-
+                    return LiveCasinoPositionTaking(userName, null, null);
+                if (sportId == Constants.Sport.Keno)
+                    return LiveCasinoPositionTaking(userName, sportId, bettypeId);
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
                                                 sportId == 999 ? Constants.BetType.MixParlay : bettypeId, isLive, false);
                 if (CastAide.AsInt32(data.Outputs["errcode"], -1) != 0)
@@ -1364,6 +1366,18 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 sports.SportsList.Add(sport);
             }
 
+            if (KenoSection.Instance.ShowSetting)
+            {
+                var kenoPT = new KenoPT();
+                var sport = new Sport()
+                {
+                    SportId = Constants.Sport.Keno,
+                    SportName = "Keno",
+                    Bettype = kenoPT.GetBettypeByKeno()
+                };
+                sports.SportsList.Add(sport);
+            }
+
             #endregion live casino
 
             #region All Sports
@@ -1378,6 +1392,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
             #endregion All Sports
         }
+
 
         private static BettypeDTO GetListBingoGameKindGameType()
         {
@@ -2438,14 +2453,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             return result;
         }
 
-        private static ViewPtDTO LiveCasinoPositionTaking(string userName)
+        private static ViewPtDTO LiveCasinoPositionTaking(string userName, int? sportType, int? bettype)
         {
             var result = new ViewPtDTO();
             try
             {
                 #region get data
 
-                var dtPt = SelectCustomer.GetLiveCasinoPt(userName);
+                var dtPt = SelectCustomer.GetLiveCasinoPt(userName, sportType, bettype);
 
                 #endregion get data
 
