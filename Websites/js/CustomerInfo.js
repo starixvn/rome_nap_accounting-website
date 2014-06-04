@@ -210,7 +210,7 @@ function updateCloseStatus(type, hasDownLine) {
 }
 //showPopup(title, url, left, top, width, height, isreload, duration, fnRecall)
 function openInfoPanel(url) {
-    showPopup("Edit Customer", url, "", "", 600, 360, true, 2000, null);
+    showPopup("Edit Customer", url, "", "", 600, 420, true, 2000, null);
 }
 function openMinMaxPtPanel(url) {
     if (url == "") return;

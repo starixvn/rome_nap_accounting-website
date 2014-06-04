@@ -621,7 +621,7 @@ function OpenEditCustInfo(id, type) {
     if (location.href.indexOf("#") > -1) {
         pageIndex = location.href.split("#")[1];
     }
-    showPopup("Edit Customer", url, "", "", 600, 360, false, 2000, function () { callAjax(getParams(pageIndex)); });
+    showPopup("Edit Customer", url, "", "", 600, 420, false, 2000, function () { callAjax(getParams(pageIndex)); });
 }
 
 //this function is used to Min Max Position Taking

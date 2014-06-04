@@ -1,7 +1,7 @@
 <table class="tbllayout" cellspacing="1" >
 <tr>
 	<td width="15%" class="b c">First Name</td>
-	<td width="35%" class="l">
+	<td width="34%" class="l">
 		<input type="text" name="txtFirstname" id="txtFirstname" value="{fname-Val}"/>
 	</td>
 	<td class="b c">Birthday (MM/dd/yyyy)</td>
@@ -67,13 +67,7 @@
 	<td class="l">
 		<input type="text" name="txtState" id="txtState" value="{vstate-Val}"/>
 	</td>
-	<td class="b c">Remark</td>
-	<td class="l">
-		<input type="text" name="txtRemark" id="txtRemark" value="{vremark-Val}"/>
-	</td>	
-</tr>
-<tr>
-	<td class="b c">Country</td>
+    <td class="b c">Country</td>
 	<td class="l">
 		<select name="listCountry" id="listCountry">
 			<option value='{vCountry}'>{vCountry}</option>
@@ -318,10 +312,21 @@
 			<option value='Zimbabwe'>Zimbabwe</option>
 		</select>
 	</td>
+</tr>
+<tr>
 	<td class="b c">Important</td>
 	<td class="l">
 		<input type="checkbox" name="chkImportant" id="chkImportant" {vchecked}/>
-	</td>	
+	</td>
+    <td colspan="2">
+    </td>		
+</tr>
+<tr>
+	<td class="b c">Remark</td>
+	<td colspan="3" class="l">
+        <textarea type="text" name="txtRemark" id="Text1" value="{vremark-Val}" maxlength="300"
+            style="min-height: 90px; height: 90px; max-height: 250px; width: 490px; resize: vertical;">{vremark-Val}</textarea>
+	</td>
 </tr>
 <tr>
 	<td colspan="4" class="c">

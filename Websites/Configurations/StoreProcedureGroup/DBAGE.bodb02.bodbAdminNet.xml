@@ -304,7 +304,9 @@
     <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
 	</Function>
- 
-  
+
+  <Function Name="Customer - Smart punter">
+    <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>
 

@@ -789,6 +789,37 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
         {
             ResultDTO result = new ResultDTO();
             result.ErrorHandler = new List<Result>();
+            if (!setting.CustomerInfo.IsSyncLiveCasino && setting.GameSetting.Count == 0)
+            {
+                var settingGame = this._gameSettingService.GetByExhangeId(setting.CustomerInfo.ExchangeId, setting.CustomerInfo.Site);
+                if (settingGame.Count > 0)
+                {
+                    var gameTypes = new List<GameType>();
+                    foreach (var item in settingGame)
+                    {
+                        var stakes = new List<StakeLevel>();
+                        foreach (var stake in item.BettingLimit)
+                        {
+                            stakes.Add(new StakeLevel
+                            {
+                                Id = stake.Id,
+                                IsSelected = false,
+                                Text = stake.Text
+                            });
+                        }
+
+                        gameTypes.Add(new GameType
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            BetTypeId = item.BetTypeId,
+                            BettingLimit = stakes
+                        });
+                    }
+
+                    setting.GameSetting = gameTypes;
+                }
+            }
 
             try
             {
@@ -807,6 +838,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 int custid = setting.requestContext.CustId;
 
                 #region Get Setting Info
+
                 var gameTypeList = _gameSettingService.GetByCustomerId(custid);
                 List<LiveCasinoSetting.Model.GameType> oldValues = new List<LiveCasinoSetting.Model.GameType>();
 
@@ -833,6 +865,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
                     oldValues.Add(_gameType);
                 }
+
                 #endregion
 
                 #region tracking values
@@ -845,6 +878,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                                 (o as LiveCasinoSetting.Model.StakeLevel).IsDirty = (arg.PropertyName == "IsSelected");
                             }
                         }));
+
                 if (gameTypeList.Count > 0)
                 {
                     foreach (LiveCasinoSetting.Model.GameType gameType in gameTypeList)
@@ -869,28 +903,36 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     foreach (GameType gameType in setting.GameSetting)
                     {
                         var bettingLimit = new List<LiveCasinoSetting.Model.StakeLevel>();
-                        foreach (var stakeLavel in gameType.BettingLimit)
+                        if (gameType.BettingLimit.Count > 0)
                         {
-                            var gameSetting = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
-                                f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
-                            if (gameSetting != null && gameSetting.Count() > 0)
+                            foreach (var stakeLavel in gameType.BettingLimit)
                             {
-                                var stakeSetting = gameSetting.ToList().FirstOrDefault();
-                                if (stakeSetting != null && stakeSetting.Count() > 0)
+                                var gameSetting = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
+                                    f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
+                                if (gameSetting != null && gameSetting.Count() > 0)
                                 {
-                                    stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                                    var stakeSetting = gameSetting.ToList().FirstOrDefault();
+                                    if (stakeSetting != null && stakeSetting.Count() > 0)
+                                    {
+                                        stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                                    }
                                 }
-                            }
 
-                            bettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
-                            {
-                                Id = stakeLavel.Id,
-                                IsSelected = stakeLavel.IsSelected,
-                                Text = stakeLavel.Text,
-                                IsDirty = true
-                            });
+                                bettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
+                                {
+                                    Id = stakeLavel.Id,
+                                    IsSelected = stakeLavel.IsSelected,
+                                    Text = stakeLavel.Text,
+                                    IsDirty = true
+                                });
+                            }
+                            gameTypeList.Add(new LiveCasinoSetting.Model.GameType() { Id = gameType.Id, BetTypeId = gameType.BetTypeId, Name = gameType.Name, BettingLimit = bettingLimit });
                         }
-                        gameTypeList.Add(new LiveCasinoSetting.Model.GameType() { Id = gameType.Id, BetTypeId = gameType.BetTypeId, Name = gameType.Name, BettingLimit = bettingLimit });
+                        else
+                        {
+                            bettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel() { IsDirty = true });
+                            gameTypeList.Add(new LiveCasinoSetting.Model.GameType() { Id = gameType.Id, BetTypeId = gameType.BetTypeId, Name = gameType.Name, BettingLimit = bettingLimit });
+                        }
                     }
                 }
 
@@ -1467,6 +1509,21 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                 var setting = _gameSettingService.InsertAccount(request, ref dtResult);
                 string errCode = setting.ErrorCode ?? string.Empty;
                 string errMsg = setting.ErrorMessage ?? string.Empty;
+                if (dtResult.Rows.Count == 0)
+                {
+                    var gameTypes = _gameSettingService.GetByExhangeId(custInfo.ExchangeId, custInfo.CustSite);
+                    if (gameTypes.Count > 0)
+                    {
+                        foreach (var gameType in gameTypes)
+                        {
+                            var row = dtResult.NewRow();
+                            row[0] = gameType.Id;
+                            row[1] = gameType.BetTypeId;
+                            row[2] = string.Empty;
+                            dtResult.Rows.Add(row);
+                        }
+                    }
+                }
                 WriteLogAutoInsertAccount(request, dtResult, errCode, errMsg);
 
                 #endregion

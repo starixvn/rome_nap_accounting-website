@@ -205,7 +205,7 @@
     },
     openEditCustInfo: function (id, type) {
         var url = "Customer/EditCustomerInfo.aspx?custId=" + id + "&type=" + type;
-        showPopup("Edit Customer", url, "", "", 600, 360, false, 2000, function () {
+        showPopup("Edit Customer", url, "", "", 600, 420, false, 2000, function () {
             superList.getData();
         });
     }

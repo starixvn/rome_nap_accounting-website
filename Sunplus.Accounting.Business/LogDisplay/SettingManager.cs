@@ -409,7 +409,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                         trackingVal = trackingVal.Replace("AddFrom=\"1\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom01")));
                         trackingVal = trackingVal.Replace("AddFrom=\"2\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom02")));
-
+                        trackingVal = trackingVal.Replace("AddFrom=\"4\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom04")));
                     }
 
                     trackingVal = trackingVal.ToLower();

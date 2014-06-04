@@ -73,18 +73,19 @@
                     freezeWidth: 0,
                     numberFreezeCol: 0
                 });
-
-                BetListByCustInfo.initPager(_length,
+                if (typeof _length != "undefined") {
+                    BetListByCustInfo.initPager(_length,
                     BetListByCustInfo.paramGetBetBetlist.pageSize,
                     BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
 
-                $("#betListSystemParlayContent").find(".detail").remove();
-                $("#betListSystemParlayContent").find("#hidden0").removeAttr("href");
-                $("#result").attr('style', 'cursor: pointer;cursor: hand;');
+                    $("#betListSystemParlayContent").find(".detail").remove();
+                    $("#betListSystemParlayContent").find("#hidden0").removeAttr("href");
+                    $("#result").attr('style', 'cursor: pointer;cursor: hand;');
 
-                BetListByCustInfo.eventGridOpts.gridHeight = $("#betListSystemParlayContent").height() + 55;
-                $("#EventDetail").initGrid(BetListByCustInfo.eventGridOpts);
-                $('#EventDetail').removeClass("display-none").gridScroller(BetListByCustInfo.eventGridOpts);
+                    BetListByCustInfo.eventGridOpts.gridHeight = $("#betListSystemParlayContent").height() + 55;
+                    $("#EventDetail").initGrid(BetListByCustInfo.eventGridOpts);
+                    $('#EventDetail').removeClass("display-none").gridScroller(BetListByCustInfo.eventGridOpts);
+                }
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -106,12 +107,15 @@
             data: params,
             success: function (result) {
                 $("#betListContent").html(result);
-                BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
-                $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
-                $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
-                BetListByCustInfo.initPager(_length,
+
+                if (typeof _length != "undefined") {
+                    BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
+                    $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
+                    $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
+                    BetListByCustInfo.initPager(_length,
                     BetListByCustInfo.paramGetBetBetlist.pageSize,
                     BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
+                }
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
