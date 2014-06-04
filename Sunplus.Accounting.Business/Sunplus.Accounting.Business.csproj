@@ -203,6 +203,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="Logs.cs" />
+    <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="Report\Common\RMReportUtils.cs" />
     <Compile Include="Report\DailyTurnover\DailyTurnoverManager.cs" />
     <Compile Include="Report\DailyTurnover\IDailyTurnoverManager.cs" />
@@ -568,7 +569,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
