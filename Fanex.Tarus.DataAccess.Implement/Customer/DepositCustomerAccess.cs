@@ -34,6 +34,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
 
                 var betTypeId = betType.Id;
+                if (!dictionaryParams.ContainsKey("v" + betTypeId + "maxbet"))
+                {
+                    continue;
+                }
 
                 kenoParams += string.Format("<product Bettype=\"{0}\"" +
                     " MaxBet=\"{1}\"" +
@@ -237,6 +241,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
 
                 sportId = sport.Id;
+                if (!dictionaryParams.ContainsKey("v" + sportId + "maxbet"))
+                {
+                    continue;
+                }
 
                 virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
                     " MaxBet=\"{1}\"" +
