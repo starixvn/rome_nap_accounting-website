@@ -3489,4 +3489,10 @@
   <data name="Disable202_1509" xml:space="preserve">
     <value>Disabled Malta</value>
   </data>
+  <data name="Disable202_1511" xml:space="preserve">
+    <value>Disabled Kentucky</value>
+  </data>
+  <data name="Disable202_1513" xml:space="preserve">
+    <value>Disabled Michigan</value>
+  </data>
 </root>
