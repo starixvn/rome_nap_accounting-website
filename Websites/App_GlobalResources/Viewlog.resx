@@ -3663,4 +3663,46 @@
   <data name="MPMv202_1509" xml:space="preserve">
     <value>Max Per Match - Malta</value>
   </data>
+  <data name="MaxBv202_1511" xml:space="preserve">
+    <value>Max Bet - Kentucky</value>
+  </data>
+  <data name="MaxBv202_1513" xml:space="preserve">
+    <value>Max Bet - Michigan</value>
+  </data>
+  <data name="MinBv202_1511" xml:space="preserve">
+    <value>Min Bet - Kentucky</value>
+  </data>
+  <data name="MinBv202_1513" xml:space="preserve">
+    <value>Min Bet - Michigan</value>
+  </data>
+  <data name="MPMv202_1511" xml:space="preserve">
+    <value>Max Per Match - Kentucky</value>
+  </data>
+  <data name="MPMv202_1513" xml:space="preserve">
+    <value>Max Per Match - Michigan</value>
+  </data>
+  <data name="v202apt_1511" xml:space="preserve">
+    <value>Kentucky</value>
+  </data>
+  <data name="v202apt_1513" xml:space="preserve">
+    <value>Michigan</value>
+  </data>
+  <data name="v202mpt_1511" xml:space="preserve">
+    <value>Kentucky</value>
+  </data>
+  <data name="v202mpt_1513" xml:space="preserve">
+    <value>Michigan</value>
+  </data>
+  <data name="v202spt_1511" xml:space="preserve">
+    <value>Kentucky</value>
+  </data>
+  <data name="v202spt_1513" xml:space="preserve">
+    <value>Michigan</value>
+  </data>
+  <data name="Disable202_1511" xml:space="preserve">
+    <value>Disabled Kentucky</value>
+  </data>
+  <data name="Disable202_1513" xml:space="preserve">
+    <value>Disabled Michigan</value>
+  </data>
 </root>
