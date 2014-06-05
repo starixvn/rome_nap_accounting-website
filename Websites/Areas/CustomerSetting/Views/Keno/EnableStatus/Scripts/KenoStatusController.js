@@ -8,6 +8,7 @@ function KenoStatusController($scope) {
     $scope.model = model;
     $scope.betTypes = $scope.model.betTypeStatusList;
     $scope.isDisabledAll = true;
+    $scope.enableBetTypeCache = {};
 
     var length = $scope.model.betTypeStatusList.length;
     for (var i = 0; i < length; i++) {
@@ -175,7 +176,7 @@ function KenoStatusController($scope) {
                     $scope.betTypes[i].isDisabledDownlines = false;
                 }
                 else {
-					betTypeChexkboxesDownlines[i].checked = false;
+                    betTypeChexkboxesDownlines[i].checked = false;
                     betTypeChexkboxesDownlines[i].disabled = false;
                     $scope.betTypes[i].isDisabledDownlines = true;
                 }
@@ -190,16 +191,30 @@ function KenoStatusController($scope) {
                 betTypeChexkboxes[i].checked = false;
                 betTypeChexkboxesDownlines[i].checked = false;
 
-				betTypeChexkboxesDownlines[i].disabled = true;
+                betTypeChexkboxesDownlines[i].disabled = true;
 
                 $scope.betTypes[i].isDisabled = true;
                 $scope.betTypes[i].isDisabledDownlines = true;
             }
         }
     };
-	
-	$scope.CheckDownline = function (id, scope) {	
-		var checkboxDownlines = document.getElementById(id);
-		scope.item.isDisabledDownlines = !checkboxDownlines.checked;
-	};
+
+    $scope.CheckDownline = function (id, scope) {
+        var checkboxDownlines = document.getElementById(id);
+        scope.item.isDisabledDownlines = !checkboxDownlines.checked;
+    };
+
+    $scope.cacheEnableBetType = function () {
+        for (var i = 0; i < $scope.betTypes.length; i++) {
+            var betType = $scope.betTypes[i];
+            if ($scope.enableBetTypeCache[betType.betTypeID] == undefined) {
+                $scope.enableBetTypeCache[betType.betTypeID] = betType.enable;
+            }
+        }
+
+        return true;
+    };
+    $scope.isEnableCheckboxDownline = function (item) {
+        return $scope.enableBetTypeCache[item.betTypeID] || !item.enable;
+    };
 };
