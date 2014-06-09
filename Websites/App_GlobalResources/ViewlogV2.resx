@@ -486,6 +486,9 @@
   <data name="addfrom02" xml:space="preserve">
     <value>Agent Site</value>
   </data>
+  <data name="addfrom04" xml:space="preserve">
+    <value>External Accounting</value>
+  </data>
   <data name="auto_v162mpositiontaking_1101" xml:space="preserve">
     <value>Master Auto Preset PT</value>
   </data>
