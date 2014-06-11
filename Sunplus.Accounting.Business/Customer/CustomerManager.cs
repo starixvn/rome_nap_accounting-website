@@ -44,17 +44,16 @@ namespace Sunplus.Accounting.Business.Customer
 	{
 		public ICustomerDAO _customerDAO;
 
-        public ISmartPunterPermissionService _smartPunterService;
+       
 
 		public CustomerManager()
-			: this(null, null)
+			: this(null)
 		{
 		}
 
-        public CustomerManager(ICustomerDAO customerDAO, ISmartPunterPermissionService smartPunterService)
+        public CustomerManager(ICustomerDAO customerDAO)
 		{
 			_customerDAO = customerDAO ?? new CustomerDAO();
-            _smartPunterService = smartPunterService ?? new SmartPunterPermissionService();
 		}
 
 		public CustDetail GetCustomerInfo(string username)
@@ -253,7 +252,7 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
 
-                            if (_smartPunterService.IsDeniedViewSmartPunter(custId, userName))
+                            if (new SmartPunterPermissionService().IsDeniedViewSmartPunter(custId, userName))
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
                                 arrcontent.Add("strcontent", htmlcontent);
