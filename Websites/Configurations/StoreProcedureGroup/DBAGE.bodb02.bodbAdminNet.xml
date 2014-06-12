@@ -280,6 +280,8 @@
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    
+    <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Progressive Bonus">
