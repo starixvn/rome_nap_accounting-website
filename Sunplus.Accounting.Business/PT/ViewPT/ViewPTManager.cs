@@ -25,6 +25,7 @@ using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Result = Sunplus.Bingo.Entities.Result;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Sunplus.Accounting.Entities.Criteria.ViewPT;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
@@ -236,12 +237,26 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             var result = new ViewPtDTO();
             try
             {
-                if (sportId == Constants.Sport.Casino || sportId == Constants.Sport.BingoGame)
-                    return CasinoPositionTaking(userName, sportId, bettypeId);
-                if (sportId == Constants.Sport.LiveCasino)
-                    return LiveCasinoPositionTaking(userName, null, null);
-                if (sportId == Constants.Sport.Keno)
-                    return LiveCasinoPositionTaking(userName, sportId, bettypeId);
+                switch (sportId)
+                {
+                    case Constants.Sport.Casino:
+                    case Constants.Sport.BingoGame:
+                        return CasinoPositionTaking(userName, sportId, bettypeId);
+                    case Constants.Sport.LiveCasino:
+                        return LiveCasinoPositionTaking(userName, null, null);
+                    case Constants.Sport.Keno:
+                        var viewPTCriteria = new ViewKenoPTCriteria
+                        {
+                            Username = userName,
+                            SportId = sportId,
+                            BetType = bettypeId,
+                            IsLive = isLive,
+                            HasCommission = false
+                        };
+
+                        return (new KenoPT()).ViewPositionTaking(viewPTCriteria);
+                }
+
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
                                                 sportId == 999 ? Constants.BetType.MixParlay : bettypeId, isLive, false);
                 if (CastAide.AsInt32(data.Outputs["errcode"], -1) != 0)
