@@ -246,26 +246,26 @@
 
   <Function Name="Keno Setting">
     <Function Name="EditSuper">
-      <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerUpdSuperKeno" SpName="Acc_CustomerUpdSuperKeno" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdSuperKeno" SpName="Acc_CustomerUpdSuperKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
     <Function Name="EditMaster">
-      <Setting Key="Acc_CustomerUpdMasterKeno_BetSetting" SpName="Acc_CustomerUpdMasterKeno_BetSetting" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerUpdMasterKeno" SpName="Acc_CustomerUpdMasterKeno" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMasterKeno_BetSetting" SpName="Acc_CustomerUpdMasterKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMasterKeno" SpName="Acc_CustomerUpdMasterKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
     <Function Name="EditAgent">
-      <Setting Key="Acc_CustomerUpdAgentKeno_BetSetting" SpName="Acc_CustomerUpdAgentKeno_BetSetting" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerUpdAgentKeno" SpName="Acc_CustomerUpdAgentKeno" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdAgentKeno_BetSetting" SpName="Acc_CustomerUpdAgentKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdAgentKeno" SpName="Acc_CustomerUpdAgentKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
     <Function Name="AgentEditMember">
-      <Setting Key="Acc_CustomerUpdMemberKeno_BetSetting" SpName="Acc_CustomerUpdMemberKeno_BetSetting" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerUpdMemberKeno_Positiontaking" SpName="Acc_CustomerUpdMemberKeno_Positiontaking" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_BetSetting" SpName="Acc_CustomerUpdMemberKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_Positiontaking" SpName="Acc_CustomerUpdMemberKeno_Positiontaking_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
     <Function Name="SuperEditMember">
-      <Setting Key="Acc_CustomerUpdMemberKeno_SAg" SpName="Acc_CustomerUpdMemberKeno_SAg" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_SAg" SpName="Acc_CustomerUpdMemberKeno_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
     <Function Name="MasterEditMember">
-      <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
   </Function>
 </Functions>
