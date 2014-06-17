@@ -230,7 +230,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     SuperAuto = FormatPTValue(dr["u1"]),
                     SuperIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["i1"], false)),
                     MasterAuto = FormatPTValue(dr["um1"]),
-                    MasterIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im1"], false))
+                    MasterIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im1"], false)),
+                    MaxPt = FormatPTValue(dr["l1"])
                 };
 
                 ptDTO.Member = memberPt;
@@ -246,7 +247,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     SuperIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im2"], false)),
                     MasterAuto = FormatPTValue(dr["um2"]),
                     MasterIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im2"], false)),
-                    MinPt = FormatPTValue(dr["n2"])
+                    MinPt = FormatPTValue(dr["n2"]),
+                    MaxPt = FormatPTValue(dr["l2"])
                 };
 
                 ptDTO.Agent = agentPt;
@@ -260,7 +262,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     Master = FormatPTValue(dr["m3"]),
                     SuperAuto = FormatPTValue(dr["u3"]),
                     SuperIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["i3"], false)),
-                    MinPt = FormatPTValue(dr["n3"])
+                    MinPt = FormatPTValue(dr["n3"]),
+                    MaxPt = FormatPTValue(dr["l3"])
                 };
 
                 ptDTO.Master = masterPt;
@@ -273,7 +276,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     Super = FormatPTValue(dr["s4"]),
                     Master = FormatPTValue(dr["m4"]),
                     Agent = FormatPTValue(dr["a4"]),
-                    MinPt = FormatPTValue(dr["n4"])
+                    MinPt = FormatPTValue(dr["n4"]),
+                    MaxPt = FormatPTValue(dr["l4"])
                 };
 
                 ptDTO.Super = superPt;
