@@ -113,7 +113,11 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return matchInfo;
         }
 
-        public DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
+        public DataTable GetSMATurnoverList(int sportId,
+            int leagueId,
+            DateTime fromDate,
+            DateTime toDate,
+            decimal fromPercent)
         {
             var dtb = new DataTable();
             using (ObjectDb objDB = new ObjectDb("GetSMATurnoverList"))
@@ -123,6 +127,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
                 objDB.AddInParameter("todate", DbType.DateTime, toDate);
                 objDB.AddInParameter("movebetsday", DbType.DateTime, MoveBetDay());
+                objDB.AddInParameter("usedpercent", DbType.Decimal, fromPercent);
                 var ds = objDB.ExecuteDataSet();
                 if (ds != null)
                 {

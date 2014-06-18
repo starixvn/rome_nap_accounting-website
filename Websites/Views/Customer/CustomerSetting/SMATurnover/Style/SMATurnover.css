@@ -241,7 +241,6 @@ input.btnSave[disabled]
     background-color: #ffb981;
     display: inline-block;
     line-height: 17px;
-    
     float: right;
     min-width: 120px;
     text-align: center;
@@ -526,8 +525,43 @@ body
 }
 
 
-.freegrid .normalTable td, .grid-fixed-table .normalTable td 
+.freegrid .normalTable td, .grid-fixed-table .normalTable td
 {
     border: none;
 }
 
+.normalTable
+{
+    width: 800px;
+}
+
+.txtMaxTurnover
+{
+    text-align: right;
+    width: 157px;
+}
+
+.txtMaxTurnover-disabled
+{
+    height: 17px;
+}
+
+.btnSave.btnUpdate
+{
+    cursor: default;
+}
+
+.height-17
+{
+    height: 17px;
+}
+
+.boxPercentUsed
+{
+    background: url('../../../../../Views/Customer/CustomerSetting/SMATurnover/Style/Images/MaxPercentStatus.png') no-repeat scroll 0 100% transparent;
+}
+
+.freegrid td, .grid-fixed-table td
+{
+    padding-right: 0px !important;
+}

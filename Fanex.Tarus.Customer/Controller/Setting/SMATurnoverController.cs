@@ -15,6 +15,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
     using DNAide.Core;
     using Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover;
     using Fanex.Tarus.Customer.Criteria.SMATurnover;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
@@ -70,11 +71,18 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return jsonResult;
         }
 
-        public JsonResult GetSMATurnoverList(string sportId, string LeagueId, string fromDate, string toDate)
+        public JsonWithoutNullField GetSMATurnoverList(string sportId,
+            string LeagueId,
+            string fromDate,
+            string toDate,
+            string fromPercent)
         {
-            var result = _SMATurnover.GetSMATurnoverList(CastAide.AsInt32(sportId), CastAide.AsInt32(LeagueId), CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
-            var jsonResult = Json(result);
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var result = _SMATurnover.GetSMATurnoverList(CastAide.AsInt32(sportId),
+                CastAide.AsInt32(LeagueId),
+                CastAide.AsDateTime(fromDate),
+                CastAide.AsDateTime(toDate),
+                CastAide.AsDecimal(fromPercent));
+            var jsonResult = new JsonWithoutNullField(result);
             return jsonResult;
         }
 

@@ -16,7 +16,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    
+
     using System.Linq;
     using System.Web;
     using DNAide.Core;
@@ -94,12 +94,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         public List<CustomerTurnoverDetail> GetSMATurnoverList(int sportId,
             int leagueId,
             DateTime fromDate,
-            DateTime toDate)
+            DateTime toDate,
+            decimal fromPercent)
         {
             var leagueList = new List<CustomerTurnoverDetail>();
             try
             {
-                var dtb = _SMATurnoverAccess.GetSMATurnoverList(sportId, leagueId, fromDate, toDate);
+                var dtb = _SMATurnoverAccess.GetSMATurnoverList(sportId, leagueId, fromDate, toDate, fromPercent);
                 var query = from league in dtb.AsEnumerable()
                             group league by new
                             {
