@@ -26,7 +26,11 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             DateTime toDate,
             bool isGetList);
         MatchInfo GetInfoByMatchId(int matchId);
-        DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate);
+        DataTable GetSMATurnoverList(int sportId, 
+            int leagueId, 
+            DateTime fromDate, 
+            DateTime toDate,
+            decimal fromPercent);
         Result AddSMATurnover(int matchId, string custName, decimal maxTurnover, int userId, string ip);
         Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover, int userId, string ip);
         Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode);

@@ -138,11 +138,6 @@
             SMATurnover.SaveCountDownRefreshOption(this);
         });
 
-        //        SMATurnover.cachedData.fileUpload.unbind('change');
-        //        SMATurnover.cachedData.fileUpload.change(function () {
-        //            SMATurnover.CheckFormatFile();
-        //        });
-
         SMATurnover.cachedData.btnUploadFile.unbind('click');
         SMATurnover.cachedData.btnUploadFile.click(function () {
             SMATurnover.uploadSMAList_ByAjaxForm();
@@ -225,6 +220,7 @@
             isShowPager: false
         });
 
+        SMATurnover.forceNumberOnly(SMATurnover.cachedData.fromPercentageUsed);
         $("#succeededRecordsTable").delegate(".MaxTurnover", "keyup", function () {
             var obj = $(this);
             var oldValue = obj.attr("oldValue");
@@ -240,6 +236,7 @@
                 obj.val('');
             }
         });
+
     },
     BackToFilter_AddSMAList: function () {
         SMATurnover.cachedData.btnSubmit_AddSMAList.addClass("hidden");
@@ -721,6 +718,9 @@
         SMATurnover.cachedData.lbl100ReachedCounter = $('.lbl100ReachedCounter');
         SMATurnover.cachedData.msgError = $('#msgError');
         SMATurnover.cachedData.tblSMATurnoverBody = $("#tblSMATurnover tbody");
+        SMATurnover.cachedData.tblSMATurnoverBody = $("#tblSMATurnover tbody");
+
+        SMATurnover.cachedData.fromPercentageUsed = $("#textbox-percentageused");
     },
     getValidSMAListInfo: function () {
         var succeededSMAList = $(".succeededSMA");
@@ -1115,7 +1115,10 @@
             sportId: SMATurnover.cachedData.ddlSport.val(),
             leagueId: SMATurnover.cachedData.ddlLeague.val(),
             fromDate: SMATurnover.cachedData.txtfromdate.val(),
-            toDate: SMATurnover.cachedData.txttodate.val()
+            toDate: SMATurnover.cachedData.txttodate.val(),
+            fromPercent: SMATurnover.cachedData.fromPercentageUsed.val() != "" ?
+                SMATurnover.cachedData.fromPercentageUsed.val() :
+                0
         };
 
         $.ajax({
@@ -1135,7 +1138,6 @@
                 var arr = [];
                 if (rs != null && rs.length > 0) {
                     SMATurnover.cachedData.tblSMATurnoverBody.empty().append(SMATurnover.renderRow(rs));
-                    SMATurnover.cachedData.reportRows = SMATurnover.cachedData.tblSMATurnoverBody.find(">tr");
                 }
                 else {
                     SMATurnover.cachedData.tblSMATurnoverBody.empty().append('<tr><td colspan="6"><div class="c">There is no data.</div></td></tr>');
@@ -1159,51 +1161,52 @@
         };
 
         $("#SMATurnover").removeClass("hidden").gridScroller(gridOpts);
-        // SMATurnover.makeTwoTableSameHeight($("#SMATurnover table.row_header_content"), $("#SMATurnover table.col_header_content"), false, true);
     },
 
     renderRow: function (result) {
         var html = '';
+        var htmlArray = [];
         var _100PercentageUsedCounter = 0;
         var isChanged = 0;
-
         for (var index = 0; index < result.length; index++) {
+            htmlArray = [];
             var row = result[index];
             var matchLength = row.CustomerList.length;
             var matchList = row.CustomerList;
             for (var i = 0; i < matchLength; i++) {
                 var match = matchList[i];
-                html += '<tr>';
-                html += '<td class="rowLeague" colspan="5">' +
-                            '<table class="normalTable" style="width: 800px;">' +
-                                '<tr>' +
-                                    '<td>' +
-                                        '<div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
-                                        '<div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>' +
-                                        '<div class="rightArrow_LeagueInfo"></div>' +
-                                        '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
-                                    '</td>' +
-                                    '<td class="col160">' +
-                                        '<div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>' +
-                                    '</td>' +
-                                '</tr>' +
-                             '</table>' +
-                          '</td>';
+                htmlArray.push('<tr>');
+                htmlArray.push(
+                '<td class="rowLeague" colspan="5">\
+                    <table class="normalTable">\
+                        <tr>\
+                            <td>\
+                                <div class="lblLeagueHeadline">' + row.LeagueName + '</div>\
+                                <div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>\
+                                <div class="rightArrow_LeagueInfo"></div>\
+                                <div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>\
+                             </td>\
+                             <td class="col160">\
+                                <div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>\
+                             </td>\
+                         </tr>\
+                      </table>\
+                  </td>');
 
                 if (match.EventStatus &&
                     match.EventStatus.toLowerCase() != "completed") {
-                    html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +
+                    htmlArray.push('<td class="rowLeague"><divclass="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +
                         match.MatchId +
                         '\',\'' + match.EventDate +
                         '\',\'' + match.EventDate +
                         '\',\'' + SMATurnover.cachedData.reportParams.sportId +
                         '\',\'' + row.LeagueId +
-                        '\')"></div></td>';
+                        '\')"></div></td>');
                 } else {
-                    html += '<td></td>';
+                    htmlArray.push('<td><div class="col60"></div></td>');
                 }
 
-                html += '</tr>';
+                htmlArray.push('</tr>');
                 var customerLength = match.CustomerList.length;
                 var customerList = match.CustomerList;
                 for (var j = 0; j < customerLength; j++) {
@@ -1214,62 +1217,39 @@
                         percentageUsed = SMATurnover.constants.MaxPercentageUsed;
                     }
 
-                    html += '<tr class="match_' + customer.CustId + '_' + match.MatchId + '">';
-                    html += '<td><div class="col200 c">' + customer.Username + '</div></td>';
-                    html += '<td><div class="col100 c ">' + customer.Currency + '</div></td>';
-                    html += '<td><div class="col160 r colSMATurnover">' + customer.SMATurnover + '</div></td>';
+                    htmlArray.push('<tr class="match_' + customer.CustId + '_' + match.MatchId + '">');
+                    htmlArray.push('<td class="td-username"><div class="col200 c">' + customer.Username + '</div></td>');
+                    htmlArray.push('<td class="td-currency"><div class="col100 c">' + customer.Currency + '</div></td>');
+                    htmlArray.push('<td class="td-smaturnover"><div class="col160 r colSMATurnover">' + customer.SMATurnover + '</div></td>');
                     if (match.EventStatus != "completed") {
-                        html += '<td><div class="col160 table-cell" style="height:17px"><input type="text" class="MaxTurnover" id="txtMaxTurnover_' + match.MatchId + "_" + customer.CustId + '" matchId="' + match.MatchId + '" custId="' + customer.CustId + '" oldValue="' + customer.MaxTurnover + '" value="' + customer.MaxTurnover + '" style="text-align:right; width:157px" maxlength="15" onkeypress="return CheckIntNumber(event)"></div></td>';
+                        htmlArray.push('<td class="td-maxturnover"><div class="col160 table-cell" style="height:17px"><input type="text" class="MaxTurnover" id="txtMaxTurnover_' + match.MatchId + "_" + customer.CustId + '" matchId="' + match.MatchId + '" custId="' + customer.CustId + '" oldValue="' + customer.MaxTurnover + '" value="' + customer.MaxTurnover + '" class="txtMaxTurnover" maxlength="15" onkeypress="return CheckIntNumber(event)"></div></td>');
                     }
                     else {
-                        html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
+                        htmlArray.push('<td class="td-maxturnover"><div class="col160 r" class="txtMaxTurnover-disabled">' + customer.MaxTurnover + '</div></td>');
                     }
 
                     if (percentageUsed == SMATurnover.constants.MaxPercentageUsed) {
-                        html += '<td class="c colPercentUsed">\
+                        htmlArray.push('<td class="td-percentageused c colPercentUsed">\
                                     <div class="col160 c boxPercentUsed_100Percent ">' + percentageUsed + '%</div>\
-                                 </td>';
+                                 </td>');
                     } else {
-                        html += '<td class="c colPercentUsed">\
-                                    <div class="col160 c boxPercentUsed_Low" style="background:url(\'../Views/Customer/CustomerSetting/SMATurnover/Style/Images/MaxPercentStatus.png\') no-repeat scroll -' + (100 - percentageUsed) + 'px 100% transparent">' + percentageUsed + '%</div>\
-                                 </td>';
+                        htmlArray.push('<td class="td-percentageused c colPercentUsed">\
+                                    <div class="col160 c boxPercentUsed_Low boxPercentUsed" style="background-position: -' + (100 - percentageUsed) + 'px">' + percentageUsed + '%</div>\
+                                 </td>');
                     }
 
-                    html += '<td><div class="col60 table-cell c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnSave" style="cursor: default;"/></div></td>';
-                    html += '</tr>';
+                    htmlArray.push('<td class="td-edit"><div class="col60 table-cell c height-17"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnSave btnUpdate"/></div></td>');
+                    htmlArray.push('</tr>');
                 }
             }
+
+            html += htmlArray.join("");
         }
 
         SMATurnover.cachedData.lbl100ReachedCounter.html(_100PercentageUsedCounter);
         return html;
     },
 
-    renderFrozenRow: function (result) {
-        var html = '';
-        for (var index = 0; index < result.length; index++) {
-            var row = result[index];
-            var matchLength = row.CustomerList.length;
-            var matchList = row.CustomerList;
-            for (var i = 0; i < matchLength; i++) {
-                var match = matchList[i]
-                html += '<tr>';
-                //html += '<td colspan="5" style="background-color:#D9E9FD; font-weight:bold; height:17px"><span style="width:200px">' + row.LeagueName + '</span><span style="width:250px">MatchID: ' + match.MatchId + ' (' + match.EventDate + ')</span><span style="width:170px">' + match.HomeTeam + ' -vs-' + match.AwayTeam + '</span><span style="">Add SMA</span></td>';
-                html += '<td class="rowLeague"><div class="col200" >' + row.LeagueName + '</div></td>';
-
-                html += '</tr>';
-                var customerLength = match.CustomerList.length;
-                var customerList = match.CustomerList;
-                for (var j = 0; j < customerLength; j++) {
-                    var customer = customerList[j];
-                    html += '<tr>';
-                    html += '<td><div class="col200 c">' + customer.Username + '</div></td>';
-                    html += '</tr>';
-                }
-            }
-        }
-        return html;
-    },
     RedirectToAddSMA_RenderLeague: function (matchId,
         fromDate,
         toDate,
@@ -1419,40 +1399,45 @@
         });
     },
 
-    makeTwoTableSameHeight: function (tableA, tableB, isFormatHeader, isFormatBody) {
-        if (isFormatBody) {
-            var rows_TableA = tableA.find("> tbody > tr");
-            var rows_TableB = tableB.find("> tbody > tr");
-            var minRowLength = rows_TableA.length < rows_TableB.length ? rows_TableA.length : rows_TableB.length;
-            for (var i = 0; i < minRowLength; i++) {
-                var columns_TableA = $(rows_TableA[i]).find("td");
-                var columns_TableB = $(rows_TableB[i]).find("td");
-                var minColumnLength = columns_TableA.length < columns_TableB.length ? columns_TableA.length : columns_TableB.length;
-                if (minColumnLength > 0) {
-                    var height_TableA = $(columns_TableA[0]).height();
-                    var height_TableB = $(columns_TableB[0]).height();
-                    var maxHeight = height_TableA > height_TableB ? height_TableA : height_TableB;
-
-                    if (height_TableA != height_TableB) {
-                        $(columns_TableA[0]).css("height", maxHeight + 'px');
-                        $(columns_TableB[0]).css("height", maxHeight + 'px');
-
-                        if ($(columns_TableA[0]).hasClass("rowLeague") &&
-                            $.browser.mozilla) {
-                            $(columns_TableA[0]).css("height", maxHeight + 5 + 'px');
-                        }
-                    }
-                }
-            }
-        }
-    },
-
     InputMaxTurnover: function () {
         // var maxTurnover = $('#txtTurnover').val();
         var maxturnover = Helper.SeparateNumricByThousand($('#txtTurnover').val());
         if (maxturnover != "") {
             $('#txtTurnover').val(formatNumber2(maxturnover));
         }
+    },
+
+    forceNumberOnly: function (textbox) {
+        textbox.keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            if (key == 109) {
+                //subtract
+                if (jQuery(this).val() == "") {
+                    return true;
+                }
+            }
+
+            var isAccept = (
+                (e.ctrlKey && e.keyCode == 67) || //accept ctrl + c(copy)
+                (e.ctrlKey && e.keyCode == 86) || //accept ctrl + v(paste)
+                key == 16 || //shift
+                key == 17 || //ctrl
+                key == 8 || //backspace
+                key == 36 || //home
+                key == 35 || //end
+                key == 9 || //tab
+                key == 46 || //delete
+                key == 109 || //-
+                key == 189 || //-
+                (key >= 37 && key <= 40) || //left , right , up , down (arrow)
+                (key >= 48 && key <= 57) || //0-9
+                (key >= 96 && key <= 105)); //numpad 0-9
+            return isAccept;
+        }).keyup(function () {
+            if (jQuery(this).val() != "-" && isNaN(parseFloat(jQuery(this).val()))) {
+                jQuery(this).val("");
+            }
+        });
     }
 }
 

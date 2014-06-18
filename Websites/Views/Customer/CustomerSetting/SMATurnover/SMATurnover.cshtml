@@ -17,6 +17,7 @@
 <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
 <script src="~/js/jQuery/monthPicker/monPickr-0.0.1.js?ver=1" type="text/javascript"></script>
 <script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1" type="text/javascript"></script>
+<script src="~/js/jQuery/Number/jquery.formattyping.js" type="text/javascript"></script>
 <div class="main">
     <div class="maincontent">
         <div style="border: 1px solid #7C98A4; width: 800px; padding: 0px" class="maincontent_box">
@@ -36,7 +37,7 @@
                         </div>
                         <table>
                             <tr>
-                                <td style="width: 60px; text-align: right; padding-left: 8px">
+                                <td style="width: 80px; text-align: right; padding-left: 8px">
                                     <b>From Date</b>
                                 </td>
                                 <td>
@@ -71,6 +72,15 @@
                                     <input type="button" id="btnSubmit" value="Submit" class="btn" onclick="SMATurnover.GetSMATurnoverList()" />
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div style="padding-left: 8px; text-align: right">
+                                        <b>% Used >=</b></div>
+                                </td>
+                                <td colspan="3">
+                                    <input type="text" id="textbox-percentageused" value="40" style="width: 101px" maxlength="10" />
+                                </td>
+                            </tr>
                         </table>
                     </div>
                     <div class="contentBox">
@@ -95,12 +105,12 @@
                         <div class="countDownOptionContainer">
                             <div class="countDownOption countDownOptionCheck" val="Not Refresh">
                                 Not Refresh</div>
-                            <div class="countDownOption" val="10">
-                                10 sec</div>
-                            <div class="countDownOption" val="20">
-                                20 sec</div>
                             <div class="countDownOption" val="30">
                                 30 sec</div>
+                            <div class="countDownOption" val="60">
+                                60 sec</div>
+                            <div class="countDownOption" val="90">
+                                90 sec</div>
                         </div>
                         @Html.Partial("~/Views/Customer/CustomerSetting/SMATurnover/SMATurnoverContent.cshtml")
                     </div>
@@ -122,7 +132,7 @@
     }
 }
 <script type="text/javascript" src="~/js/jQuery/AjaxForm/ajax-form.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-<script type="text/javascript" src="~/Views/Customer/CustomerSetting/SMATurnover/Scripts/SMATurnover.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/Views/Customer/CustomerSetting/SMATurnover/Scripts/SMATurnover.js"></script>
 <script type="text/javascript" src="~/Views/Customer/CustomerSetting/SMATurnover/Scripts/Helper.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script language="javascript" type="text/javascript">
     var currDay = '@DNAide.Core.CastAide.AsDateTime(DateTime.Now.ToShortDateString())';
