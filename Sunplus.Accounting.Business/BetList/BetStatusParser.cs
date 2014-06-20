@@ -12,15 +12,6 @@ namespace Sunplus.Accounting.Business.BetList
     using System;
     using System.Data;
 
-    public class TeamId
-    {
-        public static int HomeTeam = 1;
-        public static int AwayTeam = 2;
-
-        public static string HomeTeamString = "h";
-        public static string AwayTeamString = "a";
-    }
-
     /// <summary>
     /// Bet Status Parser.
     /// </summary>
@@ -28,21 +19,10 @@ namespace Sunplus.Accounting.Business.BetList
     {
         private string _betStatus;
         private string _goalRecord;
-        private bool _hasFGLGInfo;
 
         private int _firstGoalValue;
         private int _lastGoalValue;
         private int _lastGoalValueHT;
-
-        public bool IsHomeScoreHTFirstGoal;
-        public bool IsAwayScoreHTFirstGoal;
-        public bool IsHomeScoreHTLastGoal;
-        public bool IsAwayScoreHTLastGoal;
-
-        public bool IsHomeScoreFirstGoal;
-        public bool IsAwayScoreFirstGoal;
-        public bool IsHomeScoreLastGoal;
-        public bool IsAwayScoreLastGoal;
 
         private int _finalHomeScore;
         private int _finalAwayScore;
@@ -64,6 +44,22 @@ namespace Sunplus.Accounting.Business.BetList
                 Convert.ToInt32(betTransaction["finalawayscore"]);
             DetermineFGLG();
         }
+
+        public bool IsHomeScoreHTFirstGoal { get; set; }
+
+        public bool IsAwayScoreHTFirstGoal { get; set; }
+
+        public bool IsHomeScoreHTLastGoal { get; set; }
+
+        public bool IsAwayScoreHTLastGoal { get; set; }
+
+        public bool IsHomeScoreFirstGoal { get; set; }
+
+        public bool IsAwayScoreFirstGoal { get; set; }
+
+        public bool IsHomeScoreLastGoal { get; set; }
+
+        public bool IsAwayScoreLastGoal { get; set; }
 
         /// <summary>
         /// Determines the FGLG (include 1FGLG).
@@ -92,9 +88,12 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
+        /// <summary>
+        /// Parses the 1H FL.
+        /// </summary>
+        /// <param name="status">The status.</param>
         private void Parse1HFL(string status)
         {
-            _hasFGLGInfo = true;
             string fglgInfo = status.Split(':')[1];
             var goalInfoArray = fglgInfo.Split('-');
 
@@ -115,9 +114,12 @@ namespace Sunplus.Accounting.Business.BetList
             IsAwayScoreFirstGoal = IsAwayScoreHTFirstGoal;
         }
 
+        /// <summary>
+        /// Parses the FL.
+        /// </summary>
+        /// <param name="status">The status.</param>
         private void ParseFL(string status)
         {
-            _hasFGLGInfo = true;
             string fglgInfo = status.Split(':')[1];
             var goalInfoArray = fglgInfo.Split('-');
             _firstGoalValue = Convert.ToInt32(goalInfoArray[0]) == 0 ?
@@ -132,6 +134,9 @@ namespace Sunplus.Accounting.Business.BetList
             IsAwayScoreLastGoal = _lastGoalValue == TeamId.AwayTeam;
         }
 
+        /// <summary>
+        /// Parses the goal record.
+        /// </summary>
         private void ParseGoalRecord()
         {
             if (string.IsNullOrEmpty(_goalRecord))
