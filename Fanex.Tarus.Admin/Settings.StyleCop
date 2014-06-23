@@ -1,5 +1,0 @@
-<StyleCopSettings Version="105">
-	<Compile Include="/Controller/MailingList/SpecialDeleteController.cs">
-		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-	</Compile>
- </StyleCopSettings>

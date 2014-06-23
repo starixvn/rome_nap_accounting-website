@@ -1115,9 +1115,9 @@
                 return CheckIntNumber(event);
             });
 
-            SMATurnover.cachedData.tblSMATurnoverBody.find(".btnUpdate").keypress(function (event) {
+            SMATurnover.cachedData.tblSMATurnoverBody.find(".btnUpdate").click(function () {
                 var element = $(this);
-                SMATurnover.RedirectToAddSMA(element.attr("custId"), element.attr("matchId"));
+                SMATurnover.UpdateSMATurnoverProccess(element.attr("custId"), element.attr("matchId"));
             });
         }
         else {
@@ -1169,9 +1169,9 @@
                         return CheckIntNumber(event);
                     });
 
-                    SMATurnover.cachedData.tblSMATurnoverBody.find(".btnUpdate").keypress(function (event) {
+                    SMATurnover.cachedData.tblSMATurnoverBody.find(".btnUpdate").click(function () {
                         var element = $(this);
-                        SMATurnover.RedirectToAddSMA(element.attr("custId"), element.attr("matchId"));
+                        SMATurnover.UpdateSMATurnoverProccess(element.attr("custId"), element.attr("matchId"));
                     });
                 }
                 else {

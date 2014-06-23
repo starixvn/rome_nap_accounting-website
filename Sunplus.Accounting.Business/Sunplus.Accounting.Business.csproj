@@ -184,6 +184,7 @@
     <Compile Include="BetList\BetStatusParser.cs" />
     <Compile Include="BetList\IBetListManager.cs" />
     <Compile Include="BetList\IBetListNumberGameManager.cs" />
+    <Compile Include="BetList\TeamId.cs" />
     <Compile Include="BootStrappers\BootStrapperManager.cs" />
     <Compile Include="BootStrappers\CommonBootStrapper.cs" />
     <Compile Include="BootStrappers\UnityBootStrapper.cs" />
@@ -573,7 +574,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
