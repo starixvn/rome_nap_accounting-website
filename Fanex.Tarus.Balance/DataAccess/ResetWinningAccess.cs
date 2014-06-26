@@ -13,6 +13,9 @@ namespace Fanex.Tarus.Balance.DataAccess
 
     using Fanex.Data;
     using Fanex.Tarus.Balance.Entities;
+    using Fanex.Tarus.Balance.Criteria;
+    using System.Collections;
+    using Fanex.Common;
 
     public class ResetWinningAccess: IResetWinningAccess
     {
@@ -109,6 +112,206 @@ namespace Fanex.Tarus.Balance.DataAccess
             result.Total = NumberFormat.DecFormat(sumVariance, 2);
             return result;
 
+        }
+
+        public ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria)
+        {
+            var result = new ResetWinning_New();
+            Hashtable outParams = new Hashtable();
+            DataTable resetWinningTable = new DataTable();
+
+            Hashtable  _params = new Hashtable();
+            _params.Add("fromdate", criteria.FromDate);
+            _params.Add("todate", criteria.ToDate);
+            _params.Add("mode", criteria.ViewOrResetStatus);
+            _params.Add("creator", criteria.Creator);
+            _params.Add("ip", criteria.IP);
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                var resetWinningDataSet = objDb.ExecuteDataSet(_params);
+                resetWinningTable = resetWinningDataSet.Tables[0];
+            }
+
+            foreach (DataRow row in resetWinningTable.Rows)
+            {
+                decimal winLoss = CastAide.AsDecimal(row["winlost"]);
+                decimal reset = CastAide.AsDecimal(row["reset"]);
+                decimal variance = winLoss + reset;
+
+                var resetWinning = new ResetWinning_New
+                {
+                    WinLossDate = Convert.ToDateTime(row["winlostdate"]).ToShortDateString(),
+                    Product = CastAide.AsString(row["product"]),
+                    WinLoss = winLoss,
+                    Reset = reset,
+                    Variance = variance
+                };
+
+                result.ReportRows.Add(resetWinning);
+            }
+
+            return result;
+        }
+
+        public ResetWinning_New GetResetWinningByDay(ResetWinning_New resetWinning)
+        {
+            var result = new ResetWinning_New();
+
+            var resetWinningByDayGroup = resetWinning.ReportRows.GroupBy(x => x.WinLossDate).ToList();
+
+            foreach (var group in resetWinningByDayGroup)
+            {
+                var resetWinningByDay = new ResetWinning_New();
+                var numberReset = group.Count();
+                var listResetWinningByDayItems = group.ToList();
+                decimal winlossTotal = 0, varianceTotal = 0;
+
+                for (int i = 0; i < numberReset - 1; i++)
+                {
+                    var currentResetWinningDay = listResetWinningByDayItems[i];
+                    winlossTotal += currentResetWinningDay.WinLoss;
+                    varianceTotal += currentResetWinningDay.WinLoss + currentResetWinningDay.Reset;
+                    var resetWinningByProduct = new ResetWinning_New
+                    {
+                        Product = currentResetWinningDay.Product,
+                        WinLoss = currentResetWinningDay.WinLoss,
+                        Reset = currentResetWinningDay.Reset,
+                        Reset_Str = currentResetWinningDay.Reset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinningDay.Reset, 2),
+                        Variance = currentResetWinningDay.Variance
+                    };
+
+                    resetWinningByDay.ReportRows.Add(resetWinningByProduct);
+                }
+
+                var totalBalanceRow = listResetWinningByDayItems[numberReset - 1];
+                decimal otherWinLoss = totalBalanceRow.WinLoss - winlossTotal;
+                var otherResetWinning = new ResetWinning_New
+                {
+                    Product = "OTHERS",
+                    WinLoss = otherWinLoss,
+                    Reset_Str = "N/A",
+                    Variance = otherWinLoss
+                };
+
+                varianceTotal += otherWinLoss;
+                resetWinningByDay.Variance = varianceTotal;
+                resetWinningByDay.WinLossDate =Convert.ToDateTime(group.Key).ToShortDateString();
+                resetWinningByDay.ReportRows.Add(otherResetWinning);
+                result.ReportRows.Add(resetWinningByDay);
+            }
+
+            return result;
+        }
+
+        public ResetWinningBeforeMoveBetDay GetResetWinningDataBeforeMoveBetDay(GetResetWinningBeforeMoveBetDayCriteria criteria)
+        {
+            var result = new ResetWinningBeforeMoveBetDay();
+            DataTable resetWinningTable = new DataTable();
+            Hashtable outParams = new Hashtable();
+            decimal winloss = 0, reset = 0, variance = 0;
+
+            Hashtable _params = new Hashtable();
+            _params.Add("winlostdate", criteria.WinLossDate);
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                var resetWinningDataSet = objDb.ExecuteDataSet(_params);
+                resetWinningTable = resetWinningDataSet.Tables[0];
+                outParams = objDb.GetOuputParams();
+            }
+
+            foreach (DataRow row in resetWinningTable.Rows)
+            {
+                string product = CastAide.AsString(row["product"]);
+                winloss = CastAide.AsDecimal(row["winlost"]);
+                reset = CastAide.AsDecimal(row["reset"]);
+                variance = winloss + reset;
+
+               var resetWinning = new ResetWinningBeforeMoveBetDay
+                {
+                    Product = product,
+                    WinLoss = NumberFormat.DecFormat(winloss, 2),
+                    Reset = product.ToLower() == "openning balance" ? "N/A" : reset == 0 ? "-" : NumberFormat.DecFormat(reset, 2),
+                    Variance = product.ToLower() == "openning balance" ? "N/A" : NumberFormat.DecFormat(variance, 2)
+                };
+
+                result.ReportRows.Add(resetWinning);
+            }
+
+            decimal totalBalance = CastAide.AsDecimal(outParams["totalbalance"]);
+            decimal otherWinLoss = (totalBalance - winloss);
+            var otherReset = new ResetWinningBeforeMoveBetDay
+            {
+                Product = "OTHERS",
+                WinLoss = NumberFormat.DecFormat(otherWinLoss, 2),
+                Reset = "N/A",
+                Variance = NumberFormat.DecFormat(otherWinLoss, 2)
+            };
+
+            result.ReportRows.Add(otherReset);
+            result.Variance = NumberFormat.DecFormat(variance + otherWinLoss, 2);
+            return result;
+        }
+
+        public ResetWinningByDay ResetWinningByDay(GetResetWinningCriteria criteria)
+        {
+            ResetWinningByDay resetWinningByDay = new ResetWinningByDay();
+
+            DataSet resetWinningDataSet = new DataSet();
+            DataTable resetWinningTable = new DataTable();
+            Hashtable outputParams = new Hashtable();
+            Hashtable _params = new Hashtable();
+            _params.Add("fromdate", criteria.FromDate);
+            _params.Add("todate", criteria.ToDate);
+            _params.Add("mode", criteria.ViewOrResetStatus);
+            _params.Add("creator", criteria.Creator);
+            _params.Add("ip", criteria.IP);
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                resetWinningDataSet = objDb.ExecuteDataSet(_params);
+                outputParams = objDb.GetOuputParams();
+            }
+
+            int errorCode = Converter.ToInt(outputParams["errcode"]);
+            resetWinningByDay.ResetStatus.ErrorCode = errorCode;
+            resetWinningByDay.ResetStatus.ErrorMessage = Converter.ToString2(outputParams["errmsg"]);
+
+            if (errorCode == 0)
+            {
+                resetWinningTable = resetWinningDataSet.Tables[0];
+                resetWinningByDay.ResetWinning = this.GetResetWiningDataAfterReset(resetWinningTable);
+            }
+
+            return resetWinningByDay;
+        }
+
+        private ResetWinning_New GetResetWiningDataAfterReset(DataTable resetWinningTable)
+        {
+            var result = new ResetWinning_New();
+
+            foreach (DataRow row in resetWinningTable.Rows)
+            {
+                decimal winLoss = CastAide.AsDecimal(row["winlost"]);
+                decimal reset = CastAide.AsDecimal(row["totalreset"]);
+                decimal latestReset = CastAide.AsDecimal(row["latestreset"]);
+                decimal variance = winLoss + reset;
+
+                var resetWinning = new ResetWinning_New
+                {
+                    WinLossDate = Convert.ToDateTime(row["winlostdate"]).ToShortDateString(),
+                    Product = CastAide.AsString(row["product"]),
+                    WinLoss = winLoss,
+                    Reset = reset,
+                    LatestReset = latestReset,
+                    Variance = variance
+                };
+
+                result.ReportRows.Add(resetWinning);
+            }
+
+            return result;
         }
     }
 }

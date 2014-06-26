@@ -1,0 +1,104 @@
+﻿.w525
+{
+    width: 525px;
+}
+.align-left
+{
+    text-align:left;
+}
+.align-right
+{
+    text-align:right;
+}
+.totalRow
+{
+    background-color:#C3D79B
+}
+.col140
+{
+    width:140px;
+}
+.col125
+{
+    width:125px;
+}
+.col120
+{
+    width:120px;
+}
+.resetWinningByDayTbl
+{
+    border: 1px solid #7c98a4;
+    line-height: 18px;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+.resetWinningByDayTbl td, .resetWinningByDayTbl th{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #7c98a4 !important;
+    border-image: none;
+    border-style: none solid solid none !important;
+    border-width: 0 1px 1px 0 !important;
+}
+.resetWinningByDayTbl th
+{
+    background-color: #cddef3;
+    border-bottom: 1px solid #7c98a4!important;
+}
+.resetWinningByDayTbl .dateTitle
+{
+    background-color:#8DB4E2;
+    text-align: left;
+    padding:1px;
+    font-weight: bold;
+    color:#ffffff;
+}
+.none-border
+{
+    border: none !important;
+}
+/*#resetWinningSinceLastMoveBetDay .content-body
+{
+    border-bottom: none !important;
+}*/
+.bold
+{
+    font-weight:bold;
+}
+.highlightRow
+{
+    background-color: #FFFF00;
+}
+.dueToPartnerRow
+{
+    background-color:#DADADA;
+    color:#666666;
+}
+.bgOthers
+{
+    background-color:#D8E4BB;
+}
+.productTitle
+{
+    color:#000000 !important;
+}
+.oddRow
+{
+    background-color: #cddef3;
+}
+.highlightRow .colVariance, .otherVariance .colVariance, .dueToPartnerVariance .colVariance
+{
+    color:#FF2A00;
+}
+.col530
+{
+    width:530px !important;
+}
+.lastDayResetWinning
+{
+    margin-bottom: 0px !important;
+    border-bottom: none !important;
+}
