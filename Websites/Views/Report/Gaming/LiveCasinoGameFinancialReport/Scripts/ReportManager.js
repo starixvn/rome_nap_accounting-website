@@ -60,7 +60,7 @@ ReportManager = function () {
             fullHeight: true,
             fullWidth: true,
             gridWidth: 1150,
-            //            columns: [120, 80, 80, 100, 100, 100, 100, 100, 100, 100, 120],
+            columns: [120, 80, 80, 100],
             gridHeight: 280,
             freezeWidth: 290,
             freezeHeight: 150,

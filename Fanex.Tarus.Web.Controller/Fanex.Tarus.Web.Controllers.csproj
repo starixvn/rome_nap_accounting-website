@@ -149,7 +149,6 @@
       <DependentUpon>ErrorMsg.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\RouteCollectionExtensions.cs" />
-    <Compile Include="Balance\ResetWinningController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CommonController.cs" />
     <Compile Include="Customer\DepositCustomerController.cs" />
@@ -167,10 +166,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Balance\Fanex.Tarus.Balance.csproj">
-      <Project>{2DAE27B1-6A14-41E6-8C36-7CC5621BF36B}</Project>
-      <Name>Fanex.Tarus.Balance</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>

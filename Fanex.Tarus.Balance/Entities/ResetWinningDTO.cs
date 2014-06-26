@@ -34,7 +34,6 @@ namespace Fanex.Tarus.Balance.Entities
         
         public List<ResetWinning> Items { get; set; }
 
-        
         public string Total { get; set; }
     }
 }
