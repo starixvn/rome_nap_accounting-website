@@ -1116,4 +1116,10 @@
   <data name="v5spt_9999" xml:space="preserve">
     <value>Others</value>
   </data>
+  <data name="maxpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="minpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
 </root>
