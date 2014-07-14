@@ -79,3 +79,10 @@
     border-top: 1px solid #7C98A4;
     border-left: 1px solid #ECF3F7;
 }
+.PTBoxRightBorder .BetTypeHeader, .PTBoxRightBorder .BetTypeSelect, .PTBoxRightBorder .BetTypeLabel {
+    border-right: 1px solid #7C98A4;
+}
+.BetTypeBottomBorder {
+    border-bottom: 1px solid #7C98A4;
+    height: 22px;
+}
