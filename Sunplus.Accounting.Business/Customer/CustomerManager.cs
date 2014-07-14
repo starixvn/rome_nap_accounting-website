@@ -808,6 +808,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var liveCasinoSetting = "";
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
+                                var kenoSetting = string.Empty;
                                 switch (roleId)
                                 {
                                     case 1: // member
@@ -819,6 +820,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMember.aspx?custId={0}&uplineId={1}", custId, parentId);
                                         VirtualSportsSetting = string.Format("VirtualSportMemberPT/EditMember?custId={0}&uplineId={1}", custId, parentId);
+                                        kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/AgentEditMember?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                                         TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
@@ -838,6 +840,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditAgent.aspx?custId={0}&uplineId={1}", custId, _masterID);
                                         VirtualSportsSetting = string.Format("VirtualSportAgentPT/EditAgent?custId={0}&uplineId={1}", custId, _masterID);
+                                        kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditAgent?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                         break;
@@ -855,6 +858,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMaster.aspx?custId={0}&uplineId={1}", custId, _superID);
                                         VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
+                                        kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditMaster?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                         break;
 
@@ -871,6 +875,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditSuper.aspx?custId={0}&exchangeId={1}", custId, CastAide.AsInt32(row1["exchangeid"]));
                                         VirtualSportsSetting = string.Format("VirtualSportSuperPT/EditSuper?custId={0}&uname={1}", custId, userName);
+                                        kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditSuper?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         break;
@@ -914,6 +919,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
                                 }
                                 TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
                                 TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
@@ -921,6 +927,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
 
                                 string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                                 //AppSession.GroupID
@@ -991,6 +998,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                                 }
 
+                                bool isShowSetting = KenoSection.Instance.ShowSetting;
+                                if (!isShowSetting)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
+                                }
                                 #endregion MenuDetail
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
@@ -1272,6 +1284,7 @@ namespace Sunplus.Accounting.Business.Customer
 			string minMaxPtUrl = "";
 			var minMaxPtRenovationUrl = string.Empty;
 			string masterPtUrl = "";
+            bool isShowSetting = KenoSection.Instance.ShowSetting;
 			switch (roleId)
 			{
 				case 1: // member
@@ -1318,6 +1331,11 @@ namespace Sunplus.Accounting.Business.Customer
 						}
 					}
 
+                    if (isShowSetting)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
+                    }
+
 					submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 					if (!WebSettings.disabledFI)
 					{
@@ -1346,6 +1364,11 @@ namespace Sunplus.Accounting.Business.Customer
 							submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/MasterEditMember?custId=" + custId.ToString() + "&masterId=" + masterId + "\");' target='centerFr'>Virtual Sports</a>";
 						}
 					}
+
+                    if (isShowSetting)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
+                    }
 
 					TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
 					TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
