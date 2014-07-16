@@ -6,6 +6,7 @@ using System.Configuration;
 using Fanex.Tarus.Reports.Core.Configurations;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 
 public partial class Redirect_Report : System.Web.UI.Page
@@ -28,7 +29,8 @@ public partial class Redirect_Report : System.Web.UI.Page
                 if (getMappingConfig != null && getMappingConfig.Count() > 0)
                 {
                     var napUrl = getMappingConfig.First().NapUrl;
-                    var url = string.Format("{0}?username={1}&onlineUserId={2}&redirectUrl={3}", ConfigurationManager.AppSettings["NapReportLoginUrl"], userName, onuserId, napUrl);
+                    var url = string.Format("{0}?username={1}&onlineUserId={2}&redirectUrl={3}", NapURL(), userName, onuserId, napUrl);
+                    
                     Response.Redirect(url);
                 }
             }
@@ -37,5 +39,24 @@ public partial class Redirect_Report : System.Web.UI.Page
         {
             Response.Redirect("Index.aspx");
         }
+    }
+
+    private string NapURL()
+    {
+        Uri uri = HttpContext.Current.Request.Url;
+        var publisIPs = ConfigurationManager.AppSettings["PublicIPs"].ToString().Split(new char[]{','},StringSplitOptions.RemoveEmptyEntries);
+        string host = uri.Scheme + Uri.SchemeDelimiter + uri.Host + (uri.Port == 80 ? "" : ":" + uri.Port);
+        bool isUsedIP = false;
+
+        foreach (var Ip in publisIPs)
+        { 
+            if (host.Contains(Ip.ToString()))
+            {
+                isUsedIP=true;
+                break;
+            }
+        }
+
+        return isUsedIP ? string.Format(ConfigurationManager.AppSettings["NapReportSSOUrl"],host) : ConfigurationManager.AppSettings["NapReportLoginUrl"];
     }
 }
