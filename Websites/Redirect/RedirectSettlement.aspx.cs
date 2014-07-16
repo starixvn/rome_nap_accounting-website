@@ -27,6 +27,7 @@ public partial class Redirect_RedirectSettlement : System.Web.UI.Page
         var settlementUrl = ConfigurationManager.AppSettings["settlementloginurl"];
 
         Uri uri = HttpContext.Current.Request.Url;
+        
         string host = uri.Scheme + Uri.SchemeDelimiter + uri.Host + (uri.Port== 80 ? "":":" + uri.Port);
         settlementUrl = string.Format(settlementUrl, host);
 
