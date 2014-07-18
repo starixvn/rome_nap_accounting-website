@@ -1657,6 +1657,8 @@ namespace Sunplus.Accounting.Business.BetList
             var isPending = false;
             TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
             TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+            // For Bet Radar: Penalty Shootout.
+            RenderSoccerPSEventStatus(ref _s, r);
 
             string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
             string strAway = CacheRef.GetTeamName(r["awayid"]);
@@ -1828,6 +1830,32 @@ namespace Sunplus.Accounting.Business.BetList
                 case "internal": return "Internal";
                 default: return _eventstatus;
             }
+        }
+
+        /// <summary>
+        /// For Bet-Radar: Render Penalty Shootout Result in EventStatus column.
+        /// </summary>
+        /// <param name="_s"></param>
+        /// <param name="r"></param>
+        private void RenderSoccerPSEventStatus(ref string _s, DataRow r)
+        {
+            string betStatus = r["betstatus"].ToString().Trim().ToUpperInvariant();
+            int index = betStatus.IndexOf("PS:");
+            if (index == -1)
+            {
+                TemplateHandler.RemoveBlock(ref _s, "PenaltyShootout");
+                return;
+            }
+
+            string psStatus = betStatus.Substring(index, 4);
+            TemplateHandler.Assign(ref _s, "PSResult", psStatus);
+            TemplateHandler.Assign(
+                ref _s, "PSResultTooltip",
+                ResourceExtension.GetResourceValue(
+                    ResourceExtension.Resources.Language,
+                    psStatus.Replace(':', '_')
+                )
+            );
         }
 
         #endregion SoccerHTML

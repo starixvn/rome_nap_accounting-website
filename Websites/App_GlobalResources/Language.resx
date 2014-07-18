@@ -2434,4 +2434,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="smartPunterAtuthorized" xml:space="preserve">
     <value>You are not authorized to view this page.</value>
   </data>
+  <data name="PS_N" xml:space="preserve">
+    <value>Match was not decided by penalty shoot-out</value>
+  </data>
+  <data name="PS_Y" xml:space="preserve">
+    <value>Match was decided by penalty shoot-out</value>
+  </data>
 </root>

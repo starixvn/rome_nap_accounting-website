@@ -88,6 +88,7 @@ namespace Fanex.Agent.UI
 			public string bgEventStatus = "{bgEventStatus}";
 			protected static string s19 = "\" rowspan=\"2\" >";
 			public string eventstatus = "{eventstatus}";
+			public Soccer_row_PenaltyShootout_Block PenaltyShootout = new Soccer_row_PenaltyShootout_Block();
 			protected static string s20 = "</td></tr><tr><td class=\"l ";
 			public string awaystyle = "{awaystyle}";
 			protected static string s21 = "\">";
@@ -132,6 +133,7 @@ namespace Fanex.Agent.UI
 					bd.Append(bgEventStatus);
 					bd.Append(s19);
 					bd.Append(eventstatus);
+					if(null != PenaltyShootout) PenaltyShootout.ToString(ref bd);
 					bd.Append(s20);
 					bd.Append(awaystyle);
 					bd.Append(s21);
@@ -149,6 +151,28 @@ namespace Fanex.Agent.UI
 					bd.Append(s27);
 					bd.Append(awayFScore);
 					bd.Append(s28);
+				}
+				if(IsAssigned){bd.Append(Value);}
+			}
+		}
+
+		public class Soccer_row_PenaltyShootout_Block: Block
+		{
+			protected static string s29 = "<div><span class=\"ps\" title=\"";
+			public string PSResultTooltip = "{PSResultTooltip}";
+			protected static string s30 = "\">";
+			public string PSResult = "{PSResult}";
+			protected static string s31 = "</span></div>";
+			public override void ToString(ref StringBuilder bd)
+			{
+				if(!Visible) return;
+				if(RenderChild)
+				{
+					bd.Append(s29);
+					bd.Append(PSResultTooltip);
+					bd.Append(s30);
+					bd.Append(PSResult);
+					bd.Append(s31);
 				}
 				if(IsAssigned){bd.Append(Value);}
 			}
