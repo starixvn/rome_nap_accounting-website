@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Business\ExchangeRateService.cs" />
     <Compile Include="Business\IExchangeRateService.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Controller\ExchangeRateController.cs" />
     <Compile Include="DataAccess\ExchangeRateAccess.cs" />
     <Compile Include="DataAccess\IExchangeRateAccess.cs" />
