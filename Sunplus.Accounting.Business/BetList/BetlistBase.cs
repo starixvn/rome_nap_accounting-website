@@ -1665,7 +1665,7 @@ namespace Sunplus.Accounting.Business.BetList
 
             TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
             TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
 
             string htHome = CastAide.AsString(r["hthomescore"]).Trim();
             string htAway = CastAide.AsString(r["htawayscore"]).Trim();
@@ -1907,7 +1907,7 @@ namespace Sunplus.Accounting.Business.BetList
 
             TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
             TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
-            TemplateHandler.Assign(ref _s, "{date}", CastAide.AsDateTime(r["kickofftime"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
 
             string htHome = CastAide.AsString(r["hthomescore"]).Trim();
             string htAway = CastAide.AsString(r["htawayscore"]).Trim();
@@ -2047,7 +2047,7 @@ namespace Sunplus.Accounting.Business.BetList
 
             TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
             TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
 
             bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
             bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
@@ -2133,7 +2133,7 @@ namespace Sunplus.Accounting.Business.BetList
                 TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
                 TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
                 TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-                TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+                TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
                 bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
                 bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
                 int i = 0;
@@ -2256,7 +2256,7 @@ namespace Sunplus.Accounting.Business.BetList
 
                 TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
                 TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-                TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+                TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
                 bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
                 bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
                 int i = 0;
@@ -2378,7 +2378,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
             TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
 
-            TemplateHandler.Assign(ref _s, "date", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "date", FormatKickoffTime(r));
 
             string strHome = CacheRef.GetTeamName(r["homeid"]) +
                              (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
@@ -2455,7 +2455,7 @@ namespace Sunplus.Accounting.Business.BetList
                                    CacheRef.GetTeamName(r["homeid"]) +
                                    (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
             TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
             bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
             bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
             int i = 0;
@@ -2573,7 +2573,7 @@ namespace Sunplus.Accounting.Business.BetList
                                    CacheRef.GetTeamName(r["homeid"]) +
                                    (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
             TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
             bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
             bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
             int i = 0;
@@ -2650,7 +2650,7 @@ namespace Sunplus.Accounting.Business.BetList
                                    CacheRef.GetTeamName(r["homeid"]) +
                                    (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
             TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
             if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
             {
                 TemplateHandler.Assign(ref _s, "hstyle", "b");
@@ -2694,7 +2694,7 @@ namespace Sunplus.Accounting.Business.BetList
                                    CacheRef.GetTeamName(r["homeid"]) +
                                    (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
             TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(r));
             if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
             {
                 TemplateHandler.Assign(ref _s, "hstyle", "b");
@@ -2788,7 +2788,7 @@ namespace Sunplus.Accounting.Business.BetList
                 html.Append(rowHtml);
             }
 
-            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(dt.Rows[0]["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{date}", FormatKickoffTime(dt.Rows[0], true));
             TemplateHandler.Assign(ref _s, "{totalRowspan}", 5);
             TemplateHandler.Assign(ref _s, "{firstIndex}", "1");
             TemplateHandler.Assign(ref _s, "{firstBall}", new Random().Next(1, 75));
@@ -3147,5 +3147,18 @@ namespace Sunplus.Accounting.Business.BetList
         }
 
         #endregion combination mp
+
+        private string FormatKickoffTime(DataRow row, bool secondIncluded = false)
+        {
+            string timeFormat = secondIncluded ? "MM/dd/yyyy<br/>hh:mm:ss tt" : "MM/dd/yyyy<br/>hh:mm tt";
+            object kickoffTime = row["kickofftime"];
+            if (kickoffTime == DBNull.Value || kickoffTime == null)
+            {
+                kickoffTime = row["eventdate"];
+                timeFormat = "MM/dd/yyyy";
+            }
+            
+            return Convert.ToDateTime(kickoffTime).ToString(timeFormat);
+        }
     }
 }
