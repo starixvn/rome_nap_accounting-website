@@ -241,6 +241,31 @@
   <Function Name="SearchCopy">
     <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
+
+  <Function Name="Keno Setting">
+    <Function Name="EditSuper">
+      <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdSuperKeno" SpName="Acc_CustomerUpdSuperKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="EditMaster">
+      <Setting Key="Acc_CustomerUpdMasterKeno_BetSetting" SpName="Acc_CustomerUpdMasterKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMasterKeno" SpName="Acc_CustomerUpdMasterKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="EditAgent">
+      <Setting Key="Acc_CustomerUpdAgentKeno_BetSetting" SpName="Acc_CustomerUpdAgentKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdAgentKeno" SpName="Acc_CustomerUpdAgentKeno_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="AgentEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_BetSetting" SpName="Acc_CustomerUpdMemberKeno_BetSetting_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_Positiontaking" SpName="Acc_CustomerUpdMemberKeno_Positiontaking_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="SuperEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_SAg" SpName="Acc_CustomerUpdMemberKeno_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="MasterEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+  </Function>
    <Function Name="Admin-MaxNewMember">
         <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     </Function>
