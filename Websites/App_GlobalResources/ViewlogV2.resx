@@ -990,7 +990,7 @@
   <data name="v154mpt_20" xml:space="preserve">
     <value>Money Line</value>
   </data>
-  <data name="v154spt_20" xml:space  <KenoBetTypesSection configSource="Configurations\KenoBetTypesSection.config"/>="preserve">
+  <data name="v154spt_20" xml:space="preserve">
     <value>Money Line</value>
   </data>
   <data name="v180maxb" xml:space="preserve">
@@ -1036,7 +1036,7 @@
     <value>Min Bet</value>
   </data>
   <data name="v184mpm" xml:space="preserve">
-    <value>Max Per Match</value>  <KenoBetTypesSection configSource="Configurations\KenoBetTypesSection.config"/>
+    <value>Max Per Match</value>
   </data>
   <data name="v185maxb" xml:space="preserve">
     <value>Max Bet</value>
@@ -1128,8 +1128,6 @@
   <data name="v5spt_9999" xml:space="preserve">
     <value>Others</value>
   </data>
-    <value>Max Others</value>
-    <value>Min Others</value>
   <data name="mpmv202" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
@@ -1145,10 +1143,10 @@
   <data name="minv5pt_9999" xml:space="preserve">
     <value>Min Others</value>
   </data>
-  </data>
   <data name="maxpt_9999" xml:space="preserve">
     <value>Others</value>
   </data>
   <data name="minpt_9999" xml:space="preserve">
     <value>Others</value>
-</root>
+   </data>
+  </root>
