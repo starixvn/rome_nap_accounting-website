@@ -1125,9 +1125,6 @@
   <data name="minpt_9999" xml:space="preserve">
     <value>Min Others</value>
   </data>
-  <data name="v5spt_9999" xml:space="preserve">
-    <value>Others</value>
-  </data>
   <data name="mpmv202" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
@@ -1137,16 +1134,4 @@
   <data name="minv5pt_9999" xml:space="preserve">
     <value>Min Others</value>
   </data>
-  <data name="maxv5pt_9999" xml:space="preserve">
-    <value>Max Others</value>
-  </data>
-  <data name="minv5pt_9999" xml:space="preserve">
-    <value>Min Others</value>
-  </data>
-  <data name="maxpt_9999" xml:space="preserve">
-    <value>Others</value>
-  </data>
-  <data name="minpt_9999" xml:space="preserve">
-    <value>Others</value>
-   </data>
-  </root>
+</root>
