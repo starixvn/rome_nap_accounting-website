@@ -678,12 +678,22 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private bool IsBelongToSport(XAttribute attr, string vSportId)
         {
             var attrName = attr.Name.ToString();
-            var isExactSportId = vSportId.Length < attrName.Length &&
-                (attrName[vSportId.Length] < '0' ||
-                '9' < attrName[vSportId.Length]);
 
-            return (isExactSportId && attrName.StartsWith(vSportId)) ||
-                attrName.EndsWith(vSportId);
+            if(attrName.Contains(vSportId))
+            {
+                string[] lines = Regex.Split(attrName, vSportId);
+
+                string lastString = lines[lines.Length - 1];
+
+                return lastString.Equals(string.Empty) || !IsCharDigit(lastString[0]);
+            }
+
+            return false;
+        }
+
+        public static bool IsCharDigit(char c)
+        {
+            return ((c >= '0') && (c <= '9'));
         }
 
         private TrackingNode AssignGroupAttribute(XElement node,
