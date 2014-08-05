@@ -713,6 +713,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
+                                if (!WebSettings.EnableAGCasino || roleId != 4)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+                                }
+
                                 if (Functions.Settings.IsVisibleSpecial)
                                 {
                                     TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
