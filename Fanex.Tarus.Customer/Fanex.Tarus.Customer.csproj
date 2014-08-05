@@ -140,6 +140,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AGCasino\AGCasinoService.cs" />
+    <Compile Include="Business\AGCasino\IAGCasinoService.cs" />
     <Compile Include="Business\AutoSuspend\AutoSuspendService.cs" />
     <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
@@ -167,11 +169,17 @@
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
+    <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
+    <Compile Include="Criteria\AGCasino\GetAGCasinoAPIResultCriteria.cs" />
+    <Compile Include="Criteria\AGCasino\GetCustomerSettingCriteria.cs" />
+    <Compile Include="Criteria\AGCasino\GetCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\AGCasino\UpdateCustomerSettingCriteria.cs" />
+    <Compile Include="Criteria\AGCasino\UpdateCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
@@ -183,6 +191,8 @@
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
+    <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
+    <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\IEditLicenseeRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\AutoSuspendRepository.cs" />
@@ -234,6 +244,12 @@
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
+    <Compile Include="Entities\AGCasino\AGCasinoCustomerInfo.cs" />
+    <Compile Include="Entities\AGCasino\GameType.cs" />
+    <Compile Include="Entities\AGCasino\GameTypeGroup.cs" />
+    <Compile Include="Entities\AGCasino\ProductInfo.cs" />
+    <Compile Include="Entities\AGCasino\SettingLimit.cs" />
+    <Compile Include="Entities\AGCasino\ViewResources.cs" />
     <Compile Include="Entities\AutoSuspend\CustomerInfo.cs" />
     <Compile Include="Entities\AutoSuspend\ViewResources.cs" />
     <Compile Include="Entities\BaseModel.cs" />
@@ -251,6 +267,7 @@
     <Compile Include="Entities\CustomerList\CustomerList.cs" />
     <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\SelectResult.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\AddSMAListResult.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
@@ -292,6 +309,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

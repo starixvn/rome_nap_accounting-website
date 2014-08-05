@@ -1,0 +1,70 @@
+﻿
+.content-width, #result-message
+{
+    width: 575px;
+}
+
+.table-settings
+{
+    margin-bottom: 15px;
+}
+
+.label-for-checkbox
+{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.label-for-checkbox.disabled
+{
+    cursor: default;
+}
+
+.display-none
+{
+    display: none;
+}
+
+.align-left
+{
+    text-align: left;
+}
+
+.tipsy
+{
+    font-size: 12px;
+}
+
+.checkbox-checked
+{
+    background: url("Images/check.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 3px;
+}
+
+.checkbox-unchecked
+{
+    background: url("Images/uncheck.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 3px;
+}
+
+.checkbox-checked.display-none, .checkbox-unchecked.display-none
+{
+    display: none;
+}
+
+.col-setting
+{
+    width: 200px;
+}
+
+.custBtn1[disabled], #button-update[disabled]
+{
+    cursor: default;
+    opacity: 0.4;
+}

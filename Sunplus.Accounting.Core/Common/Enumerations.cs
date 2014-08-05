@@ -148,7 +148,8 @@ namespace Sunplus.Accounting.Core.Common
                 DailyTransaction,
                 ClearCredit,
                 ResetMaxTransfer,
-                AutoSuspend
+                AutoSuspend,
+                AGCasino
             }
 
             public enum Transfer
