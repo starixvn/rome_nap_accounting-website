@@ -112,6 +112,22 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl.Replace("https", "http") + "';\n");
                 IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                 menuService.GetUserMenu();
+                bool isShowNap = new Fanex.Nap.SSO.UserLogin.Business.NapHomeCheckUserSiteAccessService().NapHomeCheckUserSiteAccess(AppSession.AccId, System.Configuration.ConfigurationManager.AppSettings["Environment"].ToString());
+                if (isShowNap)
+                {
+                    AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO { 
+                        Id=0,
+                        Name="Nap",
+                        Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
+                        System = "accounting",
+                        ParentId = 0,
+                        FunctionName = "",
+                        Target = "_blank",
+                        IsHide = false,
+                        SubMenu= null
+                    });
+                }
+                
                 menuService.GetReportMenu("ACC-REPORT");
                 menuService.GetBAMenu();
 				
