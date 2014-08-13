@@ -13,6 +13,7 @@ using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Configurations;
 using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Extensions;
+using System.Configuration;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -503,6 +504,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var parms = new Hashtable();
             parms.Add("custid", custId);
             parms.Add("system", AppSession.CurrentSystemNAME.ToString());
+            parms.Add("enviroment", ConfigurationManager.AppSettings["Environment"].ToString());
 
             DbResult result = null;
 

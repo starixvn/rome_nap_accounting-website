@@ -38,12 +38,14 @@
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-        RegisterGlobalFilters(GlobalFilters.Filters);
-        
+
+       
+        RegisterGlobalFilters(GlobalFilters.Filters);     
         RegisterRoutes(RouteTable.Routes);
+        AreaRegistration.RegisterAllAreas();
         // ViewEngines.Engines.Add(new CustomView());
         
-        AreaRegistration.RegisterAllAreas();
+       
     }
 
 
