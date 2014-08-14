@@ -94,8 +94,8 @@ namespace Fanex.NAP.SSO
 
         private string NapURL()
         {
-            Uri uri = HttpContext.Request.Url;        
-            return string.Format(ConfigurationManager.AppSettings["NapReportLoginUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
+            Uri uri = HttpContext.Request.Url;
+            return string.Format(ConfigurationManager.AppSettings["NapHomeSSOUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
         }
 
         #endregion
