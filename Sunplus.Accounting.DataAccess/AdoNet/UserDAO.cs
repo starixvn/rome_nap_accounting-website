@@ -504,7 +504,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var parms = new Hashtable();
             parms.Add("custid", custId);
             parms.Add("system", AppSession.CurrentSystemNAME.ToString());
-            parms.Add("enviroment", ConfigurationManager.AppSettings["Environment"].ToString());
 
             DbResult result = null;
 
