@@ -1,0 +1,464 @@
+﻿@using Fanex.Tarus.Admin.Business.AutoFollowBet;
+@using Fanex.Tarus.Infrastructure.Configurations;
+@model IList<Fanex.Tarus.Admin.Entities.FollowedCustomer>
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Report/reportgrid.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/js/ToolTip/Tipsy-Tooltip/tipsy.css" />
+<link rel="stylesheet" type="text/css" href="~/js/MultipleSelect/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+<link rel="stylesheet" type="text/css" href="~/Views/Admin/Style/AutoFollowBet.css" />
+<script type="text/javascript" src="~/js/jQuery/Template/jquery.tmpl.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/js/Datetime.js"></script>
+<script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/gridscroller.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/js/showhidepopup.js"></script>
+<script type="text/javascript" src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js"></script>
+<script type="text/javascript" src="~/js/MultipleSelect/jquery.multiselect.js"></script>
+<script type="text/javascript" src="~/js/jQuery/Pager/jpager.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/Views/Admin/Js/AutoFollowBet.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+@{
+    var minRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Min;
+    var maxRate = Admin_AutoFollowBetSection.Instance.Configs["Rate"].Max;
+}
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var minRate = @minRate;
+    var maxRate = @maxRate;
+
+    var viewResources = {
+        All: 'All',
+        No_type_found: 'No type found.',
+        Save: 'Save',
+        Cancel: 'Cancel',
+        Edit: 'Edit',
+        Delete: 'Delete',
+        Both: 'Both',
+        Live: 'Live',
+        Non_Live: 'Non-Live',
+        Warning_Admin_AutoFollowBetManagement_DeleteFollowInfo: 'Are you sure you want to delete followed member?',
+        Success_Admin_AutoFollowBetManagement_DeleteFollowInfo: 'Member is deleted successfully!',
+        No_Info: 'There is no information available.',
+
+        Error_Admin_AutoFollowBetManagement_InvalidRate_Empty: 'Please input rate value!',
+        Error_Admin_AutoFollowBetManagement_InvalidRate_Number: 'Invalid Rate! Please input rate with number value!',
+        Error_Admin_AutoFollowBetManagement_InvalidRate_Range: 'Invalid Rate! Rate must range between ' + minRate.toFixed(2) + ' and ' + maxRate + '.',
+        Error_Admin_AutoFollowBetManagement_InvalidRate_DecimalDigit: 'Invalid Rate! Don\'t enter the number with more than 2 decimal places.',
+        Success_Admin_AutoFollowBetManagement_UpdateFollowInfo: 'Member is updated successfully!',
+
+        Add_New_Followed_Customer: 'Add New Follow Member',
+        Error_Admin_AutoFollowBetManagement_LiveStatus_Empty: 'Please select at least one live status!',
+        Error_Admin_AutoFollowBetManagement_HDPStatus_Empty: 'Please select at least one HDP status!',
+        Error_Admin_AutoFollowBetManagement_1stHDPStatus_Empty: 'Please select at least one 1st HDP status!',
+        Error_Admin_AutoFollowBetManagement_OverUnderStatus_Empty: 'Please select at least one Over Under status!',
+        Error_Admin_AutoFollowBetManagement_1stOverUnderStatus_Empty: 'Please select at least one 1st Over Under status!',
+
+        Error_Admin_AutoFollowBetManagement_Username_Empty: 'Please input username!',
+        Success_Admin_AutoFollowBetManagement_AddFollowInfo: 'Member is added successfully!',
+        Error_Admin_AutoFollowBetManagement_InvalidFollower_Empty: 'Please input follower!'
+    };
+
+</script>
+<div class="main">
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL">
+                </td>
+                <td class="maincontent_headerC">
+                    Auto Follow Bet Management
+                </td>
+                <td class="maincontent_headerR">
+                </td>
+            </tr>
+        </table>
+        <div id="errormessage" class="errMsg display-none">
+        </div>
+        <div id="divContainer" style="margin-top: 4px">
+            <div class="maincontent_box" style="width: 991px;">
+                <table id="tablefilter">
+                    <tr>
+                        <td>
+                            <div class="b">
+                                Username
+                            </div>
+                        </td>
+                        <td>
+                            <input id="textbox-username" type="text" maxlength="50" />
+                        </td>
+                        <td>
+                            <div class="b">
+                                Customer
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <select id="dropdown-customer">
+                                <option value="%">All</option>
+                                <option value="@CustomerConstants.Agent">Agent</option>
+                                <option value="@CustomerConstants.Member">Member</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <div class="b">
+                                Source
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <select id="dropdown-source">
+                                <option value="%">All</option>
+                                <option value="@SourceTypeConstants.Auto">Auto</option>
+                                <option value="@SourceTypeConstants.Manual">Manual</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="b col60">
+                                BA Status
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <select id="dlStatus" style="vertical-align: middle; width: 85px">
+                                <option value="%">All</option>
+                                <option value="@BAStatusConstants.BAEnabled">BA Enabled</option>
+                                <option value="@BAStatusConstants.BADisabled">BA Disabled</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="b col80">
+                                Follow Type
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <div id="dropdown-followtype">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="b">
+                                Follower
+                            </div>
+                        </td>
+                        <td>
+                            <input id="textbox-follower" type="text" maxlength="50" />
+                        </td>
+                        <td align="left">
+                            <input type="button" class="btn" onclick="autoFollowBet.GetAutoFollowedBet();" value="Submit"
+                                name="btnShow" id="btnShow" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="autofollowbet-grid" class="content-warper hidden">
+                <div class="content-toolbox bgtitle">
+                    <div id="gridTitle" class="gridtitle">
+                    </div>
+                    <div class="btngroup">
+                        <input id="button-addnewfollowedcustomer" type="button" value="  " name="btnAdd"
+                            class="btnAdd" title="Add Exist Customer" />
+                    </div>
+                </div>
+                <div class="content-header clearfix">
+                    <div class="header-scroll">
+                        <table class="tbl-header-scroll">
+                            <tr>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col120 c">
+                                        Username
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col80 c">
+                                        Source
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col80 c">
+                                        Rate
+                                    </div>
+                                </td>
+                                 <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col90 c">
+                                        Live/Non-Live
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col80 c">
+                                        (+/-)Odds
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        HDP
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        1st HDP
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        O/U
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        1st O/U
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col120 c">
+                                        Follower
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col70 c">
+                                        BA Status
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+<<<<<<< HEAD
+                                    <div class="col70 c">
+=======
+                                    <div class="col60 c">
+>>>>>>> #20005 - WEB -  Auto Follow Bet Management - Separate Live/Non-Live based on each bet types and Odds.
+                                        Agent
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+<<<<<<< HEAD
+                                    <div class="col60 c">
+=======
+                                    <div class="col40 c">
+>>>>>>> #20005 - WEB -  Auto Follow Bet Management - Separate Live/Non-Live based on each bet types and Odds.
+                                        Edit
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        Delete
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-body clearfix">
+                    <div class="body-scroll">
+                        <table class="tbl-body-scroll">
+                            <tbody id="autofollowbet-gridbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-pagination bgtitle clearfix">
+                    <div class="pagination-scroll">
+                        <table style="width: 100%" cellspacing="0" cellpadding="1">
+                            <tr>
+                                <td>
+                                    <div id="pagination" class="pagination">
+                                        &nbsp;</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog-addnewfollowedcustomer" class="display-none">
+        <span id="resultmessage-adddialog"></span>
+        <table>
+            <tr>
+                <td>
+                    <div class="col60 r">
+                        Username
+                    </div>
+                </td>
+                <td>
+                    <div class="col150">
+                        <input id="textbox-username-addnewdialog" type="text" maxlength="50" />
+                    </div>
+                </td>
+                <td>
+                    <div class="col40 r">
+                        Rate
+                    </div>
+                </td>
+                <td>
+                    <div class="col90">
+                        <input id="textbox-rate-addnewdialog" type="text" maxlength="4" class="c" />
+                    </div>
+                </td>
+                <td>
+                    <div class="col60 r">
+                        Follower
+                    </div>
+                </td>
+                <td>
+                    <div class="col120">
+                        <input id="textbox-follower-addnewdialog" type="text" maxlength="50" class="c" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <table class="filter-adddialog addAutoFollowBetForm">
+                        <tr>
+                            <td class="title2">
+                                <div class="col100 c">
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col100 c">
+                                    (+/-)Odds
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    HDP
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    1st HDP
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    O/U
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    1st O/U
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="followedNoneLive">
+                            <td>
+<<<<<<< HEAD
+                                 <div class="col100 c">Non-Live</div>
+=======
+                                 <div class="col100 c">None-Live</div>
+>>>>>>> #20005 - WEB -  Auto Follow Bet Management - Separate Live/Non-Live based on each bet types and Odds.
+                            </td>
+                            <td>
+                                <div class="col100 c">
+                                    <select id="dropdown-nonelive-odds-adddialog" class="ddlNoneLiveOdds">
+                                        <option value="0.1">0.1</option>
+                                        <option value="0.09">0.09</option>
+                                        <option value="0.08">0.08</option>
+                                        <option value="0.07">0.07</option>
+                                        <option value="0.06">0.06</option>
+                                        <option value="0.05">0.05</option>
+                                        <option value="0.04">0.04</option>
+                                        <option value="0.03">0.03</option>
+                                        <option value="0.02">0.02</option>
+                                        <option value="0.01">0.01</option>
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="-0.01">-0.01</option>
+                                        <option value="-0.02">-0.02</option>
+                                        <option value="-0.03">-0.03</option>
+                                        <option value="-0.04">-0.04</option>
+                                        <option value="-0.05">-0.05</option>
+                                        <option value="-0.06">-0.06</option>
+                                        <option value="-0.07">-0.07</option>
+                                        <option value="-0.08">-0.08</option>
+                                        <option value="-0.09">-0.09</option>
+                                        <option value="-0.1">-0.1</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="hdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1sthdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="overunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1stoverunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="followedLive">
+                            <td>
+                                 <div class="col100 c">Live</div>
+                            </td>
+                            <td>
+                                <div class="col100 c">
+                                    <select id="dropdown-live-odds-adddialog" class="ddlLiveOdds">
+                                        <option value="0.1">0.1</option>
+                                        <option value="0.09">0.09</option>
+                                        <option value="0.08">0.08</option>
+                                        <option value="0.07">0.07</option>
+                                        <option value="0.06">0.06</option>
+                                        <option value="0.05">0.05</option>
+                                        <option value="0.04">0.04</option>
+                                        <option value="0.03">0.03</option>
+                                        <option value="0.02">0.02</option>
+                                        <option value="0.01">0.01</option>
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="-0.01">-0.01</option>
+                                        <option value="-0.02">-0.02</option>
+                                        <option value="-0.03">-0.03</option>
+                                        <option value="-0.04">-0.04</option>
+                                        <option value="-0.05">-0.05</option>
+                                        <option value="-0.06">-0.06</option>
+                                        <option value="-0.07">-0.07</option>
+                                        <option value="-0.08">-0.08</option>
+                                        <option value="-0.09">-0.09</option>
+                                        <option value="-0.1">-0.1</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="hdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1sthdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="overunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1stoverunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <div class="c">
+                        <input id="buttonsubmit-addnewdialog" type="button" value="Add New" class="btn" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
