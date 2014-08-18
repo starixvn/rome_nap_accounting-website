@@ -21,9 +21,9 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public string Follower { get; set; }
 
-        public int BAStatus { get; set; }
+        public string BAStatus { get; set; }
 
-        public int Source { get; set; }
+        public string Source { get; set; }
 
         public string LiveStatus { get; set; }
 
@@ -35,6 +35,8 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public string _1stOverUnder { get; set; }
 
+        public string IsAgent { get; set; }
+
         /// <summary>
         /// Gets the store procedure parameters.
         /// </summary>
@@ -42,15 +44,16 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
         public Hashtable GetStoreProcedureParams()
         {
             var storeProcedureParams = new Hashtable();
-            storeProcedureParams.Add("username", Username ?? string.Empty);
-            storeProcedureParams.Add("follower", Follower ?? string.Empty);
+            storeProcedureParams.Add("username", Username);
+            storeProcedureParams.Add("follower", Follower);
             storeProcedureParams.Add("source", Source);
             storeProcedureParams.Add("bastatus", BAStatus);
             storeProcedureParams.Add("followlive", LiveStatus);
-            storeProcedureParams.Add("handicap", HDP);
-            storeProcedureParams.Add("1sthandicap", _1stHDP);
-            storeProcedureParams.Add("overunder", OverUnder);
-            storeProcedureParams.Add("1stoverunder", _1stOverUnder);
+            storeProcedureParams.Add("hdp", HDP);
+            storeProcedureParams.Add("1sthdp", _1stHDP);
+            storeProcedureParams.Add("ou", OverUnder);
+            storeProcedureParams.Add("1stou", _1stOverUnder);
+            storeProcedureParams.Add("isagent", IsAgent);
             return storeProcedureParams;
         }
 

@@ -50,7 +50,7 @@ namespace Fanex.Tarus.Admin.Controller
 
         public JsonResult GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria)
         {
-            var result = _autoFollowBetService.GetAutoFollowedBetCustomer(criteria);
+            var result = _autoFollowBetService.GetAutoFollowBet(criteria);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

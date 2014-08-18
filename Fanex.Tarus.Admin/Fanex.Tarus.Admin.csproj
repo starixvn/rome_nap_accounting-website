@@ -59,11 +59,11 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Business\AutoFollowBet\AutoFollowBetService.cs" />
     <Compile Include="Business\AutoFollowBet\BAStatusConstants.cs" />
+    <Compile Include="Business\AutoFollowBet\CustomerConstants.cs" />
     <Compile Include="Business\AutoFollowBet\IAutoFollowBetService.cs" />
     <Compile Include="Business\AutoFollowBet\LiveStatusConstants.cs" />
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
@@ -122,6 +123,8 @@
     <Compile Include="DataAccess\SecurityCode\IAdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SMAManagement\ISMAManagementAccess.cs" />
     <Compile Include="DataAccess\SMAManagement\SMAManagementAccess.cs" />
+    <Compile Include="Entities\AutoFollowBet\AutoFollowBet.cs" />
+    <Compile Include="Entities\AutoFollowBet\AutoFollowBetDetail.cs" />
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
@@ -181,6 +184,7 @@
   <ItemGroup>
     <None Include="Fanex.Tarus.Admin.licenseheader" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

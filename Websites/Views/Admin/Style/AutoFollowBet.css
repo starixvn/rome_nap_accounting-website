@@ -133,4 +133,16 @@
     border: #7C98A4 solid 1px;
     padding: 2px;
 }
+.checkStatus
+{
+    background: url('../../../App_Themes/Images/Buttons/checked-icon.png') no-repeat center center;
+    width: 16px;
+    height: 16px;
+    display: block;
+    margin-left: 20px;
+}
 
+.filter-adddialog.addAutoFollowBetForm
+{
+    margin-left: 65px !important;
+}
