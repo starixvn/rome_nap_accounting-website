@@ -7,37 +7,37 @@ var autoFollowBet = {
     height: 500,
     status: 0,
 
+    updateFollowEnums: {
+        notFollow: 0,
+        follow: 1,
+        notUpdate: 2
+    },
+
     followTypeEnums: {
         LiveStatus: 0,
-        LiveStatus_Both: 2,
         LiveStatus_Live: 1,
         LiveStatus_NonLive: 0,
-        LiveStatus_All: 3,
-        LiveStatus_None: -2,
+        LiveStatus_All: '%',
 
         HDP: 1,
         HDP_Follow: 1,
         HDP_NotFollow: 0,
-        HDP_All: 2,
-        HDP_None: -2,
+        HDP_All: '%',
 
         _1stHDP: 2,
         _1stHDP_Follow: 1,
         _1stHDP_NotFollow: 0,
-        _1stHDP_All: 2,
-        _1stHDP_None: -2,
+        _1stHDP_All: '%',
 
         OverUnder: 3,
         OverUnder_Follow: 1,
         OverUnder_NotFollow: 0,
-        OverUnder_All: 2,
-        OverUnder_None: -2,
+        OverUnder_All: '%',
 
         _1stOverUnder: 4,
         _1stOverUnder_Follow: 1,
         _1stOverUnder_NotFollow: 0,
-        _1stOverUnder_All: 2,
-        _1stOverUnder_None: -2
+        _1stOverUnder_All: '%'
     },
     Tables: {
         dropdownFollowType: null,
@@ -50,7 +50,8 @@ var autoFollowBet = {
         reportGridBody: null,
         addNewFollowedCustomerDialog: null,
         buttonAddNewFollowedCustomer: null,
-        reportGridPagination: null
+        reportGridPagination: null,
+        dropdownCustomer: null
     },
     CachedData: {
         FollowTypes: null,
@@ -89,7 +90,7 @@ var autoFollowBet = {
             Followed1stOverUnder: null
         },
         gridHeight: $(window).height() - 150,
-        gridWidth: 978,
+        gridWidth: 1030,
         pageIndex: 0,
         totalItems: 0,
         pageSize: 50,
@@ -161,20 +162,18 @@ var autoFollowBet = {
             HDP: autoFollowBet.GetHDPParam(),
             _1stHDP: autoFollowBet.Get1stHDPParam(),
             OverUnder: autoFollowBet.GetOverUnderParam(),
-            _1stOverUnder: autoFollowBet.Get1stOverUnderParam()
+            _1stOverUnder: autoFollowBet.Get1stOverUnderParam(),
+            IsAgent: autoFollowBet.Tables.dropdownCustomer.val()
         };
     },
     GetLiveStatusParam: function () {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         var groupId = "#dropdown-followType" + followTypeEnums.LiveStatus;
-        //        if ($(groupId).attr("checked")) {
-        //            return followTypeEnums.LiveStatus_All.toString();
-        //        }
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums.LiveStatus_All.toString();
+        }
 
         var paramList = [];
-        if ($(groupId + "_" + followTypeEnums.LiveStatus_Both).attr("checked")) {
-            paramList.push(followTypeEnums.LiveStatus_Both);
-        }
 
         if ($(groupId + "_" + followTypeEnums.LiveStatus_Live).attr("checked")) {
             paramList.push(followTypeEnums.LiveStatus_Live);
@@ -289,7 +288,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 976px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 1030px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -357,7 +356,7 @@ var autoFollowBet = {
         else {
             var rowHTML = '<tr>\
                                 <td colspan="11" style="border-right: 0px none">\
-                                    <div class="c b" style="width: 976px">' + viewResources.No_Info + '</div>\
+                                    <div class="c b" style="width: 1030px">' + viewResources.No_Info + '</div>\
                                 </td>\
                             </tr>';
             autoFollowBet.Tables.reportGridBody.html(rowHTML);
@@ -381,70 +380,80 @@ var autoFollowBet = {
     },
 
     renderFollowBetRow: function (rowId, isEvenRow, followInfo) {
-        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var numberChildRow = followInfo.AutoFollowBetDetail.length;
+        var aaa = 0;
         var cssClass = isEvenRow ? 'bgeven' : '';
-        var strRow = '';
-        strRow += '<tr class="' + cssClass + ' followInfo_' + rowId + '">';
-        strRow += '<td><div class="col100 c">' + followInfo.Username + '</div></td>';
-        strRow += '<td><div class="col60 c">' + followInfo.Source + '</div></td>';
-        strRow += '<td class="td-labelrate col80">\
-                        <div class="c labelrate col80">' + followInfo.Rate + '</div>\
-                   </td>';
-        strRow += '<td class="c col80">\
-                        <div class="c col80"><select class="dropdown-odds editablefield" disabled="disabled">' +
-                            autoFollowBet.generateDropdownOddsOptions(followInfo.Odds) +
-                        '</select></div>' +
-                  '</td>';
-        strRow += '<td class="c col90">\
-                        <div class="c col90"><select class="dropdown-livestatus editablefield" disabled="disabled">' +
-                            autoFollowBet.generateDropdownLiveStatusOptions(followInfo.LiveStatus) +
-                        '</select></div>\
-                   </td>';
-        strRow += '<td class="c col60">\
+        var htmlRow = '';
+
+        for (var i = 0; i < numberChildRow; i++) {
+            var followBetByLiveStatus = followInfo.AutoFollowBetDetail[i];
+            var liveStatus = followBetByLiveStatus.FollowedLive;
+            var liveStatusClass = liveStatus ? 'live' : 'none-live';
+
+            if (i == 0) {
+                htmlRow += '<tr class="' + cssClass + ' followInfo_' + rowId + ' ' + liveStatusClass + '">\
+                <td rowspan="' + numberChildRow + '"><div class="col100 c">' + followInfo.UserName + '</div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col60 c">' + (followInfo.Source ? "Auto" : "Manual") + '</div></td>\
+                <td rowspan="' + numberChildRow + '" class="td-labelrate col80"><div class="col80 c labelrate">' + followInfo.Rate + '</div></td>\
+                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
+                <td><div class="col90 c">' + (followBetByLiveStatus.FollowedLive ? "Live" : "None-Live") + '</div></td>\
+                <td class="c col60">\
                         <div class="c col60"><input class="hdpstatus editablefield" type="checkbox" disabled="disabled"' +
-                            (followInfo.FollowedHDP == followTypeEnums.HDP_Follow ? ' checked = "checked"' : '') + '/></div>\
-                   </td>';
-        strRow += '<td class="c col60">\
-                        <div class="c col60"><input class="_1sthdpstatus editablefield" type="checkbox" disabled="disabled"' +
-                            (followInfo.Followed1stHDP == followTypeEnums._1stHDP_Follow ? checked = "checked" : '') + '/></div>\
-                   </td>';
-        strRow += '<td class="c col60">\
-                        <div class="c col60"><input class="overunderstatus editablefield" type="checkbox" disabled="disabled"' +
-                            (followInfo.FollowedOverUnder == followTypeEnums.OverUnder_Follow ? ' checked = "checked"' : '') + '/></div>\
-                   </td>';
-        strRow += '<td class="c col60">\
-                        <div class="c col60"><input class="_1stoverunderstatus editablefield" type="checkbox" disabled="disabled"' +
-                            (followInfo.Followed1stOverUnder == followTypeEnums._1stOverUnder_Follow ? checked = "checked" : '') + '/></div>\
-                   </td>';
-        strRow += '<td class="td-labelfollower col120">\
-                        <div class="c labelfollower col120">' + followInfo.Follower + '</div>\
-                   </td>';
-        strRow += '<td class="col60 c"><div class="col60 ' + (followInfo.BAStatus ? 'checkBA' : '') + '"></div></td>';
+                            (followBetByLiveStatus.FollowedHandicap ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="firsthalfhdpstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedFirstHalfHandicap ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="overunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedOverUnder ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="firsthalfoverunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedFirstHalfOverUnder ? ' checked = "checked"' : '') + '/></div>\
+                </td>\
+                <td rowspan="' + numberChildRow + '" class="td-labelfollower col120"><div class="col120 c labelfollower">' + followInfo.Follower + '</div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col40 c">\
+                    <img class="editcontrol editicon" src="'
+                     + autoFollowBet.CachedData.editIcon + '" onclick="autoFollowBet.beginEditFollowInfo(' + rowId + ')"\
+                     title="' + viewResources.Edit + '" />\
+                     <img class="saveicon editcontrol display-none" src="'
+                     + autoFollowBet.CachedData.saveIcon + '" onclick="autoFollowBet.updateFollowInfo(' + rowId + ')"\
+                     title="' + viewResources.Save + '" />\
+                     <img class="undoicon editcontrol display-none" src="'
+                     + autoFollowBet.CachedData.undoIcon + '" onclick="autoFollowBet.undoEditFollowInfo(' + rowId + ')"\
+                     title="' + viewResources.Cancel + '" />\
+                 </div></td>\
+                 <td rowspan="' + numberChildRow + '"><div class="col60 c">\
+                    <img class="deleteicon editicon" src="'
+                     + autoFollowBet.CachedData.deleteIcon + '" onclick="autoFollowBet.deleteFollowInfo(' + rowId + ')"\
+                     title="' + viewResources.Delete + '" />\
+                 </div></td>\
+                </tr>';
+            }
+            else {
+                htmlRow += '<tr class="' + cssClass + ' followInfo_' + rowId + ' ' + liveStatusClass + '">\
+                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
+                <td><div class="col90 c">' + (followBetByLiveStatus.FollowedLive ? "Live" : "None-Live") + '</div></td>\
+                <td><div class="c col60"><input class="hdpstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedHandicap ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="firsthalfhdpstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedFirstHalfHandicap ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="overunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedOverUnder ? ' checked = "checked"' : '') + '/></div></td>\
+                <td class="c col60">\
+                            <div class="c col60"><input class="firsthalfoverunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                                (followBetByLiveStatus.FollowedFirstHalfOverUnder ? ' checked = "checked"' : '') + '/></div>\
+                </td></tr>';
+            }
+        }
 
-        strRow += '<td>';
-        strRow += '<div class="col40 c">';
-
-        strRow += '<img class="editcontrol editicon"' +
-            ' src="' + autoFollowBet.CachedData.editIcon + '"' +
-            ' onclick="autoFollowBet.beginEditFollowInfo(event, \'' + rowId + '\')"' +
-            ' title="' + viewResources.Edit + '"/>';
-        strRow += '<img class="saveicon editcontrol display-none"' +
-            ' src="' + autoFollowBet.CachedData.saveIcon + '"' +
-            ' onclick="autoFollowBet.updateFollowInfo(event, \'' + rowId + '\')"' +
-            ' title="' + viewResources.Save + '" />';
-        strRow += '<img class="undoicon editcontrol display-none"' +
-            ' src="' + autoFollowBet.CachedData.undoIcon + '"' +
-            ' onclick="autoFollowBet.undoEditFollowInfo(event, \'' + rowId + '\')"' +
-            ' title="' + viewResources.Cancel + '" />';
-        strRow += '<td>';
-        strRow += '<div class="col60 c">';
-        strRow += '<img class="deleteicon editcontrol"' +
-            ' src="' + autoFollowBet.CachedData.deleteIcon + '"' +
-            ' onclick="autoFollowBet.deleteFollowInfo(event, \'' + rowId + '\')"' +
-            ' title="' + viewResources.Delete + '" /></div></td>';
-        return strRow;
+        return htmlRow;
     },
-    beginEditFollowInfo: function (event, rowId) {
+
+    beginEditFollowInfo: function (rowId) {
         var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
         var rowInfo = $(".followInfo_" + rowId);
         rowInfo.find(".editablefield").attr("disabled", null);
@@ -458,32 +467,18 @@ var autoFollowBet = {
         var tdLabelRate = rowInfo.find('.td-labelrate');
 
         tdLabelRate.html('<input class="textboxrate txt" maxlength="4" type="text"' +
-            'onkeyup="autoFollowBet.onEditFollowInfo(event ,\'' + rowId + '\');" editor="true"/>');
+            'onkeyup="autoFollowBet.onEditFollowInfo(' + rowId + ');" editor="true"/>');
         rowInfo.find('.textboxrate').val(rate);
 
         var follower = rowInfo.find('.labelfollower').html();
         var tdLabelFollower = rowInfo.find('.td-labelfollower');
         tdLabelFollower.html('<input class="textboxfollower txt" maxlength="50" type="text"' +
-            'onkeyup="autoFollowBet.onEditFollowInfo(event ,\'' + rowId + '\');" editor="true"/>');
+            'onkeyup="autoFollowBet.onEditFollowInfo(' + rowId + ');" editor="true"/>');
         rowInfo.find('.textboxfollower').val(follower);
-    },
-    generateDropdownLiveStatusOptions: function (liveStatus) {
-        var option = '';
-        var followTypeEnums = autoFollowBet.followTypeEnums;
-        option += '<option value="' + followTypeEnums.LiveStatus_Both + '"' +
-                        (liveStatus == followTypeEnums.LiveStatus_Both ? ' selected="selected"' : '') +
-                   '>' + viewResources.Both + '</option>';
-        option += '<option value="' + followTypeEnums.LiveStatus_Live + '"' +
-                        (liveStatus == followTypeEnums.LiveStatus_Live ? ' selected="selected"' : '') +
-                   '>' + viewResources.Live + '</option>';
-        option += '<option value="' + followTypeEnums.LiveStatus_NonLive + '"' +
-                        (liveStatus == followTypeEnums.LiveStatus_NonLive ? ' selected="selected"' : '') +
-                   '>' + viewResources.Non_Live + '</option>';
-        return option;
     },
     generateDropdownOddsOptions: function (oddsValue) {
         var options =
-            '<option value="0.01" ' + (oddsValue === 0.1 ? 'selected="selected"' : '') + '>0.1</option>' +
+            '<option value="0.1" ' + (oddsValue === 0.1 ? 'selected="selected"' : '') + '>0.1</option>' +
             '<option value="0.09" ' + (oddsValue === 0.09 ? 'selected="selected"' : '') + '>0.09</option>' +
             '<option value="0.08" ' + (oddsValue === 0.08 ? 'selected="selected"' : '') + '>0.08</option>' +
             '<option value="0.07" ' + (oddsValue === 0.07 ? 'selected="selected"' : '') + '>0.07</option>' +
@@ -506,36 +501,57 @@ var autoFollowBet = {
             '<option value="-0.1" ' + (oddsValue === -0.1 ? 'selected="selected"' : '') + '>-0.1</option>';
         return options;
     },
-    undoEditFollowInfo: function (event, rowId) {
+    undoEditFollowInfo: function (rowId) {
         var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
         var rowInfo = $(".followInfo_" + rowId);
-        rowInfo.find(".editablefield").attr("disabled", "disabled");
+
         var iconEdit = rowInfo.find('.editicon');
         var iconSave = rowInfo.find('.saveicon');
         var iconUndo = rowInfo.find('.undoicon');
-        iconSave.hide()
+        iconSave.hide();
         iconUndo.hide();
         iconEdit.show();
-        var rate = rowInfo.find('.labelrate').html();
+
         var tdLabelRate = rowInfo.find('.td-labelrate');
         tdLabelRate.html('<div class="col80 c labelrate">' + followInfo.Rate + '</div>');
 
-        var follower = rowInfo.find('.labelfollower').html();
         var tdLabelFollower = rowInfo.find('.td-labelfollower');
         tdLabelFollower.html('<div class="col120 c labelfollower">' + followInfo.Follower + '</div>');
 
-        var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
-        dropdownLiveStatus.find('option[value=' + followInfo.LiveStatus + ']').attr('selected', 'selected');
-        var hdpStatus = rowInfo.find('.hdpstatus');
-        hdpStatus.attr("checked", followInfo.FollowedHDP ? "checked" : null);
-        var _1stHDPStatus = rowInfo.find('._1sthdpstatus');
-        _1stHDPStatus.attr("checked", followInfo.Followed1stHDP ? "checked" : null);
-        var overUnderStatus = rowInfo.find('.overunderstatus');
-        overUnderStatus.attr("checked", followInfo.FollowedOverUnder ? "checked" : null);
-        var _1stOverUnderStatus = rowInfo.find('._1stoverunderstatus');
-        _1stOverUnderStatus.attr("checked", followInfo.Followed1stOverUnder ? "checked" : null);
+        for (var i = 0; i < followInfo.AutoFollowBetDetail.length; i++) {
+            var currentFollowByStatus = followInfo.AutoFollowBetDetail[i];
+
+            if (currentFollowByStatus.FollowedLive) {
+                var liveRow = $(".followInfo_" + rowId + ".live");
+                var liveOdds = liveRow.find('.dropdown-odds');
+                liveOdds.val(currentFollowByStatus.Odds);
+                var livehdpStatus = liveRow.find('.hdpstatus');
+                livehdpStatus.attr("checked", currentFollowByStatus.FollowedHandicap ? "checked" : null);
+                var liveFirstHalfHdpStatus = liveRow.find('.firsthalfhdpstatus');
+                liveFirstHalfHdpStatus.attr("checked", currentFollowByStatus.FollowedFirstHalfHandicap ? "checked" : null);
+                var liveOverUnderStatus = liveRow.find('.overunderstatus');
+                liveOverUnderStatus.attr("checked", currentFollowByStatus.FollowedOverUnder ? "checked" : null);
+                var liveFirstHalfOverUnderStatus = liveRow.find('.firsthalfoverunderstatus');
+                liveFirstHalfOverUnderStatus.attr("checked", currentFollowByStatus.FollowedFirstHalfOverUnder ? "checked" : null);
+
+            } else {
+                var noneLiveRow = $(".followInfo_" + rowId + ".none-live");
+                var noneLiveOdds = noneLiveRow.find('.dropdown-odds');
+                noneLiveOdds.val(currentFollowByStatus.Odds);
+                var hdpStatus = noneLiveRow.find('.hdpstatus');
+                hdpStatus.attr("checked", currentFollowByStatus.FollowedHandicap ? "checked" : null);
+                var _1stHDPStatus = noneLiveRow.find('.firsthalfhdpstatus');
+                _1stHDPStatus.attr("checked", currentFollowByStatus.FollowedFirstHalfHandicap ? "checked" : null);
+                var overUnderStatus = noneLiveRow.find('.overunderstatus');
+                overUnderStatus.attr("checked", currentFollowByStatus.FollowedOverUnder ? "checked" : null);
+                var _1stOverUnderStatus = noneLiveRow.find('.firsthalfoverunderstatus');
+                _1stOverUnderStatus.attr("checked", currentFollowByStatus.FollowedFirstHalfOverUnder ? "checked" : null);
+            }
+        }
+
+        rowInfo.find(".editablefield").attr("disabled", "disabled");
     },
-    deleteFollowInfo: function (event, rowId) {
+    deleteFollowInfo: function (rowId) {
         autoFollowBet.blockUI();
         var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
         var isDelete = confirm(viewResources.Warning_Admin_AutoFollowBetManagement_DeleteFollowInfo);
@@ -545,7 +561,7 @@ var autoFollowBet = {
         }
 
         var postParams = {
-            Username: followInfo.Username,
+            Username: followInfo.UserName,
             RowId: rowId
         };
 
@@ -588,7 +604,7 @@ var autoFollowBet = {
             autoFollowBet.Tables.errorMessage.addClass("display-none").empty();
         }, 3000);
     },
-    updateFollowInfo: function (event, rowId) {
+    updateFollowInfo: function (rowId) {
         autoFollowBet.blockUI();
         var postParams = autoFollowBet.getUpdateInfoParams(rowId);
 
@@ -607,7 +623,10 @@ var autoFollowBet = {
             true);
     },
     getUpdateInfoParams: function (rowId) {
+        var liveRow = null;
+        var noneLiveRow = null;
         var followTypeEnums = autoFollowBet.followTypeEnums;
+        var updateFollowEnums = autoFollowBet.updateFollowEnums;
         var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
 
         var rowInfo = $(".followInfo_" + rowId);
@@ -616,26 +635,71 @@ var autoFollowBet = {
         var iconUndo = rowInfo.find('.undoicon');
         var rate = rowInfo.find('.textboxrate').val();
         var follower = rowInfo.find('.textboxfollower').val();
-        var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
-        var dropdownOdds = rowInfo.find('.dropdown-odds');
-        var hdpStatus = rowInfo.find('.hdpstatus');
-        var _1stHDPStatus = rowInfo.find('._1sthdpstatus');
-        var overUnderStatus = rowInfo.find('.overunderstatus');
-        var _1stOverUnderStatus = rowInfo.find('._1stoverunderstatus');
+
+        var noneLiveOdds = updateFollowEnums.notUpdate;
+        var liveOdds = updateFollowEnums.notUpdate;
+
+        var followedLiveHdp = updateFollowEnums.notUpdate;
+        var followedNoneLiveHdp = updateFollowEnums.notUpdate;
+
+        var followedLive1stHdp = updateFollowEnums.notUpdate;
+        var followedNoneLive1stHdp = updateFollowEnums.notUpdate;
+
+        var followedLiveOverUnder = updateFollowEnums.notUpdate;
+        var followedNoneLiveOverUnder = updateFollowEnums.notUpdate;
+
+        var followedLive1stOverUnder = updateFollowEnums.notUpdate;
+        var followedNoneLive1stOverUnder = updateFollowEnums.notUpdate;
+
+        var numberStatusFollow = followInfo.AutoFollowBetDetail.length;
+
+        if (numberStatusFollow == 2) {
+            liveRow = $(".followInfo_" + rowId + ".live");
+            noneLiveRow = $(".followInfo_" + rowId + ".none-live");
+            liveOdds = liveRow.find('.dropdown-odds').val();
+            noneLiveOdds = noneLiveRow.find('.dropdown-odds').val();
+            followedLiveHdp = liveRow.find('.hdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedNoneLiveHdp = noneLiveRow.find('.hdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedLive1stHdp = liveRow.find('.firsthalfhdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedNoneLive1stHdp = noneLiveRow.find('.firsthalfhdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedLiveOverUnder = liveRow.find('.overunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedNoneLiveOverUnder = noneLiveRow.find('.overunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedLive1stOverUnder = liveRow.find('.firsthalfoverunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            followedNoneLive1stOverUnder = noneLiveRow.find('.firsthalfoverunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+        }
+        else {
+            if (followInfo.AutoFollowBetDetail[0].FollowedLive) {
+                liveRow = $(".followInfo_" + rowId + ".live");
+                liveOdds = liveRow.find('.dropdown-odds').val();
+                followedLiveHdp = liveRow.find('.hdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedLive1stHdp = liveRow.find('.firsthalfhdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedLiveOverUnder = liveRow.find('.overunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedLive1stOverUnder = liveRow.find('.firsthalfoverunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            } else {
+                noneLiveRow = $(".followInfo_" + rowId + ".none-live");
+                noneLiveOdds = noneLiveRow.find('.dropdown-odds').val();
+                followedNoneLiveHdp = noneLiveRow.find('.hdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedNoneLive1stHdp = noneLiveRow.find('.firsthalfhdpstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedNoneLiveOverUnder = noneLiveRow.find('.overunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+                followedNoneLive1stOverUnder = noneLiveRow.find('.firsthalfoverunderstatus').attr("checked") ? updateFollowEnums.follow : updateFollowEnums.notFollow;
+            }
+        }
 
         return {
             RowId: rowId,
-            Username: followInfo.Username,
-            Follower: follower,
-            SourceId: followInfo.SourceId,
-            Source: followInfo.Source,
+            Username: followInfo.UserName,
             Rate: rate,
-            LiveStatus: dropdownLiveStatus.find("option:selected").val(),
-            FollowedHDP: hdpStatus.attr("checked") ? followTypeEnums.HDP_Follow : followTypeEnums.HDP_NotFollow,
-            Followed1stHDP: _1stHDPStatus.attr("checked") ? followTypeEnums._1stHDP_Follow : followTypeEnums._1stHDP_NotFollow,
-            FollowedOverUnder: overUnderStatus.attr("checked") ? followTypeEnums.OverUnder_Follow : followTypeEnums.OverUnder_NotFollow,
-            Followed1stOverUnder: _1stOverUnderStatus.attr("checked") ? followTypeEnums._1stOverUnder_Follow : followTypeEnums._1stOverUnder_NotFollow,
-            Odds: dropdownOdds.find("option:selected").val()
+            LiveOdds: liveOdds,
+            NoneLiveOdds: noneLiveOdds,
+            FollowedLiveHDP: followedLiveHdp,
+            FollowedNoneLiveHDP: followedNoneLiveHdp,
+            FollowedLive1stHDP: followedLive1stHdp,
+            FollowedNoneLive1stHDP: followedNoneLive1stHdp,
+            FollowedLiveOverUnder: followedLiveOverUnder,
+            FollowedNoneLiveOverUnder: followedNoneLiveOverUnder,
+            FollowedLive1stOverUnder: followedLive1stOverUnder,
+            FollowedNoneLive1stOverUnder: followedNoneLive1stOverUnder,
+            Follower: follower
         };
     },
     validateUpdateInfoParams: function (postParams) {
@@ -770,12 +834,18 @@ var autoFollowBet = {
         autoFollowBet.Tables.textboxFollower_AddDialog = $('#textbox-follower-addnewdialog');
         autoFollowBet.Tables.buttonSubmit_AddDialog = $('#buttonsubmit-addnewdialog');
 
-        autoFollowBet.Tables.dropdownLiveStatus_AddDialog = $('#dropdown-livestatus-adddialog');
-        autoFollowBet.Tables.hdpStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.hdpstatus');
-        autoFollowBet.Tables._1stHDPStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('._1sthdpstatus');
-        autoFollowBet.Tables.overUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.overunderstatus');
-        autoFollowBet.Tables._1stOverUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('._1stoverunderstatus');
-        autoFollowBet.Tables.dropdownAddOdds = $('#dropdown-odds-adddialog');
+        autoFollowBet.Tables.liveHdpStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedLive .hdpstatus');
+        autoFollowBet.Tables.live1stHDPStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedLive ._1sthdpstatus');
+        autoFollowBet.Tables.liveOverUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedLive .overunderstatus');
+        autoFollowBet.Tables.live1stOverUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedLive ._1stoverunderstatus');
+        autoFollowBet.Tables.dropdownAddLiveOdds = $('#dropdown-live-odds-adddialog');
+        autoFollowBet.Tables.noneLiveHdpStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedNoneLive .hdpstatus');
+        autoFollowBet.Tables.noneLive1stHDPStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedNoneLive ._1sthdpstatus');
+        autoFollowBet.Tables.noneLiveOverUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedNoneLive .overunderstatus');
+        autoFollowBet.Tables.noneLive1stOverUnderStatus_AddDialog = autoFollowBet.Tables.addNewFollowedCustomerDialog.find('.followedNoneLive ._1stoverunderstatus');
+        autoFollowBet.Tables.dropdownAddNoneLiveOdds = $('#dropdown-nonelive-odds-adddialog');
+
+        autoFollowBet.Tables.dropdownCustomer = $('#dropdown-customer');
     },
     getFollowType: function () {
         autoFollowBet.blockUI();
@@ -889,7 +959,7 @@ var autoFollowBet = {
             }
         });
     },
-    onEditFollowInfo: function (event, rowId) {
+    onEditFollowInfo: function (rowId) {
         //        var rowInfo = $(".followInfo_" + rowId);
         //        var rate = rowInfo.find(".textboxrate").val();
     },
@@ -899,15 +969,7 @@ var autoFollowBet = {
         autoFollowBet.Tables.textboxUsername_AddDialog.val('');
         autoFollowBet.Tables.textboxFollower_AddDialog.val(autoFollowBet.CachedData.defaultFollowerName);
         autoFollowBet.Tables.textboxRate_AddDialog.val('');
-
-        autoFollowBet.Tables.dropdownLiveStatus_AddDialog.find('option[value=' + followTypeEnums.LiveStatus_Both + ']').attr('selected', 'selected');
-        autoFollowBet.Tables.hdpStatus_AddDialog.attr("checked", "checked");
-        autoFollowBet.Tables._1stHDPStatus_AddDialog.attr("checked", "checked");
-        autoFollowBet.Tables.overUnderStatus_AddDialog.attr("checked", "checked");
-        autoFollowBet.Tables._1stOverUnderStatus_AddDialog.attr("checked", "checked");
-
         autoFollowBet.Tables.addNewFollowedCustomerDialog.removeClass("display-none").dialog("open");
-        document.getElementById('dropdown-odds-adddialog').options[10].selected = true;
     },
     addNewFollowedCustomer: function () {
         autoFollowBet.blockUI();
@@ -929,22 +991,34 @@ var autoFollowBet = {
         var followTypeEnums = autoFollowBet.followTypeEnums;
         return {
             Username: autoFollowBet.Tables.textboxUsername_AddDialog.val(),
-            Follower: autoFollowBet.Tables.textboxFollower_AddDialog.val(),
             Rate: autoFollowBet.Tables.textboxRate_AddDialog.val(),
-            LiveStatus: autoFollowBet.Tables.dropdownLiveStatus_AddDialog.val(),
-            FollowedHDP: autoFollowBet.Tables.hdpStatus_AddDialog.attr("checked") ?
-                followTypeEnums.HDP_Follow :
-                followTypeEnums.HDP_NotFollow,
-            Followed1stHDP: autoFollowBet.Tables._1stHDPStatus_AddDialog.attr("checked") ?
-                followTypeEnums._1stHDP_Follow :
-                followTypeEnums._1stHDP_NotFollow,
-            FollowedOverUnder: autoFollowBet.Tables.overUnderStatus_AddDialog.attr("checked") ?
-                followTypeEnums.OverUnder_Follow :
-                followTypeEnums.OverUnder_NotFollow,
-            Followed1stOverUnder: autoFollowBet.Tables._1stOverUnderStatus_AddDialog.attr("checked") ?
-                followTypeEnums._1stOverUnder_Follow :
-                followTypeEnums._1stOverUnder_NotFollow,
-            Odds: autoFollowBet.Tables.dropdownAddOdds.val()
+            LiveOdds: autoFollowBet.Tables.dropdownAddLiveOdds.val(),
+            NoneLiveOdds: autoFollowBet.Tables.dropdownAddNoneLiveOdds.val(),
+            FollowedLiveHDP: autoFollowBet.Tables.liveHdpStatus_AddDialog.attr("checked") ?
+                true :
+                false,
+            FollowedNoneLiveHDP: autoFollowBet.Tables.noneLiveHdpStatus_AddDialog.attr("checked") ?
+                true :
+                false,
+            FollowedLive1stHDP: autoFollowBet.Tables.live1stHDPStatus_AddDialog.attr("checked") ?
+                true :
+                false,
+            FollowedNoneLive1stHDP: autoFollowBet.Tables.noneLive1stHDPStatus_AddDialog.attr("checked") ?
+            true :
+            false,
+            FollowedLiveOverUnder: autoFollowBet.Tables.liveOverUnderStatus_AddDialog.attr("checked") ?
+            true :
+            false,
+            FollowedNoneLiveOverUnder: autoFollowBet.Tables.noneLiveOverUnderStatus_AddDialog.attr("checked") ?
+            true :
+            false,
+            FollowedLive1stOverUnder: autoFollowBet.Tables.live1stOverUnderStatus_AddDialog.attr("checked") ?
+            true :
+            false,
+            FollowedNoneLive1stOverUnder: autoFollowBet.Tables.noneLive1stOverUnderStatus_AddDialog.attr("checked") ?
+            true :
+            false,
+            Follower: autoFollowBet.Tables.textboxFollower_AddDialog.val()
         };
     },
     validateAddInfoParams: function (postParams) {

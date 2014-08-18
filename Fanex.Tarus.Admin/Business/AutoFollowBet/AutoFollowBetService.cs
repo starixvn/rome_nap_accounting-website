@@ -19,6 +19,9 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
     using Fanex.Tarus.Admin.Models.AutoFollowBet;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.Admin.Entities.AutoFollowBet;
+    using System.Linq;
+    using System.Data;
 
     /// <summary>
     /// Auto Follow Bet Service.
@@ -203,6 +206,55 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
             }
 
             return null;
+        }
+
+        public List<AutoFollowBet> GetAutoFollowBet(GetAutoFollowedBetCustomerCriteria criteria)
+        {
+            List<AutoFollowBet> result = new List<AutoFollowBet>();
+
+            var rawData = _autoFollowBetAccess.GetAutoFollowBet(criteria);
+
+            var autoFollowBetGroups = rawData.GroupBy(
+                x => new {
+                    Username = x.Field<string>("username"),
+                    Source = x.Field<byte>("src"),
+                    Rate = x.Field<decimal>("Rate"),
+                    BaStatus = x.Field<int>("IsBA"),
+                    Follower = x.Field<string>("Follower"),
+                    IsAgent = x.Field<int>("IsAgent")
+                }).ToList();
+
+            foreach (var group in autoFollowBetGroups)
+            {
+                AutoFollowBet autoFollowBet = new AutoFollowBet
+                {
+                    UserName = Converter.ToString2(group.Key.Username),
+                    Source = Convert.ToBoolean(group.Key.Source),
+                    Rate = Converter.ToDecimal(group.Key.Rate),
+                    BaStatus = Convert.ToBoolean(group.Key.BaStatus),
+                    Follower = Converter.ToString2(group.Key.Follower),
+                    IsAgent = Convert.ToBoolean(group.Key.IsAgent)
+                };
+
+                foreach (var item in group)
+                {
+                    AutoFollowBetDetail autoFollowBetDetail = new AutoFollowBetDetail
+                    {
+                        Odds = Converter.ToDecimal(item.Field<decimal>("Odds")),
+                        FollowedLive = Convert.ToBoolean(item.Field<byte>("FollowLive")),
+                        FollowedHandicap = Convert.ToBoolean(item.Field<bool>("Follow1")),
+                        FollowedFirstHalfHandicap = Convert.ToBoolean(item.Field<bool>("Follow7")),
+                        FollowedOverUnder = Convert.ToBoolean(item.Field<bool>("Follow3")),
+                        FollowedFirstHalfOverUnder = Convert.ToBoolean(item.Field<bool>("Follow8"))
+                    };
+
+                    autoFollowBet.AutoFollowBetDetail.Add(autoFollowBetDetail);
+                }
+
+                result.Add(autoFollowBet);
+            }
+
+            return result;
         }
 
         /// <summary>

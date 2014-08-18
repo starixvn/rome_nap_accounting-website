@@ -23,23 +23,29 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
     {
         public string Username { get; set; }
 
-        public string Follower { get; set; }
-
         public decimal Rate { get; set; }
 
-        public int SourceId { get; set; }
+        public decimal LiveOdds { get; set; }
 
-        public int LiveStatus { get; set; }
+        public decimal NoneLiveOdds { get; set; }
 
-        public int FollowedHDP { get; set; }
+        public bool FollowedLiveHDP { get; set; }
 
-        public int Followed1stHDP { get; set; }
+        public bool FollowedNoneLiveHDP { get; set; }
 
-        public int FollowedOverUnder { get; set; }
+        public bool FollowedLive1stHDP { get; set; }
 
-        public int Followed1stOverUnder { get; set; }
+        public bool FollowedNoneLive1stHDP { get; set; }
 
-        public decimal Odds { get; set; }
+        public bool FollowedLiveOverUnder { get; set; }
+
+        public bool FollowedNoneLiveOverUnder { get; set; }
+
+        public bool FollowedLive1stOverUnder { get; set; }
+
+        public bool FollowedNoneLive1stOverUnder { get; set; }
+
+        public string Follower { get; set; }
 
         public int EditorId
         {
@@ -65,19 +71,22 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
         {
             var storeProcedureParams = new Hashtable();
             storeProcedureParams.Add("username", Username ?? string.Empty);
-            storeProcedureParams.Add("follower", Follower ?? string.Empty);
             storeProcedureParams.Add("rate", Rate);
-            storeProcedureParams.Add("followlive", LiveStatus);
-            storeProcedureParams.Add("handicap", FollowedHDP);
-            storeProcedureParams.Add("1sthandicap", Followed1stHDP);
-            storeProcedureParams.Add("overunder", FollowedOverUnder);
-            storeProcedureParams.Add("1stoverunder", Followed1stOverUnder);
-
+            storeProcedureParams.Add("liveodds", LiveOdds);
+            storeProcedureParams.Add("nonliveodds", NoneLiveOdds);
+            storeProcedureParams.Add("livehdp", FollowedLiveHDP);
+            storeProcedureParams.Add("nonlivehdp", FollowedNoneLiveHDP);
+            storeProcedureParams.Add("live1sthdp", FollowedLive1stHDP);
+            storeProcedureParams.Add("nonlive1sthdp", FollowedNoneLive1stHDP);
+            storeProcedureParams.Add("liveou", FollowedLiveOverUnder);
+            storeProcedureParams.Add("nonliveou", FollowedNoneLiveOverUnder);
+            storeProcedureParams.Add("live1stou", FollowedLive1stOverUnder);
+            storeProcedureParams.Add("nonlive1stou", FollowedNoneLive1stOverUnder);
+            storeProcedureParams.Add("follower", Follower ?? string.Empty);
             storeProcedureParams.Add("userid", EditorId);
             storeProcedureParams.Add("ip", IP);
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
-            storeProcedureParams.Add("odds", Odds);
 
             return storeProcedureParams;
         }
