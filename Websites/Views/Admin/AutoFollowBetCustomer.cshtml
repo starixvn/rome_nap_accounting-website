@@ -95,12 +95,25 @@
                         </td>
                         <td>
                             <div class="b">
+                                Customer
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <select id="dropdown-customer">
+                                <option value="%">All</option>
+                                <option value="@CustomerConstants.Agent">Agent</option>
+                                <option value="@CustomerConstants.Member">Member</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <div class="b">
                                 Source
                             </div>
                         </td>
                         <td style="width: 120px">
                             <select id="dropdown-source">
-                                <option value="@SourceTypeConstants.All">All</option>
+                                <option value="%">All</option>
                                 <option value="@SourceTypeConstants.Auto">Auto</option>
                                 <option value="@SourceTypeConstants.Manual">Manual</option>
                             </select>
@@ -112,7 +125,7 @@
                         </td>
                         <td style="width: 120px">
                             <select id="dlStatus" style="vertical-align: middle; width: 85px">
-                                <option value="@BAStatusConstants.All">All</option>
+                                <option value="%">All</option>
                                 <option value="@BAStatusConstants.BAEnabled">BA Enabled</option>
                                 <option value="@BAStatusConstants.BADisabled">BA Disabled</option>
                             </select>
@@ -210,6 +223,11 @@
                                     </div>
                                 </td>
                                 <td style="border-bottom: none 0px;" class="title2">
+                                    <div class="col60 c">
+                                        Agent
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;" class="title2">
                                     <div class="col40 c">
                                         Edit
                                     </div>
@@ -283,16 +301,15 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <table class="filter-adddialog">
+                    <table class="filter-adddialog addAutoFollowBetForm">
                         <tr>
                             <td class="title2">
                                 <div class="col100 c">
-                                    (+/-)Odds
                                 </div>
                             </td>
                             <td class="title2">
                                 <div class="col100 c">
-                                    Live/None Live
+                                    (+/-)Odds
                                 </div>
                             </td>
                             <td class="title2">
@@ -316,11 +333,14 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="followedNoneLive">
+                            <td>
+                                 <div class="col100 c">None-Live</div>
+                            </td>
                             <td>
                                 <div class="col100 c">
-                                    <select id="dropdown-odds-adddialog">
-                                        <option value="0.01">0.1</option>
+                                    <select id="dropdown-nonelive-odds-adddialog" class="ddlNoneLiveOdds">
+                                        <option value="0.1">0.1</option>
                                         <option value="0.09">0.09</option>
                                         <option value="0.08">0.08</option>
                                         <option value="0.07">0.07</option>
@@ -345,32 +365,75 @@
                                 </div>
                             </td>
                             <td>
+                                <div class="col60 c">
+                                    <input class="hdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1sthdpstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="overunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1stoverunderstatus chkBox" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="followedLive">
+                            <td>
+                                 <div class="col100 c">Live</div>
+                            </td>
+                            <td>
                                 <div class="col100 c">
-                                    <select id="dropdown-livestatus-adddialog">
-                                        <option value="@LiveStatusConstants.Both" selected="selected">Both</option>
-                                        <option value="@LiveStatusConstants.Live">Live</option>
-                                        <option value="@LiveStatusConstants.NonLive">Non Live</option>
+                                    <select id="dropdown-live-odds-adddialog" class="ddlLiveOdds">
+                                        <option value="0.1">0.1</option>
+                                        <option value="0.09">0.09</option>
+                                        <option value="0.08">0.08</option>
+                                        <option value="0.07">0.07</option>
+                                        <option value="0.06">0.06</option>
+                                        <option value="0.05">0.05</option>
+                                        <option value="0.04">0.04</option>
+                                        <option value="0.03">0.03</option>
+                                        <option value="0.02">0.02</option>
+                                        <option value="0.01">0.01</option>
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="-0.01">-0.01</option>
+                                        <option value="-0.02">-0.02</option>
+                                        <option value="-0.03">-0.03</option>
+                                        <option value="-0.04">-0.04</option>
+                                        <option value="-0.05">-0.05</option>
+                                        <option value="-0.06">-0.06</option>
+                                        <option value="-0.07">-0.07</option>
+                                        <option value="-0.08">-0.08</option>
+                                        <option value="-0.09">-0.09</option>
+                                        <option value="-0.1">-0.1</option>
                                     </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="col60 c">
-                                    <input class="hdpstatus" type="checkbox" checked="checked" />
+                                    <input class="hdpstatus chkBox" type="checkbox" checked="checked" />
                                 </div>
                             </td>
                             <td>
                                 <div class="col60 c">
-                                    <input class="_1sthdpstatus" type="checkbox" checked="checked" />
+                                    <input class="_1sthdpstatus chkBox" type="checkbox" checked="checked" />
                                 </div>
                             </td>
                             <td>
                                 <div class="col60 c">
-                                    <input class="overunderstatus" type="checkbox" checked="checked" />
+                                    <input class="overunderstatus chkBox" type="checkbox" checked="checked" />
                                 </div>
                             </td>
                             <td>
                                 <div class="col60 c">
-                                    <input class="_1stoverunderstatus" type="checkbox" checked="checked" />
+                                    <input class="_1stoverunderstatus chkBox" type="checkbox" checked="checked" />
                                 </div>
                             </td>
                         </tr>

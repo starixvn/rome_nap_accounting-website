@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
     using Fanex.Data;
     using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
     using Fanex.Tarus.Admin.Entities;
+    using System.Linq;
 
     /// <summary>
     /// Auto Follow Bet Access.
@@ -120,6 +121,24 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
             }
 
             return result;
+        }
+
+        public List<DataRow> GetAutoFollowBet(GetAutoFollowedBetCustomerCriteria criteria)
+        {
+            var dataTable = new DataTable();
+
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objectDb.AssignParamValues(criteria.GetStoreProcedureParams());
+                DataSet dataSet = objectDb.ExecuteDataSet();
+
+                if (dataSet.Tables.Count > 0)
+                {
+                    dataTable = dataSet.Tables[0];
+                }
+            }
+
+            return dataTable.AsEnumerable().ToList();
         }
     }
 }
