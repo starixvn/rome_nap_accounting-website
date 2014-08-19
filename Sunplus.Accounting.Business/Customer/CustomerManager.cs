@@ -370,43 +370,30 @@ namespace Sunplus.Accounting.Business.Customer
                             }
 
                         #endregion assign data
-
-                            if (parentId > 0)
-                            {
-                                _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
-                            }
-
                             bool isAllowEditCS = true;
                             bool disabledCSParent = false;
-                            if (parentId != 0)
-                            {
-                                isAllowEditCS = Permissions.IsAllowEditCasino(parentId, _custparent.IsCasinoSync);
-                                disabledCSParent = _custparent.IsDisableCasino;
-                            }
-
                             bool isAllowEditBI = true;
                             bool disabledBIParent = false;
-                            if (parentId != 0)
-                            {
-                                isAllowEditBI = Permissions.IsAllowEditBingo(parentId, _custparent.IsBingoSync);
-                                disabledBIParent = _custparent.IsDisabledBingoGame;
-                            }
-
                             bool isAllowEditLCS = true;
                             bool isAllowEditVS = true;
                             bool disabledLCSParent = false;
-                            if (parentId != 0)
+                            bool disalbedVSParent = false;
+                            bool disabledEsportsParent = false;
+                            if (parentId > 0)
                             {
+                                _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
+                                isAllowEditCS = Permissions.IsAllowEditCasino(parentId, _custparent.IsCasinoSync);
+                                disabledCSParent = _custparent.IsDisableCasino;
+                                isAllowEditBI = Permissions.IsAllowEditBingo(parentId, _custparent.IsBingoSync);
+                                disabledBIParent = _custparent.IsDisabledBingoGame;
                                 isAllowEditLCS = Permissions.IsAllowEditLiveCasino(parentId, _custparent.IsLiveCasinoSync);
                                 isAllowEditVS = Permissions.IsAllowEditVirtualSports(parentId, _custparent.IsHideVirtualSports);
                                 disabledLCSParent = _custparent.IsDisableLiveCasino;
+                                disalbedVSParent = _custparent.IsDisableVirtualSports;
+                                disabledEsportsParent = _custparent.IsDisableEsports;
                             }
 
-                            var disalbedVSParent = false;
-                            if (parentId != 0)
-                            {
-                                disalbedVSParent = _custparent.IsDisableVirtualSports;
-                            }
+                          
 
                             string statusClass = " ";
                             string statusTip = "";
@@ -806,7 +793,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 GenSettingControl(ref htmlcontent, row1, row3, roleId, parentId, _custparent,
                                                   isManageCustomerAccess, suspend, autosuspend, UplineAutoSuspend, isAllowEditCS,
                                                   disabledCSParent, isAllowEditBI, disabledBIParent, isAllowEditLCS,
-                                                  disabledLCSParent, disalbedVSParent);
+                                                  disabledLCSParent, disalbedVSParent, disabledEsportsParent);
 
                                 #endregion Setting
 
@@ -1108,7 +1095,7 @@ namespace Sunplus.Accounting.Business.Customer
         private void GenSettingControl(ref string htmlcontent, DataRow row1, DataRow row3, int roleId, int parentID,
             CustomerDetail CustParent, bool isManageCustomerAccess, bool isSuspended, bool autosuspend, bool UplineAutoSuspend,
             bool isAllowEdit, bool disabledCSParent, bool isAllowEditBI, bool disabledBIParent, bool isAllowEditLCS,
-            bool disableLiveCasinoParent, bool disabledVSParent)
+            bool disableLiveCasinoParent, bool disabledVSParent, bool disabledEsportsParent)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1311,6 +1298,19 @@ namespace Sunplus.Accounting.Business.Customer
             }
 
             #endregion HRFixedOdds
+
+            #region Esports
+
+            bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
+            bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesvirtualsports"]) ? false : Convert.ToBoolean(row1["disabledownlinesvirtualsports"]);
+            sg.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
+                                                   (roleId > 1), disabledEsports,
+                                                   CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
+                                                   !disabledEsportsDownline));
+            
+            TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", disabledEsports ? 1 : 0);
+
+            #endregion Esports
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
@@ -2203,6 +2203,54 @@ namespace Sunplus.Accounting.Business.Customer
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "virtualsports"),
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, "VS");
+            }
+        }
+
+        private SettingControl GetSettingControlEsports(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
+            bool hasDownLine, bool hasDownline, bool isenabled, bool disabledUpline, bool disableDownLine)
+        {
+            if (!WebSettings.EnableVirtualSports)
+            {
+                return
+                    new SettingControl(
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "disableEsports"),
+                        false, true, "", "", "", "", statusName, roleId, disableDownLine, "ES");
+            }
+            else
+            {
+                string classname = "";
+                string jsonclick = "";
+                string jsonmouseover = "";
+                string jsonmouseout = "";
+
+                if (isManageCustomerAccess)
+                {
+                    if (isenabled)
+                    {
+                        if (4 == roleId || !disabledUpline)
+                        {
+                            classname = "canchange";
+                            jsonclick = "return ShowDisablePop(this);";
+                        }
+                        else
+                        {
+                            classname = "cannotchange";
+                            jsonmouseout = "UnTip()";
+                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledESUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                        }
+                    }
+                    else
+                    {
+                        classname = "cannotchange";
+                        jsonmouseout = "UnTip()";
+                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                    }
+                }
+                return
+                    new SettingControl(
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEsports"),
+                        currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
+                        disableDownLine, "ES");
             }
         }
 

@@ -720,6 +720,39 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
+        public void CustomerUpdateDisabledEsport(int accid, int custid, bool disabled, string ip, bool isDisableDownlines)
+        {
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("userid", accid);
+                param.Add("custid", custid);
+                param.Add("disable", disabled);
+                param.Add("language", "E");
+                param.Add("ip", ip);
+                param.Add("disabledownlines", isDisableDownlines);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableVS", 120))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
+                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
+                }
+            }
+            catch (AccException accException)
+            {
+                throw accException;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
         public void CustomerUpdateDisableHorseRacingFixedOdds(
             int userId,
             int custId,
