@@ -411,8 +411,8 @@ var autoFollowBet = {
                                 (followBetByLiveStatus.FollowedFirstHalfOverUnder ? ' checked = "checked"' : '') + '/></div>\
                 </td>\
                 <td rowspan="' + numberChildRow + '" class="td-labelfollower col120"><div class="col120 c labelfollower">' + followInfo.Follower + '</div></td>\
-                <td rowspan="' + numberChildRow + '"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
-                <td rowspan="' + numberChildRow + '"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '" class="col60 c"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '" class="col60 c"><div class="col60 c ' + (followInfo.IsAgent ? "checkStatus" : "") + '"></div></td>\
                 <td rowspan="' + numberChildRow + '"><div class="col40 c">\
                     <img class="editcontrol editicon" src="'
                      + autoFollowBet.CachedData.editIcon + '" onclick="autoFollowBet.beginEditFollowInfo(' + rowId + ')"\
