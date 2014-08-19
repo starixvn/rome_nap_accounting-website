@@ -7,6 +7,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Bingo.Core;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -33,6 +34,7 @@ public partial class Others_Menu : System.Web.UI.Page
         string bingopath = "../PT/Bingo/";
         var liveCasinoPath = "../../LiveCasino/PTSetting/";
         var virtualSportsPath = string.Empty;
+        var kenoPath = string.Empty;
         var uplineId = CastAide.AsInt32(arrCustID[3].Split('=')[1]);
         
         if (roleid == 1)
@@ -42,6 +44,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "MemberUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath += "EditMember.aspx?custId=" + custID + "&uplineId=" + uplineId;
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + AppSession.AccId);
         }
         else if (roleid == 2)
         {
@@ -50,6 +53,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "AgentUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath += "EditAgent.aspx?custId=" + custID + "&uplineId=" + uplineId;
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + AppSession.AccId);
         }
         else if (roleid == 3)
         {
@@ -58,6 +62,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "MasterUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath += "EditMaster.aspx?custId=" + custID + "&uplineId=" + uplineId;
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + AppSession.AccId);
         }
         else
         {
@@ -67,6 +72,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "SuperUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath += "EditSuper.aspx?custId=" + custID + "&exchangeId=" + exChangeId;
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + AppSession.AccId);
         }
         if (WebSettings.disabledFI || !AllowedFi || AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         {
@@ -94,6 +100,11 @@ public partial class Others_Menu : System.Web.UI.Page
         if(!allowVirtualSports)
             TemplateHandler.RemoveBlock(ref tplMenu, "VirtualSports");
 
+        if (!KenoSection.Instance.ShowSetting)
+        {
+            TemplateHandler.RemoveBlock(ref tplMenu, "Keno");
+        }
+
         TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default
         TemplateHandler.Assign(ref tplMenu, "{urlFinance}", "UpdateFinancePT.aspx" + Request.UrlReferrer.Query);
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
@@ -102,6 +113,7 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref tplMenu, "{urlPoker}", PokerURL);
         TemplateHandler.Assign(ref tplMenu, "{urlLiveCasino}", liveCasinoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlVirtualSports}", virtualSportsPath);
+        TemplateHandler.Assign(ref tplMenu, "{urlKeno}", kenoPath);
 
         this.sMenu.Text = tplMenu;
     }

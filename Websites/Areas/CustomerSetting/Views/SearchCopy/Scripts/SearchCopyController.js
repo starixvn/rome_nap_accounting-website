@@ -98,7 +98,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.resetFrameSource();
             };
 
-            if ($scope.existedUser.userid == "-1") {
+            if ($scope.existedUser.userid == "-1" || $scope.existedUser.userid == "600") {
                 $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
             }
             else {
@@ -152,7 +152,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#errorMsg").width("700");
             validate.setRequired("#maxCredit");
             return false;
-        }       
+        }
 
         return true;
     };
@@ -295,23 +295,32 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 //var statusSports = customerSettingView.StatusSports;
 
                 $scope.existedUser.userid = custid;
-                if (custid != "-1") {
-                    //step1
-                    message.hideAlertMessage("errorMsg");
-                    $("#checkExisted").removeClass('not_success');
-                    $("#checkExisted").addClass('success');
 
-                    $scope.getCustomerInfoByUserId(custid);
+                switch (custid) {
+                    case -1:
+                        $("#checkExisted").removeClass('success');
+                        $("#checkExisted").addClass('not_success');
+                        message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
+                        $("#errorMsg").width("550");
+                        break;
+                    case 600:
+                        $("#checkExisted").removeClass('success');
+                        $("#checkExisted").addClass('not_success');
+                        message.showAlertMessage("errorMsg", "This account was disabled.", 1);
+                        $("#errorMsg").width("550");
+                        break;
+                    default:
+                        //step1
+                        message.hideAlertMessage("errorMsg");
+                        $("#checkExisted").removeClass('not_success');
+                        $("#checkExisted").addClass('success');
 
-                    if (callback) {
-                        callback();
-                    }
-                }
-                else {
-                    $("#checkExisted").removeClass('success');
-                    $("#checkExisted").addClass('not_success');
-                    message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
-                    $("#errorMsg").width("550");
+                        $scope.getCustomerInfoByUserId(custid);
+
+                        if (callback) {
+                            callback();
+                        }
+                        break;
                 }
 
                 try { parent.jQuery.unblockUI() } catch (e) { }
@@ -341,7 +350,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
 
                 $scope.existedUser.selectedSite.SiteName = custInfo.Site;
-                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);                
+                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
@@ -413,7 +422,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             MobilePhone: $scope.newUser.mobilephone,
             Site: $scope.existedUser.selectedSite.SiteName,
             Fax: $scope.newUser.fax,
-            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),            
+            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
             IsInternal: $scope.newUser.internaluser,
             CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,

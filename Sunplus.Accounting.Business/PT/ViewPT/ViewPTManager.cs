@@ -24,6 +24,8 @@ using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Result = Sunplus.Bingo.Entities.Result;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Sunplus.Accounting.Entities.Criteria.ViewPT;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
@@ -235,10 +237,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             var result = new ViewPtDTO();
             try
             {
-                if (sportId == Constants.Sport.Casino || sportId == Constants.Sport.BingoGame)
-                    return CasinoPositionTaking(userName, sportId, bettypeId);
-                if (sportId == Constants.Sport.LiveCasino)
-                    return LiveCasinoPositionTaking(userName);
+                switch (sportId)
+                {
+                    case Constants.Sport.Casino:
+                    case Constants.Sport.BingoGame:
+                        return CasinoPositionTaking(userName, sportId, bettypeId);
+                    case Constants.Sport.LiveCasino:
+                        return LiveCasinoPositionTaking(userName, null, null);
+                    case Constants.Sport.Keno:
+                        var viewPTCriteria = new ViewKenoPTCriteria
+                        {
+                            Username = userName,
+                            SportId = sportId,
+                            BetType = bettypeId,
+                            IsLive = isLive,
+                            HasCommission = false
+                        };
+
+                        return (new KenoPT()).ViewPositionTaking(viewPTCriteria);
+                }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
                                                 sportId == 999 ? Constants.BetType.MixParlay : bettypeId, isLive, false);
@@ -1364,6 +1381,18 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 sports.SportsList.Add(sport);
             }
 
+            if (KenoSection.Instance.ShowSetting)
+            {
+                var kenoPT = new KenoPT();
+                var sport = new Sport()
+                {
+                    SportId = Constants.Sport.Keno,
+                    SportName = "Keno",
+                    Bettype = kenoPT.GetBettypeByKeno()
+                };
+                sports.SportsList.Add(sport);
+            }
+
             #endregion live casino
 
             #region All Sports
@@ -1378,6 +1407,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
             #endregion All Sports
         }
+
 
         private static BettypeDTO GetListBingoGameKindGameType()
         {
@@ -2438,14 +2468,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             return result;
         }
 
-        private static ViewPtDTO LiveCasinoPositionTaking(string userName)
+        private static ViewPtDTO LiveCasinoPositionTaking(string userName, int? sportType, int? bettype)
         {
             var result = new ViewPtDTO();
             try
             {
                 #region get data
 
-                var dtPt = SelectCustomer.GetLiveCasinoPt(userName);
+                var dtPt = SelectCustomer.GetLiveCasinoPt(userName, sportType, bettype);
 
                 #endregion get data
 

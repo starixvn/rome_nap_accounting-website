@@ -140,6 +140,7 @@ namespace Sunplus.Accounting.Core.Common
             public const int BingoGame = 252;
             public const int NumberGame = 161;
             public const int LiveCasino = 162;
+            public const int Keno = 202;
             public static readonly IEnumerable<int> Sports = new int[] { Soccer, Basketball, Football, Tennis, Baseball, Golf, Motorsports, OtherSports };
 
             public static string GetSportName(int sportId)

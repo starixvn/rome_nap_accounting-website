@@ -3,6 +3,9 @@
 @using Sunplus.Accounting.Core.Configurations
 @using Sunplus.Bingo.Core;
 @using System.Collections;
+@using Fanex.CustomerSetting.Module.KenoStatus.Configurations
+@using Sunplus.Accounting.Core.Common;
+
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
@@ -48,7 +51,8 @@
     hash.Add("disabledFI", disabledFI);
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
-
+    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
+    
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -155,6 +159,11 @@
                             Virtual Sports</li>
                     }
                     <!--/edit-virtualSports-->
+                        @if (CastAide.AsBoolean(hash["allowKeno"]))
+                    {
+                        <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">
+                            Keno</li>
+                    }
                 </ul>
             </div>
         </td>
@@ -623,4 +632,5 @@
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
+    var _userId = @AppSession.AccId;
 </script>
