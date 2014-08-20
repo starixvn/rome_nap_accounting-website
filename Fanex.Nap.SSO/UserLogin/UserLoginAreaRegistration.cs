@@ -26,11 +26,8 @@ namespace Fanex.NAP.SSO
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
-                this.AreaName + "_DefaultAreas",
-                "UserLogin/{controller}/{action}/{id}",
-                new { controller = "Login", action = "Index", id = UrlParameter.Optional }, new[] { "Fanex.NAP.SSO.Controllers" });
-          
+            var controller = new { controller = "Login", action = "Index", id = UrlParameter.Optional };
+            context.MapRoute(this.AreaName + "_DefaultAreas", "UserLogin/{controller}/{action}/{id}", controller, new[] { "Fanex.NAP.SSO.Controllers" });
         }
     }
 }

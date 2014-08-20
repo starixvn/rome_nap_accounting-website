@@ -103,6 +103,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.AuthenticationFilter"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.SSO", "Fanex.Nap.SSO\Fanex.Nap.SSO.csproj", "{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{FEA96353-136C-46AF-A440-C0EB195E4AF1}"
+	ProjectSection(SolutionItems) = preProject
+		CodeAnalysis\FxCopDictionary.xml = CodeAnalysis\FxCopDictionary.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

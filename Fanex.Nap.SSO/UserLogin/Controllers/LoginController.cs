@@ -3,9 +3,6 @@
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
-// <history>
-//   <change who="Edward.Nguyen" date="2012.8.28">Add properties _currentContext</change>
-// </history>
 
 namespace Fanex.NAP.SSO
 {
@@ -18,7 +15,6 @@ namespace Fanex.NAP.SSO
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
     using Sunplus.Accounting.Core.Common;
 
     /// <summary>
@@ -27,9 +23,11 @@ namespace Fanex.NAP.SSO
     public class LoginController : Controller
     {
         #region members
+
+        private CurrentContext CurrentContext;
         private IUserService _userService;
-        protected readonly CurrentContext CurrentContext;
-        #endregion
+
+        #endregion members
 
         #region ctors
 
@@ -41,13 +39,11 @@ namespace Fanex.NAP.SSO
         public LoginController(
             IUserService userService)
         {
-
             this._userService = userService ?? new UserService();
             this.CurrentContext = new CurrentContext();
-
         }
 
-        #endregion
+        #endregion ctors
 
         #region login
 
@@ -94,10 +90,10 @@ namespace Fanex.NAP.SSO
 
         private string NapURL()
         {
-            Uri uri = HttpContext.Request.Url;        
+            Uri uri = HttpContext.Request.Url;
             return string.Format(ConfigurationManager.AppSettings["NapReportLoginUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
         }
 
-        #endregion
+        #endregion login
     }
 }
