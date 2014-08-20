@@ -90,7 +90,7 @@ var autoFollowBet = {
             Followed1stOverUnder: null
         },
         gridHeight: $(window).height() - 150,
-        gridWidth: 1030,
+        gridWidth: 1112,
         pageIndex: 0,
         totalItems: 0,
         pageSize: 50,
@@ -392,11 +392,11 @@ var autoFollowBet = {
 
             if (i == 0) {
                 htmlRow += '<tr class="' + cssClass + ' followInfo_' + rowId + ' ' + liveStatusClass + '">\
-                <td rowspan="' + numberChildRow + '"><div class="col100 c">' + followInfo.UserName + '</div></td>\
-                <td rowspan="' + numberChildRow + '"><div class="col60 c">' + (followInfo.Source ? "Auto" : "Manual") + '</div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col120 c">' + followInfo.UserName + '</div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col80 c">' + (followInfo.Source ? "Auto" : "Manual") + '</div></td>\
                 <td rowspan="' + numberChildRow + '" class="td-labelrate col80"><div class="col80 c labelrate">' + followInfo.Rate + '</div></td>\
-                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
                 <td><div class="col90 c">' + (followBetByLiveStatus.FollowedLive ? "Live" : "Non-Live") + '</div></td>\
+                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
                 <td class="c col60">\
                         <div class="c col60"><input class="hdpstatus editablefield" type="checkbox" disabled="disabled"' +
                             (followBetByLiveStatus.FollowedHandicap ? ' checked = "checked"' : '') + '/></div></td>\
@@ -411,9 +411,9 @@ var autoFollowBet = {
                                 (followBetByLiveStatus.FollowedFirstHalfOverUnder ? ' checked = "checked"' : '') + '/></div>\
                 </td>\
                 <td rowspan="' + numberChildRow + '" class="td-labelfollower col120"><div class="col120 c labelfollower">' + followInfo.Follower + '</div></td>\
-                <td rowspan="' + numberChildRow + '" class="col60 c"><div class="col60 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
-                <td rowspan="' + numberChildRow + '" class="col60 c"><div class="col60 c ' + (followInfo.IsAgent ? "checkStatus" : "") + '"></div></td>\
-                <td rowspan="' + numberChildRow + '"><div class="col40 c">\
+                <td rowspan="' + numberChildRow + '" class="col70 c"><div class="col70 c ' + (followInfo.BaStatus ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '" class="col70 c"><div class="col70 c ' + (followInfo.IsAgent ? "checkStatus" : "") + '"></div></td>\
+                <td rowspan="' + numberChildRow + '"><div class="col60 c">\
                     <img class="editcontrol editicon" src="'
                      + autoFollowBet.CachedData.editIcon + '" onclick="autoFollowBet.beginEditFollowInfo(' + rowId + ')"\
                      title="' + viewResources.Edit + '" />\
@@ -433,8 +433,8 @@ var autoFollowBet = {
             }
             else {
                 htmlRow += '<tr class="' + cssClass + ' followInfo_' + rowId + ' ' + liveStatusClass + '">\
-                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
                 <td><div class="col90 c">' + (followBetByLiveStatus.FollowedLive ? "Live" : "Non-Live") + '</div></td>\
+                <td><div class="col80 c"><select class="dropdown-odds editablefield" disabled="disabled">' + autoFollowBet.generateDropdownOddsOptions(followBetByLiveStatus.Odds) + '</select></div></td>\
                 <td><div class="c col60"><input class="hdpstatus editablefield" type="checkbox" disabled="disabled"' +
                                 (followBetByLiveStatus.FollowedHandicap ? ' checked = "checked"' : '') + '/></div></td>\
                 <td class="c col60">\
