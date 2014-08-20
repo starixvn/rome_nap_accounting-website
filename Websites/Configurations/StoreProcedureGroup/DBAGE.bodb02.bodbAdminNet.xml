@@ -280,13 +280,16 @@
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    
+    <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="SearchCopy">    
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>        
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
 	<Function Name="External Betting Limit">
 		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
@@ -304,9 +307,17 @@
     <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
 	</Function>
-
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+
+  <Function Name="Keno Setting">
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>
 

@@ -205,6 +205,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="Logs.cs" />
+    <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="Report\Common\RMReportUtils.cs" />
     <Compile Include="Report\DailyTurnover\DailyTurnoverManager.cs" />
     <Compile Include="Report\DailyTurnover\IDailyTurnoverManager.cs" />
