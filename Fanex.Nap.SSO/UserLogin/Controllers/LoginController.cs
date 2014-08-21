@@ -24,7 +24,7 @@ namespace Fanex.NAP.SSO
     {
         #region members
 
-        private CurrentContext CurrentContext;
+        private ICurrentContext _currentContext;
         private IUserService _userService;
 
         #endregion members
@@ -36,11 +36,10 @@ namespace Fanex.NAP.SSO
         {
         }
 
-        public LoginController(
-            IUserService userService)
+        public LoginController(IUserService userService)
         {
             this._userService = userService ?? new UserService();
-            this.CurrentContext = new CurrentContext();
+            this._currentContext = new CurrentContext();
         }
 
         #endregion ctors
@@ -63,12 +62,12 @@ namespace Fanex.NAP.SSO
                     UserId = AppSession.OnAccId,
                     SiteId = 100,
                     NetSessionId = Session.SessionID,
-                    Ip = CurrentContext.IP,
+                    Ip = _currentContext.IP,
                     LoginDate = DateTime.Now,
-                    BrowserName = CurrentContext.BrowserName,
-                    CountryCode = CurrentContext.CountryCode,
-                    Domain = CurrentContext.DomainName,
-                    Platform = CurrentContext.Platform
+                    BrowserName = _currentContext.BrowserName,
+                    CountryCode = _currentContext.CountryCode,
+                    Domain = _currentContext.DomainName,
+                    Platform = _currentContext.Platform
                 };
 
                 this._userService.UserCheckIn(ref criteria);
