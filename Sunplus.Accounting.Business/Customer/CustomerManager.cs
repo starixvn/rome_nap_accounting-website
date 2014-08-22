@@ -713,7 +713,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
