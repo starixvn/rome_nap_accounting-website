@@ -186,6 +186,11 @@
                         <li class="canchange" onclick="SuperList.kenoSetting('@superItem.ChildID');">
                             Keno</li>
                       }
+                       @if (superItem.IsLicensee)
+                      {
+                       <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">
+                            AG Casino</li>
+                      }
                 </ul>
             </div>
         </td>

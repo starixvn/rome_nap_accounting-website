@@ -34,6 +34,7 @@ using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
 using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.DataAccess.Implement.Customer;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -236,7 +237,7 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-
+                            var isLicensee = IsLicensee(Convert.ToString(row1["site"]));
 
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
@@ -712,7 +713,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
@@ -946,7 +947,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
                                 }
@@ -2666,6 +2667,15 @@ namespace Sunplus.Accounting.Business.Customer
             });
 
             return !progressiveStatus.DisableUplinesCasinoBonus;
+        }
+
+        private bool IsLicensee(string siteName)
+        {
+
+            var licenseeAccess = new DepositCustomerAccess();
+            var dtLicensee = licenseeAccess.SelAllLicensee();
+            bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
+            return result;
         }
     }
 }

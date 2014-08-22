@@ -24,7 +24,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     {
         ICustomerListAccess _customerListAccess = null;
         ICustomerSettingDataAccess _customerSettingDataAccess = null;
-        public CustomerListService() : this(null,null) { }
+        public CustomerListService() : this(null, null) { }
         public CustomerListService(ICustomerListAccess customerListAccess, ICustomerSettingDataAccess customerSettingDataAccess)
         {
             _customerListAccess = customerListAccess ?? new CustomerListAccess();
@@ -37,39 +37,39 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 int totalPages = 0;
                 int totalChildren = 0;
                 var dtSuperList = new DataSet();
-                    Hashtable hash = new Hashtable();
-                    if (!string.IsNullOrEmpty(searchText))
+                Hashtable hash = new Hashtable();
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    string keyword = "%" + searchText.Replace("'", "") + "%";
+                    hash.Add("keyword", keyword);
+                }
+
+                if (!string.IsNullOrEmpty(selectAlpha))
+                {
+                    string firstchar = selectAlpha;
+                    if (string.Compare(firstchar, "0-9", true) == 0)
                     {
-                        string keyword = "%" + searchText.Replace("'", "") + "%";
-                        hash.Add("keyword", keyword);
+                        firstchar = "[" + firstchar + "]";
                     }
+                    firstchar = firstchar + "%";
+                    hash.Add("firstchar", firstchar);
+                }
 
-                    if (!string.IsNullOrEmpty(selectAlpha))
-                    {
-                        string firstchar = selectAlpha;
-                        if (string.Compare(firstchar, "0-9", true) == 0)
-                        {
-                            firstchar = "[" + firstchar + "]";
-                        }
-                        firstchar = firstchar + "%";
-                        hash.Add("firstchar", firstchar);
-                    }
+                if (!string.IsNullOrEmpty(selectCurreny))
+                    hash.Add("currency", selectCurreny);
 
-                    if (!string.IsNullOrEmpty(selectCurreny))
-                        hash.Add("currency", selectCurreny);
+                if (!string.IsNullOrEmpty(statusParam))
+                    hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(statusParam)));
 
-                    if (!string.IsNullOrEmpty(statusParam))
-                        hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(statusParam)));
+                if (!string.IsNullOrEmpty(dComm))
+                    hash.Add("doublecommlosing", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(dComm)));
 
-                    if (!string.IsNullOrEmpty(dComm))
-                       hash.Add("doublecommlosing", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(dComm)));
+                hash.Add("pageindex", pageIndex);
+                hash.Add("pagesize", pageSize);
+                hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
+                hash.Add("totalitems", totalChildren);
 
-                    hash.Add("pageindex", pageIndex);
-                    hash.Add("pagesize", pageSize);
-                    hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                    hash.Add("totalitems", totalChildren);
-                    
-                    dtSuperList = _customerListAccess.GetCustomerList("Acc_CustomerSelSAg",hash, ref totalPages, ref totalChildren);
+                dtSuperList = _customerListAccess.GetCustomerList("Acc_CustomerSelSAg", hash, ref totalPages, ref totalChildren);
 
                 CustomerListModel model = new CustomerListModel();
                 if (dtSuperList.Tables.Count > 0)
@@ -114,6 +114,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
 
+                        // superItem.IsLicensee = CastAide.AsBoolean(row["IsLicensee"]);
                         superItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         superItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -261,8 +262,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                var dtAgentList = _customerListAccess.GetCustomerList("Acc_CustomerSelByMAg",hash, ref totalPages, ref totalChildren);
-                
+                var dtAgentList = _customerListAccess.GetCustomerList("Acc_CustomerSelByMAg", hash, ref totalPages, ref totalChildren);
+
                 CustomerListModel model = new CustomerListModel();
                 if (dtAgentList.Tables.Count > 0)
                 {
@@ -340,7 +341,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                var dtMemberList = _customerListAccess.GetCustomerList("Acc_CustomerSelByAg",hash,ref totalPages, ref totalChildren);
+                var dtMemberList = _customerListAccess.GetCustomerList("Acc_CustomerSelByAg", hash, ref totalPages, ref totalChildren);
 
 
                 CustomerListModel model = new CustomerListModel();
@@ -431,7 +432,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
             try
             {
                 result.Add(new Currency() { Value = -1, Name = "All" });
-                
+
                 var getData = base.GetCurrency();
                 if (getData != null && getData.Rows.Count > 0)
                 {

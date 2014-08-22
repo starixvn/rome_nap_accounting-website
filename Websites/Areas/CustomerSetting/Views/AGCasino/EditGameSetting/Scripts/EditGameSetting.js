@@ -234,6 +234,11 @@ var AGCasinoSetting = function () {
             }
         }
 
+        isChanged = isChanged ||
+            (self.CacheData.selectedDefaultGroup &&
+            self.CacheData.selectedDefaultGroup.Name !== self.CacheData.customerSetting.DefaultAGCasinoGroup.Name) ||
+            (self.CacheData.selectedApplyGroup &&
+            self.CacheData.selectedApplyGroup.Name !== self.CacheData.firstSelectedApplyGroup.Name);
         if (isChanged) {
             self.Tables.buttonUpdate.attr("disabled", null);
         } else {
@@ -344,6 +349,7 @@ var AGCasinoSetting = function () {
     self.updateSelectedGroup = function () {
         self.RenderApplyGroup();
         self.RenderDefaultGroup();
+        self.EnableUpdateButton();
     };
     self.RenderApplyGroup = function () {
         var options = '';
@@ -360,6 +366,14 @@ var AGCasinoSetting = function () {
                     if (!isKeepSelected) {
                         isKeepSelected = self.CacheData.selectedApplyGroup &&
                             self.CacheData.selectedApplyGroup.Name == group.Name;
+
+                        if (!self.CacheData.selectedApplyGroup &&
+                            !self.CacheData.firstSelectedApplyGroup) {
+                            self.CacheData.firstSelectedApplyGroup = {
+                                Id: group.Id,
+                                Name: group.Name
+                            };
+                        }
                     }
 
                     options += '<option data-group-id="' + group.Id + '"' +
@@ -382,6 +396,7 @@ var AGCasinoSetting = function () {
                 Id: selectedGroup.attr("data-group-id"),
                 Name: self.Tables.dropdownCopyToMember.val()
             };
+            self.EnableUpdateButton();
         });
     };
     self.RenderDefaultGroup = function () {
@@ -421,6 +436,7 @@ var AGCasinoSetting = function () {
                 Id: selectedGroup.attr("data-group-id"),
                 Name: self.Tables.dropdownDefautGroupNewMember.val()
             };
+            self.EnableUpdateButton();
         });
     };
 
@@ -497,6 +513,8 @@ var AGCasinoSetting = function () {
         showAlertMessage("result-message", updateResult.ErrorMessage, 0);
         self.Tables.buttonUpdate.attr("disabled", "disabled");
         self.CacheData.customerSetting = self.Params.updateCustomerInfo;
+        self.CacheData.selectedDefaultGroup = self.CacheData.customerSetting.DefaultAGCasinoGroup;
+        self.CacheData.firstSelectedApplyGroup = self.Params.updateCustomerInfo.ApplyGroupToMember;
         setTimeout(function () {
             self.Tables.resultMessage.empty();
         }, 3000);
