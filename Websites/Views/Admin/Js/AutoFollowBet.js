@@ -970,6 +970,8 @@ var autoFollowBet = {
         autoFollowBet.Tables.textboxFollower_AddDialog.val(autoFollowBet.CachedData.defaultFollowerName);
         autoFollowBet.Tables.textboxRate_AddDialog.val('');
         autoFollowBet.Tables.addNewFollowedCustomerDialog.removeClass("display-none").dialog("open");
+        $('#dropdown-live-odds-adddialog').val('0');
+        $('#dropdown-nonelive-odds-adddialog').val('0');
     },
     addNewFollowedCustomer: function () {
         autoFollowBet.blockUI();
