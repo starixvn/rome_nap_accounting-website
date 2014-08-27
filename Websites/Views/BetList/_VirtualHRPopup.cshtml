@@ -11,6 +11,7 @@
 
 @{
     VirtualHRPopupModel virtualPopupModel = new VirtualHRPopupModel();
+    var isSpeedway = !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "183";
 }
 
 @functions {
@@ -46,10 +47,13 @@
                 <div>
                     Win</div>
             </th>
+            @if (!isSpeedway)
+            {
             <th>
                 <div>
                     Place</div>
             </th>
+            }
             <th>
                 <div>
                     Status</div>
@@ -61,7 +65,6 @@
         {
             virtualPopupModel = Model[i];
             var win = i != 0 && !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "185" ? string.Empty : virtualPopupModel.WinOdds.Format(2);
-            var isSpeedway = !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "183";
             var rowSpan = isSpeedway ? string.Empty : "rowspan=" + Model.Count;
             <tr>
                 @if (i == 0)
@@ -87,10 +90,13 @@
                     <div class="width60">
                         @win</div>
                 </td>
+                @if (!isSpeedway)
+                {
                 <td  class="c">
                     <div class="width60">
                         @virtualPopupModel.PlaceOdds.Format(2)</div>
                 </td>
+                }
                 <td  class="c">
                     <div class="width60">
                         @virtualPopupModel.Status</div>

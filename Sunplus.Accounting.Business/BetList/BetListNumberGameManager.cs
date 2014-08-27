@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.Business.BetList
                 {
                     result.Status = "Pending";
                 }
-                result.KickOffTime = dt.Rows[0]["eventdate"].ToString();
+                result.KickOffTime = FormatKickoffTime(dt.Rows[0], true);
                 result.Match = string.Format("{0} {1}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblNumberGameNo"), dt.Rows[0]["matchcode"].ToString());
 
                 result.FirstBall = "<img src='Images/" + (CastAide.AsInt16(dt.Rows[0]["number"], 0) < 10 ? "0" + dt.Rows[0]["number"].ToString() + ".jpg" : dt.Rows[0]["number"].ToString() + ".jpg") + "' border='0' hspace='1' vspace='1'>";
@@ -81,5 +81,18 @@ namespace Sunplus.Accounting.Business.BetList
         }
 
         #endregion IBetListNumberGameManager Members
+
+        private string FormatKickoffTime(DataRow row, bool secondIncluded = false)
+        {
+            string timeFormat = secondIncluded ? "MM/dd/yyyy\nhh:mm:ss tt" : "MM/dd/yyyy\nhh:mm tt";
+            object kickoffTime = row["kickofftime"];
+            if (kickoffTime == DBNull.Value || kickoffTime == null)
+            {
+                kickoffTime = row["eventdate"];
+                timeFormat = "MM/dd/yyyy";
+            }
+
+            return Convert.ToDateTime(kickoffTime).ToString(timeFormat);
+        }
     }
 }
