@@ -713,11 +713,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
-                                {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
-                                }
-
                                 if (Functions.Settings.IsVisibleSpecial)
                                 {
                                     TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
@@ -752,6 +747,19 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (!isAllowProgressiveBonus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
+                                }
+
+                                var canEditAGCasinoStatus = WebSettings.EnableAGCasino &&
+                                    roleId == 4 &&
+                                    isLicensee;
+                                if (!canEditAGCasinoStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+                                }
+
+                                if (!isAllowProgressiveBonus && !canEditAGCasinoStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "Row_ProgressiveBonus_AGCasinoStatus");
                                 }
 
                                 bool isShowKenoStatus = KenoSection.Instance.Enable;
