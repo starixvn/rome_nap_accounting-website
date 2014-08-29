@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ViewKenoPTCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ViewKenoPTRepository.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -18,6 +18,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
     /// </summary>
     public class ViewKenoPTRepository : IViewKenoPTRepository
     {
+        /// <summary>
+        /// Gets The Position Taking.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The Position Taking.</returns>
         public DbResult GetPT(ViewKenoPTCriteria criteria)
         {
             DbResult result = null;

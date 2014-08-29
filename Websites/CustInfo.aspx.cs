@@ -34,7 +34,7 @@ public partial class CustInfo : PageBase
             HtmlHolder.Text = CastAide.AsString(hash["strcontent"]);
             isBA = hash.ContainsKey("isba") ? CastAide.AsBoolean(hash["isba"]):false;
         }
-        catch(Exception ex){
+        catch(Exception){
             HtmlHolder.Text = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
         }
         
