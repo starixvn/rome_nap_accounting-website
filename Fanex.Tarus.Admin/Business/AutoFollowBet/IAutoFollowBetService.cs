@@ -14,6 +14,7 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
     using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Models.AutoFollowBet;
+    using Fanex.Tarus.Admin.Entities.AutoFollowBet;
 
     public interface IAutoFollowBetService
     {
@@ -26,5 +27,7 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria);
 
         Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria);
+
+        List<AutoFollowBet> GetAutoFollowBet(GetAutoFollowedBetCustomerCriteria criteria);
     }
 }
