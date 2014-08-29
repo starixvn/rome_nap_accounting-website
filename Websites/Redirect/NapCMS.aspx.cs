@@ -19,6 +19,11 @@ public partial class NapCMS_Redirect : System.Web.UI.Page
 
             var accUrlIndentify = Request["napcmskey"];
             var mappingUrlSection = MappingNapCMSUrlSection.Instance.NapCMSUrl;
+            string newTab = "newTab=false";
+            if (HttpContext.Current.Request.Url.ToString().Contains("blank"))
+            {
+                newTab = "newTab=true";
+            }
             if (mappingUrlSection != null)
             {
                 var getMappingConfig = (from m in
@@ -28,7 +33,7 @@ public partial class NapCMS_Redirect : System.Web.UI.Page
                 if (getMappingConfig != null && getMappingConfig.Count() > 0)
                 {
                     var napUrl = getMappingConfig.First().NapUrl;
-                    var url = string.Format("{0}?username={1}&onlineUserId={2}&redirectUrl={3}", NapURL(), userName, onuserId, napUrl);
+                    var url = string.Format("{0}?username={1}&onlineUserId={2}&redirectUrl={3}&{4}", NapURL(), userName, onuserId, napUrl, newTab);
                     Response.Redirect(url);
                 }
             }

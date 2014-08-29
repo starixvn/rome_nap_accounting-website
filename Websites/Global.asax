@@ -36,13 +36,13 @@
         //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
-
+        
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
-       
+        AreaRegistration.RegisterAllAreas();       
         RegisterGlobalFilters(GlobalFilters.Filters);     
         RegisterRoutes(RouteTable.Routes);
-        AreaRegistration.RegisterAllAreas();
+       
         // ViewEngines.Engines.Add(new CustomView());
         
        
