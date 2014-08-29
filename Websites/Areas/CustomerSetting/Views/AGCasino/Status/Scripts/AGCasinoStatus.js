@@ -142,7 +142,8 @@ var AGCasinoStatus = function () {
     };
     self.GetCustomerInfo = function () {
         self.Params.getCustomerInfo = {
-            CustomerId: viewResources.CustomerId
+            CustomerId: viewResources.CustomerId,
+            RoleId: viewResources.CurrentRole
         };
 
         self.CallAjax(self,
@@ -165,12 +166,12 @@ var AGCasinoStatus = function () {
                         ' type="checkbox" />\
                     <span id="checkbox-enable-' + sport.Id + '-disable"' +
                         ' class="' + (canUpdate ? 'display-none' : '') +
-                            (sport.Enable ? ' checkbox-checked' : ' checkbox-unchecked') + '"' +
+                         (sport.Enable ? ' checkbox-checked' : ' checkbox-unchecked') + '"' +
                         ' title="Upline has been disabled"></span>\
                     <label id="label-enable-' + sport.Id + '"' +
                         ' class="label-for-checkbox"' +
                         ' for="checkbox-enable-' + sport.Id + '"' +
-                        (canUpdate ? '' : ' disabled="disabled" title="Upline has been disabled"') +
+                        (canUpdate ? '' : ' disabled="disabled"') +
                         '>' + 'Enable ' + sport.Name +
                     '</label>\
                 </td>';

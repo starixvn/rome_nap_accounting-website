@@ -16,6 +16,8 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
     /// </summary>
     public class GetCustomerStatusCriteria
     {
+        public int RoleId { get; set; }
+
         public int CustomerId { get; set; }
 
         public string GetSettingKey()

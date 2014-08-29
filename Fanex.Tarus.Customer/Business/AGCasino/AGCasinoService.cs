@@ -230,25 +230,37 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
         /// <param name="customerSetting">The customer setting.</param>
         private void ParseAGCasinoAPIResult(string apiResult, AGCasinoCustomerInfo customerSetting)
         {
-            var asianGamingCasinoGameType = new ProductInfo
+            try
             {
-                Id = "1",
-                Name = "AG Casino",
-                Enable = customerSetting.EnableAGCasino,
-                GameTypeGroup = new List<GameTypeGroup>(),
-                GameTypes = new List<GameType>()
-            };
+                var asianGamingCasinoGameType = new ProductInfo
+                {
+                    Id = "1",
+                    Name = "AG Casino",
+                    Enable = customerSetting.EnableAGCasino,
+                    GameTypeGroup = new List<GameTypeGroup>(),
+                    GameTypes = new List<GameType>()
+                };
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(apiResult);
-            string xpath = "/GroupBettingLimit";
-            var groupBettingLimitNodes = xmlDoc.SelectNodes(xpath);
-            foreach (XmlNode childrenNode in groupBettingLimitNodes)
-            {
-                MappingGroupBettingLimitChildNodes(childrenNode, customerSetting, asianGamingCasinoGameType);
+                if (string.IsNullOrEmpty(apiResult))
+                {
+                    return;
+                }
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(apiResult);
+                string xpath = "/GroupBettingLimit";
+                var groupBettingLimitNodes = xmlDoc.SelectNodes(xpath);
+                foreach (XmlNode childrenNode in groupBettingLimitNodes)
+                {
+                    MappingGroupBettingLimitChildNodes(childrenNode, customerSetting, asianGamingCasinoGameType);
+                }
+
+                customerSetting.ProductInfo = new List<ProductInfo> { asianGamingCasinoGameType };
             }
-
-            customerSetting.ProductInfo = new List<ProductInfo> { asianGamingCasinoGameType };
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
         }
 
         /// <summary>

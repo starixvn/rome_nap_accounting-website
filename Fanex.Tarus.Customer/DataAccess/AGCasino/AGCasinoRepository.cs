@@ -34,7 +34,8 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
         {
             AGCasinoCustomerInfo result = new AGCasinoCustomerInfo
             {
-                CustomerId = criteria.CustomerId
+                CustomerId = criteria.CustomerId,
+                RoleId = criteria.RoleId
             };
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
