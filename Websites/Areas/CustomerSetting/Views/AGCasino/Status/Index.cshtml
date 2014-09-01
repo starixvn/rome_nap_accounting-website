@@ -2,13 +2,14 @@
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
 @using Fanex.Tarus.Customer.Entities.AGCasino;
+@using Fanex.Tarus.Business.Implement;
 @model AGCasinoCustomerInfo
 @{
     Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
     ViewBag.Title = "Update AG Casino Status";
     var customerId = Model.CustomerId;
     var roleId = Model.RoleId;
-    var hasHostPermission = 1;
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />

@@ -84,7 +84,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
             try
             {
                 Result updateResult = new Result();
-                if (!Permissions.HasHostPermission(Enumerations.Functions.Customer.AGCasino))
+                if (!Permissions.HasHostPermission(Enumerations.Functions.Customer.ViewInfo))
                 {
                     updateResult.ErrorCode = 1;
                     updateResult.ErrorMessage = "You don't have permission on this function.";
@@ -165,7 +165,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
             try
             {
                 Result updateResult = new Result();
-                if (!Permissions.HasHostPermission(Enumerations.Functions.Customer.AGCasino))
+                if (!Permissions.HasHostPermission(Enumerations.Functions.Customer.ViewInfo))
                 {
                     updateResult.ErrorCode = 1;
                     updateResult.ErrorMessage = "You don't have permission on this function.";
