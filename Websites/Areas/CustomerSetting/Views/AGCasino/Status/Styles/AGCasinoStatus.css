@@ -37,7 +37,7 @@
 
 .checkbox-checked
 {
-    background: url("Images/check.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("Images/check.jpg") repeat scroll 0 0 #000;
     display: inline-block;
     height: 13px;
     width: 13px;
@@ -46,7 +46,7 @@
 
 .checkbox-unchecked
 {
-    background: url("Images/uncheck.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("Images/uncheck.jpg") repeat scroll 0 0 #000;
     display: inline-block;
     height: 13px;
     width: 13px;

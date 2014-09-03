@@ -247,7 +247,7 @@ var AGCasinoStatus = function () {
         self.EnableUpdateButton(isChecked);
 
         var checkboxDownlines = self.Tables.settingBody.find('#checkbox-enable-' + sportId + '-downlines');
-        var labelDownlines = self.Tables.settingBody.find('#checkbox-enable-' + sportId + '-downlines');
+        var labelDownlines = self.Tables.settingBody.find('#label-enable-' + sportId + '-downlines');
         var checkboxDownlinesDisable = self.Tables.settingBody.find('#checkbox-enable-' + sportId + '-downlines-disable');
         if (isChecked === sport.Enable) {
             self.disableDownlinesCheckbox(labelDownlines, checkboxDownlines, checkboxDownlinesDisable);
