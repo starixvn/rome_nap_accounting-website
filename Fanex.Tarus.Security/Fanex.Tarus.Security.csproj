@@ -40,6 +40,10 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasino\NewLiveCasinoSetting\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
@@ -55,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
+    <Compile Include="Authenticate\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Permission\IPermissionService.cs" />
