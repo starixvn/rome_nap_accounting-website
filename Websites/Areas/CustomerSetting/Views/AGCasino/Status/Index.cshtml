@@ -1,0 +1,65 @@
+﻿@using Sunplus.Accounting.Business.Security;
+@using Sunplus.Accounting.Core.Common;
+@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Customer.Entities.AGCasino;
+@using Fanex.Tarus.Business.Implement;
+@model AGCasinoCustomerInfo
+@{
+    Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
+    ViewBag.Title = "Update AG Casino Status";
+    var customerId = Model.CustomerId;
+    var roleId = Model.RoleId;
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/AGCasino/Status/Styles/AGCasinoStatus.css" />
+<div class="main">
+    <div class="maincontent">
+        <div id="result-message">
+            Loading...
+        </div>
+        <div id="setting-content" class="display-none">
+            <table class="tblcollapse content-width table-settings">
+                <thead>
+                    <tr class="title1">
+                        <td id="customer-info-title" colspan="2">
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0" id="button-update-container">
+                <tr>
+                    <td class="custBtn1" disabled="disabled">
+                    </td>
+                    <td id="button-update" class="custBtn2 hand" disabled="disabled">
+                        Update
+                    </td>
+                    <td>
+                        <div id="test-tipsy" title="Upline has been auto suspended">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/AGCasino/Status/Scripts/AGCasinoStatus.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")'; 
+        var viewResources = {
+            CustomerId: @customerId,
+            HasHostPermission: @hasHostPermission,
+            CurrentRole: @roleId
+        };
+    </script>
+</div>

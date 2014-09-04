@@ -68,7 +68,6 @@ namespace Fanex.Tarus.Admin.DataAccess.LimitNewMember
         /// <returns>The result object.</returns>
         public Result UpdateLimitNewMember(LimitNewMemberCriteria criteria)
         {
-            Result result = null;
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AddInParameter("username", DbType.String, criteria.Super);

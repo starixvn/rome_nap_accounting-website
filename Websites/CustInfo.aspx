@@ -14,7 +14,7 @@
     <link href="App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="js/jQuery/message/jquery.msg.css" rel="stylesheet" type="text/css" />
     <script src="js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>        
+    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js"></script>
     <script type="text/javascript" src="js/common.js?v=<%=AccCommon.Version() %>"></script>
@@ -261,27 +261,27 @@
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
-         function showhideCasinoBonus(id, roleid, username) {
-        	var title = 'Update Progressive Bonus';
-        	var url = 'CustomerSetting/ProgressiveBonus/CasinoBonus/Index?custId=' + id;
-        	var width = 500;
-        	var height = 190;
-        	parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
-     }
-     function showhideKeno(id, uplineid, roleid, subAccountId, userid) {
-         var title = 'Update Enable Keno';
-         var url = 'CustomerSetting/keno/enablestatus/index?id=' + id + '&uplineId=' + uplineid + '&roleId=' + roleid + '&subAccountId=' + subAccountId + '&userid=' + userid;
-         var width = 480;
-         var height = 400;
-         parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
-     }
-         function updateAutoSuspendStatus(id, roleIds) {
-            var title = 'Update Auto Suspend Status';
-            var url = 'Customer/Setting/AutoSuspendStatus/Index.aspx?custId=' + id;
-            var width = 305;
+        function showhideCasinoBonus(id, roleid, username) {
+            var title = 'Update Progressive Bonus';
+            var url = 'CustomerSetting/ProgressiveBonus/CasinoBonus/Index?custId=' + id;
+            var width = 500;
+            var height = 190;
+            parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
+        }
+        function showhideKeno(id, uplineid, roleid, subAccountId, userid) {
+            var title = 'Update Enable Keno';
+            var url = 'CustomerSetting/keno/enablestatus/index?id=' + id + '&uplineId=' + uplineid + '&roleId=' + roleid + '&subAccountId=' + subAccountId + '&userid=' + userid;
+            var width = 480;
+            var height = 400;
+            parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
+        }
+        function updateAGCasinoStatus(id, roleIds) {
+            var title = 'Update AG Casino Status';
+            var url = 'AGCasino/AGCasinoStatus?custId=' + id + '&roleId=' + roleIds;
+            var width = 605;
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
-        }       
+        }   
     </script>
 </head>
 <body>

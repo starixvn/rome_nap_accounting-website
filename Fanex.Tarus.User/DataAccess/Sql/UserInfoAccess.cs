@@ -13,7 +13,7 @@ using DNAide.Core;
 
 namespace Fanex.Tarus.User.DataAccess.Sql
 {
-    public class UserInfoAccess: IUserInfoAccess
+    public class UserInfoAccess : IUserInfoAccess
     {
         public DataTable GetAllDept()
         {
@@ -94,7 +94,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                     return objDB.ExecuteDataSet();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new DataSet();
             }

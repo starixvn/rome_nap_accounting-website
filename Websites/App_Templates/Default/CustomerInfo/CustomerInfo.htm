@@ -186,14 +186,20 @@
                     <td class="l" colspan="2" ><span class="canchange" onclick="showhideRacebooksStatus({CustId},{RoleId})">Enable Racing</span></td>
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span></td>
                 </tr>             
-		        <!--ProgressiveBonus-->
+		        <!--Row_ProgressiveBonus_AGCasinoStatus-->
 		        <tr>
+		            <!--ProgressiveBonus-->
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideCasinoBonus({CustId},{RoleId},'{UserName}')">Enable Bonus</span></td>
-	                <td class="l" colspan="2"></td>
+	                <!--/ProgressiveBonus-->
+                    <td class="l" colspan="2">
+                        <!--AGCasinoStatus-->             
+                            <span class="canchange" onclick="updateAGCasinoStatus({CustId},{RoleId})">Enable AG Casino</span>
+                        <!--/AGCasinoStatus-->
+                    </td>
                 </tr>   
-                <!--/ProgressiveBonus-->
+                <!--/Row_ProgressiveBonus_AGCasinoStatus-->
                 <!--EnableKeno-->
-                    <tr>
+                <tr>
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span></td>
 	                <td class="l" colspan="2"></td>
                 </tr>
@@ -293,6 +299,10 @@
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{livecasinoLinkSetting}');">
                                 Edit Live Casino</a><br />
                             <!--/edit-LiveCasino-->    
+                             <!--edit-agcasino-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{agcasinoLinkSetting}');">
+                                Edit AG Casino</a><br />
+                            <!--/edit-agcasino-->    
                             <!--edit-VirtualSport-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualSportLinkSetting}');">
                                 Edit Virtual Sports</a><br />

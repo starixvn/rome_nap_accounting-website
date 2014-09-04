@@ -12,6 +12,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using DNAide.Core;
     using DNAide.Data;
     using DNAide.Utils;
@@ -29,10 +30,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
     /// </summary>
     public class KenoPT
     {
-        public static Dictionary<int, string> Bettypes;
-
-        public static byte NumberOfDecimalDigits = (byte)2;
-
         private IViewKenoPTRepository _viewKenoPTRepository;
 
         public KenoPT()
@@ -46,6 +43,19 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             _viewKenoPTRepository = viewKenoPTRepository ?? new ViewKenoPTRepository();
         }
 
+        public static Dictionary<int, string> Bettypes { get; set; }
+
+        public static byte NumberOfDecimalDigits
+        {
+            get
+            {
+                return (byte)2;
+            }
+        }
+
+        /// <summary>
+        /// Gets the active bet types.
+        /// </summary>
         public void GetActiveBetTypes()
         {
             if (Bettypes != null)
@@ -66,6 +76,10 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             }
         }
 
+        /// <summary>
+        /// Gets the bet type by keno.
+        /// </summary>
+        /// <returns>The bet type by keno.</returns>
         public BettypeDTO GetBettypeByKeno()
         {
             var result = new BettypeDTO
@@ -85,6 +99,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             return result;
         }
 
+        /// <summary>
+        /// Views the position taking.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The position taking.</returns>
         public ViewPtDTO ViewPositionTaking(ViewKenoPTCriteria criteria)
         {
             var result = new ViewPtDTO();
@@ -103,13 +122,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 return result;
             }
 
-            var drCustInfo = rawData.ResultSet.Tables[0].Rows[0];
-            var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);
+            var dataRowCustInfo = rawData.ResultSet.Tables[0].Rows[0];
+            var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
             result.CustomerInfo = GetCustomerRelation(rawData);
             result.PotionTakingDetail = PositionTakingDetail(rawData, roleId, criteria.SportId);
             return result;
         }
 
+        /// <summary>
+        /// Gets the customer relation.
+        /// </summary>
+        /// <param name="data">The data information.</param>
+        /// <returns>The customer relation.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
         public CustomerRelation GetCustomerRelation(DbResult data)
         {
             var customerRelation = new CustomerRelation
@@ -117,14 +144,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 Upline = new List<CustomerInfo>()
             };
 
-            var drCustInfo = data.ResultSet.Tables[0].Rows[0];
-            var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);
+            var dataRowCustInfo = data.ResultSet.Tables[0].Rows[0];
+            var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
             if (roleId < (int)CustInfo.Roles.Agent)
             {
                 var agentInfo = new CustomerInfo()
                 {
-                    CustId = CastAide.AsInt32(drCustInfo["AgID"].ToString()),
-                    UserName = drCustInfo["Ag"].ToString(),
+                    CustId = CastAide.AsInt32(dataRowCustInfo["AgID"].ToString()),
+                    UserName = dataRowCustInfo["Ag"].ToString(),
                     RoleId = (int)CustInfo.Roles.Agent,
                     RoleName = ResourceExtension.GetResourceValue(
                      ResourceExtension.Resources.Language, "Agent")
@@ -133,13 +160,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 customerRelation.Upline.Add(agentInfo);
             }
 
-
             if (roleId < (int)CustInfo.Roles.Master)
             {
                 var masterInfo = new CustomerInfo()
                 {
-                    CustId = CastAide.AsInt32(drCustInfo["MAgID"].ToString()),
-                    UserName = drCustInfo["MAg"].ToString(),
+                    CustId = CastAide.AsInt32(dataRowCustInfo["MAgID"].ToString()),
+                    UserName = dataRowCustInfo["MAg"].ToString(),
                     RoleId = (int)CustInfo.Roles.Master,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Master")
@@ -152,8 +178,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 var superInfo = new CustomerInfo()
                 {
-                    CustId = CastAide.AsInt32(drCustInfo["SAgID"].ToString()),
-                    UserName = drCustInfo["SAg"].ToString(),
+                    CustId = CastAide.AsInt32(dataRowCustInfo["SAgID"].ToString()),
+                    UserName = dataRowCustInfo["SAg"].ToString(),
                     RoleId = (int)CustInfo.Roles.Super,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Super")
@@ -163,61 +189,83 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
             customerRelation.Customer = new CustomerInfo()
             {
-                CustId = CastAide.AsInt32(drCustInfo["custid"].ToString()),
-                UserName = drCustInfo["username"].ToString(),
+                CustId = CastAide.AsInt32(dataRowCustInfo["custid"].ToString()),
+                UserName = dataRowCustInfo["username"].ToString(),
                 RoleId = (int)CustInfo.Roles.Member
             };
 
             return customerRelation;
         }
 
+        /// <summary>
+        /// Gets the position taking detail.
+        /// </summary>
+        /// <param name="data">The data information.</param>
+        /// <param name="roleId">The role identifier.</param>
+        /// <param name="sportId">The sport identifier.</param>
+        /// <returns>The position taking detail.</returns>
         private List<PositionTakingDTO> PositionTakingDetail(DbResult data, int roleId, int sportId)
         {
-            var ptDetail = new List<PositionTakingDTO>();
+            var positionTakingDetail = new List<PositionTakingDTO>();
             if (data == null || data.ResultSet.Tables.Count < 2)
             {
-                return ptDetail;
+                return positionTakingDetail;
             }
 
-            var ptData = data.ResultSet.Tables[1];
-            var ptInfo = data.ResultSet.Tables[0].Rows[0];
+            var positionTakingData = data.ResultSet.Tables[1];
+            var positionTakingInfo = data.ResultSet.Tables[0].Rows[0];
             string currencyColumnName = "currency";
-            var currencyOfCustomer = ptInfo.Table.Columns.Contains(currencyColumnName) ?
-                CastAide.AsInt32(ptInfo[currencyColumnName]) : 1;
+            var currencyOfCustomer = positionTakingInfo.Table.Columns.Contains(currencyColumnName) ?
+                CastAide.AsInt32(positionTakingInfo[currencyColumnName]) : 1;
 
-            foreach (DataRow dr in ptData.Rows)
+            foreach (DataRow dr in positionTakingData.Rows)
             {
-                var ptCurrent = new PositionTakingDTO();
+                var positionTakingCurrent = new PositionTakingDTO();
                 var betType = CastAide.AsInt32(dr["bettype"]);
                 var sportType = CastAide.AsInt32(dr["sporttype"].ToString());
                 var currencyAllowForTote = string.Empty;
 
-                AssignSportInfo(ref ptCurrent, dr, ptInfo);
-                AssignPtDetail(ref ptCurrent, dr, roleId);
-                ptDetail.Add(ptCurrent);
+                AssignSportInfo(ref positionTakingCurrent, dr, positionTakingInfo);
+                AssignPtDetail(ref positionTakingCurrent, dr, roleId);
+                positionTakingDetail.Add(positionTakingCurrent);
             }
 
-            return ptDetail;
+            return positionTakingDetail;
         }
 
+        /// <summary>
+        /// Assigns the sport information.
+        /// </summary>
+        /// <param name="positionTakingDTO">The position taking DTO.</param>
+        /// <param name="dr">The data row.</param>
+        /// <param name="positionTakingInfo">The position taking information.</param>
         private void AssignSportInfo(
-            ref PositionTakingDTO ptDTO,
+            ref PositionTakingDTO positionTakingDTO,
             DataRow dr,
-            DataRow ptInfo)
+            DataRow positionTakingInfo)
         {
-            ptDTO.SportName = CastAide.AsString(dr["sportname"]);
-            ptDTO.SportType = CastAide.AsString(dr["sporttype"]);
-            ptDTO.Bettype = CastAide.AsString(dr["bettype"]);
-            ptDTO.TypeName = CastAide.AsString(dr["typename"]);
+            positionTakingDTO.SportName = CastAide.AsString(dr["sportname"]);
+            positionTakingDTO.SportType = CastAide.AsString(dr["sporttype"]);
+            positionTakingDTO.Bettype = CastAide.AsString(dr["bettype"]);
+            positionTakingDTO.TypeName = CastAide.AsString(dr["typename"]);
 
-            ptDTO.PermistionEnableAutoMaster = Permissions.IsEnabledAutoMaster(!CastAide.AsBoolean(ptInfo["disableautompt"], false));
-            ptDTO.EnableAutoMaster = !Sunplus.Accounting.Core.Configurations.WebSettings.disableAutoM;
-            ptDTO.DisableFlagCss = !ptDTO.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag";
-            ptDTO.DisableAutoCss = !ptDTO.PermistionEnableAutoMaster ? "disColorMPT" : string.Empty;
+            positionTakingDTO.PermistionEnableAutoMaster = Permissions.IsEnabledAutoMaster(!CastAide.AsBoolean(positionTakingInfo["disableautompt"], false));
+            positionTakingDTO.EnableAutoMaster = !Sunplus.Accounting.Core.Configurations.WebSettings.disableAutoM;
+            positionTakingDTO.DisableFlagCss = !positionTakingDTO.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag";
+            positionTakingDTO.DisableAutoCss = !positionTakingDTO.PermistionEnableAutoMaster ? "disColorMPT" : string.Empty;
         }
 
+        /// <summary>
+        /// Assigns the position taking detail.
+        /// </summary>
+        /// <param name="positionTakingDTO">The position taking DTO.</param>
+        /// <param name="dr">The data row.</param>
+        /// <param name="roleId">The role identifier.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
         private void AssignPtDetail(
-            ref PositionTakingDTO ptDTO,
+            ref PositionTakingDTO positionTakingDTO,
             DataRow dr,
             int roleId)
         {
@@ -235,7 +283,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     MaxPt = FormatPTValue(dr["l1"])
                 };
 
-                ptDTO.Member = memberPt;
+                positionTakingDTO.Member = memberPt;
             }
 
             if (roleId < (int)CustInfo.Roles.Master)
@@ -252,7 +300,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     MaxPt = FormatPTValue(dr["l2"])
                 };
 
-                ptDTO.Agent = agentPt;
+                positionTakingDTO.Agent = agentPt;
             }
 
             if (roleId < (int)CustInfo.Roles.Super)
@@ -267,7 +315,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     MaxPt = FormatPTValue(dr["l3"])
                 };
 
-                ptDTO.Master = masterPt;
+                positionTakingDTO.Master = masterPt;
             }
 
             if (roleId <= (int)CustInfo.Roles.Super)
@@ -281,13 +329,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     MaxPt = FormatPTValue(dr["l4"])
                 };
 
-                ptDTO.Super = superPt;
+                positionTakingDTO.Super = superPt;
             }
         }
 
-        private string FormatPTValue(object ptValue)
+        private string FormatPTValue(object positionTakingValue)
         {
-            return NumberFormat.DecFormat(ptValue, NumberOfDecimalDigits);
+            return NumberFormat.DecFormat(positionTakingValue, NumberOfDecimalDigits);
         }
 
         private string CheckIsAutoBox(bool isCheck)

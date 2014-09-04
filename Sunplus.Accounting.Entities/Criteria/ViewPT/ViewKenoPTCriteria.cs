@@ -33,15 +33,14 @@ namespace Sunplus.Accounting.Entities.Criteria.ViewPT
 
         public Hashtable GetSpParam()
         {
-            var param = new Hashtable();
-            param.Add("username", Username);
-            param.Add("bettype", BetType);
-            param.Add("islive", IsLive);
-            param.Add("hascomm", HasCommission);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
-
-            return param;
+            var storeProcedureParam = new Hashtable();
+            storeProcedureParam.Add("username", Username);
+            storeProcedureParam.Add("bettype", BetType);
+            storeProcedureParam.Add("islive", IsLive);
+            storeProcedureParam.Add("hascomm", HasCommission);
+            storeProcedureParam.Add("errcode", 0);
+            storeProcedureParam.Add("errmsg", string.Empty);
+            return storeProcedureParam;
         }
 
         public string GetSettingKey()

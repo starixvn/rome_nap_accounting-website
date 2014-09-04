@@ -501,6 +501,22 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableAGCasino
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableAGCasino"] == "1");
+            }
+        }
+
+        public static string AGCasinoAPILink
+        {
+            get
+            {
+                return Convert.ToString(ConfigurationManager.AppSettings["AGCasinoAPILink"]);
+            }
+        }
+
         public static int KenoPositionTaking_BetTypeRepresentative
         {
             get

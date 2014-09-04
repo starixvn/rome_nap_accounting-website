@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
 
   <Function Name="BetList">
@@ -76,7 +76,7 @@
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
-  <Function Name="Customer - New Customer (NEW)">                
+  <Function Name="Customer - New Customer (NEW)">
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
   <Function Name="Customer - Enable Number Game">
@@ -95,7 +95,7 @@
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  
+
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
@@ -157,7 +157,7 @@
 
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />            
+    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
   
@@ -190,8 +190,9 @@
     <Setting Key="CustGroupIns" SpName="Acc_CustGroupIns" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBAGE.bodb02.bodbAdminNet"/>
-	  <Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
   </Function>
 
   <Function Name="User Control">
@@ -289,13 +290,13 @@
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="SearchCopy">    
+  <Function Name="SearchCopy">
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
-	<Function Name="External Betting Limit">
-		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
-		<Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
   </Function>
 
   <Function Name="Customer - Finance Edit">
@@ -308,7 +309,7 @@
     <Setting Key="CustomerSelFISuperGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
-	</Function>
+  </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>

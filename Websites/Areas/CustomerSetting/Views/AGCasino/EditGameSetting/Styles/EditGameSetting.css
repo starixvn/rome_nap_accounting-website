@@ -1,0 +1,135 @@
+﻿.maincontent_box
+{
+    width: 600px;
+}
+
+#settingcontent .tableinfo
+{
+    width: 605px;
+    margin-top: 6px;
+}
+
+#settingcontent .tablesetting
+{
+    width: 605px;
+}
+
+.btn-updategamesetting
+{
+    background: url("Images/Save.png") no-repeat scroll center center transparent;
+    border: 0 solid red;
+    cursor: pointer;
+    font-size: 11px;
+    height: 18px;
+    margin: 0 2px;
+    overflow: visible;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 18px;
+}
+
+input.btn-updategamesetting[disabled]
+{
+    opacity: 0.2;
+    cursor: default;
+}
+
+input.btn-update[disabled]
+{
+    opacity: 0.4;
+    cursor: default;
+}
+
+.btn-update
+{
+    background: url("Images/btnUpdateSetting.jpg") no-repeat scroll center center transparent;
+    border: 0 none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    height: 24px;
+    margin-top: 6px;
+    text-align: center;
+    width: 122px;
+}
+
+.tableinfo .col-1, .tableinfo .col-2, .tableinfo .col-3, .tablesetting .col-1, .tablesetting .col-2, .tablesetting .col-3
+{
+    width: 120px;
+}
+
+.tableinfo .col-4, .tablesetting .col-4
+{
+    width: 236px;
+}
+
+.checkbox-checked
+{
+    background: url("Images/check.jpg") repeat scroll 0 0 #000;
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 3px -2px 0;
+    cursor: pointer;
+}
+
+.checkbox-unchecked
+{
+    background: url("Images/uncheck.jpg") repeat scroll 0 0 #000;
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 3px -2px 0;
+    cursor: pointer;
+}
+
+.checkbox-checked.display-none, .checkbox-unchecked.display-none
+{
+    display: none;
+}
+
+.label-for-checkbox
+{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.copy-tomember-container, .default-newmembergroup-container
+{
+    margin-top: 5px;
+}
+
+.tblcollapse td.col-gamekindgroups
+{
+    padding: 0px 1px 0 0;
+}
+
+.col-gamekindgroup, .col-gamekindlimit
+{
+    width: 112px;
+    display: inline-block;
+    border-right: 1px solid #7c98a4;
+    line-height: 18px;
+    padding: 1px 1px 1px 6px;
+}
+
+.col-gamekindgroup.last-group, .col-gamekindlimit.last-group
+{
+    border-right: none;
+}
+
+#dropdown-copy-tomember, #dropdown-default-newmembergroup
+{
+    width: 50px;
+}
+
+label[for="dropdown-copy-tomember"], label[for="dropdown-default-newmembergroup"]
+{
+    width: 270px;
+}
+
+.no-info
+{
+    font-weight: bold;
+}

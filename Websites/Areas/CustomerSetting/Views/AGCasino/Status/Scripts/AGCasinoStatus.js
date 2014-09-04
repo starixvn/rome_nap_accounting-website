@@ -1,0 +1,399 @@
+﻿var agCasinoStatus;
+
+$(document).ready(function () {
+    agCasinoStatus.initPage();
+});
+
+var AGCasinoStatus = function () {
+    var self = this;
+    self.Constants = {
+        RoleId: {
+            SUPER: 4,
+            MASTER: 3,
+            AGENT: 2,
+            MEMBER: 1,
+            SuperOnMember: -1,
+            MasterOnMember: -2,
+            SuperMin: -3,
+            MasterMinMax: -4,
+            AgentMinMax: -5
+        }
+    };
+
+    self.Tables = {
+        settingContent: null,
+        buttonUpdateContainer: null,
+        buttonUpdate: null,
+        resultMessage: null,
+        customerInfoTitle: null,
+
+        tableSettings: null,
+        settingContent: null,
+        checkboxEnableAGCasino: null,
+        labelEnableAGCasino: null,
+        checkboxEnableAGCasinorDisable: null,
+
+        checkboxEnableAGCasinoDownlines: null,
+        labelEnableAGCasinoDownlines: null,
+        checkboxEnableAGCasinoDownlinesDisable: null
+    };
+    self.CacheData = {
+        customerInfo: null
+    };
+
+    self.Params = {
+        getCustomerInfo: {
+            CustomerId: 0
+        },
+
+        updateCustomerInfo: {
+            CustomerId: 0,
+            Role: null,
+            ProductInfo: null
+        }
+    };
+
+    self.blockUI = function () {
+        try {
+            var blocker = parent.parent.BlockUI ? parent.parent : parent;
+            blocker.BlockUI();
+        }
+        catch (e) {
+        }
+    };
+
+    self.unblockUI = function () {
+        try {
+            var blocker = parent.parent.$ && parent.parent.$.unblockUI ?
+             parent.parent.$ :
+             parent.$;
+            blocker.unblockUI();
+        }
+        catch (e) {
+        }
+    };
+
+    self.CallAjax = function (reportHandler,
+        url,
+        requestParams,
+        successFunction,
+        errorFunction,
+        completeFunction) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(requestParams),
+            beforeSend: function () {
+            },
+            success: function (rs) {
+                if (successFunction && typeof (successFunction) == 'function') {
+                    successFunction.call(reportHandler, rs);
+                }
+            },
+            error: function (jqXHR, event, ajaxSettings) {
+                if (errorFunction && typeof (errorFunction) == 'function') {
+                    errorFunction.call(reportHandler);
+                }
+            },
+            complete: function () {
+                if (completeFunction && typeof (completeFunction) == 'function') {
+                    completeFunction();
+                }
+            }
+        });
+    };
+
+    self.initPage = function () {
+        self.blockUI();
+        self.cachedDOMElements();
+        self.bindingEvent();
+        self.GetCustomerInfo();
+    };
+
+    self.cachedDOMElements = function () {
+        self.Tables.settingContent = $("#setting-content");
+
+        self.Tables.buttonUpdateContainer = $("#button-update-container");
+        self.Tables.buttonUpdate = self.Tables.buttonUpdateContainer.find("#button-update");
+
+        self.Tables.resultMessage = $("#result-message");
+        self.Tables.tableSettings = $("#setting-content .table-settings");
+        self.Tables.settingBody = self.Tables.tableSettings.find("tbody");
+        self.Tables.customerInfoTitle = $("#customer-info-title");
+    };
+    self.bindingEvent = function () {
+        if (!viewResources.HasHostPermission) {
+            return;
+        }
+    };
+    self.EnableUpdateButton = function (isChecked) {
+        var custBtn1 = $(".custBtn1");
+        if (self.CacheData.customerInfo.EnableAGCasino != isChecked) {
+            custBtn1.attr("disabled", null);
+            self.Tables.buttonUpdate.attr("disabled", null);
+            self.Tables.buttonUpdate.click(self.buttonUpdateClick);
+        } else {
+            custBtn1.attr("disabled", "disabled");
+            self.Tables.buttonUpdate.attr("disabled", "disabled");
+            self.Tables.buttonUpdate.unbind("click");
+        }
+    };
+    self.GetCustomerInfo = function () {
+        self.Params.getCustomerInfo = {
+            CustomerId: viewResources.CustomerId,
+            RoleId: viewResources.CurrentRole
+        };
+
+        self.CallAjax(self,
+            window.rootUrl + "AGCasino/CustomerStatus",
+            self.Params.getCustomerInfo,
+            self.RenderCustomerInfo,
+            self.RenderCustomerInfo,
+            self.unblockUI);
+    };
+
+    self.RenderSportCurrentLevel = function (sport, sportIndex) {
+        var sportHtml = '';
+        var canUpdate = viewResources.HasHostPermission;
+        sportHtml += '<td class="align-left col-setting">\
+                    <input id="checkbox-enable-' + sport.Id + '"' +
+                        ' class="' + (canUpdate ? '' : 'display-none') + '"' +
+                        (sport.Enable ? ' checked="checked"' : '') +
+                        (canUpdate ? '' : ' disabled="disabled"') +
+                        ' data-sportindex="' + sportIndex + '"' +
+                        ' type="checkbox" />\
+                    <span id="checkbox-enable-' + sport.Id + '-disable"' +
+                        ' class="' + (canUpdate ? 'display-none' : '') +
+                         (sport.Enable ? ' checkbox-checked' : ' checkbox-unchecked') + '"' +
+                        ' title="Upline has been disabled"></span>\
+                    <label id="label-enable-' + sport.Id + '"' +
+                        ' class="label-for-checkbox"' +
+                        ' for="checkbox-enable-' + sport.Id + '"' +
+                        (canUpdate ? '' : ' disabled="disabled"') +
+                        '>' + 'Enable ' + sport.Name +
+                    '</label>\
+                </td>';
+        return sportHtml;
+    };
+    self.RenderSportDownlines = function (sport, sportIndex) {
+        var sportHtml = '';
+        sportHtml += '<td class="align-left col-setting">\
+                 <input id="checkbox-enable-' + sport.Id + '-downlines"' +
+                    (sport.EnableDownlines ? ' checked="checked"' : '') +
+                    ' data-sportindex="' + sportIndex + '"' +
+                    ' class="display-none" type="checkbox" />\
+                <span id="checkbox-enable-' + sport.Id + '-downlines-disable"' +
+                    ' class="' + (sport.EnableDownlines ? ' checkbox-checked' : ' checkbox-unchecked') + '"' +
+                    '>\
+                </span>\
+                <label id="label-enable-' + sport.Id + '-downlines"' +
+                    ' class="label-for-checkbox"' +
+                    ' for="checkbox-enable-' + (sport.Id + '-downlines" disabled="disabled"') +
+                        '>' +
+                        'Enable ' + sport.Name + ' for members' +
+                '</label>\
+            </td>';
+        return sportHtml;
+    };
+    self.RenderSport = function (sport, sportIndex) {
+        var sportHtml = '';
+        sportHtml += '<tr>' +
+                 self.RenderSportCurrentLevel(sport, sportIndex) +
+                 self.RenderSportDownlines(sport, sportIndex) +
+            '</tr>';
+        return sportHtml;
+    };
+    self.RenderCustomerInfo = function (customerInfo) {
+        self.CacheData.customerInfo = customerInfo;
+        if (customerInfo == null) {
+            self.Tables.settingContent.addClass("display-none");
+            showAlertMessage("result-message", "There is no customer info.", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        self.Tables.resultMessage.addClass("display-none");
+        var customerInfoTitle = self.getRoleName(customerInfo.RoleId) + ": " + customerInfo.Username;
+        self.Tables.customerInfoTitle.html(customerInfoTitle);
+
+        var sportHtml = '';
+        var i;
+        for (i = 0; i < customerInfo.ProductInfo.length; i++) {
+            sportHtml += self.RenderSport(customerInfo.ProductInfo[i], i);
+        }
+
+        self.Tables.settingBody.empty().append(sportHtml);
+        self.Tables.settingContent.removeClass("display-none");
+
+        if (!viewResources.HasHostPermission) {
+            return;
+        }
+
+        for (i = 0; i < customerInfo.ProductInfo.length; i++) {
+            var sport = customerInfo.ProductInfo[i];
+            var checkboxCurrentLevel = self.Tables.settingBody.find('#checkbox-enable-' + sport.Id);
+            var checkboxDownlines = self.Tables.settingBody.find('#checkbox-enable-' + sport.Id + '-downlines');
+            checkboxCurrentLevel.click(self.checkboxCurrentLevelClick);
+        }
+    };
+
+    self.checkboxCurrentLevelClick = function () {
+        var sportIndex = parseInt($(this).attr("data-sportIndex"));
+        var sport = self.CacheData.customerInfo.ProductInfo[sportIndex];
+        var sportId = sport.Id;
+        var isChecked = $(this).attr("checked") ? true : false;
+        self.EnableUpdateButton(isChecked);
+
+        var checkboxDownlines = self.Tables.settingBody.find('#checkbox-enable-' + sportId + '-downlines');
+        var labelDownlines = self.Tables.settingBody.find('#label-enable-' + sportId + '-downlines');
+        var checkboxDownlinesDisable = self.Tables.settingBody.find('#checkbox-enable-' + sportId + '-downlines-disable');
+        if (isChecked === sport.Enable) {
+            self.disableDownlinesCheckbox(labelDownlines, checkboxDownlines, checkboxDownlinesDisable);
+            self.resetDownlinesCheckbox(
+                checkboxDownlines,
+                checkboxDownlinesDisable,
+                sport.EnableDownlines);
+            return;
+        }
+
+        if (!isChecked) {
+            self.disableDownlinesCheckbox(labelDownlines, checkboxDownlines, checkboxDownlinesDisable);
+            self.resetDownlinesCheckbox(checkboxDownlines, checkboxDownlinesDisable, false);
+            return;
+        }
+
+        if (isChecked) {
+            self.enableDownlinesCheckbox(labelDownlines, checkboxDownlines, checkboxDownlinesDisable);
+            self.resetDownlinesCheckbox(checkboxDownlines, checkboxDownlinesDisable, sport.EnableDownlines);
+            return;
+        }
+    };
+
+    self.resetDownlinesCheckbox = function (checkboxDownlines, checkboxDownlinesDisable, isChecked) {
+        if (isChecked) {
+            checkboxDownlines.attr("checked", "checked");
+            checkboxDownlinesDisable.removeClass("checkbox-unchecked")
+                    .addClass("checkbox-checked");
+        } else {
+            checkboxDownlines.attr("checked", null);
+            checkboxDownlinesDisable.removeClass("checkbox-checked")
+                    .addClass("checkbox-unchecked");
+        }
+    };
+    self.disableDownlinesCheckbox = function (labelDownlines, checkboxDownlines, checkboxDownlinesDisable) {
+        labelDownlines.attr("disabled", "disabled");
+        checkboxDownlines.addClass("display-none");
+        checkboxDownlinesDisable.removeClass("display-none");
+    };
+    self.enableDownlinesCheckbox = function (labelDownlines, checkboxDownlines, checkboxDownlinesDisable) {
+        labelDownlines.attr("disabled", null);
+        checkboxDownlinesDisable.addClass("display-none");
+        checkboxDownlines.removeClass("display-none");
+    };
+
+    self.GetUpdateParams = function () {
+        self.Params.updateCustomerInfo.CustomerId = self.Params.getCustomerInfo.CustomerId;
+        self.Params.updateCustomerInfo.Role = self.CacheData.customerInfo.RoleId;
+        self.Params.updateCustomerInfo.ProductInfo = [];
+
+        for (var i = 0; i < self.CacheData.customerInfo.ProductInfo.length; i++) {
+            var sport = self.CacheData.customerInfo.ProductInfo[i];
+            var checkboxCurrentLevel = self.Tables.settingBody.find('#checkbox-enable-' + sport.Id);
+            var checkboxDownlines = self.Tables.settingBody.find('#checkbox-enable-' + sport.Id + '-downlines');
+            self.Params.updateCustomerInfo.ProductInfo.push({
+                Id: sport.Id,
+                Name: sport.Name,
+                EnableUpline: sport.EnableUpline,
+                Enable: checkboxCurrentLevel.attr("checked") ? true : false,
+                EnableDownlines: checkboxDownlines.attr("checked") ? true : false
+            });
+        };
+    };
+    self.buttonUpdateClick = function () {
+        if (!viewResources.HasHostPermission) {
+            return;
+        }
+
+        self.GetUpdateParams();
+        var confirmMessage = "Are you sure you want to update AG Casino on this customer?";
+
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+
+        self.blockUI();
+        for (var i = 0; i < self.CacheData.customerInfo.ProductInfo.length; i++) {
+            var sport = self.CacheData.customerInfo.ProductInfo[i];
+            var canUpdate = true;
+            if (!canUpdate) {
+                showAlertMessage("result-message", "Upline has been disabled.", 1);
+                self.Tables.resultMessage.removeClass("display-none");
+                self.unblockUI();
+                return;
+            }
+        }
+
+        self.CallAjax(self,
+            window.rootUrl + "AGCasino/UpdateCustomerStatus",
+            self.Params.updateCustomerInfo,
+            self.RenderUpdateResult,
+            self.RenderUpdateResult,
+            self.unblockUI);
+
+    };
+    self.getRoleName = function (roleId) {
+        roleId = parseInt(roleId);
+        var name = "";
+        switch (roleId) {
+            case self.Constants.RoleId.SUPER:
+            case self.Constants.RoleId.SuperMin:
+                name = "Super";
+                break;
+            case self.Constants.RoleId.MASTER:
+            case self.Constants.RoleId.MasterMinMax:
+                name = "Master";
+                break;
+            case self.Constants.RoleId.AGENT:
+            case self.Constants.RoleId.AgentMinMax:
+                name = "Agent";
+                break;
+            case self.Constants.RoleId.MEMBER:
+            case self.Constants.RoleId.SuperOnMember:
+            case self.Constants.RoleId.MasterOnMember:
+                name = "Member";
+                break;
+            default:
+                name = "Member";
+                break;
+        }
+
+        return name;
+    };
+    self.RenderUpdateResult = function (updateResult) {
+        if (updateResult == null) {
+            showAlertMessage("result-message", "There is a problem! Please try again!", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        if (updateResult.ErrorCode > 0) {
+            showAlertMessage("result-message", updateResult.ErrorMessage, 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        self.CacheData.customerInfo.EnableAGCasino = self.Params.updateCustomerInfo.ProductInfo[0].Enable;
+        self.EnableUpdateButton(self.CacheData.customerInfo.EnableAGCasino);
+        showAlertMessage("result-message", updateResult.ErrorMessage, 0);
+        self.Tables.resultMessage.removeClass("display-none");
+
+        setTimeout(function () {
+            self.Tables.resultMessage.empty().addClass("display-none");
+            try { parent.ClosePopup(); } catch (e) { }
+        }, 3000);
+    };
+};
+
+agCasinoStatus = new AGCasinoStatus();

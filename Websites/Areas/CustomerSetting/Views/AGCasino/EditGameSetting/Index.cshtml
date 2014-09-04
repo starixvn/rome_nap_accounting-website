@@ -1,0 +1,152 @@
+﻿@using Sunplus.Accounting.Business.Security;
+@using Sunplus.Accounting.Core.Common;
+@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Customer.Entities.AGCasino;
+@using Fanex.Tarus.Business.Implement;
+@model AGCasinoCustomerInfo
+@{
+    Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
+    ViewBag.Title = "Update AG Casino Setting";
+    var customerId = Model.CustomerId;
+    var roleId = Model.RoleId;
+    var uplineId = Model.UplineId;
+    var exchangeId = Model.ExchangeId;
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/AGCasino/EditGameSetting/Styles/EditGameSetting.css" />
+<div class="main">
+    <div class="maincontent">
+        <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC fixfont">
+                        Update AG Casino Setting
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="maincontent_box">
+            <div id="result-message">
+            </div>
+        </div>
+        <div id="settingcontent">
+            <table class="tblcollapse tableinfo">
+                <thead>
+                    <tr class="title1">
+                        <td colspan="4" class="c">
+                            Customer Information
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="r b col-1">
+                            Username:
+                        </td>
+                        <td class="l col-2">
+                        </td>
+                        <td class="r b col-3">
+                            Nick name:
+                        </td>
+                        <td class="l col-4">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="r b">
+                            First Name:
+                        </td>
+                        <td class="l">
+                        </td>
+                        <td class="r b">
+                            Last Name:
+                        </td>
+                        <td class="l">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="r b">
+                            Phone:
+                        </td>
+                        <td class="l">
+                        </td>
+                        <td class="r b">
+                            Mobile Phone:
+                        </td>
+                        <td class="l">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="r b">
+                            Fax:
+                        </td>
+                        <td class="l">
+                        </td>
+                        <td class="r b">
+                        </td>
+                        <td class="l">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tblcollapse tablesetting">
+                <thead>
+                    <tr class="title1">
+                        <td class="l" colspan="4">
+                            Game Setting
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l col-1 b">
+                            Game Type
+                        </td>
+                        <td class="l b" colspan="3">
+                            Betting Limit Groups
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="copy-tomember-container hide">
+                <label id="label-copy-tomember" class="label-for-checkbox" for="dropdown-copy-tomember">
+                    Apply group for existing members (that have no group)
+                </label>
+                <select id="dropdown-copy-tomember">
+                </select>
+            </div>
+            <div class="default-newmembergroup-container hide">
+                <label id="label-default-newmembergroup" class="label-for-checkbox" for="dropdown-default-newmembergroup">
+                    Default group for new members
+                </label>
+                <select id="dropdown-default-newmembergroup">
+                </select>
+            </div>
+            <input type="button" class="btn-update" disabled="disabled" value="Update" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js"></script>
+<script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
+<script type="text/javascript" src="~/Areas/CustomerSetting/Views/AGCasino/EditGameSetting/Scripts/EditGameSetting.js"></script>
+<script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")'; 
+        var viewResources = {
+            CustomerId: @customerId,
+            HasHostPermission: @hasHostPermission,
+            CurrentRole: @roleId,
+            UplineId: @uplineId,
+            ExchangeId: @exchangeId
+        };
+</script>
