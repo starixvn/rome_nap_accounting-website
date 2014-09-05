@@ -304,4 +304,7 @@
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
+  <Function Name="Esports">
+    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
 </Functions>

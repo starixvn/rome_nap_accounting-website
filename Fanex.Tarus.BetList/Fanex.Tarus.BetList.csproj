@@ -42,6 +42,9 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Accounting">
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Accounting.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
@@ -102,10 +105,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\nap-accounting-report\Fanex.BetList.Accounting\BetList.csproj">
-      <Project>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</Project>
-      <Name>BetList</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
       <Name>Fanex.AuthenticationFilter</Name>

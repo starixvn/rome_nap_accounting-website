@@ -276,7 +276,7 @@ public class UpdateCustomerStatus : BaseHandler
                     new CustomerUpdateStatus().CustomerUpdateDisabledVirtualSports(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
-                case "disabledEsport":
+                case "disabledEsports":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
                         throw new AccException("Invalid isupddonwline parameters");
