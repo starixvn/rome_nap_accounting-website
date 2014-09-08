@@ -83,8 +83,8 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
         int sporttype = CastAide.AsInt32(matches[0]["sporttype"]);
         string beginDiv = "<div style='float:left;margin-bottom:5px;'>";
         string endDiv = "</div>";
-        switch (sporttype)
-        {
+       switch (sporttype)
+       {
             case 1: //soccer
                 _sportType = Resources.Language.Soccer;
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Soccer.htm");
@@ -171,10 +171,11 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 tempbuild.Append(templateGame);
                 break;
 
-            case 7: //Billiard
-            case 10: //Golf
-            case 11: //Motorsports
-            case 29: //Winter sports
+            case 7: // Billiard
+            case 10: // Golf
+            case 11: // Motorsports
+            case 29: // Winter sports
+            case 43: // E-Sports
                 if (sporttype == 7)
                     _sportType = Resources.Language.billiard;
                 else if (sporttype == 10)
@@ -183,6 +184,8 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                     _sportType = Resources.Language.lblMotosports;
                 else if (sporttype == 29)
                     _sportType = Resources.Language.winterSports;
+                else if (sporttype == 43)
+                    _sportType = Resources.Language.ESports;
 
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Billiard.htm");
                 rowTemplate = TemplateHandler.CopyBlock(templateGame, "row");
