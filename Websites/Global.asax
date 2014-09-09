@@ -31,6 +31,8 @@
         //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+
+        RegisterRouteMiscController(RouteTable.Routes);
         AreaRegistration.RegisterAllAreas();
         RegisterRouteMiscController(RouteTable.Routes);
         AreaRegistration.RegisterAllAreas();
@@ -38,7 +40,7 @@
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
         // ViewEngines.Engines.Add(new CustomView());
-       
+      
     }
 
 

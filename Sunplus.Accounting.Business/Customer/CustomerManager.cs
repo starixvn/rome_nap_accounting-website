@@ -814,6 +814,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 string bingoLinkSetting = "";
                                 string pokerLinkSetting = "";
                                 var liveCasinoSetting = "";
+                                var kenoSetting = string.Empty;
                                 var agCasinoLinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
