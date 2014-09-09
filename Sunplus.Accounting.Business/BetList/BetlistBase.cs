@@ -1901,6 +1901,9 @@ namespace Sunplus.Accounting.Business.BetList
             var isPending = false;
             TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
             TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+            // Virtual Soccer uses template of Soccer, but Penalty Shootout only supports Soccer.
+            // WE MUST REMOVE IT.
+            TemplateHandler.RemoveBlock(ref _s, "PenaltyShootout");
 
             string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
             string strAway = CacheRef.GetTeamName(r["awayid"]);
