@@ -15,10 +15,7 @@ using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
-using Fanex.Tarus.DataAccess.Implement.Customer;
-using Fanex.Tarus.LiveCasino.Distributor;
 using Fanex.Tarus.LiveCasino.Entities;
-using Fanex.Tarus.Security.Permission;
 using IBCUtils.Objects;
 using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
 using Sunplus.Accounting.Business.CustSetting;
@@ -36,8 +33,13 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
+using Fanex.Tarus.Security.Permission;
 using Sunplus.Accounting.Business.Criteria;
 using Fanex.Common;
+using Fanex.LiveCasino.CoreSetting.Services;
+using Fanex.LiveCasino.CoreSetting.Models;
+using Fanex.Tarus.DataAccess.Implement.Customer;
+
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -829,7 +831,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
                                         detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
-                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMember.aspx?custId={0}&uplineId={1}", custId, parentId);
+                                        liveCasinoSetting = string.Format("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId={0}&directUplineId={1}&uplineRoleId=2&adminId={2}&targetCustId={3}&targetRoleId=1", parentId, parentId, AppSession.AccId, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
 
                                         VirtualSportsSetting = string.Format("VirtualSportMemberPT/EditMember?custId={0}&uplineId={1}", custId, parentId);
@@ -851,7 +853,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
                                         detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
-                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditAgent.aspx?custId={0}&uplineId={1}", custId, _masterID);
+                                        liveCasinoSetting = string.Format("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId={0}&directUplineId={1}&uplineRoleId=3&adminId={2}&targetCustId={3}&targetRoleId=2",_masterID, _masterID, AppSession.AccId, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _masterID, roleId);
 
                                         VirtualSportsSetting = string.Format("VirtualSportAgentPT/EditAgent?custId={0}&uplineId={1}", custId, _masterID);
@@ -871,7 +873,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
-                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMaster.aspx?custId={0}&uplineId={1}", custId, _superID);
+                                        liveCasinoSetting = string.Format("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId={0}&directUplineId={1}&uplineRoleId=4&adminId={2}&targetCustId={3}&targetRoleId=3", _superID, _superID, AppSession.AccId, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _superID, roleId);
 
                                         VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
@@ -1380,7 +1382,7 @@ namespace Sunplus.Accounting.Business.Customer
                     {
                         if (AppSession.IsSyncLCSCurrentCust)
                         {
-                            submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasino/PTSetting/SuperEditOnMember.aspx?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Live Casino</a>";
+                            submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + superId + "&directUplineId=" + parentId + "&uplineRoleId=4&adminId=" + AppSession.AccId + "&targetCustId=" + custId.ToString() + "&targetRoleId=1\");' target='centerFr'>Live Casino</a>";
                         }
                     }
                     if (WebSettings.EnableVirtualSports)
@@ -1414,7 +1416,7 @@ namespace Sunplus.Accounting.Business.Customer
                     {
                         if (AppSession.IsSyncLCSCurrentCust)
                         {
-                            submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasino/PTSetting/MasterEditOnMember.aspx?custId=" + custId.ToString() + "&masterId=" + masterId + "\");' target='centerFr'>Live Casino</a>";
+                            submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId="+masterId+"&directUplineId="+parentId+"&uplineRoleId=3&adminId="+AppSession.AccId+"&targetCustId="+custId.ToString()+"&targetRoleId=1\");' target='centerFr'>Live Casino</a>";
                         }
                     }
                     if (WebSettings.EnableVirtualSports)
@@ -2697,23 +2699,24 @@ namespace Sunplus.Accounting.Business.Customer
             }
             if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
             {
-                var liveCsService = new LiveCasinoDistributor();
-                var thirdPartyCustInfo = new CustomerInfoDTO()
-                                             {
-                                                 AgentId = custInfo.AIBCCustID,
-                                                 CustId = custInfo.IBCCustID,
-                                                 CustName = custInfo.UserName,
-                                                 DisableLiveCs = uplineInfo.IsUplineDisableLiveCasino,
-                                                 ExchangeId = custInfo.ExchangeID,
-                                                 Ip = ip,
-                                                 IsEnableDownLines = !uplineInfo.IsUplineDisableLiveCasino,
-                                                 Language = "E",
-                                                 MasterId = custInfo.MIBCCustID,
-                                                 RoleId = custInfo.RoleId,
-                                                 SubAccountId = 0,
-                                                 SuperId = custInfo.SIBCCustID
-                                             };
-                liveCsService.AutoInsertPtSetting(thirdPartyCustInfo, userId, userName, 3);
+                GameSettingService liveCasinoSettingService = new GameSettingService();
+
+                liveCasinoSettingService.InsertAutoAccount(new SettingContext {
+                    AgentId = uplineInfo.AgentId,
+                    MasterId = uplineInfo.MasterId,
+                    SuperId = uplineInfo.SuperId,
+                    DirectUplineId = custInfo.UpperCustID,
+                    UplineUsername = AppSession.AccUserName,
+                    TargetCustId = custInfo.IBCCustID,
+                    TargetUsername = custInfo.UserName,
+                    TargetRoleId = custInfo.RoleId,
+                    AdminId = AppSession.AccId,
+                    SubAccId = 0,
+                    ExchangeId = custInfo.ExchangeID,
+                    IP = ip,
+                    Language = "E",
+                    IsEditMultiple = false
+                });
             }
             return result;
         }

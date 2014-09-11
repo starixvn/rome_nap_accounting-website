@@ -167,8 +167,8 @@
 
     },
     updateDoubleComm: function (id, isAllow, isMultiple) {
-        SuperList.paramsUpdate.custDetail = id.toString();
-
+       SuperList.paramsUpdate.custDetail = id.toString();
+       
         SuperList.paramsUpdate.isDoubleComm = isAllow;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -205,7 +205,7 @@
                     var arr = [];
                     for (var i = 0; i < length; i++) {
                         if (ResultCustomerlist[i].Result.ErrorCode != 0) {
-                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :' + (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") + '</span></tr></tr>';
+                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :'+ (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") +'</span></tr></tr>';
                             arr.push(error)
                             errorFlag = true;
                         }
@@ -215,7 +215,7 @@
                         setTimeout('$("#tblconfirm").dialog("close")', 2000);
 
                         var htmlsuccess = '';
-                        htmlsuccess = '<tr><td><span class="successful">Update successful</span></tr></tr>';
+                            htmlsuccess = '<tr><td><span class="successful">Update successful</span></tr></tr>';
 
                         var title = "";
                         if (!isMultiple) {
@@ -295,9 +295,9 @@
                 , 0, 0, 640, 480, false, 2000, null);
     },
     liveCasinoSetting: function (custId, exchangeId, uplineId) {
-        showPopup(""
-                , "LiveCasino/PTSetting/EditSuper.aspx?custId=" + custId + "&uplineId=" + uplineId
-                , 0, 0, 640, 480, false, 2000, null);
+        showPopup("Live Casino"
+                , window.rootUrl + "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=" + _adminID + "&targetCustId=" + custId + "&targetRoleId=4"
+                , 0, 0, 880, 580, false, 2000, null);
     },
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup(""
@@ -308,21 +308,6 @@
         showPopup(" Edit Betting Limit"
                 , "customersetting/betsetting/sportsbook/index/" + custId + "/" + uplineId + "/" + accId + "/" + groupName
                 , 0, 0, 900, 680, false, 2000, null);
-    },
-    kenoSetting: function (custId) {
-        showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
-    },
-    asianGamingCasino: function (custId) {
-        showPopup("Update AG Casino Setting",
-        "AGCasino/EditAGCasinoGameSetting?customerId=" + _userId + "&uplineId=0&roleId=4&exchangeId=0" + _userId,
-        0,
-        0,
-        700,
-        500,
-        false,
-        2000,
-        null);
     },
     reCalculateGrid: function () {
         var initWidth = 1385;

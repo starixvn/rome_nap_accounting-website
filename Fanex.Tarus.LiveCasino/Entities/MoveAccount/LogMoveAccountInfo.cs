@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fanex.LiveCasinoSetting.Model.Log;
+//using Fanex.LiveCasinoSetting.Model.Log;
 
 namespace Fanex.Tarus.LiveCasino.Entities.MoveAccount
 {

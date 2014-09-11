@@ -70,6 +70,7 @@
     <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="UpdateSuperLiveCSComm" SpName="Acc_CustomerUpdSuperLiveCS_CommissionForAllLevels" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
 
 	<Function Name="Customer Status">

@@ -8,8 +8,18 @@
   </Function>
 
   <Function Name="Live Casino - Stake Level Setting">
-    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB" Plain="1" >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
     <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LV_BackupDB"  Plain="1"/>
     <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LV_BackupDB"  Plain="1"/>
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LV_BackupDB" Plain="1" />

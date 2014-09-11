@@ -88,50 +88,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\CacheUtils.cs" />
     <Compile Include="Business\ExRate\ExRateManager.cs" />
     <Compile Include="Business\ExRate\IExRateManager.cs" />
     <Compile Include="Business\MoveAccount\IMoverAccountManager.cs" />
     <Compile Include="Business\MoveAccount\MoveAccountManager.cs" />
-    <Compile Include="Business\Report\BaseReport.cs" />
-    <Compile Include="Business\Report\ExportExcelReport.cs" />
-    <Compile Include="Business\Report\IExportExcelReport.cs" />
-    <Compile Include="Business\Report\ReportManager.cs" />
-    <Compile Include="Business\Report\IReportManager.cs" />
     <Compile Include="Business\BaseManager.cs" />
-    <Compile Include="Business\Setting\BaseSetting.cs" />
-    <Compile Include="Business\Setting\ISettingManager.cs" />
-    <Compile Include="Business\Setting\ILimitSettingManager.cs" />
-    <Compile Include="Business\Setting\SettingManager.cs" />
-    <Compile Include="Business\Setting\LimitSettingManager.cs" />
-    <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\ExRate\IExRateDataAccess.cs" />
     <Compile Include="DataAccess\ExRate\ExRateDataAccess.cs" />
     <Compile Include="DataAccess\MoveAccount\IMoveAccountDataAccess.cs" />
     <Compile Include="DataAccess\MoveAccount\MoveAccountDataAccess.cs" />
-    <Compile Include="DataAccess\Report\IReportDataAccess.cs" />
-    <Compile Include="DataAccess\Report\ReportDataAccess.cs" />
-    <Compile Include="DataAccess\Setting\ILimitSettingDataAccess.cs" />
-    <Compile Include="DataAccess\Setting\LimitSettingDataAccess.cs" />
-    <Compile Include="Distributor\ILiveCasinoDistributor.cs" />
-    <Compile Include="Distributor\IReportService.cs" />
-    <Compile Include="Distributor\LiveCasinoDistributor.cs" />
-    <Compile Include="Distributor\ReportService.cs" />
     <Compile Include="Entities\Betlist\BetlistEvent.cs" />
     <Compile Include="Entities\Betlist\BetlistResultLC.cs" />
-    <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\ExRate\ExRate.cs" />
-    <Compile Include="Entities\GameSettingLog.cs" />
-    <Compile Include="Entities\LiveCasinoSettingDTO.cs" />
     <Compile Include="Entities\MoveAccount\LogMoveAccountInfo.cs" />
     <Compile Include="Entities\MoveAccount\MoveAccountInfo.cs" />
-    <Compile Include="Entities\Report\DailyWinloss.cs" />
-    <Compile Include="Entities\Report\FilterCommon.cs" />
-    <Compile Include="Entities\Report\GameStatisticsDTO.cs" />
-    <Compile Include="Entities\Report\DailyWinlossDetail.cs" />
-    <Compile Include="Entities\Report\GameStatisticsBO.cs" />
     <Compile Include="Entities\Result.cs" />
-    <Compile Include="Entities\Setting\LimitSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

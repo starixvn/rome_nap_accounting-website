@@ -317,17 +317,13 @@
     },
     liveCasinoSetting: function (custId, exchangeId, uplineId) {
         showPopup("Live Casino"
-                , "LiveCasino/PTSetting/EditMaster.aspx?custId=" + custId + "&uplineId=" + uplineId
-                , 0, 0, 640, 480, false, 2000, null);
+                , window.rootUrl + "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + uplineId + "&directUplineId=" + uplineId + "&uplineRoleId=4&adminId=" + _adminID + "&targetCustId=" + custId + "&targetRoleId=3"
+                , 0, 0, 880, 580, false, 2000, null);
     },
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup("Virtual Sport"
                 , "VirtualSportMasterPT/EditMaster?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
-    },
-    kenoSetting: function (custId) {
-        showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, true, 2000, null);
     },
     reCalculateGrid: function () {
         var initWidth = 1385;

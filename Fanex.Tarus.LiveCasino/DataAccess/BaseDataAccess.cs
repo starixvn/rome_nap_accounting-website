@@ -17,50 +17,50 @@ namespace Fanex.Tarus.LiveCasino.DataAccess
             
         }
 
-        public bool GetSyncLiveCasinoStatus(int custId, string userName, int userId)
-        {
+        //public bool GetSyncLiveCasinoStatus(int custId, string userName, int userId)
+        //{
 
-            using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
-                {
-                    objDB.AddInParameter("CustID", DbType.Int32, custId);
-                    objDB.AddInParameter("AdminID", DbType.Int32, userId);
-                    objDB.AddInParameter("username", DbType.String, userName);
-                    DataSet ds = objDB.ExecuteDataSet();
-                    if (ds != null && ds.Tables[0].Rows.Count > 0)
-                    {
-                        return WebSettings.EnableLiveCasino
-                                   ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["SyncLiveCasino"])
-                                   : false;
-                    }
-                }
+        //    using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
+        //        {
+        //            objDB.AddInParameter("CustID", DbType.Int32, custId);
+        //            objDB.AddInParameter("AdminID", DbType.Int32, userId);
+        //            objDB.AddInParameter("username", DbType.String, userName);
+        //            DataSet ds = objDB.ExecuteDataSet();
+        //            if (ds != null && ds.Tables[0].Rows.Count > 0)
+        //            {
+        //                return WebSettings.EnableLiveCasino
+        //                           ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["SyncLiveCasino"])
+        //                           : false;
+        //            }
+        //        }
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        public CustomerStatusInfo SelCustStatusInfo(int custId, string userName, int userId)
-        {
-            CustomerStatusInfo customer = new CustomerStatusInfo();
-            using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
-            {
-                objDB.AddInParameter("CustID", DbType.Int32, custId);
-                objDB.AddInParameter("AdminID", DbType.Int32, userId);
-                objDB.AddInParameter("username", DbType.String, userName);
-                DataSet ds = objDB.ExecuteDataSet();
-                if (ds != null && ds.Tables[0].Rows.Count > 0)
-                {
-                    customer.SyncLiveCasino = WebSettings.EnableLiveCasino
-                                                  ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["SyncLiveCasino"])
-                                                  : false;
-                    customer.DisableLiveCs = WebSettings.EnableLiveCasino
-                                                 ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["DisableLiveCasino"])
-                                                 : true;
-                    customer.IsEnableDownLines = !customer.DisableLiveCs;
+        //public CustomerStatusInfo SelCustStatusInfo(int custId, string userName, int userId)
+        //{
+        //    CustomerStatusInfo customer = new CustomerStatusInfo();
+        //    using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
+        //    {
+        //        objDB.AddInParameter("CustID", DbType.Int32, custId);
+        //        objDB.AddInParameter("AdminID", DbType.Int32, userId);
+        //        objDB.AddInParameter("username", DbType.String, userName);
+        //        DataSet ds = objDB.ExecuteDataSet();
+        //        if (ds != null && ds.Tables[0].Rows.Count > 0)
+        //        {
+        //            customer.SyncLiveCasino = WebSettings.EnableLiveCasino
+        //                                          ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["SyncLiveCasino"])
+        //                                          : false;
+        //            customer.DisableLiveCs = WebSettings.EnableLiveCasino
+        //                                         ? CastAide.AsBoolean(ds.Tables[0].Rows[0]["DisableLiveCasino"])
+        //                                         : true;
+        //            customer.IsEnableDownLines = !customer.DisableLiveCs;
                     
-                }
-            }
+        //        }
+        //    }
 
-            return customer;
-        }
+        //    return customer;
+        //}
 
         public Dictionary<int, string> GetExchange()
         {
