@@ -40,10 +40,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DNAide">
-      <HintPath>..\Websites\Bin\DNAide.dll</HintPath>
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
     <Reference Include="ExcelUtil">
-      <HintPath>..\Websites\Bin\ExcelUtil.dll</HintPath>
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

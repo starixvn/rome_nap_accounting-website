@@ -8,7 +8,6 @@ using System.Web.UI.WebControls;
 
 public partial class Customer_PT_Poker_SuperUpdate : P2PPage
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         roleId = "4";

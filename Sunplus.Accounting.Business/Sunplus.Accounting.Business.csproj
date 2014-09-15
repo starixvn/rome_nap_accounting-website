@@ -508,13 +508,13 @@
       <Project>{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}</Project>
       <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
+      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
+      <Name>Sunplus.Data.DataAbstract</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>

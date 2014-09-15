@@ -107,7 +107,7 @@
                     <tr>   
                     {{/each}}                
                 </table>
-                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker},style:{display:isShowBtSave ? '':'none'}" />
+                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
                
             </script>
         </div>
@@ -128,8 +128,7 @@
         var custId=<%=custId%>;
         var roleId=<%=roleId%>;
         var isDisabled=<%=isDisabled%>;
-        var msgDisabled='<%=msgDisabled%>';
-       var isShowBtSave = <%=(Enumerations.AccountingSystem.EXTERNAL==AppSession.CurrentSystemNAME) ? "false":"true" %>; 
+        var msgDisabled='<%=msgDisabled%>';       
         $(function () {
             pokerData.getCustomerSetting(custId,roleId);
         });

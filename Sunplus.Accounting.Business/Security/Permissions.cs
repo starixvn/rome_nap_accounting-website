@@ -499,5 +499,10 @@ namespace Sunplus.Accounting.Business.Security
         }
 
         #endregion Nested type: FinancePermission
+
+        public static bool IsAllowEditAutoSuspend()
+        {
+            return Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend);
+        }
     }
 }

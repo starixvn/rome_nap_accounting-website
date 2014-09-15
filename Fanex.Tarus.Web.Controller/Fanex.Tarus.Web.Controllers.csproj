@@ -212,7 +212,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ErrorMsg.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="bin\Fanex.Tarus.Web.Controllers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
