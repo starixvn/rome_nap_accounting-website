@@ -172,10 +172,12 @@
     <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />            
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
+  
   <Function Name="Left Panel - Customer Info">
     <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
+
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -304,6 +306,7 @@
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+
 	<Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
@@ -319,5 +322,9 @@
 
 	</Function>
   
+  </Function>
+
+  <Function Name="ConfigureDirectAccount">
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBAGE.bodb02.bodbAdminNet"  />
 </Functions>
 
