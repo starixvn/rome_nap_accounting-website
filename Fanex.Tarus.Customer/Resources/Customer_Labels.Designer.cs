@@ -88,6 +88,159 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct account status updated successfully!.
+        /// </summary>
+        public static string ConfigureDirectAccount_ChangeStatus_UpdateSuccess {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_ChangeStatus_UpdateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please choose file to upload!.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_ChooseFile {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_ChooseFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of file is larger than 1MB.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_ExceedFileSize {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_ExceedFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Accounts, please check!.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_InvalidAlert {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, you choose invalid file extension. Please choose an Excel file (.xls).
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_InvalidExtension {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data is emty.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_InvalidFormat {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M71CRMB,MK203ABCD,SORM,SA-HK$,EXP-TWN.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_SampleUserNames {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_SampleUserNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct_Account_Template.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_TemplateName {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_TemplateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to update Direct Status for these customers?.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_UpdateConfirm {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_UpdateConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid Accounts.
+        /// </summary>
+        public static string ConfigureDirectAccount_Import_ValidAlert {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_Import_ValidAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successful updated accounts.
+        /// </summary>
+        public static string ConfigureDirectAccount_ImportDirectAccount_UpdateSuccess {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_ImportDirectAccount_UpdateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will affect &lt;span id=&quot;number-effected-cust&quot; class=&quot;b&quot;&gt;X&lt;/span&gt; customers.&lt;span id=&quot;view-update-effect&quot; class=&quot;link&quot; &gt;Click here&lt;/span&gt; to view in details!.
+        /// </summary>
+        public static string ConfigureDirectAccount_ViewEffectMessage {
+            get {
+                return ResourceManager.GetString("ConfigureDirectAccount_ViewEffectMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct Account Template.
+        /// </summary>
+        public static string Direct_Account_Template {
+            get {
+                return ResourceManager.GetString("Direct_Account_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized on this function..
+        /// </summary>
+        public static string Error_NoPermission {
+            get {
+                return ResourceManager.GetString("Error_NoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a problem! Please try again!.
+        /// </summary>
+        public static string Error_SystemError {
+            get {
+                return ResourceManager.GetString("Error_SystemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Direct Account.
+        /// </summary>
+        public static string Import_Direct_Account {
+            get {
+                return ResourceManager.GetString("Import_Direct_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Master {
@@ -106,11 +259,128 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose an excel file to update.
+        /// </summary>
+        public static string Message_ChooseExcelFile {
+            get {
+                return ResourceManager.GetString("Message_ChooseExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to download template.
+        /// </summary>
+        public static string Message_DownloadTemplate {
+            get {
+                return ResourceManager.GetString("Message_DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Size limit 1MB.
+        /// </summary>
+        public static string Message_ExcelFileSizeLimit {
+            get {
+                return ResourceManager.GetString("Message_ExcelFileSizeLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no data..
+        /// </summary>
+        public static string Message_NoData {
+            get {
+                return ResourceManager.GetString("Message_NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open File.
+        /// </summary>
+        public static string Open_File {
+            get {
+                return ResourceManager.GetString("Open_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reason.
+        /// </summary>
+        public static string Reason {
+            get {
+                return ResourceManager.GetString("Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super.
         /// </summary>
         public static string Super {
             get {
                 return ResourceManager.GetString("Super", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Symbol_Loading {
+            get {
+                return ResourceManager.GetString("Symbol_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #.
+        /// </summary>
+        public static string Symbol_No {
+            get {
+                return ResourceManager.GetString("Symbol_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Now!.
+        /// </summary>
+        public static string Update_Now {
+            get {
+                return ResourceManager.GetString("Update_Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

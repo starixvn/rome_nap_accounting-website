@@ -123,8 +123,62 @@
   <data name="Bingo" xml:space="preserve">
     <value>Bingo</value>
   </data>
-  <data name="ClickToViewPTInfo" xml:space="preserve">
-    <value>Click to view PT Info</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConfigureDirectAccount_ChangeStatus_UpdateSuccess" xml:space="preserve">
+    <value>Direct account status updated successfully!</value>
+  </data>
+  <data name="ConfigureDirectAccount_ImportDirectAccount_UpdateSuccess" xml:space="preserve">
+    <value>Successful updated accounts</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_ChooseFile" xml:space="preserve">
+    <value>Please choose file to upload!</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_ExceedFileSize" xml:space="preserve">
+    <value>The size of file is larger than 1MB</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_InvalidAlert" xml:space="preserve">
+    <value>Invalid Accounts, please check!</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_InvalidExtension" xml:space="preserve">
+    <value>Sorry, you choose invalid file extension. Please choose an Excel file (.xls)</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_InvalidFormat" xml:space="preserve">
+    <value>Data is emty</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_SampleUserNames" xml:space="preserve">
+    <value>M71CRMB,MK203ABCD,SORM,SA-HK$,EXP-TWN</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_TemplateName" xml:space="preserve">
+    <value>Direct_Account_Template</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_UpdateConfirm" xml:space="preserve">
+    <value>Are you sure you want to update Direct Status for these customers?</value>
+  </data>
+  <data name="ConfigureDirectAccount_Import_ValidAlert" xml:space="preserve">
+    <value>Valid Accounts</value>
+  </data>
+  <data name="ConfigureDirectAccount_ViewEffectMessage" xml:space="preserve">
+    <value>This action will affect &lt;span id="number-effected-cust" class="b"&gt;X&lt;/span&gt; customers.&lt;span id="view-update-effect" class="link" &gt;Click here&lt;/span&gt; to view in details!</value>
+  </data>
+  <data name="Direct_Account_Template" xml:space="preserve">
+    <value>Direct Account Template</value>
+  </data>
+  <data name="Error_NoPermission" xml:space="preserve">
+    <value>You are not authorized on this function.</value>
+  </data>
+  <data name="Direct_Account_Template" xml:space="preserve">
+    <value>Direct Account Template</value>
+  </data>
+  <data name="Error_NoPermission" xml:space="preserve">
+    <value>You are not authorized on this function.</value>
+  </data>
+  <data name="Error_SystemError" xml:space="preserve">
+    <value>There is a problem! Please try again!</value>
+  </data>
+  <data name="Import_Direct_Account" xml:space="preserve">
+    <value>Import Direct Account</value>
   </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
@@ -132,7 +186,46 @@
   <data name="Member" xml:space="preserve">
     <value>Member</value>
   </data>
+  <data name="Message_ChooseExcelFile" xml:space="preserve">
+    <value>Choose an excel file to update</value>
+  </data>
+  <data name="Message_DownloadTemplate" xml:space="preserve">
+    <value>Click here to download template</value>
+  </data>
+  <data name="Message_ExcelFileSizeLimit" xml:space="preserve">
+    <value>File Size limit 1MB</value>
+  </data>
+  <data name="Message_NoData" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open_File" xml:space="preserve">
+    <value>Open File</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
+  </data>
+  <data name="Symbol_Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="Symbol_No" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="Update_Now" xml:space="preserve">
+    <value>Update Now!</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

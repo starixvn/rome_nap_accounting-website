@@ -213,7 +213,6 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                 addResult.ErrorMesage = CastAide.AsString(outputParams["errmsg"]);
                 if (addResult.ErrorCode == 0)
                 {
-
                     var succeededTable = rawData[0];
                     var failedTable = rawData[1];
                     var smaListLength = smaList.Count;

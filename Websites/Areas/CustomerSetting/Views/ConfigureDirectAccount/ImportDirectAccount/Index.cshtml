@@ -1,0 +1,230 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+@using Fanex.Tarus.Customer.Entities;
+@using Fanex.Tarus.Customer.Entities.ConfigureDirectAccount;
+@using Fanex.Tarus.Business.Implement;
+@using Sunplus.Accounting.Core.Common;
+@{
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
+    var userId = AppSession.AccId;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/LeftPanel/left_panel.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/ConfigureDirectAccount/ImportDirectAccount/Styles/ImportDirectAccount.css" />
+<div class="main">
+    <div class="maincontent">
+        <div class="maincontent_box">
+            <div class="box_header">
+                <div class="left_tab">
+                    <ul>
+                        <li id="import-direct-account-tab" class="current"><a href="javascript:;"><span>
+                            @Customer_Labels.Import_Direct_Account</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="box-upload-content">
+                <div id="result-message" class="display-none">
+                </div>
+                <table class="uploadFileContainer display-none" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="b l">
+                            @Customer_Labels.Message_ChooseExcelFile
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            <form id="file-upload-form" method="post" enctype="multipart/form-data" action="../Areas/CustomerSetting/Views/ConfigureDirectAccount/ImportDirectAccount/UploadHandler.ashx"
+                            target="upload_iframe">
+                            <input id="file-upload-control" name="file-upload-control" size="85" type="file" />
+                            <input id="button-open-file" class="btn" type="btn" name="action" value="@Customer_Labels.Open_File" />
+                            <input id="button-update" class="btn" type="btn" name="action" value="@Customer_Labels.Update_Now" disabled="disabled" />
+                            <input id="AccId_UploadFile" name="AccId" type="hidden" />
+                            <iframe id="upload_target" name="upload_iframe"></iframe>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            <span class="label-filesize-limit">
+                                @Customer_Labels.Message_ExcelFileSizeLimit</span> <a class="link-download-excel-template b">@Customer_Labels.Message_DownloadTemplate</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="check-import-result-box display-none">
+                    <div class="failed-records-table-container freegrid display-none">
+                        <div class="col_header row-headers-background scroll-y">
+                            <div class="header-container">
+                                <table class="grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4" class="l b error-title">
+                                                <div class="error-icon">
+                                                </div>
+                                                <div class="error-label">
+                                                    @Customer_Labels.ConfigureDirectAccount_Import_InvalidAlert</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-position">
+                                                    @Customer_Labels.Position
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-reason">
+                                                    @Customer_Labels.Reason
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid-container container">
+                            <div class="content-container">
+                                <table id="failed-records-table" class="failed-records-table grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4" class="l b error-title">
+                                                <div class="error-icon">
+                                                </div>
+                                                <div class="error-label">
+                                                    @Customer_Labels.ConfigureDirectAccount_Import_InvalidAlert</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no ">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-position">
+                                                    @Customer_Labels.Position
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-reason">
+                                                    @Customer_Labels.Reason
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="success-records-table-container freegrid display-none">
+                        <div class="col_header row-headers-background scroll-y">
+                            <div class="header-container">
+                                <table class="grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="l b success-title">
+                                                <div class="success-icon">
+                                                </div>
+                                                <div class="success-label">
+                                                    @Customer_Labels.ConfigureDirectAccount_Import_ValidAlert</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-position">
+                                                    @Customer_Labels.Position
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid-container container">
+                            <div class="content-container">
+                                <table id="success-records-table" class="success-records-table grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="l b success-title">
+                                                <div class="success-icon">
+                                                </div>
+                                                <div class="success-label">
+                                                    @Customer_Labels.ConfigureDirectAccount_Import_ValidAlert</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no ">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-position">
+                                                    @Customer_Labels.Position
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js"></script>
+<script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+<script type="text/javascript" src="~/js/jQuery/AjaxForm/ajax-form.js"></script>
+<script type="text/javascript" src="~/Areas/CustomerSetting/Views/ConfigureDirectAccount/ImportDirectAccount/Scripts/ImportDirectAccount.js"></script>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+        var userId = @userId;
+    var hasHostPermission = @(hasHostPermission ? 1 : 0);
+    var viewResources = {
+        Error_NoPermission: '@Customer_Labels.Error_NoPermission',
+        Error_SystemError: '@Customer_Labels.Error_SystemError',
+        ConfigureDirectAccount_Import_UpdateConfirm: '@Customer_Labels.ConfigureDirectAccount_Import_UpdateConfirm'
+    };
+</script>

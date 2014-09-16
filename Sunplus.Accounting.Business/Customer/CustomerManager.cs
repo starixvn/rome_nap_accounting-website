@@ -15,9 +15,12 @@ using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
+using Fanex.Tarus.DataAccess.Implement.Customer;
 using Fanex.Tarus.LiveCasino.Distributor;
 using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.Security.Permission;
 using IBCUtils.Objects;
+using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
 using Sunplus.Accounting.Business.CustSetting;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
@@ -33,8 +36,8 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-using Fanex.Tarus.Security.Permission;
-using Fanex.Tarus.DataAccess.Implement.Customer;
+using Sunplus.Accounting.Business.Criteria;
+using Fanex.Common;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -44,8 +47,6 @@ namespace Sunplus.Accounting.Business.Customer
     public class CustomerManager : ICustomerManager
     {
         public ICustomerDAO _customerDAO;
-
-
 
         public CustomerManager()
             : this(null)
@@ -1072,8 +1073,8 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
-
         }
+
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
         {
             try
@@ -1116,12 +1117,6 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Selected Betting
 
-            #region Auto Suspend
-
-
-
-            #endregion Auto Suspend
-
             #region is Internal user
 
             if (!WebSettings.DisableInternal && Functions.Settings.IsVisibleInternal)
@@ -1129,6 +1124,23 @@ namespace Sunplus.Accounting.Business.Customer
                 bool isInternalUser = Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
                 sg.Add(GetSettingControlInternalUser(roleId, CustParent.IsInternalUser, isManageCustomerAccess, "internalUser", isInternalUser, CastAide.AsBoolean(row1["Enabled"])));
             }
+
+            ConfigureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
+            {
+                SettingGroup = sg,
+                UserId = Converter.ToString2(row1["custid"]),
+                Username = Converter.ToString2(row1["username"]),
+                DirectAccountStatusInfo = new DirectAccountStatusInfo
+                {
+                    IsShowDirectStatus = !Converter.ToBool(row1["IsHideDirectStatus"]),
+                    IsCheckedDirectStatus = Converter.ToBool(row1["IsCheckDirectStatus"]),
+                    CanEditDirectStatus = !Converter.ToBool(row1["IsDisabledDirectStatus"]) && Permissions.GetHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount)
+                },
+
+                RoleId = roleId,
+                Htmlcontent = htmlcontent,
+                IsManageCustomerAccess = isManageCustomerAccess
+            });
 
             #endregion is Internal user
 

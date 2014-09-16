@@ -267,10 +267,10 @@
       <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
   </Function>
-   <Function Name="Admin-MaxNewMember">
+  <Function Name="Admin-MaxNewMember">
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
- <Function Name="AGCasino">
+  <Function Name="AGCasino">
     <Setting Key="Customer_AGCasino_GetCustomerSetting" SpName="Acc_AGC_SelSuperSetting" DbName="DBTXN.CustDB.bodbAdminNet"/>
 
     <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet"  />
@@ -301,8 +301,8 @@
       <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
   </Function>
-  <Function Name="Esports">
-    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  <Function Name="ConfigureDirectAccount">
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBTXN.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
