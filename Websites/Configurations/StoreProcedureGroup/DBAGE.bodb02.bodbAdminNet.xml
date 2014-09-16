@@ -319,5 +319,9 @@
 
 	</Function>
   
+  </Function>
+
+  <Function Name="ConfigureDirectAccount">
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBAGE.bodb02.bodbAdminNet"  />
 </Functions>
 

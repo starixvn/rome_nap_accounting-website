@@ -263,7 +263,7 @@
 	<Function Name="SearchCopy">    
 		<Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>    
 	</Function>
-	<Function Name="Esports">
+ <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
   <Function Name="ConfigureDirectAccount">
