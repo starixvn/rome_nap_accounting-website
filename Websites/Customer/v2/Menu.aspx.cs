@@ -3,11 +3,11 @@ using System;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Bingo.Core;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -26,9 +26,9 @@ public partial class Others_Menu : System.Web.UI.Page
         AllowedFi = CastAide.AsBoolean(db.Outputs["allowedfi"]);
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
-        AllowedPoker = CastAide.AsBoolean(PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"].Value);
+        AllowedPoker = true;
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
-        allowVirtualSports = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
+        allowVirtualSports = true ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
 
         int roleid = CastAide.AsInt32(arrCustID[2].Split('=')[1]);
         string bingopath = "../PT/Bingo/";
@@ -74,11 +74,11 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + AppSession.AccId);
         }
-        if (WebSettings.disabledFI || !AllowedFi || AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-        {
+        //if (WebSettings.disabledFI || !AllowedFi || AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+        //{
             TemplateHandler.RemoveBlock(ref tplMenu, "Finance");
             defaultUrl = HRURL;
-        }
+        //}
         if (WebSettings.disabledHR)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "HorceRacing");
