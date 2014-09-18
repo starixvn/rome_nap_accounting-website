@@ -17,6 +17,13 @@
     </div>
     @Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
     @Scripts.Render("~/areasjs/livecasino/core")
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")?v=1"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")?v=1"></script>
+    }
+    else
+    {
+        @Scripts.Render("~/areasjs/livecasino/setting")
+    }
     @RenderSection("scripts", false)
 </body>
 </html>
