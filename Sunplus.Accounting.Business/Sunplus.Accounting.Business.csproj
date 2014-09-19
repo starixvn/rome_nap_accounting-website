@@ -118,6 +118,10 @@
     <Reference Include="RemotingRef">
       <HintPath>..\Dependency\RemotingRef.dll</HintPath>
     </Reference>
+    <Reference Include="RSACryptoPad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\RSACryptoPad.dll</HintPath>
+    </Reference>
     <Reference Include="SharedCache.WinServiceCommon">
       <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
     </Reference>
@@ -162,11 +166,15 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TplCore">
+    <Reference Include="TplCore, Version=1.0.4694.29951, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\TplCore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountingCoreAppSession.cs" />
+    <Compile Include="AccountingCoreConfig.cs" />
+    <Compile Include="AccountingCoreUtils.cs" />
     <Compile Include="Admin\ExternalSite.cs" />
     <Compile Include="Admin\IExternalSite.cs" />
     <Compile Include="BetAggregator\LicenseeConfigManager..cs" />

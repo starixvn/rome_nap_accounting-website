@@ -61,14 +61,23 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Core">
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.4.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -79,8 +88,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RemotingRef">
-      <HintPath>..\Dependency\RemotingRef.dll</HintPath>
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="RSACryptoPad">
       <HintPath>..\Dependency\RSACryptoPad.dll</HintPath>
@@ -88,8 +101,12 @@
     <Reference Include="SharedCache.WinServiceCommon">
       <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Core.Common">
-      <HintPath>..\Dependency\Sunplus.Core.Common.dll</HintPath>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.Common, Version=1.1.4505.19054, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -99,8 +116,8 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TplCore">
-      <HintPath>..\Dependency\TplCore.dll</HintPath>
+    <Reference Include="TplCore, Version=1.0.4694.29951, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TplCore.1.0.4694.29951\lib\net40\TplCore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +194,12 @@
     <Compile Include="Helper\SendEmail3rdParty.cs" />
     <Compile Include="Helper\StringUtils.cs" />
     <Compile Include="Helper\Utils.cs" />
+    <Compile Include="TplCore\App_Templates\Default\BetList\DeleteBet.htm.cs" />
+    <Compile Include="TplCore\App_Templates\Default\BetList\Soccer.htm.cs" />
+    <Compile Include="TplCore\App_Templates\Default\CustomerInfo\CustomerInfo.htm.cs" />
+    <Compile Include="TplCore\App_Templates\Default\DangerousCust.htm.cs" />
+    <Compile Include="TplCore\App_Templates\Default\SpecialDelete\Mixpalay\TplSendMailMixparlayFromBetList.htm.cs" />
+    <Compile Include="TplCore\App_Templates\Default\SpecialDelete\OutrightList.htm.cs" />
     <Compile Include="Web\HtmlHelper.cs" />
     <Compile Include="Web\PagerManager.cs" />
     <Compile Include="Web\TplCore\App_Templates\Balance\BalanceForm.htm.cs" />

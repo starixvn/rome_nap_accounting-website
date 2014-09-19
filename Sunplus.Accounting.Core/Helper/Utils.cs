@@ -187,11 +187,7 @@ namespace Sunplus.Accounting.Core.Helper
             }
         }
 
-        public static string EncryptString(string strEncrypt, int len, string pathKey)
-        {
-            RSACryptoPad.EncryptionThread encryption = new RSACryptoPad.EncryptionThread();
-            return encryption.EncryptString(strEncrypt, 1024, pathKey);
-        }
+      
 
 
     }

@@ -4,8 +4,6 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Bingo.Core;
 
@@ -36,6 +34,7 @@ public partial class Others_Menu : System.Web.UI.Page
         var virtualSportsPath = string.Empty;
         var kenoPath = string.Empty;
         var uplineId = CastAide.AsInt32(arrCustID[3].Split('=')[1]);
+        int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
         
         if (roleid == 1)
         {
@@ -44,7 +43,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "MemberUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId="+custID+"&customerLevel=1");
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + AppSession.AccId);
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
         }
         else if (roleid == 2)
         {
@@ -53,7 +52,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "AgentUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=2");
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + AppSession.AccId);
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
         }
         else if (roleid == 3)
         {
@@ -62,7 +61,7 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "MasterUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=4&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=3");
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + AppSession.AccId);
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
         }
         else
         {
@@ -72,20 +71,20 @@ public partial class Others_Menu : System.Web.UI.Page
             PokerURL += "SuperUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=4");
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + AppSession.AccId);
+            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
         }
         //if (WebSettings.disabledFI || !AllowedFi || AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         //{
             TemplateHandler.RemoveBlock(ref tplMenu, "Finance");
             defaultUrl = HRURL;
         //}
-        if (WebSettings.disabledHR)
+        if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "HorceRacing");
-            if ((WebSettings.disabledFI || !AllowedFi) && !WebSettings.disableCS)
+            if ((Sunplus.Accounting.Core.Configurations.WebSettings.disabledFI || !AllowedFi) && !Sunplus.Accounting.Core.Configurations.WebSettings.disableCS)
                 defaultUrl = "../PositionTakingCS.aspx" + Request.UrlReferrer.Query;
         }
-        if (WebSettings.disableCS || !AllowedCS)
+        if (Sunplus.Accounting.Core.Configurations.WebSettings.disableCS || !AllowedCS)
             TemplateHandler.RemoveBlock(ref tplMenu, "Casino");
         if (!BingoSettings.BingoGame.Enabled || !AllowedBI)
         {

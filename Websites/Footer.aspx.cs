@@ -7,13 +7,13 @@ public partial class _Footer : System.Web.UI.Page
     public string WrapVertionStr = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (AppSession.SYSTEM.ToLower() != Enumerations.AccountingSystem.Accounting.ToString().ToLower())
-        {
-            WrapVertionStr = "";
-        }
-        else
-        {
-            WrapVertionStr = "<a href=\"javascript:SwapVersion();\">Classic Version</a>";
-        }
+        //if (AppSession.SYSTEM.ToLower() != Enumerations.AccountingSystem.Accounting.ToString().ToLower())
+        //{
+        //    WrapVertionStr = "";
+        //}
+        //else
+        //{
+        //    WrapVertionStr = "<a href=\"javascript:SwapVersion();\">Classic Version</a>";
+        //}
     }
 }

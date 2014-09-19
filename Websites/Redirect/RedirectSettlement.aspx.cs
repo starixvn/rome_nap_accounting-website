@@ -2,9 +2,8 @@
 using System;
 using System.Configuration;
 using System.Web;
-
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 
 public partial class Redirect_RedirectSettlement : System.Web.UI.Page
 {
@@ -13,20 +12,17 @@ public partial class Redirect_RedirectSettlement : System.Web.UI.Page
         int _accId = AppSession.AccId;
         string _userName = AppSession.AccUserName;
         int _onUserId = AppSession.OnAccId;
-        string system = AppSession.SYSTEM.ToString();
+        string system = AccountingCoreAppSession.SYSTEM.ToString();
         string strParams = string.Empty, path = string.Empty, url = string.Empty;
         //string loginTime = Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks.ToString();
         strParams = _userName + "&" + _accId + "&" + _onUserId + "&" + system;
         path = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
-        strParams = Utils.EncryptString(strParams, 1024, path);
+        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, path);
         var settlementUrl = ConfigurationManager.AppSettings["settlementloginurl"];
         Uri uri = HttpContext.Current.Request.Url;
         string host = uri.Scheme + Uri.SchemeDelimiter + Request.Headers["Host"];
         settlementUrl = string.Format(settlementUrl, host);
-
-
         url = (settlementUrl.StartsWith("http") ? settlementUrl : "http://" + settlementUrl) + "?loginInfo=" + strParams;
-
         Response.Redirect(url);
     }
 }

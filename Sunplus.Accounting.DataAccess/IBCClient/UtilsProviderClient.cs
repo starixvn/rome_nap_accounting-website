@@ -3,13 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
-using DNAide.Data;
-
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 
 /// <summary>
 /// Summary description for UtilsProviderClient

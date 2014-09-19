@@ -8,14 +8,11 @@ using CasinoLibrary.Model.BaseBO;
 using CasinoLibrary.Model.Common;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
 using JSoft.Utility;
-
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Extensions;
-using Fanex.Data;
 
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer

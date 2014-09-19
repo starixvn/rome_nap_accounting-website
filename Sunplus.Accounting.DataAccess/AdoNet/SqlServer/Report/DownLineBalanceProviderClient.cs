@@ -2,11 +2,8 @@
 using System;
 using System.Collections;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
 using Fanex.Data;
+using Sunplus.Accounting.DataAccess.Provider.Report;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient

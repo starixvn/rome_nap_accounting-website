@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report

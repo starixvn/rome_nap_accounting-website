@@ -2,8 +2,8 @@
 using System;
 using System.Linq;
 using DNAide.Web;
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 
 public partial class Customer_ChangeUserGroup : PageBase
@@ -31,21 +31,10 @@ public partial class Customer_ChangeUserGroup : PageBase
             }
             else
             {
-                var groupSection = CustomerSection.Instance[CustomerSection.CustomerCollections.Currencies];
-                var groups = (from g in groupSection.Cast<CustomerElement>().Where(s => s.Name == "all") select g);
-                var options = string.Empty;
-                if (groups != null)
-                {
-                    foreach (var group in groups.First().Group.ToString().Split(','))
-                    {
-                        options += ("<option value=\"" + group + "\">" + group + "</option>");
-                    }
-                }
-
                 ChangeUGroupHeaderStr.Text = "Change User Group";
                 TemplateHandler.Assign(ref strHtml, "{txtName1}", "txtUname");
                 TemplateHandler.Assign(ref strHtml, "{oldUname}", "Username");
-                TemplateHandler.Assign(ref strHtml, "{currencies}", options);
+                TemplateHandler.Assign(ref strHtml, "{currencies}", CustomerGroup.getGroupOptions());
                 TemplateHandler.Assign(ref strHtml, "{newUname}", "New User Group");
                 TemplateHandler.Assign(ref strHtml, "{txtName2}", "");
                 TemplateHandler.Assign(ref strHtml, "{hidden}", "hidden");

@@ -5,12 +5,9 @@ using System.Data;
 using System.Data.OleDb;
 using System.Web;
 using DNAide.Data;
-
+using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
-using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {

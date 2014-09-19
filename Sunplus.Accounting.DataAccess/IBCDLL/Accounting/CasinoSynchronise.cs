@@ -8,13 +8,10 @@ using System.Globalization;
 using CasinoLibrary.Model.BaseBO;
 using CasinoLibrary.Model.Common;
 using DNAide.Data;
+using Fanex.Data;
 using JSoft.Utility;
-
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {

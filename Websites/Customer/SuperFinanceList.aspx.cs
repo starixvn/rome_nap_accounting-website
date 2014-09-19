@@ -2,10 +2,8 @@
 using System;
 using System.Collections;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Web;
 using DNAide.Web;
-
-using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Business;
 
 public partial class NewCustomer_SuperAgentList : PageBase
 {
@@ -33,13 +31,13 @@ public partial class NewCustomer_SuperAgentList : PageBase
         TemplateHandler.Assign(ref strHtml, "{Keyword}", "Keyword");
 
         TemplateHandler.Assign(ref strHtml, "{search-Val}", "All");
-        TemplateHandler.Assign(ref strHtml, "{listAlphaValue}", AccCommon.GetListAlPhabet(""));
+        TemplateHandler.Assign(ref strHtml, "{listAlphaValue}", Sunplus.Accounting.Core.Common.AccCommon.GetListAlPhabet(""));
 
-        TemplateHandler.Assign(ref strHtml, "{lfrom}", "");
+        TemplateHandler.Assign(ref strHtml, "{lfrom}", "");        
 
         TemplateHandler.Assign(ref strHtml, "{tblData}", "");
-        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, true, false));
-        TemplateHandler.Assign(ref strHtml, "{listStatus-Val}", AccCommon.GenListStatus(""));
+        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, true, false));
+        TemplateHandler.Assign(ref strHtml, "{listStatus-Val}", Sunplus.Accounting.Core.Common.AccCommon.GenListStatus(""));
         TemplateHandler.RemoveBlock(ref strHtml, "type");
 
         return strHtml;

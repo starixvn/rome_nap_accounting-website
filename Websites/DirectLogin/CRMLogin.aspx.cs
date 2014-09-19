@@ -2,8 +2,8 @@
 using System;
 using System.Configuration;
 using System.Web;
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 
 public partial class DirectLogin_CRMLogin : System.Web.UI.Page
 {
@@ -25,7 +25,7 @@ public partial class DirectLogin_CRMLogin : System.Web.UI.Page
 
         param = string.Format("{0}&{1}&{2}&{3}", accId, accName, onUserId, sid);
         path = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
-        param = Utils.EncryptString(param, 1024, path);
+        param = AccountingCoreUtils.EncryptString(param, 1024, path);
         url = (crmUrl.StartsWith("http") ? crmUrl : "http://" + crmUrl) + "?params=" + param;
         Response.Redirect(url);
         Response.End();

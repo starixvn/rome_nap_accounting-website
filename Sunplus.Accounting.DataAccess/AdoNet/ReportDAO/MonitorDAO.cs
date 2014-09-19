@@ -3,16 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
+using DNAide.Core;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Monitor;
-using Sunplus.Core.LoggingLib;
-using DNAide.Core;
-using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
