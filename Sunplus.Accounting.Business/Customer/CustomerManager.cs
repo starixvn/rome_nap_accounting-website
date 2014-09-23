@@ -1301,14 +1301,21 @@ namespace Sunplus.Accounting.Business.Customer
 
             #region Esports
 
-            bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
-            bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
-            sg.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
-                                                   (roleId > 1), disabledEsports,
-                                                   CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
-                                                   !disabledEsportsDownline));
-            
-            TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", disabledEsports ? 1 : 0);
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]))
+            {
+                bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
+                bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
+                sg.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
+                                                       (roleId > 1), disabledEsports,
+                                                       CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
+                                                       !disabledEsportsDownline));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", disabledEsports ? 1 : 0);
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
+            }
 
             #endregion Esports
 
