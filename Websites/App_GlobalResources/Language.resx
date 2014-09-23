@@ -2440,4 +2440,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="PS_Y" xml:space="preserve">
     <value>Match was decided by penalty shoot-out</value>
   </data>
+  <data name="lblDisabledESUpline" xml:space="preserve">
+    <value>Esports status has been disabled at upline</value>
+  </data>
+  <data name="lblEsports" xml:space="preserve">
+    <value>Esports</value>
+  </data>
+  <data name="ESports" xml:space="preserve">
+    <value>E-Sports</value>
+  </data>
 </root>

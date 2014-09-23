@@ -232,7 +232,16 @@ function changeDisable(obj, type) {
             $("#disabledVSPop .btn:first").attr("disabled", "disabled");
         }
     }
+    if (type == "ES") {
+        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueEsport').val() == '1') ||
+            ($("#" + chk1).attr('checked') == false && $('#chkOldValueEsport').val() == '0')) {
+            $("#disabledESPop .btn:first").removeAttr("disabled");
+        }
+        else {
 
+            $("#disabledESPop .btn:first").attr("disabled", "disabled");
+        }
+    }
     if (type == "LCS")
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueLiveCasino').val() == '1') ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueLiveCasino').val() == '0')) {

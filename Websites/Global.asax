@@ -24,8 +24,6 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
-        
-        
         // Code that runs on application startup    
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
@@ -39,13 +37,11 @@
         
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
-        AreaRegistration.RegisterAllAreas();       
         RegisterGlobalFilters(GlobalFilters.Filters);     
         RegisterRoutes(RouteTable.Routes);
+        AreaRegistration.RegisterAllAreas();       
        
         // ViewEngines.Engines.Add(new CustomView());
-        
-       
     }
 
 

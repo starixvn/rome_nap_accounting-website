@@ -2866,20 +2866,21 @@ namespace Sunplus.Accounting.Business.BetList
                         html = TennisHTML(r, sportName, matchid, bettype, betid);
                         break;
 
-                    case 7: //Billard
-                    case 10: //Golf
-                    case 11: //Motorsports
-                    case 29: //Winter sports
-                    case 33://     Cycling
-                    case 34://     Fencing
-                    case 35://     Judo
-                    case 36://     Modern Pentathlon
-                    case 37://     Rowing
-                    case 38://     Sailing
-                    case 39://     Shooting
-                    case 40://     Taekwondo
-                    case 41://     Triathlon
-                    case 42://     Wrestling
+                    case 7: // Billard
+                    case 10: // Golf
+                    case 11: // Motorsports
+                    case 29: // Winter sports
+                    case 33: // Cycling
+                    case 34: // Fencing
+                    case 35: // Judo
+                    case 36: // Modern Pentathlon
+                    case 37: // Rowing
+                    case 38: // Sailing
+                    case 39: // Shooting
+                    case 40: // Taekwondo
+                    case 41: // Triathlon
+                    case 42: // Wrestling
+                    case 43: // E-Sport
                         sportName = CacheRef.GetSportName(sportID);
                         html = BilliardHTML(r, sportName);
                         break;

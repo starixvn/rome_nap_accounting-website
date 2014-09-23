@@ -301,4 +301,10 @@
       <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
   </Function>
+  <Function Name="Esports">
+    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+  <Function Name="Esports">
+    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
 </Functions>
