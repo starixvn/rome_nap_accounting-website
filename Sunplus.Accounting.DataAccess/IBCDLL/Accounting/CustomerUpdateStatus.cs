@@ -734,7 +734,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableVS", 120))
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableEsports", 120))
                 {
                     db.AssignParamValues(param);
                     db.ExecuteNonQuery();

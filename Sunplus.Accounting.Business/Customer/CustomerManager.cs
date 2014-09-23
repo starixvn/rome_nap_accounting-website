@@ -1302,7 +1302,7 @@ namespace Sunplus.Accounting.Business.Customer
             #region Esports
 
             bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
-            bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesvirtualsports"]) ? false : Convert.ToBoolean(row1["disabledownlinesvirtualsports"]);
+            bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
             sg.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
                                                    (roleId > 1), disabledEsports,
                                                    CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
