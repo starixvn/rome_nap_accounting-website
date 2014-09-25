@@ -63,7 +63,7 @@
         if (this.currentSetting && this.currentSetting.settings &&
             this.currentSetting.settings.sportTypes && this.currentSetting.settings.sportTypes.length > 0) {
             Fanex.PTRacing.CURRENT_CONTEXT = this.context;
-            Fanex.PTRacing.CURRENT_CONTEXT.ia3 = !this.currentSetting.DisableAutoMasterPt;
+            Fanex.PTRacing.CURRENT_CONTEXT.ia3 = !this.currentSetting.disableAutoMasterPt;
 
             /*region render betting & comm*/
             this.bettingCommSetting = new Fanex.PTRacing.BettingCommSetting(this.currentSetting.settings.sportTypes);
