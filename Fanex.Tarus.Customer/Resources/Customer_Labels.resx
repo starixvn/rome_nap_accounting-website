@@ -123,6 +123,9 @@
   <data name="Bingo" xml:space="preserve">
     <value>Bingo</value>
   </data>
+  <data name="ClickToViewPTInfo" xml:space="preserve">
+    <value>Click to view PT Info</value>
+  </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
   </data>

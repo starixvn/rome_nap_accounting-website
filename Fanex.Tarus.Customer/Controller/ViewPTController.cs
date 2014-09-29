@@ -42,5 +42,10 @@ namespace Fanex.Tarus.Customer.Controller
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
+
+        public ActionResult GetBettypesReference()
+        {
+            return View("~/Views/PTInformation/Index.cshtml");
+        }
     }
 }
