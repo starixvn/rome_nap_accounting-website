@@ -48,9 +48,9 @@
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.0.3.3, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.Core, Version=2.0.5.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.Core.2.0.3.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.5.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,7 +103,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
