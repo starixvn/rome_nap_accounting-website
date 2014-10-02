@@ -118,7 +118,7 @@
     <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
-
-  
-  
+    <Function Name="PT Setting Information">
+        <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    </Function>
 </Functions>

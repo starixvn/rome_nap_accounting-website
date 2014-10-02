@@ -86,3 +86,10 @@
     border-bottom: 1px solid #7C98A4;
     height: 22px;
 }
+.infoIcon {
+	background: url("Images/info.png") no-repeat right;
+	cursor: pointer;
+	display:inline-block;
+	height: 16px;
+	width: 16px;
+}
