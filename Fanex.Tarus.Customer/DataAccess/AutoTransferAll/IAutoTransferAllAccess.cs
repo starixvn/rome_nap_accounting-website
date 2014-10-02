@@ -1,0 +1,25 @@
+namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
+{
+    using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.AutoTransferAll;
+
+    public interface IAutoTransferAllAccess
+    {
+        AutoTransferAll GetAutoTranfers(SelectTransferAgentCriteria criteria);
+
+        Result UpdatedTransfer(UpdatedTransferCriteria criteria);
+
+        Result DeletedTransfer(DeletedTransferCriteria criteria);
+
+        Result InsertAgentsFromPopup(InsertAgentsFromPopupCriteria criteria);
+
+        Result ClearBalanceDownlines(ClearBalanceDownlineCriteria criteria);
+
+        Result ClearBalanceMembers(ClearBalanceMembersCriteria criteria);
+
+        ValidAgents InsertAgentsFromFile(InsertAgentsFromFileCriteria criteria);
+
+        ValidAgents CheckValidAgentsFromFile(CheckValidAgentsFromFileCriteria criteria);
+    }
+}

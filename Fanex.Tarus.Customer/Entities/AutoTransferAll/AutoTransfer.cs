@@ -1,0 +1,28 @@
+namespace Fanex.Tarus.Customer.Entities.AutoTransferAll
+{
+    using System;
+
+    /// <summary>
+    /// Auto Transfer.
+    /// </summary>
+    public class AutoTransfer
+    {
+        public decimal No { get; set; }
+
+        public string CustId { get; set; }
+
+        public string UserName { get; set; }
+
+        public string UserRole { get; set; }
+
+        public string SuperName { get; set; }
+
+        public string MasterName { get; set; }
+
+        public int TransferType { get; set; }
+
+        public DateTime LastestAutoTransferLog { get; set; }
+
+        public string StatusName { get; set; }
+    }
+}

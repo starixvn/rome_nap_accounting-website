@@ -1,0 +1,16 @@
+namespace Fanex.Tarus.Customer.Entities.AutoTransferAll
+{
+    /// <summary>
+    /// Valid Agent.
+    /// </summary>
+    public class ValidAgent
+    {
+        public decimal No { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Remark { get; set; }
+
+        public bool IsValid { get; set; }
+    }
+}

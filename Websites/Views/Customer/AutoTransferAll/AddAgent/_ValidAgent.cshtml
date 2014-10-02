@@ -1,0 +1,96 @@
+﻿@using Fanex.Tarus.Customer.Entities.AutoTransferAll
+@{
+    ValidAgents agents = Model;
+}
+@if (string.IsNullOrEmpty(ViewBag.ValidFile))
+{
+    if (agents.InValids.Count > 0)
+    {
+        <div class="alerterror">
+            @ViewBag.InValid</div>
+        <table class="validUsers">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="width30 height20 table-cell">
+                            No</div>
+                    </th>
+                    <th>
+                        <div class="width250 height20 table-cell">
+                            Username</div>
+                    </th>
+                    <th>
+                        <div class="width150 height20 table-cell">
+                            Reason</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ValidAgent agent in agents.InValids)
+                {
+                    var bg = (agent.No % 2 == 0) ? "even" : "";
+                    <tr  class="@bg">
+                        <td style="text-align: center;" class="height20">
+                            @agent.No
+                        </td>
+                        <td>
+                            @agent.UserName
+                        </td>
+                        <td>
+                            @agent.Remark
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    if (agents.Valids.Count > 0)
+    {  
+        <div class="alertsuccess" style="margin-top: 15px;">
+            @ViewBag.Valid</div>
+        <table class="validUsers">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="width30 height20 table-cell">
+                            No</div>
+                    </th>
+                    <th>
+                        <div class="width250 height20 table-cell">
+                            Username</div>
+                    </th>
+                    <th>
+                        <div class="width150 height20 table-cell">
+                            Remark</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ValidAgent agent in agents.Valids)
+                {
+                    var bg = (agent.No % 2 == 0) ? "even" : "";
+                    <tr  class="@bg">
+                        <td style="text-align: center;" class="height20">
+                            @agent.No
+                        </td>
+                        <td>
+                            @agent.UserName
+                        </td>
+                        <td>
+                            @agent.Remark
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+     <div class="alerterror">
+        @ViewBag.ValidFile</div>
+}
+<script type="text/javascript">
+   var _validCount = @agents.Valids.Count;
+</script>

@@ -30,14 +30,15 @@
         //var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
         //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
-        RegisterRouteMiscController(RouteTable.Routes);
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
+        RegisterRouteMiscController(RouteTable.Routes);
         AreaRegistration.RegisterAllAreas();
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
         // ViewEngines.Engines.Add(new CustomView());
+       
     }
 
 
@@ -57,7 +58,7 @@
         routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
         
         routes.MapRoute(
-          "BetListWithoutAreaName",
+          "FixBetListMissingArea",
           "BetList/{action}",
           new { controller = "BetList", action = "Index", id = UrlParameter.Optional }
           );

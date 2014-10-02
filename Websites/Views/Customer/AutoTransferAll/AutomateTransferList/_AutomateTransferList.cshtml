@@ -1,0 +1,230 @@
+﻿@using Fanex.Tarus.Customer.Entities.AutoTransferAll
+@{
+    string result = string.Empty;
+    foreach (AutoTransfer autoTransfer in Model.AutoTransfers)
+    {
+        result += renderContent(autoTransfer);
+    }
+}
+@functions {
+    public string SplitUsername(string username)
+    {
+        if (username.Length < 13)
+        {
+            return username;
+        }
+
+        string usernameTmp = username;
+        string firstSubstring = usernameTmp.Substring(0, 13);
+        string secondSubstring = usernameTmp.Substring(13, username.Length - 13);
+        return firstSubstring + "<br />" + secondSubstring;
+    }
+ }
+@helper renderContent(AutoTransfer autoTransfer)
+    {
+        var bg = (autoTransfer.No % 2 == 0) ? "even" : "";
+        string isFailed = autoTransfer.StatusName.Trim().ToLower().Equals("failed") ? "red" : "";
+        string isDisabled = autoTransfer.StatusName.Trim().ToLower().Equals("failed") ? "" : "disabled";
+        string transferTypeColor = autoTransfer.TransferType == 1 ? "blue" : "green";
+        
+        string tooltip = string.Empty;
+        switch(autoTransfer.StatusName.Trim().ToLower() )
+        {
+            case "failed":
+                tooltip = "Failed (D): Auto transfer status = Failed; Transfer type = Transfer all Downlines. \n Failed (M): Auto transfer status = Failed; Transfer type = Transfer all Members.";
+                break;
+            case "waiting ":
+                tooltip = "Waiting (D): Auto transfer status = Waiting; Transfer type = Transfer all Downlines. \n Waiting (M): Auto transfer status = Waiting;Transfer type = Transfer all Members.";
+                break;
+            case "running ":
+                tooltip = "Running (D): Auto transfer status = Running; Transfer type = Transfer all Downlines. \n Running (M): Auto transfer status = Running; Transfer type = Transfer all Members.";
+                break;
+            default:
+                tooltip = "Complete (D): Auto transfer status or manual transfer status = Complete; Transfer type = Transfer all Downlines. \n Complete (M): Auto transfer status = Complete; Transfer type = Transfer all Members.";
+                break;
+        }
+        
+    <tr id="tr_@autoTransfer.No" class="@bg">
+        <td>
+            <div class="width30 table-cell c height20">
+                @autoTransfer.No
+            </div>
+        </td>
+        <td class="">
+            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+                 @MvcHtmlString.Create(SplitUsername(autoTransfer.UserName))
+            </div>
+        </td>
+        <td>
+            <div class="width60 table-cell ">
+                @autoTransfer.UserRole
+            </div>
+        </td>
+        <td>
+            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+                  @MvcHtmlString.Create(SplitUsername(autoTransfer.SuperName)) 
+            </div>
+        </td>
+        <td>
+            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+              @MvcHtmlString.Create(SplitUsername(autoTransfer.MasterName)) 
+            </div>
+        </td>
+        <td>
+            <div class="width150 table-cell c">
+                <select id="ddlTranferType_@autoTransfer.CustId" style="color: @transferTypeColor;" name="ddlTranferType" onChange="automateTransferAll.updatedTransfer('@autoTransfer.UserName',@autoTransfer.CustId);">
+                    @if(autoTransfer.TransferType == 1){
+                    <option value="1" style="color: blue;" selected="selected">Transfer All Members</option>
+                    <option value="2" style="color: Green;">Transfer All DownLines</option>
+                        }
+                        else{
+                          <option value="1" style="color: blue;">Transfer All Members</option>
+                    <option value="2" style="color: Green;" selected="selected">Transfer All DownLines</option>
+                        }
+                </select>
+            </div>
+        </td>
+        <td>
+            <div class="width150 table-cell c">
+                @autoTransfer.LastestAutoTransferLog
+            </div>
+        </td>
+        <td class="c">
+            <div class="width80 table-cell c @isFailed" id="status_@autoTransfer.CustId"  title="@tooltip">
+                @autoTransfer.StatusName (M)
+            </div>
+        </td>
+        <td>
+            <div class="width100 table-cell c">
+                <input @isDisabled class="btn" type="button" id="btnTransferAll_@autoTransfer.CustId" value="Transfer All" onclick="automateTransferAll.confirmClearBalance('@autoTransfer.UserName',@autoTransfer.CustId);" />
+                &nbsp;
+            </div>
+        </td>
+        <td>
+            <div class="width50 table-cell c">
+                <span id="delete_@autoTransfer.CustId" class="delete_button"  onclick="automateTransferAll.confirmDeletedTransfer('@autoTransfer.UserName',@autoTransfer.CustId);">
+                </span>
+            </div>
+        </td>
+    </tr>
+}
+<div id="transferGid" class="freegrid hidden">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Username</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                User Role</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Super</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Master</div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Transfer Type</div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Lastest AutoTransfer Log</div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Status</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Transfer Balance</div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Remove</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Username</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                User Role</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Super</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Master</div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Transfer Type</div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Lastest AutoTransfer Log</div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Status</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Transfer Balance</div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Remove</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.AutoTransfers.Count > 0)
+                    {
+                        @MvcHtmlString.Create(result)
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="10">
+                                <div style="text-align: center;" class="height20 r">
+                                    &nbsp;There is no imformation.</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   var _length = @Model.TotalRows;
+</script>

@@ -1,0 +1,341 @@
+namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
+{
+    using System;
+    using Fanex.Common;
+    using Fanex.Common.Extensions;
+    using Fanex.Data;
+    using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.AutoTransferAll;
+    
+    /// <summary>
+    /// Auto Transfer All Access.
+    /// </summary>
+    public class AutoTransferAllAccess : IAutoTransferAllAccess
+    {
+        /// <summary>
+        /// Get auto transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Auto transfer object.</returns>
+        public AutoTransferAll GetAutoTranfers(SelectTransferAgentCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    AutoTransferAll autoTransferAll = new AutoTransferAll();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                        {
+                            int index = 1;
+                            int no = (criteria.PageIndex - 1) * criteria.PageSize;
+                            while (reader.Read())
+                            {
+                                autoTransferAll.AutoTransfers.Add(new AutoTransfer
+                                {
+                                 No = no + index,
+                                 UserName = reader.ToString("username"),
+                                 CustId = reader.ToString("custid"),
+                                 UserRole = reader.ToString("role"),
+                                 SuperName = reader.ToString("super"),
+                                 MasterName = reader.ToString("master"),
+                                 TransferType = reader.ToInt("transferType"),
+                                 LastestAutoTransferLog = reader.ToDateTime("lastTransfer"),
+                                  StatusName = reader.ToString("status"),
+                                });
+
+                                index++;
+                            }
+                        }
+
+                        var outParameters = objDb.GetOuputParams();
+                        autoTransferAll.TotalRows = Converter.ToInt(outParameters["totalrows"]);
+                    }
+
+                    return autoTransferAll;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new AutoTransferAll();
+        }
+
+        /// <summary>
+        /// Update transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdatedTransfer(UpdatedTransferCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    Result result = new Result();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+
+        /// <summary>
+        /// Delete transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result DeletedTransfer(DeletedTransferCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    Result result = new Result();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+
+        /// <summary>
+        /// Delete transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result ClearBalanceDownlines(ClearBalanceDownlineCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    Result result = new Result();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+
+        /// <summary>
+        /// Delete transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result ClearBalanceMembers(ClearBalanceMembersCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    Result result = new Result();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+
+        /// <summary>
+        /// Insert agents from popup.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result InsertAgentsFromPopup(InsertAgentsFromPopupCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    Result result = new Result();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+
+        /// <summary>
+        /// Insert agents from excel file.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Valid agent list.</returns>
+        public ValidAgents InsertAgentsFromFile(InsertAgentsFromFileCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    ValidAgents validAgents = new ValidAgents();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                        {
+                            decimal indexValid = 1;
+                            decimal indexInValid = 1;
+
+                            while (reader.Read())
+                            {
+                                var isValid = reader.ToBool("issuccess");
+
+                                ValidAgent agent = new ValidAgent
+                                {
+                                    UserName = reader.ToString("username"),
+                                    Remark = reader.ToString("remark"),
+                                    IsValid = isValid
+                                };
+
+                                if (agent.IsValid)
+                                {
+                                    agent.No = indexValid++;
+                                    validAgents.Valids.Add(agent);
+                                }
+                                else
+                                {
+                                    agent.No = indexInValid++;
+                                    validAgents.InValids.Add(agent);
+                                }
+                            }
+                        }
+                    }
+
+                    return validAgents;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new ValidAgents();
+        }
+
+        /// <summary>
+        /// Check valid of list agents.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Valid agent list.</returns>
+        public ValidAgents CheckValidAgentsFromFile(CheckValidAgentsFromFileCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    ValidAgents validAgents = new ValidAgents();
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                        {
+                            decimal indexValid = 1;
+                            decimal indexInvalid = 1;
+
+                            while (reader.Read())
+                            {
+                                var isValid = reader.ToBool("isvalid");
+
+                                ValidAgent agent = new ValidAgent
+                                {
+                                    UserName = reader.ToString("username"),
+                                    Remark = reader.ToString("remark"),
+                                    IsValid = isValid
+                                };
+
+                                if (agent.IsValid)
+                                {
+                                    agent.No = indexValid++;
+                                    validAgents.Valids.Add(agent);
+                                }
+                                else
+                                {
+                                    agent.No = indexInvalid++;
+                                    validAgents.InValids.Add(agent);
+                                }
+                            }
+                        }
+                    }
+
+                    return validAgents;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new ValidAgents();
+        }
+    }
+}

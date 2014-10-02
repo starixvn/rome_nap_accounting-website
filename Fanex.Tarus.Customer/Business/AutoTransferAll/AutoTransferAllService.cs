@@ -1,0 +1,203 @@
+namespace Fanex.Tarus.Customer.Business.AutoTransferAll
+{
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Web;
+    using Fanex.Common;
+    using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
+    using Fanex.Tarus.Customer.DataAccess.AutoTransferAll;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.AutoTransferAll;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using Sunplus.Accounting.Core.Common;
+
+    /// <summary>
+    /// Auto transfer service.
+    /// </summary>
+    public class AutoTransferAllService : IAutoTransferAllService
+    {
+        private IAutoTransferAllAccess _autoTransferAllAccess = null;
+
+        private string _ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+
+        private int _userId = AppSession.AccId;
+
+        public AutoTransferAllService() : this(null) 
+        { 
+        }
+
+        public AutoTransferAllService(AutoTransferAllAccess autoTransferAllAccess)
+        {
+            _autoTransferAllAccess = autoTransferAllAccess ?? new AutoTransferAllAccess();
+        }
+
+        public AutoTransferAll GetAutoTranfers(SelectTransferAgentCriteria criteria)
+        {
+            return _autoTransferAllAccess.GetAutoTranfers(criteria);
+        }
+
+        public Result UpdatedTransfer(UpdatedTransferCriteria criteria)
+        {
+            criteria.IP = this._ip;
+            criteria.UserID = this._userId;
+            return _autoTransferAllAccess.UpdatedTransfer(criteria);
+        }
+
+        public Result DeletedTransfer(DeletedTransferCriteria criteria)
+        {
+            criteria.IP = this._ip;
+            criteria.UserID = this._userId;
+            return _autoTransferAllAccess.DeletedTransfer(criteria);
+        }
+
+        public Result InsertAgentsFromPopup(InsertAgentsFromPopupCriteria criteria)
+        {
+            criteria.IP = this._ip;
+            criteria.UserID = this._userId;
+            return _autoTransferAllAccess.InsertAgentsFromPopup(criteria);
+        }
+
+        public Result ClearBalanceDownlines(ClearBalanceDownlineCriteria criteria)
+        {
+            criteria.IP = this._ip;
+            criteria.UserID = this._userId;
+            return _autoTransferAllAccess.ClearBalanceDownlines(criteria);
+        }
+
+        public Result ClearBalanceMembers(ClearBalanceMembersCriteria criteria)
+        {
+            criteria.IP = this._ip;
+            criteria.UserID = this._userId;
+            return _autoTransferAllAccess.ClearBalanceMembers(criteria);
+        }
+
+        public ValidAgents CheckValidAgentsFromFile(HttpPostedFileBase fileUploaded)
+        {
+            var usernames = this.ReadUsernameFromFile(fileUploaded);
+            return _autoTransferAllAccess.CheckValidAgentsFromFile(new CheckValidAgentsFromFileCriteria { UserName = usernames });
+        }
+
+        /// <summary>
+        /// Insert agents from excel file.
+        /// </summary>
+        /// <param name="fileUploaded">File upload.</param>
+        /// <returns>Valid agents list.</returns>
+        public ValidAgents InsertAgentsFromFile(HttpPostedFileBase fileUploaded)
+        {
+            ValidAgents agents = this.CheckValidAgentsFromFile(fileUploaded);
+
+            string usernames = string.Empty;
+
+            foreach (var agent in agents.Valids)
+            {
+                usernames += agent.UserName + ",";
+            }
+
+            InsertAgentsFromFileCriteria critera = new InsertAgentsFromFileCriteria
+            {
+                UserName = usernames,
+                IP = this._ip,
+                UserID = this._userId,
+                TransferType = 1
+            };
+
+            return _autoTransferAllAccess.InsertAgentsFromFile(critera);
+        }
+
+        /// <summary>
+        /// Export excel file.
+        /// </summary>
+        /// <returns> Memory stream object.</returns>
+        public MemoryStream ExportExcelFile()
+        {
+            HSSFWorkbook _workbook = new HSSFWorkbook();
+            var sheetName = "Username";
+            var worksheet = _workbook.CreateSheet(sheetName);
+            var header = worksheet.CreateRow(0);
+            header.CreateCell(0).SetCellValue("Username");
+            header.Sheet.SetColumnWidth(0, 20 * 256);
+            var row1 = worksheet.CreateRow(1);
+            row1.CreateCell(0).SetCellValue("Super_1");
+            var row2 = worksheet.CreateRow(2);
+            row2.CreateCell(0).SetCellValue("Master_1");
+
+            var result = new MemoryStream();
+            _workbook.Write(result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Read user name from excel.
+        /// </summary>
+        /// <param name="fileUploaded">File upload.</param>
+        /// <returns>User name list.</returns>
+         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        private string ReadUsernameFromFile(HttpPostedFileBase fileUploaded)
+        {
+            string usernames = string.Empty;
+
+            var usernameTable = new DataTable();
+            IWorkbook workbook = WorkbookFactory.Create(fileUploaded.InputStream);
+            ISheet sheet = workbook.GetSheetAt(0);
+            IEnumerator rows = sheet.GetRowEnumerator();
+            usernameTable.Columns.Add("Username");
+
+            while (rows.MoveNext())
+            {
+                IRow row = (NPOI.SS.UserModel.IRow)rows.Current;
+                DataRow dr = usernameTable.NewRow();
+                var count = 0;
+                for (int i = 0; i < row.LastCellNum; i++)
+                {
+                    ICell cell = row.GetCell(i);
+                    if (cell != null)
+                    {
+                        switch (cell.CellType)
+                        {
+                            case CellType.Numeric:
+                                dr[i] = cell.ToString();
+                                break;
+                            default:
+                                try
+                                {
+                                    if (string.IsNullOrEmpty(cell.StringCellValue))
+                                    {
+                                        count++;
+                                        break;
+                                    }
+
+                                    dr[i] = cell.StringCellValue;
+                                    break;
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogExtensions.ExceptionHandler(ex);
+                                    throw new Exception("Input invalid at row " + (row.RowNum + 1) + " cell " + (i + 1) + "!");
+                                }
+                        }
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+
+                if (count != row.LastCellNum && row.RowNum > 0)
+                {
+                    usernameTable.Rows.Add(dr);
+                    usernames += Converter.ToString2(dr[0]).Trim() + ",";
+                }
+            }
+
+            return usernames;
+        }
+    }
+}
