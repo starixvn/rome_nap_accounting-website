@@ -30,9 +30,11 @@
         var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
         string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
+        manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+        RegisterRouteMiscController(RouteTable.Routes);
         RegisterRouteMiscController(RouteTable.Routes);
 
-        RegisterRouteMiscController(RouteTable.Routes);
+        AreaRegistration.RegisterAllAreas();
         AreaRegistration.RegisterAllAreas();
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         RegisterGlobalFilters(GlobalFilters.Filters);
