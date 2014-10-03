@@ -30,6 +30,7 @@
         //var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
         //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
+        RegisterRouteMiscController(RouteTable.Routes);
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
         RegisterRouteMiscController(RouteTable.Routes);
