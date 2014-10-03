@@ -24,10 +24,14 @@ namespace Fanex.NAP.SSO
             }
         }
 
+        /// <summary>
+        /// Registers an area in an ASP.NET MVC application using the specified area's context information.
+        /// </summary>
+        /// <param name="context">Encapsulates the information that is required in order to register the area.</param>
         public override void RegisterArea(AreaRegistrationContext context)
         {
             var controller = new { controller = "Login", action = "Index", id = UrlParameter.Optional };
-            context.MapRoute(this.AreaName + "_DefaultAreas", "UserLogin/{controller}/{action}/{id}", controller, new[] { "Fanex.NAP.SSO.Controllers" });
+            context.MapRoute(this.AreaName + "_Default", "UserLogin/{controller}/{action}/{id}", controller, new[] { typeof(Fanex.NAP.SSO.LoginController).Namespace });
         }
     }
 }
