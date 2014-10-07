@@ -11,7 +11,7 @@ namespace Fanex.Nap.SSO.Repositories
 {
     using Fanex.Common;
     using Fanex.Data;
-    using Fanex.Nap.SSO.Criteria;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Login Repository.
@@ -23,7 +23,7 @@ namespace Fanex.Nap.SSO.Repositories
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Check result.</returns>
-        public bool CheckUserSiteAccess(CheckUserSiteAccessCriteria criteria)
+        public bool CheckUserSiteAccess(CriteriaBase criteria)
         {
             bool isAccess;
             using (var objectDB = new ObjectDb(criteria.GetSettingKey()))

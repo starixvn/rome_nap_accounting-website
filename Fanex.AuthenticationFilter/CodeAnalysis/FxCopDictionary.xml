@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<Dictionary>
+  <Words>
+    <Recognized />
+    <Unrecognized />
+    <Deprecated>
+      <Term>Username</Term>
+      <Term>Fanex</Term>
+    </Deprecated>
+    <Compound>
+      <Term>Fanex</Term>
+    </Compound>
+    <DiscreteExceptions />
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>Cs</Acronym>
+      <Acronym>Ch</Acronym>
+      <Acronym>SSO</Acronym>
+      <Acronym>MYR</Acronym>
+      <Acronym>EUR</Acronym>
+      <Acronym>Ja</Acronym>
+      <Acronym>EN</Acronym>
+      <Acronym>USD</Acronym>
+      <Acronym>Ip</Acronym>
+      <Acronym>IPVN</Acronym>
+      <Acronym>Jp</Acronym>
+      <Acronym>Th</Acronym>
+      <Acronym>En</Acronym>
+      <Acronym>Cn</Acronym>
+      <Acronym>Zh</Acronym>
+      <Acronym>ID</Acronym>
+      <Acronym>IBC</Acronym>
+      <Acronym>1st</Acronym>
+      <Acronym>VN</Acronym>
+      <Acronym>Ot</Acronym>
+      <Acronym>st</Acronym>
+      <Acronym>VNIP</Acronym>
+      <Acronym>BARM</Acronym>
+      <Acronym>SMA</Acronym>
+      <Acronym>XML</Acronym>
+      <Acronym>Cc</Acronym>
+      <Acronym>URL</Acronym>
+      <Acronym>3rd</Acronym>
+      <Acronym>AUS</Acronym>
+      <Acronym>BET</Acronym>
+      <Acronym>RNG</Acronym>
+      <Acronym>ALOG</Acronym>
+      <Acronym>BCH</Acronym>
+      <Acronym>FDL</Acronym>
+      <Acronym>PIH</Acronym>
+      <Acronym>ALOGEU</Acronym>
+      <Acronym>LDL</Acronym>
+      <Acronym>SMAs</Acronym>
+      <Acronym>NPOI</Acronym>
+      <Acronym>IPVN</Acronym>
+      <Acronym>VN</Acronym>
+      <Acronym>3rd</Acronym>
+      <Acronym>rd</Acronym>
+      <Acronym>NAP</Acronym>
+      <Acronym>Fanex</Acronym>
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>

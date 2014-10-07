@@ -5,8 +5,11 @@
     <Unrecognized />
     <Deprecated>
       <Term>Username</Term>
+      <Term>Fanex</Term>
     </Deprecated>
-    <Compound />
+    <Compound>
+      <Term>Fanex</Term>
+    </Compound>
     <DiscreteExceptions />
   </Words>
   <Acronyms>
@@ -55,6 +58,7 @@
       <Acronym>3rd</Acronym>
       <Acronym>rd</Acronym>
       <Acronym>NAP</Acronym>
+      <Acronym>Fanex</Acronym>
     </CasingExceptions>
   </Acronyms>
 </Dictionary>
