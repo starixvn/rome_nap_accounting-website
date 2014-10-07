@@ -141,12 +141,12 @@ namespace Fanex.NAP.SSO
         /// <summary>
         /// Login Nap Invoice.
         /// </summary>
-        /// <param name="id">The redirect key(SettlementReport) on IMS .</param>
+        /// <param name="redirectURL">The redirect url on IMS .</param>
         /// <returns>
         /// Return site.
         /// </returns>
         [ValidateInput(false)]
-        public ActionResult Invoice(string id)
+        public ActionResult Invoice(Uri redirectURL)
         {
             // check-in user
             _userId = GetUserId();
@@ -155,11 +155,11 @@ namespace Fanex.NAP.SSO
                 var checkInUser = UserCheckin((int)SiteName.Report, _userId);
                 return new RedirectResult(
                     string.Format(
-                        NapURL(SiteName.IMS) + "?userId={0}&onuserId={1}&time={2}&redirectURL={3}",
+                        NapURL(SiteName.IMS) + "?userId={0}&onuserId={1}&time={2}&redirectURL={3}&newTab=false",
                         Cryptography.CfsEnCrypt(_userId.ToString(CultureInfo.CurrentCulture)),
                         Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
                         Cryptography.CfsEnCrypt(GetServerTime()),
-                        string.IsNullOrEmpty(id) ? string.Empty : id));
+                        string.IsNullOrEmpty(redirectURL.ToString()) ? string.Empty : redirectURL.ToString()));
             }
             else
             {
