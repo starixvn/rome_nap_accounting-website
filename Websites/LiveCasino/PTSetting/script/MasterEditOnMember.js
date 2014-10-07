@@ -134,6 +134,7 @@
         casinoManager.casinoVM.isNotAutoReset = ko.dependentObservable(function () {
             return !(casinoManager.casinoVM.PTSetting.Upline.Upline.IsAutoPresetPT());
         }, casinoManager.casinoVM);
+
         casinoManager.casinoVM.isAllowUpdateWinLimit = ko.dependentObservable(function () {
             if (casinoManager.casinoVM.WinLimitSetting.Limits() && casinoManager.casinoVM.WinLimitSetting.Limits().length > 0) {
                 var totalLimits = casinoManager.casinoVM.WinLimitSetting.Limits().length;
@@ -235,6 +236,11 @@ var masterEditOnMember = {
         casinoManager.casinoVM.requestContext.CustId = masterEditOnMember.custId;
         casinoManager.casinoVM.requestContext.UplineId = masterEditOnMember.uplineId;
         casinoManager.casinoVM.requestContext.UplineRoleId = masterEditOnMember.requestContext.UplineRoleId;
+
+        casinoManager.casinoVM.PTSetting.Upline.Upline.AutoPresetPT = ko.dependentObservable(function () {
+            return (casinoManager.casinoVM.PTSetting.Upline.Upline.IsAutoPresetPT() ? casinoManager.casinoVM.PTSetting.Upline.Upline.AutoPresetPT() : 0);
+        }, casinoManager.casinoVM);
+
 
         for (var i = 0; i < casinoManager.casinoVM.GameSetting().length; i++) {
             var item = casinoManager.casinoVM.GameSetting()[i];

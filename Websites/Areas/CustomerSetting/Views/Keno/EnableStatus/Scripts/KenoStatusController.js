@@ -119,8 +119,8 @@ function KenoStatusController($scope) {
         .success(function (data) {
             var errorCodes = data.errorCode.toString().indexOf('\u0007') != -1 ? data.errorCode.split('\u0007') : data.errorCode.toString();
             var errorMessages = data.errorMessage.toString().indexOf('\u0007') != -1 ? data.errorMessage.split('\u0007') : data.errorMessage.toString();
-            var success = true;
-            var message = '';
+            var success = data.errorCode == 1 ? false : true;
+            var message = data.errorCode == 1 ? data.errorMessage : '';
 
             $(errorCodes).each(function (i, error) {
                 if (error != '' && parseInt(error) > 0) {
