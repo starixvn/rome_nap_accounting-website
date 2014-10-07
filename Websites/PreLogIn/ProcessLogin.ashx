@@ -14,6 +14,8 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Services;
 using IBCUtils;
 using System.Data;
+using Fanex.Nap.SSO.Repositories;
+using Fanex.Nap.SSO.Criteria;
 
 
 public class ProcessLogin : IHttpHandler, IRequiresSessionState
@@ -112,7 +114,8 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl.Replace("https", "http") + "';\n");
                 IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                 menuService.GetUserMenu();
-                bool isShowNap = true;
+                
+                bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
                 if (isShowNap)
                 {
                     AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO { 
