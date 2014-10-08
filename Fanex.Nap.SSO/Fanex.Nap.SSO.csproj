@@ -43,34 +43,36 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core">
-      <HintPath>..\Dependency\Sunplus.Accounting.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\CheckUserSiteAccessCriteria.cs" />
+    <Compile Include="Criteria\Repositories\LoginRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserLogin\Controllers\LoginController.cs" />
     <Compile Include="UserLogin\UserLoginAreaRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
-      <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>
-      <Name>Sunplus.Accounting.Entities</Name>
-    </ProjectReference>
+    <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
+    <Content Include="CodeAnalysis\FxCopDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
+    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
+      <Project>{B7FD958B-43DB-45EE-895E-2105971893E3}</Project>
+      <Name>Fanex.Tarus.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,14 +8,15 @@ namespace Fanex.NAP.SSO
 {
     using System;
     using System.Configuration;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
-    using Sunplus.Accounting.Core.Common;
+    using Fanex.Tarus.Admin.Core.Configurations;
 
     /// <summary>
     /// Login controller.
@@ -26,6 +27,7 @@ namespace Fanex.NAP.SSO
 
         private ICurrentContext _currentContext;
         private IUserService _userService;
+        private int _userId = 0;
 
         #endregion members
 
@@ -47,39 +49,56 @@ namespace Fanex.NAP.SSO
         #region login
 
         /// <summary>
-        /// Login indexes page.
+        /// Site Name.
         /// </summary>
-        /// <returns>Return site.</returns>
+        private enum SiteName
+        {
+            /// <summary>
+            /// Nap accounting report.
+            /// </summary>
+            Report = 3,
+
+            /// <summary>
+            /// Customer management system.
+            /// </summary>
+            CMS = 84,
+
+            /// <summary>
+            /// The Invoice management system.
+            /// </summary>
+            IMS = 73,
+
+            /// <summary>
+            /// The special delete.
+            /// </summary>
+            SpecialDelete = 70,
+
+            /// <summary>
+            /// The NAP home.
+            /// </summary>
+            Home = 0
+        }
+
+        /// <summary>
+        /// Login Nap Home.
+        /// </summary>
+        /// <returns>
+        /// Return site.
+        /// </returns>
         [ValidateInput(false)]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index()
         {
             // check-in user
-            if (AppSession.AccId != 0)
+            _userId = GetUserId();
+            if (_userId != 0)
             {
-                var criteria = new UserCheckInUserCriteria
-                {
-                    UserId = AppSession.OnAccId,
-                    SiteId = 100,
-                    NetSessionId = Session.SessionID,
-                    Ip = _currentContext.IP,
-                    LoginDate = DateTime.Now,
-                    BrowserName = _currentContext.BrowserName,
-                    CountryCode = _currentContext.CountryCode,
-                    Domain = _currentContext.DomainName,
-                    Platform = _currentContext.Platform
-                };
-
-                this._userService.UserCheckIn(ref criteria);
-
-                string time = this._userService.UserSSOGetTime();
-
+                var checkInUser = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPHomeSiteId"], 0), _userId);
                 return new RedirectResult(
                     string.Format(
-                         NapURL() + "?userId={0}&onlineUserId={1}&time={2}",
-                        Cryptography.CfsEnCrypt(AppSession.AccId.ToString()),
-                        Cryptography.CfsEnCrypt(criteria.OnUserId.ToString()),
-                        Cryptography.CfsEnCrypt(time)));
+                        NapURL(SiteName.Home) + "?userId={0}&onuserId={1}&time={2}",
+                        Cryptography.CfsEnCrypt(_userId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(GetServerTime())));
             }
             else
             {
@@ -87,10 +106,187 @@ namespace Fanex.NAP.SSO
             }
         }
 
-        private string NapURL()
+        /// <summary>
+        /// Login Nap CMS.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Return site.
+        /// </returns>
+        [ValidateInput(false)]
+        public ActionResult Cms(string id)
+        {
+            // check-in user
+            _userId = GetUserId();
+            var urlKey = string.IsNullOrEmpty(id) ? string.Empty : GetNAPReportDirectURL(id);
+            if (_userId != 0)
+            {
+                var checkInUser = UserCheckin(Convert.ToInt16(ConfigurationManager.AppSettings["NAPCMSSiteId"], 0), _userId);
+                return new RedirectResult(
+                    string.Format(
+                        "{0}?userId={1}&onuserId={2}&time={2}&redirectUrl={3}&{4}",
+                        NapURL(SiteName.CMS),
+                        Cryptography.CfsEnCrypt(_userId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(GetServerTime()),
+                        urlKey,
+                        NewTab()));
+            }
+            else
+            {
+                return new RedirectResult("Index.aspx");
+            }
+        }
+
+        /// <summary>
+        /// Login Nap Invoice.
+        /// </summary>
+        /// <param name="redirectURL">The redirect url on IMS .</param>
+        /// <returns>
+        /// Return site.
+        /// </returns>
+        [ValidateInput(false)]
+        public ActionResult Invoice(Uri redirectURL)
+        {
+            // check-in user
+            _userId = GetUserId();
+            if (_userId != 0)
+            {
+                var checkInUser = UserCheckin((int)SiteName.Report, _userId);
+                return new RedirectResult(
+                    string.Format(
+                        NapURL(SiteName.IMS) + "?userId={0}&onuserId={1}&time={2}&redirectURL={3}&newTab=false",
+                        Cryptography.CfsEnCrypt(_userId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(GetServerTime()),
+                        string.IsNullOrEmpty(redirectURL.ToString()) ? string.Empty : redirectURL.ToString()));
+            }
+            else
+            {
+                return new RedirectResult("Index.aspx");
+            }
+        }
+
+        /// <summary>
+        /// Gets the server time.
+        /// </summary>
+        /// <returns>Return server time.</returns>
+        private string GetServerTime()
+        {
+            string time = this._userService.UserSSOGetTime();
+            return time;
+        }
+
+        /// <summary>
+        /// Users the check in.
+        /// </summary>
+        /// <param name="siteId">The site identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Return User Checked In.</returns>
+        private UserCheckInUserCriteria UserCheckin(int siteId, int userId)
+        {
+            var criteria = new UserCheckInUserCriteria
+            {
+                UserId = userId,
+                SiteId = siteId,
+                NetSessionId = Session.SessionID,
+                Ip = _currentContext.IP,
+                LoginDate = DateTime.Now,
+                BrowserName = _currentContext.BrowserName,
+                CountryCode = _currentContext.CountryCode,
+                Domain = _currentContext.DomainName,
+                Platform = _currentContext.Platform
+            };
+
+            this._userService.UserCheckIn(ref criteria);
+            return criteria;
+        }
+
+        /// <summary>
+        /// Naps the URL.
+        /// </summary>
+        /// <param name="site">Name of the redirect nap site.</param>
+        /// <returns>A Specific Nap URL.</returns>
+        private string NapURL(SiteName site)
         {
             Uri uri = HttpContext.Request.Url;
-            return string.Format(ConfigurationManager.AppSettings["NapReportLoginUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
+            string loginUrl = string.Empty;
+            switch (site)
+            {
+                case SiteName.Report:
+                    loginUrl = ConfigurationManager.AppSettings["NapReportLoginUrl"];
+                    break;
+
+                case SiteName.SpecialDelete:
+                    loginUrl = ConfigurationManager.AppSettings["NapSpecialDeleteLoginUrl"];
+                    break;
+
+                case SiteName.CMS:
+                    loginUrl = ConfigurationManager.AppSettings["NapCMSLoginUrl"];
+                    break;
+
+                case SiteName.IMS:
+                    loginUrl = ConfigurationManager.AppSettings["IMSLoginUrl"];
+                    break;
+
+                case SiteName.Home:
+                    loginUrl = ConfigurationManager.AppSettings["NapHomeSSOUrl"];
+                    break;
+
+                default:
+                    loginUrl = ConfigurationManager.AppSettings["NapReportLoginUrl"];
+                    break;
+            }
+
+            return string.Format(loginUrl, uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
+        }
+
+        /// <summary>
+        /// Gets the user identifier.
+        /// </summary>
+        /// <returns>Return account login id.</returns>
+        private int GetUserId()
+        {
+            return Converter.ToInt(HttpContext.Session["AccId"], 0);
+        }
+
+        /// <summary>
+        /// Get new the tab parameter.
+        /// </summary>
+        /// <returns>New Tab parameter.</returns>
+        private string NewTab()
+        {
+            string newTab = "newTab=false";
+            if (Request.Url.ToString().Contains("blank"))
+            {
+                newTab = "newTab=true";
+            }
+
+            return newTab;
+        }
+
+        /// <summary>
+        /// Gets the nap direct URL.
+        /// </summary>
+        /// <param name="urlKey">The URL key.</param>
+        /// <returns>Nap direct URL.</returns>
+        private string GetNAPReportDirectURL(string urlKey)
+        {
+            var napDirectURL = string.Empty;
+            var mappingUrlSection = MappingNapCMSUrlSection.Instance.NapCMSUrl;
+            if (mappingUrlSection != null)
+            {
+                var getMappingConfig = from m in 
+                                           mappingUrlSection.Cast<NapCMSUrlElement>().Where(
+                                                m => m.AccUrl.ToLower().Equals(urlKey.ToLower()) && m.Active) 
+                                       select m;
+                if (getMappingConfig != null && getMappingConfig.Count() > 0)
+                {
+                    napDirectURL = getMappingConfig.First().NapUrl;
+                }
+            }
+
+            return napDirectURL;
         }
 
         #endregion login

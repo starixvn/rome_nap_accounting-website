@@ -13,12 +13,9 @@
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="Microsoft.Practices.Unity" %>
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
-<%@ Import Namespace = "LVCasinoSetting" %>
-
 
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
-
 
 <script runat="server">
 
@@ -33,14 +30,13 @@
         //var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
         //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
         //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
+        RegisterRouteMiscController(RouteTable.Routes);
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
-        
-        Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
-        RegisterGlobalFilters(GlobalFilters.Filters);     
+        AreaRegistration.RegisterAllAreas();
+        Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+        RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
-        AreaRegistration.RegisterAllAreas();       
-       
         // ViewEngines.Engines.Add(new CustomView());
     }
 
@@ -53,13 +49,22 @@
 
     }
 
-    static void RegisterRoutes(RouteCollection routes)
+    static void RegisterRouteMiscController(RouteCollection routes)
     {
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
         routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
         routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
-        //routes.IgnoreRoute("{*staticfile}", new { staticfile = @".*\.(css|js|gif|jpg|zip)(/.*)?" });
+        
+        routes.MapRoute(
+          "BetListWithoutAreaName",
+          "BetList/{action}",
+          new { controller = "BetList", action = "Index", id = UrlParameter.Optional }
+          );
+    }
+    
+    static void RegisterRoutes(RouteCollection routes)
+    {
         routes.MapRoute(
             "Default",
             // Route name

@@ -46,21 +46,7 @@ public partial class NapCMS_Redirect : System.Web.UI.Page
 	
 	private string NapURL()
     {
-        Uri uri = HttpContext.Current.Request.Url;
-        //var publisIPs = ConfigurationManager.AppSettings["PublicIPs"].ToString().Split(new char[]{','},StringSplitOptions.RemoveEmptyEntries);
-        ////string host = uri.Scheme + Uri.SchemeDelimiter + uri.Host + (uri.Port == 80 ? "" : ":" + uri.Port);
-        //bool isUsedIP = false;
-
-        //foreach (var Ip in publisIPs)
-        //{ 
-        //    if (host.Contains(Ip.ToString()))
-        //    {
-        //        isUsedIP=true;
-        //        break;
-        //    }
-        //}
-
-        //return isUsedIP ? string.Format(ConfigurationManager.AppSettings["NapReportSSOUrl"],host) : ConfigurationManager.AppSettings["NapReportLoginUrl"];
+        Uri uri = HttpContext.Current.Request.Url;        
         return string.Format(ConfigurationManager.AppSettings["NapCMSLoginUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Current.Request.Headers["Host"].ToString());
     }
 }
