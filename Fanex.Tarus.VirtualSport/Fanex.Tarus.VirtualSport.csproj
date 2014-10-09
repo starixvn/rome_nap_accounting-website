@@ -222,7 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\Customer\PTSetting\" />
-    <Folder Include="Core\" />
+    <Folder Include="Controllers\Core\" />
     <Folder Include="DataAccess\PTSetting\" />
   </ItemGroup>
   <ItemGroup>

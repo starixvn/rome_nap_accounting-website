@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="LoginController.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="NapSsoController.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -16,16 +16,18 @@ namespace Fanex.NAP.SSO
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
+    using Fanex.NAP.Core.Web.Session;
     using Fanex.Tarus.Admin.Core.Configurations;
 
     /// <summary>
-    /// Login controller.
+    /// The Nap Single sign on controller.
     /// </summary>
-    public class LoginController : Controller
+    public class NapSsoController : Controller
     {
         #region members
 
         private ICurrentContext _currentContext;
+        private ICurrentSession _currentSession;
         private IUserService _userService;
         private int _userId = 0;
 
@@ -33,15 +35,16 @@ namespace Fanex.NAP.SSO
 
         #region ctors
 
-        public LoginController()
+        public NapSsoController()
             : this(null)
         {
         }
 
-        public LoginController(IUserService userService)
+        public NapSsoController(IUserService userService)
         {
             this._userService = userService ?? new UserService();
             this._currentContext = new CurrentContext();
+            this._currentSession = new CurrentSession();
         }
 
         #endregion ctors
@@ -89,7 +92,7 @@ namespace Fanex.NAP.SSO
         public ActionResult Index()
         {
             // check-in user
-            _userId = GetUserId();
+            _userId = GetUserIdBySite(SiteName.Home);
             if (_userId != 0)
             {
                 var checkInUser = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPHomeSiteId"], 0), _userId);
@@ -117,11 +120,11 @@ namespace Fanex.NAP.SSO
         public ActionResult Cms(string id)
         {
             // check-in user
-            _userId = GetUserId();
+            _userId = GetUserIdBySite(SiteName.CMS);
             var urlKey = string.IsNullOrEmpty(id) ? string.Empty : GetNAPReportDirectURL(id);
             if (_userId != 0)
             {
-                var checkInUser = UserCheckin(Convert.ToInt16(ConfigurationManager.AppSettings["NAPCMSSiteId"], 0), _userId);
+                var checkInUser = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPCMSSiteId"], 0), _userId);
                 return new RedirectResult(
                     string.Format(
                         "{0}?userId={1}&onuserId={2}&time={2}&redirectUrl={3}&{4}",
@@ -149,13 +152,13 @@ namespace Fanex.NAP.SSO
         public ActionResult Invoice(Uri redirectURL)
         {
             // check-in user
-            _userId = GetUserId();
+            _userId = GetUserIdBySite(SiteName.Report);
             if (_userId != 0)
             {
-                var checkInUser = UserCheckin((int)SiteName.Report, _userId);
+                var checkInUser = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPIMSSiteId"], 0), _userId);
                 return new RedirectResult(
                     string.Format(
-                        NapURL(SiteName.IMS) + "?userId={0}&onuserId={1}&time={2}&redirectURL={3}&newTab=false",
+                        NapURL(SiteName.IMS) + "?userId={0}&onuserId={1}&time={2}&redirectUrl={3}&newTab=false",
                         Cryptography.CfsEnCrypt(_userId.ToString(CultureInfo.CurrentCulture)),
                         Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
                         Cryptography.CfsEnCrypt(GetServerTime()),
@@ -242,12 +245,32 @@ namespace Fanex.NAP.SSO
         }
 
         /// <summary>
-        /// Gets the user identifier.
+        /// Gets the user from site identifier.
         /// </summary>
-        /// <returns>Return account login id.</returns>
-        private int GetUserId()
+        /// <param name="site">The site name.</param>
+        /// <returns>
+        /// Return account login id.
+        /// </returns>
+        private int GetUserIdBySite(SiteName site)
         {
-            return Converter.ToInt(HttpContext.Session["AccId"], 0);
+            int userId;
+            switch (site)
+            {
+                case SiteName.Report:
+                case SiteName.SpecialDelete:
+                case SiteName.CMS:
+                case SiteName.IMS:
+                    userId = this._currentSession.UserId;
+                    break;
+                case SiteName.Home:
+                    userId = Converter.ToInt(HttpContext.Session["AccId"], 0);
+                    break;
+                default:
+                    userId = Converter.ToInt(HttpContext.Session["AccId"], 0);
+                    break;
+            }
+
+            return userId;
         }
 
         /// <summary>
