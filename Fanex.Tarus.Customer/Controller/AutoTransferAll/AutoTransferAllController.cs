@@ -26,19 +26,16 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             _autoTransferAllService = autoTransferAllService ?? new AutoTransferAllService();
         }
 
-        [AuthenticateRead]
         public ActionResult Index()
         {
             return View("~/Views/Customer/AutoTransferAll/AutomateTransferList/Index.cshtml");
         }
 
-        [AuthenticateRead]
         public ActionResult AddAgent()
         {
             return View("~/Views/Customer/AutoTransferAll/AddAgent/AddAgent.cshtml");
         }
 
-        [AuthenticateRead]
         [HttpPost]
         public ActionResult GetAutoTransfers(SelectTransferAgentCriteria criteria)
         {
@@ -46,7 +43,6 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             return PartialView("~/Views/Customer/AutoTransferAll/AutomateTransferList/_AutomateTransferList.cshtml", model);
         }
 
-        [AuthenticateHost]
         [HttpPost]
         public JsonResult UpdatedTransfer(UpdatedTransferCriteria criteria)
         {
@@ -59,10 +55,11 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         /// </summary>
         /// <param name="username">User name.</param>
         /// <param name="transferType">Transfer type.</param>
+        /// <param name="custId">User name Id.</param>
         /// <returns>Valid page.</returns>
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult ClearBalance(string username, int transferType)
+        public JsonResult ClearBalance(string username, int transferType, int custId)
         {
             Result result = new Result();
 
@@ -70,14 +67,16 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             {
                 result = _autoTransferAllService.ClearBalanceMembers(new ClearBalanceMembersCriteria
                 {
-                    AgentName = username
+                    AgentName = username,
+                    CustId = custId
                 });
             }
             else
             {
                 result = _autoTransferAllService.ClearBalanceDownlines(new ClearBalanceDownlineCriteria
                 {
-                    AgentName = username
+                    AgentName = username,
+                    CustId = custId
                 });
             }
 
@@ -100,7 +99,6 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             return Json(result);
         }
 
-        [AuthenticateHost]
         public ActionResult ExportTemplateExcelFile()
         {
             var templateFile = _autoTransferAllService.ExportExcelFile();
@@ -151,7 +149,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         /// <returns>String object.</returns>
         private string CheckValidExcelFile(HttpPostedFileBase file)
         {
-            if (!IsExcelFile(file))
+            if (file == null || !IsExcelFile(file))
             {
                 return "The uploading file is not a excel file, please try again!";
             }

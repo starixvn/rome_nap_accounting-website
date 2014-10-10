@@ -24,7 +24,7 @@
             <div id="maincontent_betlist" class="maincontent_box" style="width: 963px; margin-bottom: 5px;">
                 <div>
                     <form id="uploadForm" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" />
+                    <input id="fileId" type="file" name="file" />
                     <input id="btnOpenFile" class="btn" type="submit" value="Open File" onclick="return AddNewAgent.checkValidAgents(this);" />
                     <input disabled="disabled" id="btnSubmit" class="btn" type="submit" value="Submit"
                         onclick="return AddNewAgent.updatedAgentFromFile(this);" />

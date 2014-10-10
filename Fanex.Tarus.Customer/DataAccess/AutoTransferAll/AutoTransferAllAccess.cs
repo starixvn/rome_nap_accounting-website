@@ -99,6 +99,32 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
         }
 
         /// <summary>
+        /// Update transfer status.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdatedTransferStatus(UpdatedTransferStatusCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        objDb.ExecuteReader(criteria.GetSpParams());
+                        var outParameters = objDb.GetOuputParams();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new Result();
+        }
+           
+        /// <summary>
         /// Delete transfer.
         /// </summary>
         /// <param name="criteria">Criteria object.</param>
@@ -206,6 +232,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
                 try
                 {
                     Result result = new Result();
+                    criteria.UserName = criteria.UserName.Replace(" ", string.Empty);
 
                     using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {

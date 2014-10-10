@@ -209,6 +209,7 @@
     <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\UpdatedTransferStatusCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />

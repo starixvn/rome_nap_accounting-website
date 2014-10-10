@@ -9,14 +9,14 @@
 @functions {
     public string SplitUsername(string username)
     {
-        if (username.Length < 13)
+        if (username.Length < 15)
         {
             return username;
         }
 
         string usernameTmp = username;
-        string firstSubstring = usernameTmp.Substring(0, 13);
-        string secondSubstring = usernameTmp.Substring(13, username.Length - 13);
+        string firstSubstring = usernameTmp.Substring(0, 15);
+        string secondSubstring = usernameTmp.Substring(15, username.Length - 15);
         return firstSubstring + "<br />" + secondSubstring;
     }
  }
@@ -28,6 +28,8 @@
         string transferTypeColor = autoTransfer.TransferType == 1 ? "blue" : "green";
         
         string tooltip = string.Empty;
+        string transferTypeSymbol = autoTransfer.TransferType == 1 ? " (M) " : " (D) ";
+        string status = string.IsNullOrEmpty(autoTransfer.StatusName) ? string.Empty : autoTransfer.StatusName + transferTypeSymbol;
         switch(autoTransfer.StatusName.Trim().ToLower() )
         {
             case "failed":
@@ -51,7 +53,7 @@
             </div>
         </td>
         <td class="">
-            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+            <div class="width100 table-cell" style="height: 20px; text-overflow:ellipsis;">
                  @MvcHtmlString.Create(SplitUsername(autoTransfer.UserName))
             </div>
         </td>
@@ -61,12 +63,12 @@
             </div>
         </td>
         <td>
-            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+            <div class="width100 table-cell" style="height: 20px; text-overflow:ellipsis;">
                   @MvcHtmlString.Create(SplitUsername(autoTransfer.SuperName)) 
             </div>
         </td>
         <td>
-            <div class="width100 table-cell display" style="height: 20px; text-overflow:ellipsis;">
+            <div class="width100 table-cell" style="height: 20px; text-overflow:ellipsis;">
               @MvcHtmlString.Create(SplitUsername(autoTransfer.MasterName)) 
             </div>
         </td>
@@ -86,12 +88,15 @@
         </td>
         <td>
             <div class="width150 table-cell c">
+           @if(!string.IsNullOrEmpty(autoTransfer.StatusName))
+           {
                 @autoTransfer.LastestAutoTransferLog
+               }
             </div>
         </td>
         <td class="c">
             <div class="width80 table-cell c @isFailed" id="status_@autoTransfer.CustId"  title="@tooltip">
-                @autoTransfer.StatusName (M)
+                @status
             </div>
         </td>
         <td>

@@ -62,18 +62,50 @@ namespace Fanex.Tarus.Customer.Business.AutoTransferAll
             return _autoTransferAllAccess.InsertAgentsFromPopup(criteria);
         }
 
+        /// <summary>
+        /// Delete transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
         public Result ClearBalanceDownlines(ClearBalanceDownlineCriteria criteria)
         {
             criteria.IP = this._ip;
             criteria.UserID = this._userId;
-            return _autoTransferAllAccess.ClearBalanceDownlines(criteria);
+            Result result = _autoTransferAllAccess.ClearBalanceDownlines(criteria);
+
+            if (result.ErrorCode == 0)
+            {
+              return _autoTransferAllAccess.UpdatedTransferStatus(
+                new UpdatedTransferStatusCriteria 
+                {
+                    CustId = criteria.CustId
+                });
+            }
+
+            return result;
         }
 
+        /// <summary>
+        /// Delete transfer.
+        /// </summary>
+        /// <param name="criteria">Criteria object.</param>
+        /// <returns>Result object.</returns>
         public Result ClearBalanceMembers(ClearBalanceMembersCriteria criteria)
         {
             criteria.IP = this._ip;
             criteria.UserID = this._userId;
-            return _autoTransferAllAccess.ClearBalanceMembers(criteria);
+            Result result = _autoTransferAllAccess.ClearBalanceMembers(criteria);
+
+            if (result.ErrorCode == 0)
+            {
+                return _autoTransferAllAccess.UpdatedTransferStatus(
+                  new UpdatedTransferStatusCriteria
+                  {
+                      CustId = criteria.CustId
+                  });
+            }
+
+            return result;
         }
 
         public ValidAgents CheckValidAgentsFromFile(HttpPostedFileBase fileUploaded)

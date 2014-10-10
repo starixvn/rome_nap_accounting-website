@@ -123,7 +123,7 @@ Fanex.Accounting.AutomateTransferList = function () {
 
     me.clearBalance = function (username, custId) {
         try { parent.BlockUI(); } catch (e) { }
-        var params = { username: username, transferType: $('#ddlTranferType_' + custId).val() };
+        var params = { username: username, transferType: $('#ddlTranferType_' + custId).val(), custId: custId };
         $("#err").empty().hide();
         $.ajax({
             type: "POST",
@@ -144,6 +144,7 @@ Fanex.Accounting.AutomateTransferList = function () {
                     $('#status_' + custId).empty().removeClass("red").html("completed" + statusSymbol);
                     setTimeout(function () {
                         $("#err").hide();
+                        me.getAutoTransfers(false);
                     }, 3000);
                 }
 
@@ -163,7 +164,7 @@ Fanex.Accounting.AutomateTransferList = function () {
 
         var color = $('#ddlTranferType_' + custId).val() == 1 ? "blue" : "green";
         $('#ddlTranferType_' + custId).css('color', color);
-
+        $("#err").empty();
         $.ajax({
             type: "POST",
             url: window.rootUrl + 'AutoTransferAll/UpdatedTransfer',
@@ -210,7 +211,7 @@ Fanex.Accounting.AutomateTransferList = function () {
     me.deletedTransfer = function (custId) {
         try { parent.BlockUI(); } catch (e) { }
         var params = { custId: custId };
-
+        $("#err").empty();
         $.ajax({
             type: "POST",
             url: window.rootUrl + 'AutoTransferAll/DeletedTransfer',
@@ -219,7 +220,7 @@ Fanex.Accounting.AutomateTransferList = function () {
             data: JSON.stringify(params),
             success: function (result) {
                 if (result.ErrorCode != 0) {
-                    $("#err").show().html("<div class='alerterror'>Removed agent failed!</div>");
+                    $("#err").show().html("<div class='alerterror'>" + result.ErrorMessage + "</div>");
                 }
                 else {
                     $("#err").show().html("<div class='alertsuccess'>Removed agent successfully!</div>");
@@ -238,6 +239,8 @@ Fanex.Accounting.AutomateTransferList = function () {
     };
 
     me.confirmAddNewAgentFromPopup = function () {
+        $("#errPopup").empty();
+        $('#usernamesTextarea').val('');
         $("#tblconfirm").dialog({
             title: "Add Agent",
             autoOpen: false,
@@ -261,7 +264,7 @@ Fanex.Accounting.AutomateTransferList = function () {
     me.AddNewAgentFromPopup = function () {
         try { parent.BlockUI(); } catch (e) { }
         var params = { username: $('#usernamesTextarea').val(), transferType: $('#ddlTranferTypePopup').val() };
-
+        
         $.ajax({
             type: "POST",
             url: window.rootUrl + 'AutoTransferAll/InsertAgentsFromPopup',
@@ -318,20 +321,14 @@ Fanex.Accounting.AutomateTransferList = function () {
                 })
         });
 
-        $("#usernamesTextarea").bind("paste", function (e) {
-            e.preventDefault();
-
-            var text;
-            var clp = (e.originalEvent || e).clipboardData;
-            if (clp === undefined || clp === null) {
-                text = window.clipboardData.getData("text") || "";
-            } else {
-                text = clp.getData('text/plain') || "";
-            }
-
-            text = text.replace(/(\r\n|\n|\r)/gm, " ");
-            text = text.replace(/\s+/g, " ");
-            $('#usernamesTextarea').empty().text(text);
+        $("#usernamesTextarea").on("paste", function (e) {
+            var element = this;
+            setTimeout(function () {
+                var context = $(element).val();
+                context = context.replace(/(\r\n|\n|\r)/gm, " ");
+                context = context.replace(/\s+/g, " ");
+                $('#usernamesTextarea').empty().val(context);
+            }, 100);
         });
 
         $("#usernamesTextarea").resizable();

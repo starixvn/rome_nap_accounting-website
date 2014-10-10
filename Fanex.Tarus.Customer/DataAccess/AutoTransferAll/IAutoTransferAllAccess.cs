@@ -10,6 +10,8 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
 
         Result UpdatedTransfer(UpdatedTransferCriteria criteria);
 
+        Result UpdatedTransferStatus(UpdatedTransferStatusCriteria criteria);
+
         Result DeletedTransfer(DeletedTransferCriteria criteria);
 
         Result InsertAgentsFromPopup(InsertAgentsFromPopupCriteria criteria);

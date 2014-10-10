@@ -16,6 +16,9 @@ namespace Fanex.Tarus.Customer.Criteria.AutoTransferAll
     /// </summary>
     public class ClearBalanceMembersCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public int CustId { get; set; }
+
         public string AgentName { get; set; }
 
         public int UserID { get; set; }
