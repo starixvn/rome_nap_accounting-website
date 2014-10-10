@@ -317,4 +317,17 @@
     <Setting Key="Acc_CustomerDelAutoTransferAgent" SpName="Acc_CustomerDelAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
+  <Function Name="Esports">
+    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Agent's yesterday balance">
+    <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerCheckValidAutoTransferAgent" SpName="Acc_CustomerCheckValidAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAutoTransferAgent" SpName="Acc_CustomerUpdAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerDelAutoTransferAgent" SpName="Acc_CustomerDelAutoTransferAgent" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
 </Functions>
