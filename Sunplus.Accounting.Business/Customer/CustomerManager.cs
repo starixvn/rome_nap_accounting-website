@@ -1522,7 +1522,7 @@ namespace Sunplus.Accounting.Business.Customer
         {
             try
             {
-                string s = WebUtils.LoadTemplate("settingitem.htm");
+                string s = WebUtils.LoadTemplate("specialstatus.htm");
                 TemplateHandler.Assign(ref s, "{name}", name);
                 TemplateHandler.Assign(ref s, "{onmouseout}", string.Empty);
                 TemplateHandler.Assign(ref s, "{onmouseover}", string.Empty);
