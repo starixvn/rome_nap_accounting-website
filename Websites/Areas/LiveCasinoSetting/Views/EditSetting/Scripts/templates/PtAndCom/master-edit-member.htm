@@ -28,7 +28,7 @@
                 <select id="ddlUm1"
                 data-ng-model="ptAndComSetting.PositionTaking.Um1" 
                 data-ng-options="item.id as item.value for item in masterAutoPTOptions"
-                data-ng-disabled="!ptAndComSetting.PositionTaking.Im1"></select>
+                data-ng-change="masterAutoPTChange()"
             </td>
             <td>
                 {{ptAndComSetting.PositionTaking.A1}}

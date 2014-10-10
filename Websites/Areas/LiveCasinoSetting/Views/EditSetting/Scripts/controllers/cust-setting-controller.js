@@ -15,12 +15,12 @@ if (fanex.liveCasinoSetting) {
             $scope.mainResult = {
                 CommandResultsList: []
             };
-            $scope.isUpdateAllSetting = false;
             $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
-            if (custSetting.SettingContext.IsEditMultiple
-                && custSetting.SettingContext.TargetSyncStatus
+            settingContext.IsSyncLiveCasino = settingContext.Customer.IsSyncLiveCasino;
+            $scope.isUpdateAllSetting = false;
                 && custSetting.SettingContext.IsEditDirectDownline) {
                 custSetting.CustInfo.IsSyncLiveCasino = custSetting.SettingContext.TargetSyncStatus.indexOf('0') === -1;
+                        settingContext.IsSyncLiveCasino = false;
             }
 
             $scope.validateAndUpdateSetting = function (updateType) {
@@ -68,8 +68,7 @@ if (fanex.liveCasinoSetting) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
                         }
                         else {
-                            if (!isUpdatePartial
-                                && $window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
+                            if ($window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
                                 $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePartial);
                             }
 
