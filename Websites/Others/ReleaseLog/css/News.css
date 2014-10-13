@@ -15,7 +15,7 @@ p, pre {margin: 8px;}
 input.clone{display:none;}
 .maincontent_news 
 {
-	background: url("../.../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+	background: url("../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
 	border: 1px solid #7C98A4;
 	display: table;
 	padding: 4px 5px;
