@@ -6,6 +6,9 @@ using DNAide.Web;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Bingo.Core;
+using System.Threading;
+using Fanex.Common;
+using System.Configuration;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -14,14 +17,14 @@ public partial class Others_Menu : System.Web.UI.Page
         string tplMenu = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         
-        Boolean AllowedFi, AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports;
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports;
         string[] arrCustID = Request.UrlReferrer.Query.Split('&');
         string custID = arrCustID[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
         var HRURL = string.Empty;
         string PokerURL = "../PT/Poker/";
-        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));
-        AllowedFi = CastAide.AsBoolean(db.Outputs["allowedfi"]);
+        Thread.Sleep(6000);
+        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));        
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
         AllowedPoker = true;
@@ -73,15 +76,11 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
         }
-        //if (WebSettings.disabledFI || !AllowedFi || AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-        //{
-            TemplateHandler.RemoveBlock(ref tplMenu, "Finance");
-            defaultUrl = HRURL;
-        //}
+      
         if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "HorceRacing");
-            if ((Sunplus.Accounting.Core.Configurations.WebSettings.disabledFI || !AllowedFi) && !Sunplus.Accounting.Core.Configurations.WebSettings.disableCS)
+            if (!Sunplus.Accounting.Core.Configurations.WebSettings.disableCS)
                 defaultUrl = "../PositionTakingCS.aspx" + Request.UrlReferrer.Query;
         }
         if (Sunplus.Accounting.Core.Configurations.WebSettings.disableCS || !AllowedCS)
@@ -104,8 +103,7 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "Keno");
         }
 
-        TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default
-        TemplateHandler.Assign(ref tplMenu, "{urlFinance}", "UpdateFinancePT.aspx" + Request.UrlReferrer.Query);
+        TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
         TemplateHandler.Assign(ref tplMenu, "{urlCasino}", "../PositionTakingCS.aspx" + Request.UrlReferrer.Query);
         TemplateHandler.Assign(ref tplMenu, "{urlBingo}", bingopath);
