@@ -48,8 +48,8 @@
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-   <Reference Include="Fanex.BetList.Core, Version=2.0.5.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.0.5.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core">
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.5.8\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
