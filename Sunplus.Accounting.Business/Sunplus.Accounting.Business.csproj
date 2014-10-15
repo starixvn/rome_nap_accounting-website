@@ -71,6 +71,10 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
       <HintPath>..\Dependency\Keno\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
     </Reference>
@@ -193,6 +197,9 @@
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
     <Compile Include="Criteria\WinLossByLicenseeCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
+    <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
+    <Compile Include="Customer\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager.cs" />
@@ -272,6 +279,11 @@
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="ResetWinning\IResetWinningManager.cs" />
     <Compile Include="ResetWinning\ResetWinningManager.cs" />
+    <Compile Include="Resources\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
     <Compile Include="Security\LoginFailedHandler.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Settle\ISettlement.cs" />
@@ -572,6 +584,13 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

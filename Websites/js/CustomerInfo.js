@@ -43,6 +43,17 @@ function ChangeGivenCredit(ischanging) {
     }
 }
 
+function changeDirectAccountStatus(username, userId, isCheckedDirectStatus) {
+    var title = 'Mark direct account';
+    var url = 'ConfigureDirectAccount/UpdateDirectAccountStatus?' + $.param({
+        username: username,
+        userId: userId,
+        isCheckedDirectStatus: isCheckedDirectStatus ? true : false
+    });
+    var width = 322;
+    var height = 115;
+    parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, window.closeDirectAccountPopup);
+}
 
 function checkKeyPress(e) {
     try {
@@ -74,7 +85,6 @@ function checkKeyPress(e) {
 function changeStatus(type, hasDownLine) {
     try {
         var isUpdateDownline = false; //update HR status for all downline?
-
         switch (type) {
             case "suspended":
                 yes = ($('#suspended').attr('class').indexOf("chkuncheck") > -1);

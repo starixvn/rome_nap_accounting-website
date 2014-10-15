@@ -1,0 +1,45 @@
+﻿#result-message
+{
+    width: 475px;
+}
+
+#button-update, #button-cancel
+{
+    margin-right: 10px;
+    width: 80px;
+}
+
+.display-none
+{
+    display: none !important;
+}
+
+.link
+{
+    color: #0066cc;
+    cursor: pointer;
+}
+
+.link:hover
+{
+    color: #d66d35;
+}
+
+#update-effect-container
+{
+    margin-top: 6px;
+    margin-left: 0px;
+    margin-bottom: 6px;
+}
+
+.freegrid th, .grid-fixed-table th,
+.freegrid td, .grid-fixed-table td
+{
+    font-size: 12px;
+}
+
+#table-button-group
+{
+    margin-top: 10px;
+    float: right;
+}

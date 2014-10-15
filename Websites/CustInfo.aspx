@@ -281,7 +281,12 @@
             var width = 605;
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
-        }   
+        }
+        function closeDirectAccountPopup() {
+            if (parent.window.isUpdateDirectStatus) {
+                changeDisplayStatus();
+            }
+        }
     </script>
 </head>
 <body>
