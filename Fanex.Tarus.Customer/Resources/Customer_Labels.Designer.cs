@@ -88,6 +88,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to view PT Info.
+        /// </summary>
+        public static string ClickToViewPTInfo {
+            get {
+                return ResourceManager.GetString("ClickToViewPTInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direct account status updated successfully!.
         /// </summary>
         public static string ConfigureDirectAccount_ChangeStatus_UpdateSuccess {

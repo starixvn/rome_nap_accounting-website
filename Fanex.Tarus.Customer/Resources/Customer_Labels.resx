@@ -228,4 +228,7 @@
   <data name="Username" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="ClickToViewPTInfo" xml:space="preserve">
+    <value>Click to view PT Info</value>
+  </data>
 </root>
