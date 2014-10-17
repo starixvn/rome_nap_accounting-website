@@ -47,7 +47,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.resize = function (frameId) {
         var windowHeight = $(window).height();
-        var height = windowHeight - 100;
+        var height = windowHeight - 115;
         $(frameId).height(height + "px");
     };
 
