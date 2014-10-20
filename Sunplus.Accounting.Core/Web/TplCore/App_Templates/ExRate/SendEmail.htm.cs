@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
         {
             protected static string s0 = "Admin <b>";
             public string username = "{username}";
-            protected static string s1 = "</b> has been updated exchange ID = ";
+            protected static string s1 = "</b> has just updated exchange ID = ";
             public string ExchangeID = "{ExchangeID}";
             protected static string s2 = " with new BaseRate = ";
             public string BaseRate = "{BaseRate}";
