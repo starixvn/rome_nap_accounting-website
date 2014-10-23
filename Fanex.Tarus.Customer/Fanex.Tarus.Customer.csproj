@@ -58,6 +58,14 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4758.30536, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
@@ -144,6 +152,8 @@
     <Compile Include="Business\AGCasino\IAGCasinoService.cs" />
     <Compile Include="Business\AutoSuspend\AutoSuspendService.cs" />
     <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
+    <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
+    <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
@@ -173,6 +183,7 @@
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
+    <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -184,10 +195,19 @@
     <Compile Include="Criteria\AGCasino\GetCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\AGCasino\UpdateCustomerSettingCriteria.cs" />
     <Compile Include="Criteria\AGCasino\UpdateCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectStatusEffectCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\UpdatedTransferStatusCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
+    <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
@@ -201,6 +221,8 @@
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
+    <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
+    <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />
@@ -263,6 +285,10 @@
     <Compile Include="Entities\Alignment.cs" />
     <Compile Include="Entities\AutoSuspend\CustomerInfo.cs" />
     <Compile Include="Entities\AutoSuspend\ViewResources.cs" />
+    <Compile Include="Entities\AutoTransferAll\AutoTransfer.cs" />
+    <Compile Include="Entities\AutoTransferAll\AutoTransferAll.cs" />
+    <Compile Include="Entities\AutoTransferAll\ValidAgents.cs" />
+    <Compile Include="Entities\AutoTransferAll\ValidAgent.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\ImportDirectAccountResult.cs" />

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto transfer all</title>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/Customer/AutoTransferAll/Style/AutoTransferAll.css" />
+</head>
+<body>
+    <div  id="mainDiv" class="main">
+        <div class="maincontent">
+            <div id="boxheader">
+                <div class="left_tab">
+                    <ul>
+                        <li class="" id="autoTransferTab"><a href="@Url.Action("Index", "AutoTransferAll")">
+                            <span>Automate Transfer List</span></a></li>
+                        <li class="current" id="addAgemtTab" onclick=";"><a><span>Upload Agent</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="maincontent_betlist" class="maincontent_box" style="width: 963px; margin-bottom: 5px;">
+                <div>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <input id="fileId" type="file" name="file" />
+                    <input id="btnOpenFile" class="btn" type="submit" value="Open File" onclick="return AddNewAgent.checkValidAgents(this);" />
+                    <input disabled="disabled" id="btnSubmit" class="btn" type="submit" value="Submit"
+                        onclick="return AddNewAgent.updatedAgentFromFile(this);" />
+                    </form>
+                </div>
+                <div>
+                    File Size limit 1MB. <div id="templateId" onclick="AddNewAgent.exportTemplate();">
+                        Click here to download template.</div>
+                </div>
+            </div>
+            <div id="validAgentDiv">
+            </div>
+        </div>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+    <script type="text/javascript" src="~/js/jQuery/jquery-1.7.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.form.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=15"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="~/Scripts/Namespace.js"></script>
+    <script type="text/javascript" src="~/Views/Customer/AutoTransferAll/Scripts/AddNewAgent.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var menuHeight = window.parent.document.getElementById("submenu").clientHeight - 33;
+        $('#mainDiv').css({ 'margin-top': menuHeight });
+    </script>
+</body>
+</html>

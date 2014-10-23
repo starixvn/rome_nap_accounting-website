@@ -1,0 +1,238 @@
+﻿.left_tab {
+    float: left;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 17px;
+    width: 100%;
+    margin: 5px 0 0 5px;
+}
+
+.left_tab ul {
+    font-size: 11px;
+    list-style-type: none;
+    margin: 1px auto 0;
+    padding: 0;
+}
+
+.left_tab li {
+    display: inline;
+    font-size: 11px;
+}
+
+.left_tab a {
+    background: url(../../../../App_Themes/Images/L_banner/L_tab_left.png) no-repeat scroll left top transparent;
+    float: left;
+    font-size: 11px;
+    margin-right: 3px;
+    padding-left: 3px;
+    text-decoration: none;
+}
+
+.left_tab a span {
+    background: url(../../../../App_Themes/Images/L_banner/R_tab_left-1.png) no-repeat scroll right top transparent;
+    color: #FFF;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    float: none;
+    padding: 1px 8px 2px 6px;
+}
+
+.left_tab a:hover span {
+    color: #D66D35;
+    background-position: 100% -42px;
+}
+
+.left_tab .current a {
+    background-position: 0 -21px!important;
+}
+
+.left_tab .current a span {
+    background-position: 100% -21px!important;
+    color: #2678C5;
+}
+
+.left_tab a:hover {
+    background-position: 0 -42px;
+}
+
+.delete_button {
+    background: url(../../../../App_Themes/Images/icon_del.gif) repeat scroll 0 0 transparent;
+    display: block;
+    height: 14px;
+    width: 14px;
+    margin-left: 19px;
+    cursor: pointer;
+}
+
+.ui-dialog .ui-dialog-title {
+    text-align: center!important;
+    width: 100%;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: center!important;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+}
+
+.ui-widget-content {
+    border: 0 solid #A6C9E2!important;
+}
+
+.width30 {
+    width: 30px;
+}
+
+.width100 {
+    width: 100px;
+}
+
+.width120 {
+    width: 120px;
+}
+
+.width50 {
+    width: 50px;
+}
+
+.width60 {
+    width: 60px;
+}
+
+.width80 {
+    width: 80px;
+}
+
+.width150 {
+    width: 150px;
+}
+
+.width250 {
+    width: 250px;
+}
+
+.height34 {
+    height: 34px;
+}
+
+.height20 {
+    height: 20px;
+}
+
+tr.yellow td {
+    background: none repeat scroll 0 0 #FF0!important;
+}
+
+table.tblconfirm {
+    border: 0;
+}
+
+div.validUsers 
+{
+    width: 435px;
+    height: 670px;
+    overflow: auto;
+}
+
+table.validUsers {
+    border: 1px solid #7C98A4;
+    border-collapse: collapse;
+}
+
+table.validUsers td {
+    color: #000;
+    border: 1px solid #7C98A4;
+    border-collapse: collapse;
+    padding-left: 3px;
+}
+
+table.validUsers th {
+    color: #000;
+    background-color: #CDDEF3;
+    border: 1px solid #7C98A4;
+    border-collapse: collapse;
+}
+
+.alerterror {
+    background: url(Images/error.gif) no-repeat scroll left center #F6F5F2;
+    color: #F40000;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    padding-left: 20px;
+}
+
+.alertsuccess {
+    background: url(Images/sucess.gif) no-repeat scroll left center #F6F5F2;
+    color: #618E11;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    padding-left: 20px;
+}
+
+.maincontent_box {
+    font-weight: 700;
+    width: 983px!important;
+    margin-bottom: 10px!important;
+}
+
+.maincontent_box span,input {
+    margin-left: 5px!important;
+}
+
+#txtUsername {
+    background-color: #fff;
+    width: 100px;
+}
+
+#err {
+    width: 983px!important;
+}
+
+.c {
+    text-align: center;
+}
+
+.red {
+    color: Red;
+}
+
+
+#templateId {
+    color: #78D2FF;
+    margin-top: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+tr.even td,table.validUsers tr.even td {
+    background: #E6E9F0 !important;
+}
+
+.display
+{
+    overflow:hidden !important;
+     display: block;
+     white-space:nowrap; 
+}
+
+#usernamesTextarea { /* and the textarea follows its parent's dimensions */
+      width: 350px !important;
+      height: 100px !important;
+        margin: 0 !important; /* don't want to add to container size */
+  border:  1px solid #7C98A4 !important; /* don't want to add to container size */
+}
+
+
+.ui-resizable-handle {
+    background-image: none !important;
+}
+
+.ui-wrapper {
+       width: 355px !important;
+      height: 100px !important;
+}
