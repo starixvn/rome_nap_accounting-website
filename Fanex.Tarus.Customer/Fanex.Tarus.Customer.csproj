@@ -204,14 +204,9 @@
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferStatusCriteria.cs" />
-    <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
-    <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
-    <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
-    <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />
-    <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
@@ -228,10 +223,6 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
-    <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
-    <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
-    <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
-    <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />
