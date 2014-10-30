@@ -32,7 +32,6 @@
         manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
         manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
         RegisterRouteMiscController(RouteTable.Routes);
-        RegisterRouteMiscController(RouteTable.Routes);
 
         AreaRegistration.RegisterAllAreas();
         AreaRegistration.RegisterAllAreas();
