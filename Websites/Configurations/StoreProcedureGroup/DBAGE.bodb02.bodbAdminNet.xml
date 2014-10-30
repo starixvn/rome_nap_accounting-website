@@ -310,42 +310,14 @@
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="SearchCopy">
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBAGE.bodb02.bodbAdminNet"/>
-  </Function>
-  <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
-  </Function>
+	<Function Name="External Betting Limit">
+		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+		<Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+	</Function>
+	<Function Name="SearchCopy">
+		<Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet"/>
 
-  <Function Name="Customer - Finance Edit">
-    <Setting Key="CustomerSelFIEditSuper" SpName="Acc_CustomerSelFIEditCustomer_Com" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIEditMaster" SpName="Acc_CustomerSelFIEditCustomer_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIEditAgent" SpName="Acc_CustomerSelFIEditCustomer_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIEditMember" SpName="Acc_CustomerSelFIEditCustomer_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIMasterEditMember" SpName="Acc_CustomerSelFIEditMember_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFISuperEditMember" SpName="Acc_CustomerSelFIEditMember_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFISuperGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIMasterGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelFIAgentGetMinMaxPt" SpName="Acc_CustomerSelFIComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-
-  <Function Name="Customer - Smart punter">
-    <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-
-  <Function Name="Keno Setting">
-    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" TimeOut="600" />
-  </Function>
-
-  <Function Name="ConfigureDirectAccount">
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBAGE.bodb02.bodbAdminNet"  />
-  </Function>
+	</Function>
+  
 </Functions>
 
