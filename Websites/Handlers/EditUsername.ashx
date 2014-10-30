@@ -46,7 +46,7 @@ public class EditUsername : IHttpHandler,IRequiresSessionState {
                      bool success = err.IsSuccess();
                      if (custid != 0 && success) // Have been synchronized casino
                      {
-                         if (!WebSettings.disableCS)
+                         if (!WebSettings.disableCS && custcs.IsCasinoSync)
                          {
                              CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
                              csCustomer.SiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(custid);
@@ -66,7 +66,7 @@ public class EditUsername : IHttpHandler,IRequiresSessionState {
             catch(Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg(Resources.Language.thereisnodata, AlertMessage.MsgType.Error) + "','errMsg');");
+                context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Not casino's customer", AlertMessage.MsgType.Error) + "','errMsg');");
             }
             finally
             {
