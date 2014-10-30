@@ -25,12 +25,12 @@
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
         //Sunplus.Data.DataAbstract.BootStrappers.BootStrapperManager.Initialize(new Sunplus.Data.DataAbstract.BootStrappers.UnityBootStrapper());
-        
-        //var logger = new CasinoAPILogger();
-        //var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
-        //string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
-        //manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
-        //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+
+        var logger = new CasinoAPILogger();
+        var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
+        string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
+        manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
+        manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
         RegisterRouteMiscController(RouteTable.Routes);
         AreaRegistration.RegisterAllAreas();

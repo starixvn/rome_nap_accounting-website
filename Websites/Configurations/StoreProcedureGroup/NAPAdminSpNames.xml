@@ -7,7 +7,7 @@
         <Setting Key="NAP_Site_UpdateSiteURL" SpName="NAP_Site_UpdateSiteURL" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>
         <Setting Key="NAP_Site_UpdateStatus" SpName="NAP_Site_UpdateStatus" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>
         <Setting Key="NAP_Site_UpdateDefaultSiteURL" SpName="NAP_Site_UpdateDefaultSiteURL" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>
-        <Setting Key="NAP_Home_CheckUserSiteAccess" SpName="NAP_Home_CheckUserSiteAccess" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>      
+		<Setting Key="NAP_Home_CheckUserSiteAccess" SpName="NAP_Home_CheckUserSiteAccess" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>
     </Function>
     <Function Name="Function">
         <Setting Key="NAP_Function_Duplicate" SpName="NAP_Function_Duplicate" DbName="DBNAP.bodb_NAP.bodbAdminNet"></Setting>
@@ -32,6 +32,7 @@
         <Setting Key="NAP_User_AssignFunction" SpName="NAP_User_AssignFunction" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_User_AssignSite" SpName="NAP_User_AssignSite" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_User_Insert" SpName="NAP_User_Insert" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
+        <Setting Key="NAP_Home_CheckUserSiteAccess" SpName="NAP_Home_CheckUserSiteAccess" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
     </Function>
     <Function Name="Cust">
         <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />

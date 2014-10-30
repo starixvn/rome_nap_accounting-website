@@ -2,28 +2,23 @@
 <Functions>
 
   <Function Name="Helper">
-    <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>	
+    <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
 	
   </Function>
-
+  
   <Function Name="Report">
-    <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>
+    <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
   </Function> 
-  <Function Name="Customer Status">
-    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="UserControl">
-    <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/>
-    <!--not use-->
+
+  <Function Name="UserControl">    
+    <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="AdminIns" SpName="Acc_AccAdminIns" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="AdminInsFromExisted" SpName="Acc_AccAdminInsFromExisted" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
-  <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
-  </Function>
+
   <Function Name="Live Casino">
     <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="DBTXN.bodb02.bodbAdminNet"  />
@@ -31,7 +26,7 @@
   </Function>
 
   <Function Name="Finance">
-    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet"  />    
   </Function>
 
   <Function Name="Virtual Sports">
@@ -42,8 +37,8 @@
     <Setting Key="NewLicensee_AdNewAgent_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />    
-
+    <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
+    
   </Function>
 
   <Function Name="Special Delete">
@@ -58,7 +53,7 @@
     <Setting Key="Acc_BettransDelSpecial_NumberGame" SpName="Acc_BettransDelSpecial_NumberGame" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransDelSpecialDel_EarlyKO" SpName="Acc_BettransDelSpecialDel_EarlyKO" DbName="DBTXN.bodb02.bodbAdminNet"  />
-
+    
   </Function>
 
   <Function Name="Others">
@@ -68,10 +63,9 @@
     <Setting Key="HedgeRecord" SpName="Acc_Rpt_HedgeRecord" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="HedgeSel" SpName="Acc_HedgeSel" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="HedgeDel" SpName="Acc_HedgeDel" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="HedgeUpd" SpName="Acc_HedgeUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-
+    <Setting Key="HedgeUpd" SpName="Acc_HedgeUpd" DbName="DBTXN.bodb02.bodbAdminNet" />    
+    
   </Function>
-
 
   <Function Name="Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
@@ -83,10 +77,10 @@
     <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
-
-
+  
+    
   </Function>
 
   <Function Name="Exchange Daily">    
@@ -114,11 +108,11 @@
   </Function>
 
   
-   <Function Name="Progressive Bonus">
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
-
-    <Function Name="PT Setting Information">
+  <Function Name="Customer - Auto Suspend">
+    <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet"/>
+  </Function>	
+  
+  <Function Name="PT Setting Information">
         <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
-    </Function>
+  </Function>
 </Functions>

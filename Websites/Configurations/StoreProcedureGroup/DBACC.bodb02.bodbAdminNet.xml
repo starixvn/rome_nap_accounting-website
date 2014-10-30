@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="ResetWinning">
+    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0"  />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+  </Function>
+  
   <Function Name="Main Report - Match Win Loss (2a)">
     <Setting Key="MatchWinLoss2aV3_SelMainReport" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="MatchWinLoss2aV3_SelMainReport_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="DBACC.bodb02.bodbAdminNet"  />
@@ -307,9 +312,5 @@
     <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.bodbAdminNet"/>
 	  <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet"/>
-  </Function>
-  <Function Name="ResetWinning">
-    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 </Functions>

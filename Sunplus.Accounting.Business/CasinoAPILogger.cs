@@ -3,6 +3,9 @@ using System.Collections;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Libraries.APILogger;
+using System.Web;
+using System.Xml;
+using System.Linq;
 
 namespace Sunplus.Accounting.Business
 {
@@ -13,10 +16,43 @@ namespace Sunplus.Accounting.Business
     {
         public void Write(int actionId, string functionName, string trackingValue, string returnValue, int returnCode)
         {
+            var custId = HttpContext.Current.Request["id"];
+            var urlRef = HttpContext.Current.Request.UrlReferrer;            
+            custId = string.IsNullOrWhiteSpace(custId) ? HttpContext.Current.Request["custid"] : custId;
+            if (string.IsNullOrWhiteSpace(custId))
+            {
+                var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
+                foreach (var item in qryCustId)
+                {
+                    if (item.ToLower().Contains("custid"))
+                    {
+                        custId = item.Split('=')[1];
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(custId))
+                {
+                    var tracking = new XmlDocument();
+                    tracking.LoadXml(trackingValue);
+                    try
+                    {
+                        var id = tracking.GetElementsByTagName("DocumentElement").Item(0).FirstChild;
+                        var idNode = id.SelectSingleNode("intIBCCustID");
+                        idNode = idNode == null ? id.SelectSingleNode("IBCCustID") : idNode;
+                        custId = idNode.FirstChild.Value;
+                    }
+                    catch
+                    {
+                        custId = "0";
+                    }
+                }
+            }
+
             var param = new Hashtable();
             param.Add("systemid", 3);
             param.Add("userid", AppSession.AccId);
-            param.Add("custid", AppSession.AccId);
+            param.Add("custid", custId);
             param.Add("actionid", actionId);
             param.Add("funcname", functionName);
             param.Add("trackingvalue", trackingValue);

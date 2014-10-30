@@ -1,9 +1,655 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Functions>
 
-  <!--<Function Name="SearchCopy">
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="db053"  Plain="0"/>
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="main"  Plain="0"/>
-  </Function>-->
+  <!--<Function Name="Special Report">
+	  <Setting Key="Acc_Rpt_MatchAnalysisByCurrency" SpName="Acc_Rpt_MatchAnalysisByCurrency" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisByBettype" SpName="Acc_Rpt_MatchAnalysisByBettype" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper" SpName="Acc_Rpt_MatchAnalysisBySuper" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisByMember" SpName="Acc_Rpt_MatchAnalysisByMember" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisByCountry" SpName="Acc_Rpt_MatchAnalysisByCountry" DbName="warehouse"/>
+	  <Setting Key="Acc_LeagueSel" SpName="Acc_LeagueSel" DbName="warehouse"/>
+	  <Setting Key="Acc_MatchSel" SpName="Acc_MatchSel" DbName="warehouse"/>
+	  <Setting Key="Acc_BettypeSelFromMatch" SpName="Acc_BettypeSelFromMatch" DbName="warehouse"/>
+
+	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_SAg" SpName="Acc_Rpt_MatchAnalysisBySuper_SAg" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_MAg" SpName="Acc_Rpt_MatchAnalysisBySuper_MAg" DbName="warehouse"/>
+	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_Ag" SpName="Acc_Rpt_MatchAnalysisBySuper_Ag" DbName="warehouse"/>
+  </Function>
+	<Function Name="MatchWinLoss2aReport">
+		<Setting Key="WLSummaryReportByBettype" SpName="Acc_Rpt_WinlossByBettype" DbName="warehouse"  />
+		<Setting Key="WLSummaryReportByBettype_14" SpName="Acc_Rpt_WinlossByBettype14" DbName="warehouse"  />
+		<Setting Key="WLSummaryReportByBettype_WH" SpName="Acc_Rpt_WinlossByBettype_Old" DbName="punter"  />
+
+		<Setting Key="MatchWinLoss2a" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="warehouse"  />
+		<Setting Key="MatchWinLoss2a_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="warehouse"  />
+		<Setting Key="MatchWinLoss2a_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="punter"  />
+
+		<Setting Key="SelWLBySportTypeDetail" SpName="Acc_Rpt_MatchWinLoss2_Sporttype" DbName="warehouse"  />
+		<Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="warehouse"  />
+		<Setting Key="SelWLBySportTypeDetail_WH" SpName="Acc_Rpt_MatchWinLoss2_Sporttype_Old" DbName="punter"  />
+
+		<Setting Key="MatchWinLoss2a_Old" SpName="Acc_Rpt_MatchWinLoss2" DbName="warehouse" />
+		<Setting Key="MatchWinLoss2a_Old_14" SpName="Acc_Rpt_MatchWinLoss214" DbName="warehouse"  />
+		<Setting Key="MatchWinLoss2a_Old_WH" SpName="Acc_Rpt_MatchWinLoss2_Old" DbName="punter"  />
+
+		<Setting Key="ThirdPartyCasinoReport" SpName="Acc_Rpt_WinlostCA_Details" DbName="report"  />
+		<Setting Key="ThirdPartyCasinoReport_14" SpName="Acc_Rpt_WinlostCA_Details14" DbName="report"  />
+		<Setting Key="ThirdPartyCasinoReport_WH" SpName="Acc_Rpt_WinlostCA_Details_Old" DbName="punter"  />
+		<Setting Key="MatchWinLoss2aV3_SelMainReport" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="warehouse"  />
+		<Setting Key="MatchWinLoss2aV3_SelMainReport_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="warehouse"  />
+		<Setting Key="MatchWinLoss2aV3_SelMainReport_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="punter"  />
+	</Function>
+	<Function Name="Report - Virtual Sport Winloss">
+		<Setting Key="GetSportType" SpName="Acc_SelVirtualSport" DbName="punter"  />
+		<Setting Key="DailyWinlossVirtualSport" SpName="Acc_Rpt_VirtualsportWinloss" DbName="punter"  />
+		<Setting Key="WinlossVirtualSportByCurrency" SpName="Acc_Rpt_VirtualsportWinloss_detail" DbName="punter"  />
+	</Function>
+	<Function Name="Report - Gaming">
+		<Setting Key="BingoWinlossByMonth" SpName="Acc_Rpt_BingoWinlossByMonth" DbName="punter"  />
+		<Setting Key="Acc_Rpt_NumberGameMonthlyWinloss" SpName="Acc_Rpt_NumberGameMonthlyWinloss" DbName="punter"  />
+		<Setting Key="Gaming_SelNumberGameMonthlyWinLossReport" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="punter"  />
+	</Function>
+	<Function Name="Report - CheckBet">
+		<Setting Key="Acc_checkhack2" SpName="Acc_checkhack2" DbName="DBBET.BK"  />
+		<Setting Key="CheckBet" SpName="Acc_Rpt_CheckBet" DbName="DBBET.BK"  />
+		<Setting Key="CheckBetNormal" SpName="Acc_Rpt_CheckBet_Normal" DbName="DBBET.BK"  />
+		<Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK"  />
+	</Function>
+	<Function Name="Daily WinLoss2h Report New">
+
+		<Setting Key="DailyWLDirect_Sporttype" SpName="Acc_Rpt_DailyWLDirect_Sporttype" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Old" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Sporttype_Soccer" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_Soccer_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_Soccer_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer_Old" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Sporttype_OtherSports" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_OtherSports_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_Sporttype_OtherSports_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports_Old" DbName="punter" />
+		
+		<Setting Key="DailyWLDirect_MixParlay" SpName="Acc_Rpt_DailyWLDirect_MixParlay" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_MixParlay_14" SpName="Acc_Rpt_DailyWLDirect_MixParlay14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_MixParlay_WH" SpName="Acc_Rpt_DailyWLDirect_MixParlay" DbName="punter" />
+
+		<Setting Key="DailyWLDirectRacing" SpName="Acc_Rpt_DailyWLDirect_Racing" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacing_14" SpName="Acc_Rpt_DailyWLDirect_Racing14" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacing_WH" SpName="Acc_Rpt_DailyWLDirect_Racing" DbName="punter" />
+		<Setting Key="DailyWLDirectRacingBySport" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport14" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacingBySport_WH" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="punter" />
+		<Setting Key="DailyWLDirectRacingBySportDetails" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacingBySportDetails_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details14" DbName="warehouse" />
+		<Setting Key="DailyWLDirectRacingBySportDetails_WH" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_soccer_bettype" SpName="Acc_Rpt_DailyWLDirect_Soccer_Bettype" DbName="report" />
+		<Setting Key="DailyWLDirect_soccer_bettype_14" SpName="Acc_Rpt_DailyWLDirect_Soccer_Bettype14" DbName="report" />
+		<Setting Key="DailyWLDirect_soccer_bettype_WH" SpName="Acc_Rpt_DailyWLDirect_Soccer_Bettype" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Detail" SpName="Acc_Rpt_DailyWLDirect_Details" DbName="report" />
+		<Setting Key="DailyWLDirect_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Details14" DbName="report" />
+		<Setting Key="DailyWLDirect_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_Details" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_NumberGame" SpName="Acc_Rpt_DailyWLDirect_NumberGame" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_NumberGame_14" SpName="Acc_Rpt_DailyWLDirect_NumberGame14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_NumberGame_WH" SpName="Acc_Rpt_DailyWLDirect_NumberGame" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Casino_Detail" SpName="Acc_Rpt_DailyWLDirect_Casino" DbName="report" />
+		<Setting Key="DailyWLDirect_Casino_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Casino14" DbName="report" />
+		<Setting Key="DailyWLDirect_Casino_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_Casino" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Bingo" DbName="report" />
+		<Setting Key="DailyWLDirect_Bingo_14" SpName="Acc_Rpt_DailyWLDirect_Bingo14" DbName="report" />
+		<Setting Key="DailyWLDirect_Bingo_WH" SpName="Acc_Rpt_DailyWLDirect_Bingo" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Finance_Detail" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="report" />
+		<Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="report" />
+		<Setting Key="DailyWLDirect_Finance_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="report" />
+		<Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="report" />
+		<Setting Key="DailyWLDirect_Finance_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="warehouse"  />
+		<Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="warehouse"  />
+		<Setting Key="DailyWLDirect_LiveCasino_WH" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="punter"  />
+
+		<Setting Key="DailyWLDirect_MixParlayAdvance" SpName="Acc_Rpt_MixParlay_Advance" DbName="warehouse"  />
+		<Setting Key="DailyWLDirect_MixParlayAdvance_14" SpName="Acc_Rpt_MixParlay_Advance14" DbName="warehouse"  />
+		<Setting Key="DailyWLDirect_MixParlayAdvance_WH" SpName="Acc_Rpt_MixParlay_Advance_Dw" DbName="punter"  />
+
+		<Setting Key="DailyWLDirect_othersport" SpName="Acc_Rpt_DailyWLDirect_OtherSport" DbName="report"  />
+		<Setting Key="DailyWLDirect_othersport_14" SpName="Acc_Rpt_DailyWLDirect_OtherSport14" DbName="report"  />
+		<Setting Key="DailyWLDirect_othersport_WH" SpName="Acc_Rpt_DailyWLDirect_OtherSport" DbName="punter"  />
+
+		<Setting Key="DailyWLDirect_othersport_bettype" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype" DbName="report"  />
+		<Setting Key="DailyWLDirect_othersport_bettype_14" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype14" DbName="report"  />
+		<Setting Key="DailyWLDirect_othersport_bettype_WH" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype" DbName="punter"  />
+
+		<Setting Key="DailyWLDirect_VirtualSports" SpName="Acc_Rpt_DailyWLDirect_VirtualSports" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_VirtualSports_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_VirtualSports_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Old" DbName="punter" />
+		<Setting Key="DailyWLDirect_VirtualSports_Bettype" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_VirtualSports_Bettype_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype14" DbName="warehouse" />
+		<Setting Key="DailyWLDirect_VirtualSports_Bettype_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype_Old" DbName="punter" />
+
+		<Setting Key="Acc_Rpt_DailyParlayWinloss" SpName="Acc_Rpt_DailyParlayWinloss" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_DailyParlayWinloss_14" SpName="Acc_Rpt_DailyParlayWinloss14" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_DailyParlayWinloss_WH" SpName="Acc_Rpt_DailyParlayWinloss_DW" DbName="punter" />
+
+		<Setting Key="DailyWLDirect_VirtualHorseRacing_Detail" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="report" />
+		<Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_14" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details14" DbName="report" />
+		<Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="punter" />
+	</Function>
+	<Function Name="Direct Balance Report">
+		<Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.BODB02"  />
+		<Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.BODB02"  />
+	</Function>
+  <Function Name="Exchange Rate">
+    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
+    <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA" DbName="licensee"  />
+  </Function>
+
+  <Function Name="Live Casino - GET PT Setting">
+    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="db053"/>
+    <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="db053"  />
+	<Setting Key="CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
+	  
+  </Function>
+	<Function Name="Live Casino - Win Limit Setting">
+		<Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
+		
+		<Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="main"  />
+	</Function>
+	<Function Name="Live Casino - Move Account">
+		<Setting Key="TP_User_Customer_MoveMaster_Update" SpName="TP_User_Customer_MoveMaster_Update" DbName="LV_BackupDB" Plain="1" />
+		<Setting Key="TP_User_Customer_MoveAgent_Update" SpName="TP_User_Customer_MoveAgent_Update" DbName="LV_BackupDB" Plain="1" />
+		<Setting Key="TP_User_Customer_MoveMaster_Rollback" SpName="TP_User_Customer_MoveMaster_Rollback" DbName="LV_BackupDB" Plain="1" />
+		<Setting Key="TP_User_Customer_MoveAgent_Rollback" SpName="TP_User_Customer_MoveAgent_Rollback" DbName="LV_BackupDB" Plain="1" />
+		<Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="db053" />
+	</Function>
+  <Function Name="Live Casino - update PT Setting">
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="main"  />
+   
+  </Function>
+
+  <Function Name="Live Casino - Stake Level Settingc">
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LV_BackupDB"  Plain="1"/>
+    <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LV_BackupDB"  Plain="1"/>
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="log"  />
+  </Function>
+
+  <Function Name="Live Casino - Update Ex.Rate">
+    <Setting Key="TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="LV_BackupDB" Plain="1" />
+  </Function>
+
+  <Function Name="Live Casino - Settlement">
+    <Setting Key="Acc_Set_LeagueSel" SpName="Acc_Set_LeagueSel" DbName="main" />
+    <Setting Key="Acc_Set_GameSel" SpName="Acc_Get_LiveCasinoGameList" DbName="main" />
+    <Setting Key="TP_Game_GameDetail_ByMatchId" SpName="TP_Game_GameDetail_ByMatchId" DbName="LV_MainDB" Plain="1"/>
+    <Setting Key="Acc_Set_LiveCSGameSelScore" SpName="Acc_Get_LiveCasinoGameResult" DbName="main" />
+    <Setting Key="TP_Controller_MiniBac_VoidFromAct" SpName="TP_Game_MiniBac_VoidFromAct" DbName="LV_MainDB" Plain="1"/>
+    <Setting Key="Admin_Settlement_s162" SpName="Admin_Settlement_s162" DbName="main" />
+    <Setting Key="Dot_Member_LiveCasino_UpdResult" SpName="Dot_Member_LiveCasino_UpdResult" DbName="prod" />
+  </Function>
+
+  <Function Name="Live Casino - Special Delete - Recover Bet">
+	  <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="db053" />
+	  <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="main" />
+	  <Setting Key="Acc_BettransDelSpecial_LiveCS" SpName="Acc_BettransDelSpecial_LiveCS" DbName="DBTXN.BODB02" />
+	  <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1"/>
+	  <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
+
+	  <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="db053" />
+	  <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
+	  <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="DBTXN.BODB02" />
+	  <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
+	  <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="message" />
+  </Function>
+
+  <Function Name="Live Casino - Report">
+    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
+    <Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="warehouse"  />
+	<Setting Key="DailyWLDirect_LiveCasino_WH" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="punter"  /> 
+    
+	<Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="warehouse"  />
+    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
+    <Setting Key="GameStatistics_GameTableSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTableSel" DbName="warehouse"  />
+    <Setting Key="GameStatistics_GameTypeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTypeSel" DbName="warehouse"  />
+    <Setting Key="GameStatistics_LicenseeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_LicenseeSel" DbName="archive"  />
+    <Setting Key="GameStatistics_SelCurrency" SpName="Acc_ExchangeSel" DbName="db053"  />
+    <Setting Key="GameStatistics_DW" SpName="Acc_Rpt_LiveCasino_GameStatistics_DW" DbName="dw"  />
+	<Setting Key="LiveCasinoWinLoss_DW" SpName="Acc_Rpt_LiveCasino_AgencyWinLoss" DbName="warehouse"  />
+
+	<Setting Key="Gaming_SelLiveCasinoGameTable" SpName="Acc_Rpt_LiveCasinoFinance_GameTable" DbName="punter"  />
+	<Setting Key="Gaming_SelFinancialReport" SpName="Acc_Rpt_LiveCasinoFinance" DbName="punter"  />
+  </Function>
+
+  <Function Name="Live Casino - Betlist">
+    <Setting Key="SelBetlistResultLC" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
+  </Function>
+
+  <Function Name="Customer">
+      <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
+	  <Setting Key="Customer_ViewPTSel" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
+  </Function>
+
+	<Function Name="New Customer Setting">
+		<Setting Key="CustomerSetting_ExchangeSel" SpName="Acc_ExchangeSel" DbName="main" />
+		<Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="db053" />
+		<Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="db053" />
+		
+		<Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="db053"/>
+		<Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.BODB02"/>
+		<Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="db053"/>
+	</Function>
+	
+	<Function Name="Finance">
+   
+ 
+    <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="db053"  />
+    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="main"  />
+    <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="db053"  />
+  </Function>
+
+  <Function Name="Report">
+    <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="db053"  />
+    <Setting Key="MatchWinLossByBetType" SpName="Acc_Rpt_MatchWinLossByBetType" DbName="warehouse"  />
+    <Setting Key="MatchWinLossSingleBet" SpName="Acc_Rpt_MatchWinLossSingleBet" DbName="warehouse"  />
+  </Function>
+
+  <Function Name="Exchange Rate">
+    <Setting Key="ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
+  </Function>
+
+  <Function Name="PT Setting">
+	  <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="main" />
+  </Function>
+
+  <Function Name="Users">
+    <Setting Key="CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="ON_USER"  />
+  </Function>
+
+  <Function Name="Special delete - Sportbook">
+	  <Setting Key="Acc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="warehouse"  />
+	  <Setting Key="Acc_BettransDelSpecial" SpName="Acc_BettransDelSpecial" DbName="DBTXN.BODB02"  />
+	  <Setting Key="Acc_BettransDelSpecialDel_MixParlay" SpName="Acc_BettransDelSpecialDel_MixParlay" DbName="DBTXN.BODB02"  />
+	  <Setting Key="Acc_BettransDelBet" SpName="Acc_BettransDelBet" DbName="DBTXN.BODB02"  />
+	  <Setting Key="Acc_BettransDelBet_Parlay" SpName="Acc_BettransDelBet_Parlay" DbName="DBTXN.BODB02"  />
+  </Function>
+
+
+  <Function Name="BetList">
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.BODB02"  />
+	  <Setting Key="ByIPOtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.BODB02"  />
+	
+    <Setting Key="BetListByIP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.BODB02"  />
+    <Setting Key="ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.BODB02"  />
+    <Setting Key="BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
+    <Setting Key="BetsSelBetList" SpName="Acc_BetsSelBetList" DbName="DBAGE.BODB02"  />
+    <Setting Key="GetCombinationMixparlay" SpName="Acc_BetlistCombinationParlay_Details" DbName="db053"  />
+    <Setting Key="BetlistSystemParlayDetailByTransid" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="db053"  />
+	<Setting Key="SoprtingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="db053"  />
+
+	  <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.BODB02"  />
+	  <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="db053"  />
+
+	  <Setting Key="BetList_CustInfo_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
+	  <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.BODB02"  />
+	  <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="db053"  />
+	  <Setting Key="BetList_SelBetTypeByDate" SpName="Acc_BetList_SelBettype" DbName="db053"  />
+
+	  <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.BODB02"  />
+	  <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.BODB02"  />
+	  <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.BODB02"  />
+
+	  <Setting Key="BetList_VirtualHR_Popup" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
+
+	  <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.BODB02" />
+	  <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old_xtest" DbName="punter" />
+	  
+  </Function>
+	<Function Name="ResetWinning">
+		<Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
+		<Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
+		<Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
+		<Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
+	</Function>
+  <Function Name="Customer - New Licensee">
+	  <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="archive" /> 
+
+    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="archive" />
+    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="archive" />
+    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="archive" />
+    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="archive" />
+
+	  <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="archive" />
+	  <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="archive" />
+  </Function>
+
   
+	<Function Name="Admin-BACustomer">
+		<Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="archive"/>
+	</Function>
+	<Function Name="Punter">
+		
+		<Setting Key="Punter_TopPunterSelLeagues" SpName="Acc_TopPunterSelLeagues" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterSummary" SpName="Acc_SelTopPunterSummary" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterSummaryByLeague" SpName="Acc_SelTopPunterSummaryByLeague" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterByCustID" SpName="Acc_SelTopPunterByCustID" DbName="punter" />
+		<Setting Key="Punter_SelTopPunterBySporttype" SpName="Acc_SelTopPunterBySporttype" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterByBettype" SpName="Acc_SelTopPunterByBettype" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterBySporttypeSum" SpName="Acc_SelTopPunterBySporttypeSum" DbName="punter"  />
+		<Setting Key="Punter_SelTopPunterByLeagueCustID" SpName="Acc_SelTopPunterByLeagueCustID" DbName="punter"  />
+		<Setting Key="Punter_SelIPByCustomer" SpName="Acc_SelIPByCustomer" DbName="punter"  />
+		<Setting Key="Punter_SelBetCountByCustomer" SpName="Acc_SelBetCountByCustomer" DbName="punter"  />
+		<Setting Key="Punter_SelBetCountByCustomer_Detail" SpName="Acc_SelBetCountByCustomer_Detail" DbName="punter"  />
+		<Setting Key="Punter_TopPunterSelSports" SpName="Acc_SelBettypesbySports_DW" DbName="punter"  />
+	</Function>
+	<Function Name="User - Account Management">
+		<Setting Key="GroupInfoSel" SpName="Acc_Con_GroupInfoSel" DbName="db03" />
+		<Setting Key="AdminSelByGroupID" SpName="Acc_Con_AdminSelByGroupID" DbName="db03"/>
+		<Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="GroupPolicySel" SpName="Acc_Con_GroupPolicySel" DbName="db03"/>
+		<Setting Key="AdminPolicySelByCustID" SpName="Acc_Con_AdminPolicySelByCustID" DbName="db03"/>
+		<Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent" DbName="db03"/>
+		<Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="log"/>
+		<Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel" DbName="db03"/>
+		<Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="log"/>
+		<Setting Key="Con_CustomerSelByUserName" SpName="Acc_Con_CustomerSelByUserName" DbName="db03"/>
+	</Function>
+	<Function Name="Customer Finance List">
+		<Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="db053"  />
+		
+	</Function>
+	<Function Name="NumberGame">
+		<Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="archive"  />
+		<Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="WAREHOUSE"  />
+		<Setting Key="Acc_Rpt_NumberGameWinlossByCurrency_detail" SpName="Acc_Rpt_NumberGameWinlossByCurrency_detail" DbName="punter"  />
+		<Setting Key="Acc_Rpt_NumberGameWinlossByCurrency" SpName="Acc_Rpt_NumberGameWinlossByCurrency" DbName="punter"  />
+		<Setting Key="Acc_Rpt_NumberGameWinlossByDate" SpName="Acc_Rpt_NumberGameWinlossByDate" DbName="punter"  />
+		<Setting Key="Acc_Rpt_NumberGameWinlossByMonth" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="dw"  />
+
+		<Setting Key="Acc_Rpt_NumberGame" SpName="Acc_Rpt_NumberGame" DbName="WAREHOUSE"  />
+		<Setting Key="Acc_Rpt_NumberGame14" SpName="Acc_Rpt_NumberGame14" DbName="WAREHOUSE"  />
+		<Setting Key="Acc_Rpt_NumberGame_Old" SpName="Acc_Rpt_NumberGame_Old" DbName="punter"  />
+
+		<Setting Key="Acc_Rpt_NumberGame_Details" SpName="Acc_Rpt_NumberGame_Details" DbName="WAREHOUSE"  />
+		<Setting Key="Acc_Rpt_NumberGame_Details14" SpName="Acc_Rpt_NumberGame_Details14" DbName="WAREHOUSE"  />
+		<Setting Key="Acc_Rpt_NumberGame_Details_Old" SpName="Acc_Rpt_NumberGame_Details_Old" DbName="punter"  />
+		<Setting Key="Acc_Rpt_NumberGameFinanceWinlossByMonth" SpName="Acc_Rpt_NumberGameFinanceWinlossByMonth" DbName="punter"  />
+	</Function>
+	<Function Name="OtherReport">
+		<Setting Key="BetCountReport" SpName="Acc_Rpt_BetCount" DbName="punter"  />
+		<Setting Key="Acc_BetCountSelSports" SpName="Acc_Rpt_BetCount_SelSports" DbName="punter"  />
+	</Function>
+	<Function Name="Report - ParlayWon">
+		<Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="db053"  />
+	</Function>
+	<Function Name="Finance Module">
+		<Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="warehouse"  />
+		<Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="warehouse"  />
+		<Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="warehouse"  />
+		<Setting Key="SelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="main"  />
+	</Function>
+	<Function Name="PTVirtualSports - Setting">
+		<Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.BODB02" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBAGE.BODB02" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBAGE.BODB02" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditMemberVS" SpName="Acc_CustomerSelEditMemberVS" DbName="DBAGE.BODB02" Plain="0" />
+		<Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
+		<Setting Key="BetTypeSel_VirtualSports" SpName="Acc_BetTypeSel" DbName="db053" />
+		<Setting Key="CheckRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
+		<Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBAGE.BODB02" />
+		<Setting Key="BettransDelSpecial_VirtualSports" SpName="Acc_BettransDelSpecial_VirtualSports" DbName="DBTXN.BODB02" />
+
+		<Setting Key="SelMatchInfo" SpName="Acc_MatchSelByID" DbName="db053" />
+		<Setting Key="BettransSelRecoverSpecialBets" SpName="Acc_BettransSelRecoverSpecialBets" DbName="DBAGE.BODB02" />
+		<Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.BODB02" />
+
+		<Setting Key="Acc_CustomerSelStatusVS" SpName="Acc_CustomerSelStatusVS" DbName="DBAGE.BODB02" Plain="0" />
+		
+		
+
+		
+		
+		
+		<Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
+
+		<Setting Key="NewLicensee_AdNewSuper_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Com" DbName="main" />
+		<Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="archive" />
+		<Setting Key="Licensee_UpdSuper_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Com" DbName="main" />
+
+		<Setting Key="NewLicensee_AdNewMaster_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_SAg" DbName="main" />
+		<Setting Key="Licensee_SelMaster_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAg" DbName="archive" />
+		<Setting Key="Licensee_SelMaster_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAgInfo" DbName="archive" />
+		<Setting Key="Licensee_UpdMaster_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_SAg" DbName="main" />
+
+		<Setting Key="NewLicensee_AdNewAgent_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_MAg" DbName="main" />
+		<Setting Key="Licensee_SelAgent_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_MAg" DbName="archive" />
+		<Setting Key="Licensee_SelAgent_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_MAgInfo" DbName="archive" />
+		<Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="main" />
+
+		<Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="main" />
+		<Setting Key="Licensee_SelMember_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Ag" DbName="archive" />
+		<Setting Key="Licensee_SelMember_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_AgInfo" DbName="archive" />
+		<Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="main" />
+		<Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="message" />
+		<Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="message" />
+	</Function>
+	<Function Name="Gaming Report - Poker Winloss">
+		<Setting Key="PokerWinloss" SpName="Acc_Rpt_WinlostP2P" DbName="warehouse"  />
+		<Setting Key="PokerWinlossDetail" SpName="Acc_Rpt_WinlostP2P_Details" DbName="warehouse"  />
+		<Setting Key="PokerWinlossDetail_14" SpName="Acc_Rpt_WinlostP2P_Details14" DbName="warehouse"  />
+		<Setting Key="PokerWinloss_WH" SpName="Acc_Rpt_WinlostP2P_DW" DbName="punter"  />
+		<Setting Key="PokerWinlossDetail_WH" SpName="Acc_Rpt_WinlostP2P_DW_Detail" DbName="punter"  />
+	</Function>
+	
+	<Function Name="Report - Racing">
+		<Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="db053"  />
+	</Function>
+	
+	<Function Name="Customer List">
+		
+		
+		
+		<Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="db053"  />
+	</Function>
+	
+	<Function Name="Report - Licensee">
+		<Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
+		<Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
+		<Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
+		<Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
+		<Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />
+		<Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="archive"  />
+		
+		<Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="archive"  />
+	</Function>
+	<Function Name="Admin-SMA Management">
+		<Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="db053" />
+		<Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.BODB02" />
+	</Function>
+	<Function Name="Report - WinLoss">
+		<Setting Key="Acc_Rpt_TreeWinlostByProduct" SpName="Acc_Rpt_TreeWinlostByProduct" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_TreeWinlostByCom" SpName="Acc_Rpt_TreeWinlostByCom" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_TreeWinlostBySAg" SpName="Acc_Rpt_TreeWinlostBySAg" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_TreeWinlostByMAg" SpName="Acc_Rpt_TreeWinlostByMAg" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_TreeWinlostByAg" SpName="Acc_Rpt_TreeWinlostByAg" DbName="warehouse" />
+		<Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="log" />
+
+		<Setting Key="Acc_Rpt_TreeWinlostByProduct_Old" SpName="Acc_Rpt_TreeWinlostByProduct_Old" DbName="punter" />
+		<Setting Key="Acc_Rpt_TreeWinlostByCom_Old" SpName="Acc_Rpt_TreeWinlostByCom_Old" DbName="punter" />
+		<Setting Key="Acc_Rpt_TreeWinlostBySAg_Old" SpName="Acc_Rpt_TreeWinlostBySAg_Old" DbName="punter" />
+		<Setting Key="Acc_Rpt_TreeWinlostByMAg_Old" SpName="Acc_Rpt_TreeWinlostByMAg_Old" DbName="punter" />
+		<Setting Key="Acc_Rpt_TreeWinlostByAg_Old" SpName="Acc_Rpt_TreeWinlostByAg_Old" DbName="punter" />
+	</Function>
+	<Function Name="Special Delete - NumberGame">
+		<Setting Key="SelSpecialDel_NumberGame" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="db053"  />
+		<Setting Key="Acc_BettransDelSpecial_NumberGame" SpName="Acc_BettransDelSpecial_NumberGame" DbName="DBTXN.BODB02"  />
+		<Setting Key="Acc_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="db053"  />
+		<Setting Key="Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="DBTXN.BODB02"  />
+	</Function>
+	<Function Name="Special delete - Early KickOff">
+		<Setting Key="Acc_BettransDelSpecialDel_EarlyKO" SpName="Acc_BettransDelSpecialDel_EarlyKO" DbName="DBTXN.BODB02"  />
+	</Function>
+	<Function Name="Special delete - Ticket Listing">
+		<Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.BODB02"  />
+	</Function>
+	<Function Name="RNG Casino - Customer">
+		<Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.BODB02"  />
+	</Function>
+	<Function Name="Customer - Login">
+		
+		<Setting Key="CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.BODB02"  />
+	</Function>
+	<Function Name="Admin-Mailing">
+		<Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
+		<Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />
+		<Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.BODB_ACC" />
+	</Function>
+	<Function Name="Consolidated Group">
+		<Setting Key="Acc_CustomerDelConsolidatedGroup" SpName="Acc_CustomerDelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
+		<Setting Key="Acc_CustomerInsConsolidatedGroup_User" SpName="Acc_CustomerInsConsolidatedGroup_User" DbName="DBAGE.bodb_AGE" />
+		<Setting Key="Acc_CustomerSelByConsolidatedGroupID" SpName="Acc_CustomerSelByConsolidatedGroupID" DbName="DBAGE.bodb_AGE" />
+		<Setting Key="Acc_CustomerSelConsolidatedGroup" SpName="Acc_CustomerSelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
+		<Setting Key="Acc_CustomerUpdConsolidatedGroup" SpName="Acc_CustomerUpdConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
+		<Setting Key="Acc_CustomerUpdConsolidatedGroupHeader" SpName="Acc_CustomerUpdConsolidatedGroupHeader" DbName="DBAGE.bodb_AGE" />
+	</Function>
+	<Function Name="Customer - Sportsbook-NG-Bingo Settings">
+		
+		
+		
+		
+		<Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.BODB02"  />
+		
+		
+		
+		
+	</Function>
+	
+	<Function Name="Bet List - Result">
+		<Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetlistCombinationParlay_ByTransID" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetsSelBetCheckM_All" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.BODB02"  />
+		<Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.BODB02"  />
+		<Setting Key="Acc_BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
+	</Function>
+	
+	<Function Name="Move Customer">
+		<Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBAGE.BODB02"/>
+	</Function>
+
+	<Function Name="Move Site">
+		<Setting Key="Acc_CustomerSelCheckMoveSite" SpName="Acc_CustomerSelCheckMoveSite" DbName="DBAGE.BODB02"  />
+	</Function>
+	
+<Function Name="Credit term">
+    
+   
+   
+    
+   
+	<Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.BODB02"/>
+	
+  </Function>
+	<Function Name="Accounting Transfer">
+		<Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
+		<Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
+		<Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.BODB02"></Setting>
+		<Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
+		<Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
+		<Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.BODB02"></Setting>
+		<Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.BODB02"></Setting>
+		<Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.BODB02"></Setting>
+		<Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.BODB02"></Setting>
+		
+		<Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.BODB02"  />
+		<Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.BODB02"  />
+		<Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.BODB02"  />
+		<Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.BODB02"  />
+	</Function>
+	
+	<Function Name="User Control">
+		<Setting Key="RemoveAccount" SpName="Acc_Con_AdminDel" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="Con_AdminInsFromExisted" SpName="Acc_Con_AdminInsFromExisted" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="AdminPolicy" SpName="Acc_Con_AdminPolicyUpd" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="GroupInfoDel" SpName="Acc_Con_GroupInfoDel" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns" DbName="DBPOLICY.BODB02"/>
+		<Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd" DbName="DBPOLICY.BODB02"/>
+	</Function>
+
+	<Function Name="Admin-SecurityCode">
+		<Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
+		
+		
+	</Function>
+	<Function Name="Racing-Report">
+		<Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.BODB_ACC" />
+		<Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.bodb_report" />
+		<Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="warehouse" />
+	</Function>
+	<Function Name="Racing - PT Setting">
+		<Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="db053"  />
+		<Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="db053"  />
+
+		<Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="db053"  />
+		
+	</Function>
+	<Function Name="Customer - SMATurnover">
+		<Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="DBAGE.BODB02" />
+		<Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="DBAGE.BODB02" />
+		<Setting Key="GetInfoByMatch" SpName="Acc_SMATurnoverMatchSel" DbName="DBAGE.BODB02" />
+		<Setting Key="GetSMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="DBAGE.BODB02" />
+		<Setting Key="AddSMATurnover" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
+		<Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="DBAGE.BODB02" />
+		<Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="DBAGE.BODB02" />
+
+		<Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.BODB02" />
+		<Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
+	</Function>
+	<Function Name="External Betting Limit">
+		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="db053_ex" Plain="0" />
+		<Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="main_ex" Plain="0" />
+		<Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="db053_ex" Plain="0" />
+		<Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="db03_ex" Plain="0" />
+	</Function>
+	<Function Name="Exchange Daily">
+		<Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.BODB02"/>
+		<Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.BODB02"/>
+		<Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.BODB02" />
+		<Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.BODB02" />
+	</Function>
+	<Function Name="Progressive Bonus">
+		<Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.BODB02" />
+	</Function>
+	<Function Name="Customer - Auto Suspend">
+		<Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBAGE.BODB02"/>
+	</Function>-->
 </Functions>
