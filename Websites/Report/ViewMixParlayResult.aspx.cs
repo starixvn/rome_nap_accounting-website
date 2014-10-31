@@ -8,6 +8,7 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using Sunplus.Accounting.Business.BetList;
+using System.Web;
 
 public partial class Report_ViewMixParlayResult : System.Web.UI.Page
 {
@@ -58,7 +59,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                     content += GenerateLeague(matches, betlist, matchid, bettype, betid);
                     content += "<br>";
                 }
-                string footer = String.Format("<script>var numOfMatch={0}; var numOfLeague={1}</script>", tblMatches.Rows.Count, arrLeagueId.Count);
+                string footer = String.Format("<script>var numOfMatch={0}; var numOfLeague={1}; var refno = {2}; var rootUrl = '{3}';</script>", tblMatches.Rows.Count, arrLeagueId.Count, refno.ToString(), VirtualPathUtility.ToAbsolute("~/"));
                 main = String.Format("<table align='center' cellpadding='0' cellspacing='0' border='0'><tr><td>{0}</td></tr><tr><td>{1}</td></tr></table>",
                                      content, footer);
             }
@@ -153,6 +154,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 break;
 
             case 5: //tennis
+                //break;
                 _sportType = Resources.Language.lblTennis;
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Tennis.htm");
                 rowTemplate = TemplateHandler.CopyBlock(templateGame, "row");

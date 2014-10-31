@@ -26,12 +26,31 @@
         }
     }
     </script>
-    
 </head>
 <body>
     
     <asp:Literal ID="lMPResult" runat="server"></asp:Literal>  
     
+    <div id = "parlayDiv">
+    
+    </div>
     
 </body>
+   <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
+  <script type="text/javascript">
+       $.ajax({
+            type: "POST",
+            url: rootUrl + "BetList/GetResultParlay",
+            data: 'refno=' + refno,
+            success: function (result) {
+                $("#parlayDiv").html(result);
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    </script>
 </html>

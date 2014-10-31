@@ -12,7 +12,7 @@
     @foreach (var match in matchs)
     {
         <div style="margin-top: 20px; text-align: center;">
-         @if (match.SetResults.Count > 1)
+         @if (!string.IsNullOrEmpty(match.HomeTotalSets) && !string.IsNullOrEmpty(match.AwayTotalSets))
          {
             @Html.Partial("~/Views/BetList/TennisSporting/_TennisMatchSporting.cshtml", match)
          }
