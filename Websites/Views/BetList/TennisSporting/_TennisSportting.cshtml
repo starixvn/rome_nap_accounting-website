@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link href="@Url.Content("~/Views/BetList/Style/BetList.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    @using Fanex.BetList.Accounting.Models
+    @using Fanex.BetList.Accounting.Criteria
+    @using System.Collections.Generic
+    @{
+        List<TennisMatchResult> matchs = Model;
+    }
+    @foreach (var match in matchs)
+    {
+        <div style="margin-top: 20px; text-align: center;">
+         @if (match.SetResults.Count > 1)
+         {
+            @Html.Partial("~/Views/BetList/TennisSporting/_TennisMatchSporting.cshtml", match)
+         }
+         else
+         {
+            @Html.Partial("~/Views/BetList/TennisSporting/_TennisSetSporting.cshtml", match)
+         }
+         </div>
+     }
+</body>
+</html>
