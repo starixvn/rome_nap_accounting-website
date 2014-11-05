@@ -821,7 +821,6 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
-                                var kenoSetting = string.Empty;
                                 switch (roleId)
                                 {
                                     case 1: // member
