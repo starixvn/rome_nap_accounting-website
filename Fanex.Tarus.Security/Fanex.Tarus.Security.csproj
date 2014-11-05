@@ -42,10 +42,14 @@
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\LiveCasino\NewLiveCasinoSetting\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +80,9 @@
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
       <Name>Fanex.AuthenticationFilter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

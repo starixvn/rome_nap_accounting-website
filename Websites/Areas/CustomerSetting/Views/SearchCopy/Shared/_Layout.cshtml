@@ -17,6 +17,7 @@
 
         window.rootUrl = '@ViewBag.RootUrl';
         var adminId = @AppSession.AccId;
+         var adminUsername = @AppSession.AccUserName;
     </script>
     @*<script type="text/javascript" src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Areas/CustomerSetting/Views/SearchCopy/CommonJs")" ></script>*@
     @RenderSection("Scripts", required: false)

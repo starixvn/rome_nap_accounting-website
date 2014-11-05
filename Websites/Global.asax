@@ -34,8 +34,6 @@
 
         RegisterRouteMiscController(RouteTable.Routes);
         AreaRegistration.RegisterAllAreas();
-        RegisterRouteMiscController(RouteTable.Routes);
-        AreaRegistration.RegisterAllAreas();
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);

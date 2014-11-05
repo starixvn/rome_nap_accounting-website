@@ -14,6 +14,7 @@
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
     
     var adminID = AppSession.AccId;
+    var adminUserName = AppSession.AccUserName;
     var disabledHR = WebSettings.disabledHR;
     var disabledFI = WebSettings.disabledFI;
     var enableBingo = BingoSettings.BingoGame.Enabled;
@@ -643,6 +644,7 @@
 </div>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
+    var _adminUserName = '@adminUserName'
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";

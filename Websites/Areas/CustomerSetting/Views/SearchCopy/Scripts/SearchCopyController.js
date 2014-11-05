@@ -152,7 +152,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#errorMsg").width("700");
             validate.setRequired("#maxCredit");
             return false;
-        }       
+        }
 
         return true;
     };
@@ -228,7 +228,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmBingo", url);
                 $scope.resize("#frmBingo");
                 break;
-            case 'tabLiveCasino': url += "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=" + adminId + "&targetCustId=" + $scope.existedUser.userid + "&targetRoleId=4&formType=2";
+            case 'tabLiveCasino': url += "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + adminId + "&actorUsername=" + adminUsername + "&customerId=" + $scope.existedUser.userid + "&customerLevel=4&formType=2";
                 $scope.loadData("#frmLiveCasino", url);
                 $scope.resize("#frmLiveCasino");
                 break;
@@ -341,7 +341,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
 
                 $scope.existedUser.selectedSite.SiteName = custInfo.Site;
-                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);                
+                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
@@ -413,7 +413,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             MobilePhone: $scope.newUser.mobilephone,
             Site: $scope.existedUser.selectedSite.SiteName,
             Fax: $scope.newUser.fax,
-            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),            
+            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
             IsInternal: $scope.newUser.internaluser,
             CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,

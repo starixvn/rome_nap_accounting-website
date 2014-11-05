@@ -20,6 +20,7 @@
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
     var adminID = AppSession.AccId;
+    var adminUserName = AppSession.AccUserName;
     bool allowCS = false;
     bool allowFI = Permissions.IsAllowEditFI();
     bool allowLiveCS = false;
@@ -668,6 +669,7 @@
 </div>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
+    var _adminUserName = '@adminUserName'
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
     var _masterId = @Model.ParentId;

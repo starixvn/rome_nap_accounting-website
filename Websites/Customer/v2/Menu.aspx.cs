@@ -42,7 +42,7 @@ public partial class Others_Menu : System.Web.UI.Page
             bingopath += "MemberUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditMemberPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             PokerURL += "MemberUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
-            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + uplineId + "&directUplineId=" + uplineId + "&uplineRoleId=2&adminId=" + AppSession.AccId + "&targetCustId=" + custID + "&targetRoleId=1");
+            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId="+custID+"&customerLevel=1");
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + AppSession.AccId);
         }
@@ -51,7 +51,7 @@ public partial class Others_Menu : System.Web.UI.Page
             bingopath += "AgentUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditAgentPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             PokerURL += "AgentUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
-            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + uplineId + "&directUplineId=" + uplineId + "&uplineRoleId=3&adminId=" + AppSession.AccId + "&targetCustId=" + custID + "&targetRoleId=2");
+            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=2");
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + AppSession.AccId);
         }
@@ -60,7 +60,7 @@ public partial class Others_Menu : System.Web.UI.Page
             bingopath += "MasterUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditMasterPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             PokerURL += "MasterUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
-            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + uplineId + "&directUplineId=" + uplineId + "&uplineRoleId=4&adminId=" + AppSession.AccId + "&targetCustId=" + custID + "&targetRoleId=3");
+            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=4&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=3");
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + AppSession.AccId);
         }
@@ -70,7 +70,7 @@ public partial class Others_Menu : System.Web.UI.Page
             bingopath += "SuperUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditSuperPTRacing/Index?custid={0}", custID);
             PokerURL += "SuperUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
-            liveCasinoPath =  Page.ResolveUrl("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId="+AppSession.AccId+"&targetCustId="+custID+"&targetRoleId=4");
+            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=4");
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + AppSession.AccId);
         }

@@ -296,7 +296,7 @@
     },
     liveCasinoSetting: function (custId, exchangeId, uplineId) {
         showPopup("Live Casino"
-                , window.rootUrl + "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=" + _adminID + "&targetCustId=" + custId + "&targetRoleId=4"
+                , window.rootUrl + "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + _adminID + "&actorUsername=" + _adminUserName + "&customerId=" + custId + "&customerLevel=4"
                 , 0, 0, 880, 580, false, 2000, null);
     },
     virtualSportsSetting: function (custId, uplineId, roleId) {
