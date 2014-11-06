@@ -4,6 +4,7 @@
     string trbeginTag = "<tr>";
     string trendTag = "</tr>";
     int numerousSet = match.SetResults.Count;
+    int existSettlement = 0;
 }
 @if (numerousSet > 0)
 {
@@ -11,6 +12,7 @@
     {
         int numerousGames = set.GameResults.Count;
         int rows = (numerousGames / 13) + 1;
+            existSettlement++;
 
         int rowSpan = rows == 1 ? 1 : 2 * rows;
     <table style="margin-top: 10px; margin-left: 20px;" id="tbl-content">
