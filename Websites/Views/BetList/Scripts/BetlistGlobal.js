@@ -1,6 +1,6 @@
 ﻿function virtualHRPopup(sporttype, matchID, raceNo) {
     try { parent.BlockUI(); } catch (e) { }
-    var URL = "";
+    var URL = "Report/GetVirtualHRPopup.aspx?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sporttype=" + sporttype;
     var title = "";
     var heightTmp = 0;
     var widthTmp = 0;
@@ -9,38 +9,32 @@
         RaceNo: raceNo
     };
     switch (sporttype) {
-        case 181:
-            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
+        case 181:          
             title = "Virtual Horse Racing";
             heightTmp = 200;
             widthTmp = 750;
             break;
         case 182:
-            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Virtual Greyhound";
             heightTmp = 200;
             widthTmp = 750;
             break;
         case 183:
-            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sport=183";
             title = "Virtual Speedway";
             heightTmp = 200;
             widthTmp = 750;
             break;
         case 184:
-            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Virtual Motor Racing";
             heightTmp = 200;
             widthTmp = 750;
             break;
         case 185:
-            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sport=185";
             title = "Virtual Cycling";
             heightTmp = 200;
             widthTmp = 750;
             break;
         case 186:
-            URL = "BetList/GetVirtualTennisPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Tennis - Virtual Tennis";
             heightTmp = 180;
             widthTmp = 700;
@@ -55,9 +49,9 @@
 
 function ViewTennisPopup(matchID, bettype, betId, leagueName) {
     try { parent.BlockUI(); } catch (e) { }
-    URL = "BetList/GetTennisResult?matchid=" + matchID + "&bettype=" + bettype + "&betId=" + betId;
+    URL = 'Report/ViewResult.aspx?matchid=' + matchID + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betId;
 
-    parent.OpenNextPopup("-TennisResult", window.rootUrl + URL, "Tennis", 945, 200, true, true, window, 2000, null, null);
+    parent.OpenNextPopup("TennisResult", window.rootUrl + URL, "Tennis", 945, 300, true, true, window, 2000, null, null);
 
     try { parent.jQuery.unblockUI(); } catch (e) { }
 }

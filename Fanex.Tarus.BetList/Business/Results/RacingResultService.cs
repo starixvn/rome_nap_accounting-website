@@ -1,0 +1,68 @@
+// --------------------------------------------------------------------------
+// <copyright file="RacingResultService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Paul.Nguyen" date="2014.11.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.BetList.Business.Results
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Result.Core;
+    using Fanex.Result.Core.DTO;
+    using Fanex.Tarus.BetList.Criteria.Results;
+    using Fanex.Tarus.BetList.DataAccess.Results;
+
+    /// <summary>
+    /// The class RacingResultService.
+    /// </summary>
+    public class RacingResultService : IRacingResultService
+    {
+        private IRacingResultDataAccess _racingResultDataAccess;
+
+        public RacingResultService(IRacingResultDataAccess racingResultDataAccess)
+        {
+            this._racingResultDataAccess = racingResultDataAccess ?? new RacingResultDataAccess();
+        }
+
+        public RacingResultService()
+            : this(null)
+        {
+        }
+
+        public string GetResult(DateTime fromDate, int leagueId, int raceNumber)
+        {
+            var criteria = GetCriteria(fromDate, leagueId, raceNumber);
+            IEnumerable<Racing> racings = this._racingResultDataAccess.GetRacingResult(ref criteria);
+            ResultSetting resultSetting = GetFanexResultSetting(criteria.SportType);
+
+            return ResultEngine.HtmlParser<Racing>(racings.ToList(), resultSetting);
+        }
+
+        private static GetRacingResultCriteria GetCriteria(DateTime fromDate, int leagueId, int raceNumber)
+        {
+            return new GetRacingResultCriteria()
+            {
+                EventDate = fromDate,
+                RaceNo = raceNumber,
+                LeagueID = leagueId
+            };
+        }
+
+        private static ResultSetting GetFanexResultSetting(int sportType)
+        {
+            return new ResultSetting
+            {
+                SportType = sportType == 0 ? SportType.HorseRacing : (SportType)sportType,
+                LanguageCode = "en-US",
+                VisibleDetailedLink = false,
+                VisibleFreeHeader = true,
+                VisibleMatchCodeIDColumn = false
+            };
+        }
+    }
+}

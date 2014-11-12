@@ -122,21 +122,26 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
     var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;
     parent.OpenNextPopup("ViewCombinationMixParlayResult", url, "System Parlay", width, 500, true, false, window, 1000, null, null);
 
-    var maxWidth = getMaxChildWidth("innerFrameViewCombinationMixParlayResult");
-
-    $("#innerFrameViewCombinationMixParlayResult").width(maxWidth);
+    //var maxWidth = getMaxChildWidth("innerFrameViewCombinationMixParlayResult");
+    //$("#innerFrameViewCombinationMixParlayResult").width(maxWidth);
 }
 
-function ViewResult(matchid, bettype, betid) {
+//function ViewResult(matchid, bettype, betid) {
+//    var width = 750;
+//    parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, 'Result', width, 500, true, false, window, 0, null, null);
+//}
+
+function ViewResult(matchid, bettype, betid, sporttype) {
     var width = 750;
-    parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, 'Result', width, 500, true, false, window, 0, null, null);
+    parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
 }
+
 function ViewResultHR(url) {
     OpenPopup(url, '', 300, 100, true, false, window, 0, null, null);
 }
 
 function openHRresult(url, title, width, heigh) {
-     parent.OpenNextPopup("HRPopup",url, title, 420, heigh, true, false, window, 0, null, null);
+    parent.OpenNextPopup("HRPopup", url, title, 750, 250, true, false, window, 0, null, null);
 }
 
 function ViewResultNumberGame(url) {

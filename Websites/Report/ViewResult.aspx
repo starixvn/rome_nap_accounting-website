@@ -8,6 +8,9 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" type ="text/css" href ="../App_Themes/BetList/Betlist.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result-customized.css"/>
+
     <script type="text/javascript">
         function obj(id)
         {
@@ -37,6 +40,5 @@
 <body>
     <div style="margin-bottom:5px;"></div>
     <asp:Literal ID="lResult" runat="server"></asp:Literal>  
-
 </body>
 </html>
