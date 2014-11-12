@@ -7,7 +7,6 @@ using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-using Fanex.Tarus.LiveCasino.Business.Setting;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Business.Security;
@@ -1368,7 +1367,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
             #region live casino
 
-            ISettingManager liveCS = new SettingManager();
+            //ISettingManager liveCS = new SettingManager();
 
             if (WebSettings.EnableLiveCasino)
             {
@@ -2481,7 +2480,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                 #region assign data to ViewPtDTO
 
-                ISettingManager LiveCS = new SettingManager();
+                //ISettingManager LiveCS = new SettingManager();
 
                 if (dtPt != null && dtPt.ResultSet.Tables.Count > 1)
                 {

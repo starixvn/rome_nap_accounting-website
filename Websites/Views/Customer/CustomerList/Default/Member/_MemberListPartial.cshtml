@@ -1,15 +1,15 @@
 ﻿@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
 @using DNAide.Core
 @using Sunplus.Accounting.Core.Configurations
-@using Sunplus.Bingo.Core;
-@using System.Collections;
-@using Fanex.CustomerSetting.Module.KenoStatus.Configurations
-@using Sunplus.Accounting.Core.Common;
+@using Sunplus.Bingo.Core
+@using System.Collections
+@using Sunplus.Accounting.Core.Common
+@using Sunplus.Accounting.Business.Security
 
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
-    var IsVisibleVirtualRate = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleVirtualRate;
+    var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
 
     var disabledHR = WebSettings.disabledHR;
@@ -18,12 +18,13 @@
     var EnableLiveCasino = WebSettings.EnableLiveCasino;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
-
-    bool allowFI = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditFI();
+    var adminID = AppSession.AccId;
+    var adminUserName = AppSession.AccUserName;
+    bool allowFI = Permissions.IsAllowEditFI();
     int IsShowCustomerSettingRenovation = 0;
-    var thirdPartyStatus = Sunplus.Accounting.Business.Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
+    var thirdPartyStatus = Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
     bool allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
-    bool allowLiveCS = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditLiveCasino(Model.ParentId, thirdPartyStatus.LiveCasinoSync);
+    bool allowLiveCS = Permissions.IsAllowEditLiveCasino(Model.ParentId, thirdPartyStatus.LiveCasinoSync);
     if (IsPost)
     {
         IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
@@ -51,8 +52,7 @@
     hash.Add("disabledFI", disabledFI);
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
-    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    
+
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -159,11 +159,6 @@
                             Virtual Sports</li>
                     }
                     <!--/edit-virtualSports-->
-                        @if (CastAide.AsBoolean(hash["allowKeno"]))
-                    {
-                        <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">
-                            Keno</li>
-                    }
                 </ul>
             </div>
         </td>
@@ -625,6 +620,8 @@
     </ul>
 </div>
 <script language="javascript" type="text/javascript">
+    var _adminID = @adminID;
+    var _adminUserName = '@adminUserName'
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
     var _agentId = @Model.ParentId;
@@ -632,5 +629,4 @@
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
-    var _userId = @AppSession.AccId;
 </script>

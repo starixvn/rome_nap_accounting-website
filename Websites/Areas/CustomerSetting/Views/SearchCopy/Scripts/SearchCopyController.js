@@ -98,7 +98,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.resetFrameSource();
             };
 
-            if ($scope.existedUser.userid == "-1" || $scope.existedUser.userid == "600") {
+            if ($scope.existedUser.userid == "-1") {
                 $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
             }
             else {
@@ -200,35 +200,35 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         var url = $("#currentURL").val();
         switch (tabId) {
             case 'tabSportsbook':
-                url += "/EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
+                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbook", url);
                 $scope.resize("#frmSportbook");
                 break;
-            case 'tabSportsbookMinPT': url += "/EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
+            case 'tabSportsbookMinPT': url += "EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbookMinPT", url);
                 $scope.resize("#frmSportbookMinPT");
                 break;
-            case 'tabRacing': url += "/EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid;
+            case 'tabRacing': url += "EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRacing", url);
                 $scope.resize("#frmRacing");
                 break;
-            case 'tabRacingMinPT': url += "/customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid;
+            case 'tabRacingMinPT': url += "customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRacingMinPT", url);
                 $scope.resize("#frmRacingMinPT");
                 break;
-            case 'tabCasino': url += "/Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid;
+            case 'tabCasino': url += "Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
                 break;
-            case 'tabVirtualSports': url += "/VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4";
+            case 'tabVirtualSports': url += "VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4";
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
                 break;
-            case 'tabBingo': url += "/Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid;
+            case 'tabBingo': url += "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmBingo", url);
                 $scope.resize("#frmBingo");
                 break;
-            case 'tabLiveCasino': url += "/LiveCasino/PTSetting/EditSuper.aspx?custId=" + $scope.existedUser.userid + "&exchangeId=20&roleId=4";
+            case 'tabLiveCasino': url += "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + adminId + "&actorUsername=" + adminUsername + "&customerId=" + $scope.existedUser.userid + "&customerLevel=4&formType=2";
                 $scope.loadData("#frmLiveCasino", url);
                 $scope.resize("#frmLiveCasino");
                 break;
@@ -295,32 +295,23 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 //var statusSports = customerSettingView.StatusSports;
 
                 $scope.existedUser.userid = custid;
+                if (custid != "-1") {
+                    //step1
+                    message.hideAlertMessage("errorMsg");
+                    $("#checkExisted").removeClass('not_success');
+                    $("#checkExisted").addClass('success');
 
-                switch (custid) {
-                    case -1:
-                        $("#checkExisted").removeClass('success');
-                        $("#checkExisted").addClass('not_success');
-                        message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
-                        $("#errorMsg").width("550");
-                        break;
-                    case 600:
-                        $("#checkExisted").removeClass('success');
-                        $("#checkExisted").addClass('not_success');
-                        message.showAlertMessage("errorMsg", "This account was disabled.", 1);
-                        $("#errorMsg").width("550");
-                        break;
-                    default:
-                        //step1
-                        message.hideAlertMessage("errorMsg");
-                        $("#checkExisted").removeClass('not_success');
-                        $("#checkExisted").addClass('success');
+                    $scope.getCustomerInfoByUserId(custid);
 
-                        $scope.getCustomerInfoByUserId(custid);
-
-                        if (callback) {
-                            callback();
-                        }
-                        break;
+                    if (callback) {
+                        callback();
+                    }
+                }
+                else {
+                    $("#checkExisted").removeClass('success');
+                    $("#checkExisted").addClass('not_success');
+                    message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
+                    $("#errorMsg").width("550");
                 }
 
                 try { parent.jQuery.unblockUI() } catch (e) { }

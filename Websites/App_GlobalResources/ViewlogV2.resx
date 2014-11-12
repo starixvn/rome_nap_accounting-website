@@ -361,13 +361,13 @@
     <value>Disabled Live Casino</value>
   </data>
   <data name="discount162_1101" xml:space="preserve">
-    <value>Baccarat</value>
+    <value>Comm</value>
   </data>
   <data name="discount162_1102" xml:space="preserve">
-    <value>Roulette</value>
+    <value>Comm</value>
   </data>
   <data name="discount162_1103" xml:space="preserve">
-    <value>Sicbo</value>
+    <value>Comm</value>
   </data>
   <data name="enableDownlinesLiveCS" xml:space="preserve">
     <value>Enable Downlines Live Casino</value>

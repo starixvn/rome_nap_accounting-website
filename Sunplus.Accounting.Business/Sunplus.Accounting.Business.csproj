@@ -71,10 +71,6 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
       <HintPath>..\Dependency\Keno\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
     </Reference>
@@ -84,6 +80,10 @@
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
@@ -112,7 +112,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RemotingRef">
@@ -197,9 +198,6 @@
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
     <Compile Include="Criteria\WinLossByLicenseeCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
-    <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager.cs" />
@@ -279,11 +277,6 @@
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="ResetWinning\IResetWinningManager.cs" />
     <Compile Include="ResetWinning\ResetWinningManager.cs" />
-    <Compile Include="Resources\Labels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.resx</DependentUpon>
-    </Compile>
     <Compile Include="Security\LoginFailedHandler.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Settle\ISettlement.cs" />
@@ -585,17 +578,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Labels.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,7 +15,6 @@
 }
 
 <script type="text/javascript">
-
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
     };
@@ -33,7 +32,7 @@
 
 <div id="divSearchCopy" ng-controller="SearchCopyController">
     <input type="hidden" id="currentUserId" value= '@ViewBag.CurrentUserId' />
-    <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
+    <input type="hidden" id="currentURL" value= '@Url.Content("~")' />
     <div id="errorMsg" class="errMsg maincontent_box" style="width: 700px;">
     </div>
     <div class="formPanel">
