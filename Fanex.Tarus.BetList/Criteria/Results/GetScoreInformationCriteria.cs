@@ -23,7 +23,7 @@ namespace Fanex.Tarus.BetList.Criteria.Results
         [SpParam(Ignored = true)]
         public int SportType { get; set; }
 
-        public int BetId { get; set; }
+        public long BetId { get; set; }
 
         public override string GetSettingKey()
         {

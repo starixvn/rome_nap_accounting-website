@@ -39,8 +39,10 @@ namespace Fanex.Tarus.BetList.Business.Results
         /// <param name="betType">Type of the bet.</param>
         /// <param name="betId">The bet identifier.</param>
         /// <param name="isSupport">If set to <c>true</c> [is support].</param>
-        /// <returns>The result for SPORTSBOOK.</returns>
-        public string GetResult(int matchId, int betType, int betId, out bool isSupport)
+        /// <returns>
+        /// The result for SPORTSBOOK.
+        /// </returns>
+        public string GetResult(int matchId, int betType, long betId, out bool isSupport)
         {
             var criteria = GetCriteria(matchId, betType, betId);
             List<Sportsbook> sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(ref criteria);
@@ -68,7 +70,7 @@ namespace Fanex.Tarus.BetList.Business.Results
             return true;
         }
 
-        private static GetScoreInformationCriteria GetCriteria(int matchId, int betType, int betId)
+        private static GetScoreInformationCriteria GetCriteria(int matchId, int betType, long betId)
         {
             return new GetScoreInformationCriteria()
             {

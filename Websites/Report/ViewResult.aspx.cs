@@ -13,7 +13,7 @@ public partial class Report_ViewResult : System.Web.UI.Page
         {
             int matchID = CastAide.AsInt32(Request.QueryString["matchid"], 0);
             int bettype = CastAide.AsInt32(Request.QueryString["bettype"], 0);
-            int betId = CastAide.AsInt32(Request.QueryString["betid"], 0);
+            long betId = CastAide.AsInt64(Request.QueryString["betid"], 0);
             bool isSupportFromFanexResult = false;
             string result = new ScoreInformationService().GetResult(matchID, bettype, betId, out isSupportFromFanexResult);
 

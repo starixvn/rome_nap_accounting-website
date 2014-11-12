@@ -14,6 +14,6 @@ namespace Fanex.Tarus.BetList.Business.Results
     /// </summary>
     public interface IScoreInformationService
     {
-        string GetResult(int matchId, int betType, int betId, out bool isSupport);
+        string GetResult(int matchId, int betType, long betId, out bool isSupport);
     }
 }
