@@ -71,6 +71,10 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
       <HintPath>..\Dependency\Keno\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
     </Reference>
@@ -196,8 +200,11 @@
     <Compile Include="CacheManager\CacheUtils.cs" />
     <Compile Include="CreditTerm\CreditTermManager.cs" />
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
+    <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
     <Compile Include="Criteria\WinLossByLicenseeCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
+    <Compile Include="Customer\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager.cs" />
@@ -277,6 +284,7 @@
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="ResetWinning\IResetWinningManager.cs" />
     <Compile Include="ResetWinning\ResetWinningManager.cs" />
+    <Compile Include="Resources\Labels.Designer.cs" />
     <Compile Include="Security\LoginFailedHandler.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Settle\ISettlement.cs" />
@@ -559,15 +567,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-    <COMReference Include="MSDATASRC">
-      <Guid>{7C0FFAB0-CD84-11D0-949A-00A0C91110ED}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>
@@ -578,10 +577,13 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.resx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
