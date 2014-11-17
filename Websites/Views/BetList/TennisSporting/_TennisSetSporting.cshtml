@@ -14,7 +14,7 @@
         int rows = (numerousGames / 13) + 1;
             existSettlement++;
 
-        int rowSpan = rows == 1 ? 1 : 2 * rows;
+            int rowSpan = rows == 1 ? 1 : (2 * rows + 1);
     <table style="margin-top: 10px; margin-left: 20px;" id="tbl-content">
         <thead>
             <tr>
@@ -46,6 +46,15 @@
                     if (i > 0)
                     {   
                     @MvcHtmlString.Create(trbeginTag) 
+                        for (int y = 1; y < 14; y++)
+                        {
+                        <th>
+                            <div>
+                                @(13 * i + y)</div>
+                        </th>
+                        }
+                      @MvcHtmlString.Create(trendTag)
+                      @MvcHtmlString.Create(trbeginTag) 
                     }
 
                     for (int j = 0; j < 13; j++)
@@ -54,7 +63,7 @@
                                     
                     <td class="c">
                         <div class="width45 b" style="font-size: 12px;">
-                            @if (position < numerousGames)
+                            @if (homePosition < set.MaxGame)
                             { 
                                 @set.GameResults[position].TennisGame.HomeValue
                             }
@@ -80,7 +89,7 @@
                             int position1 = 13 * i + z;
                             <td class="c">
                                 <div class="width45 b" style="font-size: 12px;">
-                                    @if (position1 < numerousGames)
+                                    @if (awayPosition < set.MaxGame)
                                     { 
                                         @set.GameResults[position1].TennisGame.AwayValue
                                     }
