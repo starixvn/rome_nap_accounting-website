@@ -2703,7 +2703,7 @@ namespace Sunplus.Accounting.Business.Customer
             var result = new Result();
             if (uplineInfo.IsUplineSyncCasino)
             {
-                System.Threading.Thread.Sleep(6000);
+                System.Threading.Thread.Sleep(3000);
                 var csService = new PT.Casino.CasinoManager();
                 //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
 

@@ -9,6 +9,7 @@ using Sunplus.Bingo.Core;
 using System.Threading;
 using Fanex.Common;
 using System.Configuration;
+using Sunplus.Accounting.Core.Common;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -23,7 +24,7 @@ public partial class Others_Menu : System.Web.UI.Page
         custID = custID.Substring(8, custID.Length - 8);
         var HRURL = string.Empty;
         string PokerURL = "../PT/Poker/";
-        Thread.Sleep(6000);
+        Thread.Sleep(2000);
         DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));        
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
