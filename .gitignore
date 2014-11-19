@@ -51,6 +51,7 @@ Sunplus.Accounting.DataAccess/bin
 Sunplus.Accounting.Entities/bin
 Sunplus.Accounting.WcfServiceLibrary/bin
 Sunplus.Data.DataAbstract/bin
+Sunplus.Data.DataAbstract/DLL
 [Dd]ebug*/
 *.lib
 *.sbr

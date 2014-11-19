@@ -18,26 +18,30 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
         public override List<IPVNBean> GetIPVN()
         {
             var listIPVN = new List<IPVNBean>();
-            //try
-            //{
-            //    //get data from database
-            //    DataSet ds = DbHelper.Execute("GetIPVN", DBType.IPDB).ResultSet;
-            //    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            //    {
-            //        DataRow[] rows = ds.Tables[0].Select();
-            //        Array.ForEach(rows,
-            //                      row =>
-            //                      listIPVN.Add(new IPVNBean(CastAide.AsDouble(row["IPFrom"]),
-            //                                                CastAide.AsDouble(row["IPTo"]))));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    {
-            //        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            //    }
-            //}
+            try
+            {
+                //get data from database
+                DataSet ds = new DataSet();
+                using (ObjectDb db = new ObjectDb("GetIPVN"))
+                {
+                    ds = db.ExecuteDataSet();
+                }
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataRow[] rows = ds.Tables[0].Select();
+                    Array.ForEach(rows,
+                                  row =>
+                                  listIPVN.Add(new IPVNBean(CastAide.AsDouble(row["IPFrom"]),
+                                                            CastAide.AsDouble(row["IPTo"]))));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
 
             return listIPVN;
         }
