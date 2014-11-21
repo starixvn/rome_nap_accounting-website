@@ -44,7 +44,6 @@ namespace Fanex.NAP.SSO
         {
             this._userService = userService ?? new UserService();
             this._currentContext = new CurrentContext();
-            this._currentSession = new CurrentSession();
         }
 
         #endregion ctors
@@ -260,6 +259,7 @@ namespace Fanex.NAP.SSO
                 case SiteName.SpecialDelete:
                 case SiteName.CMS:
                 case SiteName.IMS:
+                    this._currentSession = new Fanex.NAP.Core.Web.Session.CurrentSession();
                     userId = this._currentSession.UserId;
                     break;
                 case SiteName.Home:
