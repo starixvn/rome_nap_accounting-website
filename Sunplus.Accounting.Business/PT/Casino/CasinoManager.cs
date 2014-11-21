@@ -22,34 +22,31 @@ namespace Sunplus.Accounting.Business.PT.Casino
             //casinoLibray.SiteName = customerInfo.SiteName;
             try
             {
-                Task.Factory.StartNew(() =>
-                {
-                    bool EnableBonus = false;
-                    bool EnableJackpot = false;
+                bool EnableBonus = false;
+                bool EnableJackpot = false;
  
-                    var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
-                                                                    customerInfo.UserName, customerInfo.UserName2,
-                                                                    customerInfo.FirstName, customerInfo.LastName,
-                                                                    customerInfo.UserPwd, customerInfo.Phone,
-                                                                    customerInfo.MobilePhone, customerInfo.ExchangeID,
-                                                                    customerInfo.Fax, customerInfo.Closed,
-                                                                    customerInfo.Suspend, customerInfo.IsEnablePT,
-                                                                    customerInfo.SIBCCustID, customerInfo.MIBCCustID,
-                                                                    customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
-                                                                    EnableBonus,
-                                                                    EnableJackpot,
-                                                                    DateTime.Today,
-                                                                    ip, userId, userName, 3);
-                    Thread.Sleep(1000);
-                    if (isSuccess)
-                    {
-                        var isUpdIbc = CasinoProvider.Instance.UpdateCSStatusAfterSync(customerInfo.IBCCustID, true, customerInfo.CasinoDisabled, userId, ip);
-                    }
-                    else
-                    {
-                        casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
-                    }
-                });
+                var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
+                                                                customerInfo.UserName, customerInfo.UserName2,
+                                                                customerInfo.FirstName, customerInfo.LastName,
+                                                                customerInfo.UserPwd, customerInfo.Phone,
+                                                                customerInfo.MobilePhone, customerInfo.ExchangeID,
+                                                                customerInfo.Fax, customerInfo.Closed,
+                                                                customerInfo.Suspend, customerInfo.IsEnablePT,
+                                                                customerInfo.SIBCCustID, customerInfo.MIBCCustID,
+                                                                customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
+                                                                EnableBonus,
+                                                                EnableJackpot,
+                                                                DateTime.Today,
+                                                                ip, userId, userName, 3);
+                Thread.Sleep(1000);
+                if (isSuccess)
+                {
+                    var isUpdIbc = CasinoProvider.Instance.UpdateCSStatusAfterSync(customerInfo.IBCCustID, true, customerInfo.CasinoDisabled, userId, ip);
+                }
+                else
+                {
+                    casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
+                }
             }
             catch (Exception ex)
             {
