@@ -31,13 +31,22 @@ public partial class Report_CompBalance : PageBase
                     hasData = true;
                     string rowHtml = (string)rowTpl.Clone();
 
-                    string currency = Convert.IsDBNull(row["currency"]) ? "ERROR" : row["currency"].ToString();
+                    string currency = Convert.IsDBNull(row["CurrencyName"]) ? "ERROR" : row["CurrencyName"].ToString();
                     string localAmount = Convert.IsDBNull(row["totalamtlocal"]) ? "0" : FormatHandler.FormatNumber20(row["totalamtlocal"]);
                     double rmAmount = Convert.IsDBNull(row["totalamt"]) ? 0 : Convert.ToDouble(row["totalamt"], FormatHandler.EngCult);
+                    string todayRate = Convert.IsDBNull(row["Today"]) ?
+                        "-" :
+                        Convert.ToString(row["Today"]);
+                    string yesterdayRate = Convert.IsDBNull(row["Yesterday"]) ?
+                        "-" :
+                        Convert.ToString(row["Yesterday"]);
+
                     totalRmAmount += rmAmount;
                     TemplateHandler.Assign(ref rowHtml, "{Currency}", currency);
                     TemplateHandler.Assign(ref rowHtml, "{LocalAmt}", localAmount);
                     TemplateHandler.Assign(ref rowHtml, "{RmAmount}", FormatHandler.FormatNumber20(rmAmount));
+                    TemplateHandler.Assign(ref rowHtml, "{today-rate}", todayRate);
+                    TemplateHandler.Assign(ref rowHtml, "{yesterday-rate}", yesterdayRate);
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     TemplateHandler.Assign(ref rowHtml, "{odd_even}", odd_even);
                     html.Append(rowHtml + "\n");
