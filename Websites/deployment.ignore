@@ -1,4 +1,4 @@
-﻿*.local.config
-*.master.config
-*.uat.config
-*.pro.config
+﻿\\*.local.config
+\\*.master.config
+\\*.uat.config
+\\*.pro.config
