@@ -59,7 +59,7 @@
       <HintPath>..\Dependency\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoLibrary">
-      <HintPath>..\Dependency\CasinoLibrary.dll</HintPath>
+      <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
