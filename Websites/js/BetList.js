@@ -108,15 +108,23 @@ function OpenByIP(custid, fdate, ip, type) {
 }
 
 function ViewMixParlayResult(refno, matchid, bettype, betid) {
-    var width = 750;
-    parent.OpenNextPopup("ViewMixParlayResult", 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'Mix Parlay', width, 500, true, false, window, 0, null, null);
+    var width = 945;
+    var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;
+    parent.OpenNextPopup("ViewMixParlayResult", url, 'Mix Parlay', width, 500, true, false, window, 0, null, null);
+
+//    window.top.frames["content"].frames["innerFrameViewCombinationMixParlayResult"];
 }
 
+
 function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
-    var width = 800;
+    var width = 945;
     //OpenPopup('../Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'System Parlay', width, 500, true, false, window, 0, null, null);
     var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;
     parent.OpenNextPopup("ViewCombinationMixParlayResult", url, "System Parlay", width, 500, true, false, window, 1000, null, null);
+
+    var maxWidth = getMaxChildWidth("innerFrameViewCombinationMixParlayResult");
+
+    $("#innerFrameViewCombinationMixParlayResult").width(maxWidth);
 }
 
 function ViewResult(matchid, bettype, betid) {

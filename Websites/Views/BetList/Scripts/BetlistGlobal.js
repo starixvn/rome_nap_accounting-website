@@ -49,17 +49,15 @@
 
     parent.OpenNextPopup("popupVirtualHR", window.rootUrl + URL, title, widthTmp, heightTmp, true, true, window, 2000, null, null);
 
-     try { parent.jQuery.unblockUI(); } catch (e) { }
+    try { parent.jQuery.unblockUI(); } catch (e) { }
 }
 
 
 function ViewTennisPopup(matchID, bettype, betId, leagueName) {
     try { parent.BlockUI(); } catch (e) { }
     URL = "BetList/GetTennisResult?matchid=" + matchID + "&bettype=" + bettype + "&betId=" + betId;
-    heightTmp = 200;
-    widthTmp = 850;
 
-    parent.OpenNextPopup("-TennisResult", window.rootUrl + URL, "Tennis - " + leagueName, widthTmp, heightTmp, true, true, window, 2000, null, null);
+    parent.OpenNextPopup("-TennisResult", window.rootUrl + URL, "Tennis", 945, 200, true, true, window, 2000, null, null);
 
     try { parent.jQuery.unblockUI(); } catch (e) { }
 }

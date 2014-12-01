@@ -154,7 +154,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 break;
 
             case 5: //tennis
-                //break;
+                break;
                 _sportType = Resources.Language.lblTennis;
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Tennis.htm");
                 rowTemplate = TemplateHandler.CopyBlock(templateGame, "row");
