@@ -43,8 +43,12 @@
           data: 'refno=' + refno,
           success: function (result) {
               $("#parlayDiv").append(result);
-              if ((typeof numOfLeague != 'undefined') && numOfLeague - _numberLeageOfTennis == 0) {
+              if ((typeof numOfLeague != 'undefined') && numOfLeague - _numberLeageOfTennis == 0) {                
                   $("#aspResult").empty();
+              }
+
+              if (_numberLeageOfTennis == 0) {
+                  $("#parlayDiv").empty();
               }
           },
           error: function () {
