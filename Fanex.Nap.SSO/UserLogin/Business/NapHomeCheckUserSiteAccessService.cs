@@ -12,30 +12,34 @@ namespace Fanex.Nap.SSO.UserLogin.Business
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Nap.SSO.UserLogin.DataAccess;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Checks user sites access.
+    /// </summary>
     public class NapHomeCheckUserSiteAccessService : INapHomeCheckUserSiteAccessService
     {
         private readonly INapHomeCheckUserSiteAccessDataAccess _reportRepository;
 
-        public NapHomeCheckUserSiteAccessService ()
+        public NapHomeCheckUserSiteAccessService()
             : this(null)
         {
         }
 
-        public NapHomeCheckUserSiteAccessService (INapHomeCheckUserSiteAccessDataAccess reportRepository)
+        public NapHomeCheckUserSiteAccessService(INapHomeCheckUserSiteAccessDataAccess reportRepository)
         {
             this._reportRepository = reportRepository ?? new NapHomeCheckUserSiteAccessDataAccess();
         }
 
         /// <summary>
-        /// Check User Site Access
+        /// Check User Site Access.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="environment"></param>
-        /// <returns>Return true if having permission</returns>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="environment">Environment parameter.</param>
+        /// <returns>Return true if having permission.</returns>
         public bool NapHomeCheckUserSiteAccess(int userId, string environment)
         {
-            return _reportRepository.NapHomeCheckUserSiteAccess(new Criteria.NapHomeCheckUserSiteAccessCriteria(){
+            return _reportRepository.NapHomeCheckUserSiteAccess(
+                new Criteria.NapHomeCheckUserSiteAccessCriteria()
+                {
                     UserId = userId,
                     Environment = environment
                 });

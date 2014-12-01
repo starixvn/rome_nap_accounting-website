@@ -53,6 +53,18 @@
 }
 
 
+function ViewTennisPopup(matchID, bettype, betId, leagueName) {
+    try { parent.BlockUI(); } catch (e) { }
+    URL = "BetList/GetTennisResult?matchid=" + matchID + "&bettype=" + bettype + "&betId=" + betId;
+    heightTmp = 200;
+    widthTmp = 850;
+
+    parent.OpenNextPopup("-TennisResult", window.rootUrl + URL, "Tennis - " + leagueName, widthTmp, heightTmp, true, true, window, 2000, null, null);
+
+    try { parent.jQuery.unblockUI(); } catch (e) { }
+}
+
+
 function ViewIP(ip) {
     //    window.open('http://anonym.to/?http://legacytools.dnsstuff.com/tools/ipall.ch?tool_id=67&token=&toolhandler_redirect=0&j=1&ip=' + ip);
     window.open('http://www.iplocationfinder.com/' + ip);

@@ -148,7 +148,7 @@
     <value>Data is emty</value>
   </data>
   <data name="ConfigureDirectAccount_Import_SampleUserNames" xml:space="preserve">
-    <value>SUPERTEST10101</value>
+    <value>M71CRMB,MK203ABCD,SORM,SA-HK$,EXP-TWN</value>
   </data>
   <data name="ConfigureDirectAccount_Import_TemplateName" xml:space="preserve">
     <value>Direct_Account_Template</value>
@@ -227,8 +227,5 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
-  </data>
-  <data name="ClickToViewPTInfo" xml:space="preserve">
-    <value>Click to view PT Info</value>
   </data>
 </root>

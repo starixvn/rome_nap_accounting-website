@@ -155,8 +155,8 @@
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
-    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
+    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
@@ -199,9 +199,9 @@
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
+    <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectStatusEffectCriteria.cs" />
-    <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferStatusCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />
