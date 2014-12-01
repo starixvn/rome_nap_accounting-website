@@ -1,12 +1,8 @@
 ﻿var mailboxArr = ["tbxToList", "tbxCCList", "tbxBCCList"];
 var groupIDTemp = 1;
 function IsValidEmail(emailAddress) {
-    var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-    var valid = emailRegex.test($.trim(emailAddress));
-    if (!valid) {
-        return false;
-    } else
-        return true;
+    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test($.trim(emailAddress));
 }
 
 var MailingList = {
@@ -130,9 +126,9 @@ var MailingList = {
                 }
                 else {
                     MailingList.Params.BCCList += value + ';';
-                    MailingList.currentInputString += value ;
+                    MailingList.currentInputString += value;
                 }
-                
+
             }
         });
     },
@@ -241,7 +237,7 @@ head.ready(function (event) {
             noResultsText: "",
             searchingText: "",
             isCheckEmail: true
-//            enableSumitFunctionName: "MailingList.EnabledSubmit()"
+            //            enableSumitFunctionName: "MailingList.EnabledSubmit()"
         });
     }
 

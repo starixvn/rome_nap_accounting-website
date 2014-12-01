@@ -273,10 +273,10 @@
         })
         .bind("keyup keydown blur update", resize_input)
         .keypress(function () {
-//            eval($(input).data("settings").enableSumitFunctionName);
+            //            eval($(input).data("settings").enableSumitFunctionName);
         })
         .mouseout(function () {
-//            eval($(input).data("settings").enableSumitFunctionName);
+            //            eval($(input).data("settings").enableSumitFunctionName);
         })
         .keyup(function (event) {
             var previous_token;
@@ -423,51 +423,51 @@
                             //                            focus_with_timeout(input_box);
                             input_box.focus();
                         }
-//                        if (li.find('input: hidden').length == 0) {
-//                            li.addClass("token-input-selected-token-facebook");
-//                        }
+                        //                        if (li.find('input: hidden').length == 0) {
+                        //                            li.addClass("token-input-selected-token-facebook");
+                        //                        }
                         break;
-//                    case 2: // double click
-//                        $(selected_token).removeClass($(input).data("settings").classes.selectedToken);
-//                        var li = $(event.target).closest("li");
-//                        if (li.find('input').val() != '') {
-//                            li.find('p').css("display", "none");
-//                            li.find('span').css("display", "none");
-//                            li.addClass("token-input-selected-token-facebook");
-//                            li.find('input').show().keydown(function (event) {
-//                                if (event.keyCode == KEY.ENTER) {
-//                                    var tmpVal = li.find('input').val();
-//                                    li.find('p').show().text(tmpVal);
-//                                    li.find('span').show();
-//                                    li.find('input').hide();
-//                                    if (!IsValidEmail(tmpVal)) {
-//                                        li.addClass("invalidEmail");
-//                                    }
-//                                    else {
-//                                        li.removeClass("invalidEmail");
-//                                    }
+                    //                    case 2: // double click 
+                    //                        $(selected_token).removeClass($(input).data("settings").classes.selectedToken); 
+                    //                        var li = $(event.target).closest("li"); 
+                    //                        if (li.find('input').val() != '') { 
+                    //                            li.find('p').css("display", "none"); 
+                    //                            li.find('span').css("display", "none"); 
+                    //                            li.addClass("token-input-selected-token-facebook"); 
+                    //                            li.find('input').show().keydown(function (event) { 
+                    //                                if (event.keyCode == KEY.ENTER) { 
+                    //                                    var tmpVal = li.find('input').val(); 
+                    //                                    li.find('p').show().text(tmpVal); 
+                    //                                    li.find('span').show(); 
+                    //                                    li.find('input').hide(); 
+                    //                                    if (!IsValidEmail(tmpVal)) { 
+                    //                                        li.addClass("invalidEmail"); 
+                    //                                    } 
+                    //                                    else { 
+                    //                                        li.removeClass("invalidEmail"); 
+                    //                                    } 
 
-//                                    eval($(input).data("settings").enableSumitFunctionName);
-//                                }
-//                            }).mouseout(function (event) {
-//                                var tmpVal = li.find('input').val();
-//                                li.find('p').show().text(tmpVal);
-//                                li.find('span').show();
-//                                li.find('input').hide();
-//                                if (!IsValidEmail(tmpVal)) {
-//                                    li.addClass("invalidEmail");
-//                                }
-//                                else {
-//                                    li.removeClass("invalidEmail");
-//                                }
+                    //                                    eval($(input).data("settings").enableSumitFunctionName); 
+                    //                                } 
+                    //                            }).mouseout(function (event) { 
+                    //                                var tmpVal = li.find('input').val(); 
+                    //                                li.find('p').show().text(tmpVal); 
+                    //                                li.find('span').show(); 
+                    //                                li.find('input').hide(); 
+                    //                                if (!IsValidEmail(tmpVal)) { 
+                    //                                    li.addClass("invalidEmail"); 
+                    //                                } 
+                    //                                else { 
+                    //                                    li.removeClass("invalidEmail"); 
+                    //                                } 
 
-//                            });
+                    //                            }); 
 
-//                            var $t = li.find('input');  //cache the target so we're not parsing for it multiple times
-//                            var oldv = $t.val();  // remember the original value
-//                            $t.focus().val(String.fromCharCode(35)).val(oldv);  // focus it, set as 'END' key, reset to original
-//                        }
-//                        break;
+                    //                            var $t = li.find('input');  //cache the target so we're not parsing for it multiple times 
+                    //                            var oldv = $t.val();  // remember the original value 
+                    //                            $t.focus().val(String.fromCharCode(35)).val(oldv);  // focus it, set as 'END' key, reset to original 
+                    //                        } 
+                    //                        break; 
                 }
                 clicks = 0;
             }, delay);
@@ -485,7 +485,7 @@
             }
         })
         .keyup(function () {
-//            eval($(input).data("settings").enableSumitFunctionName);
+            //            eval($(input).data("settings").enableSumitFunctionName);
         })
         .insertBefore(hidden_input);
 
@@ -675,7 +675,7 @@
               .click(function () {
                   if (!$(input).data("settings").disabled) {
                       delete_token($(this).parent());
-//                      eval($(input).data("settings").enableSumitFunctionName);
+                      //                      eval($(input).data("settings").enableSumitFunctionName);
                       hidden_input.change();
                       return false;
                   }
@@ -1111,12 +1111,8 @@
 
         // Check valid of email
         function IsValidEmail(emailAddress) {
-            var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-            var valid = emailRegex.test($.trim(emailAddress));
-            if (!valid) {
-                return false;
-            } else
-                return true;
+            var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return emailRegex.test($.trim(emailAddress));
         }
 
 
