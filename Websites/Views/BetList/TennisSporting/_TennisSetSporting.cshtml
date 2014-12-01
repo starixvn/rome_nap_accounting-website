@@ -10,9 +10,10 @@
 {
     foreach (var set in match.SetResults)
     {
-        int numerousGames = set.GameResults.Count;
-        int rows = (numerousGames / 13) + 1;
+        if (set.MaxGame > 0)
+        {
             existSettlement++;
+            int rows = (set.MaxGame / 13) + 1;
 
             int rowSpan = rows == 1 ? 1 : (2 * rows + 1);
     <table style="margin-top: 10px; margin-left: 20px;" id="tbl-content">
@@ -59,13 +60,13 @@
 
                     for (int j = 0; j < 13; j++)
                     {
-                        int position = 13 * i + j;
+                        int homePosition = 13 * i + j;
                                     
                     <td class="c">
                         <div class="width45 b" style="font-size: 12px;">
                             @if (homePosition < set.MaxGame)
                             { 
-                                @set.GameResults[position].TennisGame.HomeValue
+                                @set.GameResults[homePosition].TennisGame.HomeValue
                             }
                             else
                             {
@@ -86,12 +87,12 @@
                         }
                         @for (int z = 0; z < 13; z++)
                         {
-                            int position1 = 13 * i + z;
+                            int awayPosition = 13 * i + z;
                             <td class="c">
                                 <div class="width45 b" style="font-size: 12px;">
                                     @if (awayPosition < set.MaxGame)
                                     { 
-                                        @set.GameResults[position1].TennisGame.AwayValue
+                                        @set.GameResults[awayPosition].TennisGame.AwayValue
                                     }
                                     else
                                     {
@@ -102,6 +103,34 @@
                         }
                     </tr>
                 }
+        </tbody>
+    </table>
+        }
+    }
+    if (existSettlement == 0)
+    {
+        <table style="margin-top: 10px; margin-left: 65px;" id="tbl-content">
+        <thead>
+            <tr>
+                <th>
+                    <div class="width150 ">
+                        Game Result</div>
+                </th>
+                @for (int i = 1; i < 14; i++)
+                {
+                    <th>
+                        <div style="width:45px;" class="b">
+                            @i</div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="14" style="font-size: 13px;">
+                    There is no data.
+                </td>
+            </tr>
         </tbody>
     </table>
     }

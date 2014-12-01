@@ -1,132 +1,100 @@
 ﻿@using Fanex.BetList.Accounting.Models
+@using Fanex.Common
 @{
     TennisMatchResult match = Model;
-}
-<table id="tbl-content">
-    <thead>
-        <tr>
-            <th>
-                <div>
-                    Kick Off. Time</div>
-            </th>
-            <th>
-                <div>
-                    Team
-                </div>
-            </th>
-            @for (int i = 1; i < 6; i++)
-            {
-                <th>
-                    <div>
-                        @i Set</div>
-                </th>
-            }
-            <th>
-                <div>
-                    Total Games</div>
-            </th>
-            <th>
-                <div>
-                    Total Sets</div>
-            </th>
-            <th>
-                <div>
-                    Event Status</div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="c" rowspan="2">
-                <div class="width120">
-                    @match.KickOffTime.ToString()</div>
-            </td>
-            <td class="l">
-                <div class="width150 ">
-                    @match.HomeName</div>
-            </td>
-            @for (int i = 0; i < 5; i++)
-            {
-                <td class="c">
-                    <div class="width50 b" style="font-size: 12px;">
-                        @if (match.SetResults.Count > i)
-                        {
-                            @match.SetResults[i].SetDetail.HomeValue
-                        }
-                        else
-                        {
-                            <span>-</span>
-                        }</div>
-                </td>
-            }
-            <td class="c">
-                <div class="width80 b" style="font-size: 12px;">
-                @if (string.IsNullOrEmpty(match.HomeTotalGames))
+ }
+
+<tr>
+    <td class="c" rowspan="2">
+        <div class="width120">
+             @match.KickOffTime.ToString("MM/dd/yyyy")
+                    <br />
+             @match.KickOffTime.ToString("hh:mm:ss tt")</div>
+    </td>
+    <td class="l">
+        <div class="width150 ">
+            @match.HomeName</div>
+    </td>
+    @for (int i = 0; i < 5; i++)
+    {
+        <td class="c">
+            <div class="width65 b" style="font-size: 12px;">
+                @if (match.SetResults.Count > i)
                 {
-                     <span>-</span>
+                    @match.SetResults[i].SetDetail.HomeValue
                 }
                 else
                 {
-                    @match.HomeTotalGames
+                    <span>-</span>
                 }</div>
-            </td>
-            <td class="c">
-                <div class="width80 b" style="font-size: 12px;">
-                 @if (string.IsNullOrEmpty(match.HomeTotalSets))
-                 {
-                     <span>-</span>
-                 }
-                 else
-                 {
-                    @match.HomeTotalSets
-                 }</div>
-            </td>
-            <td class="c" rowspan="2 ">
-                <div class="width100 b" style="font-size: 12px;">
-                    @match.EventStatus</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="l b">
-                <div>
-                    @match.AwayName</div>
-            </td>
-            @for (int i = 0; i < 5; i++)
+        </td>
+    }
+    <td class="c">
+        <div class="width80 b" style="font-size: 12px;">
+            @if (string.IsNullOrEmpty(match.HomeTotalSets))
             {
-                <td class="c">
-                    <div class="width50 b" style="font-size: 12px;">
-                        @if (match.SetResults.Count > i)
-                        {
-                            @match.SetResults[i].SetDetail.AwayValue
-                        }
-                        else
-                        {
-                            <span>-</span>
-                        }</div>
-                </td>
+                <span>-</span>
             }
-            <td class="c">
-                <div class=" b" style="font-size: 12px;">
-                  @if (string.IsNullOrEmpty(match.AwayTotalGames))
-                  {
-                     <span>-</span>
-                  }
-                  else
-                  {
-                    @match.AwayTotalGames
-                  }</div>
-            </td>
-            <td class="c">
-                <div class=" b" style="font-size: 12px;">
-                 @if (string.IsNullOrEmpty(match.AwayTotalSets))
-                 {
-                     <span>-</span>
-                 }
-                 else
-                 {
-                    @match.AwayTotalSets
-                 }</div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            else
+            {
+                @match.HomeTotalGames
+            }</div>
+    </td>
+    <td class="c">
+        <div class="width80 b" style="font-size: 12px;">
+            @if (string.IsNullOrEmpty(match.HomeTotalSets))
+            {
+                <span>-</span>
+            }
+            else
+            {
+                @match.HomeTotalSets
+            }</div>
+    </td>
+    <td class="c" rowspan="2 ">
+        <div class="width100 b" style="font-size: 12px;">
+            @match.EventStatus</div>
+    </td>
+</tr>
+<tr>
+    <td class="l b">
+        <div>
+            @match.AwayName</div>
+    </td>
+    @for (int i = 0; i < 5; i++)
+    {
+        <td class="c">
+            <div class="width65 b" style="font-size: 12px;">
+                @if (match.SetResults.Count > i)
+                {
+                    @match.SetResults[i].SetDetail.AwayValue
+                }
+                else
+                {
+                    <span>-</span>
+                }</div>
+        </td>
+    }
+    <td class="c">
+        <div class=" b" style="font-size: 12px;">
+            @if (string.IsNullOrEmpty(match.AwayTotalSets))
+            {
+                <span>-</span>
+            }
+            else
+            {
+                @match.AwayTotalGames
+            }</div>
+    </td>
+    <td class="c">
+        <div class=" b" style="font-size: 12px;">
+            @if (string.IsNullOrEmpty(match.AwayTotalSets))
+            {
+                <span>-</span>
+            }
+            else
+            {
+                @match.AwayTotalSets
+            }</div>
+    </td>
+</tr>

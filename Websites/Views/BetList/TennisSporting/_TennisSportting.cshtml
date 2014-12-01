@@ -7,20 +7,111 @@
     @using Fanex.BetList.Accounting.Criteria
     @using System.Collections.Generic
     @{
-        List<TennisMatchResult> matchs = Model;
+        List<TennisLeagueResult> leagues = Model;
     }
-    @foreach (var match in matchs)
+
+    @if (leagues.Count > 0)
     {
-        <div style="margin-top: 20px; text-align: center;">
-         @if (!string.IsNullOrEmpty(match.HomeTotalSets) && !string.IsNullOrEmpty(match.AwayTotalSets))
-         {
-            @Html.Partial("~/Views/BetList/TennisSporting/_TennisMatchSporting.cshtml", match)
-         }
-         else
-         {
-            @Html.Partial("~/Views/BetList/TennisSporting/_TennisSetSporting.cshtml", match)
-         }
-         </div>
-     }
+        foreach (var league in leagues)
+        {
+            bool isExistBettypeMatch = false;
+            foreach (var match in league.Matchs)
+            {
+                if (!match.BettypeId.Equals(1324))
+                {
+                    isExistBettypeMatch = true;
+                    break;
+                }
+            }
+        
+        <div style="margin-top: 10px; text-align: center;">
+            <span class="bl_time"><span class="b bl_stype">Tennis - </span>&nbsp;<span class="b">@league.LeagueName</span></span>
+            @if (isExistBettypeMatch)
+            {
+            <table style="margin-top: 5px; margin-left: 20px;" id="tbl-content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div>
+                                Kick Off. Time</div>
+                        </th>
+                        <th>
+                            <div>
+                                Team
+                            </div>
+                        </th>
+                        @for (int i = 1; i < 6; i++)
+                        {
+                            <th>
+                                <div>
+                                    @i Set</div>
+                            </th>
+                        }
+                        <th>
+                            <div>
+                                Total Games</div>
+                        </th>
+                        <th>
+                            <div>
+                                Total Sets</div>
+                        </th>
+                        <th>
+                            <div>
+                                Event Status</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var match in league.Matchs)
+                    {
+                        if (!match.BettypeId.Equals(1324))
+                        {
+                            @Html.Partial("~/Views/BetList/TennisSporting/_TennisMatchSporting.cshtml", match)
+                        }
+                    }
+                </tbody>
+            </table>
+            }
+            
+            @foreach (var match in league.Matchs)
+            {
+                if (match.BettypeId.Equals(1324))
+                {
+                    @Html.Partial("~/Views/BetList/TennisSporting/_TennisSetSporting.cshtml", match)
+                }
+            }
+        </div>
+        }
+    }
+    else
+    {
+         <table style="margin-top: 10px; margin-left: 65px;" id="tbl-content">
+        <thead>
+            <tr>
+                <th>
+                    <div class="width150 ">
+                        Game Result</div>
+                </th>
+                @for (int i = 1; i < 14; i++)
+                {
+                    <th>
+                        <div style="width:45px;" class="b">
+                            @i</div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="14" style="font-size: 13px; text-align: center">
+                    There is no data.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    }
 </body>
+<script type="text/javascript">
+    var _numberLeageOfTennis = @leagues.Count;
+</script>
 </html>
