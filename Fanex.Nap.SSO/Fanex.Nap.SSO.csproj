@@ -43,9 +43,13 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core">
+      <HintPath>..\Dependency\Sunplus.Accounting.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -53,9 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\CheckUserSiteAccessCriteria.cs" />
-    <Compile Include="Criteria\Repositories\LoginRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
+    <Compile Include="UserLogin\Business\INapHomeCheckUserSiteAccessService.cs" />
+    <Compile Include="UserLogin\Business\NapHomeCheckUserSiteAccessService.cs" />
+    <Compile Include="UserLogin\Controllers\LoginController.cs" />
+    <Compile Include="UserLogin\Controllers\NapSsoController.cs" />
+    <Compile Include="UserLogin\Criteria\DataAccess\INapHomeCheckUserSiteAccessDataAccess.cs" />
+    <Compile Include="UserLogin\Criteria\DataAccess\NapHomeCheckUserSiteAccessDataAccess.cs" />
+    <Compile Include="UserLogin\Criteria\NapHomeCheckUserSiteAccessCriteria.cs" />
+    <Compile Include="UserLogin\NapLoginAreaRegistration.cs" />
     <Compile Include="UserLogin\UserLoginAreaRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +83,6 @@
       <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
