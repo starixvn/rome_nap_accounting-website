@@ -4,7 +4,7 @@
         pageSize: 50,
         pageIndex: 1,
         doubleCommMaster: "",
-        synccasinoUpline:false
+        synccasinoUpline: false
     },
     paramsUpdate: {
         custDetail: "",
@@ -153,7 +153,7 @@
     },
     updateDoubleComm: function (id, isAllow, isMultiple) {
         AgentList.paramsUpdate.userId = _masterId;
-            AgentList.paramsUpdate.custDetail = id.toString();
+        AgentList.paramsUpdate.custDetail = id.toString();
 
         AgentList.paramsUpdate.isDoubleComm = isAllow;
         try { parent.BlockUI(); } catch (e) { }
@@ -191,7 +191,7 @@
                     var arr = [];
                     for (var i = 0; i < length; i++) {
                         if (ResultCustomerlist[i].Result.ErrorCode != 0) {
-                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :'+ (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") +'</span></tr></tr>';
+                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :' + (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") + '</span></tr></tr>';
                             arr.push(error)
                             errorFlag = true;
                         }
@@ -201,7 +201,7 @@
                         setTimeout('$("#tblconfirm").dialog("close")', 2000);
 
                         var htmlsuccess = '';
-                            htmlsuccess = '<tr><td><span class="username"></span><span class="successful"> Update successful</span></tr></tr>';
+                        htmlsuccess = '<tr><td><span class="username"></span><span class="successful"> Update successful</span></tr></tr>';
                         var title = "";
                         if (!isMultiple) {
                             title = "Edit Single Double Commission for Losing tickets";
@@ -210,7 +210,7 @@
                             title = "Edit Multiple Double Commission for Losing tickets";
                         }
 
-//                        $('#tblconfirm').empty().append(htmlsuccess);
+                        //                        $('#tblconfirm').empty().append(htmlsuccess);
                         $("#tblconfirm").dialog({
                             title: title,
                             autoOpen: false,
@@ -283,13 +283,17 @@
     },
     liveCasinoSetting: function (custId, exchangeId, uplineId) {
         showPopup("Live Casino"
-                , window.rootUrl + "LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + _adminID + "&actorUsername=" + _adminUserName + "&customerId=" + custId + "&customerLevel=2"
-                , 0, 0, 880, 580, false, 2000, null);
+                , "LiveCasino/PTSetting/EditAgent.aspx?custId=" + custId + "&uplineId=" + uplineId
+                , 0, 0, 640, 480, false, 2000, null);
     },
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup("Virtual Sport"
                 , "VirtualSportAgentPT/EditAgent?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
+    },
+    kenoSetting: function (custId) {
+        showPopup(""
+                , "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
     },
     reCalculateGrid: function () {
         var initWidth = 1385;
