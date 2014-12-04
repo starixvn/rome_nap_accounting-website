@@ -61,4 +61,4 @@ _ReSharper*/
 ![Bb]in/en
 *Settings.StyleCop
 Websites/[Bb]in/*.xml
-Fanex.Tarus.Web.Controller/bin/Fanex.Tarus.Web.Controllers.dll
+/Fanex.Tarus.Web.Controller/bin
