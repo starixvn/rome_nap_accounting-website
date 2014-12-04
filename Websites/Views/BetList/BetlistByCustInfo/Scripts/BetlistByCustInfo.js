@@ -23,7 +23,7 @@
         isShowPager: true,
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridWidth: 970, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 120,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
@@ -33,7 +33,7 @@
         manualCopyHeader: true,
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 670, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridWidth: 675, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 550,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
@@ -68,7 +68,7 @@
                     isShowPager: true,
                     fullWidth: true,
                     fullHeight: false,
-                    gridWidth: 980,
+                    gridWidth: 970,
                     gridHeight: 500,
                     freezeWidth: 0,
                     numberFreezeCol: 0

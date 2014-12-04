@@ -61,13 +61,11 @@
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="UserLogin\Business\INapHomeCheckUserSiteAccessService.cs" />
     <Compile Include="UserLogin\Business\NapHomeCheckUserSiteAccessService.cs" />
-    <Compile Include="UserLogin\Controllers\LoginController.cs" />
     <Compile Include="UserLogin\Controllers\NapSsoController.cs" />
     <Compile Include="UserLogin\Criteria\DataAccess\INapHomeCheckUserSiteAccessDataAccess.cs" />
     <Compile Include="UserLogin\Criteria\DataAccess\NapHomeCheckUserSiteAccessDataAccess.cs" />
     <Compile Include="UserLogin\Criteria\NapHomeCheckUserSiteAccessCriteria.cs" />
     <Compile Include="UserLogin\NapLoginAreaRegistration.cs" />
-    <Compile Include="UserLogin\UserLoginAreaRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />

@@ -55,7 +55,7 @@
             </div>
         </td>
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
-            <div id="choice_right_@betdetail.Ticket.TransId" class="width270 table-cell">
+            <div id="choice_right_@betdetail.Ticket.TransId" class="width275 table-cell">
                 @Html.Raw(betdetail.ChoiceHtml)
                 @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
                 {
@@ -107,18 +107,6 @@
                 @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
             </div>
         </td>
-        <td>
-            <div class="width30 table-cell">
-                @if (betdetail.AllowDelete == false || betdetail.Ticket.BetTypeId == 1102 || betdetail.Ticket.BetTypeId == 1103 || betdetail.Ticket.BetTypeId == 1000)
-                {
-                    <span>&nbsp;</span>
-                }
-                else
-                {
-                    <span id="delete_@betdetail.Ticket.TransId" class="delete_button"  onclick="confirm_delete(@betdetail.Ticket.TransId, '@betdetail.BetFrom', '@betdetail.Ticket.MatchId', @betdetail.Ticket.BetTypeId)" onmouseout="" onmouseover="this.style.cursor='pointer';">
-                    </span> 
-                }</div>
-        </td>
     </tr>
  
 }
@@ -137,7 +125,7 @@
                                 Date</div>
                         </th>
                         <th>
-                            <div class="width270 height34 table-cell">
+                            <div class="width275 height34 table-cell">
                                 Choice</div>
                         </th>
                         <th>
@@ -173,10 +161,6 @@
                                 Agent
                                 <br />
                                 PT/Comm</div>
-                        </th>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                Del</div>
                         </th>
                     </tr>
                 </thead>
@@ -197,7 +181,7 @@
                                 Date</div>
                         </th>
                         <th>
-                            <div class="width270 height34 table-cell">
+                            <div class="width275 height34 table-cell">
                                 Choice</div>
                         </th>
                         <th>
@@ -233,10 +217,6 @@
                                 Agent
                                 <br />
                                 PT/Comm</div>
-                        </th>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                Del</div>
                         </th>
                     </tr>
                 </thead>
@@ -268,6 +248,3 @@
    var _length = @ViewBag.Quantity;
    var _arrayTransID = @serializer.Serialize(arrTransID);
 </script>
-
-
-
