@@ -145,6 +145,7 @@
             <b>Group Setting</b>
         </td>
         <td>
+        {#if $T.IsSuperAutoPositionTakingOnMaster == false}
             <select id="listSuperPT_{$T.ID}" onchange="on_ChangeSuperPT(this);" max="{roundNumber($T.PositionTakingMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
                 <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
             </select>
@@ -152,12 +153,15 @@
             <input type="button" onclick="IncreasePT('listSuperPT_{$T.ID}',1)" class="btn-inc1 SuperPT_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==true} Disabled {#else}{#/if}>
             <input type="button" onclick="ReducePT('listSuperPT_{$T.ID}',10)" class="btn-dec10 SuperPT_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==true} Disabled {#else}{#/if}>
             <input type="button" onclick="IncreasePT('listSuperPT_{$T.ID}',10)" class="btn-inc10 SuperPT_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==true} Disabled {#else}{#/if}>
+        {#else}
+            <div>{roundNumber($T.PositionTaking,2)}</div>
+        {#/if}
         </td>
         <td>
             <input type="checkbox" {#if $T.IsAutoPositionTaking==true} checked {#else}{#/if} onclick="CheckAutoPT(this)" id="chkAuto_{$T.ID}">
         </td>
         <td>
-             <select id="listSuperAutoPT_{$T.ID}" onchange="On_ChangeSuperAutoPT(this)"  max="0.9" min="0" class="select-pt" {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
+             <select id="listSuperAutoPT_{$T.ID}" onchange="On_ChangeSuperAutoPT(this)"  max="{roundNumber($T.SuperPositionTakingPreset, 2)}" min="0" class="select-pt" {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
                 <option value="{roundNumber($T.AutoPositionTaking,2)}" selected="true">{roundNumber($T.AutoPositionTaking,2)}</option>
             </select>
             <input type="button" onclick="ReducePT('listSuperAutoPT_{$T.ID}',1)" class="btn-dec1 SuperAuto_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
@@ -182,15 +186,19 @@
     <tr>
         <td class="l" rowspan="2">{$T.Name}</td>
         <td class="gametypePT c" style="{#if $P.IsGroupSetting==true}display:none{#else}{#/if}" >
+            {#if $T.IsSuperAutoPositionTakingOnMaster == false}
              <select id="listSuperPT_{$P.ID}_{$T.ID}" max="{roundNumber($T.PositionTakingMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt SuperPT_{$P.ID}" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
                      <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
             </select>
+            {#else}
+                <div>{roundNumber($T.PositionTaking,2)}</div>
+            {#/if}
         </td>
         <td style="{#if $P.IsGroupSetting==true}display:none{#else}{#/if}">
             <input class="chkauto" type="checkbox" {#if $T.IsAutoPositionTaking==true} checked {#else}{#/if} onclick="CheckAutoPTGameType(this)" id="chkAuto_{$P.ID}_{$T.ID}">
         </td>
         <td class="gametypePT c" style="{#if $P.IsGroupSetting==true}display:none{#else}{#/if}">
-             <select id="listSuperAutoPT_{$P.ID}_{$T.ID}" max="0.9" min="0" class="select-pt SuperAuto_{$P.ID}" {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if} >
+             <select id="listSuperAutoPT_{$P.ID}_{$T.ID}" max="{roundNumber($T.SuperPositionTakingPreset, 2)}" min="0" class="select-pt SuperAuto_{$P.ID}" {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if} >
                 <option value="{roundNumber($T.AutoPositionTaking,2)}" selected="true">{roundNumber($T.AutoPositionTaking,2)}</option>
             </select>
         </td>

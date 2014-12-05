@@ -16,6 +16,7 @@
             Super Position Taking
         </td>
         <td>
+            {#if $T.IsSuperAutoPositionTakingOnMaster == false}
             <select {#if $T.isautopt== "True"}disabled="disabled"{#else}{#/if} id="listSPT252" max="{roundNumber($T.maxspt,2)}" min="{roundNumber($T.minspt,2)}" name="listSPT252" class="select-pt" >
                 <option value="{roundNumber($T.spt,2)}" selected="true">{roundNumber($T.spt,2)}</option>
             </select>
@@ -27,6 +28,9 @@
                  {#if $T.isautopt== "True"}Disabled{#else}{#/if}>
             <input type="button" onclick="IncreasePT('listSPT252',10)" class="btn-inc10" id="chkI10SPre252" 
                  {#if $T.isautopt== "True"}Disabled{#else}{#/if}>
+            {#else}
+                <div>{roundNumber($T.spt,2)}</div>
+            {#/if}
         </td>
     </tr>
     <!--/Super PT -->
