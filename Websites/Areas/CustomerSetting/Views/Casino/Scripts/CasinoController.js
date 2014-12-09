@@ -121,7 +121,7 @@
                 ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
             }
             else {
-                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
+                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="#618E11">Updated successfully</font><br /><br />';
             }
 
             if (!IsMultiple) {

@@ -15,21 +15,31 @@
         });    
 }
 
-<div id="ng-app" style="width: 1024px" data-ng-app="settingApp">
+<div id="ng-app" style="width: 982px;" data-ng-app="settingApp">
+<table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+        <tbody>
+            <tr>
+                <td class="maincontent_headerL">
+                </td>
+                <td class="maincontent_headerC fixfont">
+                   Update PT Casino
+                </td>
+                <td class="maincontent_headerR">
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <div id="errMsg" style="display: none;" class="successMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
     </div>
     <div id="names" style="display: none;" class="names">
-    </div>    
-    <div>
-        <input class="buttonPopup" type="button" value="Submit" />
-    </div>
+    </div>   
     <div>
         @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
     </div>
     <div>
-        <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
+        <div class="headerPositionTaking" style="border: 1px solid #7c98a4; border-top: 0">
             @NGCasinoLang.positiontaking
         </div>                                                                                                                                                                                                                                                                                                                                                            
         <div style="border-right: none" id="settingContainer" data-ng-controller="EditMasterController">
@@ -123,33 +133,34 @@
         </div>
     </div>
     <div>
-        <input class="buttonPopup" type="button" value="Submit" />
+        <input value="Update" type="button" class="btnUpdate b" />
     </div>
 </div>
 
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditMasterController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
     try {
         //var casinoController = new CasinoController(custId, custName, IsMultiple, custIds, custNames);
         var casinoController = new CasinoController(uplineId, '');
 
-        $('.buttonPopup').bind('click', function () {
+        $('.btnUpdate').bind('click', function () {
             casinoController.Update(function (errorCode, errorMessage) {
-//                if (errorCode == 0) {
-//                    var timeout = setTimeout(function () {
-//                        clearTimeout(timeout);
+                //                if (errorCode == 0) {
+                //                    var timeout = setTimeout(function () {
+                //                        clearTimeout(timeout);
 
-//                        if (parent.document.getElementById('customerListGrid')) {
-//                            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-//                            parent.Fanex.ExtAcc.Form.Close();
-//                        }
-//                        else {
-//                            document.location.reload(true);
-//                        }
-//                    }, 2000);
-//                }
+                //                        if (parent.document.getElementById('customerListGrid')) {
+                //                            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                //                            parent.Fanex.ExtAcc.Form.Close();
+                //                        }
+                //                        else {
+                //                            document.location.reload(true);
+                //                        }
+                //                    }, 2000);
+                //                }
             });
         });
-    } catch(e) {
+    } catch (e) {
     }
 </script>

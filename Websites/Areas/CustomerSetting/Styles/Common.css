@@ -160,11 +160,11 @@ html, body
 }
 div#settingContainer,div.custInfo
 {
-    border: 1px solid #ccc;
+    border: 1px solid #7c98a4;
     border-bottom:0px;
     border-top: none;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+    border-left: 1px solid #7c98a4;
+    border-right: 1px solid #7c98a4;
     padding: 0;
     margin: 0;
 }
@@ -321,7 +321,6 @@ select,.select
 }
 .successMsg
 {
-    background-color: #b5c4d0;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
