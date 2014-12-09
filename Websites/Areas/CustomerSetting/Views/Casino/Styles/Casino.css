@@ -132,4 +132,48 @@ table, .header, .formatCol,
 }
 .tdTitleRight {
     padding: 4px;
+	}
+	.maincontent_header {
+		height: 23px;
+		border: 0 none !important;
+	}
+	.alerterror {
+		background: url("Images/error.gif") no-repeat scroll left center #F6F5F2;
+		color: #F40000;
+		font-weight: bold;
+		margin-bottom: 2px;
+		margin-top: 2px;
+		padding-left: 20px;
+	}
+	.alertsuccess {
+		background: url("Images/sucess.gif") no-repeat scroll left center #F6F5F2;
+		color: #618E11;
+		font-weight: bold;
+		margin-bottom: 2px;
+		margin-top: 2px;
+		padding-left: 20px;
+	}
+table, .header, .formatCol,
+{
+	border: 1px solid #7C98A4;
 }
+
+.btnUpdate
+{
+	color: #FFF;
+	background: url(Images/Update.png) no-repeat 0 0px;
+	width: 120px;
+	height: 24px;
+	cursor: pointer;
+	font-weight: bold;
+	margin-bottom: 5px;
+	margin-top: 3px;
+}
+
+.btnUpdate:hover
+{
+	background: url(Images/Update.png) no-repeat 0 -25px;
+}
+
+.tdWidth {
+    width: 144px !important;
