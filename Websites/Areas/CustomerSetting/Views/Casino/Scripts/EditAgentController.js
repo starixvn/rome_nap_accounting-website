@@ -8,6 +8,8 @@ function EditAgentController($scope, $element) {
 
     $scope.customer = customerSetting;
 
+   $scope.isDisableAutoMPT = customerModel.isDisableAutoMPT;
+
     $scope.$on('rendered', function () {
         p.appendChild(e);
     });
@@ -16,7 +18,7 @@ function EditAgentController($scope, $element) {
 function GameGroupController($scope) {
     $scope.gameGroup = $scope.$parent.gameGroup;
     var gameGroup = $scope.setting = $scope.gameGroup;
-
+    
     $scope.setupWatch = function () {
         $scope.$watch("setting.m2", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
@@ -89,12 +91,6 @@ function GameGroupController($scope) {
 
             if (newValue) {
                 gameGroup.max = gameGroup.m3;
-
-                ngDialog.open({
-                    template: "ConfirmDialogId",
-                    scope: gameGroup,
-                    closeByCloseButton: true
-                });
             }
             else {
                 var max = gameGroup.m3 - gameGroup.m2;
@@ -318,20 +314,20 @@ function GameTypeController($scope) {
             gameType.$a2 = toPTSource(gameType.$a2);
         });
 
-//        $scope.$watch("setting.im2", function (newValue, oldValue) {
-//            // No need to watch, because it's already watched on render action
-//        });
+        $scope.$watch("setting.im2", function (newValue, oldValue) {
+            // No need to watch, because it's already watched on render action
+        });
 
-//        $scope.$watch("setting.um2", function (newValue, oldValue) {
-//            if (newValue == oldValue) return; // Avoid $apply checking
+        $scope.$watch("setting.um2", function (newValue, oldValue) {
+            if (newValue == oldValue) return; // Avoid $apply checking
 
-//            max = gameType.m3;
-//            selected = Math.min(max, newValue).ptRound();
+            max = gameType.m3;
+            selected = Math.min(max, newValue).ptRound();
 
-//            gameType.um2 = selected;
-//            gameType.$um2.min = gameType.$um2.max = gameType.$um2.selected = selected;
-//            gameType.$um2 = toPTSource(gameType.$um2);
-//        });
+            gameType.um2 = selected;
+            gameType.$um2.min = gameType.$um2.max = gameType.$um2.selected = selected;
+            gameType.$um2 = toPTSource(gameType.$um2);
+        });
 
         $scope.$watch("setting.a2", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking

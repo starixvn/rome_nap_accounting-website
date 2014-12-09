@@ -15,7 +15,7 @@
         });    
 }
 
-<div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
+<div id="ng-app" style="width: 1024px" data-ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="successMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
@@ -126,19 +126,7 @@
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>
-<script type="text/ng-template" id="ConfirmDialogId">
-		<div class="ngdialog-message">
-			<h3>ngDialog template</h3>
-			<p>Dialog containing work in which a user has to perform a task (e.g. editing data).</p>
-			<p>'Save' would save the task's actions, while 'Cancel' would cause the task's actions to be lost.</p>
-			<p>...other controls here...</p>
-		</div>
-		<div class="ngdialog-buttons">
-			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('Cancel')">Cancel</button>
-			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm('Save')">Save</button>
-		</div>
-	</script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditMasterController.js")" type="text/javascript"></script>
+
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
     try {
