@@ -35,9 +35,9 @@ namespace Sunplus.Accounting.Business.PT.Casino
                                                                 customerInfo.Suspend, customerInfo.IsEnablePT,
                                                                 customerInfo.SIBCCustID, customerInfo.MIBCCustID,
                                                                 customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
-                                                                DisableAutoMPT,
                                                                 EnableBonus,
                                                                 EnableJackpot,
+                                                                DisableAutoMPT,
                                                                 DateTime.Today,
                                                                 ip, userId, userName, 3);
                 Thread.Sleep(1000);

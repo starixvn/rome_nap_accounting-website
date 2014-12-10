@@ -39,7 +39,8 @@ public partial class Others_Menu : System.Web.UI.Page
         var kenoPath = string.Empty;
         var uplineId = CastAide.AsInt32(arrCustID[3].Split('=')[1]);
         int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
-        
+        var casinoPath = string.Empty;
+
         if (roleid == 1)
         {
             bingopath += "MemberUpdate.aspx?custId=" + custID.ToString();
@@ -48,6 +49,7 @@ public partial class Others_Menu : System.Web.UI.Page
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId="+custID+"&customerLevel=1");
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
         }
         else if (roleid == 2)
         {
@@ -57,6 +59,7 @@ public partial class Others_Menu : System.Web.UI.Page
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=2");
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
         }
         else if (roleid == 3)
         {
@@ -66,6 +69,7 @@ public partial class Others_Menu : System.Web.UI.Page
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=4&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=3");
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
         }
         else
         {
@@ -76,6 +80,7 @@ public partial class Others_Menu : System.Web.UI.Page
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=4");
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
         }
       
         if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
@@ -106,7 +111,7 @@ public partial class Others_Menu : System.Web.UI.Page
 
         TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
-        TemplateHandler.Assign(ref tplMenu, "{urlCasino}", "../PositionTakingCS.aspx" + Request.UrlReferrer.Query);
+        TemplateHandler.Assign(ref tplMenu, "{urlCasino}", casinoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlBingo}", bingopath);
         TemplateHandler.Assign(ref tplMenu, "{urlPoker}", PokerURL);
         TemplateHandler.Assign(ref tplMenu, "{urlLiveCasino}", liveCasinoPath);

@@ -216,7 +216,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmRacingMinPT", url);
                 $scope.resize("#frmRacingMinPT");
                 break;
-            case 'tabCasino': url += "Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid;
+            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper/" + $scope.existedUser.userid +"/0/true";
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
                 break;

@@ -263,7 +263,8 @@ public class UpdateCSSetting : BaseHandler
                      3,
                      bAutoReset,
                      false,//EnableCasinoBonus
-                     false//EnableCasinoJackpot
+                     false,//EnableCasinoJackpot
+                     false//DisableAutoMPT
                      );
 
                 if (!status)
