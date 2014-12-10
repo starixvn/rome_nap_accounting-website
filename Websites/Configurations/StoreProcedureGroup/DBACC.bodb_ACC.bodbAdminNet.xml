@@ -15,7 +15,6 @@
     <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.bodb_ACC.bodbAdminNet" />
   </Function>
   <Function Name="ConfigureDirectAccount">
-  <Function Name="ConfigureDirectAccount">
     <Setting Key="Customer_ConfigureDirectAccount_CheckImportDirectAccount" SpName="Acc_CustDirectMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
   </Function>
 </Functions>

@@ -152,6 +152,10 @@
                     SuccessMessage = '';
                     Fanex.CustomerSetting.Core.UnBlockUI();
 
+                    setTimeout(function () {
+                        location.reload();
+                        parent.frames["centerFr"].location.reload();
+                    }, 2000);
                     return true;
                 }
             }

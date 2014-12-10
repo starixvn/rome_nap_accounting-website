@@ -152,9 +152,6 @@
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
-    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
-    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
-    <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
@@ -198,7 +195,6 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
-    <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\GoldDeluxeController.cs" />
@@ -214,12 +210,8 @@
     <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
-    <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
-    <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
-    <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectStatusEffectCriteria.cs" />
-    <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectStatusEffectCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
@@ -252,8 +244,6 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
-    <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
-    <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />

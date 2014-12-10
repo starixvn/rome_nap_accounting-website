@@ -19,6 +19,9 @@
     border-bottom: 0; 
     border-top: 1px solid #ccc;
 }
+.tdWidthMember {
+     width: 192px ;
+}
 .tdWidthSuper
 {
     width: 249px;

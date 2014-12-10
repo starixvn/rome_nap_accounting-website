@@ -8,7 +8,7 @@ function EditAgentController($scope, $element) {
 
     $scope.customer = customerSetting;
 
-   $scope.isDisableAutoMPT = customerModel.isDisableAutoMPT;
+    $scope.isDisableAutoMPT = customerModel.isDisableAutoMPT;
 
     $scope.$on('rendered', function () {
         p.appendChild(e);
