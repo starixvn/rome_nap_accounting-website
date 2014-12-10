@@ -21,10 +21,10 @@ PTSetting.SportType = new function () {
             }
             //disable edit
             $content.find('input:text').attr('disabled', true);
-            $content.find('.selectcomm').attr('disabled', true);            
+            $content.find('.selectcomm').attr('disabled', true);
             $content.find('.PTSelect').attr('disabled', true);
             $content.find('input:button').attr('disabled', true);
-        }, 1.5*delayTime);
+        }, 1.5 * delayTime);
     };
 
     var RemoveSportBookMinPT = function () {
@@ -61,7 +61,7 @@ PTSetting.SportType = new function () {
                 $content.find('.tblcollapse tr:eq(0)').remove();
             }
             $content.find('.maincontent_box').remove();
-            $content = $content.find('#SettingContent');            
+            $content = $content.find('#SettingContent');
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('select').attr('disabled', true);
@@ -69,8 +69,8 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveCasinoCustInfo = function () {
-        var $content = $("#frmCasino").contents();                
-        
+        var $content = $("#frmCasino").contents();
+
         setTimeout(function () {
             for (var i = 0; i < 2; i++) {
                 $content.find('.tblcollapse tr:eq(0)').remove();
@@ -78,7 +78,7 @@ PTSetting.SportType = new function () {
             $content.find('.maincontent_box').remove();
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
-            $content.find('input:text').attr('disabled', true);                           
+            $content.find('input:text').attr('disabled', true);
             $content.find('select').attr('disabled', true);
             $content.find('a').css('display', 'none');
             $content.find('input:button').attr('disabled', true);
@@ -87,21 +87,21 @@ PTSetting.SportType = new function () {
 
     var RemoveVirtualSportsCustInfo = function () {
         var $content = $("#frmVirtualSports").contents();
-              
+
         setTimeout(function () {
             for (var i = 0; i < 5; i++) {
                 $content.find('.tblcollapse tr:eq(0)').remove();
             }
             //disable edit
-            $content.find('input:text').attr('disabled', true);                        
-            $content.find('.PTSelect').attr('disabled', true);            
+            $content.find('input:text').attr('disabled', true);
+            $content.find('.PTSelect').attr('disabled', true);
             $content.find('.btnUpdate').remove();
         }, delayTime);
     };
 
     var RemoveBingoCustInfo = function () {
-        var $content = $("#frmBingo").contents();                
-        
+        var $content = $("#frmBingo").contents();
+
         setTimeout(function () {
             for (var i = 0; i < 5; i++) {
                 $content.find('.tblcollapse tr:eq(0)').remove();
@@ -110,7 +110,7 @@ PTSetting.SportType = new function () {
             $content.find('#tblHideUpdate').remove();
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
-            $content.find('input:text').attr('disabled', true);                           
+            $content.find('input:text').attr('disabled', true);
             $content.find('select').attr('disabled', true);
             $content.find('.canchange').css('display', 'none');
             $content.find('input:button').attr('disabled', true);
@@ -119,7 +119,7 @@ PTSetting.SportType = new function () {
 
     var RemoveLiveCasinoCustInfo = function () {
         var $content = $("#frmLiveCasino").contents();
-        
+
         setTimeout(function () {
             for (var i = 0; i < 5; i++) {
                 $content.find('.tblcollapse tr:eq(0)').remove();
@@ -134,7 +134,7 @@ PTSetting.SportType = new function () {
     };
 
     this.SetFrameLoaded = function () {
-        var sport = $('#listSports option:selected').text();        
+        var sport = $('#listSports option:selected').text();
 
         //remove settings
         switch (sport) {

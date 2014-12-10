@@ -27,7 +27,6 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         {
             _customerSetting = customerSetting ?? new CustomerSettingService();
         }
-
         
         public JsonResult UpdateDoubleComm(int custId, bool isDoubleComm)
         {
