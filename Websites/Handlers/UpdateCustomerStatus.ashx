@@ -15,7 +15,7 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
 using IBCUtils.Web;
 using System.Text;
-
+using CasinoLibrary.SBAgent;
 
 public class UpdateCustomerStatus : BaseHandler
 {
@@ -97,6 +97,8 @@ public class UpdateCustomerStatus : BaseHandler
                     break;
                 case "autompt":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
+                    var casinoSync = new Customer();
+                    casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
                     s = "parent.changeDisplayStatus();";
                     break;

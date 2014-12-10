@@ -115,3 +115,7 @@ table, .header, .formatCol,
 .memberWidth {
     width: 374px !important;
 }
+
+.custInfoHeader {
+    border-top: 1px solid #7C98A4;
+}

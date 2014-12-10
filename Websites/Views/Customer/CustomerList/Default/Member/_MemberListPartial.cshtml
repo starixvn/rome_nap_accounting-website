@@ -120,7 +120,7 @@
                     @{
                         var IsOnclickCS = !string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"]);
-                        var onclickCS = (IsOnclickCS == true ? "OpenEditCS('" + memberItem.ChildID + "');" : "");
+                        var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
                     <!--/casino-edit-->

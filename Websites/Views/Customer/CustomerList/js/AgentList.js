@@ -295,9 +295,9 @@
         showPopup(""
                 , "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
     },
-    NGCasino: function (custId) {
+    casino: function (custId, uplineId) {
         showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
+                , "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/ " + uplineId, 0, 0, 1024, 700, false, 2000, null);
     },
     reCalculateGrid: function () {
         var initWidth = 1385;
