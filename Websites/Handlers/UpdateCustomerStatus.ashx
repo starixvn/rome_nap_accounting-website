@@ -97,8 +97,8 @@ public class UpdateCustomerStatus : BaseHandler
                     break;
                 case "autompt":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
-                    
-                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
+                    var casinoSync = new Customer();
+                    casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
                     if (custcs.CasinoSync)
                     {
                         var casinoSync = new Customer();
