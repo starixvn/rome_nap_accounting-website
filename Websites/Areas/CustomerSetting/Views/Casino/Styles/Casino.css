@@ -177,3 +177,7 @@ table, .header, .formatCol,
 
 .tdWidth {
     width: 144px !important;
+
+.memberWidth {
+    width: 374px !important;
+}
