@@ -2372,7 +2372,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                       (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
-                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                  MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                  MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                               };
                             ptCurrent.Super = superPt;
                         }
@@ -2394,7 +2396,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                        (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
-                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                   MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                   MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                                };
                             ptCurrent.Master = masterPt;
                         }
@@ -2416,7 +2420,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                       (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
-                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                  MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                  MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                               };
                             ptCurrent.Agent = agentPt;
                         }
@@ -2438,7 +2444,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                        (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
-                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                   MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                   MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                                };
                             ptCurrent.Member = memberPt;
                         }

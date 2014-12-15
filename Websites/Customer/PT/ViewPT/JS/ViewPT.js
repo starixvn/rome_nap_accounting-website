@@ -239,6 +239,8 @@ var ViewPT = {
                             <th width="40">MinPT</th>\
                             <th width="40">isAutoPT</th>\
                             <th width="40">AutoPT</th>\
+                            <th width="40">isMAutoPT</th>\
+                            <th width="40">MAutoPT</th>\
                             <th width="40">Comm</th>\
                         </tr>\
                         <!--r4-->\
@@ -251,6 +253,8 @@ var ViewPT = {
                                 <td>${Super.MinPt}</td>\
                                 <td><input type="checkbox" disabled="disabled" ${Super.SuperIsAuto}/></td>\
                                 <td>${Super.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Super.MasterIsAuto}/></td>\
+                                <td>${Super.MasterAuto}</td>\
                                 <td>${Super.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -265,6 +269,8 @@ var ViewPT = {
                                 <td>${Master.MinPt}</td>\
                                 <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto}/></td>\
                                 <td>${Master.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Master.MasterIsAuto}/></td>\
+                                <td>${Master.MasterAuto}</td>\
                                 <td>${Master.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -279,6 +285,8 @@ var ViewPT = {
                                 <td>${Agent.MinPt}</td>\
                                 <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
                                 <td>${Agent.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto}/></td>\
+                                <td>${Agent.MasterAuto}</td>\
                                 <td>${Agent.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -293,6 +301,8 @@ var ViewPT = {
                                 <td>${Member.MinPt}</td>\
                                 <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto}/></td>\
                                 <td>${Member.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto}/></td>\
+                                <td>${Member.MasterAuto}</td>\
                                 <td>${Member.Com}</td>\
                             </tr>\
                         {{/if}}\
