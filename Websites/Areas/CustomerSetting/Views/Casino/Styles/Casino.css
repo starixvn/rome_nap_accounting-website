@@ -122,3 +122,14 @@ table, .header, .formatCol,
 .custInfoHeader {
     border-top: 1px solid #7C98A4;
 }
+
+.gameTypeWidth {
+    padding: 4px;
+    width: 142px !important;
+}
+.tdTitleLeft {
+    padding: 4px;
+}
+.tdTitleRight {
+    padding: 4px;
+}

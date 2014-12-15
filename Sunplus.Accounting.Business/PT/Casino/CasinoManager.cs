@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.Business.PT.Casino
             {
                 bool EnableBonus = false;
                 bool EnableJackpot = false;
-                bool DisableAutoMPT = true;
+                bool DisableAutoMPT = false;
 
                 var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
                                                                 customerInfo.UserName, customerInfo.UserName2,
