@@ -112,11 +112,11 @@ table, .header, .formatCol,
 }
 
 .tdWidth {
-    width: 144px !important;
+    width: 138px !important;
 }
 
 .memberWidth {
-    width: 374px !important;
+    width: 375px !important;
 }
 
 .custInfoHeader {
@@ -125,7 +125,7 @@ table, .header, .formatCol,
 
 .gameTypeWidth {
     padding: 4px;
-    width: 142px !important;
+    width: 140px !important;
 }
 .tdTitleLeft {
     padding: 4px;
