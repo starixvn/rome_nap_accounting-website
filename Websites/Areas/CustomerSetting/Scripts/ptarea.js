@@ -12,6 +12,7 @@ toPTSource = function (obj, resetSelected, isComm) {
     var step = isComm ? 0.0005 : 0.01;
     var selectedValue = obj.selected;
     var breakpt = obj.breakpt;
+    min = min < 0 ? 0 : min;
 
     if (breakpt) {
         return;
@@ -93,11 +94,19 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
-                var max = source == "$m3" && scope[attrs.ngModel].is3 ?
-                    scope[attrs.ngModel].s4 : (source == "$m3" && typeof scope[attrs.ngModel]["n3"] != 'undefined' && typeof scope[attrs.ngModel].is3 != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                var max = 0;
+
+                if (source == "$m3") {
+                    max = source == "$m3" && scope[attrs.ngModel].is3 ?
+                        scope[attrs.ngModel].s4 : (source == "$m3" && typeof scope[attrs.ngModel]["n3"] != 'undefined' && typeof scope[attrs.ngModel].is3 != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                }
+                else {
+                    max = source == "$a2" && scope[attrs.ngModel].im2 ?
+                        scope[attrs.ngModel].m3 : (source == "$a2" && typeof scope[attrs.ngModel]["n2"] != 'undefined' && typeof scope[attrs.ngModel].im2 != 'undefined' ? scope[attrs.ngModel].m3 - scope[attrs.ngModel].m2 : getValue(attrs.max));
+                }
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
-               
+
                 // $ + 'selected' attribute
                 var warned = obj.warning;
                 var curWarn = selected > max || selected < min;
@@ -113,16 +122,23 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
 
             var template = "<select ng-blur=\"" + source + "blur($event)\" ng-touchstart=\"" + source + "focus($event)\" ng-mouseenter=\"" + source + "focus($event)\" ng-change=\"" + source + "change($event, setting." + source + ")\" class='input-small' ng-disabled='" + attrs.enable + "' ng-model='setting." + source + ".selected' ng-options='pt for pt in setting." + source + ".pts'>" +
                             "</select>";
-            if (attrs.showbutton != "false") {
-                template +=
+
+            if (attrs.islabel == "true") {
+                var model = "setting." + source + ".selected";
+                template = "<span style='font-weight: normal'>{{" + model + "}}</span>";
+            }
+            else {
+                if (attrs.showbutton != "false") {
+                    template +=
                             "<input class='btnPTDown' ng-touchstart=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
                             "<input class='btnPTUp' ng-touchstart=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
                             "<input class='btnPTSub' ng-touchstart=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />" +
                             "<input class='btnPTAdd' ng-touchstart=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />";
-            }
-            else {
-                template +=
+                }
+                else {
+                    template +=
                             "<span ng-init=\"setting." + source + ".warning=false\" ng-model=\"setting." + source + ".warning\" ng-show=\"setting." + source + ".warning\" style=\"color: Red\">*</span>";
+                }
             }
 
             scope[source + "change"] = function (event, source) {
@@ -136,7 +152,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (attrs.max == "l4" && scope[attrs.ngModel]["is3"]) {
                     attrs.l4 = scope[attrs.ngModel]["l4"] = scope[attrs.ngModel]["s4"].ptRound();
                 }
-                
+
                 var newValue = (source.selected + (isComm ? 5 * step : step) / (isComm ? 10000 : 100)).ptRound();
                 var max = getValue(attrs.max).ptRound();
                 var min = getValue(attrs.min).ptRound();
