@@ -2352,16 +2352,19 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     var masterDisableAutoPt = false; // Need to assign 
                     foreach (DataRow dr in dtPt.Rows)
                     {
-                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
-                        masterDisableAutoPt = CastAide.AsBoolean(dr["DisableAutoMPT"]);
+                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());                        
 
                         #region super
-                        
-                        ptCurrent.PermistionEnableAutoMaster =
-                            Permissions.IsEnabledAutoMaster(!masterDisableAutoPt);
-                        ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
-                        ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
-                        ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
+
+                        if (currentRoleId == (int)CustInfo.Roles.Master)
+                        {
+                            masterDisableAutoPt = CastAide.AsBoolean(dr["DisableAutoMPT"]);
+                            ptCurrent.PermistionEnableAutoMaster =
+                                Permissions.IsEnabledAutoMaster(!masterDisableAutoPt);
+                            ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
+                            ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
+                            ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
+                        }
 
                         if (currentRoleId == (int)CustInfo.Roles.Super)
                         {
