@@ -3704,5 +3704,35 @@
   </data>
   <data name="V202apt_1501" xml:space="preserve">
     <value>Australia Acttab</value>
-  </data>  
+  </data>
+  <data name="MaxBv202_1514" xml:space="preserve">
+    <value>Max Bet - Korea</value>
+  </data>
+  <data name="MinBv202_1514" xml:space="preserve">
+    <value>Min Bet - Korea</value>
+  </data>
+  <data name="MPMv202_1514" xml:space="preserve">
+    <value>Max Per Match - Korea</value>
+  </data>
+  <data name="v202apt_1514" xml:space="preserve">
+    <value>Korea</value>
+  </data>
+  <data name="v202MaxBv_1514" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v202MinBv_1514" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v202MPMv_1514" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v202mpt_1514" xml:space="preserve">
+    <value>Korea</value>
+  </data>
+  <data name="v202spt_1514" xml:space="preserve">
+    <value>Korea</value>
+  </data>
+  <data name="Disable202_1514" xml:space="preserve">
+    <value>Disabled Korea</value>
+  </data>
 </root>
