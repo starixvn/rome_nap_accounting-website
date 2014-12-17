@@ -34,6 +34,19 @@
     width: 170px;
 }
 
+.tdWidth {
+    width: 138px !important;
+}
+
+.memberWidth {
+    width: 375px !important;
+}
+
+.gameTypeWidth {
+    padding-right: 4px !important;
+    width: 140px !important;
+}
+
 .maincontent_headerL {
 		height: 23px;
 		width: 24px;
@@ -111,22 +124,11 @@ table, .header, .formatCol,
 	background: url(Images/Update.png) no-repeat 0 -25px;
 }
 
-.tdWidth {
-    width: 138px !important;
-}
-
-.memberWidth {
-    width: 375px !important;
-}
 
 .custInfoHeader {
     border-top: 1px solid #7C98A4;
 }
 
-.gameTypeWidth {
-    padding: 4px;
-    width: 140px !important;
-}
 .tdTitleLeft {
     padding: 4px;
 }
@@ -175,25 +177,6 @@ table, .header, .formatCol,
 	background: url(Images/Update.png) no-repeat 0 -25px;
 }
 
-.tdWidth {
-    width: 144px !important;
-}
-
-.memberWidth {
-    width: 374px !important;
-}
-
-.custInfoHeader {
-    border-top: 1px solid #7C98A4;
-}
-
-.gameTypeWidth {
-    padding: 4px;
-    width: 142px !important;
-}
-.tdTitleLeft {
-    padding: 4px;
-}
-.tdTitleRight {
-    padding: 4px;
+select, .select {
+    width: 60px !important;
 }
