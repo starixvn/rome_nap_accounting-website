@@ -236,11 +236,11 @@ var ViewPT = {
                             <th width="40">s</th>\
                             <th width="40">m</th>\
                             <th width="40">a</th>\
-                            <th width="40">MinPT</th>\
-                            <th width="40">isAutoPT</th>\
-                            <th width="40">AutoPT</th>\
-                            <th width="40">isMAutoPT</th>\
-                            <th width="40">MAutoPT</th>\
+                            <th width="40">us</th>\
+                            <th width="40">is</th>\
+                            <th width="40">um</th>\
+                            <th width="40">im</th>\
+                            <th width="40">n</th>\
                             <th width="40">Comm</th>\
                         </tr>\
                         <!--r4-->\
@@ -250,11 +250,15 @@ var ViewPT = {
                                 <td>${Super.Super}</td>\
                                 <td>${Super.Master}</td>\
                                 <td>${Super.Agent}</td>\
-                                <td>${Super.MinPt}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Super.SuperIsAuto}/></td>\
-                                <td>${Super.SuperAuto}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Super.MasterIsAuto}/></td>\
-                                <td>${Super.MasterAuto}</td>\
+                                <td class="disable"></td>\
+		                        <td class="disable"></td>\
+		                        <!--AutoMPT-->\
+                                {{if (EnableAutoMaster)}}\
+		                            <td class="disable"></td>\
+		                            <td class="disable"></td>\
+                                {{/if}}\
+		                        <!--/AutoMPT-->\
+		                        <td>${Super.MinPt}</td>\
                                 <td>${Super.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -266,11 +270,15 @@ var ViewPT = {
                                 <td>${Master.Super}</td>\
                                 <td>${Master.Master}</td>\
                                 <td></td>\
-                                <td>${Master.MinPt}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto}/></td>\
                                 <td>${Master.SuperAuto}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Master.MasterIsAuto}/></td>\
-                                <td>${Master.MasterAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto}/></td>\
+                                <!--AutoMPT-->\
+                                {{if (EnableAutoMaster)}}\
+		                            <td class="${DisableFlagCss}"></td>\
+		                            <td class="${DisableFlagCss}"></td>\
+                                {{/if}}\
+		                        <!--/AutoMPT-->\
+		                        <td>${Master.MinPt}</td>\
                                 <td>${Master.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -282,12 +290,21 @@ var ViewPT = {
                                 <td></td>\
                                 <td>${Agent.Master}</td>\
                                 <td>${Agent.Agent}</td>\
-                                <td>${Agent.MinPt}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-                                <td>${Agent.SuperAuto}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto}/></td>\
-                                <td>${Agent.MasterAuto}</td>\
-                                <td>${Agent.Com}</td>\
+                                <!--DisableAutoMPT-->\
+                                {{if (!EnableAutoMaster)}}\
+		                            <td>${Agent.SuperAuto}</td>\
+		                            <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+		                        <!--/DisableAutoMPT-->\
+		                        <!--AutoMPT-->\
+                                {{else}}\
+		                            <td class="disable"></td>\
+		                            <td class="disable"></td>\
+		                            <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+		                            <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                                {{/if}}\
+		                        <!--/AutoMPT-->\
+		                        <td>${Agent.MinPt}</td>\
+		                        <td>${Agent.Com}</td>\
                             </tr>\
                         {{/if}}\
                         <!--/r2-->\
@@ -298,12 +315,16 @@ var ViewPT = {
                                 <td>${Member.Super}</td>\
                                 <td>${Member.Master}</td>\
                                 <td>${Member.Agent}</td>\
-                                <td>${Member.MinPt}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto}/></td>\
                                 <td>${Member.SuperAuto}</td>\
-                                <td><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto}/></td>\
-                                <td>${Member.MasterAuto}</td>\
-                                <td>${Member.Com}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto}/></td>\
+                                <!--AutoMPT-->\
+                                {{if (EnableAutoMaster)}}\
+		                            <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+		                            <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                                {{/if}}\
+		                        <!--/AutoMPT-->\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
                             </tr>\
                         {{/if}}\
                         <!--/r1-->\

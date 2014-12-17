@@ -2349,11 +2349,19 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     #region assign PT
 
                     var ptCurrent = new PositionTakingDTO();
+                    var masterDisableAutoPt = false; // Need to assign 
                     foreach (DataRow dr in dtPt.Rows)
                     {
                         int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
+                        masterDisableAutoPt = CastAide.AsBoolean(dr["DisableAutoMPT"]);
 
                         #region super
+                        
+                        ptCurrent.PermistionEnableAutoMaster =
+                            Permissions.IsEnabledAutoMaster(!masterDisableAutoPt);
+                        ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
+                        ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
+                        ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
 
                         if (currentRoleId == (int)CustInfo.Roles.Super)
                         {
