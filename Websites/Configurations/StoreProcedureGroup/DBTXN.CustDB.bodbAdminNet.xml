@@ -208,7 +208,6 @@
     <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
-
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.CustDB.bodbAdminNet"  />
@@ -232,8 +231,6 @@
     <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
-
-
 
   <Function Name="Customer - Login">
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.CustDB.bodbAdminNet"  />
@@ -265,7 +262,7 @@
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
-  </Function>
+  </Function>  
   <Function Name="ConfigureDirectAccount">
     <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBTXN.CustDB.bodbAdminNet"  />
     <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBTXN.CustDB.bodbAdminNet"  />
