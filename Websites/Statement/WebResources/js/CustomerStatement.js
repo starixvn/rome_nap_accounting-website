@@ -1,11 +1,10 @@
-﻿function KeyPress(e)
-{
-     var code = (e.keycode ? e.keycode : e.which);
-        if(code==13){
-            GetDataReport();
-        }
+﻿function KeyPress(e) {
+    var code = (e.keycode ? e.keycode : e.which);
+    if (code == 13) {
+        GetDataReport();
+    }
 }
-        
+
 function reset_date() {
     var dayNoReset = 7;
     var fdateId = 'fdate';
@@ -36,22 +35,83 @@ function GetDataReport() {
         tdate = '';
     }
 
-    //alert(encodeURIComponent($("#txtCustName").attr("value")));
-
     try { parent.BlockUI(); } catch (e) { }
     custName = encodeURIComponent($("#txtCustName").attr("value"));
+
+    var criteria = {
+        fromDate: moment(new Date(fdate)).format("MM DD, YYYY"),
+        toDate: moment(new Date(tdate)).format("MM DD, YYYY"),
+        custId: 0,
+        roleId: 0,
+        balanceUpDay: balanceUpDay,
+        moveBetDay: moveBetsDay,
+        username: custName
+    };
+    statementReportManager.initFunction(
+                function () {
+                    parent.jQuery.unblockUI();
+                },
+                function (options) {
+                    parent.OpenPopup(options.url,
+                        options.title,
+                        options.width,
+                        options.height,
+                        true,
+                        true,
+                        window,
+                        2000,
+                        null,
+                        null);
+                },
+                function (options) {
+                    var criteria = {
+                        username: custName,
+                        transType: 1,
+                        fromDate: options.statementDate
+                    };
+
+                    var url = domain + "BetList/GetBetListStatement?" +
+                        jQuery.param(criteria);
+                    parent.OpenPopup(url,
+                        options.title,
+                        800,
+                        options.height,
+                        true,
+                        true,
+                        window,
+                        2000,
+                        null,
+                        null);
+                });
+    if (!isInternalCustomer) {
+        if (!statementReportManager.checkCriteria(criteria)) {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+            return;
+        }
+
+        if (statementReportManager.IsUseNewLayout(criteria)) {
+            jQuery('#statementCotent').addClass("hidden");
+            statementReportManager.getStatementReport(criteria);
+            return;
+        }
+    }
+
+    //alert(encodeURIComponent($("#txtCustName").attr("value")));
+
+    jQuery('#GridContainer').addClass("hidden");
+    jQuery('#statementCotent').removeClass("hidden");
     $.ajax({
 
         url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + "&custname=" + custName,
         dataType: 'html',
-        success: function(data) {
+        success: function (data) {
 
             $("#statementCotent").attr("style", "display:block");
             obj('sData').innerHTML = data;
-            
-//            if ($('#rptMemberStatement').height() > 500) {
-//                $('#rptMemberStatement').Scrollable(500, $('#rptMemberStatement').innerWidth());
-//            }
+
+            //            if ($('#rptMemberStatement').height() > 500) {
+            //                $('#rptMemberStatement').Scrollable(500, $('#rptMemberStatement').innerWidth());
+            //            }
 
             parent.jQuery.unblockUI();
         }
@@ -59,7 +119,7 @@ function GetDataReport() {
 
     //$("#btnVerify").css("backgound-color", "");
     //$("#btnVerify").css("backgound-color", "url(../images/buttons/bgred_btn.jpg) repeat-x left");
-      
+
 }
 
 function ViewCustomerStatement(reportNo) {
@@ -78,7 +138,7 @@ function ViewCustomerStatement(reportNo) {
         tdate = '';
     }
 
-    var url = "CustomerStatement.aspx?repno=" + reportNo.toString() 
+    var url = "CustomerStatement.aspx?repno=" + reportNo.toString()
     + "&fdate=" + fdate.toString()
     + "&tdate=" + tdate.toString()
     + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
@@ -104,6 +164,7 @@ function ViewStatement(repno) {
     document.location.href = url;
 }
 
+var statementReportCriteria = null;
 function ExportToExcel() {
     var fdate = '';
     var tdate = '';
@@ -114,8 +175,36 @@ function ExportToExcel() {
         tdate = obj('tdate').value;
     }
 
+    var criteria = {
+        fromDate: moment(new Date(fdate)).format("MM DD, YYYY"),
+        toDate: moment(new Date(tdate)).format("MM DD, YYYY"),
+        custId: 0,
+        roleId: 0,
+        username: custName
+    };
+
+    if (!isInternalCustomer) {
+        if (!statementReportManager.checkCriteria(criteria)) {
+            parent.jQuery.unblockUI();
+            return;
+        }
+
+        if (statementReportManager.IsUseNewLayout(criteria)) {
+            statementReportCriteria = criteria;
+            var url = domain + 'Statement/StatementReport/GetCustomerInfo';
+            statementReportManager.callAjax(url, criteria, exportStatementReport);
+            return;
+        }
+    }
+
     location.href = 'CustomerStatement.aspx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + '&IsExport=1'
     + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+}
+
+function exportStatementReport(rs) {
+    statementReportCriteria.custId = rs.CustomerId;
+    statementReportCriteria.roleId = rs.RoleId;
+    statementReportManager.exportStatementReport(statementReportCriteria);
 }
 
 function DelTrans(refno) {
@@ -125,7 +214,7 @@ function DelTrans(refno) {
             $.ajax({
                 url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName,
                 dataType: 'html',
-                success: function(data) {
+                success: function (data) {
                     var arr = data.split('|');
                     if (arr[0] == "1") {
                         obj('sData').innerHTML = arr[1];
@@ -147,7 +236,7 @@ function GetSelectedRefNo() {
     var refNos;
     refNos = "";
 
-    $("input[type='checkbox'][id!='chkAll']").each(function() {
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == true && !this.disabled)
             refNos += this.id + ",";
     });
@@ -156,7 +245,7 @@ function GetSelectedRefNo() {
 }
 
 
-function VerifyTrans(btn) {    
+function VerifyTrans(btn) {
     var bCconfirm = window.confirm("Are you sure you want to verify the selected transaction(s)?");
     if (!bCconfirm)
         return bCconfirm;
@@ -251,7 +340,7 @@ function SetEnableVerify() {
     if (totalCheckedCheckbox > totalDisabledCheckbox) {
         $("#btnVerify").removeAttr("disabled");
         $("#btnVerify").attr("class", "verified");
-       
+
     }
     else {
         $("#btnVerify").attr("disabled", "true");
@@ -263,7 +352,7 @@ function CheckSelectAll() {
 
     var flag = true;
     //explore all check box except chkAll
-    $("input[type='checkbox'][id!='chkAll']").each(function() {
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == false && !this.disabled)
             flag = false;
     });

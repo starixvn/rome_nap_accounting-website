@@ -10,13 +10,25 @@ using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
+using Fanex.Module.Statement.Resources;
+using Fanex.Module.Statement.Configurations;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class Statement_CustomerStatement : PageBase
 {
+    public int isInternalCustomer = 1;
+    public string newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+    public string balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.BalanceUpDay);
+    public string moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.MoveBetsDay);
+    public string rootUrl = string.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
+            isInternalCustomer = AppSession.IsInternal ? 1 : 0;
+            rootUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath + "/";
+
             WebUtils.SetNoCache();
 
             int reportNo = 1;
@@ -292,5 +304,11 @@ public partial class Statement_CustomerStatement : PageBase
             //response error
             Response.Write("<script>window.alert('Cannot export excel. Please contact administrator')</script>");
         }
+    }
+
+    private static string GetFullRootUrl()
+    {
+        HttpRequest request = HttpContext.Current.Request;
+        return request.Url.AbsoluteUri.Replace(request.Url.AbsolutePath, String.Empty);
     }
 }

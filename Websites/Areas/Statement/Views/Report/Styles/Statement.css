@@ -1,0 +1,32 @@
+﻿.display-none
+{
+    display: none;
+}
+
+.freegrid .freegrid-even td.note-opening-balance, .freegrid .grid-fixed-table td.note-opening-balance
+{
+    background-color: #ff66ff;
+}
+
+.column-transfer-amount,
+.column-void-cancelled,
+.column-outstanding,
+.column-statement-date,
+.column-winloss
+{
+    cursor: pointer;
+}
+
+.column-transfer-amount:hover,
+.column-void-cancelled:hover,
+.column-outstanding:hover,
+.column-winloss:hover
+{
+    color: #996600;
+}
+
+.freegrid .format-negative.column-transfer-amount:hover, 
+.freegrid .format-positive.column-transfer-amount:hover
+{
+    color: #996600!important;
+}
