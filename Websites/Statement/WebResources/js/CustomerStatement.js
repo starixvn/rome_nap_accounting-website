@@ -21,7 +21,20 @@ function obj(id) {
 
 var custName = '';
 function GetDataReport() {
-    var fdate, tdate
+    try { parent.BlockUI(); } catch (e) { }
+    custName = encodeURIComponent($("#txtCustName").attr("value"));
+
+    statementReportManager.callAjax(
+        domain + 'NapStatement/StatementReport/CheckInternalByUsername',
+        {
+            Username: custName
+        },
+        completeUpdateIsInternal);
+}
+
+function completeUpdateIsInternal(rs) {
+    isInternalCustomer = rs;
+    var fdate, tdate;
     if (obj('fdate')) {
         fdate = obj('fdate').value;
     }
@@ -35,17 +48,14 @@ function GetDataReport() {
         tdate = '';
     }
 
-    try { parent.BlockUI(); } catch (e) { }
-    custName = encodeURIComponent($("#txtCustName").attr("value"));
-
     var criteria = {
-        fromDate: moment(new Date(fdate)).format("MM DD, YYYY"),
-        toDate: moment(new Date(tdate)).format("MM DD, YYYY"),
+        fromDate: moment(new Date(fdate)).format("MM/DD/YYYY"),
+        toDate: moment(new Date(tdate)).format("MM/DD/YYYY"),
         custId: 0,
         roleId: 0,
         balanceUpDay: balanceUpDay,
         moveBetDay: moveBetsDay,
-        username: custName
+        username: $('#txtCustName').val()
     };
     statementReportManager.initFunction(
                 function () {
@@ -66,7 +76,7 @@ function GetDataReport() {
                 function (options) {
                     var criteria = {
                         username: custName,
-                        transType: 1,
+                        transType: options.transactionType,
                         fromDate: options.statementDate
                     };
 
@@ -74,7 +84,7 @@ function GetDataReport() {
                         jQuery.param(criteria);
                     parent.OpenPopup(url,
                         options.title,
-                        800,
+                        1024,
                         options.height,
                         true,
                         true,
@@ -83,7 +93,9 @@ function GetDataReport() {
                         null,
                         null);
                 });
-    if (!isInternalCustomer) {
+
+    var reportNo = obj('repno').value;
+    if (!isInternalCustomer && reportNo == 1) {
         if (!statementReportManager.checkCriteria(criteria)) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
             return;
@@ -96,30 +108,19 @@ function GetDataReport() {
         }
     }
 
-    //alert(encodeURIComponent($("#txtCustName").attr("value")));
-
     jQuery('#GridContainer').addClass("hidden");
     jQuery('#statementCotent').removeClass("hidden");
     $.ajax({
 
-        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + "&custname=" + custName,
+        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName,
         dataType: 'html',
         success: function (data) {
 
             $("#statementCotent").attr("style", "display:block");
             obj('sData').innerHTML = data;
-
-            //            if ($('#rptMemberStatement').height() > 500) {
-            //                $('#rptMemberStatement').Scrollable(500, $('#rptMemberStatement').innerWidth());
-            //            }
-
             parent.jQuery.unblockUI();
         }
     });
-
-    //$("#btnVerify").css("backgound-color", "");
-    //$("#btnVerify").css("backgound-color", "url(../images/buttons/bgred_btn.jpg) repeat-x left");
-
 }
 
 function ViewCustomerStatement(reportNo) {
@@ -166,39 +167,48 @@ function ViewStatement(repno) {
 
 var statementReportCriteria = null;
 function ExportToExcel() {
-    var fdate = '';
-    var tdate = '';
-    if (obj('fdate')) {
-        fdate = obj('fdate').value;
-    }
-    if (obj('tdate')) {
-        tdate = obj('tdate').value;
-    }
+    statementReportManager.callAjax(
+        domain + 'NapStatement/StatementReport/CheckInternalByUsername',
+        {
+            Username: $('#txtCustName').val()
+        },
+        function (rs) {
+            isInternalCustomer = rs;
+            var fdate = '';
+            var tdate = '';
+            if (obj('fdate')) {
+                fdate = obj('fdate').value;
+            }
+            if (obj('tdate')) {
+                tdate = obj('tdate').value;
+            }
 
-    var criteria = {
-        fromDate: moment(new Date(fdate)).format("MM DD, YYYY"),
-        toDate: moment(new Date(tdate)).format("MM DD, YYYY"),
-        custId: 0,
-        roleId: 0,
-        username: custName
-    };
+            var criteria = {
+                fromDate: moment(new Date(fdate)).format("MM/DD/YYYY"),
+                toDate: moment(new Date(tdate)).format("MM/DD/YYYY"),
+                custId: 0,
+                roleId: 0,
+                username: custName
+            };
 
-    if (!isInternalCustomer) {
-        if (!statementReportManager.checkCriteria(criteria)) {
-            parent.jQuery.unblockUI();
-            return;
-        }
+            var reportNo = obj('repno').value;
+            if (!isInternalCustomer && reportNo == 1) {
+                if (!statementReportManager.checkCriteria(criteria)) {
+                    parent.jQuery.unblockUI();
+                    return;
+                }
 
-        if (statementReportManager.IsUseNewLayout(criteria)) {
-            statementReportCriteria = criteria;
-            var url = domain + 'Statement/StatementReport/GetCustomerInfo';
-            statementReportManager.callAjax(url, criteria, exportStatementReport);
-            return;
-        }
-    }
+                if (statementReportManager.IsUseNewLayout(criteria)) {
+                    statementReportCriteria = criteria;
+                    var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
+                    statementReportManager.callAjax(url, criteria, exportStatementReport);
+                    return;
+                }
+            }
 
-    location.href = 'CustomerStatement.aspx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + '&IsExport=1'
-    + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+            location.href = 'CustomerStatement.aspx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + '&IsExport=1'
+                + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+        });
 }
 
 function exportStatementReport(rs) {
@@ -392,10 +402,32 @@ jQuery(document).ready(function () {
     });
 });
 
-
 function viewDetail(fdate, transtypeid) {
     var username = $('#txtCustName').val();
     url = 'BetList/GetBetListStatement?Username=' + username + '&TransType=' + transtypeid + '&FromDate=' + fdate;
     parent.OpenNextPopup("popupStatement", url, "Bet list", 1050, 700, true, true, window, 2000, null, null);
 
+}
+
+function viewGuidelines() {
+    var criteria = {
+        username: $('#txtCustName').val()
+    };
+    var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
+    statementReportManager.callAjax(url, criteria, function (rs) {
+        parent.OpenPopup(
+            window.rootUrl + "NapStatement/StatementReport/Guideline?" +
+            $.param({
+                roleId: rs.RoleId
+            }),
+            statementResources.Statement_Guidelines,
+            900,
+            400,
+            true,
+            false,
+            window,
+            2000,
+            null,
+            null);
+    });
 }

@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBAGE.bodb_report.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBAGE.bodb_report.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBAGE.bodb_report.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_Statement" DbName="DBAGE2.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE2.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14_xtest" DbName="DBRPT.bodb_Report.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old_xtest" DbName="DBRPT.bodb_Report.bodbAdminNet" Plain="0" />
+
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old_xtest" DbName="DBARC.bodb_Archive.bodbAdminNet" Plain="0" />
+    
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 </Functions>

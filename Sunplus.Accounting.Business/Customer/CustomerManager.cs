@@ -2411,7 +2411,7 @@ namespace Sunplus.Accounting.Business.Customer
                 string statementLink = string.Empty;
                 if (!isInternal)
                 {
-                    statementLink = "Statement/CustomerStatement.aspx?custname={custname}";
+                    statementLink = "Statement/CustomerStatement.aspx?custname={custname}&isinternal=" + isInternal;
                 }
                 else
                 {

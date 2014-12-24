@@ -4,6 +4,11 @@ var StatementReportManager = function () {
     self.Enums = {
         RoleId: {
             Member: 1
+        },
+        TransactionType: {
+            WinLoss: 1,
+            VoidCancelled: 2,
+            Outstanding: 3
         }
     };
     self.Constants = {
@@ -32,8 +37,7 @@ var StatementReportManager = function () {
     self.checkCriteria = function (criteria) {
         var newLayoutFromDate = new Date(newLayoutDate);
         if (new Date(criteria.fromDate) < newLayoutFromDate &&
-            newLayoutFromDate < new Date(criteria.toDate)) {
-            // jQuery('#GridContainer').addClass("display-none");
+            newLayoutFromDate <= new Date(criteria.toDate)) {
             alert(statementResources.Invalid_Date_Range);
             return false;
         }
@@ -67,7 +71,7 @@ var StatementReportManager = function () {
     };
     self.getStatementReport = function (criteria) {
         self.cachedData.statementReportCriteria = criteria;
-        var url = domain + 'Statement/StatementReport/GetCustomerInfo';
+        var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
         if (criteria.custId == 0) {
             self.callAjax(url, criteria, self.completeLoadCustomerInfo);
             return;
@@ -93,7 +97,7 @@ var StatementReportManager = function () {
     };
 
     self.getSMAStatementReport = function (criteria) {
-        var url = domain + 'Statement/StatementReport/SMAStatement';
+        var url = domain + 'NapStatement/StatementReport/SMAStatement';
         self.callAjax(url, criteria, self.renderSMAStatementReport);
     };
     self.renderSMAStatementReport = function (rs) {
@@ -126,8 +130,8 @@ var StatementReportManager = function () {
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="column-winloss"' + dataRowIndex + '>' +
-                                    statement.WinLoss.Value +
+                               ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                    numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
                         },
@@ -229,7 +233,10 @@ var StatementReportManager = function () {
                 itemsPerPageArray: [10, 50, 100, 500],
                 currentPage: 0,
                 startPerPage: 50,
-                pageStep: 50
+                pageStep: 50,
+                afterPagedFunction: function () {
+                    self.bindGridEvent();
+                }
             }
         };
 
@@ -253,7 +260,7 @@ var StatementReportManager = function () {
 
     self.getMemberStatementReport = function (criteria) {
         self.cachedData.statementReportCriteria = criteria;
-        var url = domain + 'Statement/StatementReport/MemberStatement';
+        var url = domain + 'NapStatement/StatementReport/MemberStatement';
         self.callAjax(url, criteria, self.renderMemberStatementReport);
     };
     self.renderMemberStatementReport = function (rs) {
@@ -266,6 +273,7 @@ var StatementReportManager = function () {
             for (var i = 0; i < statementListLength; i++) {
                 var dataRowIndex = ' data-rowindex="' + i + '"';
                 var statement = rs.StatementList[i];
+                var canViewBetList = new Date(balanceUpDay) <= new Date(statement.StatementDateString);
                 var currentRow = {
                     Columns: [
                         {
@@ -291,24 +299,31 @@ var StatementReportManager = function () {
                         {
                             Name: "ColVoid_Cancelled",
                             Value: statement.VoidCancelled.HasData ?
-                               ('<div class="column-void-cancelled"' + dataRowIndex + '>' +
-                                    statement.VoidCancelled.Value +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-void-cancelled ' : '') +
+                                    (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') +
+                                    '"' + dataRowIndex + '>' +
+                                    numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
                             Name: "ColOutstanding",
                             Value: statement.Outstanding.HasData ?
-                               ('<div class="column-outstanding"' + dataRowIndex + '>' +
-                                    statement.Outstanding.Value +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-outstanding ' : '') +
+                                    (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                    numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="column-winloss"' + dataRowIndex + '>' +
-                                    statement.WinLoss.Value +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-winloss ' : '') +
+                                    (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                    numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
                         },
@@ -426,7 +441,10 @@ var StatementReportManager = function () {
                 itemsPerPageArray: [10, 50, 100, 500],
                 currentPage: 0,
                 startPerPage: 50,
-                pageStep: 50
+                pageStep: 50,
+                afterPagedFunction: function () {
+                    self.bindGridEvent();
+                }
             }
         };
 
@@ -445,25 +463,27 @@ var StatementReportManager = function () {
         });
         reportGrid.find(".column-void-cancelled").click(function () {
             var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex);
+            self.viewBetList(rowIndex, self.Enums.TransactionType.VoidCancelled);
         });
         reportGrid.find(".column-outstanding").click(function () {
             var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex);
+            self.viewBetList(rowIndex, self.Enums.TransactionType.Outstanding);
         });
         reportGrid.find(".column-winloss").click(function () {
             var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex);
+            self.viewBetList(rowIndex, self.Enums.TransactionType.WinLoss);
         });
     };
     self.viewTransferDetails = function (rowIndex) {
         var statement = self.cachedData.statementReport.StatementList[rowIndex];
-        var url = domain + 'Statement/StatementReport/TransferDetails';
+        var url = domain + 'NapStatement/StatementReport/TransferDetails';
         var criteria = {
             CustId: self.cachedData.statementReportCriteria.custId,
             RoleId: self.cachedData.statementReportCriteria.roleId,
             TransferDate: statement.StatementDateString,
-            Username: self.cachedData.statementReportCriteria.username
+            Username: self.cachedData.statementReportCriteria.username,
+            BalanceUpDate: balanceUpDay,
+            SiteName: 'NAP'
         };
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
@@ -476,7 +496,7 @@ var StatementReportManager = function () {
             });
         }
     };
-    self.viewBetList = function (rowIndex) {
+    self.viewBetList = function (rowIndex, transactionType) {
         var statement = self.cachedData.statementReport.StatementList[rowIndex];
         if (self.eventFunction.viewBetListFunction) {
             self.eventFunction.viewBetListFunction({
@@ -486,7 +506,8 @@ var StatementReportManager = function () {
                 width: 900,
                 height: 600,
                 custId: self.cachedData.statementReportCriteria.custId,
-                statementDate: statement.StatementDateString
+                statementDate: statement.StatementDateString,
+                transactionType: transactionType
             });
         }
     };
@@ -494,9 +515,9 @@ var StatementReportManager = function () {
     self.exportStatementReport = function (criteria) {
         var url = domain;
         if (criteria.roleId === self.Enums.RoleId.Member) {
-            url += 'Statement/StatementReport/ExportMemberStatement?';
+            url += 'NapStatement/StatementReport/ExportMemberStatement?';
         } else {
-            url += 'Statement/StatementReport/ExportSMAStatement?';
+            url += 'NapStatement/StatementReport/ExportSMAStatement?';
         }
 
         url += jQuery.param(criteria);

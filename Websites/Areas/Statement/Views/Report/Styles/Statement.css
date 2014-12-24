@@ -30,3 +30,12 @@
 {
     color: #996600!important;
 }
+
+#GridContainer .col_header_content th > div,
+#GridContainer #tblContent_GridContainer td > div
+
+{
+    display: inline-table; 
+    height: 19px !important;
+    margin-top: 5px;
+}

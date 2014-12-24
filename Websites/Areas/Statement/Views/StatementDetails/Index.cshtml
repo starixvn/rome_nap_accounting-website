@@ -1,8 +1,9 @@
 ﻿@using Newtonsoft.Json;
 @using Fanex.Module.Statement.Models.StatementReport;
+@using Fanex.Module.Statement.Resources;
 @model StatementReportModel
 @{
-    ViewBag.Title = "Transfer Details";
+    ViewBag.Title = Labels.Transfer_Details;
     Layout = "";
     var statementReport = JsonConvert.SerializeObject(Model);
     var transferDetailsCriteria = JsonConvert.SerializeObject(ViewBag.TransferDetailsCriteria);
@@ -30,11 +31,12 @@
         var statementReport= @Html.Raw(statementReport); 
         var transferDetailsCriteria= @Html.Raw(transferDetailsCriteria); 
           var statementResources = {
-              Date: 'Date',
-              Remark: 'Remark',
-              Amount: 'Amount',
-              Symbol_NoData: '--',
-              Total: 'Total'
+              Date: '@Labels.Date',
+              Remark: '@Labels.Remark',
+              Amount: '@Labels.Amount',
+              Symbol_NoData: '@Labels.Symbol_NoData',
+              Total: '@Labels.Total',
+              Symbol_ExchangeRate: '@Labels.Symbol_ExchangeRate'
           };
     </script>
 </body>

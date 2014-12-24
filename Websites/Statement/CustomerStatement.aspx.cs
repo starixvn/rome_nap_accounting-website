@@ -13,6 +13,7 @@ using Sunplus.Accounting.Core.Web.Controls;
 using Fanex.Module.Statement.Resources;
 using Fanex.Module.Statement.Configurations;
 using Sunplus.Accounting.DataAccess.Report;
+using Fanex.Common;
 
 public partial class Statement_CustomerStatement : PageBase
 {
@@ -26,7 +27,7 @@ public partial class Statement_CustomerStatement : PageBase
     {
         try
         {
-            isInternalCustomer = AppSession.IsInternal ? 1 : 0;
+            isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
             rootUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath + "/";
 
             WebUtils.SetNoCache();

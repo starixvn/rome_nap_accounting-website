@@ -11,10 +11,10 @@
     <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-    <link rel="Stylesheet" type="text/css" href="~/App_Themes/Report/Statement.css?v=2.1" />
     <link type="text/css" rel="Stylesheet" href="~/js/jQuery/autocomplete/styles.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/_Libs/FanexGrid/Fanex.Grid.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css" />
+    <link rel="Stylesheet" type="text/css" href="~/App_Themes/Report/Statement.css?v=2.1" />
     <link rel="stylesheet" type="text/css" href="~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1" />
     <%--<link href="../js/IBCWnd/IBCWnd.css" rel="stylesheet" type="text/css" />--%>
     <%--<link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
@@ -72,7 +72,7 @@
             Date: "<%=Labels.Date%>",
             Opening_Balance: "<%=Labels.Opening_Balance%>",
             Turnover: "<%=Labels.Turnover%>",
-            Void_Cancelled: "<%=Labels.Void_Cancelled%>",
+            Void_Cancelled: '<%=(Labels.Void + "/" + Labels.Rejected)%>',
             Outstanding: "<%=Labels.Outstanding%>",
             Win_Loss: "<%=Labels.Win_Loss%>",
             Commission: "<%=Labels.Commission%>",
@@ -80,10 +80,16 @@
             Accumulated_Total: "<%=Labels.Accumulated_Total%>",
             Symbol_NoData: "<%=Labels.Symbol_NoData%>",
             Transfer_Details: "<%=Labels.Transfer_Details%>",
-            Bet_List: '<%=Labels.Bet_List%>'
+            Bet_List: '<%=Labels.Bet_List%>',
+            Statement_Guidelines: '<%=Labels.Statement_Guidelines%>'
         };
 
         GetDataReport();
+        jQuery(document).ready(function() {
+            $("#notemessage").click(function() {
+                viewGuidelines();
+            });
+        });
     </script>
     <script src="../js/jQuery/autocomplete/jquery.autocomplete.min.js" type="text/javascript"></script>
     <%--<script src="../js/IBCWnd/IBCWnd.js" type="text/javascript"></script>--%>
