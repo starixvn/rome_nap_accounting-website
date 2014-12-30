@@ -76,7 +76,10 @@ namespace Sunplus.Accounting.Business.Security
 
                         string functionName = CastAide.AsString(row["funcname"], string.Empty).ToLower();
                         int actualPolicy = CastAide.AsInt32(row["actual_policy"], 0);
-                        roleAccess.Add(functionName, actualPolicy);
+                        if (!roleAccess.ContainsKey(functionName))
+                        {
+                            roleAccess.Add(functionName, actualPolicy);
+                        }
 
                         if (string.IsNullOrEmpty(filenames))
                             continue;

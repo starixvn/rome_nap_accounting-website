@@ -56,8 +56,21 @@
         }
 
         function ViewVRHistory(CustID, UserName) {
-            var url = 'Report/Others/VRHistory.aspx?CustID=' + CustID + '&UserName=' + UserName;
-            showPopup('VIRTUAL RATE UPDATE HISTORY (' + UserName + ')', url, 0, 0, 420, 270, false, 0, null);
+            var url = 'VirtualRate/HistoryLogView?' +
+                $.param({
+                    CustId: CustID,
+                    Username: UserName
+                });
+            showPopup(
+                'VIRTUAL RATE UPDATE HISTORY (' + UserName + ')',
+                url,
+                0,
+                0,
+                1130,
+                600,
+                false,
+                0,
+                null);
         }
 
         var result = "";

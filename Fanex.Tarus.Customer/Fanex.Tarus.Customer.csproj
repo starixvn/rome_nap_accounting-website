@@ -178,6 +178,11 @@
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
+    <Compile Include="Business\VirtualRate\IVirtualRateService.cs" />
+    <Compile Include="Business\VirtualRate\UpdateTypeConstants.cs" />
+    <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
+    <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
+    <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
@@ -187,6 +192,7 @@
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
+    <Compile Include="Controller\VirtualRateController.cs" />
     <Compile Include="Criteria\AGCasino\GetAGCasinoAPIResultCriteria.cs" />
     <Compile Include="Criteria\AGCasino\GetCustomerSettingCriteria.cs" />
     <Compile Include="Criteria\AGCasino\GetCustomerStatusCriteria.cs" />
@@ -216,6 +222,9 @@
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\ViewHistoryLogCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\ViewVirtualRateCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
@@ -273,6 +282,8 @@
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
+    <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
+    <Compile Include="DataAccess\VirtualRate\VirtualRateRepository.cs" />
     <Compile Include="Entities\AGCasino\AGCasinoCustomerInfo.cs" />
     <Compile Include="Entities\AGCasino\GameType.cs" />
     <Compile Include="Entities\AGCasino\GameTypeGroup.cs" />
@@ -314,6 +325,14 @@
     <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
     <Compile Include="Entities\ViewPT\PostionTakingInfo.cs" />
+    <Compile Include="Entities\VirtualRate\CustomerVirtualRateModel.cs" />
+    <Compile Include="Entities\VirtualRate\HistoryLogDetailModel.cs" />
+    <Compile Include="Entities\VirtualRate\HistoryLogByDateModel.cs" />
+    <Compile Include="Entities\VirtualRate\HistoryLogEntity.cs" />
+    <Compile Include="Entities\VirtualRate\HistoryLogReportModel.cs" />
+    <Compile Include="Entities\VirtualRate\LogBySportEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
+    <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Customer_Labels.Designer.cs">
       <AutoGen>True</AutoGen>

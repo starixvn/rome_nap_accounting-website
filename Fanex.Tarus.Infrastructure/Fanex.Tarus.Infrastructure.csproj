@@ -107,6 +107,9 @@
     <Compile Include="Configurations\StoreProcedureGroup\UserControlSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\ViewPtSession.cs" />
     <Compile Include="Configurations\StoreProcedureSection.cs" />
+    <Compile Include="Configurations\VirtualRate\VirtualRateCollection.cs" />
+    <Compile Include="Configurations\VirtualRate\VirtualRateElement.cs" />
+    <Compile Include="Configurations\VirtualRate\VirtualRateSection.cs" />
     <Compile Include="Configurations\VirtualSportsSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constants\BetType.cs" />

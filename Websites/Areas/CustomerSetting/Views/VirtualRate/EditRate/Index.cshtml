@@ -1,0 +1,84 @@
+﻿@using Fanex.Tarus.Customer.Entities.VirtualRate;
+@using Fanex.Tarus.Customer.Resources;
+@using Newtonsoft.Json;
+@using Sunplus.Accounting.Business.Security;
+@using Sunplus.Accounting.Core.Common;
+@model CustomerVirtualRateModel
+@{
+    ViewBag.Title = Customer_Labels.Virtual_Rate;
+    Layout = "";
+    var customerVirtualRateModel = JsonConvert.SerializeObject(Model);
+    var betTypeCount = Model.BetTypeList.Count;
+    var tableColumnCount = betTypeCount * 2;
+    int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Styles/VirtualRate.less" />
+<div class="main">
+    <div class="maincontent">
+        <div id="result-message">
+        </div>
+        <div id="virtual-rate-setting-container">
+            <table id="virtual-rate-setting" cellspacing="1" class="tbllayout">
+                <thead>
+                    <tr class="title">
+                        <td colspan="@tableColumnCount">
+                            @Model.RoleName: @Model.Username
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="r" colspan="@betTypeCount">
+                            @Customer_Labels.Actual_Exchange_Rate
+                        </td>
+                        <td nowrap="true" class="b l" colspan="@betTypeCount">
+                            @Model.ActualExchangeRate
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap="true" class="r" colspan="@betTypeCount">
+                            @Customer_Labels.Apply_Virtual_Rate
+                        </td>
+                        <td nowrap="true" class="l" colspan="@betTypeCount">
+                            <input id="chk-enable" type="checkbox" value="false" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="@tableColumnCount">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="update-warning">@Customer_Labels.VirtualRate_UpdateWarning</div>
+            <input id="btnSubmit" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn"/>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Scripts/VirtualRateController.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var customerVirtualRateModel= @Html.Raw(customerVirtualRateModel); 
+        var oldCustomerVirtualRateModel= @Html.Raw(customerVirtualRateModel); 
+        var betTypeCount= @betTypeCount; 
+        var isManageVirtualRateAccess = @isManageVirtualRateAccess;
+        var viewResources = {
+            Live: '@Customer_Labels.Live',
+            Non_Live: '@Customer_Labels.Non_Live',
+            Copy: '@Customer_Labels.Copy',
+            System_Error: '@Customer_Labels.System_Error',
+            VirtualRate_UpdateConfirm:'@Customer_Labels.VirtualRate_UpdateConfirm',
+            Symbol_Percent: '@Customer_Labels.Symbol_Percent',
+            NoPermission_OnFunction: '@Customer_Labels.NoPermission_OnFunction'
+        };
+    </script>
+</div>

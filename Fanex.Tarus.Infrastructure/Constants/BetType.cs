@@ -28,5 +28,8 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int WinUKTote = 41;
 
         public const int AustraliaActtab = 1501;
+
+        public const int OddEven = 2;
+        public const int FirstOddEven = 12;
     }
 }
