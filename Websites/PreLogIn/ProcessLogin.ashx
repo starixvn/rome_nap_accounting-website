@@ -1,6 +1,7 @@
 <%@ WebHandler Language="C#" Class="ProcessLogin" %>
 
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
@@ -38,7 +39,26 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 context.Response.Write("parent.signIn.loginError('Username and Password must not be empty!');\n");
+            
+            string[] deniedUsersAccess = ConfigurationManager.AppSettings["DeniedUsersAccess"].Split(',');
+            bool deniedAccess = false;
 
+            for (int i = 0; i < deniedUsersAccess.Length; i++)
+            {
+                if (username == deniedUsersAccess[i].Trim())
+                {
+                    deniedAccess = true;
+                    break;
+                }
+            }
+            if (deniedAccess)
+            {
+                context.Session.Clear();
+                FormsAuthentication.SignOut();
+                context.Response.Write("parent.signIn.loginError('" + Resources.ErrorMsg.DenyLoginAccount + "');\n");
+                goto end;
+            }
+                
             if (LoginFailedHandler.IsLocked(username))
             {
                 context.Response.Write(LoginFailedHandler.WriteJS(username));
