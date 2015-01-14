@@ -11,7 +11,6 @@ function CustomerController($scope, $element) {
     $scope.IsAgent = false;
     $scope.IsMember = false;
     $scope.IsSuper = false;
-
     UplineRoleId = $scope.CustomerModel.uplineRoleId;
 
     switch ($scope.CustomerModel.roleId) {

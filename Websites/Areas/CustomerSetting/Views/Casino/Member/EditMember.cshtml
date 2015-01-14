@@ -144,28 +144,15 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditMemberController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
-    try {
-        //var casinoController = new CasinoController(custId, custName, IsMultiple, custIds, custNames);
-       var casinoController = new CasinoController(@Sunplus.Accounting.Core.Common.AppSession.AccId, '@Sunplus.Accounting.Core.Common.AppSession.AccUserName');
+     $(document).ready(function () {
+        //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
+        var casinoController = new CasinoController(@Sunplus.Accounting.Core.Common.AppSession.AccId, '@Sunplus.Accounting.Core.Common.AppSession.AccUserName');
 
         $('.btnUpdate').bind('click', function () {
-            casinoController.Update(function (errorCode, errorMessage) {
-//                if (errorCode == 0) {
-//                    var timeout = setTimeout(function () {
-//                        clearTimeout(timeout);
-
-//                        if (parent.document.getElementById('customerListGrid')) {
-//                            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-//                            parent.Fanex.ExtAcc.Form.Close();
-//                        }
-//                        else {
-//                            document.location.reload(true);
-//                        }
-//                    }, 2000);
-//                }
-            });
+            casinoController.Update();
         });
-    } catch (e) {
-    }
+
+        //$('.buttonPopup').remove();
+    });
 </script>
 </html>

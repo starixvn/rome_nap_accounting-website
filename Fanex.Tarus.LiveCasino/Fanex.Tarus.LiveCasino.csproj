@@ -52,7 +52,6 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    </Reference>
     <Reference Include="RemotingRef">
       <HintPath>..\Dependency\RemotingRef.dll</HintPath>
     </Reference>
