@@ -12,15 +12,19 @@ public partial class View : System.Web.UI.Page
         int _accId = AppSession.AccId;
         string _userName = AppSession.AccUserName;
         int _onUserId = AppSession.OnAccId;
-        string system = AccountingCoreAppSession.SYSTEM.ToString();
-        string strParams = string.Empty, path = string.Empty,  url = string.Empty;
+        string system = AppSession.SYSTEM.ToString();
+        string strParams = string.Empty, path = string.Empty, url = string.Empty;
         //string loginTime = Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks.ToString();
         strParams = _userName + "&" + _accId + "&" + _onUserId + "&" + system;
         path = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
-        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, path);
+        RSACryptoPad.EncryptionThread encryption = new RSACryptoPad.EncryptionThread();
+        strParams = encryption.EncryptString(strParams, 1024, path);
+
         url = NapURL() + "?loginInfo=" + strParams;
-        Response.Redirect(url);
- 
+        //url = "http://localhost:62421/BA/PreLogin/ProcessLoginBA.ashx?params=" + strParams;
+
+
+        Response.Redirect(url); 
     }
 	
 	private string NapURL()
