@@ -1929,8 +1929,6 @@ namespace Sunplus.Accounting.Business
                 default: //Agent on member
                     return GenCSHTMLAgentOnMember(tplPT, _cust, csGroup);
             }
-
-            return string.Empty;
         }
 
         /// <summary>

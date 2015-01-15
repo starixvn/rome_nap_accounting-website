@@ -2,12 +2,9 @@
 using System;
 using System.Collections;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
-using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Sunplus.Accounting.DataAccess.Provider.Report;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient

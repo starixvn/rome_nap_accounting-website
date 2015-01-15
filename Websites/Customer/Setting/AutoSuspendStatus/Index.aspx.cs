@@ -16,7 +16,6 @@ using System.Web.UI;
 using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.Entities.AutoSuspend;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// TODO: Update summary.
@@ -47,7 +46,7 @@ public partial class Customer_Setting_AutoSuspendStatus_Index : Page
         var jsonData = new ViewResources
         {
             CustomerId = custid,
-            HasHostPermission = Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend),
+            HasHostPermission = Permissions.IsAllowEditAutoSuspend(),
             CurrentRole = GetCurrentPage()
         };
 

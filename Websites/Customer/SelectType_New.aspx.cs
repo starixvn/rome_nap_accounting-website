@@ -3,9 +3,8 @@ using System;
 using System.Data;
 using System.Text;
 using DNAide.Web;
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 public partial class NewCustomer_SelectType_New : PageBase
@@ -111,7 +110,8 @@ public partial class NewCustomer_SelectType_New : PageBase
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex);
+            
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         return html.ToString();
     }
@@ -119,6 +119,7 @@ public partial class NewCustomer_SelectType_New : PageBase
     private string GenContentInput()
     {
         StringBuilder html = new StringBuilder();
+        string sysTemName = AccountingCoreAppSession.SYSTEM;
         try
         {
             GenContent(false);
@@ -140,9 +141,9 @@ public partial class NewCustomer_SelectType_New : PageBase
                     TemplateHandler.Assign(ref content, "{fSuper}", "");
                     TemplateHandler.Assign(ref content, "{fInput}", "none");
                     TemplateHandler.Assign(ref content, "{createmaster}", Resources.Language.CreateMasterAgent);
-                    TemplateHandler.Assign(ref content, "{listSuperValue}", GetListSuper(AppSession.SYSTEM));
-                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, false, false));
-                    TemplateHandler.Assign(ref content, "{listSiteValue}", CustomerUtils.GetListSite(false, AppSession.SYSTEM));
+                    TemplateHandler.Assign(ref content, "{listSuperValue}", GetListSuper(sysTemName));
+                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(sysTemName, false, false, false));
+                    TemplateHandler.Assign(ref content, "{listSiteValue}", CustomerUtils.GetListSite(false, sysTemName));
                     TemplateHandler.Assign(ref content, "{curency}", Resources.Language.Currency);
                     TemplateHandler.Assign(ref content, "{site}", Resources.Language.Site);
                     TemplateHandler.Assign(ref content, "{companydirect}", Resources.Language.CompanyDirect);
@@ -158,7 +159,7 @@ public partial class NewCustomer_SelectType_New : PageBase
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         return html.ToString();
     }
@@ -180,7 +181,7 @@ public partial class NewCustomer_SelectType_New : PageBase
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         return html.ToString();
     }

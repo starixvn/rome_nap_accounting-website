@@ -2,18 +2,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Configurations;
 using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Extensions;
-using System.Configuration;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.ViewModel;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {

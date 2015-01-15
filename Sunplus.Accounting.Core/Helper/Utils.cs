@@ -186,5 +186,9 @@ namespace Sunplus.Accounting.Core.Helper
                     return chars[0] + "." + chars[1].Substring(0, 2);
             }
         }
+
+      
+
+
     }
 }

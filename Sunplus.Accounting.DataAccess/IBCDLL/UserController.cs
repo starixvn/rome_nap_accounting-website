@@ -10,7 +10,6 @@ using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 using Encryption = DNAide.Utils.Encryption;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL

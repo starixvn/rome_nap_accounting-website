@@ -261,14 +261,8 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\Dependency\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="NetUtility">
       <HintPath>..\Dependency\NetUtility.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Core.LoggingLib">
-      <HintPath>..\Dependency\Sunplus.Core.LoggingLib.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependency\Sunplus.Libraries.AOP.dll</HintPath>
@@ -279,9 +273,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -290,13 +281,13 @@
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
+      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
+      <Name>Sunplus.Data.DataAbstract</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
       <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>

@@ -59,9 +59,6 @@
     <Reference Include="FluentValidation">
       <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation.resources">
-      <HintPath>..\Dependency\Fanex\FluentValidation.resources.dll</HintPath>
-    </Reference>
     <Reference Include="NotifyPropertyChanged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\LiveCasino\NotifyPropertyChanged.dll</HintPath>

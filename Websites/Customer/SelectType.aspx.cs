@@ -2,15 +2,15 @@
 using System;
 using System.Data;
 using System.Text;
-
 using DNAide.Web;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Business;
 
 public partial class NewCustomer_SelectType : PageBase
 {
+  
     private string content = "";
     private string strSelect = "";
 
@@ -141,9 +141,9 @@ public partial class NewCustomer_SelectType : PageBase
                     TemplateHandler.Assign(ref content, "{fSuper}", "");
                     TemplateHandler.Assign(ref content, "{fInput}", "none");
                     TemplateHandler.Assign(ref content, "{createmaster}", Resources.Language.CreateMasterAgent);
-                    TemplateHandler.Assign(ref content, "{listSuperValue}", GetListSuper(AppSession.SYSTEM));
-                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, false, false));
-                    TemplateHandler.Assign(ref content, "{listSiteValue}", CustomerUtils.GetListSite(false, AppSession.SYSTEM));
+                    TemplateHandler.Assign(ref content, "{listSuperValue}", GetListSuper(AccountingCoreAppSession.SYSTEM));
+                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, false, false));
+                    TemplateHandler.Assign(ref content, "{listSiteValue}", CustomerUtils.GetListSite(false, AccountingCoreAppSession.SYSTEM));
                     TemplateHandler.Assign(ref content, "{curency}", Resources.Language.Currency);
                     TemplateHandler.Assign(ref content, "{site}", Resources.Language.Site);
                     TemplateHandler.Assign(ref content, "{companydirect}", Resources.Language.CompanyDirect);

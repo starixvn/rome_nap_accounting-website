@@ -1,9 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DefaultSetting.aspx.cs" Inherits="Customer_PT_Poker_DefaultSetting" %>
-<%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Poker Default Setting</title>
@@ -25,7 +21,7 @@
     <script src="JS/PokerData.js" type="text/javascript"></script>
     <script type="text/javascript" src="JS/DefaultSetting.js"></script>
     <script>
-        var maxSComm=<%=PokerSection.Instance[PokerSection.PokerCollections.DefaultSetting]["supercom"].Max %>;
+        var maxSComm = 0.67;
     </script>
 </head>
 <body>

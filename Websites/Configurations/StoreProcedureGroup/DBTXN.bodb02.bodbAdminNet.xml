@@ -3,12 +3,12 @@
 
   <Function Name="Helper">
     <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
-	
+
   </Function>
   
   <Function Name="Report">
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
-  </Function> 
+  </Function>
 
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
@@ -85,7 +85,7 @@
     
   </Function>
 
-  <Function Name="Exchange Daily">    
+  <Function Name="Exchange Daily">
     <Setting Key="Acc_ExchangeUpdateBaseRate" SpName="Acc_ExchangeUpdateBaseRate" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
@@ -98,7 +98,7 @@
     <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
 
   </Function>
-	
+
   <Function Name="Customer - HR">
     <Setting Key="Acc_CustomerUpdMember_MinMaxBetHR" SpName="Acc_CustomerUpdMember_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdAgent_MinMaxBetHR" SpName="Acc_CustomerUpdAgent_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
@@ -109,12 +109,12 @@
     <Setting Key="Acc_CustomerUpdDisableOpenTote" SpName="Acc_CustomerUpdDisableOpenTote" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
-  
+
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>	
   
   <Function Name="PT Setting Information">
-        <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

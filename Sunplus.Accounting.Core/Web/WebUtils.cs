@@ -7,6 +7,7 @@ using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
+using DNAide.Core;
 
 namespace Sunplus.Accounting.Core.Web
 {
@@ -227,5 +228,15 @@ namespace Sunplus.Accounting.Core.Web
         }
 
         #endregion Load template
+
+        public static bool visibleP2P()
+        {
+            return CastAide.AsBoolean(PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"].Value);
+        }
+
+        public static bool enableVirtualSport()
+        {
+            return WebSettings.EnableVirtualSports;
+        }
     }
 }

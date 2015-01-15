@@ -445,7 +445,6 @@ namespace Sunplus.Accounting.Business.Settlement
                 }
                 throw ex;
             }
-            return rs;
         }
 
         public static DbResult RefundMultiple(int custID, int matchID)

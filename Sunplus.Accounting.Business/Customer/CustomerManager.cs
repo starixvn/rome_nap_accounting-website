@@ -1522,7 +1522,7 @@ namespace Sunplus.Accounting.Business.Customer
         {
             try
             {
-                string s = WebUtils.LoadTemplate("settingitem.htm");
+                string s = WebUtils.LoadTemplate("specialstatus.htm");
                 TemplateHandler.Assign(ref s, "{name}", name);
                 TemplateHandler.Assign(ref s, "{onmouseout}", string.Empty);
                 TemplateHandler.Assign(ref s, "{onmouseover}", string.Empty);
@@ -2703,7 +2703,7 @@ namespace Sunplus.Accounting.Business.Customer
             var result = new Result();
             if (uplineInfo.IsUplineSyncCasino)
             {
-                //System.Threading.Thread.Sleep(2000);
+                System.Threading.Thread.Sleep(3000);
                 var csService = new PT.Casino.CasinoManager();
                 //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
 

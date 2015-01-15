@@ -60,7 +60,7 @@
                     </tr>
                      <tr class="title1">
                         <td  class="l">Bet Setting </td>
-                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateBetSetting, click: function(){pokerManager.pokerVM.updateBetSetting(true)},style:{display:isShowBtSave ? '':'none'}" /></td>
+                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateBetSetting, click: function(){pokerManager.pokerVM.updateBetSetting(true)}" /></td>
                     </tr>
                      <tr>
                         <td class="l">Member max. transfer credit</td>
@@ -74,7 +74,7 @@
                     </tr>
                     <tr class="title1">
                         <td  class="l">Game Setting </td>
-                        <td colspan="3" class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){pokerManager.pokerVM.updateGameSetting(false)},style:{display:isShowBtSave ? '':'none'}" /></td>
+                        <td colspan="3" class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){pokerManager.pokerVM.updateGameSetting(false)}" /></td>
                     </tr>
                     <tr>
                         <td class="l b">Game Type</td>
@@ -92,7 +92,7 @@
                     {{/each}}
                     <tr class="title1">
                         <td  class="l">Commission</td>
-                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateCommission, click: function(){pokerManager.pokerVM.updateCommission(true)},style:{display:isShowBtSave ? '':'none'}" /></td>
+                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateCommission, click: function(){pokerManager.pokerVM.updateCommission(true)}" /></td>
                     </tr>
                      <tr>
                         <td></td>
@@ -107,7 +107,7 @@
                     <tr>   
                     {{/each}}                
                 </table>
-                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker},style:{display:isShowBtSave ? '':'none'}" />
+                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
                
             </script>
         </div>
@@ -128,8 +128,7 @@
         var custId=<%=custId%>;
         var roleId=<%=roleId%>;
         var isDisabled=<%=isDisabled%>;
-        var msgDisabled='<%=msgDisabled%>';
-       var isShowBtSave = <%=(Enumerations.AccountingSystem.EXTERNAL==AppSession.CurrentSystemNAME) ? "false":"true" %>; 
+        var msgDisabled='<%=msgDisabled%>';       
         $(function () {
             pokerData.getCustomerSetting(custId,roleId);
         });

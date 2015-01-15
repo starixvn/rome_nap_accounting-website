@@ -9,20 +9,16 @@ namespace Fanex.Tarus.ExchangeRate.Business
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Drawing;
     using System.Linq;
     using System.Web;
-
+    using DNAide.Core;
+    using ExcelUtil.Spreadsheet;
     using Fanex.Tarus.ExchangeRate.DataAccess;
     using Fanex.Tarus.ExchangeRate.Entities;
-    using DNAide.Core;
-
-    using ExcelUtil.Spreadsheet;
-
     using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.Accounting.Core.Configurations;
-    using System.Configuration;
 
     /// <summary>
     /// TODO: Update summary.

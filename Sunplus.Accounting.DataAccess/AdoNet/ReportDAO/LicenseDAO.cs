@@ -4,13 +4,10 @@ using System.Collections;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Core.LoggingLib;
 using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.DataAccess.IReportDAO;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {

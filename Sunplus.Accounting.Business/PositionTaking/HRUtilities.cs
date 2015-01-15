@@ -7,17 +7,13 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Accounting.Entities;
+using Fanex.Data;
+using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 using Sunplus.Accounting.Core.Web;
-using IBCUtils;
-using Fanex.Data;
+using Sunplus.Accounting.Entities;
+using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 /// <summary>
 /// Summary description for FinanceManager
 /// </summary>

@@ -421,7 +421,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return "err|" + ex.Message;
             }
-            return string.Empty;
         }
 
         public static string EditLogActionType(string actionTypeID, string txtEN, string txtCH, string txtCS,
@@ -451,7 +450,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return "err|" + ex.Message;
             }
-            return string.Empty;
         }
     }
 }
