@@ -342,14 +342,14 @@ var VirtualRateController = function () {
                     '[liveType="' + self.Constants.LiveType.Live + '"]' +
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
-                    customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = parseInt(liveRate) / 100;
+                    customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = parseInt(liveRate) / 100 + 1;
 
                     var nonliveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sport.Id) + '"]' +
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
-                    customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = parseInt(nonliveRate) / 100;
+                    customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = parseInt(nonliveRate) / 100 + 1;
                 }
             }
 

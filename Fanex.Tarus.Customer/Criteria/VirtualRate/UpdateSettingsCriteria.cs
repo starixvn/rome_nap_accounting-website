@@ -115,7 +115,7 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
                 for (var j = 0; j < betTypeCount; j++)
                 {
                     var betType = BetTypeList[j];
-                    var liveRate = sportVirtualRate.LiveVirtualRate[j].PercentRate + 1;
+                    var liveRate = sportVirtualRate.LiveVirtualRate[j].PercentRate;
                     var oldLiveRate = LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate;
                     var virtualMultiplierFormat = "<Rate SportType=\"{0}\" BetType=\"{1}\" IsLive=\"{2}\" VirtualMultiplier=\"{3}\" /> ";
                     if (liveRate != oldLiveRate)
@@ -128,7 +128,7 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
                             liveRate);
                     }
 
-                    liveRate = sportVirtualRate.NonLiveVirtualRate[j].PercentRate + 1;
+                    liveRate = sportVirtualRate.NonLiveVirtualRate[j].PercentRate;
                     oldLiveRate = LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate;
                     if (liveRate != oldLiveRate)
                     {

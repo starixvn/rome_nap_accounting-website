@@ -73,7 +73,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         {
             try
             {
-                // Result updateResult = new Result();
                 Result updateResult = _virtualRateRepository.UpdateSettings(criteria);
                 if (updateResult.ErrorCode == 0)
                 {

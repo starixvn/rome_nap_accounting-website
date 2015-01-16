@@ -560,7 +560,6 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 else
                                 {
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
                                     TemplateHandler.RemoveBlock(ref balanceinfo, "AllowGiven");
                                 }
 
