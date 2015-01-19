@@ -2,10 +2,12 @@
 
 namespace Fanex.Tarus.Infrastructure.Constants
 {
-    #region SportConstants
+    using Fanex.Tarus.Infrastructure.Resource;
 
     public static class Sports
     {
+        public const int OtherSports = 99;
+
         public const int Soccer = 1;
         public const int HorseRacing = 151;
         public const int Financials = 201;
@@ -52,7 +54,24 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int Criket = 27;
         public const int VirtualSoccer = 180;
         public const int Darts = 25;
-    }
 
-    #endregion SportConstants
+
+        /// <summary>
+        /// Gets the sport name.
+        /// </summary>
+        /// <param name="sportId">The sport identifier.</param>
+        /// <returns>The sport name.</returns>
+        public static string SportName(int sportId)
+        {
+            switch (sportId)
+            {
+                case Soccer:
+                    return Labels.Soccer;
+                case OtherSports:
+                    return Labels.Other_Sports;
+                default:
+                    return string.Empty;
+            }
+        }
+    }
 }

@@ -9,7 +9,7 @@
   </Function>
 
   <Function Name="Customer">
-    <Setting Key="CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>    
+    <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>    
   </Function>
 
   <Function Name="Customer - Log">
@@ -22,7 +22,7 @@
   </Function>
 
   <Function Name="Report - WinLoss">
-    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
 
   <Function Name="Live Casino - Stake Level Setting">

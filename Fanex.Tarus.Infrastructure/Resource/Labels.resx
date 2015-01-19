@@ -264,4 +264,10 @@
   <data name="Virtual_All_Total" xml:space="preserve">
     <value>Virtual All Total</value>
   </data>
+  <data name="Other_Sports" xml:space="preserve">
+    <value>Other Sports</value>
+  </data>
+  <data name="Soccer" xml:space="preserve">
+    <value>Soccer</value>
+  </data>
 </root>

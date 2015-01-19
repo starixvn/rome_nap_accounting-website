@@ -117,14 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actual_Exchange_Rate" xml:space="preserve">
+    <value>Actual Exchange Rate</value>
+  </data>
   <data name="Agent" xml:space="preserve">
     <value>Agent</value>
+  </data>
+  <data name="Apply_Virtual_Rate" xml:space="preserve">
+    <value>Apply Virtual Rate</value>
   </data>
   <data name="Bingo" xml:space="preserve">
     <value>Bingo</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Changed_by" xml:space="preserve">
+    <value>Changed by</value>
   </data>
   <data name="ConfigureDirectAccount_ChangeStatus_UpdateSuccess" xml:space="preserve">
     <value>Direct account status updated successfully!</value>
@@ -162,14 +171,17 @@
   <data name="ConfigureDirectAccount_ViewEffectMessage" xml:space="preserve">
     <value>This action will affect &lt;span id="number-effected-cust" class="b"&gt;X&lt;/span&gt; customers.&lt;span id="view-update-effect" class="link" &gt;Click here&lt;/span&gt; to view in details!</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="Direct_Account_Template" xml:space="preserve">
     <value>Direct Account Template</value>
   </data>
-  <data name="Error_NoPermission" xml:space="preserve">
-    <value>You are not authorized on this function.</value>
-  </data>
-  <data name="Direct_Account_Template" xml:space="preserve">
-    <value>Direct Account Template</value>
+  <data name="Enabled_Virtual_Rate" xml:space="preserve">
+    <value>Enabled Virtual Rate</value>
   </data>
   <data name="Error_NoPermission" xml:space="preserve">
     <value>You are not authorized on this function.</value>
@@ -177,8 +189,14 @@
   <data name="Error_SystemError" xml:space="preserve">
     <value>There is a problem! Please try again!</value>
   </data>
+  <data name="HDP" xml:space="preserve">
+    <value>HDP</value>
+  </data>
   <data name="Import_Direct_Account" xml:space="preserve">
     <value>Import Direct Account</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
@@ -198,11 +216,20 @@
   <data name="Message_NoData" xml:space="preserve">
     <value>There is no data.</value>
   </data>
+  <data name="Non_Live" xml:space="preserve">
+    <value>Non-Live</value>
+  </data>
+  <data name="OE" xml:space="preserve">
+    <value>OE</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Open_File" xml:space="preserve">
     <value>Open File</value>
+  </data>
+  <data name="OU" xml:space="preserve">
+    <value>OU</value>
   </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
@@ -210,11 +237,17 @@
   <data name="Reason" xml:space="preserve">
     <value>Reason</value>
   </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
+  </data>
+  <data name="Symbol_False" xml:space="preserve">
+    <value>False</value>
   </data>
   <data name="Symbol_Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -222,10 +255,52 @@
   <data name="Symbol_No" xml:space="preserve">
     <value>#</value>
   </data>
+  <data name="Symbol_Percent" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="Symbol_True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="System_Error" xml:space="preserve">
+    <value>There is a problem! Please try again!</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="Update_Now" xml:space="preserve">
     <value>Update Now!</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="VirtualRate_UpdateConfirm" xml:space="preserve">
+    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?</value>
+  </data>
+  <data name="VirtualRate_UpdateSuccess" xml:space="preserve">
+    <value>Virtual rate setting updated successfully</value>
+  </data>
+  <data name="Virtual_Rate" xml:space="preserve">
+    <value>Virtual Rate</value>
+  </data>
+  <data name="_1stHDP" xml:space="preserve">
+    <value>1st HDP</value>
+  </data>
+  <data name="_1stOE" xml:space="preserve">
+    <value>1st OE</value>
+  </data>
+  <data name="_1stOU" xml:space="preserve">
+    <value>1st OU</value>
+  </data>
+  <data name="There_is_no_data" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
+  <data name="VirtualRate_UpdateWarning" xml:space="preserve">
+    <value>Note: Update will take effect to all downlines</value>
+  </data>
+  <data name="ClickToViewPTInfo" xml:space="preserve">
+    <value>Click To View PT Info</value>
+  </data>
+  <data name="NoPermission_OnFunction" xml:space="preserve">
+    <value>You are not authorized to this function</value>
   </data>
 </root>

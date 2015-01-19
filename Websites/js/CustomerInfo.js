@@ -228,9 +228,22 @@ function openMinMaxPtPanel(url) {
 }
 
 function OpenEditVirtualExRate(id, uname, type) {
-    var url = "Customer/EditVirtualExRate.aspx?custId=" + id + "&uname=" + uname + "&type=" + type + "&iscustinfo=yes";
-    showPopup('Edit VirtualRate', url, 0, 0, 300, 180, true, 2000, null);
-    //window.open(url, "ExitMaxEx", "height=160,width=300,top=200,left=200");
+    var url = "VirtualRate/Index?" +
+        $.param({
+            custId: id,
+            username: uname,
+            roleName: type
+        });
+    showPopup(
+        'Edit Virtual Rate',
+        url,
+        0,
+        0,
+        900,
+        600,
+        true,
+        2000,
+        null);
 }
 
 function OpenCloseMenuDangerous() {

@@ -1,0 +1,75 @@
+﻿
+#virtual-rate-setting-container
+{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#virtual-rate-setting
+{
+    width: 875px;
+    .sport-title
+    {    
+       font-weight: bold;
+       td
+       {
+            background-color: #b5c4d0;
+        }
+    }
+    
+    .first-column
+    {
+        width: 120px;
+    }
+    
+    .bettype-separator-column
+    {
+        width: 20px;
+    }
+    
+    .bettypevalue-column
+    {
+        width: 80px;
+        &[disabled="disabled"]
+        {
+            background-color: #C3C3C3;
+            select
+            {
+                background-color: #C3C3C3;
+            }
+        }
+    }
+}
+
+#btnSubmit
+{
+    margin-top: 10px;
+    margin-left: 420px;
+}
+
+.icon-copy-setting {
+    background: url("Images/copy-icon.png") no-repeat scroll right top transparent;
+    border: medium none;
+    cursor: pointer;
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    margin: 2px 2px 0 0;
+    padding: 0;
+    width: 20px;
+}
+
+.icon-copy-setting.icon-copy-setting-checked {
+    background: url("Images/checked-copy-icon.png") no-repeat scroll right top transparent;
+}
+
+.icon-copy-setting[disabled] 
+{
+    cursor: default;
+}
+
+.update-warning
+{
+    margin-top: 3px;
+    font-size: 11px;
+}

@@ -278,7 +278,6 @@ namespace Sunplus.Accounting.Business.Customer
                             string pwdExpiryDate = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : Convert.ToDateTime(row1["pwdexpiry"]).ToShortDateString();
                             string pwdExpiryTime = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : " " + Convert.ToDateTime(row1["pwdexpiry"]).ToShortTimeString();
                             decimal credit = Convert.ToDecimal(row1["credit"]);
-                            decimal virtualRate = Convert.ToDecimal(row1["virtualmultiplier"]);
                             decimal actualRate = Convert.ToDecimal(row1["actualrate"]);
                             string currency = row1["currency"].ToString();
                             bool important = Convert.IsDBNull(row1["important"]) ? false : Convert.ToBoolean(row1["important"]);
@@ -299,10 +298,6 @@ namespace Sunplus.Accounting.Business.Customer
                             string fax = row1["fax"] + "";
                             string nickname = CastAide.AsString(row1["username2"], string.Empty);
 
-
-                            virtualRate = virtualRate * 100;
-                            actualRate = (virtualRate + 100) * actualRate / 100;
-                            string vRate = ((virtualRate > 0) ? "+" : string.Empty) + IBCUtils.FormatHandler.FormatNumber4(virtualRate) + " (" + IBCUtils.FormatHandler.FormatNumber4(actualRate) + ")";
                             if (row3 != null && roleId <= 4)
                             {
                                 lastTxnDate = Convert.IsDBNull(row3["lastTxn"]) ? "" : Convert.ToDateTime(row3["lastTxn"]).ToShortDateString();
@@ -540,7 +535,6 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 bool isManageCustomerAccess = Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust); // 4: id of [Customer] function
                                 bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
-                                bool isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate); // [VirtualRate]
                                 TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((cash >= 0) ? " b" : " hilight"));
 
                                 TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((yesterdayCash >= 0) ? " b" : " hilight"));
@@ -566,25 +560,24 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 else
                                 {
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
                                     TemplateHandler.RemoveBlock(ref balanceinfo, "AllowGiven");
                                 }
 
-                                if (isManageVirtualRateAccess)
-                                {
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", "return OpenEditVirtualExRate(" + custId + ",'" + userName + "','" + AccCommon.GetRoleName(roleId) + "');");
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", "canchange");
-                                }
-                                else
-                                {
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", string.Empty);
-                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
-                                }
+                                bool isEnableVirtuaRate = CastAide.AsDecimal(row1["EnableVirtualRate"]) != 0;
+                                var virtualRateClass = "canchange";
+                                var virtualRateText = isEnableVirtuaRate ? "Edit" : "Disabled";
+                                var virtualRateOnclick =
+                                    "return OpenEditVirtualExRate(" + custId + ",'" +
+                                        userName + "','" +
+                                        AccCommon.GetRoleName(roleId) + "');";
+                                var virtualRateTitle = "Click to Edit";
+                                TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", virtualRateClass);
+                                TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", virtualRateOnclick);
+                                TemplateHandler.Assign(ref balanceinfo, "{VirtualRate}", virtualRateText);
+                                TemplateHandler.Assign(ref balanceinfo, "{virtualRateTitle}", virtualRateTitle);
+
                                 TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", currency + " ");
                                 TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", credit));
-
-                                TemplateHandler.Assign(ref balanceinfo, "{VirtualRate}", vRate);
-
                                 if (roleId > 1)
                                 {
                                     TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
@@ -956,7 +949,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
                                 TemplateHandler.Assign(ref htmlcontent, "{bingoLinkSetting}", bingoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
-                                TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting );
+                                TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
 
