@@ -197,9 +197,12 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
                     foreach (var data in sportGroup)
                     {
-                        var betTypeIndex = betTypeIndexList[data.BetType];
-                        historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
-                        historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
+                        if (betTypeIndexList.ContainsKey(data.BetType))
+                        {
+                            var betTypeIndex = betTypeIndexList[data.BetType];
+                            historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
+                            historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
+                        }
                     }
 
                     historyLogDetailList.Add(historyLogDetail);

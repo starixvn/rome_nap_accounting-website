@@ -61,12 +61,14 @@
                     CustId: CustID,
                     Username: UserName
                 });
+            var width = $(window.parent || window).width();
+            var maxWidth = 1770;
             showPopup(
                 'VIRTUAL RATE UPDATE HISTORY (' + UserName + ')',
                 url,
                 0,
                 0,
-                1130,
+                width > maxWidth ? maxWidth : width,
                 600,
                 false,
                 0,
