@@ -130,6 +130,13 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     goto end;
                 }
                 AuthManager.AssignRoles(custId);
+                if (AppSession.RoleAccess.Count < 1) //limit user have no permission access 
+                {
+                    context.Session.Clear();
+                    FormsAuthentication.SignOut();
+                    context.Response.Write("parent.signIn.loginError('" + Resources.ErrorMsg.DenyLoginAccount + "');\n");
+                    goto end;
+                }
 
                 context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl.Replace("https", "http") + "';\n");
                 IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
