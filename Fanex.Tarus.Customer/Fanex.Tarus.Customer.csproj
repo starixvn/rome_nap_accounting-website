@@ -325,6 +325,7 @@
     <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
     <Compile Include="Entities\ViewPT\PostionTakingInfo.cs" />
+    <Compile Include="Entities\VirtualRate\BetTypeModel.cs" />
     <Compile Include="Entities\VirtualRate\CustomerVirtualRateModel.cs" />
     <Compile Include="Entities\VirtualRate\HistoryLogDetailModel.cs" />
     <Compile Include="Entities\VirtualRate\HistoryLogByDateModel.cs" />

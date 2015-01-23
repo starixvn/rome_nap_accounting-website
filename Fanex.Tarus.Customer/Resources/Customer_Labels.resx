@@ -303,4 +303,16 @@
   <data name="NoPermission_OnFunction" xml:space="preserve">
     <value>You are not authorized to this function</value>
   </data>
+  <data name="Bet_Type" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="Live_NonLive" xml:space="preserve">
+    <value>Live/Non-Live</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
 </root>

@@ -26,6 +26,8 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
 
         public int LiveType { get; set; }
 
+        public List<BetTypeModel> BetTypeList { get; set; }
+
         public List<VirtualRateModel> VirtualRate { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
     using System.Globalization;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Customer.Constants;
-    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Infrastructure.Helper;
@@ -37,8 +36,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
         public decimal MinVirtualRate { get; set; }
 
         public string ActualExchangeRate { get; set; }
-
-        public List<BaseModel> BetTypeList { get; set; }
 
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
 
@@ -108,41 +105,71 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             var paramXML = "<ROOT>";
 
             var sportCount = SportVirtualRateList.Count;
-            var betTypeCount = BetTypeList.Count;
             for (var i = 0; i < sportCount; i++)
             {
                 var sportVirtualRate = SportVirtualRateList[i];
+                var betTypeCount = sportVirtualRate.BetTypeList.Count;
                 for (var j = 0; j < betTypeCount; j++)
                 {
-                    var betType = BetTypeList[j];
-                    var liveRate = sportVirtualRate.LiveVirtualRate[j].PercentRate;
-                    var oldLiveRate = LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate;
+                    var betType = sportVirtualRate.BetTypeList[j];
                     var virtualMultiplierFormat = "<Rate SportType=\"{0}\" BetType=\"{1}\" IsLive=\"{2}\" VirtualMultiplier=\"{3}\" /> ";
-                    if (liveRate != oldLiveRate)
-                    {
-                        paramXML += string.Format(
-                            virtualMultiplierFormat,
-                            sportVirtualRate.Id,
-                            betType.Id,
-                            LiveTypeConstants.Live,
-                            liveRate);
-                    }
 
-                    liveRate = sportVirtualRate.NonLiveVirtualRate[j].PercentRate;
-                    oldLiveRate = LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate;
-                    if (liveRate != oldLiveRate)
-                    {
-                        paramXML += string.Format(
-                            virtualMultiplierFormat,
-                            sportVirtualRate.Id,
-                            betType.Id,
-                            LiveTypeConstants.NonLive,
-                            liveRate);
-                    }
+                    paramXML += AddBetTypeParam(
+                        sportVirtualRate.LiveVirtualRate[j],
+                        LastSettings.SportVirtualRateList[i].LiveVirtualRate[j],
+                        sportVirtualRate.Id,
+                        betType,
+                        LiveTypeConstants.Live,
+                        virtualMultiplierFormat);
+                    paramXML += AddBetTypeParam(
+                        sportVirtualRate.NonLiveVirtualRate[j],
+                        LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j],
+                        sportVirtualRate.Id,
+                        betType,
+                        LiveTypeConstants.NonLive,
+                        virtualMultiplierFormat);
                 }
             }
 
             paramXML += "</ROOT>";
+            return paramXML;
+        }
+
+        /// <summary>
+        /// Adds the bet type parameter.
+        /// </summary>
+        /// <param name="liveRate">The live rate.</param>
+        /// <param name="oldLiveRate">The old live rate.</param>
+        /// <param name="sportId">The sport identifier.</param>
+        /// <param name="betType">Type of the bet.</param>
+        /// <param name="liveType">Type of the live.</param>
+        /// <param name="virtualMultiplierFormat">The virtual multiplier format.</param>
+        /// <returns>
+        /// The bet type parameter.
+        /// </returns>
+        private string AddBetTypeParam(
+            VirtualRateModel liveRate,
+            VirtualRateModel oldLiveRate,
+            int sportId,
+            BetTypeModel betType,
+            int liveType,
+            string virtualMultiplierFormat)
+        {
+            var paramXML = string.Empty;
+            if (liveRate.PercentRate == oldLiveRate.PercentRate)
+            {
+                return paramXML;
+            }
+
+            paramXML += string.Format(virtualMultiplierFormat, sportId, betType.Id, liveType, liveRate.PercentRate);
+            if (betType.MultiBetTypes != null && betType.MultiBetTypes.Length > 0)
+            {
+                for (var k = 0; k < betType.MultiBetTypes.Length; k++)
+                {
+                    paramXML += string.Format(virtualMultiplierFormat, sportId, betType.MultiBetTypes[k], liveType, liveRate.PercentRate);
+                }
+            }
+
             return paramXML;
         }
     }

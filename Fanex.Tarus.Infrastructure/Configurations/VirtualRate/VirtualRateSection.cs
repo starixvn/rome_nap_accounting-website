@@ -26,16 +26,18 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        [ConfigurationProperty("BetTypes", IsDefaultCollection = false)]
+        [ConfigurationProperty("Sports", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(VirtualRateCollection),
             AddItemName = "add",
             ClearItemsName = "clear",
             RemoveItemName = "remove")]
-        public VirtualRateCollection BetTypes
+        public VirtualRateCollection Sports
         {
             get
             {
-                return (VirtualRateCollection)base["BetTypes"];
+                var sportsCollection =
+                    (VirtualRateCollection)base["Sports"];
+                return sportsCollection;
             }
         }
     }

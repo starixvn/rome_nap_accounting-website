@@ -32,8 +32,6 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
 
         public string ActualExchangeRate { get; set; }
 
-        public List<BaseModel> BetTypeList { get; set; }
-
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
     }
 }

@@ -234,14 +234,12 @@ function OpenEditVirtualExRate(id, uname, type) {
             username: uname,
             roleName: type
         });
-    var width = $(window.parent || window).width();
-    var maxWidth = 1500;
     showPopup(
         'Edit Virtual Rate',
         url,
         0,
         0,
-        width > maxWidth ? maxWidth : width,
+        830,
         600,
         true,
         2000,

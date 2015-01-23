@@ -115,6 +115,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Type.
+        /// </summary>
+        public static string Bet_Type {
+            get {
+                return ResourceManager.GetString("Bet_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bingo.
         /// </summary>
         public static string Bingo {
@@ -286,6 +295,24 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled Virtual Rate.
         /// </summary>
         public static string Enabled_Virtual_Rate {
@@ -336,6 +363,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Live {
             get {
                 return ResourceManager.GetString("Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live/Non-Live.
+        /// </summary>
+        public static string Live_NonLive {
+            get {
+                return ResourceManager.GetString("Live_NonLive", resourceCulture);
             }
         }
         
