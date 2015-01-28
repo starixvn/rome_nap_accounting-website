@@ -1,0 +1,150 @@
+﻿/* Begin General */
+table.fn-rs
+{
+    clear: both;
+    width: 99%;
+    border-right: 1px solid #7C98A4;
+    border-top: 1px solid #7C98A4;
+    border-collapse: collapse;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    cursor: default;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0px;
+}
+
+table.fn-rs tr.header th:first-child
+{
+    border-left: 1px solid #7C98A4;
+}
+
+table.fn-rs tr.header th
+{
+    background: -moz-linear-gradient(#B5C4D0, #B5C4D0) #B5C4D0;
+    background: #B5C4D0;
+    background: -webkit-linear-gradient(#B5C4D0, #B5C4D0) #B5C4D0;
+    color: #000;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-top: 1px solid #7C98A4;
+    border-right: 1px solid #7C98A4;
+    border-bottom: 1px solid #7C98A4;
+    font-size: 1em;
+    font-weight: bold;
+    height: 21px;
+    overflow: hidden;
+    padding: 2px;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+table.fn-rs tr.data
+{
+}
+
+table.fn-rs tr.data:hover
+{
+    background: none;
+}
+
+table.fn-rs tr.data td, table.fn-rs tr.row-noinfo td
+{
+    border-left: 1px solid #7C98A4;
+    border-bottom: 1px solid #7C98A4;
+    font-size: 1em;
+    height: 22px;
+    padding: 2px;
+    vertical-align: middle;
+    color: #222222;
+    white-space: normal;
+    border-color: #7C98A4;
+}
+
+table.fn-rs tr.data td.cl-ht-score, 
+table.fn-rs tr.data td.cl-f-score, 
+table.fn-rs tr.data td.cl-status, 
+table.fn-rs tr.data td.cl-totalgames, 
+table.fn-rs tr.data td.cl-totalset, 
+table.fn-rs tr.data td.cl-s,
+table.fn-rs tr.data td.cl-ei,
+table.fn-rs tr.row-noinfo td
+{
+    font-weight: bold;
+}
+
+table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover
+{
+    color: #222222;
+}
+
+table.fn-rs tbody .cl-match.home, table.fn-rs tbody .cl-match.away
+{
+    color: #222222;
+}
+
+table.fn-rs .cl-ko-time {
+}
+
+table.fn-rs .cl-ht-score, table.fn-rs .cl-f-score {
+    width: 95px;
+}
+
+/* End General */
+
+/* Begin Parlay Popup */
+.fn-rs-popup.parlay
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 690px;
+}
+
+.fn-rs-popup.parlay .sporttype .bl-sport-type 
+{
+    color: #0066cc;
+}
+/* End Parlay Popup */
+
+/* Begin Header Title */
+table.fn-rs thead th.cl-title
+{
+    background-color: #ffffff;
+    font-weight: bold;
+    border-left: 1px solid #7c98a4;
+    border-right: 1px solid #7c98a4;
+}
+
+table.fn-rs thead th.cl-title .sport
+{
+    color: #0066cc;
+}
+/* End Header Title */
+
+/* Begin Number Game */
+table.number-game span.ball
+{
+    padding: 0;
+}
+/* End Number Game */
+
+/* Begin Horse Racing */
+table.racing .cl-race
+{
+    width: 191px;
+}
+
+div.fn-rs-content-header 
+{
+    border: 0px none;
+    padding-right: 0px;
+}
+
+div.fn-rs-content-scroll
+{
+    overflow-y: inherit;
+}
+/* End Horse Racing */

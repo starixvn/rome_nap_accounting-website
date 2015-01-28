@@ -48,9 +48,6 @@
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core">
-      <HintPath>..\packages\Fanex.BetList.Core.2.0.5.8\lib\net40\Fanex.BetList.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
@@ -58,6 +55,13 @@
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core">
+      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -86,12 +90,47 @@
   <ItemGroup>
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\Results\IVirtualTennisResultService.cs" />
+    <Compile Include="Business\Results\VirtualTennisResultService.cs" />
+    <Compile Include="Business\Results\IRacingResultService.cs" />
+    <Compile Include="Business\Results\RacingResultService.cs" />
+    <Compile Include="Business\Results\IVirtualRacingResultService.cs" />
+    <Compile Include="Business\Results\VirtualRacingResultService.cs" />
+    <Compile Include="Business\Results\INumberGamePopupResultService.cs" />
+    <Compile Include="Business\Results\NumberGamePopupResultService.cs" />
+    <Compile Include="Business\Results\ILiveCasinoPopupResultService.cs" />
+    <Compile Include="Business\Results\LiveCasinoPopupResultService.cs" />
+    <Compile Include="Business\Results\IParlayResultService.cs" />
+    <Compile Include="Business\Results\ParlayResultService.cs" />
+    <Compile Include="Business\Results\IScoreInformationService.cs" />
+    <Compile Include="Business\Results\ScoreInformationService.cs" />
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetLiveCasinoPopupResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetRacingResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetScoreInformationCriteria.cs" />
+    <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IRacingResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\RacingResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IVirtualRacingResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\VirtualRacingResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\INumberGamePopupResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\NumberGamePopupResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\ILiveCasinoPopupResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\LiveCasinoPopupResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IParlayResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\ParlayResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IScoreInformationDataAccess.cs" />
+    <Compile Include="DataAccess\Results\ScoreInformationDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\ISportingSolutionsDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
@@ -138,6 +177,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\BetListResources.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,8 +6,9 @@
 <head id="Head1">
     <title>Mix Parlay Result</title>
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
-    <link rel="Stylesheet" type ="text/css" href ="../App_Themes/BetList/Betlist.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result-customized.css"/>
     <script type="text/javascript">
         window.onload = function() {
         ibcWnd = parent.ibcWnd;
@@ -33,30 +34,5 @@
     </div>
     <div id = "parlayDiv">
    </div>
-    
 </body>
-   <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
-  <script type="text/javascript">
-      $.ajax({
-          type: "POST",
-          url: rootUrl + "BetList/GetResultParlay",
-          data: 'refno=' + refno,
-          success: function (result) {
-              $("#parlayDiv").append(result);
-              if ((typeof numOfLeague != 'undefined') && numOfLeague - _numberLeageOfTennis == 0) {                
-                  $("#aspResult").empty();
-              }
-
-              if (_numberLeageOfTennis == 0) {
-                  $("#parlayDiv").empty();
-              }
-          },
-          error: function () {
-              try { parent.jQuery.unblockUI(); } catch (e) { }
-          },
-          complete: function () {
-              try { parent.jQuery.unblockUI(); } catch (e) { }
-          }
-      });
-    </script>
 </html>
