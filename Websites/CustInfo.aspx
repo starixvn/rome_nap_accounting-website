@@ -285,7 +285,7 @@
             var title = 'Update Enable Keno';
             var url = 'CustomerSetting/keno/enablestatus/index?id=' + id + '&uplineId=' + uplineid + '&roleId=' + roleid + '&subAccountId=' + subAccountId + '&userid=' + userid;
             var width = 480;
-            var height = 400;
+            var height = 450;
             parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
         }
         function updateAGCasinoStatus(id, roleIds) {
