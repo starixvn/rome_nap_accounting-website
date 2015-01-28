@@ -20,9 +20,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         {
             get
             {
-                var virtualRateSection =
-                    ConfigurationManager.GetSection("VirtualRateSection") as VirtualRateSection;
-                return virtualRateSection;
+                return ConfigurationManager.GetSection("VirtualRateSection") as VirtualRateSection;
             }
         }
 
@@ -35,9 +33,20 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         {
             get
             {
-                var sportsCollection =
-                    (VirtualRateCollection)base["Sports"];
-                return sportsCollection;
+                return (VirtualRateCollection)base["Sports"];
+            }
+        }
+
+        [ConfigurationProperty("Functions", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(VirtualRateCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public VirtualRateCollection Functions
+        {
+            get
+            {
+                return (VirtualRateCollection)base["Functions"];
             }
         }
     }

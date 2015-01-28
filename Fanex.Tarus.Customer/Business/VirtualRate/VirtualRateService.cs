@@ -15,10 +15,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     using System.Linq;
     using System.Xml.Linq;
     using Fanex.Common;
+    using Fanex.Tarus.Customer.Business.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
+    using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.DataAccess.VirtualRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Resources;
     using Fanex.Tarus.Infrastructure.Constants;
     using Fanex.Tarus.Infrastructure.Extensions;
@@ -30,14 +33,19 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     {
         private readonly IVirtualRateRepository _virtualRateRepository;
 
+        private readonly IUploadVirtualRateService _uploadVirtualRateService;
+
         public VirtualRateService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public VirtualRateService(IVirtualRateRepository virtualRateRepository)
+        public VirtualRateService(
+            IVirtualRateRepository virtualRateRepository,
+            IUploadVirtualRateService uploadVirtualRateService)
         {
             _virtualRateRepository = virtualRateRepository ?? new VirtualRateRepository();
+            _uploadVirtualRateService = uploadVirtualRateService ?? new UploadVirtualRateService();
         }
 
         /// <summary>
@@ -139,6 +147,16 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             }
 
             return null;
+        }
+
+        public void DownloadImportRateTemplate()
+        {
+            _uploadVirtualRateService.DownloadImportRateTemplate();
+        }
+
+        public UploadResult UpdateImportRate(UpdateImportRateCriteria criteria)
+        {
+            return _uploadVirtualRateService.UpdateImportRate(criteria);
         }
 
         /// <summary>

@@ -403,6 +403,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose an Excel file to update:.
+        /// </summary>
+        public static string Message_ChooseExcelFileToUpdate {
+            get {
+                return ResourceManager.GetString("Message_ChooseExcelFileToUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click here to download template.
         /// </summary>
         public static string Message_DownloadTemplate {
@@ -421,11 +430,47 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File Size limit 1 MB.
+        /// </summary>
+        public static string Message_FileSizeLimit_UploadVirtualRate {
+            get {
+                return ResourceManager.GetString("Message_FileSizeLimit_UploadVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no data..
         /// </summary>
         public static string Message_NoData {
             get {
                 return ResourceManager.GetString("Message_NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no information available..
+        /// </summary>
+        public static string Message_NoInfo {
+            get {
+                return ResourceManager.GetString("Message_NoInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Virtual Rate.
+        /// </summary>
+        public static string New_Virtual_Rate {
+            get {
+                return ResourceManager.GetString("New_Virtual_Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -444,6 +489,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string NoPermission_OnFunction {
             get {
                 return ResourceManager.GetString("NoPermission_OnFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
             }
         }
         
@@ -610,6 +664,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Virtual Rate.
+        /// </summary>
+        public static string Upload_Virtual_Rate {
+            get {
+                return ResourceManager.GetString("Upload_Virtual_Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -651,6 +714,204 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string VirtualRate_UpdateWarning {
             get {
                 return ResourceManager.GetString("VirtualRate_UpdateWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is empty.
+        /// </summary>
+        public static string VirtualRate_UploadFile_EmptyCusomer {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_EmptyCusomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your upload file Size must be &lt;= 1 MB.
+        /// </summary>
+        public static string VirtualRate_UploadFile_ExceedFileSize {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_ExceedFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of accounts with Virtual Rates cannot be updated.
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidAlert {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, you choose invalid file extension. Please choose an Excel file..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidExtension {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data is emty.
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidFormat {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Excel file is not in correct format..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidFormatFile {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidFormatFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Excel file must contain 13 columns as template file. Addtionally, Sheet name must be Sheet1..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidFormatFile_Note {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidFormatFile_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Live/Non-Live value..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidLiveType {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidLiveType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find column 1..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidNumberOfColumn {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidNumberOfColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Excel file must contain 13 columns as template file. Addtionally, Sheet name must be Sheet1..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidNumberOfColumn_Note {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidNumberOfColumn_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual rate must be in a range from -80% to +60% and be multiples of 5%..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidRate {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Sport value..
+        /// </summary>
+        public static string VirtualRate_UploadFile_InvalidSport {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_InvalidSport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate must be a number.
+        /// </summary>
+        public static string VirtualRate_UploadFile_NotNumberRate {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_NotNumberRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren&apos;t supported by Soccer sport type..
+        /// </summary>
+        public static string VirtualRate_UploadFile_NotSupportBetType {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_NotSupportBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times..
+        /// </summary>
+        public static string VirtualRate_UploadFile_RepeatBetType {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_RepeatBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sheet1.
+        /// </summary>
+        public static string VirtualRate_UploadFile_SheetName {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_SheetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated successfully.
+        /// </summary>
+        public static string VirtualRate_UploadFile_Success {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot update Virtual Rate. Please try again or contact the administrator..
+        /// </summary>
+        public static string VirtualRate_UploadFile_SystemError {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_SystemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VR_Upload_Template.
+        /// </summary>
+        public static string VirtualRate_UploadFile_TemplateName {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_TemplateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to update virtual rate for multiple customers?.
+        /// </summary>
+        public static string VirtualRate_UploadFile_UpdateConfirm {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_UpdateConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated successfully except these accounts with Virtual Rate values below cannot be updated. Please try again or contact the administrator..
+        /// </summary>
+        public static string VirtualRate_UploadFile_UpdateFailedSomeAccounts {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_UpdateFailedSomeAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of accounts with Virtual Rates can be updated.
+        /// </summary>
+        public static string VirtualRate_UploadFile_ValidAlert {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_ValidAlert", resourceCulture);
             }
         }
     }

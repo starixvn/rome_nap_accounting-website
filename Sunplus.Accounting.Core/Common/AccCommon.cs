@@ -813,7 +813,6 @@ namespace Sunplus.Accounting.Core.Common
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-            return null;
         }
 
         public static bool IsValidExtension(string fileName, ref string ext)

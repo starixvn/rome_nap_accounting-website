@@ -180,11 +180,48 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         }
 
         /// <summary>
+        /// Gets the bet types type list by function name.
+        /// </summary>
+        /// <param name="functionName">Name of the function.</param>
+        /// <returns>
+        /// The bet types type list by function name.
+        /// </returns>
+        public static List<BetTypeModel> BetTypeListByFunctionName(string functionName)
+        {
+            var result = new List<BetTypeModel>();
+            var virtualRateBetTypes = VirtualRateSection.Instance.Functions[functionName].BetTypes;
+            foreach (VirtualRateElement betType in virtualRateBetTypes)
+            {
+                if (!betType.Active)
+                {
+                    continue;
+                }
+
+                var betTypeModel = new BetTypeModel
+                {
+                    Id = Converter.ToInt(betType.Id)
+                };
+
+                betTypeModel.Name = ShortBetTypeName(betTypeModel.Id);
+                if (!string.IsNullOrEmpty(betType.MultiBetTypes))
+                {
+                    var betTypeIdList = betType.MultiBetTypes.Split(new char[] { ',' });
+                    betTypeModel.MultiBetTypes = betTypeIdList.Select(id => Converter.ToInt(id)).ToArray();
+                    betTypeModel.MultiBetTypeNames = betTypeModel.MultiBetTypes.Select(id => ShortBetTypeName(id)).ToArray();
+                }
+
+                result.Add(betTypeModel);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the short name of the bet type.
         /// </summary>
         /// <param name="betType">Type of the bet.</param>
         /// <returns>The short name of the bet type.</returns>
-        private static string ShortBetTypeName(int betType)
+        public static string ShortBetTypeName(int betType)
         {
             switch (betType)
             {
@@ -210,7 +247,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         /// </summary>
         /// <param name="sportId">The sport identifier.</param>
         /// <returns>The sport name key.</returns>
-        private static string SportNameKey(int sportId)
+        public static string SportNameKey(int sportId)
         {
             switch (sportId)
             {

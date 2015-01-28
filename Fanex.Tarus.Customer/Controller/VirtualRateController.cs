@@ -12,6 +12,7 @@ namespace Fanex.Tarus.Customer.Controller
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.VirtualRate;
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
+    using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
@@ -40,6 +41,12 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
+        public ActionResult UploadVirtualRateView()
+        {
+            return View("~/Areas/CustomerSetting/Views/VirtualRate/UploadRate/Index.cshtml");
+        }
+
+        [AuthenticateRead]
         public ActionResult HistoryLogView(ViewHistoryLogCriteria criteria)
         {
             HistoryLogReportModel result = _virtualRateService.HistoryLog(criteria);
@@ -51,6 +58,19 @@ namespace Fanex.Tarus.Customer.Controller
         {
             var result = _virtualRateService.UpdateSettings(criteria);
             return Json(result);
+        }
+
+        public ActionResult DownloadImportRateTemplate()
+        {
+            _virtualRateService.DownloadImportRateTemplate();
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public JsonResult UpdateImportRate(UpdateImportRateCriteria criteria)
+        {
+            return Json(_virtualRateService.UpdateImportRate(criteria));
         }
     }
 }

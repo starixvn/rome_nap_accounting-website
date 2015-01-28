@@ -315,4 +315,91 @@
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="Message_ChooseExcelFileToUpdate" xml:space="preserve">
+    <value>Choose an Excel file to update:</value>
+  </data>
+  <data name="Message_FileSizeLimit_UploadVirtualRate" xml:space="preserve">
+    <value>File Size limit 1 MB</value>
+  </data>
+  <data name="Upload_Virtual_Rate" xml:space="preserve">
+    <value>Upload Virtual Rate</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidFormat" xml:space="preserve">
+    <value>Data is emty</value>
+  </data>
+  <data name="VirtualRate_UploadFile_EmptyCusomer" xml:space="preserve">
+    <value>Username is empty</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidLiveType" xml:space="preserve">
+    <value>Invalid Live/Non-Live value.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidSport" xml:space="preserve">
+    <value>Invalid Sport value.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidRate" xml:space="preserve">
+    <value>Virtual rate must be in a range from -80% to +60% and be multiples of 5%.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_NotNumberRate" xml:space="preserve">
+    <value>Virtual Rate must be a number</value>
+  </data>
+  <data name="VirtualRate_UploadFile_NotSupportBetType" xml:space="preserve">
+    <value>Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren't supported by Soccer sport type.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_ExceedFileSize" xml:space="preserve">
+    <value>Your upload file Size must be &lt;= 1 MB</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidExtension" xml:space="preserve">
+    <value>Sorry, you choose invalid file extension. Please choose an Excel file.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidFormatFile" xml:space="preserve">
+    <value>The Excel file is not in correct format.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidFormatFile_Note" xml:space="preserve">
+    <value>Your Excel file must contain 13 columns as template file. Addtionally, Sheet name must be Sheet1.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidNumberOfColumn" xml:space="preserve">
+    <value>Cannot find column 1.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidNumberOfColumn_Note" xml:space="preserve">
+    <value>Your Excel file must contain 13 columns as template file. Addtionally, Sheet name must be Sheet1.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_SheetName" xml:space="preserve">
+    <value>Sheet1</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Message_NoInfo" xml:space="preserve">
+    <value>There is no information available.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_ValidAlert" xml:space="preserve">
+    <value>List of accounts with Virtual Rates can be updated</value>
+  </data>
+  <data name="New_Virtual_Rate" xml:space="preserve">
+    <value>New Virtual Rate</value>
+  </data>
+  <data name="VirtualRate_UploadFile_InvalidAlert" xml:space="preserve">
+    <value>List of accounts with Virtual Rates cannot be updated</value>
+  </data>
+  <data name="VirtualRate_UploadFile_RepeatBetType" xml:space="preserve">
+    <value>This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_TemplateName" xml:space="preserve">
+    <value>VR_Upload_Template</value>
+  </data>
+  <data name="VirtualRate_UploadFile_UpdateConfirm" xml:space="preserve">
+    <value>Are you sure you want to update virtual rate for multiple customers?</value>
+  </data>
+  <data name="VirtualRate_UploadFile_Success" xml:space="preserve">
+    <value>Updated successfully</value>
+  </data>
+  <data name="VirtualRate_UploadFile_SystemError" xml:space="preserve">
+    <value>Cannot update Virtual Rate. Please try again or contact the administrator.</value>
+  </data>
+  <data name="VirtualRate_UploadFile_UpdateFailedSomeAccounts" xml:space="preserve">
+    <value>Updated successfully except these accounts with Virtual Rate values below cannot be updated. Please try again or contact the administrator.</value>
+  </data>
 </root>

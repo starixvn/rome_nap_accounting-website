@@ -44,6 +44,7 @@ namespace Fanex.Tarus.Customer.Entities
         private const string FontName = "Tahoma";
         private const string IntNumberFormat = "#,##0";
         private const string TwoDecimalDigitNumber = "##,##0.00";
+        private const string IntPercentNumber = "#,##0%";
         private const string NegativeNumberFormat = "[>=0]#,##0{0}_);[RED][<0]-#,##0{1}";
         private const string NormalNumberFormat = "#,##0{0}_);-#,##0{1}";
         private const string PositiveNumberFormat = "[RED][>0]#,##0{0}_);[<0]-#,##0{1};#,##0{2}";
@@ -144,6 +145,23 @@ namespace Fanex.Tarus.Customer.Entities
             short fontColor = 8)
         {
             return StyleWithFormula(excelFile, cellColor, bold, TwoDecimalDigitNumber, fontColor);
+        }
+
+        /// <summary>
+        /// Style for integer percent value.
+        /// </summary>
+        /// <param name="excelFile">The excel file.</param>
+        /// <param name="cellColor">The cell color.</param>
+        /// <param name="bold">Check bold.</param>
+        /// <param name="fontColor">The font color.</param>
+        /// <returns>The cell style.</returns>
+        public static ICellStyle IntPercentStyle(
+            HSSFWorkbook excelFile,
+            short cellColor,
+            bool bold,
+            short fontColor = 8)
+        {
+            return StyleWithFormula(excelFile, cellColor, bold, IntPercentNumber, fontColor);
         }
 
         /// <summary>

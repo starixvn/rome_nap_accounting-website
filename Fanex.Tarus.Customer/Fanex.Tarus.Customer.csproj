@@ -154,6 +154,7 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
@@ -178,12 +179,17 @@
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
+    <Compile Include="Business\VirtualRate\UploadRate\IUploadVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\IVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\UpdateTypeConstants.cs" />
+    <Compile Include="Business\VirtualRate\UploadRate\UploadVirtualRateExcelService.cs" />
+    <Compile Include="Business\VirtualRate\UploadRate\UploadVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
     <Compile Include="Constants\LiveTypeConstants.cs" />
+    <Compile Include="Constants\LiveTypeNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
+    <Compile Include="Constants\SportNameConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
@@ -223,6 +229,10 @@
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\UploadRate\DeleteTempRateCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\UploadRate\InsertTempRateCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\UploadRate\UpdateImportRateCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewHistoryLogCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewVirtualRateCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
@@ -283,6 +293,8 @@
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
+    <Compile Include="DataAccess\VirtualRate\UploadRate\IUploadRateRepository.cs" />
+    <Compile Include="DataAccess\VirtualRate\UploadRate\UploadRateRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\VirtualRateRepository.cs" />
     <Compile Include="Entities\AGCasino\AGCasinoCustomerInfo.cs" />
     <Compile Include="Entities\AGCasino\GameType.cs" />
@@ -333,6 +345,11 @@
     <Compile Include="Entities\VirtualRate\HistoryLogReportModel.cs" />
     <Compile Include="Entities\VirtualRate\LogBySportEntity.cs" />
     <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
+    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateInfo.cs" />
+    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResult.cs" />
+    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResultGroup.cs" />
+    <Compile Include="Entities\VirtualRate\UploadRate\CheckImportResult.cs" />
+    <Compile Include="Entities\VirtualRate\UploadRate\UploadResult.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Customer_Labels.Designer.cs">

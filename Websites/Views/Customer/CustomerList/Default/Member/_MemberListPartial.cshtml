@@ -242,8 +242,10 @@
         @if (CastAide.AsBoolean(hash["IsVisibleVirtualRate"]))
         {
             <td>
-                <div class="table-cell c" style="width: 60px; height: 18px;">
-                    <a onclick="OpenEditVirtualExRate('@memberItem.ChildID','@memberItem.UserName','Member',true,'@Model.ParentId')">@memberItem.VirtualRate</a></div>
+                <div class="table-cell" style="width: 60px; height: 18px;">
+                   <span title="Edit" onclick="OpenEditVirtualExRate('@memberItem.ChildID','@memberItem.UserName','Member',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
+                    </span>
+                </div>
             </td>
         }
         <td>

@@ -15,7 +15,6 @@ namespace Sunplus.Accounting.Core.Extensions
 
     public static class LogExtensions
     {
-        private static BackgroundWorker _worker = null;
         private static Queue<Exception> _queueEx = new Queue<Exception>();
         /**
          * Function: Exception Handler

@@ -10,8 +10,10 @@
 namespace Fanex.Tarus.Customer.Business.VirtualRate
 {
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
+    using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
 
     public interface IVirtualRateService
     {
@@ -20,5 +22,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         Result UpdateSettings(UpdateSettingsCriteria criteria);
 
         HistoryLogReportModel HistoryLog(ViewHistoryLogCriteria criteria);
+
+        void DownloadImportRateTemplate();
+
+        UploadResult UpdateImportRate(UpdateImportRateCriteria criteria);
     }
 }

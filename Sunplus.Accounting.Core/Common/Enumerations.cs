@@ -150,7 +150,8 @@ namespace Sunplus.Accounting.Core.Common
                 ResetMaxTransfer,
                 AutoSuspend,
                 AGCasino,
-                ConfigureDirectAccount
+                ConfigureDirectAccount,
+                UploadVR
             }
 
             public enum Transfer

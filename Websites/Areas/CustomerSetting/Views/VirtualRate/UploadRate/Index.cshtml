@@ -1,0 +1,395 @@
+﻿@using Fanex.Tarus.Customer.Entities.VirtualRate;
+@using Fanex.Tarus.Customer.Resources;
+@using Newtonsoft.Json;
+@using Fanex.Tarus.Business.Implement;
+@using Sunplus.Accounting.Core.Common;
+@{    
+    ViewBag.Title = Customer_Labels.Virtual_Rate;
+    Layout = "";
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.UploadVR);
+    var userId = AppSession.AccId;
+
+    var numberColumnSuccess = 6;
+    var numberColumnFailed = 7;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/LeftPanel/left_panel.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/VirtualRate/UploadRate/Styles/UploadRate.less" />
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL">
+            </td>
+            <td class="maincontent_headerC">
+                @Customer_Labels.Upload_Virtual_Rate
+            </td>
+            <td class="maincontent_headerR">
+            </td>
+        </tr>
+    </table>
+    <div class="maincontent_box">
+        <div class="box-upload-content">
+            <table class="uploadFileContainer" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="b l">
+                        @Customer_Labels.Message_ChooseExcelFile
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l">
+                        <form id="file-upload-form" method="post" enctype="multipart/form-data" action="../Areas/CustomerSetting/Views/VirtualRate/UploadRate/UploadHandler.ashx"
+                        target="upload_iframe">
+                        <input id="file-upload-control" name="file-upload-control" size="85" type="file" />
+                        <input id="button-open-file" class="btn" type="btn" name="action" value="@Customer_Labels.Open_File" />
+                        <input id="button-update" class="btn" type="btn" name="action" value="@Customer_Labels.Update_Now" disabled="disabled" />
+                        <input id="AccId_UploadFile" name="AccId" type="hidden" />
+                        <iframe id="upload_target" name="upload_iframe"></iframe>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l">
+                        <span class="label-filesize-limit">
+                            @Customer_Labels.Message_FileSizeLimit_UploadVirtualRate</span> <a class="link-download-excel-template b">@Customer_Labels.Message_DownloadTemplate</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="check-import-result-box bg_table display-none">
+        <div id="result-message" class="display-none">
+        </div>
+        <div id="result-message-note" class="display-none">
+        </div>
+        <table class="table-group">
+            <tr>
+                <td colspan="2">
+                    <div class="updatefailed-records-table-container freegrid display-none">
+                        <div class="col_header row-headers-background scroll-y">
+                            <div class="header-container">
+                                <table class="grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid-container container">
+                            <div class="content-container">
+                                <table id="updatefailed-records-table" class="updatefailed-records-table grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="success-records-table-container freegrid display-none">
+                        <div class="col_header row-headers-background scroll-y">
+                            <div class="header-container">
+                                <table class="grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@numberColumnSuccess" class="l b success-title">
+                                                <div class="success-label">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid-container container">
+                            <div class="content-container">
+                                <table id="success-records-table" class="success-records-table grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@numberColumnSuccess" class="l b success-title">
+                                                <div class="success-label">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="failed-records-table-container freegrid display-none">
+                        <div class="col_header row-headers-background scroll-y">
+                            <div class="header-container">
+                                <table class="grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@numberColumnFailed" class="l b error-title">
+                                                <div class="error-label">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-reason">
+                                                    @Customer_Labels.Reason
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="grid-container container">
+                            <div class="content-container">
+                                <table id="failed-records-table" class="failed-records-table grid-fixed-table col_header_content">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@numberColumnFailed" class="l b error-title">
+                                                <div class="error-label">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="table-cell column-header-no ">
+                                                    @Customer_Labels.Symbol_No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-username">
+                                                    @Customer_Labels.Username
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-sport">
+                                                    @Customer_Labels.Sport
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-bettype">
+                                                    @Customer_Labels.Bet_Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-livetype">
+                                                    @Customer_Labels.Live_NonLive
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-virtualrate">
+                                                    @string.Format("{0} ({1})", Customer_Labels.New_Virtual_Rate, Customer_Labels.Symbol_Percent)
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell column-header-reason">
+                                                    @Customer_Labels.Reason
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script type="text/javascript" src="~/js/JQuery/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/AjaxForm/ajax-form.js"></script>
+    <script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/UploadRate/Scripts/UploadRateController.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var userId = @userId;
+        var hasHostPermission = @(hasHostPermission ? 1 : 0);
+        var numberColumnSuccess = @numberColumnSuccess;
+        var numberColumnFailed = @numberColumnFailed;
+        
+        var viewResources = {
+            Error_NoPermission: '@Customer_Labels.Error_NoPermission',
+            Error_SystemError: '@Customer_Labels.Error_SystemError',
+            Symbol_Percent: '@Customer_Labels.Symbol_Percent',
+            Notes: '@Customer_Labels.Notes',
+            Message_NoInfo: '@Customer_Labels.Message_NoInfo',
+            VirtualRate_UploadFile_ValidAlert: '@Customer_Labels.VirtualRate_UploadFile_ValidAlert',
+            VirtualRate_UploadFile_InvalidAlert: '@Customer_Labels.VirtualRate_UploadFile_InvalidAlert',
+            VirtualRate_UploadFile_UpdateConfirm: '@Customer_Labels.VirtualRate_UploadFile_UpdateConfirm'
+        };
+    </script>
+</div>
