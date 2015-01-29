@@ -442,7 +442,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         SportName = group.Key.SportName,
                         LiveTypeName = group.Key.LiveTypeName,
                         BetTypeName = group.Key.BetTypeName,
-                        VirtualRateString = "-"
+                        VirtualRateString = string.Empty
                     });
 
                     continue;
