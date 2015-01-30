@@ -72,5 +72,12 @@ namespace Fanex.Tarus.Customer.Controller
         {
             return Json(_virtualRateService.UpdateImportRate(criteria));
         }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public JsonResult DeleteTempRate()
+        {
+            return Json(_virtualRateService.DeleteTempRate());
+        }
     }
 }

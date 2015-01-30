@@ -11,6 +11,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
 {
     using System.Web;
     using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
 
     public interface IUploadVirtualRateService
@@ -20,5 +21,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         void DownloadImportRateTemplate();
 
         UploadResult UpdateImportRate(UpdateImportRateCriteria criteria);
+
+        Result DeleteTempRate();
     }
 }

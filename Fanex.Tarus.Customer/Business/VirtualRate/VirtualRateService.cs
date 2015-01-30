@@ -159,6 +159,11 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             return _uploadVirtualRateService.UpdateImportRate(criteria);
         }
 
+        public Result DeleteTempRate()
+        {
+            return _uploadVirtualRateService.DeleteTempRate();
+        }
+
         /// <summary>
         /// Parses the history log.
         /// </summary>

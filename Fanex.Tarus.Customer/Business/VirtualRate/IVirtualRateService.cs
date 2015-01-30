@@ -26,5 +26,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         void DownloadImportRateTemplate();
 
         UploadResult UpdateImportRate(UpdateImportRateCriteria criteria);
+
+        Result DeleteTempRate();
     }
 }

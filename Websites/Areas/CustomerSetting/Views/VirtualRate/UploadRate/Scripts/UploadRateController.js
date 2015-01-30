@@ -127,6 +127,8 @@ var UploadRateController = function () {
         buttonUpdate.click(function () {
             self.updateImporRate();
         });
+
+        window.onunload = self.deleteTempRate;
     };
     self.uploadFile = function () {
         self.blockUI();
@@ -427,6 +429,14 @@ var UploadRateController = function () {
             freezeWidth: 0,
             numberFreezeCol: 0
         });
+    };
+    self.deleteTempRate = function () {
+        self.CallAjax(self,
+            window.rootUrl + "VirtualRate/DeleteTempRate",
+            {},
+            null,
+            null,
+            null);
     };
 };
 

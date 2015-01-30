@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
     using Fanex.Tarus.Customer.Constants;
     using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.DataAccess.VirtualRate.UploadRate;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Resources;
@@ -212,6 +213,26 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     ResultCode = ErrorCode.SYSTEM_ERROR,
                     ResultMessage = Customer_Labels.VirtualRate_UploadFile_SystemError
                 };
+            }
+        }
+
+        /// <summary>
+        /// Deletes the temporary rate.
+        /// </summary>
+        /// <returns>Delete result.</returns>
+        public Result DeleteTempRate()
+        {
+            try
+            {
+                return _uploadRateRepository.DeleteTempRate(new DeleteTempRateCriteria
+                {
+                    UserId = AppSession.AccId
+                });
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                throw;
             }
         }
 
