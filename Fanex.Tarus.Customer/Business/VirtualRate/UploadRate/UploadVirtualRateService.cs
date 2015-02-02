@@ -153,7 +153,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         {
             try
             {
-                var overRowPerUpdating = 101;
+                var overRowPerUpdating = 10;
                 var totalPage = (criteria.TotalSuccessRow / overRowPerUpdating) +
                     (criteria.TotalSuccessRow % overRowPerUpdating != 0 ? 1 : 0);
                 CheckImportResult checkImportResult = new CheckImportResult
@@ -175,7 +175,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     {
                         var startIndex = i * pageSize;
                         var endIndex = startIndex + pageSize;
-                        for (var j = startIndex; j < endIndex; j++)
+                        for (var j = startIndex; j < endIndex && j < criteria.SuccessRecords.Count; j++)
                         {
                             checkImportResult.FailedInfoList.Add(criteria.SuccessRecords[j]);
                         }

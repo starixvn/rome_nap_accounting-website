@@ -211,7 +211,7 @@ var UploadRateController = function () {
                 var groupLength = group.ImportVirtualRateResultList.length;
                 for (var j = 0; j < groupLength; j++) {
                     var importInfo = group.ImportVirtualRateResultList[j];
-                    htmlContent += '<tr>';
+                    htmlContent += '<tr class="' + (i % 2 == 1 ? 'even-row' : '') + '">';
                     if (j == 0) {
                         htmlContent +=
                             '<td class="c" rowspan="' + groupLength + '"><div class="column-body-no">' + (i + 1) + '</div></td>\
@@ -273,7 +273,7 @@ var UploadRateController = function () {
                 var groupLength = group.ImportVirtualRateResultList.length;
                 for (var j = 0; j < groupLength; j++) {
                     var importInfo = group.ImportVirtualRateResultList[j];
-                    htmlContent += '<tr>';
+                    htmlContent += '<tr class="' + (i % 2 == 1 ? 'even-row' : '') + '">';
                     if (j == 0) {
                         htmlContent +=
                             '<td class="c" rowspan="' + groupLength + '"><div class="column-body-no">' + (i + 1) + '</div></td>\
@@ -387,7 +387,7 @@ var UploadRateController = function () {
                 var groupLength = group.ImportVirtualRateResultList.length;
                 for (var j = 0; j < groupLength; j++) {
                     var importInfo = group.ImportVirtualRateResultList[j];
-                    htmlContent += '<tr>';
+                    htmlContent += '<tr class="' + (i % 2 == 1 ? 'even-row' : '') + '">';
                     if (j == 0) {
                         htmlContent +=
                             '<td class="c" rowspan="' + groupLength + '"><div class="column-body-no">' + (i + 1) + '</div></td>\
