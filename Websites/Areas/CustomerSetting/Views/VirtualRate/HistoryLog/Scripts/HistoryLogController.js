@@ -18,7 +18,7 @@ var HistoryLogController = function () {
         },
         Format: {
             Number: {
-                IntPercent: "#,###%"
+                Rate: "#,###"
             }
         }
     };
@@ -162,7 +162,7 @@ var HistoryLogController = function () {
                                     });
                                     columns.push({
                                         Name: "ColVirtualRate",
-                                        Value: numeral((virtualRate.PercentRate - 1)).format(self.Constants.Format.Number.IntPercent)
+                                        Value: numeral((virtualRate.PercentRate - 1)*100).format(self.Constants.Format.Number.Rate)
                                     });
                                     sportBetTypeRow.push({
                                         Columns: columns
@@ -214,7 +214,7 @@ var HistoryLogController = function () {
             });
             columns.push({
                 Name: "ColVirtualRate",
-                Value: numeral((firstInfo.rate.PercentRate - 1)).format(self.Constants.Format.Number.IntPercent)
+                Value: numeral((firstInfo.rate.PercentRate - 1) * 100).format(self.Constants.Format.Number.Rate)
             });
         }
 

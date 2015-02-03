@@ -361,7 +361,7 @@ var VirtualRateController = function () {
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
                     if (customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].HasData) {
-                        customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = parseInt(liveRate) / 100 + 1;
+                        customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
                     }
 
                     var nonliveRate = $('select[sport-id="' +
@@ -370,7 +370,7 @@ var VirtualRateController = function () {
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
                     if (customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].HasData) {
-                        customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = parseInt(nonliveRate) / 100 + 1;
+                        customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = (parseInt(nonliveRate) / 100 + 1).toFixed(2);
                     }
                 }
             }
