@@ -45,8 +45,8 @@
                         <form id="file-upload-form" method="post" enctype="multipart/form-data" action="../Areas/CustomerSetting/Views/VirtualRate/UploadRate/UploadHandler.ashx"
                         target="upload_iframe">
                         <input id="file-upload-control" name="file-upload-control" size="85" type="file" />
-                        <input id="button-open-file" class="btn" type="btn" name="action" value="@Customer_Labels.Open_File" />
-                        <input id="button-update" class="btn" type="btn" name="action" value="@Customer_Labels.Update_Now" disabled="disabled" />
+                        <input id="button-open-file" class="btn" type="submit" name="action" value="@Customer_Labels.Open_File" />
+                        <input id="button-update" class="btn" type="submit" name="action" value="@Customer_Labels.Update_Now" disabled="disabled" />
                         <input id="AccId_UploadFile" name="AccId" type="hidden" />
                         <iframe id="upload_target" name="upload_iframe"></iframe>
                         </form>
