@@ -54,7 +54,7 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate.UploadRate
                         Username = Converter.ToString2(reader["UserName"]),
                         SportId = Converter.ToInt(reader["sporttype"]),
                         BetTypeId = Converter.ToInt(reader["bettype"]),
-                        LiveTypeId = Converter.ToInt(reader["isLive"]),
+                        LiveTypeId = Converter.ToBool(reader["isLive"]) ? 1 : 0,
                         VirtualRate = Converter.ToDecimal(rateString),
                         VirtualRateString = decimal.TryParse(rateString, out rateValue) ?
                                Math.Round((rateValue - 1) * 100).ToString() :
@@ -105,7 +105,7 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate.UploadRate
                         Username = Converter.ToString2(reader["UserName"]),
                         SportId = Converter.ToInt(reader["sporttype"]),
                         BetTypeId = Converter.ToInt(reader["bettype"]),
-                        LiveTypeId = Converter.ToInt(reader["isLive"]),
+                        LiveTypeId = Converter.ToBool(reader["isLive"]) ? 1 : 0,
                         VirtualRate = Converter.ToDecimal(reader["VirtualRate"]) - 1
                     };
 
