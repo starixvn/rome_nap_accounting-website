@@ -1,0 +1,73 @@
+﻿@using Fanex.CustomerSetting.Module.CloneSetting.Resources;
+@using Fanex.CustomerSetting.Module.CloneSetting.Entities;
+@model CloneAccount
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/LeftPanel/left_panel.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/CloneSetting/Styles/CloneSetting.less" />
+<form id="seachclone-setting-form" action="Index" method="POST">
+<div class="maincontent">
+    <div class="box_header" style="width: 100%;">
+        <div id="left_tab1" class="left_tab" style="width: 100%">
+            <ul>
+                <li id="tab-searchclone-settings" class="current"><a href="javascript:;"><span>@Labels.Search_CloneSetting</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="result-message" class="display-none">
+    </div>
+    <div class="filter-box">
+        <div class="title">
+        </div>
+        <div class="row username">
+            <div class="column-1">
+                <span>@Labels.Target_Username</span></div>
+            <div class="column-2">
+                @Html.EditorFor(m => m.TargetUsername, new { @id = "target-username", @type = "text", @size = "30" })
+            </div>
+            <div class="column-3">
+                <span>@Labels.Destination_Username</span></div>
+            <div class="column-4">
+                @Html.EditorFor(m => m.DestinationUsername, new { @id = "destination-username", @type = "text", @size = "30" })
+            </div>
+        </div>
+        <div class="newdoubleline">
+            &nbsp;</div>
+        <div class="row">
+            <div class="grid-column">
+                <span class="list-note bold-weight">@Labels.CloneSetting_Notes_1</span>
+                <br />
+                <span class="list-note bold-weight">@Labels.CloneSetting_Notes_2</span>
+                <br />
+                <span class="list-note bold-weight">@Labels.CloneSetting_Notes_3</span>
+            </div>
+        </div>
+        <div class="newdoubleline">
+            &nbsp;</div>
+    </div>
+    <div class="button-group">
+        <div id="submit-button" class="btnNextR hand">
+            <div class="btnNextL">
+                <span>@Labels.Submit</span></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js"></script>
+<script type="text/javascript" src="~/Areas/CustomerSetting/Views/CloneSetting/Scripts/CloneSettingManager.js"></script>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var viewResources ={
+        Error_SystemError: '@Labels.Error_SystemError',
+        CloneSetting_Error_EmptyTargetUsername: '@Labels.CloneSetting_Error_EmptyTargetUsername',
+        CloneSetting_Error_SameTargetDestinationUsername: '@Labels.CloneSetting_Error_SameTargetDestinationUsername',
+        CloneSetting_Error_EmptyDestinationUsername: '@Labels.CloneSetting_Error_EmptyDestinationUsername'
+    };
+</script>
+</form>

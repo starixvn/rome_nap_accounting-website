@@ -61,6 +61,7 @@
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
   <Function Name="Live Casino">
