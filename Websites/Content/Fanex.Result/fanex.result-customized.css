@@ -1,67 +1,100 @@
-﻿/* Begin General */
+﻿@font-face {
+    font-family: "Roboto";
+    src: url(../../App_Themes/Fonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Light";
+    src: url(../../App_Themes/Fonts/Roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Bold";
+    src: url(../../App_Themes/Fonts/Roboto/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Medium";
+    src: url(../../App_Themes/Fonts/Roboto/Roboto-Medium.ttf);
+}
+
+/* Begin General */
 table.fn-rs
 {
     clear: both;
     width: 99%;
-    border-right: 1px solid #7C98A4;
-    border-top: 1px solid #7C98A4;
+    border-right: 1px solid #b7b7b7;
+    border-top: 1px solid #b7b7b7;
     border-collapse: collapse;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: "Roboto",Arial, sans-serif;
     font-size: 11px;
     cursor: default;
     margin-left: auto;
     margin-right: auto;
-    min-width: 0px;
+}
+
+table.fn-rs tr.header, table.fn-rs .sub-header
+{
+    background: url("images/bg_header02.jpg") repeat-x scroll center top #6a6969;
+    height: 20px;
+    color: #fff;
 }
 
 table.fn-rs tr.header th:first-child
 {
-    border-left: 1px solid #7C98A4;
+    border-left: 1px solid #b7b7b7;
 }
 
 table.fn-rs tr.header th
 {
-    background: -moz-linear-gradient(#B5C4D0, #B5C4D0) #B5C4D0;
-    background: #B5C4D0;
-    background: -webkit-linear-gradient(#B5C4D0, #B5C4D0) #B5C4D0;
-    color: #000;
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    border-top: 1px solid #7C98A4;
-    border-right: 1px solid #7C98A4;
-    border-bottom: 1px solid #7C98A4;
-    font-size: 1em;
-    font-weight: bold;
-    height: 21px;
+    border-color: -moz-use-text-color #b7b7b7 #b7b7b7 -moz-use-text-color;
+    border-image: none;
+    border-right: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
+    border-style: none solid solid none;
+    border-width: medium 1px 1px medium;
     overflow: hidden;
-    padding: 2px;
+    padding: 0 2px;
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+}
+
+table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover {
+    color: #222222;
+}
+
+table.fn-rs tbody tr.even {
+    background-color: #F6F8F9;
 }
 
 table.fn-rs tr.data
 {
+    background-color: #faf9ee;
 }
 
 table.fn-rs tr.data:hover
 {
-    background: none;
+    background-color: #f8ff8d;
 }
 
 table.fn-rs tr.data td, table.fn-rs tr.row-noinfo td
 {
-    border-left: 1px solid #7C98A4;
-    border-bottom: 1px solid #7C98A4;
+    border-left: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
     font-size: 1em;
     height: 22px;
-    padding: 2px;
+    padding: 0 2px;
     vertical-align: middle;
     color: #222222;
     white-space: normal;
-    border-color: #7C98A4;
+    border-color: #b7b7b7;
 }
 
 table.fn-rs tr.data td.cl-ht-score, 
@@ -84,6 +117,11 @@ table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover
 table.fn-rs tbody .cl-match.home, table.fn-rs tbody .cl-match.away
 {
     color: #222222;
+}
+
+table.fn-rs tbody .cl-match.win
+{
+    font-weight: bold;
 }
 
 table.fn-rs .cl-ko-time {
@@ -109,42 +147,93 @@ table.fn-rs .cl-ht-score, table.fn-rs .cl-f-score {
 }
 /* End Parlay Popup */
 
-/* Begin Header Title */
-table.fn-rs thead th.cl-title
+/* Begin Live Casino Popup, Live Casino Popup */
+table.fn-rs.casino thead th.cl-title,
+table.fn-rs.number-game thead th.cl-title
 {
     background-color: #ffffff;
     font-weight: bold;
-    border-left: 1px solid #7c98a4;
-    border-right: 1px solid #7c98a4;
+    border-left: 1px solid #b7b7b7;
+    border-right: 1px solid #b7b7b7;
 }
 
-table.fn-rs thead th.cl-title .sport
+table.fn-rs.casino thead th.cl-title .sport,
+table.fn-rs.number-game thead th.cl-title .sport
 {
     color: #0066cc;
 }
-/* End Header Title */
+/* End Live Casino Popup, Live Casino Popup */
 
-/* Begin Number Game */
+/* Begin Number Game Popup */
 table.number-game span.ball
 {
     padding: 0;
 }
-/* End Number Game */
+/* End Number Game Popup */
 
-/* Begin Horse Racing */
-table.racing .cl-race
+/* Begin Tennis Popup */
+table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint, table.fn-rs .cl-totalset
 {
-    width: 191px;
+    color: #ffffff;
+}
+/* End Tennis Popup */
+
+/* Begin General Result */
+table.fn-rs tr.data td.cl-league
+{
+    background: url("images/bg_header03.jpg") repeat-x scroll center top #f8f1e9;
+    padding-left: 20px;
 }
 
-div.fn-rs-content-header 
+div.fn-rs-content-header
 {
-    border: 0px none;
-    padding-right: 0px;
+    border: none;
 }
 
+div.fn-rs-content-scroll .fn-rs
+{
+    border-top: none;
+}
+
+table.fn-rs tr.row-noinfo td
+{
+    border: 0px;
+}
+
+/* End General Result */
+
+/* Begin Sportsbook Result */
 div.fn-rs-content-scroll
 {
     overflow-y: inherit;
+    max-height: inherit;
 }
-/* End Horse Racing */
+
+div.fn-rs-content-scroll .fn-rs 
+{
+    width: 100%;
+}
+
+div.fn-rs-content-header
+{
+    padding-right: 0px;
+}
+
+div.fn-rs-content-header table.fn-rs
+{
+    width: 100%;
+}
+
+/* End Sportsbook Result */
+
+/* Begin Tennis Result */
+table.fn-rs .cl-totalset
+{
+    width: 60px;
+}
+
+table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint
+{
+    width: 76px;
+}
+/* End Tennis Result */

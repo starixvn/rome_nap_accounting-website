@@ -95,7 +95,8 @@ namespace Fanex.Tarus.BetList.Business.Results
                 IsPopUp = true,
                 LanguageCode = "en-US",
                 VisibleMatchCodeIDColumn = false,
-                VisiblePopUpTitle = true
+                VisiblePopUpTitle = true,
+                HighlightWinnerTeam = true
             };
         }
     }
