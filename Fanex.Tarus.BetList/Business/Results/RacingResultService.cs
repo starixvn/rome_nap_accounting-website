@@ -53,6 +53,11 @@ namespace Fanex.Tarus.BetList.Business.Results
             };
         }
 
+        /// <summary>
+        /// Gets result string.
+        /// </summary>
+        /// <param name="sportType">Sport type id.</param>
+        /// <returns>ResultSetting object.</returns>
         private static ResultSetting GetFanexResultSetting(int sportType)
         {
             return new ResultSetting
