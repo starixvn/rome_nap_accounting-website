@@ -59,6 +59,7 @@ namespace Fanex.Tarus.BetList.Business.Results
                 VisibleMatchCodeIDColumn = false,
                 VisibleFreeHeader = true,
                 VisibleDetailedLink = false,
+                HighlightWinnerTeam = true
             };
         }
     }
