@@ -7,7 +7,17 @@
 
 #virtual-rate-setting
 {
-    width: 875px;
+    width: 805px;
+    border-spacing: 0;
+    background-color: #FFFFFF;
+    border-collapse: collapse;    
+    border: none;
+    
+    th, td
+    {
+        border: solid 1px #7c98a4;
+    }
+    
     .sport-title
     {    
        font-weight: bold;
@@ -17,9 +27,20 @@
         }
     }
     
-    .first-column
+    .table-header
+    {
+        td, th
+        {
+            background-color: #CADCEB;
+            font-weight: bold;
+        }
+    }
+
+    th.first-column, td.first-column
     {
         width: 120px;
+        background-color: #FFFFFF;
+        font-weight: bold;
     }
     
     .bettype-separator-column
@@ -29,7 +50,7 @@
     
     .bettypevalue-column
     {
-        width: 80px;
+        width: 85px;
         &[disabled="disabled"]
         {
             background-color: #C3C3C3;
@@ -37,6 +58,14 @@
             {
                 background-color: #C3C3C3;
             }
+        }
+    }
+    
+    .padding-row
+    {
+        td, th{
+            border-left: solid 1px #FFF;
+            border-right: solid 1px #FFF;
         }
     }
 }

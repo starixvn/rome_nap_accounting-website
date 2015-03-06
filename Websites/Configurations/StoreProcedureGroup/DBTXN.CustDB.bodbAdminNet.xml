@@ -139,6 +139,7 @@
 
   <Function Name="Virtual Rate">
     <Setting Key="Acc_VirtualRateMulUpd" SpName="Acc_VirtualRateMulUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
@@ -262,7 +263,7 @@
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
-  </Function>  
+  </Function>
   <Function Name="ConfigureDirectAccount">
     <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBTXN.CustDB.bodbAdminNet"  />
     <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBTXN.CustDB.bodbAdminNet"  />

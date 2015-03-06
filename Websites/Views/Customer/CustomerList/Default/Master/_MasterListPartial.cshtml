@@ -273,7 +273,9 @@
         {
             <td>
                 <div class="table-cell c" style="width: 60px; height: 18px;">
-                    <a onclick="OpenEditVirtualExRate('@masterItem.ChildID','@masterItem.UserName','Master',true,'@Model.ParentId')">@masterItem.VirtualRate</a></div>
+                     <span title="Edit" onclick="OpenEditVirtualExRate('@masterItem.ChildID','@masterItem.UserName','Master',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
+                     </span>         
+                 </div>
             </td>
         }
         <td>

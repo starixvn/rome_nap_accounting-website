@@ -9,6 +9,8 @@
 
 namespace Fanex.Tarus.Customer.Constants
 {
+    using Fanex.Tarus.Customer.Resources;
+
     /// <summary>
     /// Live Type Constants.
     /// </summary>
@@ -17,5 +19,25 @@ namespace Fanex.Tarus.Customer.Constants
         public const int NonLive = 0;
 
         public const int Live = 1;
+
+        public const int NotLiveType = -2;
+
+        /// <summary>
+        /// Gets the live type name.
+        /// </summary>
+        /// <param name="liveType">Type of the live.</param>
+        /// <returns>The live type name.</returns>
+        public static string LiveTypeName(int liveType)
+        {
+            switch (liveType)
+            {
+                case NonLive:
+                    return Customer_Labels.Non_Live;
+                case Live:
+                    return Customer_Labels.Live;
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }

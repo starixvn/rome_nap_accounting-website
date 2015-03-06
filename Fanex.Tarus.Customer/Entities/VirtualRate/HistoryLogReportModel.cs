@@ -20,8 +20,6 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
 
         public string Username { get; set; }
 
-        public List<BaseModel> BetTypeList { get; set; }
-
         public List<HistoryLogByDateModel> HistoryLog { get; set; }
     }
 }

@@ -16,12 +16,12 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// </summary> 
     public class VirtualRateElement : ConfigurationElement
     {
-        [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
-        public string Id
+        [ConfigurationProperty("id", DefaultValue = 0, IsRequired = true, IsKey = true)]
+        public int Id
         {
             get
             {
-                return (string)this["id"];
+                return (int)this["id"];
             }
 
             set
@@ -30,7 +30,21 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        [ConfigurationProperty("name", DefaultValue = "NA", IsRequired = true, IsKey = false)]
+        [ConfigurationProperty("active", DefaultValue = true, IsRequired = true, IsKey = false)]
+        public bool Active
+        {
+            get
+            {
+                return (bool)this["active"];
+            }
+
+            set
+            {
+                this["active"] = value;
+            }
+        }
+
+        [ConfigurationProperty("name", DefaultValue = "NA", IsRequired = false, IsKey = false)]
         public string Name
         {
             get
@@ -44,17 +58,31 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        [ConfigurationProperty("active", DefaultValue = true, IsRequired = true, IsKey = true)]
-        public bool Active
+        [ConfigurationProperty("multibettypes", DefaultValue = "", IsRequired = false, IsKey = false)]
+        public string MultiBetTypes
         {
             get
             {
-                return (bool)this["active"];
+                return (string)this["multibettypes"];
             }
 
             set
             {
-                this["active"] = value;
+                this["multibettypes"] = value;
+            }
+        }
+
+        [ConfigurationProperty("BetTypes", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(VirtualRateCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public VirtualRateCollection BetTypes
+        {
+            get
+            {
+                var betTypes = (VirtualRateCollection)base["BetTypes"];
+                return betTypes;
             }
         }
     }

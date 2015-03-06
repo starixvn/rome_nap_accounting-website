@@ -190,3 +190,13 @@ input.verifiedmember{
 tr.yellow td {
     background: none repeat scroll 0 0 Yellow !important;
 }
+
+.edit-button.edit-virtualrate
+{
+    margin-left: 24px;
+}
+
+.edit-button.edit-virtualrate:hover
+{
+    margin-left: 24px;
+}

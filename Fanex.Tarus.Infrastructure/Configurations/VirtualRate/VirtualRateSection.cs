@@ -20,22 +20,33 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         {
             get
             {
-                var virtualRateSection =
-                    ConfigurationManager.GetSection("VirtualRateSection") as VirtualRateSection;
-                return virtualRateSection;
+                return ConfigurationManager.GetSection("VirtualRateSection") as VirtualRateSection;
             }
         }
 
-        [ConfigurationProperty("BetTypes", IsDefaultCollection = false)]
+        [ConfigurationProperty("Sports", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(VirtualRateCollection),
             AddItemName = "add",
             ClearItemsName = "clear",
             RemoveItemName = "remove")]
-        public VirtualRateCollection BetTypes
+        public VirtualRateCollection Sports
         {
             get
             {
-                return (VirtualRateCollection)base["BetTypes"];
+                return (VirtualRateCollection)base["Sports"];
+            }
+        }
+
+        [ConfigurationProperty("Functions", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(VirtualRateCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public VirtualRateCollection Functions
+        {
+            get
+            {
+                return (VirtualRateCollection)base["Functions"];
             }
         }
     }

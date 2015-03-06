@@ -43,11 +43,11 @@ var VirtualRateController = function () {
     self.renderVirtualRateSetting = function () {
         var tableBody = $("#virtual-rate-setting tbody");
         var settingHtml = '';
-        var tableColumnCount = betTypeCount * 2;
-
         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
         var iconCopySport = '<input id="button-copy-sport-settings" class="icon-copy-setting" type="button" title="' +
                             viewResources.Copy + '"/>';
+
+        var startBetTypeIndex = 0;
         for (var i = 0; i < sportLength; i++) {
             var sport = customerVirtualRateModel.SportVirtualRateList[i];
             if (i == 0) {
@@ -62,52 +62,69 @@ var VirtualRateController = function () {
                     '</td>\
                  </tr>';
 
-            settingHtml += self.getBetTypeTitle(customerVirtualRateModel.BetTypeList, sport);
-            settingHtml += self.getLiveHtml(sport.LiveVirtualRate, self.Constants.LiveType.Live, sport);
-            settingHtml += self.getLiveHtml(sport.NonLiveVirtualRate, self.Constants.LiveType.NonLive, sport);
-            settingHtml += '<tr><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+            var betTypeLength = sport.BetTypeList.length;
+            for (var j = startBetTypeIndex; j < betTypeLength; j += maxBetTypeColumn) {
+                settingHtml += self.getBetTypeTitle(sport.BetTypeList, sport, j);
+                settingHtml += self.getLiveHtml(sport.LiveVirtualRate, self.Constants.LiveType.Live, sport, j);
+                settingHtml += self.getLiveHtml(sport.NonLiveVirtualRate, self.Constants.LiveType.NonLive, sport, j);
+            }
+
+            if (i !== sportLength - 1) {
+                settingHtml += '<tr class="padding-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+            }
         }
 
         tableBody.empty().append(settingHtml);
     };
 
-    self.getBetTypeTitle = function (betTypeList, sport) {
-        var titleHtml = '<tr>';
+    self.getBetTypeTitle = function (betTypeList, sport, startBetTypeIndex) {
+        var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var iconCopyBetType = '<input id="button-copy-bettype-settings-' + sport.Id +
                 '" class="icon-copy-setting bettype-setting" type="button" title="' +
                 viewResources.Copy + '"' +
                 ' sport-id="' + sport.Id + '"/>';
-        for (var i = 0; i < betTypeCount; i++) {
+
+        var titleHtml = '<tr class="table-header">';
+        titleHtml += '<td class="first-column">&nbsp;</td>';
+        var betTypeLength = betTypeList.length;
+        for (var i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; i++) {
             var betType = betTypeList[i];
             if (i == 0) {
                 self.cachedData.copyFromBetTypeId = betType.Id;
             }
 
-            titleHtml += '<td class="' + (i == 0 ? 'first-column' : 'bettype-separator-column') + '">&nbsp;</td>';
-            titleHtml += '<td class="bettypevalue-column">' +
-                    betType.Name + ' (' + viewResources.Symbol_Percent + ')' + (i == 0 ? iconCopyBetType : '') +
-                '</td>';
+            var title = betType.Name + ' (' + viewResources.Symbol_Percent + ')' + (i == 0 ? iconCopyBetType : '');
+            var multiBetTypeLength = betType.MultiBetTypeNames ? betType.MultiBetTypeNames.length : 0;
+            for (var j = 0; j < multiBetTypeLength; j++) {
+                title += '<br />' + betType.MultiBetTypeNames[j];
+            }
+
+            titleHtml += '<td class="bettypevalue-column">' + title + '</td>';
         }
 
         titleHtml += '</tr>';
         return titleHtml;
     };
-    self.getLiveHtml = function (liveVirtualRate, liveType, sport) {
+    self.getLiveHtml = function (liveVirtualRate, liveType, sport, startBetTypeIndex) {
+        var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
+        var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        for (var i = 0; i < betTypeCount; i++) {
+        liveHtml += '<td class="first-column l">' + self.getLiveTypeName(liveType) + '</td>';
+        for (var i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; i++) {
             var liveRate = liveVirtualRate[i];
             var value = (liveRate.PercentRate + 1) * customerVirtualRateModel.ActualExchangeRate;
-            liveHtml += '<td class="l">' + (i == 0 ? self.getLiveTypeName(liveType) : '&nbsp;') + '</td>';
             liveHtml +=
-                '<td class="bettypevalue-column l">' +
-                    self.renderDropdownRate(customerVirtualRateModel.MinVirtualRate,
-                        customerVirtualRateModel.MaxVirtualRate,
-                        liveRate.PercentRate,
-                        customerVirtualRateModel.ActualExchangeRate,
-                        sport,
-                        liveType,
-                        i == 0 ? 'source' : 'target',
-                        customerVirtualRateModel.BetTypeList[i].Id) +
+                '<td class="bettypevalue-column c">' +
+                    (liveRate.HasData ?
+                        self.renderDropdownRate(customerVirtualRateModel.MinVirtualRate,
+                            customerVirtualRateModel.MaxVirtualRate,
+                            liveRate.PercentRate,
+                            customerVirtualRateModel.ActualExchangeRate,
+                            sport,
+                            liveType,
+                            i == 0 ? 'source' : 'target',
+                            sport.BetTypeList[i].Id) :
+                        '') +
                 '</td>';
         }
 
@@ -334,22 +351,27 @@ var VirtualRateController = function () {
                 var sport = customerVirtualRateModel.SportVirtualRateList[i];
                 var isCopyFromBetType = $("#button-copy-bettype-settings-" + sport.Id).hasClass("icon-copy-setting-checked");
 
-                for (var j = 0; j < betTypeCount; j++) {
-                    var betType = customerVirtualRateModel.BetTypeList[j];
+                var betTypeLength = sport.BetTypeList.length;
+                for (var j = 0; j < betTypeLength; j++) {
+                    var betType = sport.BetTypeList[j];
 
                     var liveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sport.Id) + '"]' +
                     '[liveType="' + self.Constants.LiveType.Live + '"]' +
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
-                    customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = parseInt(liveRate) / 100 + 1;
+                    if (customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].HasData) {
+                        customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
+                    }
 
                     var nonliveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sport.Id) + '"]' +
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
-                    customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = parseInt(nonliveRate) / 100 + 1;
+                    if (customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].HasData) {
+                        customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = (parseInt(nonliveRate) / 100 + 1).toFixed(2);
+                    }
                 }
             }
 

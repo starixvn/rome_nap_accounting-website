@@ -4,6 +4,10 @@
     <Setting Key="Acc_VirtualRateMulDelTmpExcel" SpName="Acc_VirtualRateMulDelTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
     <Setting Key="Acc_VirtualRateMulInsTmpExcel" SpName="Acc_VirtualRateMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
     <Setting Key="Acc_VirtualRateMulSelCheck" SpName="Acc_VirtualRateMulSelCheck" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
+
+    <Setting Key="Customer_VirtualRate_InsertTemp" SpName="Acc_VirtualRateMulInsTmpExcel_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
+    <Setting Key="Customer_VirtualRate_CheckImport" SpName="Acc_VirtualRateMulSelCheck_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
+    <Setting Key="Customer_VirtualRate_DeleteTemp" SpName="Acc_VirtualRateMulDelTmpExcel_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
   </Function>
   <Function Name="Admin - Mailing List">
     <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.bodb_ACC.bodbAdminNet" />

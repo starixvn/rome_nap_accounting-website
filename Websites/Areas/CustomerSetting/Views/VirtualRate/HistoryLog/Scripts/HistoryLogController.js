@@ -18,7 +18,7 @@ var HistoryLogController = function () {
         },
         Format: {
             Number: {
-                IntPercent: "#,###%"
+                Rate: "#,###"
             }
         }
     };
@@ -45,7 +45,6 @@ var HistoryLogController = function () {
         $("#virtual-rate-log").fanexGrid(gridOptions);
     };
     self.renderHistoryLogReportHeader = function (historyLogReport) {
-        var betTypeCount = historyLogReport.BetTypeList.length;
         var columns = [];
         columns.push({
             HeaderText: viewResources.Symbol_No,
@@ -68,18 +67,27 @@ var HistoryLogController = function () {
             HeaderAlign: "center",
             CellAlign: "left"
         });
-
-        for (var i = 0; i < betTypeCount; i++) {
-            var betType = historyLogReport.BetTypeList[i];
-            columns.push({
-                HeaderText: betType.Name,
-                Width: 100,
-                Name: "ColBetType" + betType.Id,
-                HeaderAlign: "center",
-                CellAlign: "right"
-            });
-        }
-
+        columns.push({
+            HeaderText: viewResources.Bet_Type,
+            Width: 140,
+            Name: "ColBetType",
+            HeaderAlign: "center",
+            CellAlign: "center"
+        });
+        columns.push({
+            HeaderText: viewResources.Live_NonLive,
+            Width: 140,
+            Name: "ColLiveType",
+            HeaderAlign: "center",
+            CellAlign: "center"
+        });
+        columns.push({
+            HeaderText: viewResources.Virtual_Rate + ' (' + viewResources.Symbol_Percent + ')',
+            Width: 160,
+            Name: "ColVirtualRate",
+            HeaderAlign: "center",
+            CellAlign: "right"
+        });
         columns.push({
             HeaderText: viewResources.Changed_by,
             Width: 100,
@@ -92,54 +100,131 @@ var HistoryLogController = function () {
     self.renderHistoryLogReportBody = function (historyLogReport) {
         var bodyData = [];
         var logLength = historyLogReport.HistoryLog.length;
-        var betTypeCount = historyLogReport.BetTypeList.length;
         if (logLength) {
+            var maxColumnIndex = 7;
             for (var i = 0; i < logLength; i++) {
                 var historyLog = historyLogReport.HistoryLog[i];
                 var detailCount = historyLog.HistoryLogDetailList.length;
+                var isFirstRow = true;
+                var rowSpan = 0;
+
+                var sportBetTypeRow = [];
+                var firstInfo = null;
+                var firstVirtualRate = null;
+
                 for (var j = 0; j < detailCount; j++) {
                     var columns = [];
                     var detailHistoryLog = historyLog.HistoryLogDetailList[j];
-                    if (j == 0) {
-                        columns.push({ Name: "ColNo", Value: (i + 1), MergeRowNumber: detailCount });
-                        columns.push({ Name: "ColDate", Value: historyLog.EditDateString, MergeRowNumber: detailCount });
-                    }
-
                     if (detailHistoryLog.UpdateType == self.Constants.UpdateType.Status ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
-                        columns.push({
-                            Name: "ColSport",
-                            Value: viewResources.Enabled_Virtual_Rate + ": " +
-                                    (detailHistoryLog.EnableVirtualRate ? viewResources.Symbol_True : viewResources.Symbol_False),
-                            MergeColNumber: (betTypeCount + 1)
-                        });
-                    } else {
-                        columns.push({ Name: "ColSport", Value: detailHistoryLog.SportName + ' (' + self.getLiveTypeName(detailHistoryLog.LiveType) + ')' });
+                        if (isFirstRow) {
+                            firstInfo = {
+                                detail: detailHistoryLog,
+                                index: i
+                            };
 
-                        for (var k = 0; k < betTypeCount; k++) {
-                            var virtualRate = detailHistoryLog.VirtualRate[k];
-                            var betType = historyLogReport.BetTypeList[k];
+                            rowSpan++;
+                            isFirstRow = false;
+                            continue;
+                        } else {
                             columns.push({
-                                Name: "ColBetType" + betType.Id,
-                                Value: (virtualRate.HasData ?
-                                        numeral((virtualRate.PercentRate - 1)).format(self.Constants.Format.Number.IntPercent) :
-                                        '&nbsp;')
+                                Name: "ColSport",
+                                Value: viewResources.Virtual_Rate + ": " +
+                                    (detailHistoryLog.EnableVirtualRate ? viewResources.Enabled : viewResources.Disabled),
+                                MergeColNumber: (maxColumnNumber - 3)
                             });
                         }
-                    }
+                    } else {
+                        var sportLiveTypeCount = detailHistoryLog.VirtualRate.length;
+                        for (var k = 0; k < sportLiveTypeCount; k++) {
+                            var virtualRate = detailHistoryLog.VirtualRate[k];
+                            if (virtualRate.HasData) {
+                                if (isFirstRow) {
+                                    firstInfo = {
+                                        detail: detailHistoryLog,
+                                        index: i,
+                                        rate: virtualRate,
+                                        betTypeName: detailHistoryLog.BetTypeList[k].Name
+                                    };
+                                    rowSpan++;
+                                    isFirstRow = false;
+                                    continue;
+                                } else {
+                                    columns = [];
+                                    columns.push({ Name: "ColSport", Value: detailHistoryLog.SportName });
+                                    columns.push({
+                                        Name: "ColBetType",
+                                        Value: detailHistoryLog.BetTypeList[k].Name
+                                    });
+                                    columns.push({
+                                        Name: "ColLiveType",
+                                        Value: self.getLiveTypeName(detailHistoryLog.LiveType)
+                                    });
+                                    columns.push({
+                                        Name: "ColVirtualRate",
+                                        Value: numeral((virtualRate.PercentRate - 1)*100).format(self.Constants.Format.Number.Rate)
+                                    });
+                                    sportBetTypeRow.push({
+                                        Columns: columns
+                                    });
+                                    rowSpan++;
+                                }
 
-                    if (j == 0) {
-                        columns.push({ Name: "ColChangedBy", Value: historyLog.Editor, MergeRowNumber: detailCount });
+                            }
+                        }
                     }
-
-                    bodyData.push({
-                        Columns: columns
-                    });
                 }
+
+                bodyData = bodyData.concat([self.getRow(historyLog, firstInfo, true, rowSpan)]);
+                bodyData = bodyData.concat(sportBetTypeRow);
             }
         }
 
         return bodyData;
+    };
+    self.getRow = function (historyLog, firstInfo, isFirstRow, rowSpan) {
+        var columns = [];
+        var logInfo = firstInfo.detail;
+        var maxColumnNumber = 7;
+        if (isFirstRow) {
+            columns.push({ Name: "ColNo", Value: (firstInfo.index + 1), MergeRowNumber: rowSpan });
+            columns.push({ Name: "ColDate", Value: historyLog.EditDateString, MergeRowNumber: rowSpan });
+        }
+
+        if (logInfo.UpdateType == self.Constants.UpdateType.Status ||
+            logInfo.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
+            columns.push({
+                Name: "ColSport",
+                Value: viewResources.Virtual_Rate + ": " +
+                    (logInfo.EnableVirtualRate ? viewResources.Enabled : viewResources.Disabled),
+                MergeColNumber: (maxColumnNumber - 3)
+            });
+        } else {
+            columns.push({
+                Name: "ColSport",
+                Value: logInfo.SportName
+            });
+            columns.push({
+                Name: "ColBetType",
+                Value: firstInfo.betTypeName
+            });
+            columns.push({
+                Name: "ColLiveType",
+                Value: self.getLiveTypeName(logInfo.LiveType)
+            });
+            columns.push({
+                Name: "ColVirtualRate",
+                Value: numeral((firstInfo.rate.PercentRate - 1) * 100).format(self.Constants.Format.Number.Rate)
+            });
+        }
+
+        if (isFirstRow) {
+            columns.push({ Name: "ColChangedBy", Value: historyLog.Editor, MergeRowNumber: rowSpan });
+        }
+
+        return {
+            Columns: columns
+        };
     };
     self.getLiveTypeName = function (liveType) {
         switch (liveType) {

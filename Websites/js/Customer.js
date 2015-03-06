@@ -568,7 +568,14 @@ function OpenEditMaxEx(id, uname, exval, type, isNewCustomerList, custid) {
     }
 }
 function OpenEditVirtualExRate(id, uname, type, isNewCustomerList, custid) {
-    var url = "Customer/EditVirtualExRate.aspx?custId=" + id + "&uname=" + uname + "&type=" + type;
+    //    var url = "Customer/EditVirtualExRate.aspx?custId=" + id + "&uname=" + uname + "&type=" + type;
+    var url = "VirtualRate/Index?" +
+        $.param({
+            custId: id,
+            username: uname,
+            roleName: type
+        });
+
     if (isNewCustomerList) {
         var fnNameReload = '';
         switch (type) {
@@ -585,7 +592,16 @@ function OpenEditVirtualExRate(id, uname, type, isNewCustomerList, custid) {
                 fnNameReload = 'GenMemberListContentByPager(\'' + pageIndex + '\');';
                 break;
         }
-        showPopup('Edit VirtualRate', url, 0, 0, 270, 150, true, 2000, function () { eval(fnNameReload) });
+        showPopup(
+            'Edit VirtualRate',
+            url,
+            0,
+            0,
+            830,
+            600,
+            true,
+            2000, 
+            null);
     }
     if (typeof isNewCustomerList === "undefined") {
         var fnNameReload = '';
@@ -609,7 +625,16 @@ function OpenEditVirtualExRate(id, uname, type, isNewCustomerList, custid) {
                 break;
         }
 
-        showPopup('Edit VirtualRate', url, 0, 0, 300, 180, false, 2000, function () { eval(fnNameReload) });
+        showPopup(
+            'Edit VirtualRate',
+            url,
+            0,
+            0,
+            830,
+            600,
+            false,
+            2000,
+            null);
     }
 
 }

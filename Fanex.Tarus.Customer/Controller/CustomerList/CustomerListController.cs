@@ -54,8 +54,6 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             {
                 return PartialView("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", model);
             }
-
-
         }
 
         public ActionResult MasterAgentList(int? superId, string doubleCommSuper)

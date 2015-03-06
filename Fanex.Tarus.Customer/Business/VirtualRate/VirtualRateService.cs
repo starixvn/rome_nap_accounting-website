@@ -15,10 +15,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     using System.Linq;
     using System.Xml.Linq;
     using Fanex.Common;
+    using Fanex.Tarus.Customer.Business.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
+    using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.DataAccess.VirtualRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Resources;
     using Fanex.Tarus.Infrastructure.Constants;
     using Fanex.Tarus.Infrastructure.Extensions;
@@ -30,14 +33,19 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     {
         private readonly IVirtualRateRepository _virtualRateRepository;
 
+        private readonly IUploadVirtualRateService _uploadVirtualRateService;
+
         public VirtualRateService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public VirtualRateService(IVirtualRateRepository virtualRateRepository)
+        public VirtualRateService(
+            IVirtualRateRepository virtualRateRepository,
+            IUploadVirtualRateService uploadVirtualRateService)
         {
             _virtualRateRepository = virtualRateRepository ?? new VirtualRateRepository();
+            _uploadVirtualRateService = uploadVirtualRateService ?? new UploadVirtualRateService();
         }
 
         /// <summary>
@@ -53,7 +61,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             try
             {
                 var result = _virtualRateRepository.CustomerVirtualRate(criteria);
-                result.BetTypeList = VirtualRateSectionService.BetTypeList();
                 return result;
             }
             catch (Exception ex)
@@ -102,8 +109,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                 {
                     CustId = criteria.CustId,
                     Username = criteria.Username,
-                    HistoryLog = new List<HistoryLogByDateModel>(),
-                    BetTypeList = VirtualRateSectionService.BetTypeList()
+                    HistoryLog = new List<HistoryLogByDateModel>()
                 };
 
                 var rawData = _virtualRateRepository.HistoryLog(criteria);
@@ -113,7 +119,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     Username = log.Username
                 });
 
-                var betTypeIndexList = VirtualRateSectionService.BetTypeIndexList();
+                Dictionary<int, Dictionary<int, int>> betTypeIndexList = new Dictionary<int, Dictionary<int, int>>();
+                betTypeIndexList.Add(Sports.Soccer, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.Soccer));
+                betTypeIndexList.Add(Sports.OtherSports, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.OtherSports));
+
                 foreach (var data in rawData)
                 {
                     var historyLogByDate = new HistoryLogByDateModel
@@ -123,7 +132,11 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                         HistoryLogDetailList = ParseHistoryLog(data, betTypeIndexList)
                     };
 
-                    result.HistoryLog.Add(historyLogByDate);
+                    if (historyLogByDate.HistoryLogDetailList != null &&
+                        historyLogByDate.HistoryLogDetailList.Count > 0)
+                    {
+                        result.HistoryLog.Add(historyLogByDate);
+                    }
                 }
 
                 return result;
@@ -134,6 +147,21 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             }
 
             return null;
+        }
+
+        public void DownloadImportRateTemplate()
+        {
+            _uploadVirtualRateService.DownloadImportRateTemplate();
+        }
+
+        public UploadResult UpdateImportRate(UpdateImportRateCriteria criteria)
+        {
+            return _uploadVirtualRateService.UpdateImportRate(criteria);
+        }
+
+        public Result DeleteTempRate()
+        {
+            return _uploadVirtualRateService.DeleteTempRate();
         }
 
         /// <summary>
@@ -149,10 +177,16 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             Justification = "Reviewed. Suppression is OK here.")]
         private List<HistoryLogDetailModel> ParseHistoryLog(
             HistoryLogEntity historyLog,
-            Dictionary<int, int> betTypeIndexList)
+            Dictionary<int, Dictionary<int, int>> betTypeIndexList)
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
+            if (xmlLoad.Attribute("EnableVirtualrate") == null &&
+                !xmlLoad.HasElements)
+            {
+                return historyLogDetailList;
+            }
+
             if (historyLog.ActionId == UpdateTypeConstants.Status ||
                 historyLog.ActionId == UpdateTypeConstants.LicenseeStatus)
             {
@@ -183,23 +217,33 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                         LiveType = logBySport.LiveType
                     });
 
-                var betTypeCount = betTypeIndexList.Count;
                 foreach (var sportGroup in sportGroups)
                 {
+                    if (!betTypeIndexList.ContainsKey(sportGroup.Key.SportType))
+                    {
+                        continue;
+                    }
+
+                    var sportBetTypeIndex = betTypeIndexList[sportGroup.Key.SportType];
+                    var betTypeCount = sportBetTypeIndex.Count;
                     var historyLogDetail = new HistoryLogDetailModel
                     {
                         UpdateType = historyLog.ActionId,
                         SportId = sportGroup.Key.SportType,
                         SportName = Sports.SportName(sportGroup.Key.SportType),
                         LiveType = sportGroup.Key.LiveType,
+                        BetTypeList = VirtualRateSectionService.BetTypeListViewLog(sportGroup.Key.SportType),
                         VirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
                     };
 
                     foreach (var data in sportGroup)
                     {
-                        var betTypeIndex = betTypeIndexList[data.BetType];
-                        historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
-                        historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
+                        if (sportBetTypeIndex.ContainsKey(data.BetType))
+                        {
+                            var betTypeIndex = sportBetTypeIndex[data.BetType];
+                            historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
+                            historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
+                        }
                     }
 
                     historyLogDetailList.Add(historyLogDetail);

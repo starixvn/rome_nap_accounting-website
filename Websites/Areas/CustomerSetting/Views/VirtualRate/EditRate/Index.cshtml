@@ -8,8 +8,11 @@
     ViewBag.Title = Customer_Labels.Virtual_Rate;
     Layout = "";
     var customerVirtualRateModel = JsonConvert.SerializeObject(Model);
-    var betTypeCount = Model.BetTypeList.Count;
-    var tableColumnCount = betTypeCount * 2;
+    var maxBetTypeColumn = 6;
+    var tableColumnCount = maxBetTypeColumn + 1;
+
+    var leftColumn = 4;
+    var rightColumn = 3;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
@@ -22,7 +25,7 @@
         <div id="result-message">
         </div>
         <div id="virtual-rate-setting-container">
-            <table id="virtual-rate-setting" cellspacing="1" class="tbllayout">
+            <table id="virtual-rate-setting" class="tbllayout" cellspacing="1" border="0">
                 <thead>
                     <tr class="title">
                         <td colspan="@tableColumnCount">
@@ -30,22 +33,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="r" colspan="@betTypeCount">
+                        <td class="r" colspan="@leftColumn">
                             @Customer_Labels.Actual_Exchange_Rate
                         </td>
-                        <td nowrap="true" class="b l" colspan="@betTypeCount">
+                        <td nowrap="true" class="b l" colspan="@rightColumn">
                             @Model.ActualExchangeRate
                         </td>
                     </tr>
                     <tr>
-                        <td nowrap="true" class="r" colspan="@betTypeCount">
+                        <td nowrap="true" class="r" colspan="@leftColumn">
                             @Customer_Labels.Apply_Virtual_Rate
                         </td>
-                        <td nowrap="true" class="l" colspan="@betTypeCount">
+                        <td nowrap="true" class="l" colspan="@rightColumn">
                             <input id="chk-enable" type="checkbox" value="false" />
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="padding-row">
                         <td colspan="@tableColumnCount">
                             &nbsp;
                         </td>
@@ -69,7 +72,8 @@
         window.rootUrl = '@Url.Content("~")';
         var customerVirtualRateModel= @Html.Raw(customerVirtualRateModel); 
         var oldCustomerVirtualRateModel= @Html.Raw(customerVirtualRateModel); 
-        var betTypeCount= @betTypeCount; 
+        var maxBetTypeColumn = @maxBetTypeColumn; 
+        var tableColumnCount = @tableColumnCount;
         var isManageVirtualRateAccess = @isManageVirtualRateAccess;
         var viewResources = {
             Live: '@Customer_Labels.Live',

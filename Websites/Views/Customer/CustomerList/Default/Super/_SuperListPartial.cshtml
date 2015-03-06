@@ -6,14 +6,13 @@
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
-
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
-    
+
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
     var disabledHR = WebSettings.disabledHR;
@@ -72,7 +71,7 @@
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    
+
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -105,7 +104,6 @@
         return bg;
     }
 }
-
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
     {
         var bg = rowCSS(superItem);
@@ -132,7 +130,8 @@
                     <li class="canchange" onclick="EditMinMaxPT(4, '@superItem.ChildID', 0 , '@superItem.UserName');"  >
                         Max PT</li>
                     <!--/minmaxPT-->
-                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');" >Info</li>
+                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');" >
+                        Info</li>
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
@@ -185,16 +184,15 @@
                             Virtual Sports</li>
                     }
                     <!--/edit-virtualSports-->
-                      @if (CastAide.AsBoolean(hash["allowKeno"]))
-                      {
-                        <li class="canchange" onclick="SuperList.kenoSetting('@superItem.ChildID');">
-                            Keno</li>
-                      }
-                       @if (superItem.IsLicensee)
-                      {
-                       <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">
-                            AG Casino</li>
-                      }
+                    @if (CastAide.AsBoolean(hash["allowKeno"]))
+                    {
+                        <li class="canchange" onclick="SuperList.kenoSetting('@superItem.ChildID');">Keno</li>
+                    }
+                    @if (superItem.IsLicensee)
+                    {
+                        <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">AG
+                            Casino</li>
+                    }
                 </ul>
             </div>
         </td>
@@ -263,16 +261,18 @@
         {
             <td>
                 <div class="table-cell c" style="width: 60px; height: 18px;">
-                    <a onclick="OpenEditVirtualExRate('@superItem.ChildID','@superItem.UserName','Super',true,'@Model.ParentId')">@superItem.VirtualRate</a></div>
+                    <span title="Edit" onclick="OpenEditVirtualExRate('@superItem.ChildID','@superItem.UserName','Super',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
+                    </span>
+                </div>
             </td>
         }
         <td>
             <div id="tooltip_@superItem.FirstName" class="table-cell c display" style="width: 140px;height: 18px;text-overflow:ellipsis;">
-           <span>@superItem.FirstName</span></div>
+                <span>@superItem.FirstName</span></div>
         </td>
         <td>
             <div id="tooltip_@superItem.LastName"  class="table-cell c display" style="width: 140px; height: 18px;text-overflow:ellipsis;">
-               <span>@superItem.LastName</span></div>
+                <span>@superItem.LastName</span></div>
         </td>
         <td>
             <div class="table-cell" style="width: 50px; height: 18px;">

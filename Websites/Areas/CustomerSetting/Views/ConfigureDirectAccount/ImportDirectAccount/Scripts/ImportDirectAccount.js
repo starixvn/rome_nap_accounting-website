@@ -3,7 +3,6 @@
 camelcase: false */
 /* global showAlertMessage,
 viewResources,
-<<<<<<< HEAD
 hasHostPermission,
 userId */
 /* exported importDirectAccountManager */

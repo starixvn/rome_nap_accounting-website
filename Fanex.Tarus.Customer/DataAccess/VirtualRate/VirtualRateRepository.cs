@@ -40,12 +40,9 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
                 CustId = criteria.CustId,
                 Username = criteria.Username,
                 RoleName = criteria.RoleName,
-                SportVirtualRateList = new List<SportVirtualRateModel>(),
-                BetTypeList = VirtualRateSectionService.BetTypeList()
+                SportVirtualRateList = new List<SportVirtualRateModel>()
             };
 
-            var betTypeIndexList = VirtualRateSectionService.BetTypeIndexList();
-            var betTypeCount = result.BetTypeList.Count;
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
@@ -60,19 +57,23 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
 
                 if (reader.NextResult())
                 {
+                    var soccerBetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.Soccer);
+                    var otherSportbetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.OtherSports);
                     var soccerSport = new SportVirtualRateModel
                     {
                         Id = Sports.Soccer,
                         Name = Sports.SportName(Sports.Soccer),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
+                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.Soccer),
+                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count),
+                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count)
                     };
                     var otherSport = new SportVirtualRateModel
                     {
                         Id = Sports.OtherSports,
                         Name = Sports.SportName(Sports.OtherSports),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
+                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.OtherSports),
+                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count),
+                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count)
                     };
 
                     while (reader.Read())
@@ -80,15 +81,23 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
                         var sportId = Converter.ToInt(reader["sporttype"]);
                         var isLive = Converter.ToBool(reader["isLive"]);
                         var betType = Converter.ToInt(reader["bettype"]);
-                        var betTypeIndex = betTypeIndexList[betType];
-                        var rate = Converter.ToDecimal(reader["virtualMultiplier"]);
+                        var targetIndex = sportId == Sports.Soccer ? soccerBetTypeIndex : otherSportbetTypeIndex;
+                        if (!targetIndex.ContainsKey(betType))
+                        {
+                            continue;
+                        }
+
                         var targetSport = sportId == Sports.Soccer ? soccerSport : otherSport;
+                        var betTypeIndex = targetIndex[betType];
+                        var rate = Converter.ToDecimal(reader["virtualMultiplier"]);
                         if (isLive)
                         {
+                            targetSport.LiveVirtualRate[betTypeIndex].HasData = true;
                             targetSport.LiveVirtualRate[betTypeIndex].PercentRate = rate;
                         }
                         else
                         {
+                            targetSport.NonLiveVirtualRate[betTypeIndex].HasData = true;
                             targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = rate;
                         }
                     }

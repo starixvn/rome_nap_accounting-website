@@ -31,5 +31,10 @@ namespace Fanex.Tarus.Infrastructure.Constants
 
         public const int OddEven = 2;
         public const int FirstOddEven = 12;
+
+        public const int MoneyLine = 20;
+        public const int FirstMoneyLine = 21;
+        public const int SetXWinner = 154;
+        public const int SetXGameYWinner = 1324;
     }
 }
