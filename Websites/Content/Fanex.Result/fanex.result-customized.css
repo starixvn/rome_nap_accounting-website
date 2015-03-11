@@ -205,7 +205,8 @@ table.fn-rs tr.row-noinfo td
 /* Begin Sportsbook Result */
 div.fn-rs-content-scroll
 {
-    overflow-y: inherit;
+    overflow-x: inherit !important;
+    overflow-y: inherit !important;
     max-height: inherit;
 }
 
