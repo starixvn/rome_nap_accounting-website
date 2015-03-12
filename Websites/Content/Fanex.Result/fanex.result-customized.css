@@ -31,6 +31,7 @@ table.fn-rs
     cursor: default;
     margin-left: auto;
     margin-right: auto;
+    min-width: 500px !important;
 }
 
 table.fn-rs tr.header, table.fn-rs .sub-header
