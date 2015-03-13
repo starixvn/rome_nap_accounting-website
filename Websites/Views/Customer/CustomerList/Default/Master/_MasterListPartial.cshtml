@@ -144,7 +144,8 @@
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : masterItem.IsSynCasinoUpline;
-                        var onclickCS = (IsOnclickCS == true ? "masterList.casino('" + masterItem.ChildID + "','" + Model.ParentId + "');" : "");
+                        var parentCustIdTmp = Model.ParentId == 0 ? masterItem.ParentMasterDirect :  Model.ParentId;
+                        var onclickCS = (IsOnclickCS == true ? "masterList.casino('" + masterItem.ChildID + "','" + parentCustIdTmp + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
                     <!--/casino-edit-->
