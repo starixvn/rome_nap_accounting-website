@@ -509,6 +509,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableGoldDeluxe
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableGoldDeluxe"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get

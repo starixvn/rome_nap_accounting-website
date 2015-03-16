@@ -716,6 +716,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
+                                // Gold Deluxe
+                                if (!WebSettings.EnableGoldDeluxe || roleId != 4 || !isLicensee)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
+                                }
+
                                 if (Functions.Settings.IsVisibleSpecial)
                                 {
                                     TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));

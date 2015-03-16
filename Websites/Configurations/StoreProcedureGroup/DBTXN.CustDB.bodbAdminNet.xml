@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="Gold Deluxe">
+    <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
   <Function Name="AG Casino">
     <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />

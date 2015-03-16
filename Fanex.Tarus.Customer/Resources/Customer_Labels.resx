@@ -402,4 +402,16 @@
   <data name="VirtualRate_UploadFile_UpdateFailedSomeAccounts" xml:space="preserve">
     <value>Updated successfully except these accounts with Virtual Rate values below cannot be updated. Please try again or contact the administrator.</value>
   </data>
+  <data name="EnableGoldDeluxe" xml:space="preserve">
+    <value>Enable Gold Deluxe</value>
+  </data>
+  <data name="EnableGoldDeluxeMembers" xml:space="preserve">
+    <value>Enable Gold Deluxe for members</value>
+  </data>
+  <data name="GoldDeluxeStatusUpdatedSuccessfully" xml:space="preserve">
+    <value>Gold Deluxe status updated successfully.</value>
+  </data>
+  <data name="GoldDeluxeUpdateConfirm" xml:space="preserve">
+    <value>Are you sure you want to update Gold Deluxe status on this customer?</value>
+  </data>
 </root>

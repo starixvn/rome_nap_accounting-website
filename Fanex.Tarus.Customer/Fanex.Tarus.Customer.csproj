@@ -154,6 +154,8 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
+    <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -195,6 +197,7 @@
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
+    <Compile Include="Controller\GoldDeluxeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
@@ -221,6 +224,8 @@
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
@@ -245,6 +250,8 @@
     <Compile Include="DataAccess\EditLicensee\IEditLicenseeRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\AutoSuspendRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
+    <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
+    <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
@@ -322,6 +329,7 @@
     <Compile Include="Entities\EditLicensee\SettingInfo.cs" />
     <Compile Include="Entities\EditLicensee\VirtualSportsSettingInfo.cs" />
     <Compile Include="Entities\ExportExcelInfo.cs" />
+    <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
