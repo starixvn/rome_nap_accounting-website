@@ -347,6 +347,7 @@ var VirtualRateController = function () {
             var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
             var isCopyFromSport = $("#button-copy-sport-settings").hasClass("icon-copy-setting-checked");
+            criteria.LastSettings = self.cachedData.oldSettings;
             for (var i = 0; i < sportLength; i++) {
                 var sport = customerVirtualRateModel.SportVirtualRateList[i];
                 var isCopyFromBetType = $("#button-copy-bettype-settings-" + sport.Id).hasClass("icon-copy-setting-checked");
@@ -361,6 +362,7 @@ var VirtualRateController = function () {
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
                     if (customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].HasData) {
+                        criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate.toFixed(2);
                         customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
                     }
 
@@ -370,12 +372,12 @@ var VirtualRateController = function () {
                     '[bettype-id="' +
                         (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
                     if (customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].HasData) {
+                        criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate.toFixed(2);
                         customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = (parseInt(nonliveRate) / 100 + 1).toFixed(2);
                     }
                 }
             }
 
-            criteria.LastSettings = self.cachedData.oldSettings;
             self.CallAjax(self,
                 window.rootUrl + "VirtualRate/UpdateSettings",
                 criteria,
