@@ -103,14 +103,13 @@
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
             userId: CustomerInfo.userId,
-            username: CustomerInfo.username,
+            actorName: CustomerInfo.username,
             settingModel: JSON.stringify(SettingModel),
-            customerModel: JSON.stringify(CustomerModel),
-            groupName: parent.$('#selectedGroupName').html()
+            customerModel: JSON.stringify(CustomerModel)
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
-        data.custName = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
+        data.username = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
 
         $.ajax({
             url: toUrl(actionName),
@@ -120,10 +119,10 @@
         })
         .success(function (result) {
             if (result.errorCode != 0) {
-                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
+                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
             }
             else {
-                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="#618E11">Updated successfully</font><br /><br />';
+                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ':</font><br /><font color="#618E11">Updated successfully</font><br /><br />';
             }
 
             if (!IsMultiple) {
