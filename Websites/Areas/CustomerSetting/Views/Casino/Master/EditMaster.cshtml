@@ -40,6 +40,9 @@
         </div>
         <div id="names" style="display: none;" class="names">
         </div>
+          <div style="margin-bottom: 5px;">
+            <input value="Update" type="button" class="btnUpdate b" />
+        </div>
         <div>
             @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
         </div>
@@ -172,6 +175,7 @@
         </div>
         <div>
             <input value="Update" type="button" class="btnUpdate b" />
+           
         </div>
     </div>
 </body>
