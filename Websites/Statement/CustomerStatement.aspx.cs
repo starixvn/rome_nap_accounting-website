@@ -28,8 +28,8 @@ public partial class Statement_CustomerStatement : PageBase
         try
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
-            rootUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath + "/";
-
+            rootUrl = Request.Url.GetLeftPart(UriPartial.Scheme) + Request.Headers["Host"] + Request.ApplicationPath + "/";
+            
             WebUtils.SetNoCache();
 
             int reportNo = 1;
