@@ -11,6 +11,9 @@ namespace Fanex.Tarus.Customer.Entities.GoldDeluxe
 {
     using Fanex.Tarus.Customer.Resources;
 
+    /// <summary>
+    /// Gold Deluxe game entity.
+    /// </summary>
     public class GoldDeluxeStatus
     {
         public int CustId { get; set; }
