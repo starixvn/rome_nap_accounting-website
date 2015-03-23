@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Customer.Controller
 {
     using System.Web.Mvc;
+    using Fanex.Tarus.Business.Implement;
     using Fanex.Tarus.Customer.Business.GoldDeluxe;
     using Fanex.Tarus.Customer.Criteria.GoldDeluxe;
     using Fanex.Tarus.Customer.Entities.GoldDeluxe;
@@ -17,6 +18,7 @@ namespace Fanex.Tarus.Customer.Controller
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
+    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// Gold Deluxe controller.
@@ -60,6 +62,7 @@ namespace Fanex.Tarus.Customer.Controller
                     NullValueHandling = NullValueHandling.Ignore
                 });
 
+            ViewBag.HasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
             return View("~/Areas/CustomerSetting/Views/GoldDeluxe/Index.cshtml", null, model);
         }
 

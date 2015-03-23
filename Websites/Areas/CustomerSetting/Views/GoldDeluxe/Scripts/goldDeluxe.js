@@ -1,4 +1,4 @@
-﻿/* global model, rootUrl, PTBlockUI, PTUnBlockUI, showAlertMessage */
+﻿/* global hasHostPermission, model, rootUrl, PTBlockUI, PTUnBlockUI, showAlertMessage */
 /* jshint unused: vars */
 (function () {
     'use strict';
@@ -67,6 +67,10 @@
             html.push(' checked="checked"');
         }
 
+        if (hasHostPermission === 0) {
+            html.push(' disabled="disabled"');
+        }
+
         html.push('/>');
         html.push('<label class="label-for-checkbox" for="chkSetting">' + model.Name + '</label>');
         html.push('</td>');
@@ -108,8 +112,9 @@
                 data: JSON.stringify(formData),
                 beforeSend: function (jqXHR, settings) { },
                 success: function (data, textStatus, jqXHR) {
-                    showMessage(data.ErrorMessage, data.ErrorCode);
-                    if (data.ErrorCode === 0) {
+                    var code = data.ErrorCode === 0 ? 0 : 1;
+                    showMessage(data.ErrorMessage, code);
+                    if (code === 0) {
                         window.setTimeout(function () {
                             try { parent.ClosePopup(); } catch (e) { }
                         }, 3000);
