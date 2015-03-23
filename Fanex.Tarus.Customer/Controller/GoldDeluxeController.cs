@@ -15,6 +15,7 @@ namespace Fanex.Tarus.Customer.Controller
     using Fanex.Tarus.Customer.Entities.GoldDeluxe;
     using Fanex.Tarus.Customer.Resources;
     using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -40,6 +41,7 @@ namespace Fanex.Tarus.Customer.Controller
         /// <param name="custId">The customer ID.</param>
         /// <param name="username">The username.</param>
         /// <returns>The action result.</returns>
+        [AuthenticateRead]
         public ActionResult Index(int custId, string username)
         {
             var criteria = new GetGoldDeluxeStatusCriteria { CustId = custId };
@@ -67,6 +69,7 @@ namespace Fanex.Tarus.Customer.Controller
         /// <param name="status">The status.</param>
         /// <returns>The JSON result.</returns>
         [HttpPost]
+        [AuthenticateHost]
         public ActionResult Update(GoldDeluxeStatus status)
         {
             var criteria = new UpdateGoldDeluxeStatusCriteria 
