@@ -1320,11 +1320,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 if (!WebSettings.disableCS)
                 {
                     //Sunplus.Accounting.Business.Customer.GetCustomerInfo
-                    var custInfo = new CustomerDAO().GetCustomerInfo(userName);
-                    if (custInfo != null && custInfo.Rows.Count > 0)
-                    {
-                        var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
-                        bettype = GetListCasinoGameKindGameType(rngSiteName);
+                    //var custInfo = new CustomerDAO().GetCustomerInfo(userName);
+                    //if (custInfo != null && custInfo.Rows.Count > 0)
+                    //{
+                        //var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
+                        bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM);
                         var sport = new Sport()
                         {
                             SportId = Constants.Sport.Casino,
@@ -1332,7 +1332,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             Bettype = bettype
                         };
                         sports.SportsList.Add(sport);
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
