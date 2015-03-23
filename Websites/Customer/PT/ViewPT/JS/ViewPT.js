@@ -324,7 +324,7 @@ var ViewPT = {
                                 {{/if}}\
 		                        <!--/AutoMPT-->\
 		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
+		                        <td class="disable">${Member.Com}</td>\
                             </tr>\
                         {{/if}}\
                         <!--/r1-->\
