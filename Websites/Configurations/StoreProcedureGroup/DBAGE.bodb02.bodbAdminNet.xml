@@ -19,6 +19,7 @@
 
   <Function Name="Balance Up Day">
     <Setting Key="Core_ReportService_GetBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Exchange Rate">
