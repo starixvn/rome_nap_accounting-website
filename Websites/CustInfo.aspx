@@ -295,6 +295,13 @@
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
+        function updateGoldDeluxe(id, username) {
+            var title = 'Update Gold Deluxe Status';
+            var url = 'GoldDeluxe/Index?custId=' + id + '&username=' + username;
+            var width = 475;
+            var height = 180;
+            parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
+        }
         function closeDirectAccountPopup() {
             if (parent.window.isUpdateDirectStatus) {
                 changeDisplayStatus();
