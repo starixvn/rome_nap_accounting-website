@@ -55,6 +55,7 @@
     <script src="WebResources/js/CustomerStatement.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
+    <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Grid.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Pagination.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/moment.js"></script>
@@ -97,6 +98,5 @@
     <script src="../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
     <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
-    <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
 </body>
 </html>

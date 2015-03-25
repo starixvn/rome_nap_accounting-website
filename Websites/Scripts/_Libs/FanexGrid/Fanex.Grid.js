@@ -1601,8 +1601,13 @@
                 o.resetScroller(o, container, rowheader, xscrollbar, yscrollbar);
             } else {
                 var top = yscrollbar.scrollTop();
-                container.prop("scrollTop", top);
-                rowheader.prop("scrollTop", top);
+                if (container.prop) {
+                    container.prop("scrollTop", top);
+                    rowheader.prop("scrollTop", top);
+                } else {
+                    container.attr("scrollTop", top);
+                    rowheader.attr("scrollTop", top);
+                }
             }
 
             return new scroller(o, container, rowheader, xscrollbar, yscrollbar);
@@ -1694,14 +1699,25 @@
     };
 
     $.fn.resetScroller = function (o, container, rowheader, xscrollbar, yscrollbar) {
-        yscrollbar.prop("scrollTop", 0);
-        container.prop("scrollTop", 0);
-        rowheader.prop("scrollTop", 0);
+        if (yscrollbar.prop) {
+            yscrollbar.prop("scrollTop", 0);
+            container.prop("scrollTop", 0);
+            rowheader.prop("scrollTop", 0);
 
-        container.prop("scrollLeft", 0);
-        xscrollbar.prop("scrollLeft", 0);
-        o.find(".col_header").prop("scrollLeft", 0);
-        o.find(".col_footer").prop("scrollLeft", 0);
+            container.prop("scrollLeft", 0);
+            xscrollbar.prop("scrollLeft", 0);
+            o.find(".col_header").prop("scrollLeft", 0);
+            o.find(".col_footer").prop("scrollLeft", 0);
+        } else {
+            yscrollbar.attr("scrollTop", 0);
+            container.attr("scrollTop", 0);
+            rowheader.attr("scrollTop", 0);
+
+            container.attr("scrollLeft", 0);
+            xscrollbar.attr("scrollLeft", 0);
+            o.find(".col_header").attr("scrollLeft", 0);
+            o.find(".col_footer").attr("scrollLeft", 0);
+        }
     };
 
     $.fn.renderScroller = function (options) {
@@ -1902,8 +1918,14 @@
             yscrollbar.scroll(function () {
                 var top = yscrollbar.scrollTop();
                 if (me.preTop != top) {
-                    container.prop("scrollTop", top);
-                    me.rowHeaderContainer.prop("scrollTop", top);
+                    if (container.prop) {
+                        container.prop("scrollTop", top);
+                        me.rowHeaderContainer.prop("scrollTop", top);
+                    } else {
+                        container.attr("scrollTop", top);
+                        me.rowHeaderContainer.attr("scrollTop", top);
+                    }
+
                     me.preTop = top;
                 }
             });
@@ -1911,17 +1933,30 @@
             container.scroll(function () {
                 var top = container.scrollTop();
                 if (me.preTop != top) {
-                    me.rowHeaderContainer.prop("scrollTop", top);
-                    yscrollbar.prop("scrollTop", top);
+                    if (me.rowHeaderContainer.prop) {
+                        me.rowHeaderContainer.prop("scrollTop", top);
+                        yscrollbar.prop("scrollTop", top);
+                    } else {
+                        me.rowHeaderContainer.attr("scrollTop", top);
+                        yscrollbar.attr("scrollTop", top);
+                    }
+
                     me.preTop = top;
                 }
                 //
                 if (isOnSmartPhoneBrowser) {
                     var left = container.scrollLeft();
                     if (me.preLeft != left) {
-                        me.colHeaderContainer.prop("scrollLeft", left);
-                        me.colFooterContainer.prop("scrollLeft", left);
-                        xscrollbar.prop("scrollLeft", top);
+                        if (me.colHeaderContainer.prop) {
+                            me.colHeaderContainer.prop("scrollLeft", left);
+                            me.colFooterContainer.prop("scrollLeft", left);
+                            xscrollbar.prop("scrollLeft", top);
+                        } else {
+                            me.colHeaderContainer.attr("scrollLeft", left);
+                            me.colFooterContainer.attr("scrollLeft", left);
+                            xscrollbar.attr("scrollLeft", top);
+                        }
+
                         me.preLeft = left;
                     }
                 }
@@ -1930,8 +1965,14 @@
             rowheader.scroll(function () {
                 var top = rowheader.scrollTop();
                 if (me.preTop != top) {
-                    container.prop("scrollTop", top);
-                    yscrollbar.prop("scrollTop", top);
+                    if (container.prop) {
+                        container.prop("scrollTop", top);
+                        yscrollbar.prop("scrollTop", top);
+                    } else {
+                        container.attr("scrollTop", top);
+                        yscrollbar.attr("scrollTop", top);
+                    }
+
                     me.preTop = top;
                 }
             });
@@ -1939,9 +1980,16 @@
             xscrollbar.scroll(function () {
                 var left = xscrollbar.scrollLeft();
                 if (me.preLeft != left) {
-                    me.colHeaderContainer.prop("scrollLeft", left);
-                    me.colFooterContainer.prop("scrollLeft", left);
-                    container.prop("scrollLeft", left);
+                    if (me.colHeaderContainer.prop) {
+                        me.colHeaderContainer.prop("scrollLeft", left);
+                        me.colFooterContainer.prop("scrollLeft", left);
+                        container.prop("scrollLeft", left);
+                    } else {
+                        me.colHeaderContainer.attr("scrollLeft", left);
+                        me.colFooterContainer.attr("scrollLeft", left);
+                        container.attr("scrollLeft", left);
+                    }
+
                     me.preLeft = left;
                 }
             });
@@ -1950,18 +1998,33 @@
                 me.colHeaderContainer.scroll(function () {
                     var left = me.colHeaderContainer.scrollLeft();
                     if (me.preLeft != left) {
-                        container.prop("scrollLeft", left);
-                        me.colFooterContainer.prop("scrollLeft", left);
-                        xscrollbar.prop("scrollLeft", top);
+                        if (container.prop) {
+                            container.prop("scrollLeft", left);
+                            me.colFooterContainer.prop("scrollLeft", left);
+                            xscrollbar.prop("scrollLeft", top);
+                        } else {
+                            container.attr("scrollLeft", left);
+                            me.colFooterContainer.attr("scrollLeft", left);
+                            xscrollbar.attr("scrollLeft", top);
+                        }
+
                         me.preLeft = left;
                     }
                 });
                 me.colFooterContainer.scroll(function () {
                     var left = me.colFooterContainer.scrollLeft();
                     if (me.preLeft != left) {
-                        container.prop("scrollLeft", left);
-                        me.colHeaderContainer.prop("scrollLeft", left);
-                        xscrollbar.prop("scrollLeft", top);
+                        if (container.prop) {
+                            container.prop("scrollLeft", left);
+                            me.colHeaderContainer.prop("scrollLeft", left);
+                            xscrollbar.prop("scrollLeft", top);
+                        }
+                        else {
+                            container.attr("scrollLeft", left);
+                            me.colHeaderContainer.attr("scrollLeft", left);
+                            xscrollbar.attr("scrollLeft", top);
+                        }
+
                         me.preLeft = left;
                     }
                 });
