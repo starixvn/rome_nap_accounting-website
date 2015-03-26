@@ -418,7 +418,8 @@ function viewGuidelines() {
         parent.OpenPopup(
             window.rootUrl + "NapStatement/StatementReport/Guideline?" +
             $.param({
-                roleId: rs.RoleId
+                roleId: rs.RoleId,
+                canViewBetListStatement: true
             }),
             statementResources.Statement_Guidelines,
             900,
