@@ -112,7 +112,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     HistoryLog = new List<HistoryLogByDateModel>()
                 };
 
-                var rawData = _virtualRateRepository.HistoryLog(criteria);
+                // Fix bug #32374
+                var rawData = _virtualRateRepository.HistoryLog(criteria).OrderByDescending(m => m.LogDate).ThenBy(m => m.ActionId);
                 var logGroups = rawData.GroupBy(log => new
                 {
                     LogDate = log.LogDate,
