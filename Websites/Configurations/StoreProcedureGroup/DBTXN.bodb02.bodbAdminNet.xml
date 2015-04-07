@@ -73,12 +73,12 @@
   <Function Name="Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction_xtest" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
