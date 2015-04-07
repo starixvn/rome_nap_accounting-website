@@ -15,7 +15,7 @@ function obj(id) {
 function GetDataReport() {
     var fdate, tdate
     if (obj('fdate')) {
-        fdate = obj('fdate').value; 
+        fdate = obj('fdate').value;
     }
     else {
         fdate = '';
@@ -31,7 +31,7 @@ function GetDataReport() {
     $.ajax({
         url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value,
         dataType: 'html',
-        success: function(data) {
+        success: function (data) {
             $("#statementCotent").attr("style", "display:block");
             obj('sData').innerHTML = data;
             parent.jQuery.unblockUI();
@@ -78,7 +78,7 @@ function DelTrans(refno) {
             $.ajax({
                 url: 'DelTrans.ashx?refno=' + refno,
                 dataType: 'html',
-                success: function(data) {
+                success: function (data) {
                     var arr = data.split('|');
                     if (arr[0] == "1") {
                         obj('sData').innerHTML = arr[1];

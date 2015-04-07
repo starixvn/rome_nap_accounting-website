@@ -10,13 +10,26 @@ using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
+using Fanex.Module.Statement.Resources;
+using Fanex.Module.Statement.Configurations;
+using Sunplus.Accounting.DataAccess.Report;
+using Fanex.Common;
 
 public partial class Statement_CustomerStatement : PageBase
 {
+    public int isInternalCustomer = 1;
+    public string newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+    public string balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.BalanceUpDay);
+    public string moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.MoveBetsDay);
+    public string rootUrl = string.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
+            isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
+            rootUrl = Request.Url.GetLeftPart(UriPartial.Scheme) + Request.Headers["Host"] + Request.ApplicationPath + "/";
+            
             WebUtils.SetNoCache();
 
             int reportNo = 1;
@@ -64,8 +77,9 @@ public partial class Statement_CustomerStatement : PageBase
                         break;
                 }
 
-                ExportToExcel(reportContent, filenameSuffix);
+                ExportToExcel(fdt, tdt, AppSession.CustUName, reportContent, filenameSuffix);
             }
+
         }
         catch (Exception ex)
         {
@@ -262,7 +276,12 @@ public partial class Statement_CustomerStatement : PageBase
         searchContent.Text = headerHtml;
     }
 
-    private void ExportToExcel(string data, string filename)
+    private void ExportToExcel(
+        DateTime fromDate,
+        DateTime toDate,
+        string username,
+        string data,
+        string filename)
     {
         if (!string.IsNullOrEmpty(filename)
             && !string.IsNullOrEmpty(data))
@@ -281,16 +300,35 @@ public partial class Statement_CustomerStatement : PageBase
             content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
             content.Append(ReportHTML.CSSExcelReport());
             content.Append("</head>");
+            content.AppendLine(ExportHeader(fromDate, toDate, username));
             content.AppendLine(data);
             content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
             content.Append("</html>");
             HttpContext.Current.Response.Write(content.ToString());
-            //HttpContext.Current.Response.End();
+            HttpContext.Current.Response.End();
         }
         else
         {
             //response error
             Response.Write("<script>window.alert('Cannot export excel. Please contact administrator')</script>");
         }
+    }
+
+    private string ExportHeader(DateTime fromDate, DateTime toDate, string username)
+    {
+        var html = "";
+        html += "<table cellspacing=\"0px\" cellpadding=\"0px\" border=\"0\" class=\"maincontent_header\" id=\"bannerFilter\"><tbody><tr><td class=\"maincontent_headerL\"></td><td class=\"maincontent_headerC\">Statement</td><td class=\"maincontent_headerR\"></td></tr></tbody></table>";
+        html += "<div id=\"bannerFilter\" class=\"maincontent_box\"><div><table cellspacing=\"2\" cellpadding=\"2\" border=\"0\"><tbody><tr>" +
+            "<td class=\"b\">Username:</td><td>" + username + "</td>" +
+            "<td class=\"b\">From:</td><td>" + fromDate.ToString("MM/dd/yyyy") + "</td>" +
+            "<td class=\"b\">To:</td><td>" + toDate.ToString("MM/dd/yyyy") + "</td>" +
+            "</tr></tbody></table></div></div>";
+        return html;
+    }
+
+    private static string GetFullRootUrl()
+    {
+        HttpRequest request = HttpContext.Current.Request;
+        return request.Url.AbsoluteUri.Replace(request.Url.AbsolutePath, String.Empty);
     }
 }

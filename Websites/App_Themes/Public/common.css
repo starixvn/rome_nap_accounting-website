@@ -291,3 +291,18 @@ span.cannotchangeinternal:hover
 {
     color: #FF0000 !important;
 }
+
+.note-info-message
+{
+    background: url("../Images/information-icon2.png") no-repeat scroll 0 3px transparent;
+    cursor: help;
+    float: right;
+    height: 16px;
+    margin: 0 2px;
+    padding: 4px 10px;
+}
+
+.note-info-message:hover
+{
+     background: url("../Images/information-icon2-hover.png") no-repeat scroll 0 3px transparent;
+}
