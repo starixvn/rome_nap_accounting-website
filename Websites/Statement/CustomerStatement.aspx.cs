@@ -18,6 +18,7 @@ using Fanex.Common;
 public partial class Statement_CustomerStatement : PageBase
 {
     public int isInternalCustomer = 1;
+    public int isOldStatementTab = 0;
     public string newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     public string balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.BalanceUpDay);
     public string moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.MoveBetsDay);
@@ -29,13 +30,24 @@ public partial class Statement_CustomerStatement : PageBase
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
             rootUrl = Request.Url.GetLeftPart(UriPartial.Scheme) + Request.Headers["Host"] + Request.ApplicationPath + "/";
-            
+
             WebUtils.SetNoCache();
 
             int reportNo = 1;
             reportNo = CastAide.AsInt32(Request.QueryString["repno"], 1);
-            if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine statement 1&2
+            var tabId = CastAide.AsInt32(Request.QueryString["repno"], 1);
+            isOldStatementTab = tabId == 6 ? 1 : 0;
+
+            if (reportNo < 1 || reportNo > 5 || reportNo == 2)
+            {
+                //combine statement 1&2
                 reportNo = 1;
+            }
+
+            if (tabId < 1 || tabId > 6 || tabId == 2)
+            {
+                tabId = 1;
+            }
 
             //get datetime
             string fdate = WebUtils.GetQueryStringValue<string>("fdate", DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy"));
@@ -53,7 +65,7 @@ public partial class Statement_CustomerStatement : PageBase
 
             //render banner search - filter
             reportHeader.Text = "Statement";
-            RenderFilterBanner(reportNo, fdt, tdt);
+            RenderFilterBanner(tabId, reportNo, fdt, tdt);
 
             //for export to excel
             if (CastAide.AsInt32(Request.QueryString["IsExport"], 0) == 1)
@@ -156,7 +168,7 @@ public partial class Statement_CustomerStatement : PageBase
     /// <param name="fromdate"></param>
     /// <param name="todate"></param>
     /// <returns></returns>
-    private void RenderFilterBanner(int reportTypeNo, DateTime fromdate, DateTime todate)
+    private void RenderFilterBanner(int tabId, int reportTypeNo, DateTime fromdate, DateTime todate)
     {
         /*
          * From date and todate must be less than or equal to DateTime.Now
@@ -181,24 +193,34 @@ public partial class Statement_CustomerStatement : PageBase
         if (Session["CustRoleId"] == null || (int)Session["CustRoleId"] < 2)
             TemplateHandler.RemoveBlock(ref headerHtml, "IsAgent");
 
-        switch (reportTypeNo)
+        switch (tabId)
         {
             case 1://Statement 1&2
                 TemplateHandler.RemoveBlock(ref headerHtml, "StatementLink");
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
                 break;
 
             case 3:// Detail
                 TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "DetailLink");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
                 break;
 
             case 4://Audit
                 TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "AuditLink");
+                break;
+
+            case 6:// Old Statement
+                TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementOldLink");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
                 break;
         }
         //if (reportTypeNo == 1) //Statement 1&2

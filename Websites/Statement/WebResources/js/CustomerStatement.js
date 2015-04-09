@@ -95,7 +95,7 @@ function completeUpdateIsInternal(rs) {
                 });
 
     var reportNo = obj('repno').value;
-    if (!isInternalCustomer && reportNo == 1) {
+    if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
         if (!statementReportManager.checkCriteria(criteria)) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
             return;
@@ -192,7 +192,7 @@ function ExportToExcel() {
             };
 
             var reportNo = obj('repno').value;
-            if (!isInternalCustomer && reportNo == 1) {
+            if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
                 if (!statementReportManager.checkCriteria(criteria)) {
                     parent.jQuery.unblockUI();
                     return;
@@ -298,7 +298,6 @@ function UnVerifyTrans(trans) {
     });
 }
 
-
 function VerifyTransCallBack(data) {
 
     //request to process data successful
@@ -400,6 +399,10 @@ jQuery(document).ready(function () {
             GetDataReport();
         }
     });
+
+    if (isOldStatementTab == "1") {
+        $("#notemessage").addClass("display-none");
+    }
 });
 
 function viewDetail(fdate, transtypeid) {
@@ -421,7 +424,7 @@ function viewGuidelines() {
                 roleId: rs.RoleId,
                 canViewBetListStatement: true
             }),
-            statementResources.Statement_Guidelines,
+            statementResources.New_Statement_Guidelines,
             900,
             400,
             true,
