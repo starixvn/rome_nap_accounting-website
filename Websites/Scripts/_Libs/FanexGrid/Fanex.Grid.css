@@ -13,7 +13,7 @@ body
     position: relative;
     z-index: 0;
     border: solid 1px #c5c5c5;
-    font-size: 0.9em;
+    font-size: 12px;
 }
 .freegrid .grid-toolbox input[type='button']:hover
 {
@@ -27,7 +27,7 @@ body
     background: url("images/excel-icon.png") 0px -26px no-repeat;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -45,7 +45,7 @@ body
     background: url("images/back-icon.png") 0px -27px no-repeat;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -64,7 +64,7 @@ body
     background: url("images/send-mail.png") 0px 20px;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 18px;
     margin: 0 2px;
     overflow: visible;
@@ -82,7 +82,7 @@ body
 {
     border: none;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 17px;
     margin-right: 2px;
     overflow: visible;
@@ -96,7 +96,7 @@ body
     background: url("images/expand-icon.png") 0px -27px;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -141,7 +141,7 @@ body
 .grid-title .grid-title-label
 {
     color: #4a4b4f;
-    font-size: 0.9em;
+    font-size: 12px;
     float: left;
     height: 18px;
     padding-left: 4px;
@@ -290,7 +290,7 @@ body
     border-top: none;
     border-left: none;
     font-weight: normal;
-    font-size: 1.0em;
+    font-size: 12px;
     padding: 2px;
     font-weight: bold;
     height: 21px;
@@ -337,7 +337,7 @@ body
     border-width: 0 1px 1px 0;
     padding: 2px;
     height: 21px;
-    font-size: 1.0em;
+    font-size: 12px;
 }
 
 .freegrid div.row-headers-background
