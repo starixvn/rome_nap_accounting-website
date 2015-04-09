@@ -14,8 +14,8 @@
     <link type="text/css" rel="Stylesheet" href="~/js/jQuery/autocomplete/styles.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/_Libs/FanexGrid/Fanex.Grid.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css" />
-    <link rel="Stylesheet" type="text/css" href="~/App_Themes/Report/Statement.css?v=2.1" />
-    <link rel="stylesheet" type="text/css" href="~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1" />
+    <link rel="Stylesheet" type="text/css" href="~/App_Themes/Report/Statement.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Statement/Views/Report/Styles/Statement.css" />
     <%--<link href="../js/IBCWnd/IBCWnd.css" rel="stylesheet" type="text/css" />--%>
     <%--<link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
         type="text/css" />--%>

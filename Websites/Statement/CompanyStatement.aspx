@@ -8,7 +8,7 @@
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link href="~/App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
 <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-<link rel="Stylesheet" type ="text/css" href ="~/App_Themes/Report/Statement.css?v=2.1" />
+<link rel="Stylesheet" type ="text/css" href ="~/App_Themes/Report/Statement.css" />
 <link href="../js/IBCWnd/IBCWnd.css" rel="stylesheet" type="text/css" />
 </head> 
 <body>
