@@ -64,7 +64,7 @@
 }
 .errMsg
 {
-	background-color: #ffedc1;
+	background-color: #b5c4d0;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -104,8 +104,8 @@
 .loading
 {
     background-image: url("../images/loading.gif");
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     line-height: 50px;
     display: block;
     border: none;
@@ -160,11 +160,11 @@ html, body
 }
 div#settingContainer,div.custInfo
 {
-    border: 1px solid #ccc;
+    border: 1px solid #7c98a4;
     border-bottom:0px;
     border-top: none;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+    border-left: 1px solid #7c98a4;
+    border-right: 1px solid #7c98a4;
     padding: 0;
     margin: 0;
 }
@@ -176,7 +176,7 @@ td
 }
 .headerPositionTaking
 {	
-	background-color: #f1f1a6;
+	background-color: #b5c4d0;
 	color: #464646;
 	font-size: 11px;
 	font-weight: bold;
@@ -321,7 +321,6 @@ select,.select
 }
 .successMsg
 {
-    background-color: #ffedc1;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;

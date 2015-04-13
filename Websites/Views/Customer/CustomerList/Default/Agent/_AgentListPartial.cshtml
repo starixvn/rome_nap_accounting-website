@@ -142,7 +142,7 @@
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : agentItem.IsSynCasinoUpline;
-                        var onclickCS = (IsOnclickCS == true ? "OpenEditCS('" + agentItem.ChildID + "');" : "");
+                        var onclickCS = (IsOnclickCS == true ? "AgentList.casino('" + agentItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
                     <!--/casino-edit-->

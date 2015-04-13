@@ -155,16 +155,16 @@ namespace Fanex.Agent.UI
 			protected string t28_RacingUpdateURL;
 			protected static string s73 = "');\">Edit Racing</a><br /></span><!--/horseracing-editlink--><!--edit-casino--><span class=\"";
 			protected string t29_IsShow1;
-			protected static string s74 = "\"><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','Customer/PositionTakingCS.aspx?custId=";
-			protected string t30_CustId;
+			protected static string s74 = "\"><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','";
+			public string casinoLinkSetting = "{casinoLinkSetting}";
 			protected static string s75 = "');\">Edit Casino</a><br /></span><span class=\"";
-			protected string t31_IsHidden1;
-			protected static string s76 = "\"><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','Customer/PositionTakingCS.aspx?custId=";
-			protected string t32_CustId;
+			protected string t30_IsHidden1;
+			protected static string s76 = "\"><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','";
+			protected string t31_casinoLinkSetting;
 			protected static string s77 = "');\">Edit Casino</a><br /></span><!--/edit-casino--><!--edit-finance--><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','Customer/v2/UpdateFinancePT.aspx?custId=";
-			protected string t33_CustId;
+			protected string t32_CustId;
 			protected static string s78 = "&roleid=";
-			protected string t34_RoleId;
+			protected string t33_RoleId;
 			protected static string s79 = "&uplineid=";
 			public string ParentId = "{ParentId}";
 			protected static string s80 = "');\">Edit Finance</a><br /><!--/edit-finance--><!--edit-bingo--><a class=\"button_left02\" href=\"javascript:;\" onclick=\"parent.gotoURL('centerFr','";
@@ -184,7 +184,7 @@ namespace Fanex.Agent.UI
 			protected static string s87 = "</div><div class=\"tab_left_content hidden\" id=\"box_05_content_4\"><div><div id=\"onlinepanel\" class=\"tab_left_content\" style=\"height: 190px;\">Loading...</div></div></div></div><!--end box setting detail login onlinelist--><div class=\"spacing\"></div></div><div class=\"box_bottom\"></div></div>";
 			public string jsparams = "{jsparams}";
 			protected static string s88 = "<input type=\"hidden\" id=\"custid\" value=\"";
-			protected string t35_CustId;
+			protected string t34_CustId;
 			protected static string s89 = "\" /><form name=\"AgLoginForm\" id=\"AgLoginForm\" method=\"get\" action=\"";
 			protected static string s90{get{return AbsoluteUrl2("App_Templates/Default/CustomerInfo/InternalView.aspx");}}
 			protected static string s91 = "\"target=\"_blank\"><input type=\"hidden\" id=\"chalengeStr\" name=\"chalengeStr\" value=\"";
@@ -209,9 +209,13 @@ namespace Fanex.Agent.UI
 			public string chkLiveCasino = "{chkLiveCasino}";
 			protected static string s101 = "\"/><input type=\"hidden\" id=\"chkOldValueVirtualSport\" name=\"chkOldValueVirtualSport\" value=\"";
 			public string chkVirtualSport = "{chkVirtualSport}";
-			protected static string s102 = "\"/><input type=\"hidden\" id=\"chkOldValueEnableHorseRacingFixedOdds\" name=\"chkOldValueEnableHorseRacingFixedOdds\" value=\"";
+			protected static string s102 = "\"/><input type=\"hidden\" id=\"chkOldValueEsport\" name=\"chkOldValueEsport\" value=\"";
+			public string chkEsports = "{chkEsports}";
+			protected static string s103 = "\"/><input type=\"hidden\" id=\"chkOldValueEnableHorseRacingFixedOdds\" name=\"chkOldValueEnableHorseRacingFixedOdds\" value=\"";
 			public string chkEnableHorseRacingFixedOdds = "{chkEnableHorseRacingFixedOdds}";
-			protected static string s103 = "\"/><!--/checkbox-oldvalue--></form>";
+			protected static string s104 = "\"/><input type=\"hidden\" id=\"chkOldValueEnableDirectStatus\" name=\"chkOldValueEnableDirectStatus\" value=\"";
+			public string chkEnableDirectStatus = "{chkEnableDirectStatus}";
+			protected static string s105 = "\"/><!--/checkbox-oldvalue--></form>";
 			public override void ToString(ref StringBuilder bd)
 			{
 				if(!Visible) return;
@@ -360,11 +364,11 @@ namespace Fanex.Agent.UI
 					bd.Append(s73);
 					bd.Append(IsShow1);
 					bd.Append(s74);
-					bd.Append(CustId);
+					bd.Append(casinoLinkSetting);
 					bd.Append(s75);
 					bd.Append(IsHidden1);
 					bd.Append(s76);
-					bd.Append(CustId);
+					bd.Append(casinoLinkSetting);
 					bd.Append(s77);
 					bd.Append(CustId);
 					bd.Append(s78);
@@ -414,8 +418,12 @@ namespace Fanex.Agent.UI
 					bd.Append(s101);
 					bd.Append(chkVirtualSport);
 					bd.Append(s102);
-					bd.Append(chkEnableHorseRacingFixedOdds);
+					bd.Append(chkEsports);
 					bd.Append(s103);
+					bd.Append(chkEnableHorseRacingFixedOdds);
+					bd.Append(s104);
+					bd.Append(chkEnableDirectStatus);
+					bd.Append(s105);
 				}
 				if(IsAssigned){bd.Append(Value);}
 			}

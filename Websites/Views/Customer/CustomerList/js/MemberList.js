@@ -297,6 +297,10 @@
         showPopup(""
                 , "customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
     },
+    casino: function (custId, uplineId) {
+        showPopup(""
+                , "CustomerSetting/Casino/Member/EditMember/" + custId + "/ " + uplineId, 0, 0, 1024, 700, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1370;
         if (_IsVisibleVirtualRate == "True") {

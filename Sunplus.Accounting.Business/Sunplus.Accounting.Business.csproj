@@ -59,7 +59,7 @@
       <HintPath>..\Dependency\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoLibrary">
-      <HintPath>..\Dependency\CasinoLibrary.dll</HintPath>
+      <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
@@ -81,7 +81,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.14, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>

@@ -832,6 +832,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var liveCasinoSetting = "";
                                 var kenoSetting = string.Empty;
                                 var agCasinoLinkSetting = string.Empty;
+                                var casinoLinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -851,6 +852,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                                         TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
+                                        casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         break;
 
                                     case 2: // agent
@@ -870,6 +872,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditAgent?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
+                                        casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         break;
 
                                     case 3: // master
@@ -888,6 +891,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
                                         kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditMaster?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
+                                        casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         break;
 
                                     case 4: // super
@@ -907,6 +911,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditSuper?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
+                                        casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         break;
 
                                     default:
@@ -958,6 +963,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {

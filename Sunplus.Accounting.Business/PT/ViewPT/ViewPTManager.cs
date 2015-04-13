@@ -1320,11 +1320,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 if (!WebSettings.disableCS)
                 {
                     //Sunplus.Accounting.Business.Customer.GetCustomerInfo
-                    var custInfo = new CustomerDAO().GetCustomerInfo(userName);
-                    if (custInfo != null && custInfo.Rows.Count > 0)
-                    {
-                        var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
-                        bettype = GetListCasinoGameKindGameType(rngSiteName);
+                    //var custInfo = new CustomerDAO().GetCustomerInfo(userName);
+                    //if (custInfo != null && custInfo.Rows.Count > 0)
+                    //{
+                        //var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
+                        bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM);
                         var sport = new Sport()
                         {
                             SportId = Constants.Sport.Casino,
@@ -1332,7 +1332,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             Bettype = bettype
                         };
                         sports.SportsList.Add(sport);
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -2349,11 +2349,22 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     #region assign PT
 
                     var ptCurrent = new PositionTakingDTO();
+                    var masterDisableAutoPt = false; // Need to assign 
                     foreach (DataRow dr in dtPt.Rows)
                     {
-                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
+                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());                        
 
                         #region super
+
+                        if (currentRoleId == (int)CustInfo.Roles.Master)
+                        {
+                            masterDisableAutoPt = CastAide.AsBoolean(dr["DisableAutoMPT"]);
+                            ptCurrent.PermistionEnableAutoMaster =
+                                Permissions.IsEnabledAutoMaster(!masterDisableAutoPt);
+                            ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
+                            ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
+                            ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
+                        }
 
                         if (currentRoleId == (int)CustInfo.Roles.Super)
                         {
@@ -2372,7 +2383,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                       (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
-                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                  MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                  MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                               };
                             ptCurrent.Super = superPt;
                         }
@@ -2394,7 +2407,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                        (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
-                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                   MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                   MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                                };
                             ptCurrent.Master = masterPt;
                         }
@@ -2416,7 +2431,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                       (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
-                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                  Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                  MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                  MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                               };
                             ptCurrent.Agent = agentPt;
                         }
@@ -2438,7 +2455,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                        (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
-                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"])
+                                                   Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
+                                                   MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
+                                                   MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], 2)
                                                };
                             ptCurrent.Member = memberPt;
                         }

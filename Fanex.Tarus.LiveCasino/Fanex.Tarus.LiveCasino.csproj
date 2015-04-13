@@ -52,17 +52,6 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasinoSetting.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\Dependency\LiveCasino\FluentValidation.dll</HintPath>
-    </Reference>
-    <Reference Include="NotifyPropertyChanged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\LiveCasino\NotifyPropertyChanged.dll</HintPath>
-    </Reference>
     <Reference Include="RemotingRef">
       <HintPath>..\Dependency\RemotingRef.dll</HintPath>
     </Reference>

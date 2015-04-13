@@ -1,0 +1,155 @@
+﻿.showWarningPT
+{
+	color: Red;
+	display: inline-block;
+	width: 10px;
+}
+.hideWarningPT
+{
+	display: none;
+}
+.masterWidth
+{
+	margin: 0;
+	padding: 0;
+	width: 1024px;
+}
+.custInfoHeader
+{
+	border-bottom: 0;
+	border-top: 1px solid #ccc;
+}
+.tdWidthMember
+{
+	width: 192px;
+}
+.tdWidthSuper
+{
+	width: 249px;
+}
+.superAutoPtWidth
+{
+	width: 167px !important;
+}
+.masterAutoPtWidth
+{
+	width: 170px;
+}
+.tdWidth
+{
+	width: 138px !important;
+}
+.memberWidth
+{
+	width: 375px !important;
+}
+.gameTypeWidth
+{
+	padding-right: 4px !important;
+	width: 140px !important;
+}
+.maincontent_headerL
+{
+	background: url(images/L_content_tab.png) no-repeat right bottom;
+	border: none;
+	height: 23px;
+	width: 24px;
+}
+.fixfont
+{
+	font-family: Tahoma,Arial ,helvetica ,sans-serif;
+	font-size: 11px;
+}
+.maincontent_headerC
+{
+	background: url(images/C_content_tab.png) repeat-x bottom;
+	border: none;
+	color: rgb(255, 255, 255);
+	font-weight: bold;
+	height: 23px;
+	min-width: 120px;
+	text-align: left;
+}
+.maincontent_headerR
+{
+	background: url(images/R_content_tab.png) no-repeat right bottom;
+	border: none;
+	height: 23px;
+	width: 5px;
+}
+.maincontent_box
+{
+	background: rgb(255, 255, 255) url(images/bg_head_tb.jpg) repeat-x left bottom;
+	border: none;
+	border: solid 1px rgb(124, 152, 164);
+	display: table;
+	margin-bottom: 5px;
+	padding: 4px 1px;
+	text-align: left;
+	width: 836px;
+}
+.maincontent_header
+{
+	border: 0 none !important;
+	height: 23px;
+}
+.alerterror
+{
+	background: url("Images/error.gif") no-repeat scroll left center #F6F5F2;
+	color: #F40000;
+	font-weight: bold;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	padding-left: 20px;
+}
+.alertsuccess
+{
+	background: url("Images/sucess.gif") no-repeat scroll left center #F6F5F2;
+	color: #618E11;
+	font-weight: bold;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	padding-left: 20px;
+}
+table, .header, .formatCol,
+{
+	border: 1px solid #7C98A4;
+}
+.btnUpdate {
+    background: url("Images/Update.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: white;
+    cursor: pointer;
+    height: 24px;
+    width: 120px;
+    border: medium none;
+    font-family: Tahoma,Arial,helvetica,sans-serif;
+    font-size: 11px;
+    margin-top: 5px;
+    font-weight: bold
+}
+.btnUpdate:hover {
+    background: url("Images/Update.png") no-repeat scroll 0 -25px rgba(0, 0, 0, 0);
+}
+.btnUpdateDisabled {
+    background: url("Images/Update.png") no-repeat scroll 0 -50px rgba(0, 0, 0, 0);
+    color: white;
+    height: 24px;
+    width: 120px;
+}
+
+.custInfoHeader
+{
+	border-top: 1px solid #7C98A4;
+}
+.tdTitleLeft
+{
+	padding: 4px;
+}
+.tdTitleRight
+{
+	padding: 4px;
+}
+select, .select
+{
+	width: 60px !important;
+}

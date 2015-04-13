@@ -175,7 +175,6 @@
     <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbAdminNet"/>
   </Function>
-
   <Function Name="Left Panel - Customer Info">
     <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBAGE.bodb02.bodbAdminNet"/>
