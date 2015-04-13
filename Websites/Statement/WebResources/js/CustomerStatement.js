@@ -75,7 +75,7 @@ function completeUpdateIsInternal(rs) {
                 },
                 function (options) {
                     var criteria = {
-                        username: custName,
+                        username: unescape(custName),
                         transType: options.transactionType,
                         fromDate: options.statementDate
                     };
@@ -95,7 +95,7 @@ function completeUpdateIsInternal(rs) {
                 });
 
     var reportNo = obj('repno').value;
-    if (!isInternalCustomer && reportNo == 1) {
+    if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
         if (!statementReportManager.checkCriteria(criteria)) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
             return;
@@ -192,7 +192,7 @@ function ExportToExcel() {
             };
 
             var reportNo = obj('repno').value;
-            if (!isInternalCustomer && reportNo == 1) {
+            if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
                 if (!statementReportManager.checkCriteria(criteria)) {
                     parent.jQuery.unblockUI();
                     return;
@@ -298,7 +298,6 @@ function UnVerifyTrans(trans) {
     });
 }
 
-
 function VerifyTransCallBack(data) {
 
     //request to process data successful
@@ -400,11 +399,15 @@ jQuery(document).ready(function () {
             GetDataReport();
         }
     });
+
+    if (isOldStatementTab == "1") {
+        $("#notemessage").addClass("display-none");
+    }
 });
 
 function viewDetail(fdate, transtypeid) {
     var username = $('#txtCustName').val();
-    url = 'BetList/GetBetListStatement?Username=' + username + '&TransType=' + transtypeid + '&FromDate=' + fdate;
+    url = 'BetList/GetBetListStatement?Username=' + unescape(username) + '&TransType=' + transtypeid + '&FromDate=' + fdate;
     parent.OpenNextPopup("popupStatement", url, "Bet list", 1050, 700, true, true, window, 2000, null, null);
 
 }
@@ -416,12 +419,8 @@ function viewGuidelines() {
     var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
     statementReportManager.callAjax(url, criteria, function (rs) {
         parent.OpenPopup(
-            window.rootUrl + "NapStatement/StatementReport/Guideline?" +
-            $.param({
-                roleId: rs.RoleId,
-                canViewBetListStatement: true
-            }),
-            statementResources.Statement_Guidelines,
+            window.rootUrl + "NapStatement/StatementReport/Guideline?roleId=" + rs.RoleId + '&canViewBetListStatement =  true',
+            statementResources.New_Statement_Guidelines,
             900,
             400,
             true,

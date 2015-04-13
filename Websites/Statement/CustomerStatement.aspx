@@ -68,6 +68,7 @@
         var moveBetsDay = '<%=moveBetsDay%>'; 
         var newLayoutDate = '<%=newLayoutDate%>';
         var domain =  window.rootUrl;
+        var isOldStatementTab = '<%=isOldStatementTab%>';
         var statementResources = {
             Invalid_Date_Range: '<%=Labels.Invalid_Date_Range%>',
             Date: "<%=Labels.Date%>",
@@ -82,7 +83,8 @@
             Symbol_NoData: "<%=Labels.Symbol_NoData%>",
             Transfer_Details: "<%=Labels.Transfer_Details%>",
             Bet_List: '<%=Labels.Bet_List%>',
-            Statement_Guidelines: '<%=Labels.Statement_Guidelines%>'
+            Statement_Guidelines: '<%=Labels.Statement_Guidelines%>',
+            New_Statement_Guidelines: '<%=Labels.New_Statement_Guidelines%>'
         };
 
         GetDataReport();
