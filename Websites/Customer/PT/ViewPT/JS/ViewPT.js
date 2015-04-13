@@ -253,10 +253,8 @@ var ViewPT = {
                                 <td class="disable"></td>\
 		                        <td class="disable"></td>\
 		                        <!--AutoMPT-->\
-                                {{if (EnableAutoMaster)}}\
 		                            <td class="disable"></td>\
 		                            <td class="disable"></td>\
-                                {{/if}}\
 		                        <!--/AutoMPT-->\
 		                        <td>${Super.MinPt}</td>\
                                 <td>${Super.Com}</td>\
@@ -661,7 +659,7 @@ var ViewPT = {
         try { parent.BlockUI(); } catch (e) { }
 
         switch (sportId) {
-            case 252://Bingo 
+            case 252: //Bingo 
                 ViewPT.getPTSetting(userName,
                     sportId,
                     betTypeId,
@@ -736,7 +734,7 @@ var ViewPT = {
         } else {
             showAlertMessage("err", "There is no information available.", 1);
         }
-    },   
+    },
     getCurrentSportIndex: function (indexValue) {
         var indexArr = indexValue.split('_');
         var sport = null;
