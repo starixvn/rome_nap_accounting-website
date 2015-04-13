@@ -258,7 +258,7 @@ public partial class Statement_CustomerStatement : PageBase
             //Gen Datetimepicker
             TemplateHandler.Assign(ref headerHtml, "{FromDateCal}",
                Calendar.GenCalendarControl(
-                    "01012008",
+                    string.Format("{0:yyyyMMdd}", StatementSection.Instance.NewLayoutDate),
                     now.AddYears(50).ToString("yyyyMMdd"),
                     "fdate",
                     "../",
@@ -272,7 +272,7 @@ public partial class Statement_CustomerStatement : PageBase
 
             TemplateHandler.Assign(ref headerHtml, "{ToDateCal}",
                Calendar.GenCalendarControl(
-                    "01012008",
+                    string.Format("{0:yyyyMMdd}", StatementSection.Instance.NewLayoutDate),
                     now.AddYears(50).ToString("yyyyMMdd"),
                     "tdate",
                     "../",
