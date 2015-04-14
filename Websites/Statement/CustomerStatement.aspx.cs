@@ -174,11 +174,11 @@ public partial class Statement_CustomerStatement : PageBase
          * From date and todate must be less than or equal to DateTime.Now
          * fromdate <= todate
          */
-        if (fromdate > DateTime.Now)
-            fromdate = DateTime.Now;
+        //if (fromdate > DateTime.Now)
+        //    fromdate = DateTime.Now;
 
-        if (todate > DateTime.Now)
-            todate = DateTime.Now;
+        //if (todate > DateTime.Now)
+        //    todate = DateTime.Now;
 
         if (fromdate > todate)
             fromdate = todate;
