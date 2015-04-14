@@ -9,11 +9,12 @@ namespace Fanex.Tarus.Security.Web
 {
     using System.Collections.Generic;
     using System.Web;
+    using Fanex.CustomerSetting.Module.Core.Web;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    internal class AppSessions
+    internal class AppSessions : ICurrentSession
     {
         /// <summary>
         /// Gets or sets the role access.
@@ -33,6 +34,150 @@ namespace Fanex.Tarus.Security.Web
         {
             get { return (Dictionary<string, int>)HttpContext.Current.Session["PageAccess"]; }
             set { HttpContext.Current.Session["PageAccess"] = value; }
+        }
+
+        public string Captcha
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public string CurrencyGroup
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public int CustId
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public int GroupId
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public bool IsITAdmin
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public bool IsInternalAdmin
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public bool IsLogin
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public string Language
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public string NetSessionId
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public int OnUserId
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public int UserId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+            set
+            {
+                AppSession.AccId = value;
+            }
+        }
+
+        public string UserName
+        {
+            get
+            {
+                return AppSession.AccUserName;
+            }
+            set
+            {
+                AppSession.AccUserName = value;
+            }
         }
     }
 }
