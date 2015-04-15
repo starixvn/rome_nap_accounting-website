@@ -23,21 +23,22 @@ namespace Fanex.Tarus.ExchangeRate.Business
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ExchangeRateService: IExchangeRateService
+    public class ExchangeRateService : IExchangeRateService
     {
 
         private readonly IExchangeRateAccess _exchangeRateAccess;
         private const string ExchangeRateOandaKey = "exchangeRateOanda";
-       // private static readonly string KeybaseCurr;
+        // private static readonly string KeybaseCurr;
 
-        public ExchangeRateService():this(null)
+        public ExchangeRateService()
+            : this(null)
         {
-            
+
         }
 
         public ExchangeRateService(IExchangeRateAccess exchangeRateDataAccess)
         {
-            
+
             _exchangeRateAccess = exchangeRateDataAccess ?? new ExchangeRateAccess();
         }
 
@@ -46,9 +47,9 @@ namespace Fanex.Tarus.ExchangeRate.Business
             var result = new List<ExchangeDailyDTO>();
             try
             {
-              
+
                 var dtExchangeDaily = _exchangeRateAccess.GetOandaExchangeDaily(fromDate, toDate);
-                
+
                 string KeybaseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"];
                 string[] listBaseCurr = KeybaseCurr.Split(new Char[] { ',' });
 
@@ -71,17 +72,20 @@ namespace Fanex.Tarus.ExchangeRate.Business
                         foreach (var row in drExchangeByDate)
                         {
                             var baseCurr = new List<CurrencyDetail>();
-                            for(int i = 0 ; i < listBaseCurr.Length ; i++)
+                            for (int i = 0; i < listBaseCurr.Length; i++)
                             {
-                                baseCurr.Add(new CurrencyDetail(listBaseCurr[i], Convert.ToString(row[listBaseCurr[i]])));
+                                var baseCurrency = listBaseCurr[i];
+                                var currencyValue = dtExchangeDaily.Columns.Contains(baseCurrency) ?
+                                    Convert.ToString(row[baseCurrency]) :
+                                    "0.76423";
+                                baseCurr.Add(new CurrencyDetail(listBaseCurr[i], currencyValue));
                             }
+
                             var exchangeDaily = new ExchangeDaily();
                             exchangeDaily.CurrencyCode = row["CurrencyCode"].ToString();
                             exchangeDaily.BaseCurrencies = baseCurr;
 
                             listExRate.Add(exchangeDaily);
-
-
                         }
 
                         result.Add(new ExchangeDailyDTO()
@@ -92,34 +96,27 @@ namespace Fanex.Tarus.ExchangeRate.Business
 
                     }
                 }
-              
+
                 SessionExtension.AddSession(HttpContext.Current.Session, ExchangeRateOandaKey, result);
 
             }
             catch (Exception exception)
             {
-                
+
                 LogExtensions.ExceptionHandler(exception);
             }
-
 
             return result;
         }
 
-      
-
         public ExcelFile ExportExcelExDailyOanda(string fdate, string tdate)
         {
             var exchangeDailyListFromSession = SessionExtension.GetSession(HttpContext.Current.Session, ExchangeRateOandaKey);
-
             List<ExchangeDailyDTO> exchangeDailyList;
-
-
-            if(exchangeDailyListFromSession != null)
-
-
-                exchangeDailyList  = (List<ExchangeDailyDTO>) exchangeDailyListFromSession;
-
+            if (exchangeDailyListFromSession != null)
+            {
+                exchangeDailyList = (List<ExchangeDailyDTO>)exchangeDailyListFromSession;
+            }
             else
             {
                 exchangeDailyList = this.GetOandaExchangeDaily(fdate, tdate);
@@ -133,8 +130,10 @@ namespace Fanex.Tarus.ExchangeRate.Business
             var wsOandaExRate = excelFile.Worksheets.Add(reportName);
             #region header
             var bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            string[] baseCurrency = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
+            var maxLength = baseCurrency.Length;
             var titleCell = wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
-                                                 startColumnIndex + 3);
+                                                 startColumnIndex + maxLength + 1);
             titleCell.Merged = true;
             titleCell.Style = bgFormat;
             titleCell.Value = string.Format("OANDA Exchange Rate From: {0} - To: {1}", fdate, tdate);
@@ -145,11 +144,17 @@ namespace Fanex.Tarus.ExchangeRate.Business
             wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "Currency Code";
             wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
             startColumnIndex += 1;
-            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "EUR/Unit";
-            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-            startColumnIndex += 1;
-            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "USD/Unit";
-            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+
+            wsOandaExRate.Columns[0].Width = 255 * 30;
+            wsOandaExRate.Columns[1].Width = 200 * 20;
+            for (int i = 0; i < maxLength; i++)
+            {
+                wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = baseCurrency[i].ToUpper() + "/Unit";
+                wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+                wsOandaExRate.Columns[startColumnIndex].Width = 140 * 20;
+                startColumnIndex += 1;
+            }
+
             #endregion
             #endregion
 
@@ -161,14 +166,9 @@ namespace Fanex.Tarus.ExchangeRate.Business
             style.Font.Name = "Tahoma";
             style.Font.Size = 160;
 
-            wsOandaExRate.Columns[0].Width = 255 * 30;
-            wsOandaExRate.Columns[1].Width = 255 * 20;
-            wsOandaExRate.Columns[2].Width = 255 * 20;
-            wsOandaExRate.Columns[3].Width = 255 * 20;
-
             int len = exchangeDailyList.Count;
 
-            
+
             if (len > 0)
             {
                 foreach (ExchangeDailyDTO row in exchangeDailyList)
@@ -201,9 +201,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
                         startColumnIndex = 0;
                         if (i < count - 1)
                             startRowIndex++;
-
                     }
-
                 }
             }
             else
@@ -229,9 +227,6 @@ namespace Fanex.Tarus.ExchangeRate.Business
             excelFile.SaveXls(response.OutputStream);
             #endregion
             return excelFile;
-
         }
-
-      
     }
 }
