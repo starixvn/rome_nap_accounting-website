@@ -2,7 +2,7 @@
 <Functions>
 
   <Function Name="Exchange Rate">
-    <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+    <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA_xtest" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
   </Function>
 
   <Function Name="Report">
