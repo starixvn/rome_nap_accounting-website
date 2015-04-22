@@ -13,7 +13,9 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Services;
-
+using Sunplus.Core.LoggingLib;
+using Fanex.Nap.SSO.Repositories;
+using Fanex.Nap.SSO.Criteria;
 
 public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
     
@@ -68,6 +70,27 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
                     IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                     menuService.GetUserMenu();
                     menuService.GetReportMenu("ACC-REPORT");
+					bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
+                    if (isShowNap)
+                    {
+                        AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO
+                        {
+                            Id = 0,
+                            Name = "Nap",
+                            Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
+                            System = "accounting",
+                            ParentId = 0,
+                            FunctionName = "",
+                            Target = "_blank",
+                            IsHide = false,
+                            SubMenu = null
+                        });
+                    }
+
+                    // Progressive Bonus
+                    Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custIdInt;
+                    Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
+                    Fanex.CustomerSetting.Module.Core.Web.AppSession.FromSystem = 3;
                 }
             }
             
@@ -83,7 +106,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
         }
         catch (Exception ex)
         {
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }        
         context.Response.Write("\n</script></head><body></body>");        
     }
