@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="IPVN">
+    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBTXNIP.IPDB.bodbAdminNet"/>
+  </Function>
+</Functions>
