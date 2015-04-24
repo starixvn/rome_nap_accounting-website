@@ -1,0 +1,10 @@
+﻿\\*.local.config
+\\*.master.config
+\\*.uat.config
+\\*.pro.config
+<<<<<<< HEAD
+\\*.dev.config
+\\*.kbt67.config
+=======
+\\*.kbt67.config
+>>>>>>> #00001 - add pro config
