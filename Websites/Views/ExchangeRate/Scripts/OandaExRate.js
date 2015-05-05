@@ -22,11 +22,11 @@
                         arr.push(OANDAExRate.renderRow(rs[i], endRow));
                     }
                     $("#tblOANDAExRate").html(arr.join(''));
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(552, 550, true);
+                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(238 + (80 + 2) * baseCurrencyLength, 550, true);
                 }
                 else {
                     $("#tblOANDAExRate").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:552px">There is no information available</div></td></tr>');
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(549, 550, true);
+                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(265 + (80 + 2) * baseCurrencyLength, 550, true);
                 }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
@@ -45,17 +45,17 @@
         for (var i = 0; i < items.length; i++) {
             var listBaseCurr = items[i].BaseCurrencies;
             if (i == 0) {
-                strrow += '<td><div class="col140 c">' + items[i].CurrencyCode + '</div></td>';
+                strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col140 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
                 }
                 strrow += '</tr>';
             }
             else {
                 strrow += '<tr>';
-                strrow += '<td><div class="col140 c">' + items[i].CurrencyCode + '</div></td>';
+                strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col140 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
                 }
                 strrow += '</tr>';
             }
@@ -88,7 +88,7 @@
     setupCalendar: function (id, toDate) {
         //alert(toDate);
         var limitDate = {
-          
+
             maxDate: toDate
         };
         OANDAExRate.renderCalendar(id, limitDate);
