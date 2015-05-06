@@ -172,7 +172,7 @@ var BetListByIP_SportType = {
         $("#pagination").pagination(total_items, BetListByIP_SportType.pagerOpts);
     },
     pageSelectCallback: function (page_index, _items_per_page, jq) {
-        var max_page = Math.ceil(_length / _items_per_page);
+        var max_page = Math.ceil(_lengthSprortype / _items_per_page);
         page_index = page_index < max_page ? page_index : max_page - 1;
 
         BetListByIP_SportType.params_SportType.pageIndex = page_index + 1;
