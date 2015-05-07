@@ -100,7 +100,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                         $("#divShowInfo").empty().show();
 
                         var html = "";
-                        if (typeof results != 'undefined') {
+                        if (typeof results != 'undefined' && typeof results != 'string') {
                             var length = results.length;
                             var isError = false;
                             for (var i = 0; i < length; i++) {
@@ -120,7 +120,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                                 $scope.showMesseges(html, false);
                             }
                         } else {
-                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
+                            $scope.showMesseges(results, false);
                         }
                     },
                     function () {
