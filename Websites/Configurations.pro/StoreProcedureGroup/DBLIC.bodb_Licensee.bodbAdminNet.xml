@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+
+  <Function Name="Exchange Rate">
+    <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Report">
+    <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+    <Setting Key="WinlostRacingLicensee_SiteSel" SpName="Acc_LicenseeProduct3rdSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />    
+    <Setting Key="LicGetResellerRates" SpName="OA_ResellerTransactionSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+    
+  </Function>
+
+	<Function Name="Customer - Replicate Licensee Settings">
+		<Setting Key="Customer_ReplicateLicenseeSettings_DoAction" SpName="Acc_Dep_SyncLicenseeSetting" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+	</Function>
+
+</Functions>
