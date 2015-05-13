@@ -146,7 +146,7 @@
         </td>
         <td>
         {#if $T.IsSuperAutoPositionTakingOnMaster == false}
-            <select id="listSuperPT_{$T.ID}" onchange="on_ChangeSuperPT(this);" max="{roundNumber($T.PositionTakingMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
+            <select id="listSuperPT_{$T.ID}" onchange="on_ChangeSuperPT(this);" max="{roundNumber($T.PositionTakingUplineMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
                 <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
             </select>
             <input type="button" onclick="ReducePT('listSuperPT_{$T.ID}',1)" class="btn-dec1 SuperPT_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==true} Disabled {#else}{#/if}>
@@ -187,7 +187,7 @@
         <td class="l" rowspan="2">{$T.Name}</td>
         <td class="gametypePT c" style="{#if $P.IsGroupSetting==true}display:none{#else}{#/if}" >
             {#if $T.IsSuperAutoPositionTakingOnMaster == false}
-             <select id="listSuperPT_{$P.ID}_{$T.ID}" max="{roundNumber($T.PositionTakingMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt SuperPT_{$P.ID}" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
+             <select id="listSuperPT_{$P.ID}_{$T.ID}" max="{roundNumber($T.PositionTakingUplineMax,2)}" min="{roundNumber($T.MinPositionTaking,2)}" class="select-pt SuperPT_{$P.ID}" {#if $T.IsAutoPositionTaking==false}  {#else}Disabled{#/if} >
                      <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
             </select>
             {#else}
