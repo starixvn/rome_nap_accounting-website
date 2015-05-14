@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using DNAide.Core;
 using Fanex.Tarus.Business.Implement;
 using Sunplus.Data.DataAbstract.Storage.Cache;
+using Fanex.Tarus.Infrastructure.Caching;
 
 /// <summary>
 /// Summary description for LoginFailedHandler
@@ -13,6 +14,8 @@ using Sunplus.Data.DataAbstract.Storage.Cache;
 public class LoginFailedHandler
 {
     private static ICache _cache;
+
+    
 
     /// <summary>
     /// Before pass info through into DB, we will invoke this function to check "Reach max times wrong password."
@@ -76,7 +79,7 @@ public class LoginFailedHandler
 
     public static void Test(string username)
     {
-        CacheService.Set(
+        CacheHelper.Set(
             GetKey(username),
             new LogFailedInformation()
                 {
@@ -122,7 +125,7 @@ public class LoginFailedHandler
     }
     private static LogFailedInformation GetInformation(string username)
     {
-        return CacheService.Get<LogFailedInformation>(GetKey(username));
+        return CacheHelper.Get<LogFailedInformation>(GetKey(username));
     }
 
     private static char[] ForbiddenChars()
@@ -167,10 +170,9 @@ public class LoginFailedHandler
 
     private static void AddLoginInformation(string username)
     {
-        CacheService.Set(
+        CacheHelper.Set(
             GetKey(username),
-            new LogFailedInformation() { UserName = username, Count = 1, LoginTime = DateTime.Now },
-            new TimeSpan(0, 100, 0));
+            new LogFailedInformation() { UserName = username, Count = 1, LoginTime = DateTime.Now });
     }
 
     private static void IncreaseCount(string username)
@@ -181,7 +183,7 @@ public class LoginFailedHandler
         }
         else
         {
-            CacheService.Set(GetKey(username), new LogFailedInformation()
+            CacheHelper.Set(GetKey(username), new LogFailedInformation()
             {
                 UserName = username,
                 Count = GetCount(username) + 1,
@@ -208,7 +210,7 @@ public class LoginFailedHandler
 
     private static bool RemoveLoginInformation(string username)
     {
-        CacheService.Delete(GetKey(username));
+        CacheHelper.Remove(GetKey(username));
         return true;
     }
 
