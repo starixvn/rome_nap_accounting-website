@@ -215,7 +215,7 @@
 
   <Function Name="Licensee">
     <add alias="LicWinlossDetailBetlist" name="Acc_BetList_SelWinloss_Mem" db="DBACC.bodb02.bodbAdminNet" function=""></add>
-    <add alias="LicWinlossDetailBetlist2" name="Acc_BetList_SelWinloss_Mem2" db="DBACC.bodb02.bodbAdminNet" function=""></add>
+    <add alias="LicWinlossDetailBetlist2" name="Acc_BetList_SelWinloss_Mem2_xtest" db="DBACC.bodb02.bodbAdminNet" function=""></add>
     <add alias="LicNegativeBalanceMember" name="Acc_Rpt_NegativeBalanceMember_Dep" db="DBACC.bodb02.bodbAdminNet" function=""></add>
   </Function>
 
@@ -251,7 +251,7 @@
 
   <Function Name="Betlist">
     <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_FULL2" SpName="Acc_AllStatement_FULL2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -260,7 +260,7 @@
   </Function>
 
   <Function Name="Bet List - ScoreInformation">
-    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 
   <Function Name="Admin - Security Code">

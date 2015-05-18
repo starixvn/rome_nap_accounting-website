@@ -5,28 +5,7 @@
 **     table.fanex-result tr.row-data
 ***      table.fanex-result tr.row-data td.*
 */
-
-@font-face {
-    font-family: "Roboto";
-    src: url(../../App_Themes/Fonts/Roboto/Roboto-Regular.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Light";
-    src: url(../../App_Themes/Fonts/Roboto/Roboto-Light.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Bold";
-    src: url(../../App_Themes/Fonts/Roboto/Roboto-Bold.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Medium";
-    src: url(../../App_Themes/Fonts/Roboto/Roboto-Medium.ttf);
-}
-
-@font-style: "Roboto",Arial, sans-serif;
+@font-style: Tahoma, Arial, Helvetica, sans-serif;
 @font-size: 11px;
 @goal-icon: "images/goal-icon.png";
 @header-background: #295091;
@@ -55,6 +34,45 @@ div.fn-rs-content-scroll
 	width: 100%;
 	max-height: 780px;
 }
+div.goal-record
+    {
+		float:right;
+		padding::5px 0px;
+		table
+        {
+        	min-width:180px;
+			 border-collapse: collapse;
+			  text-align: center;
+			th
+		   {
+				border-right: 1px solid @border-color;
+				font-weight: normal;
+				vertical-align: middle;
+				text-align: center;
+				color: #FFF !important;
+	
+           }
+			.header
+			{
+		 			color: @header-color;
+					 background-color: @header-background;
+			}
+			tbody{
+				td
+				{
+					border: solid 1px @border-color;
+					padding: 1px;
+					vertical-align: middle;
+				}
+            	.cl-goal
+				{
+					width: 50%;
+				}
+			}
+			}
+        }
+		
+
 
 table
 {
@@ -64,6 +82,7 @@ table
     {
 	 min-width: 650px !important;
     }
+	
     &.fn-rs
     {
         border-collapse: collapse;
@@ -114,16 +133,24 @@ table
                 color: @league-color;
                 background: @league-background;
                 vertical-align: middle;
-                border: 0;
                 font-weight: bold;
                 text-align: left;
                 line-height: 7px;
                 height: 21px;
+				&.sub
+				{
+					
+					
+				}
+            }
+			
+			.cl-team
+            {
+            	text-align:left;
             }
             .cl-match
             {
                 text-align:left;
-                font-weight: bold;
                 font-size: 12px;
                 padding-left: 3px;
                 &.home
@@ -133,6 +160,11 @@ table
                 &.away
                 {
                     color: @away-color;
+                }
+				&.win
+                {
+                
+					font-weight:bold;
                 }
                 div
                 {
@@ -191,7 +223,18 @@ table
         {
             width: 90px;
         }
-
+		.cl-result
+        {
+        	text-align:center;
+			&.home
+            {
+				min-width:150px;
+            }
+			&.away
+            {
+				min-width:150px;
+            }
+        }
         .cl-match
         {
            min-width: 82px;
@@ -285,10 +328,10 @@ table
 			width: 180px;
 		}
 	
-		.cl-result
+		td.cl-result
         {
         	font-weight: bold;
-			text-align: left;
+			text-align:left;
         }
 
 		.cl-win, .cl-place
