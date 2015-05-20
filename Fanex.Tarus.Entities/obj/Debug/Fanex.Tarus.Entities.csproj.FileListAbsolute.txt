@@ -1,5 +1,0 @@
-D:\GIT-LAB\__BK\accounting-website\Fanex.Tarus.Entities\bin\Debug\Fanex.Tarus.Entities.dll
-D:\GIT-LAB\__BK\accounting-website\Fanex.Tarus.Entities\bin\Debug\Fanex.Tarus.Entities.pdb
-D:\GIT-LAB\__BK\accounting-website\Fanex.Tarus.Entities\obj\Debug\ResolveAssemblyReference.cache
-D:\GIT-LAB\__BK\accounting-website\Fanex.Tarus.Entities\obj\Debug\Fanex.Tarus.Entities.dll
-D:\GIT-LAB\__BK\accounting-website\Fanex.Tarus.Entities\obj\Debug\Fanex.Tarus.Entities.pdb
