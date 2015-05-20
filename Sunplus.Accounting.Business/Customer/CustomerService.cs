@@ -12,6 +12,7 @@ using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Casino;
@@ -394,14 +395,14 @@ namespace Sunplus.Accounting.Business.Customer
             customer.Country = data["listCountry"] ?? "";
             customer.BirthDay = data["txtBirthday"] ?? "";
             customer.Remark = data["remark"] ?? "";
-            customer.Phone = Encryption.RemoveSpecialChars(data["txtPhone"]) ?? string.Empty;
-            customer.MobilePhone = Encryption.RemoveSpecialChars(data["txtMobile"]) ?? string.Empty;
-            customer.Fax = Encryption.RemoveSpecialChars(data["txtFax"]) ?? string.Empty;
-            customer.Email = Encryption.RemoveSpecialChars(data["email"]) ??
-                             Encryption.RemoveSpecialChars(data["txtEmail"]) ?? "";
-            customer.UserName = (data["txtUsername"] == null)
+            customer.Phone = data["txtPhone"] ?? string.Empty;
+            customer.MobilePhone = data["txtMobile"] ?? string.Empty;
+            customer.Fax = data["txtFax"] ?? string.Empty;
+            customer.Email = data["email"] ??
+                             data["txtEmail"] ?? "";
+            customer.UserName = data["txtUsername"] == null
                                     ? ""
-                                    : Encryption.RemoveSpecialChars(data["txtUsername"].Trim());
+                                    : data["txtUsername"].Trim();
             customer.Password = (data["txtPwd"] == null) ? "" : Encryption.CfsEnCode(data["txtPwd"].Trim());
             if (data["hdCurr"] != null || uplineId != null)
             {

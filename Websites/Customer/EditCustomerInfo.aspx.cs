@@ -66,7 +66,7 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
                     TemplateHandler.Assign(ref strHtml, "{vcity-Val}", tbl.Rows[0]["city"].ToString());
                     TemplateHandler.Assign(ref strHtml, "{vstate-Val}", tbl.Rows[0]["state"].ToString());
 
-                    var remark = HttpUtility.HtmlEncode(tbl.Rows[0]["remark"].ToString());
+                    var remark = tbl.Rows[0]["remark"].ToString();
                     TemplateHandler.Assign(ref strHtml, "{vremark-Val}", remark);
                     TemplateHandler.Assign(ref strHtml, "{hidSynCS}", tbl.Rows[0]["synccasino"].ToString());
                     TemplateHandler.Assign(ref strHtml, "{hidCur}", tbl.Rows[0]["exchangeid"].ToString());

@@ -37,6 +37,10 @@ var StatementDetailsManager = function () {
                             Value: statement.TransferAmount.HasData ?
                                 statement.TransferAmount.Value :
                                 statementResources.Symbol_NoData
+                        },
+                        {
+                            Name: "ColCreator",
+                            Value: statement.Creator
                         }]
                 };
 
@@ -57,6 +61,10 @@ var StatementDetailsManager = function () {
                         Value: statement.TransferAmount.HasData ?
                             statement.TransferAmount.Value :
                             statementResources.Symbol_NoData
+                    },
+                    {
+                        Name: "ColCreator",
+                        Value: ""
                     }]
             });
         }
@@ -84,6 +92,13 @@ var StatementDetailsManager = function () {
                 CellAlign: "right",
                 FormatNumber: self.Constants.Format.Number.TwoDecimal,
                 FormatNegative: '$'
+            },
+            {
+                HeaderText: statementResources.Creator,
+                Width: 100,
+                Name: "ColCreator",
+                HeaderAlign: "center",
+                CellAlign: "center"
             }];
 
         gridOptions = {
@@ -104,7 +119,6 @@ var StatementDetailsManager = function () {
                     var url = location.protocol + window.rootUrl + 'NapStatement/StatementReport/ExportTransferDetails?' +
                         jQuery.param(transferDetailsCriteria);
                     jQuery('#frm').attr('src', url);
-
                 }
             },
             showFooter: true

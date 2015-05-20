@@ -13,9 +13,6 @@ namespace Sunplus.Accounting.Entities.Customer
     [DataContract]
     public class CustDetail
     {
-        private string _firstName;
-        private string _lastName;
-
         [DataMember]
         public int CustId { get; set; }
 
@@ -30,15 +27,15 @@ namespace Sunplus.Accounting.Entities.Customer
         [DataMember]
         public string FirstName
         {
-            get { return _firstName; }
-            set { _firstName = Encryption.RemoveSpecialChars(value); }
+            get;
+            set;
         }
 
         [DataMember]
         public string LastName
         {
-            get { return _lastName; }
-            set { _lastName = Encryption.RemoveSpecialChars(value); }
+            get;
+            set;
         }
 
         [DataMember]
