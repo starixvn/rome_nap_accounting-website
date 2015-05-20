@@ -187,6 +187,36 @@ var VirtualRateController = function () {
         liveHtml += '</tr>';
         return liveHtml;
     };
+    self.getSubSportHtml = function (liveVirtualRate, subSport, sport, startBetTypeIndex, liveType) {
+        var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
+        var betTypeLength = sport.BetTypeList.length;
+        var liveHtml = '<tr>';
+        liveHtml += '<td class="first-column l">' + subSport.Name + '</td>';
+        var i = 0;
+        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
+            var liveRate = liveVirtualRate[i];
+            var value = (liveRate.PercentRate + 1) * customerVirtualRateModel.ActualExchangeRate;
+            liveHtml +=
+                '<td class="bettypevalue-column c">' +
+                    (liveRate.HasData ?
+                        self.renderDropdownRate(customerVirtualRateModel.MinVirtualRate,
+                            customerVirtualRateModel.MaxVirtualRate,
+                            liveRate.PercentRate,
+                            customerVirtualRateModel.ActualExchangeRate,
+                            subSport,
+                            liveType,
+                            i == 0 ? 'source' : 'target',
+                            sport.BetTypeList[i].Id) :
+                        '') +
+                '</td>';
+
+            i++;
+        }
+
+        liveHtml += self.renderPaddingEmptyColumn(startBetTypeIndex, endBetTypeIndex, i);
+        liveHtml += '</tr>';
+        return liveHtml;
+    };
 
     self.renderPaddingEmptyColumn = function (startBetTypeIndex, endBetTypeIndex, i) {
         var html = '';
@@ -459,6 +489,15 @@ var VirtualRateController = function () {
         }
     };
 
+            self.CallAjax(self,
+                window.rootUrl + "VirtualRate/UpdateSettings",
+                criteria,
+                self.renderUpdateResult,
+                self.renderUpdateResult,
+                self.unblockUI);
+        }
+    };
+
     self.updateBetTypeRate = function (sport, isCopyFromSport, isCopyFromBetType, criteria, i) {
         var betTypeLength = sport.BetTypeList.length;
         var sportId = sport.Id;
@@ -505,6 +544,8 @@ var VirtualRateController = function () {
                     .PercentRate.toFixed(2);
                 customerVirtualRateModel.SportVirtualRateList[i]
                     .SubSportList[k]
+                    .LiveVirtualRate[j]
+                    .PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
                     .LiveVirtualRate[j]
                     .PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
             }
