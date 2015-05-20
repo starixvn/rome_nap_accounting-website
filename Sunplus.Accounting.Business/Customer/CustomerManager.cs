@@ -931,7 +931,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
-                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4", AppSession.AccId, custId);
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4", AppSession.AccId, custId);
                                         break;
 
                                     default:
