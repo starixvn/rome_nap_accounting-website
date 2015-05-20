@@ -2449,4 +2449,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="ESports" xml:space="preserve">
     <value>E-Sports</value>
   </data>
+  <data name="disableGoldDeluxe" xml:space="preserve">
+    <value>Disable Gold Deluxe</value>
+  </data>
+  <data name="enableGoldDeluxe" xml:space="preserve">
+    <value>Enable Gold Deluxe</value>
+  </data>
+  <data name="lblDisabledGoldDeluxeUpline" xml:space="preserve">
+    <value>Gold Deluxe status has been disabled at upline</value>
+  </data>
 </root>

@@ -308,7 +308,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     db.ExecuteNonQuery();
                     output = db.GetOuputParams();
                 }
-                
+
                 if ((int)output["errcode"] > 0)
                     throw new AccException(output["errmsg"].ToString());
             }
@@ -791,6 +791,47 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public void CustomerUpdateDisabledGoldDeluxe(
+            int accid,
+            int custid,
+            bool disabledGoldDeluxe,
+            string ip,
+            bool isEnableDownlines)
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 300))
+                {
+                    Hashtable param = new Hashtable();
+                    param.Add("userid", accid);
+                    param.Add("custid", custid);
+                    param.Add("disable", disabledGoldDeluxe);
+                    param.Add("language", "E");
+                    param.Add("ip", ip);
+                    param.Add("enabledownlines", isEnableDownlines);
+                    param.Add("errcode", 0);
+                    param.Add("errmsg", string.Empty);
+
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
+                    {
+                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
+                    }
+                }
+            }
+            catch (AccException accException)
+            {
+                throw accException;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                throw ex;
             }
         }
     }

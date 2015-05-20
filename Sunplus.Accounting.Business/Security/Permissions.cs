@@ -210,10 +210,10 @@ namespace Sunplus.Accounting.Business.Security
                 errmsg = string.Format("{0}", db.GetParameterValue("errmsg"));
                 IsTransfer = CastAide.AsBoolean(db.GetParameterValue("istransfer"));
             }
-            
+
             if (errcode > 0)
                 return false;
-           
+
             return IsTransfer;
         }
 
@@ -414,6 +414,11 @@ namespace Sunplus.Accounting.Business.Security
             if (!WebSettings.EnableVirtualSports || hideVirtualSports)
                 return false;
             return true;
+        }
+
+        public static bool IsAllowEditGoldDeluxe(int parentId)
+        {
+            return parentId == 0 || WebSettings.EnableLiveCasino;
         }
 
         #region Settlement
