@@ -58,6 +58,20 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        [ConfigurationProperty("notes", DefaultValue = "", IsRequired = false, IsKey = false)]
+        public string Notes
+        {
+            get
+            {
+                return (string)this["notes"];
+            }
+
+            set
+            {
+                this["notes"] = value;
+            }
+        }
+
         [ConfigurationProperty("multibettypes", DefaultValue = "", IsRequired = false, IsKey = false)]
         public string MultiBetTypes
         {
@@ -72,6 +86,34 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        [ConfigurationProperty("sportList", DefaultValue = "", IsRequired = false, IsKey = false)]
+        public string SportList
+        {
+            get
+            {
+                return (string)this["sportList"];
+            }
+
+            set
+            {
+                this["sportList"] = value;
+            }
+        }
+
+        [ConfigurationProperty("supportBetTypes", DefaultValue = "", IsRequired = false, IsKey = false)]
+        public string SupportBetTypes
+        {
+            get
+            {
+                return (string)this["supportBetTypes"];
+            }
+
+            set
+            {
+                this["supportBetTypes"] = value;
+            }
+        }
+
         [ConfigurationProperty("BetTypes", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(VirtualRateCollection),
             AddItemName = "add",
@@ -83,6 +125,19 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             {
                 var betTypes = (VirtualRateCollection)base["BetTypes"];
                 return betTypes;
+            }
+        }
+
+        [ConfigurationProperty("SubSports", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(VirtualRateCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public VirtualRateCollection SubSports
+        {
+            get
+            {
+                return (VirtualRateCollection)base["SubSports"];
             }
         }
     }

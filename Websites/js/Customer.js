@@ -597,8 +597,8 @@ function OpenEditVirtualExRate(id, uname, type, isNewCustomerList, custid) {
             url,
             0,
             0,
-            830,
-            600,
+            850,
+            750,
             true,
             2000, 
             null);
@@ -630,8 +630,8 @@ function OpenEditVirtualExRate(id, uname, type, isNewCustomerList, custid) {
             url,
             0,
             0,
-            830,
-            600,
+            850,
+            750,
             false,
             2000,
             null);

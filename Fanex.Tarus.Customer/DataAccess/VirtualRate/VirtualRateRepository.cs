@@ -57,53 +57,40 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
 
                 if (reader.NextResult())
                 {
-                    var soccerBetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.Soccer);
-                    var otherSportbetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.OtherSports);
-                    var soccerSport = new SportVirtualRateModel
-                    {
-                        Id = Sports.Soccer,
-                        Name = Sports.SportName(Sports.Soccer),
-                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.Soccer),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count)
-                    };
-                    var otherSport = new SportVirtualRateModel
-                    {
-                        Id = Sports.OtherSports,
-                        Name = Sports.SportName(Sports.OtherSports),
-                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.OtherSports),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count)
-                    };
-
+                    var sportDictionaryList = VirtualRateSectionService.SportDictionaryList();
+                    var sportList = VirtualRateSectionService.SportList();
+                    var sportBetTypeIndexList = VirtualRateSectionService.SportBetTypeIndexList();
                     while (reader.Read())
                     {
                         var sportId = Converter.ToInt(reader["sporttype"]);
                         var isLive = Converter.ToBool(reader["isLive"]);
                         var betType = Converter.ToInt(reader["bettype"]);
-                        var targetIndex = sportId == Sports.Soccer ? soccerBetTypeIndex : otherSportbetTypeIndex;
+
+                        var sportPosition = sportDictionaryList[sportId];
+                        var targetIndex = sportBetTypeIndexList[sportPosition.SportIndex];
                         if (!targetIndex.ContainsKey(betType))
                         {
                             continue;
                         }
 
-                        var targetSport = sportId == Sports.Soccer ? soccerSport : otherSport;
+                        var targetSport = sportPosition.IsSubSport ?
+                            sportList[sportPosition.SportIndex].SubSportList[sportPosition.SubSportIndex] :
+                            sportList[sportPosition.SportIndex];
                         var betTypeIndex = targetIndex[betType];
                         var rate = Converter.ToDecimal(reader["virtualMultiplier"]);
-                        if (isLive)
+                        if (isLive && targetSport.LiveVirtualRate != null)
                         {
                             targetSport.LiveVirtualRate[betTypeIndex].HasData = true;
                             targetSport.LiveVirtualRate[betTypeIndex].PercentRate = rate;
                         }
-                        else
+                        else if (targetSport.NonLiveVirtualRate != null)
                         {
                             targetSport.NonLiveVirtualRate[betTypeIndex].HasData = true;
                             targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = rate;
                         }
                     }
 
-                    result.SportVirtualRateList.Add(soccerSport);
-                    result.SportVirtualRateList.Add(otherSport);
+                    result.SportVirtualRateList = sportList;
                 }
             }
 

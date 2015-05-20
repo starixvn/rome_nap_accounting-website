@@ -368,6 +368,7 @@
     <Compile Include="Entities\VirtualRate\HistoryLogEntity.cs" />
     <Compile Include="Entities\VirtualRate\HistoryLogReportModel.cs" />
     <Compile Include="Entities\VirtualRate\LogBySportEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportPositionModel.cs" />
     <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateInfo.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResult.cs" />

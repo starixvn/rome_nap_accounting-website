@@ -70,6 +70,10 @@ namespace Fanex.Tarus.Infrastructure.Constants
                     return Labels.Soccer;
                 case OtherSports:
                     return Labels.Other_Sports;
+                case Tennis:
+                    return Labels.Tennis;
+                case Basketball:
+                    return Labels.Basketball;
                 default:
                     return string.Empty;
             }

@@ -136,6 +136,15 @@ namespace Fanex.Tarus.Customer.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Basketball.
+        /// </summary>
+        public static string Basketball {
+            get {
+                return ResourceManager.GetString("Basketball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type.
         /// </summary>
         public static string Bet_Type
@@ -532,6 +541,15 @@ namespace Fanex.Tarus.Customer.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Football.
+        /// </summary>
+        public static string Football {
+            get {
+                return ResourceManager.GetString("Football", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gold Deluxe status updated successfully..
         /// </summary>
         public static string GoldDeluxeStatusUpdatedSuccessfully
@@ -553,6 +571,15 @@ namespace Fanex.Tarus.Customer.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Golf.
+        /// </summary>
+        public static string Golf {
+            get {
+                return ResourceManager.GetString("Golf", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to HDP.
         /// </summary>
@@ -763,6 +790,15 @@ namespace Fanex.Tarus.Customer.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to MotoSports.
+        /// </summary>
+        public static string MotoSports {
+            get {
+                return ResourceManager.GetString("MotoSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Virtual Rate.
         /// </summary>
         public static string New_Virtual_Rate
@@ -862,6 +898,15 @@ namespace Fanex.Tarus.Customer.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Other Sports.
+        /// </summary>
+        public static string Other_Sports {
+            get {
+                return ResourceManager.GetString("Other_Sports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OU.
         /// </summary>
         public static string OU
@@ -916,6 +961,15 @@ namespace Fanex.Tarus.Customer.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer.
+        /// </summary>
+        public static string Soccer {
+            get {
+                return ResourceManager.GetString("Soccer", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Sport.
         /// </summary>
@@ -1026,6 +1080,15 @@ namespace Fanex.Tarus.Customer.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Tennis.
+        /// </summary>
+        public static string Tennis {
+            get {
+                return ResourceManager.GetString("Tennis", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to There is no data..
         /// </summary>
@@ -1375,6 +1438,15 @@ namespace Fanex.Tarus.Customer.Resources
             get
             {
                 return ResourceManager.GetString("VirtualRate_UploadFile_ValidAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volleyball.
+        /// </summary>
+        public static string Volleyball {
+            get {
+                return ResourceManager.GetString("Volleyball", resourceCulture);
             }
         }
     }

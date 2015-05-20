@@ -18,10 +18,14 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
     [Serializable]
     public class SportVirtualRateModel : BaseModel
     {
+        public string Notes { get; set; }
+
         public List<BetTypeModel> BetTypeList { get; set; }
 
         public List<VirtualRateModel> LiveVirtualRate { get; set; }
 
         public List<VirtualRateModel> NonLiveVirtualRate { get; set; }
+
+        public List<SportVirtualRateModel> SubSportList { get; set; }
     }
 }
