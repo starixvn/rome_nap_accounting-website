@@ -1,8 +1,0 @@
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\bin\Debug\Fanex.AuthenticationFilter.dll
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\bin\Debug\Fanex.AuthenticationFilter.pdb
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\ResolveAssemblyReference.cache
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\Fanex.AuthenticationFilter.Resource.Errors.resources
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\GenerateResource.read.1.tlog
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\GenerateResource.write.1.tlog
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\Fanex.AuthenticationFilter.dll
-D:\GIT-LAB\__BK\accounting-website\Fanex.AuthenticationFilter\obj\Debug\Fanex.AuthenticationFilter.pdb
