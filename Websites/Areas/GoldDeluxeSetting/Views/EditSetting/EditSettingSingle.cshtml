@@ -70,35 +70,35 @@
                 <td class="left info-value">
                     @Model.Setting.Fax
                 </td>
-                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
-                    || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
-                {
-                    <td class="right bold"></td>
-                    <td class="left"></td>
-                }
-                else
+                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Agent
+                    || GoldDeluxeSettings.Settings.System == SystemType.Accounting)
                 {
                     <td class="right bold info-lable">
                         @GoldDeluxeLang.lblEnable
                     </td>
                     <td class="left info-value">
-                        <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
-                        @if (Model.Level != CustomerLevel.Member && Model.Setting.HasDownline)
+                        <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" />
+                        @if (GoldDeluxeSettings.Settings.System != SystemType.Agency && Model.Level != CustomerLevel.Member)
                         {
                             <label>
-                                <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="disableCheckBoxDownline || $parent.isReadOnly" />
+                                <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="!hasDownline || $parent.isReadOnly || !enableGoldDeluxe" />
                                 @GoldDeluxeLang.lblDownline
                             </label>
                         }
                     </td>
+                }
+                else
+                {
+                    <td class="right bold"></td>
+                    <td class="left"></td>
                 }
             </tr>
         </table>
     </div>
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
-    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSetting"))
-    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndCom"))
-    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
+    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdateSetting"))
+    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdatePTAndCom"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdateGameSetting"))
 }
 

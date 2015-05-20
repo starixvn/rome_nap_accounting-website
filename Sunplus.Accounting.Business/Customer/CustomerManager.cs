@@ -869,7 +869,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
-                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1", parentId, AppSession.AccId, custId);
                                         break;
 
                                     case 2: // agent
@@ -890,7 +890,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
-                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2", _masterID, AppSession.AccId, custId);
                                         break;
 
                                     case 3: // master
@@ -910,7 +910,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditMaster?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
-                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3", _superID, AppSession.AccId, custId);
                                         break;
 
                                     case 4: // super
@@ -931,7 +931,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
-                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4", AppSession.AccId, custId);
                                         break;
 
                                     default:
@@ -1391,14 +1391,14 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Esports
 
-            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
-                false :
-                Convert.ToBoolean(row1["HasDownline"]);
             RenderEnableGoldDeluxeBox(
                 row1,
                 sg,
                 ref htmlcontent,
                 roleId,
+                isManageCustomerAccess,
+                disabledGoldDeluxeParent,
+                isAllowEditGoldDeluxe);
                 isManageCustomerAccess,
                 disabledGoldDeluxeParent,
                 isAllowEditGoldDeluxe,
@@ -1461,14 +1461,14 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Virtual Sports</a>";
                         }
-                    }
+                    } 
                     if (isShowSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
                     }
                     if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
 
@@ -1509,7 +1509,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + masterId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + masterId + "&upLineLevel=3&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
@@ -2834,8 +2834,7 @@ namespace Sunplus.Accounting.Business.Customer
             int roleId,
             bool isManageCustomerAccess,
             bool disabledGoldDeluxeParent,
-            bool allowEditGoldDeluxe,
-            bool hasDownline)
+            bool allowEditGoldDeluxe)
         {
             var productName = "GoldDeluxe";
             var supportGoldDeluxe = ConfigurationManager.AppSettings["Enable" + productName] == "1";
@@ -2852,7 +2851,7 @@ namespace Sunplus.Accounting.Business.Customer
                     isManageCustomerAccess,
                     "disabled" + productName,
                     !disableGoldDeluxe,
-                    hasDownline,
+                    roleId > 1,
                     allowEditGoldDeluxe,
                     CastAide.AsBoolean(custInfoRow["Enabled"].ToString()),
                     disabledGoldDeluxeParent,
@@ -2908,7 +2907,7 @@ namespace Sunplus.Accounting.Business.Customer
                         if (4 == roleId || !disabledUpline)
                         {
                             classname = "canchange";
-                            jsonclick = "return ShowDisablePopGoldDeluxe(this," + (hasDownLine ? "1" : "0") + ");";
+                            jsonclick = "return ShowDisablePop(this);";
                         }
                         else
                         {
@@ -2929,6 +2928,7 @@ namespace Sunplus.Accounting.Business.Customer
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableGoldDeluxe"),
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, productName);
+            }
             }
         }
     }
