@@ -95,7 +95,7 @@ var StatementDetailsManager = function () {
             },
             {
                 HeaderText: statementResources.Creator,
-                Width: 100,
+                Width: 150,
                 Name: "ColCreator",
                 HeaderAlign: "center",
                 CellAlign: "center"
