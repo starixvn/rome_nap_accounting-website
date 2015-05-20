@@ -191,6 +191,11 @@
                         <li class="canchange" onclick="AgentList.kenoSetting('@agentItem.ChildID');">
                             Keno</li>
                     }
+                     @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    {
+                        <li class="canchange" onclick="AgentList.goldDeluxeSetting('@agentItem.ChildID', '@Model.ParentId');">
+                            Gold Deluxe</li>
+                    }
                 </ul>
             </div>
         </td>

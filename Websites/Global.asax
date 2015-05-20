@@ -16,6 +16,7 @@
 
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
+<%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
 
 <script runat="server">
 
@@ -38,6 +39,8 @@
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
+
+        AutoMapperConfiguration.Configure();
         // ViewEngines.Engines.Add(new CustomView());
       
     }

@@ -48,8 +48,6 @@ namespace Sunplus.Accounting.Business.Customer
     {
         public ICustomerDAO _customerDAO;
 
-
-
         public CustomerManager()
             : this(null)
         {
@@ -807,10 +805,27 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #endregion Abnormal
 
-                                GenSettingControl(ref htmlcontent, row1, row3, roleId, parentId, _custparent,
-                                                  isManageCustomerAccess, suspend, autosuspend, UplineAutoSuspend, isAllowEditCS,
-                                                  disabledCSParent, isAllowEditBI, disabledBIParent, isAllowEditLCS,
-                                                  disabledLCSParent, disalbedVSParent, disabledEsportsParent);
+                                GenSettingControl(
+                                    ref htmlcontent,
+                                    row1,
+                                    row3,
+                                    roleId,
+                                    parentId,
+                                    _custparent,
+                                    isManageCustomerAccess,
+                                    suspend,
+                                    autosuspend,
+                                    UplineAutoSuspend,
+                                    isAllowEditCS,
+                                    disabledCSParent,
+                                    isAllowEditBI,
+                                    disabledBIParent,
+                                    isAllowEditLCS,
+                                    disabledLCSParent,
+                                    disalbedVSParent,
+                                    disabledEsportsParent,
+                                    Permissions.IsAllowEditGoldDeluxe(parentId),
+                                    _custparent.IsDisableGoldDeluxe);
 
                                 #endregion Setting
 
@@ -833,6 +848,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var kenoSetting = string.Empty;
                                 var agCasinoLinkSetting = string.Empty;
                                 var casinoLinkSetting = string.Empty;
+                                var goldDeluxeLinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -853,6 +869,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1", parentId, AppSession.AccId, custId);
                                         break;
 
                                     case 2: // agent
@@ -873,6 +890,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2", _masterID, AppSession.AccId, custId);
                                         break;
 
                                     case 3: // master
@@ -886,12 +904,13 @@ namespace Sunplus.Accounting.Business.Customer
                                         addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
-                                        liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=4&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=3", _superID, _superID, AppSession.AccId, AppSession.AccUserName, custId);
+                                        liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&uplineLevel=4&actorId={2}&customerId={4}&customerLevel=3", _superID, _superID, AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _superID, roleId);
                                         VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
                                         kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditMaster?custId={0}&userId={1}", custId, AppSession.AccId);
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3", _superID, AppSession.AccId, custId);
                                         break;
 
                                     case 4: // super
@@ -912,6 +931,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
+                                        goldDeluxeLinkSetting = string.Format("GoldDeluxeSettings/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4", AppSession.AccId, custId);
                                         break;
 
                                     default:
@@ -964,6 +984,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
@@ -1050,6 +1071,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 #endregion MenuDetail
 
+                                if (!WebSettings.IsShowGoldDeluxeSettingForCredit)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1110,10 +1136,27 @@ namespace Sunplus.Accounting.Business.Customer
 
         #region GetSettingControl
 
-        private void GenSettingControl(ref string htmlcontent, DataRow row1, DataRow row3, int roleId, int parentID,
-            CustomerDetail CustParent, bool isManageCustomerAccess, bool isSuspended, bool autosuspend, bool UplineAutoSuspend,
-            bool isAllowEdit, bool disabledCSParent, bool isAllowEditBI, bool disabledBIParent, bool isAllowEditLCS,
-            bool disableLiveCasinoParent, bool disabledVSParent, bool disabledEsportsParent)
+        private void GenSettingControl(
+            ref string htmlcontent,
+            DataRow row1,
+            DataRow row3,
+            int roleId,
+            int parentID,
+            CustomerDetail CustParent,
+            bool isManageCustomerAccess,
+            bool isSuspended,
+            bool autosuspend,
+            bool UplineAutoSuspend,
+            bool isAllowEdit,
+            bool disabledCSParent,
+            bool isAllowEditBI,
+            bool disabledBIParent,
+            bool isAllowEditLCS,
+            bool disableLiveCasinoParent,
+            bool disabledVSParent,
+            bool disabledEsportsParent,
+            bool isAllowEditGoldDeluxe,
+            bool disabledGoldDeluxeParent)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1133,12 +1176,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
 
             #endregion Selected Betting
-
-            #region Auto Suspend
-
-
-
-            #endregion Auto Suspend
 
             #region is Internal user
 
@@ -1354,6 +1391,14 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Esports
 
+            RenderEnableGoldDeluxeBox(
+                row1,
+                sg,
+                ref htmlcontent,
+                roleId,
+                isManageCustomerAccess,
+                disabledGoldDeluxeParent,
+                isAllowEditGoldDeluxe);
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
@@ -1412,11 +1457,15 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Virtual Sports</a>";
                         }
-                    }
-
+                    } 
                     if (isShowSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
+                    }
+                    if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
+
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
@@ -1454,6 +1503,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
                     }
 
+                    if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + masterId + "&upLineLevel=3&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
+
+                    }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 
@@ -2767,6 +2821,110 @@ namespace Sunplus.Accounting.Business.Customer
             var dtLicensee = licenseeAccess.SelAllLicensee();
             bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
             return result;
+        }
+
+        private void RenderEnableGoldDeluxeBox(
+            DataRow custInfoRow,
+            SettingGroup settingGroup,
+            ref string htmlcontent,
+            int roleId,
+            bool isManageCustomerAccess,
+            bool disabledGoldDeluxeParent,
+            bool allowEditGoldDeluxe)
+        {
+            var productName = "GoldDeluxe";
+            var supportGoldDeluxe = ConfigurationManager.AppSettings["Enable" + productName] == "1";
+            if (supportGoldDeluxe)
+            {
+                var columnName = "Disable" + productName;
+                bool disableGoldDeluxe = Converter.ToBool(custInfoRow[columnName], false);
+
+                columnName = "DisableDownlines" + productName;
+                bool disableGoldDeluxeDownline = Converter.ToBool(custInfoRow[columnName], false);
+
+                settingGroup.Add(GetSettingControlGoldDeluxe(
+                    roleId,
+                    isManageCustomerAccess,
+                    "disabled" + productName,
+                    !disableGoldDeluxe,
+                    roleId > 1,
+                    allowEditGoldDeluxe,
+                    CastAide.AsBoolean(custInfoRow["Enabled"].ToString()),
+                    disabledGoldDeluxeParent,
+                    !disableGoldDeluxeDownline));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", disableGoldDeluxe ? 1 : 0);
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
+            }
+        }
+
+        private SettingControl GetSettingControlGoldDeluxe(
+            int roleId,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
+            bool isAllowEdit,
+            bool isEnabled,
+            bool disabledUpline,
+            bool disableDownLine)
+        {
+            string productName = "GoldDeluxe";
+            if (!WebSettings.EnableGoldDeluxe || !isAllowEdit)
+            {
+                return
+                    new SettingControl(
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "disableGoldDeluxe"),
+                        false,
+                        true,
+                        "",
+                        "",
+                        "",
+                        "",
+                        statusName,
+                        roleId,
+                        disableDownLine,
+                        productName);
+            }
+            else
+            {
+                string classname = "";
+                string jsonclick = "";
+                string jsonmouseover = "";
+                string jsonmouseout = "";
+
+                if (isManageCustomerAccess)
+                {
+                    if (isEnabled)
+                    {
+                        if (4 == roleId || !disabledUpline)
+                        {
+                            classname = "canchange";
+                            jsonclick = "return ShowDisablePop(this);";
+                        }
+                        else
+                        {
+                            classname = "cannotchange";
+                            jsonmouseout = "UnTip()";
+                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledGoldDeluxeUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                        }
+                    }
+                    else
+                    {
+                        classname = "cannotchange";
+                        jsonmouseout = "UnTip()";
+                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                    }
+                }
+                return
+                    new SettingControl(
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableGoldDeluxe"),
+                        currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
+                        disableDownLine, productName);
+            }
         }
     }
 }

@@ -517,6 +517,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowGoldDeluxeSettingForCredit
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get
