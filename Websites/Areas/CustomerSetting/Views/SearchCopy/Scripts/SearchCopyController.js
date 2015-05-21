@@ -31,7 +31,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             { sportname: 'Casino', sportvalue: 'tabCasino' },
             { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
             { sportname: 'Bingo', sportvalue: 'tabBingo' },
-            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' }
+            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
+            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' }
     ];
 
     $scope.sports = angular.copy(sports);
@@ -178,6 +179,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmVirtualSports").attr('src', "");
         $("#frmBingo").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
+        $("#frmGoldDleluxe").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -231,6 +233,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabLiveCasino': url += "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + adminId + "&actorUsername=" + adminUsername + "&customerId=" + $scope.existedUser.userid + "&customerLevel=4&formType=2";
                 $scope.loadData("#frmLiveCasino", url);
                 $scope.resize("#frmLiveCasino");
+                break;
+            case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
+                $scope.loadData("#frmGoldDleluxe", url);
+                $scope.resize("#frmGoldDleluxe");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
