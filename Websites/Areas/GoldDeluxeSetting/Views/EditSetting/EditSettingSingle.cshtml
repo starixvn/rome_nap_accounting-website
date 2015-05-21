@@ -97,8 +97,8 @@
     </div>
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
-    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdateSetting"))
-    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdatePTAndCom"))
-    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/Setting/UpdateGameSetting"))
+    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSetting"))
+    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndCom"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
 }
 
