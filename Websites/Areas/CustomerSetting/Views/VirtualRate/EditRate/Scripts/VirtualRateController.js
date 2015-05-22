@@ -464,11 +464,11 @@ var VirtualRateController = function () {
         var sportId = sport.Id;
         for (var j = 0; j < betTypeLength; j++) {
             var betType = sport.BetTypeList[j];
+            var betTypeId = isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id;
             var liveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sportId) + '"]' +
                     '[liveType="' + self.Constants.LiveType.Live + '"]' +
-                    '[bettype-id="' +
-                        (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
+                    '[bettype-id="' + betTypeId + '"]').val();
             if (sport.LiveVirtualRate && sport.LiveVirtualRate[j].HasData) {
                 criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate.toFixed(2);
                 customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
@@ -477,8 +477,7 @@ var VirtualRateController = function () {
             var nonliveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sport.Id) + '"]' +
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
-                    '[bettype-id="' +
-                        (isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id) + '"]').val();
+                    '[bettype-id="' + betTypeId + '"]').val();
             if (sport.NonLiveVirtualRate && sport.NonLiveVirtualRate[j].HasData) {
                 criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate.toFixed(2);
                 customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = (parseInt(nonliveRate) / 100 + 1).toFixed(2);
@@ -490,9 +489,7 @@ var VirtualRateController = function () {
         var sportId = subSport.Id;
         for (var j = 0; j < betTypeLength; j++) {
             var betType = sport.BetTypeList[j];
-            var betTypeId = (isCopyFromSport || isCopyFromBetType) && sportId === self.Constants.SportType.OtherSports ?
-                self.cachedData.copyFromBetTypeId :
-                betType.Id;
+            var betTypeId = isCopyFromSport || isCopyFromBetType ? self.cachedData.copyFromBetTypeId : betType.Id;
             var liveRate = $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sportId) + '"]' +
                     '[liveType="' + self.Constants.LiveType.Live + '"]' +

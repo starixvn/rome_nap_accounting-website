@@ -262,10 +262,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName("View Log");
             var betTypeCount = betTypeList.Count;
 
-            Dictionary<int, Dictionary<int, int>> betTypeIndexList = new Dictionary<int, Dictionary<int, int>>();
-            betTypeIndexList.Add(Sports.Soccer, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.Soccer));
-            betTypeIndexList.Add(Sports.OtherSports, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.OtherSports));
-
+            Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
             var customerVirtualRateDataTable = new DataTable();
             customerVirtualRateDataTable.Columns.Add("Username");
             customerVirtualRateDataTable.Columns.Add("Sport");
@@ -283,6 +280,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 return importList;
             }
 
+            var sportIdFromNameDictionary = VirtualRateSectionService.SportIdFromNameDictionary();
             do
             {
                 var row = (NPOI.SS.UserModel.IRow)rows.Current;
@@ -320,7 +318,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         continue;
                     }
 
-                    var sportId = SportId(sportName);
+                    var sportId = sportIdFromNameDictionary.ContainsKey(sportName) ?
+                        sportIdFromNameDictionary[sportName] :
+                        0;
                     if (sportId == 0)
                     {
                         uploadResult.FailedInfoList.Add(new ImportVirtualRateResult
@@ -561,24 +561,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         }
 
         /// <summary>
-        /// Gets the sport identifier.
-        /// </summary>
-        /// <param name="sportName">Name of the sport.</param>
-        /// <returns>The sport identifier.</returns>
-        private int SportId(string sportName)
-        {
-            switch (sportName)
-            {
-                case SportNameConstants.Soccer:
-                    return Sport.Soccer;
-                case SportNameConstants.OtherSports:
-                    return Sport.OtherSports;
-                default:
-                    return 0;
-            }
-        }
-
-        /// <summary>
         /// Gets the live type identifier.
         /// </summary>
         /// <param name="liveType">Type of the live.</param>
@@ -608,9 +590,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         {
             List<CustomerVirtualRateModel> customerVirtualRateList = new List<CustomerVirtualRateModel>();
             var userGroups = importList.GroupBy(data => data.Username);
-            var soccerBetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.Soccer);
-            var otherSportbetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.OtherSports);
 
+            Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
             foreach (var userGroup in userGroups)
             {
                 var customerVirtualRateModel = new CustomerVirtualRateModel
@@ -622,12 +603,12 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 var sportGroups = userGroup.GroupBy(data => data.SportType);
                 foreach (var sportGroup in sportGroups)
                 {
-                    var targetIndex = sportGroup.Key == Sports.Soccer ? soccerBetTypeIndex : otherSportbetTypeIndex;
+                    var targetIndex = betTypeIndexList[sportGroup.Key];
                     var sportRate = new SportVirtualRateModel
                     {
                         Id = sportGroup.Key,
                         Name = Sports.SportName(sportGroup.Key),
-                        BetTypeList = VirtualRateSectionService.BetTypeList(sportGroup.Key),
+                        BetTypeList = VirtualRateSectionService.BetTypeListViewLog(sportGroup.Key),
                         LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(targetIndex.Count),
                         NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(targetIndex.Count)
                     };

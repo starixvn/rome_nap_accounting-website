@@ -196,7 +196,6 @@
     <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\LiveTypeNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
-    <Compile Include="Constants\SportNameConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />

@@ -112,7 +112,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     HistoryLog = new List<HistoryLogByDateModel>()
                 };
 
-                // Fix bug #32374
                 var rawData = _virtualRateRepository.HistoryLog(criteria).OrderByDescending(m => m.LogDate).ThenBy(m => m.ActionId);
                 var logGroups = rawData.GroupBy(log => new
                 {
@@ -120,10 +119,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     Username = log.Username
                 });
 
-                Dictionary<int, Dictionary<int, int>> betTypeIndexList = new Dictionary<int, Dictionary<int, int>>();
-                betTypeIndexList.Add(Sports.Soccer, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.Soccer));
-                betTypeIndexList.Add(Sports.OtherSports, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.OtherSports));
-
+                Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
                 foreach (var data in rawData)
                 {
                     var historyLogByDate = new HistoryLogByDateModel
