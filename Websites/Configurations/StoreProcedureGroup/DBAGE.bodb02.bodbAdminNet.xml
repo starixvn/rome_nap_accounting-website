@@ -322,6 +322,7 @@
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
 
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
 
   <Function Name="Progressive Bonus">

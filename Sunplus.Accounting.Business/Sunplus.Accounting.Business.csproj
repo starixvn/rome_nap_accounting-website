@@ -214,6 +214,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="Logs.cs" />
+    <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
     <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="Report\Common\RMReportUtils.cs" />
     <Compile Include="Report\DailyTurnover\DailyTurnoverManager.cs" />
@@ -560,7 +561,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

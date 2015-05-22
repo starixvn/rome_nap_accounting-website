@@ -82,6 +82,7 @@
     <Compile Include="Country.cs" />
     <Compile Include="CreditTerm\Group.cs" />
     <Compile Include="CreditTerm\GroupEditing.cs" />
+    <Compile Include="Criteria\ViewPT\ViewGoldDeluxePTCriteria.cs" />
     <Compile Include="Criteria\ViewPT\ViewKenoPTCriteria.cs" />
     <Compile Include="CustomerDetail.cs" />
     <Compile Include="Customer\BetSetting.cs" />
@@ -245,7 +246,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildAction="Both" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_BuildAction="Both" BuildVersion_AssemblyInfoFilename="" BuildVersion_UseGlobalSettings="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
