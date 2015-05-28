@@ -107,6 +107,12 @@ function OpenByIP(custid, fdate, ip, type) {
     GeneralAjaxCall(urlLink);
 }
 
+function ViewGoldDeluxeResult(transId, bettype) {
+    var width = 945;
+    var url = 'Report/ViewGoldDeluxeResult.aspx?transId=' + transId + '&bettype=' + bettype;
+    parent.OpenNextPopup("ViewGoldDeluxeResult", url, 'Gold Deluxe', width, 500, true, false, window, 0, null, null);
+}
+
 function ViewMixParlayResult(refno, matchid, bettype, betid) {
     var width = 945;
     var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;

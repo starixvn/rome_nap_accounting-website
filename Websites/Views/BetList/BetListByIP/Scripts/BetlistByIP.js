@@ -206,6 +206,18 @@ var Helper = {
     }
 };
 
+function showDetail(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block') {
+        e.style.display = 'none';
+    }
+    else {
+        e.style.display = 'block';
+    }
+
+    $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+}
+
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
     var username = $(".combinationLink span:last").html();
     showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)

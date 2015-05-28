@@ -112,4 +112,8 @@
     <item key="RS216">Goal {0}</item>
     <item key="Home">Home</item>
     <item key="Away">Away</item>
+    <item key="GameID">Game ID</item>
+    <item key="Banker">Banker</item>
+    <item key="Player">Player</item>
+
 </root>

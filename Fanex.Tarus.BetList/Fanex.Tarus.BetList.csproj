@@ -51,9 +51,13 @@
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.1.0.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.Core, Version=2.2.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.Core.2.1.0.8-beta2\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,6 +101,8 @@
   <ItemGroup>
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
+    <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IVirtualTennisResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
     <Compile Include="Business\Results\IRacingResultService.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />
@@ -124,6 +131,8 @@
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IRacingResultDataAccess.cs" />
