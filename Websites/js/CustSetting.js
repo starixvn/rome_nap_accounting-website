@@ -372,4 +372,15 @@ function DisabeAllCheckBox() {
     $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledVSPop .btn:first").attr("disabled", "disabled");
     $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
+    $("#disabledGoldDeluxePop .btn:first").attr("disabled", "disabled");
 };
+
+function ShowDisablePopGoldDeluxe(obj, hasDownline) {
+    ShowDisablePop(obj);
+    if (hasDownline) {
+        $("#" + obj.id + 'boxDL').css("display", 'inline');
+    }
+    else {
+        $("#" + obj.id + 'boxDL').css("display", 'none');
+    }
+}eds

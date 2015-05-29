@@ -1457,7 +1457,7 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Virtual Sports</a>";
                         }
-                    } 
+                    }
                     if (isShowSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
@@ -2903,7 +2903,7 @@ namespace Sunplus.Accounting.Business.Customer
                         if (4 == roleId || !disabledUpline)
                         {
                             classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
+                            jsonclick = "return ShowDisablePopGoldDeluxe(this," + (hasDownLine ? "1" : "0") + ");";
                         }
                         else
                         {

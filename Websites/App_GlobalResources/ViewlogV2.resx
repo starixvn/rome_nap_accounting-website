@@ -1176,4 +1176,7 @@
   <data name="V255updatepositiontaking_1701" xml:space="preserve">
     <value>Update PT</value>
   </data>
+  <data name="v255playerdiscount_1701" xml:space="preserve">
+    <value>Comm</value>
+  </data>
 </root>
