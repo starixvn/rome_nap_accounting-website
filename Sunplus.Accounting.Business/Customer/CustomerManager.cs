@@ -1391,6 +1391,9 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Esports
 
+            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
+                false :
+                Convert.ToBoolean(row1["HasDownline"]);
             RenderEnableGoldDeluxeBox(
                 row1,
                 sg,
@@ -1398,7 +1401,8 @@ namespace Sunplus.Accounting.Business.Customer
                 roleId,
                 isManageCustomerAccess,
                 disabledGoldDeluxeParent,
-                isAllowEditGoldDeluxe);
+                isAllowEditGoldDeluxe,
+                hasDownline);
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
@@ -2830,7 +2834,8 @@ namespace Sunplus.Accounting.Business.Customer
             int roleId,
             bool isManageCustomerAccess,
             bool disabledGoldDeluxeParent,
-            bool allowEditGoldDeluxe)
+            bool allowEditGoldDeluxe,
+            bool hasDownline)
         {
             var productName = "GoldDeluxe";
             var supportGoldDeluxe = ConfigurationManager.AppSettings["Enable" + productName] == "1";
@@ -2847,7 +2852,7 @@ namespace Sunplus.Accounting.Business.Customer
                     isManageCustomerAccess,
                     "disabled" + productName,
                     !disableGoldDeluxe,
-                    roleId > 1,
+                    hasDownline,
                     allowEditGoldDeluxe,
                     CastAide.AsBoolean(custInfoRow["Enabled"].ToString()),
                     disabledGoldDeluxeParent,

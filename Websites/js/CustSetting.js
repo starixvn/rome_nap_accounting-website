@@ -383,4 +383,4 @@ function ShowDisablePopGoldDeluxe(obj, hasDownline) {
     else {
         $("#" + obj.id + 'boxDL').css("display", 'none');
     }
-}eds
+}
