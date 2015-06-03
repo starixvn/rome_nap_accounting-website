@@ -497,15 +497,6 @@ var VirtualRateController = function () {
         }
     };
 
-            self.CallAjax(self,
-                window.rootUrl + "VirtualRate/UpdateSettings",
-                criteria,
-                self.renderUpdateResult,
-                self.renderUpdateResult,
-                self.unblockUI);
-        }
-    };
-
     self.updateBetTypeRate = function (sport, isCopyFromSport, isCopyFromBetType, criteria, i) {
         var betTypeLength = sport.BetTypeList.length;
         var sportId = sport.Id;
@@ -552,8 +543,6 @@ var VirtualRateController = function () {
                     .PercentRate.toFixed(2);
                 customerVirtualRateModel.SportVirtualRateList[i]
                     .SubSportList[k]
-                    .LiveVirtualRate[j]
-                    .PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
                     .LiveVirtualRate[j]
                     .PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
             }
