@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Security.Web
     using System.Collections.Generic;
     using System.Web;
     using Fanex.CustomerSetting.Module.Core.Web;
+    using System;
 
     /// <summary>
     /// TODO: Update summary.
@@ -185,11 +186,11 @@ namespace Fanex.Tarus.Security.Web
         {
             get
             {
-                throw new System.NotImplementedException();
+                return 3;
             }
             set
             {
-                throw new System.NotImplementedException();
+                throw new Exception("Cannot set");
             }
         }
     }
