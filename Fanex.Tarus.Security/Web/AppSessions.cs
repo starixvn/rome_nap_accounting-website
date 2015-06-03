@@ -179,5 +179,18 @@ namespace Fanex.Tarus.Security.Web
                 AppSession.AccUserName = value;
             }
         }
+
+
+        public int FromSystem
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
     }
 }
