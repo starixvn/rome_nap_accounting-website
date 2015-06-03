@@ -190,7 +190,7 @@ namespace Fanex.Tarus.Security.Web
             }
             set
             {
-                throw new Exception("Cannot set");
+                AppSession.CurrentSession.FromSystem = value;
             }
         }
     }
