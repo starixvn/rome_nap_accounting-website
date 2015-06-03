@@ -80,6 +80,7 @@ var VirtualRateController = function () {
                     var subSportListLength = sport.SubSportList.length;
                     for (var k = 0; k < subSportListLength; k++) {
                         var subSport = sport.SubSportList[k];
+                        settingHtml += self.getSubSportHtml(subSport.LiveVirtualRate, subSport, sport, j, self.Constants.LiveType.Live);
                         settingHtml += self.getSubSportHtml(subSport.NonLiveVirtualRate, subSport, sport, j, self.Constants.LiveType.NonLive);
                     }
                 }
@@ -146,7 +147,8 @@ var VirtualRateController = function () {
                             sport,
                             liveType,
                             i == 0 ? 'source' : 'target',
-                            sport.BetTypeList[i].Id) :
+                            sport.BetTypeList[i].Id,
+                            sport.Id) :
                         '') +
                 '</td>';
 
@@ -161,7 +163,10 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        liveHtml += '<td class="first-column l">' + subSport.Name + '</td>';
+        liveHtml +=
+            '<td class="first-column l">' +
+                subSport.Name + ' - ' + self.getLiveTypeName(liveType) +
+            '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
             var liveRate = liveVirtualRate[i];
@@ -176,7 +181,8 @@ var VirtualRateController = function () {
                             subSport,
                             liveType,
                             i == 0 ? 'source' : 'target',
-                            sport.BetTypeList[i].Id) :
+                            sport.BetTypeList[i].Id,
+                            sport.Id) :
                         '') +
                 '</td>';
 
@@ -358,13 +364,13 @@ var VirtualRateController = function () {
         }
 
         var liveType = self.Constants.LiveType.Live;
-        var targetDropdown = $('select[sport-id="' + sportId + '"]' +
+        var targetDropdown = $('select[groupd-id="' + sportId + '"]' +
             '[liveType="' + liveType + '"]' +
             '[copy-direction="target"]');
         targetDropdown.attr("disabled", isCopy ? "disabled" : null);
 
         liveType = self.Constants.LiveType.NonLive;
-        targetDropdown = $('select[sport-id="' + sportId + '"]' +
+        targetDropdown = $('select[groupd-id="' + sportId + '"]' +
             '[liveType="' + liveType + '"]' +
             '[copy-direction="target"]');
         targetDropdown.attr("disabled", isCopy ? "disabled" : null);
@@ -388,12 +394,14 @@ var VirtualRateController = function () {
         sport,
         liveType,
         copyDirection,
-        betTypeId) {
+        betTypeId,
+        groupdId) {
         var html = '<select' +
                         ' sport-id="' + sport.Id + '"' +
                         ' liveType="' + liveType + '"' +
                         ' copy-direction="' + copyDirection + '"' +
                         ' bettype-id="' + betTypeId + '"' +
+                        (groupdId ? ' groupd-id="' + groupdId + '"' : '') +
                     '>';
         var currentRate = parseInt((maxRate * 100).toFixed(0));
         var limitRate = parseInt((minRate * 100).toFixed(0));

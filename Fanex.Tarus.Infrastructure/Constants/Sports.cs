@@ -2,6 +2,7 @@
 
 namespace Fanex.Tarus.Infrastructure.Constants
 {
+    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Resource;
 
     public static class Sports
@@ -70,12 +71,8 @@ namespace Fanex.Tarus.Infrastructure.Constants
                     return Labels.Soccer;
                 case OtherSports:
                     return Labels.Other_Sports;
-                case Tennis:
-                    return Labels.Tennis;
-                case Basketball:
-                    return Labels.Basketball;
                 default:
-                    return string.Empty;
+                    return CacheRef.GetSportName(sportId);
             }
         }
     }

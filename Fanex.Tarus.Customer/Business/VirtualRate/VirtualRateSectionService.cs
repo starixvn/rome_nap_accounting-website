@@ -68,7 +68,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                             {
                                 Id = subSport.Id,
                                 Name = subSport.Name,
-                                NonLiveVirtualRate = DefaultVirtualRateList(sportBetTypeIndex.Count)
+                                NonLiveVirtualRate = DefaultVirtualRateList(sportBetTypeIndex.Count),
+                                LiveVirtualRate = DefaultVirtualRateList(sportBetTypeIndex.Count)
                             });
                         }
                     }

@@ -120,17 +120,18 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
                         for (var k = 0; k < subSportLength; k++)
                         {
                             var subSport = sportVirtualRate.SubSportList[k];
-                            var liveRate = sportVirtualRate.SubSportList[k].NonLiveVirtualRate[j];
-                            var oldLiveRate = LastSettings.SportVirtualRateList[i].SubSportList[k].NonLiveVirtualRate[j];
+                            var oldLiveRate = LastSettings.SportVirtualRateList[i].SubSportList[k].LiveVirtualRate[j];
                             paramXML += AddBetTypeParam(
-                               liveRate,
+                               subSport.LiveVirtualRate[j],
                                oldLiveRate,
                                subSport.Id,
                                betType,
                                LiveTypeConstants.Live,
                                virtualMultiplierFormat);
+
+                            oldLiveRate = LastSettings.SportVirtualRateList[i].SubSportList[k].NonLiveVirtualRate[j];
                             paramXML += AddBetTypeParam(
-                               liveRate,
+                               subSport.NonLiveVirtualRate[j],
                                oldLiveRate,
                                subSport.Id,
                                betType,
