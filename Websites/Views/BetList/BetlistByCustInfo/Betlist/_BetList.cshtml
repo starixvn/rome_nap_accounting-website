@@ -2,6 +2,7 @@
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Core;
 @using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Services;
 @using DNAide.Core;
 
 @{
@@ -19,10 +20,13 @@
         int i = 0;
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+            if (betdetail.Ticket.BetTypeId == 73 ||
+                betdetail.Ticket.BetTypeId == 71 ||
+                betdetail.Ticket.SportTypeId == 202)
             {
                 betdetail.Ticket.TransId = CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
+
             result[1] += renderContent(betdetail, NumberBegining);
             arrTransID[i++] = betdetail.Ticket.TransId;
             NumberBegining++;
@@ -41,7 +45,10 @@
         <td class="c">
             <div class="width120 table-cell">
                 <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+                    @if (betdetail.Ticket.BetTypeId == 73 ||
+                        betdetail.Ticket.BetTypeId == 71 ||
+                        betdetail.Ticket.SportTypeId == 202 ||
+                        BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
@@ -57,7 +64,8 @@
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
             <div id="choice_right_@betdetail.Ticket.TransId" class="width275 table-cell">
                 @Html.Raw(betdetail.ChoiceHtml)
-                @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
+                @if (betdetail.Ticket.BetTypeId == 9 ||
+                    betdetail.Ticket.BetTypeId == 29)
                 {
                     <div class="parlay_@betdetail.Ticket.TransId ">
                     </div>

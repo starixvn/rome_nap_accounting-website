@@ -2,6 +2,7 @@
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Services;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -34,7 +35,8 @@
         <td class="c">
             <div class="width120">
                   <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71)
+                    @if (betdetail.Ticket.BetTypeId == 71 ||
+                        BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
                     {
                         <span>No: @betdetail.Ticket.RefNo </span>
                     }

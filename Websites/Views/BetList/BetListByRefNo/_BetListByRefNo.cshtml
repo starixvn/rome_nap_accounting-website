@@ -2,6 +2,7 @@
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Services;
 @{
     TicketDetail betdetail = new TicketDetail();
     if (Model != null && Model.Count > 0)
@@ -26,35 +27,43 @@
         return result;
     }
 }
-
 @helper renderContent(TicketDetail betdetail)
     {
     <tr class="c">
         <td>
-            <div class="c width100 table-cell" >
-            @if (betdetail.Ticket.UserName.Length > 13)
-            {
-                string usernameTmp = betdetail.Ticket.UserName;
-                string firstSubstring = usernameTmp.Substring(0, 13);
-                string secondSubstring = usernameTmp.Substring(13, betdetail.Ticket.UserName.Length - 13);
-                <div>@firstSubstring<br />@secondSubstring </div>
-            }
-            else
-            {
-                <div>@betdetail.Ticket.UserName</div>
-            }
+            <div class="c width100 table-cell">
+                @if (betdetail.Ticket.UserName.Length > 13)
+                {
+                    string usernameTmp = betdetail.Ticket.UserName;
+                    string firstSubstring = usernameTmp.Substring(0, 13);
+                    string secondSubstring = usernameTmp.Substring(13, betdetail.Ticket.UserName.Length - 13);
+                    <div>@firstSubstring<br />@secondSubstring
+                    </div>
+                }
+                else
+                {
+                    <div>@betdetail.Ticket.UserName</div>
+                }
             </div>
         </td>
         <td class="c">
             <div class="width120 table-cell">
                 <div class="refno ">
-                    Ref No: @betdetail.Ticket.TransId</div>
+                    @if (BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
+                    {
+                        <span>Ref No: @betdetail.Ticket.RefNo </span>
+                    }
+                    else
+                    {
+                        <span>Ref No: @betdetail.Ticket.TransId </span>
+                    }
+                </div>
                 <div class="c">
                     @betdetail.Ticket.TransDate</div>
             </div>
         </td>
         <td class='r bl_evt'>
-            <div  id="choice_right" class="width250  table-cell">
+            <div id="choice_right" class="width250  table-cell">
                 <div>
                     @Html.Raw(betdetail.ChoiceHtml)
                 </div>
@@ -68,7 +77,7 @@
             </div>
         </td>
         <td class='r bl_underdog'>
-            <div id="odd"  class="width50 table-cell">
+            <div id="odd" class="width50 table-cell">
                 @Html.Partial("~/Views/BetList/_Odds.cshtml", betdetail)
             </div>
         </td>
@@ -84,9 +93,9 @@
         </td>
         <td class="c">
             <div id="stautus" class="width100 table-cell">
-              @Html.Raw(betdetail.StatusHtml)
-                  @{
-                      var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                @Html.Raw(betdetail.StatusHtml)
+                @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }
                 @if (ip != "-")
                 {
@@ -96,7 +105,7 @@
             </div>
         </td>
         <td class="r">
-            <div  id="comm"  class="width60 table-cell">
+            <div id="comm" class="width60 table-cell">
                 @Html.Partial("~/Views/BetList/_SuperPTCom.cshtml", betdetail)
             </div>
         </td>
@@ -113,8 +122,6 @@
     </tr>
 }
 <div id="BetlistByRefNo" class="freegrid display-none">
-    
-    
     <div class="col_header row-headers-background scroll-y">
         <div class="header-container">
             <table class="grid-fixed-table col_header_content">
@@ -233,7 +240,7 @@
                     else
                     { 
                         <tr class="c">
-                            <td colspan="10" >
+                            <td colspan="10">
                                 <div class="c b" style="margin-left: 60px;">
                                     There is no data
                                 </div>
