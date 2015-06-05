@@ -1,35 +1,35 @@
 <%@ WebHandler Language="C#" Class="ProcessLogin2" %>
-
 using System;
 using System.Web;
 using System.Web.Security;
 using System.Collections;
 using System.Web.SessionState;
-using DNAide.Data;
+using Fanex.Common;
+using Fanex.Data.DNAide;
+using Fanex.Nap.SSO.Repositories;
+using Fanex.Nap.SSO.Criteria;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.IBCDLL;
 using Sunplus.Accounting.Services;
 using Sunplus.Core.LoggingLib;
-using Fanex.Nap.SSO.Repositories;
-using Fanex.Nap.SSO.Criteria;
 
-public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
-    
+public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {    
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/html";        
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         context.Response.Write("<html><head><script type='text/javascript'>\n");
         try 
         {
-            string custId = DNAide.Core.CastAide.AsString(context.Request["uid"], "0");
-            string logId = DNAide.Core.CastAide.AsString(context.Request["lid"], "0");
+            var custId = Converter.ToInt(context.Request["uid"]);
+            var logId = Converter.To<long>(context.Request["lid"]);
             //Set CustID=0 to select by username
            
-            string sessionId = DNAide.Core.CastAide.AsString(context.Request["sid"], "0");
+            var sessionId = Converter.ToInt(context.Request["sid"]);
             Hashtable param = new Hashtable();
             param.Add("custid", custId);
             param.Add("sessionid", sessionId);
@@ -39,13 +39,13 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
 
             AppSession.SYSTEM = "accounting";
           
-            DbResult ds = DbHelper.ExecuteCmd("UserLoginClaimed_out", param, DBType.ON_USER);
+            DbResult ds = DbHelper.ExecuteDbResult("UserLoginClaimed_out", param);
             if (Convert.ToBoolean(ds.Outputs["result"]))
             {
                 param.Clear();
                 param.Add("custid", custId);
 
-                ds = DbHelper.Execute("Acc_Con_AdminSelByCustID", param, DBType.DB03);
+                ds = DbHelper.ExecuteDbResult("Acc_Con_AdminSelByCustID", param);
 
                 if (ds.ResultSet.Tables[0].Rows.Count > 0)
                 {
@@ -54,7 +54,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
 
                     int roleId = Convert.ToInt32(ds.ResultSet.Tables[0].Rows[0]["roleid"]);
                     string pwd = ds.ResultSet.Tables[0].Rows[0]["userpwd"] + "";
-                    int onUserId = Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLoginAdminOnuser(custIdInt, WebSettings.ServerId, context.Request.UserHostAddress);
+                    int onUserId = UserController.AccLoginAdminOnuser(custIdInt, WebSettings.ServerId, context.Request.UserHostAddress);
                     FormsAuthentication.SetAuthCookie(username, false);
                     AppSession.Username = username;//context.Session["Username"] = username;
                     AppSession.AccUserName = username;
@@ -96,18 +96,18 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
             
             if (succ)
             {
-                context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl + (!String.IsNullOrEmpty(context.Request.QueryString["uname"]) ? "?uname=" + DNAide.Core.CastAide.AsString(context.Request.QueryString["uname"]) : string.Empty) + "';\n");
+                context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl + (!String.IsNullOrEmpty(context.Request.QueryString["uname"]) ? "?uname=" + Converter.ToString2(context.Request.QueryString["uname"]) : string.Empty) + "';\n");
             }
             else
             {
                 context.Response.Write("top.location.href='" + FormsAuthentication.LoginUrl + "';\n");
-            }
-           
+            }           
         }
         catch (Exception ex)
         {
              Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-        }        
+        }
+                
         context.Response.Write("\n</script></head><body></body>");        
     }
  
@@ -116,5 +116,4 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
             return false;
         }
     }
-
 }
