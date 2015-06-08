@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-  <Function Name="Racing - Report">
-    <Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBRPT.bodb_Report.bodbAdminNet"  />    
-  </Function>
-
-
-</Functions>

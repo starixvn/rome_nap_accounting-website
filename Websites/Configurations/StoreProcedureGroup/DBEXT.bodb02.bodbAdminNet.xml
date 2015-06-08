@@ -1,32 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-
-  <Function Name="Report - Gaming">
-    <Setting Key="GameStatistics_LicenseeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_LicenseeSel" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="DBEXT.bodb02.bodbAdminNet"  />    
-  </Function>
-
-  <Function Name="Report - Licensee">
-    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="SelCurrencyByLicensee" SpName="Acc_SelCurrencyByLicensee" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinloss" SpName="Acc_Rpt_LicWinloss" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinloss_new" SpName="Acc_Rpt_LicWinloss2" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetail" SpName="Acc_Rpt_LicWinlossDetail" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetailV2" SpName="Acc_Rpt_LicWinlossDetail2" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetail_Ag" SpName="Acc_Rpt_LicWinlossDetail_Ag" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetail_SAgV2" SpName="Acc_Rpt_LicWinlossDetail_SAg2" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetail_MAgV2" SpName="Acc_Rpt_LicWinlossDetail_MAg2" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicWinlossDetail_AgV2" SpName="Acc_Rpt_LicWinlossDetail_Ag2" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="LicGetTotalTicket" SpName="Lbs_Rpt_GetTotalTicket" DbName="DBEXT.bodb02.bodbAdminNet"  />
-  </Function>
-	<Function Name="Report - NumberGame">
-		<Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="DBEXT.bodb02.bodbAdminNet"  />
-	</Function>
+<Functions> 
   <Function Name="PT Setting">            
     <Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMaster_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />

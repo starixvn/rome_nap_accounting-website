@@ -44,7 +44,7 @@
     <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
     <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
     <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
-	<Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet_ex" Plain="0" />  
+	  <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" Plain="0" />  
   </Function>
 
   <Function Name="Left Menu - Credit term">

@@ -2,7 +2,7 @@
 <Functions>
   <Function Name="Customer - View PT">
     <Setting Key="Customer_ViewPTSel" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBCust.CustDB.bodbAdminNet"/>
     <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1"  />
     <Setting Key="BG_TP_User_CustSetting_GetCustSetting" SpName="TP_User_CustSetting_GetCustSetting" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_User_CustSetting_GetDefaultMaxTransfer" SpName="TP_User_CustSetting_GetDefaultMaxTransfer" DbName="CS_LBBackupDB" Plain="1" />
