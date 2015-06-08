@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.MetricGaming">
+      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.MetricGaming.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
