@@ -45,7 +45,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
                 param.Clear();
                 param.Add("custid", custId);
 
-                ds = DbHelper.ExecuteDbResult("Acc_Con_AdminSelByCustID", param);
+                ds = DbHelper.ExecuteDbResult("Con_AdminSelByCustID", param);
 
                 if (ds.ResultSet.Tables[0].Rows.Count > 0)
                 {
