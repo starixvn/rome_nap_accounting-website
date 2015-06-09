@@ -1141,7 +1141,7 @@
     <value>Master Auto PT</value>
   </data>
   <data name="Auto_v255mpositiontaking_mem_1701" xml:space="preserve">
-    <value>Auto Master PT</value>
+    <value>Master Auto PT</value>
   </data>
   <data name="Auto_v255spositiontaking_1701" xml:space="preserve">
     <value>Super Auto PT</value>
@@ -1177,6 +1177,9 @@
     <value>Update PT</value>
   </data>
   <data name="v255playerdiscount_1701" xml:space="preserve">
+    <value>Comm</value>
+  </data>
+  <data name="Discount255_1701" xml:space="preserve">
     <value>Comm</value>
   </data>
 </root>
