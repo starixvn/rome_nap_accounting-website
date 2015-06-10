@@ -4,7 +4,6 @@
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Services;
 @using DNAide.Core;
-
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -22,7 +21,8 @@
         {
             if (betdetail.Ticket.BetTypeId == 73 ||
                 betdetail.Ticket.BetTypeId == 71 ||
-                betdetail.Ticket.SportTypeId == 202)
+                betdetail.Ticket.SportTypeId == 202 ||
+                betdetail.Ticket.SportTypeId == 255)
             {
                 betdetail.Ticket.TransId = CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -48,6 +48,7 @@
                     @if (betdetail.Ticket.BetTypeId == 73 ||
                         betdetail.Ticket.BetTypeId == 71 ||
                         betdetail.Ticket.SportTypeId == 202 ||
+                        betdetail.Ticket.SportTypeId == 255 ||
                         BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
@@ -250,7 +251,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
    var _custid = @betdetail.Ticket.CustId;
    var _length = @ViewBag.Quantity;

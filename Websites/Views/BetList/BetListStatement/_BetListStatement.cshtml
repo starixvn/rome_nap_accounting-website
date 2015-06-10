@@ -66,6 +66,7 @@
                 <div class="refno ">
                     @if (betdetail.Ticket.BetTypeId == 71 ||
                         betdetail.Ticket.SportTypeId == 202 ||
+                        betdetail.Ticket.SportTypeId == 255 ||
                         BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
