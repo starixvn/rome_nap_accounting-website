@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Customer - View PT">
     <Setting Key="Customer_ViewPTSel" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1"  />
+    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_User_CustSetting_GetCustSetting" SpName="TP_User_CustSetting_GetCustSetting" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_User_CustSetting_GetDefaultMaxTransfer" SpName="TP_User_CustSetting_GetDefaultMaxTransfer" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Admin_GameGroup_SelAll" SpName="TP_Admin_GameGroup_SelAll" DbName="CS_LBBackupDB" Plain="1" />
@@ -21,5 +21,5 @@
     <Setting Key="BG_TP_Game_UserBet_WinLossBySAgentID" SpName="TP_Game_UserBet_WinLossBySAgentID" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Game_UserBet_WinLossByMAgentID" SpName="TP_Game_UserBet_WinLossByMAgentID" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Game_UserBet_WinLossByAgentID" SpName="TP_Game_UserBet_WinLossByAgentID" DbName="CS_LBBackupDB" Plain="1" />
-  </Function> 
+  </Function>
 </Functions>

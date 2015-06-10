@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions> 
-  <Function Name="PT Setting">            
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="PT Setting">
     <Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMaster_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMaster_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
@@ -9,38 +9,32 @@
     <Setting Key="Licensee_SelMember_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Ag" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_SelMember_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_AgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-
   <Function Name="Customer - New Licensee">
     <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
-	<Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
   <Function Name="Admin-BACustomer">
-    <Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet"/>
+    <Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-
   <Function Name="Special Delete">
-    <Setting Key="SelAllLicensee" SpName="Acc_SiteSel_Licensee" DbName="DBEXT.bodb02.bodbAdminNet"/>
+    <Setting Key="SelAllLicensee" SpName="Acc_SiteSel_Licensee" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-
   <Function Name="Betlist">
-    <Setting Key="GetCurrency" SpName="Acc_BA_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet"/>    
+    <Setting Key="GetCurrency" SpName="Acc_BA_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-
   <Function Name="ResetWinning">
-    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet"  />
-    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
+    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-
   <Function Name="Customer NewLicensee">
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
-	<Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet"/>
+    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
