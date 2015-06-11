@@ -493,6 +493,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microgming status updated successfully..
+        /// </summary>
+        public static string MicroGamingStatusUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("MicroGamingStatusUpdatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Virtual Rate.
         /// </summary>
         public static string New_Virtual_Rate {

@@ -37,3 +37,14 @@ namespace Fanex.Tarus.Customer.Controller
         }
     }
 }
+        }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public ActionResult UpdateStatus(UpdateMicroGamingStatusCriteria criteria)
+        {
+            var result = _microGamingService.UpdateStatus(criteria);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+    }
+}
