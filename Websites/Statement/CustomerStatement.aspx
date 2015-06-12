@@ -68,7 +68,7 @@
         var moveBetsDay = '<%=moveBetsDay%>'; 
         var newLayoutDate = '<%=newLayoutDate%>';
         var domain =  window.rootUrl;
-        var isOldStatementTab = '<%=isOldStatementTab%>';
+        var isNewStatementTab = '<%=isNewStatementTab%>';
         var statementResources = {
             Invalid_Date_Range: '<%=Labels.Invalid_Date_Range%>',
             Date: "<%=Labels.Date%>",
