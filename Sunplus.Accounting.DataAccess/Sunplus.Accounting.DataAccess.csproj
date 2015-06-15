@@ -76,6 +76,8 @@
     <Compile Include="IBCClient\HRPositionTakingProviderClient.cs" />
     <Compile Include="IBCClient\PositionTakingProviderClient.cs" />
     <Compile Include="IBCClient\UtilsProviderClient.cs" />
+    <Compile Include="IBCDLL\Customer\MicroGaming\IMicroGamingPTRepository.cs" />
+    <Compile Include="IBCDLL\Customer\MicroGaming\MicroGamingPTRepository.cs" />
     <Compile Include="IBCDLL\Customer\ViewGoldDeluxePTRepository.cs" />
     <Compile Include="IBCDLL\Customer\IViewKenoPTRepository.cs" />
     <Compile Include="IBCDLL\Customer\ViewKenoPTRepository.cs" />

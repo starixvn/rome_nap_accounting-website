@@ -77,5 +77,14 @@ namespace Sunplus.Accounting.Business.Resources {
                 return ResourceManager.GetString("DisabledMarkDirectStatus", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microgaming.
+        /// </summary>
+        public static string Microgaming {
+            get {
+                return ResourceManager.GetString("Microgaming", resourceCulture);
+            }
+        }
     }
 }

@@ -7,13 +7,16 @@ using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
+using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.PositionTaking;
+using Sunplus.Accounting.Business.Resources;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Accounting.Entities.Criteria.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Bingo.Core;
@@ -23,8 +26,6 @@ using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Result = Sunplus.Bingo.Entities.Result;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
-using Sunplus.Accounting.Entities.Criteria.ViewPT;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
@@ -264,6 +265,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         };
 
                         return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
+
+                    case Constants.Sport.MicroGaming:
+                        var microGamingViewPTCriteria = new ViewMicroGamingPTCriteria
+                        {
+                            Username = userName,
+                            SportId = sportId,
+                            BetType = bettypeId,
+                            IsLive = isLive
+                        };
+
+                        return new MicroGamingPTService().ViewPositionTaking(microGamingViewPTCriteria);
                 }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
@@ -1333,15 +1345,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     //var custInfo = new CustomerDAO().GetCustomerInfo(userName);
                     //if (custInfo != null && custInfo.Rows.Count > 0)
                     //{
-                        //var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
-                        bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM);
-                        var sport = new Sport()
-                        {
-                            SportId = Constants.Sport.Casino,
-                            SportName = "Casino",
-                            Bettype = bettype
-                        };
-                        sports.SportsList.Add(sport);
+                    //var rngSiteName = new CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
+                    bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM);
+                    var sport = new Sport()
+                    {
+                        SportId = Constants.Sport.Casino,
+                        SportName = "Casino",
+                        Bettype = bettype
+                    };
+                    sports.SportsList.Add(sport);
                     //}
                 }
             }
@@ -1411,6 +1423,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     Bettype = new BettypeDTO()
                 };
                 sports.SportsList.Add(goldDeluxe);
+            }
+
+            if (WebSettings.EnableMicrogaming)
+            {
+                var microgaming = new Sport
+                {
+                    SportId = Constants.Sport.MicroGaming,
+                    SportName = Labels.Microgaming,
+                    Bettype = new BettypeDTO
+                    {
+                        BettypeList = (new MicroGamingBetTypesSectionServices()).BetTypes
+                            .Select(betType => new Bettype
+                            {
+                                BettypeId = betType.Id,
+                                BettypeName = string.Format("{0} ({1})", betType.Name, betType.GameType)
+                            }).ToList()
+                    }
+                };
+                sports.SportsList.Add(microgaming);
             }
 
             #endregion live casino
@@ -2373,7 +2404,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     var masterDisableAutoPt = false; // Need to assign 
                     foreach (DataRow dr in dtPt.Rows)
                     {
-                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());                        
+                        int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
 
                         #region super
 

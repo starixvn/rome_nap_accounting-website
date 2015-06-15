@@ -228,6 +228,7 @@
     <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />

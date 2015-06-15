@@ -781,7 +781,33 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
                                 }
 
+
                                 #endregion Progressive Bonus
+                                 var customerDetail = new CustomerDetail
+                                {
+                                    CustID = custId,
+                                    RoleId = roleId,
+                                    AccId = AppSession.AccId,
+                                    HasDownline = Converter.ToBool(row1["HasDownline"])
+                                };
+
+                                var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4;
+                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming;
+                                var renderLeftPanelParameter = new RenderLeftPanelParameter
+                                {
+                                    IsShowKeno = isShowKenoStatus,
+                                    IsShowGoldDeluxe = isShowGoldDeluxe,
+                                    IsShowEnableBetTrade = isShowEnableBetTrade,
+                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                    ParentId = parentId,
+                                    RoleId = roleId,
+                                    CustId = custId
+                                };
+
+                                RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
+                                RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
+                                RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
 
                                 #region Abnormal
 
@@ -938,6 +964,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         break;
                                 }
 
+                                RenderLeftPanelManager.RenderEditMicrogamingLink(ref htmlcontent, renderLeftPanelParameter);
                                 switch (WebSettings.IsShowCustomerSettingRenovation)
                                 {
                                     case 1:

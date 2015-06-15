@@ -123,4 +123,7 @@
   <data name="DisabledMarkDirectStatus" xml:space="preserve">
     <value>Direct status can't be updated for this account!</value>
   </data>
+  <data name="Microgaming" xml:space="preserve">
+    <value>Microgaming</value>
+  </data>
 </root>

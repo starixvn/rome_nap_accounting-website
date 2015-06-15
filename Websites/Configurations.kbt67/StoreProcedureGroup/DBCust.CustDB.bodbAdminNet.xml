@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-  <Function Name="Gold Deluxe">
-    <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  <Function Name="Customer - Third Party">
+    <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus_xtest" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="AG Casino">
     <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -199,14 +200,14 @@
     <Setting Key="DBA_ResetSecurityCode_SubAgent" SpName="Acc_CustomerUpdSecurityCode_Sub" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin-AutoFollowBet">
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -284,7 +285,10 @@
   <Function Name="Report">
     <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="Customer - Finance Super List">
+  <Function Name="Customer - New Licensee">
+    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
