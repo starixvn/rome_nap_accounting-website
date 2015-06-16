@@ -963,11 +963,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 if (isDeposit)
                                 {
-                                    //TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-finance");
+                                  
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
-                                    /*TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");*/
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
@@ -1024,7 +1022,7 @@ namespace Sunplus.Accounting.Business.Customer
 
 
                                 //---- for menu details -----------
-                                AssignEditFinance(ref htmlcontent, roleId);
+                               
                                 TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId.ToString());
                                 TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
@@ -1163,7 +1161,7 @@ namespace Sunplus.Accounting.Business.Customer
             //HuyNguyen
             SettingGroup sg = new SettingGroup();
 
-            //Get setting controll Suspended
+            //Get setting control Suspended
             sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
 
             #region Selected Betting
@@ -1227,42 +1225,6 @@ namespace Sunplus.Accounting.Business.Customer
             sg.Add(GetSettingControlOutright(roleId, CustParent.IsDisableOutright, isManageCustomerAccess, "disabledOutright", !disabledOutright, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
 
             #endregion Outright
-
-            #region HR
-
-            ////////HR
-            //if (Permissions.AllowSaTote(row1["currency"].ToString()))
-            //{
-            //    bool disabledHR = Convert.IsDBNull(row1["DisableHorseracing"]) ? false : Convert.ToBoolean(row1["DisableHorseracing"]);
-            //    bool disabledHRDL = Convert.IsDBNull(row1["DisableDownlinesHR"]) ? false : Convert.ToBoolean(row1["DisableDownlinesHR"]);
-            //    sg.Add(GetSettingControlHR(roleId, CustParent.IsDisabledHR, isManageCustomerAccess, "disabledHR", row1["currency"].ToString(), !disabledHR, (roleId > 1), !disabledHRDL, CastAide.AsBoolean(row1["Enabled"])));
-
-            //    TemplateHandler.Assign(ref htmlcontent, "{chkSATote}", disabledHR ? 1 : 0);
-            //}
-            //else
-            //{
-            //    TemplateHandler.Assign(ref htmlcontent, "{chkSATote}", 1);
-            //}
-
-            //////HR OpenTote (UKTote)
-            //bool disabledHROpenTote = Convert.IsDBNull(row1["DisableOpenTote"]) ? false : Convert.ToBoolean(row1["DisableOpenTote"]);
-            //bool disabledHROpenToteDL = Convert.IsDBNull(row1["DisableDownlinesOpenTote"]) ? false : Convert.ToBoolean(row1["DisableDownlinesOpenTote"]);
-            //sg.Add(GetSettingControlHROpenTote(roleId, CustParent.IsDisabledOpenTote, isManageCustomerAccess, "disabledHROpenTote", row1["currency"].ToString(), !disabledHROpenTote, (roleId > 1), !disabledHROpenToteDL, CastAide.AsBoolean(row1["Enabled"])));
-            //TemplateHandler.Assign(ref htmlcontent, "{chkUKTote}", disabledHROpenTote ? 1 : 0);
-
-            #endregion HR
-
-            #region FI
-
-            if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                bool disabledFinancial = Convert.IsDBNull(row1["DisableFinancial"]) ? false : Convert.ToBoolean(row1["DisableFinancial"]);
-                bool disabledFIDL = Convert.IsDBNull(row1["DisableDownlinesFI"]) ? false : Convert.ToBoolean(row1["DisableDownlinesFI"]);
-                sg.Add(GetSettingControlFI(roleId, CustParent.IsDisabledFI, isManageCustomerAccess, "disabledFinancial", !disabledFinancial, (roleId > 1), !disabledFIDL, CastAide.AsBoolean(row1["Enabled"])));
-                TemplateHandler.Assign(ref htmlcontent, "{chkFinance}", disabledFinancial ? 1 : 0);
-            }
-
-            #endregion FI
 
             #region Enable Casino
 
@@ -1435,10 +1397,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     //HuyNguyen Menu Member
                     submenu1 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/EditSuperOnMemberFI.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu1 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"SuperEditMemberPTRacing/Index?custid={0}&superid={1}\");' target='centerFr'>Racing</a>", custId, superId);
@@ -1473,10 +1432,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI)
-                    {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/EditMasterOnMemberFI.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
@@ -1525,10 +1481,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + parentId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Agent";
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/AgentMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1546,10 +1499,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Master";
 
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1565,10 +1515,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Super";
                     submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                  
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperMinUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1852,48 +1799,7 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisableNumberGameDL, "NumberGame");
             }
-        }
-
-        private SettingControl GetSettingControlFI(int roleID, bool parentstatus, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool isdisabledFIDL, bool isenabled)
-        {
-            if (WebSettings.disabledFI)
-            {
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledFI"), false, true, "", "", "", "", statusName, roleID, isdisabledFIDL, "FI");
-            }
-            else
-            {
-                string classname = "";
-                string jsonclick = "";
-                string jsonmouseover = "";
-                string jsonmouseout = "";
-
-                if (isManageCustomerAccess)
-                {
-                    if (isenabled)
-                    {
-                        if (4 == roleID || !parentstatus)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledFIUplineTT") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledFI"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisabledFIDL, "FI");
-            }
-        }
+        }       
 
         private SettingControl GetSettingControlAutoSuspend(int roleID, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool UplineAutoSuspend, bool isenabled)
         {
@@ -2577,32 +2483,6 @@ namespace Sunplus.Accounting.Business.Customer
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        private void AssignEditFinance(ref string tpl, int roleId)
-        {
-            try
-            {
-                switch (roleId)
-                {
-                    case 4:
-                        if (WebSettings.disabledFI)
-                            TemplateHandler.RemoveBlock(ref tpl, "edit-finance");
-                        break;
-
-                    case 3:
-                    case 2:
-                    case 1:
-                        if (WebSettings.disabledFI)
-                            TemplateHandler.RemoveBlock(ref tpl, "edit-finance");
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
             }
         }
 

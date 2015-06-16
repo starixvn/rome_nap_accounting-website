@@ -128,15 +128,7 @@ namespace Sunplus.Accounting.Business
                 {
                     TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_CASINO_EDIT);
                 }
-                //finance
-                if (!WebSettings.disabledFI)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_FINANCE_EDIT);
-                }
+               
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{isAgent}", "0");
@@ -282,12 +274,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "casino-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "casino-edit");
                             }
-                            //finance
-                            if (WebSettings.disabledFI)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "finance-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "finance-edit");
-                            }
+                         
                             if (!BingoSettings.BingoGame.Enabled)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");
@@ -451,17 +438,7 @@ namespace Sunplus.Accounting.Business
                 else
                 {
                     TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_CASINO_EDIT);
-                }
-
-                //finance
-                if (allowFI)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_FINANCE_EDIT);
-                }
+                }               
 
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
@@ -608,11 +585,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow2, "casino-edit");
                             }
 
-                            //finance
-                            if (WebSettings.disabledFI)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow2, "finance-edit");
-                            }
+                          
                             if (!BingoSettings.BingoGame.Enabled)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow2, "bingo-edit");
@@ -740,15 +713,7 @@ namespace Sunplus.Accounting.Business
                 {
                     TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_CASINO_EDIT);
                 }
-                //finance
-                if (allowFI)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_FINANCE_EDIT);
-                }
+               
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
 
@@ -888,12 +853,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "casino-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "casino-edit");
                             }
-                            //finance
-                            if (WebSettings.disabledFI)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "finance-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "finance-edit");
-                            }
+                           
                             if (!BingoSettings.BingoGame.Enabled)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");
@@ -1020,17 +980,7 @@ namespace Sunplus.Accounting.Business
                 {
                     TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_CASINO_EDIT);
                 }
-
-                //finance
-                if (allowFI)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_FINANCE_EDIT);
-                }
-
+             
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
 
@@ -1159,12 +1109,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "casino-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "casino-edit");
                             }
-                            //finance
-                            if (WebSettings.disabledFI)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "finance-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "finance-edit");
-                            }
+                           
                             if (!BingoSettings.BingoGame.Enabled)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");

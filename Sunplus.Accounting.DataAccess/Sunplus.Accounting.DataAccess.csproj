@@ -314,7 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdoNet\SqlServer\PositionTaking\" />
-    <Folder Include="Provider\PositionTaking\" />
     <Folder Include="Report\Poker\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

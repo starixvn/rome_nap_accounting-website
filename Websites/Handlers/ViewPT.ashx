@@ -810,8 +810,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref _s, "{lblGameComm}", Resources.Language.lblGameComm);
         else
             TemplateHandler.RemoveBlock(ref _s, "numbergame");
-
-        if (WebSettings.disabledFI) TemplateHandler.RemoveBlock(ref _s, "Finan");
+     
             
         int roleID = CastAide.AsInt32(rInfo["roleid"], 1);
                           

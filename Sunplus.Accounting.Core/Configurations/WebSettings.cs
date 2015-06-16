@@ -45,10 +45,7 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly bool _disableCS;
         private static readonly bool _disableOR;
         private static readonly bool _disableInternal;
-        private static readonly bool _IncludeAccuBalInStatement;
-
-        private static readonly double _MaxPTFI;
-        private static readonly bool _DisableMinPTFI;
+        private static readonly bool _IncludeAccuBalInStatement;       
         private static readonly bool _Disable1x2Comm;
         private static readonly double _Group1x2Max = 0.0025;
         private static readonly bool _DisableHRPT_Tote;
@@ -116,11 +113,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 _disableAutoMasterFI = (ConfigurationManager.AppSettings["disableAutoMasterFI"] == "1");
                 _disableAutoMasterHR = (ConfigurationManager.AppSettings["disableAutoMasterHR"] == "1");
                 _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
-                _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
-
-                _MaxPTFI = CastAide.AsDouble(ConfigurationManager.AppSettings["maxPTFI"]);
-
-                _DisableMinPTFI = (ConfigurationManager.AppSettings["disableMinPTFI"] == "1");
+                _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");              
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
                 _Group1x2Max = CastAide.AsDouble(ConfigurationManager.AppSettings["group1x2max"]);
                 _DisableHRPT_OpenTote = (ConfigurationManager.AppSettings["disableHRPT_OpenTote"] == "1");
@@ -307,16 +300,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static double OtherMeeting
         {
             get { return _OtherMeeting; }
-        }
-
-        public static double MaxPTFI
-        {
-            get { return _MaxPTFI; }
-        }
-
-        public static bool DisableMinPTFI
-        {
-            get { return _DisableMinPTFI; }
         }
 
         public static bool Disable1x2Comm

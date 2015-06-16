@@ -118,7 +118,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\Casino\CasinoService.cs" />
     <Compile Include="PT\Casino\ICasinoService.cs" />
-    <Compile Include="PT\IServiceMinigame.cs" />
     <Compile Include="PT\Poker\IPokerService.cs" />
     <Compile Include="PT\Poker\PokerService.cs" />
     <Compile Include="Report\DailyTurnover\IDailyTurnover.cs" />
