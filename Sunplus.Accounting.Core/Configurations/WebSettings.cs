@@ -8,8 +8,6 @@ using DNAide.Core;
 
 using Sunplus.Accounting.Core.Common;
 
-
-
 namespace Sunplus.Accounting.Core.Configurations
 {
     /// <summary>
@@ -70,8 +68,6 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly bool _disableVR;
 
         private static readonly string _IgnoreGroups;
-
-        private static string _swapVersionUrl;
 
         private static string _externalSite;
         private static readonly int _maxTransLength;
@@ -139,7 +135,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _disableM88BetList = (ConfigurationManager.AppSettings["disableM88BetList"] == "1");
                 _disableVR = (ConfigurationManager.AppSettings["disableVR"] == "1");
                 _iplocation = ConfigurationManager.AppSettings["iplocation"];
-                _swapVersionUrl = ConfigurationManager.AppSettings["SwapVersionURL"];
                 OpenMiniGame = (ConfigurationManager.AppSettings["OpenMiniGame"] == "1");
                 _IgnoreGroups = ConfigurationManager.AppSettings["IgnoreGroups"];
 
@@ -194,12 +189,6 @@ namespace Sunplus.Accounting.Core.Configurations
         }
 
         public static bool OpenMiniGame { get; set; }
-
-        public static string SwapVersionUrl
-        {
-            get { return _swapVersionUrl + "?uid=" + AppSession.AccId + "&sid=" + HttpContext.Current.Session.SessionID; }
-            set { _swapVersionUrl = value; }
-        }
 
         /// <summary>
         /// Template folder
@@ -467,6 +456,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
             }
         }
+
         public static bool EnableProgressiveBonus { get; set; }
 
         public static string ExternalBettingLimitConfig
