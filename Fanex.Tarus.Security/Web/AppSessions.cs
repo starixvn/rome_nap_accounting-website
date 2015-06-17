@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Security.Web
     using System.Collections.Generic;
     using System.Web;
     using Fanex.CustomerSetting.Module.Core.Web;
+    using System;
 
     /// <summary>
     /// TODO: Update summary.
@@ -177,6 +178,19 @@ namespace Fanex.Tarus.Security.Web
             set
             {
                 AppSession.AccUserName = value;
+            }
+        }
+
+
+        public int FromSystem
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                AppSession.CurrentSession.FromSystem = value;
             }
         }
     }
