@@ -6,8 +6,6 @@
         <li class="canchange" onclick="OpenEditHR('${Id}',${RoleId})">Racing</li>
         {{/if}} {{if !DisableCS}}
         <li class="canchange" onclick="OpenEditCS('${Id}');">Casino</li>
-        {{/if}} {{if !DisabledFI}}
-        <li class="canchange" onclick="OpenEditFI('${Id}', '${ParentId}', '${RoleId}')">Finance</li>
         {{/if}} {{if BingoGameEnabled}}
         <li class="canchange" onclick="OpenEditBI('${Id}', '${ParentId}', '${RoleId}')">Bingo</li>
         {{/if}} {{if RoleId == 4 || RoleId == 3}}

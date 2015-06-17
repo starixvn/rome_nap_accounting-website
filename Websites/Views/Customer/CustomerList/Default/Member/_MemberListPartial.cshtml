@@ -123,14 +123,7 @@
                         var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
-                    <!--/casino-edit-->
-                    <!--finance-edit-->
-                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
-                    {
-                        <li class="canchange" onclick="OpenEditFI('@memberItem.ChildID', '@Model.ParentId', '1')" >
-                            Finance</li>
-                    }
-                    <!--/finance-edit-->
+                    <!--/casino-edit-->                  
                     <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {
