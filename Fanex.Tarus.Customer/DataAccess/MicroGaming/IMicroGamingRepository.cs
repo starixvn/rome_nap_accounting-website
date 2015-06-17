@@ -11,4 +11,3 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
         Result EditSetting(EditSettingCriteria criteria);
     }
 }
-}

@@ -10,6 +10,8 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.MicroGaming;
     using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
+    using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public class MicroGamingRepository : IMicroGamingRepository
     {
@@ -103,6 +105,99 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
                     });
                 }
             }
+        }
+
+        public MicroGamingCustomerInfo CustomerSetting(GetSettingCriteria criteria)
+        {
+            var result = new MicroGamingCustomerInfo
+            {
+                CustomerId = criteria.CustId,
+                RoleId = criteria.RoleId,
+                ParentId = criteria.ParentId,
+                SelectResult = new SelectResult(),
+                GameTypeList = new List<GameTypeModel>()
+            };
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                MappingCustomerInfo(reader, result);
+                if (reader.NextResult())
+                {
+                    MappingCustomerSetting(reader, result, criteria);
+                }
+            }
+
+            return result;
+        }
+
+        public Result EditSetting(EditSettingCriteria criteria)
+        {
+            Hashtable outputParams = new Hashtable();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            Result updateResult = new Result
+            {
+                ErrorCode = Converter.ToInt(outputParams["errcode"]),
+                ErrorMessage = Converter.ToString2(outputParams["errmsg"])
+            };
+
+            return updateResult;
+        }
+
+        private void MappingCustomerInfo(IDataReader reader, MicroGamingCustomerInfo custInfo)
+        {
+            while (reader.Read())
+            {
+                custInfo.Username = Converter.ToString2(reader["Username"]);
+                custInfo.FirstName = Converter.ToString2(reader["Firstname"]);
+                custInfo.LastName = Converter.ToString2(reader["Lastname"]);
+                custInfo.NickName = Converter.ToString2(reader["Nickname"]);
+                custInfo.Phone = Converter.ToString2(reader["Phone"]);
+                custInfo.Mobile = Converter.ToString2(reader["MobilePhone"]);
+                custInfo.Fax = Converter.ToString2(reader["Fax"]);
+                break;
+            }
+        }
+
+        private void MappingCustomerSetting(
+            IDataReader reader,
+            MicroGamingCustomerInfo custInfo,
+            GetSettingCriteria criteria)
+        {
+            var gameTypeList = (new MicroGamingBetTypesSectionServices()).GetGameTypes();
+            var rolePrefix = GetRolePrefix(criteria.RoleId);
+            while (reader.Read())
+            {
+                var betTypeId = Converter.ToInt(reader["BetType"]);
+                custInfo.GameTypeList.Add(new GameTypeModel
+                {
+                    Id = betTypeId,
+                    Name = gameTypeList[betTypeId],
+                    PositionTaking = Converter.ToDecimal(reader["pt"]),
+                    MaxPositionTaking = Converter.ToDecimal(reader["MaxPositionTaking"])
+                });
+            }
+        }
+
+        private string GetRolePrefix(int roleId)
+        {
+            var rolePrefixDictionary = new Dictionary<int, string>() 
+            {
+                { RoleIdConstants.Super, "s" },
+                { RoleIdConstants.Master, "m" },
+                { RoleIdConstants.Agent, "a" }
+            };
+
+            return rolePrefixDictionary.ContainsKey(roleId) ?
+                rolePrefixDictionary[roleId] :
+                string.Empty;
         }
     }
 }

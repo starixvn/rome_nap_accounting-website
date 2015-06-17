@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Customer.Criteria.MicroGaming
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Infrastructure.Configurations;
 
-    public class GetMicroGamingStatusCriteria : CriteriaBase
+    public class GetStatusCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

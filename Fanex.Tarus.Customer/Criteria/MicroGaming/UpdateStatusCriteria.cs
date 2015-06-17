@@ -14,7 +14,7 @@ namespace Fanex.Tarus.Customer.Criteria.MicroGaming
     using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Infrastructure.Helper;
 
-    public class UpdateMicroGamingStatusCriteria : CriteriaBase
+    public class UpdateStatusCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

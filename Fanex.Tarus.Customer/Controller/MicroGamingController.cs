@@ -3,6 +3,7 @@ namespace Fanex.Tarus.Customer.Controller
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.MicroGaming;
     using Fanex.Tarus.Customer.Criteria.MicroGaming;
+    using Fanex.Tarus.Customer.Entities.MicroGaming;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -35,16 +36,4 @@ namespace Fanex.Tarus.Customer.Controller
             var result = _microGamingService.EditSetting(criteria);
             return Json(result);
         }
-    }
-}
-        }
-
-        [HttpPost]
-        [AuthenticateHost]
-        public ActionResult UpdateStatus(UpdateMicroGamingStatusCriteria criteria)
-        {
-            var result = _microGamingService.UpdateStatus(criteria);
-            return Json(result, JsonRequestBehavior.DenyGet);
-        }
-    }
 }
