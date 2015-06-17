@@ -171,7 +171,7 @@
     <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelDisableHR" SpName="Acc_CustomerSelDisableHR" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDisableFI" SpName="Acc_CustomerSelDisableFI" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelDisableOutright" SpName="Acc_CustomerSelDisableOutright" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelDisableOutright" SpName="Acc_CustomerSelDisableOutright" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMultipleTransfer" SpName="CustomerSelMultipleTransfer" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelMemberSearch_AutoSuspend" SpName="Acc_CustomerSelMemberSearch_AutoSuspend" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -245,8 +245,8 @@
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="Acc_CustomerSelEditMemberLiveCS" />
+    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Gold Deluxe - GET PT Setting">
