@@ -13,7 +13,8 @@ namespace Fanex.Tarus.BetList.Business.Results
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Result.Core;
-    using Fanex.Result.Core.DTO;
+    using Fanex.Result.Core.Base;
+    using Fanex.Result.Core.Racing.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
 
