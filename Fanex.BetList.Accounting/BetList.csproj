@@ -42,75 +42,72 @@
     </Reference>
     <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\ExcelUtil.dll</HintPath>
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.AuthenticationFilter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.AuthenticationFilter.dll</HintPath>
+    <Reference Include="Fanex.AuthenticationFilter">
+      <HintPath>..\Dependency\Fanex.AuthenticationFilter.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.BetList.Age.dll</HintPath>
+      <HintPath>..\Dependency\Fanex.BetList.Age.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.2.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.2.4.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.GoldDeluxe">
-      <HintPath>..\packages\Fanex.BetList.Core.2.2.3.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.4.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Caching">
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.Caching.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.Common.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.Data.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.Logging.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.NAP.Core.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\Fanex.NAP.Framework.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\FanexResult\Fanex.Result.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCFile">
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\IBCFile.dll</HintPath>
+      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Dependency\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
-      <HintPath>..\_Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\NPOI.dll</HintPath>
+      <HintPath>..\Dependency\NPoi\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine, Version=3.2.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\FanexResult\RazorEngine.dll</HintPath>
+      <HintPath>..\Dependency\FanexResult\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\RemotingRef\RemotingRef.dll</HintPath>
+      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="SPSRemoting">
-      <HintPath>..\_Dependencies\Fanex.NAP.Framework\SPSRemoting.dll</HintPath>
+      <HintPath>..\Dependency\SPSRemoting.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Model">
-      <HintPath>..\_Dependencies\Sunplus.Agent.Model.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Sunplus.Agent.Model.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -127,39 +124,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\BetList.Designer.cs" />
-    <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="BetListAreaRegistration.cs" />
     <Compile Include="Constants\BetListConstants.cs" />
     <Compile Include="Constants\BetTypeContants.cs" />
-    <Compile Include="Constants\CombinationTypeConstants.cs" />
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\CurrencyContants.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
-    <Compile Include="Constants\LanguageTypeConstants.cs" />
-    <Compile Include="Constants\NumberFormatConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\ScoreInformationController.cs" />
-    <Compile Include="Criteria\Authenticate\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
-    <Compile Include="Criteria\BetListRacingWinLossToteCriteria.cs" />
     <Compile Include="Criteria\BetListSystemParlayByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
-    <Compile Include="Criteria\BetListByRefNoU3Criteria.cs" />
-    <Compile Include="Criteria\BetTypeByDateU3Criteria.cs" />
-    <Compile Include="Criteria\ResultParlayCriteria.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Core\BetListHelper.cs" />
-    <Compile Include="Core\CacheManager.cs" />
-    <Compile Include="Core\CacheRef.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Core\LoggingHandler.cs" />
+    <Compile Include="Extensions\NpoiExcelExtensions.cs" />
     <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria.cs" />
@@ -167,18 +154,13 @@
     <Compile Include="Criteria\BetListByRefNoCriteria.cs" />
     <Compile Include="Criteria\BetListStatement.cs" />
     <Compile Include="Criteria\BetTypeByDateCriteria.cs" />
-    <Compile Include="Criteria\CombinationParlayDetailCriteria.cs" />
     <Compile Include="Criteria\CustIDByUsernameCriteria.cs" />
     <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
-    <Compile Include="Criteria\ResultPopupCriteria.cs" />
     <Compile Include="Criteria\WinLossMemberBetListCriteria.cs" />
     <Compile Include="Models\BetListRacingToteWinLoss.cs" />
-    <Compile Include="Models\ScoreInformation\BadmintonInfo.cs" />
     <Compile Include="Models\BalanceUp.cs" />
-    <Compile Include="Models\ScoreInformation\BaseballInfo.cs" />
-    <Compile Include="Models\ScoreInformation\BasketballInfo.cs" />
     <Compile Include="Models\BetListByIP_Username.cs" />
     <Compile Include="Models\BetListDetail.cs" />
     <Compile Include="Models\BetType.cs" />
@@ -187,11 +169,7 @@
     <Compile Include="Models\GroupParlayEvent.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
-    <Compile Include="Models\ScoreInformation\ScoreInfo.cs" />
-    <Compile Include="Models\ScoreInformation\ScoreInformation.cs" />
-    <Compile Include="Models\ScoreInformation\SetX_Info.cs" />
     <Compile Include="Models\SystemParlayDetail.cs" />
-    <Compile Include="Models\ScoreInformation\TennisInfo.cs" />
     <Compile Include="Models\TennisResult\TennisLeagueResult.cs" />
     <Compile Include="Models\TennisResult\TennisGameResult.cs" />
     <Compile Include="Models\TennisResult\TennisMatchResult.cs" />
@@ -200,14 +178,11 @@
     <Compile Include="Models\TicketDetail.cs" />
     <Compile Include="Models\SystemParlayModel.cs" />
     <Compile Include="Models\IPVNBean.cs" />
-    <Compile Include="Models\ScoreInformation\TwoTimesMatchInfo.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
-    <Compile Include="Repositories\IScoreInformationRepository.cs" />
-    <Compile Include="Repositories\ScoreInformationRepository.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,16 +194,12 @@
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\BetListService.cs" />
-    <Compile Include="Services\Authenticate\CheckSmartPunterService.cs" />
     <Compile Include="Services\ExportExcelBetlist.cs" />
     <Compile Include="Services\IBetListService.cs" />
-    <Compile Include="Services\Authenticate\ICheckSmartPunterService.cs" />
     <Compile Include="Services\IpService.cs" />
     <Compile Include="Services\IResultService.cs" />
-    <Compile Include="Services\IScoreInformationService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ResultService.cs" />
-    <Compile Include="Services\ScoreInformationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -246,18 +217,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.AccountingReports.Core\Core.csproj">
-      <Project>{A5608298-26C2-4F05-A7FD-AA8C0700ED38}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

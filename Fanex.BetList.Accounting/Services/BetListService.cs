@@ -33,7 +33,7 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.NAP.Framework.Data;
     using RemotingRef;
     using AccBetListCore = Fanex.BetList.Accounting.Core;
-    using AppSession = Fanex.AccountingReports.Core.Web.AppSession;
+    using Fanex.Tarus.Infrastructure.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -148,7 +148,7 @@ namespace Fanex.BetList.Accounting.Services
                     int index = 0;
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                     foreach (TicketDetail betDetail in betListDetail.BetDetails)
                     {
                         index++;
@@ -167,72 +167,6 @@ namespace Fanex.BetList.Accounting.Services
                     }
 
                     Core.SessionManager.Set<BetListDetail>(BetListService.BetListSessionKey, betListDetail);
-
-                    return betListDetail;
-                }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return betListDetail;
-        }
-
-        /// <summary>
-        /// Gets the win loss member bet list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="baseCurrency">The base currency.</param>
-        /// <returns>The win loss member bet list.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public BetListDetail GetWinLossMemberBetList(
-            WinLossMemberBetListCriteria criteria,
-            string userName,
-            CurrencyContants baseCurrency)
-        {
-            BetListDetail betListDetail = new BetListDetail();
-            try
-            {
-                string baseCurrencyString = string.Empty;
-                var currencyName = ReportService.GetCurrencyName(baseCurrency);
-                if (!string.IsNullOrEmpty(currencyName))
-                {
-                    baseCurrencyString = " - " + currencyName + " " + Labels.Base_Currency;
-                }
-
-                criteria.MoveBetsDay = ReportService.BalanceUp.MoveBetsDay;
-                criteria.BalanceUpDay = ReportService.BalanceUp.BalanceUpDay;
-                betListDetail.BetDetails = _betListRepository.Fetch(criteria, baseCurrency);
-                betListDetail.Title = string.Format(
-                    BetListResources.BetList_MemberReport,
-                    criteria.FromDate.ToShortDateString(),
-                    criteria.ToDate.ToShortDateString(),
-                    userName,
-                    baseCurrencyString);
-
-                StringBuilder content = new StringBuilder();
-                ITicketHelper ticketHelper = new TicketHelper();
-                if (betListDetail.BetDetails != null)
-                {
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
-                    int index = 0;
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
-                    foreach (TicketDetail betDetail in betListDetail.BetDetails)
-                    {
-                        index++;
-                        ticketHelper.Index = index;
-                        betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false);
-                        betDetail.StakeHtml = builder.BuildStake(betDetail.Ticket);
-                        betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, null, funcGetOddsTypeName);
-                        betDetail.Ticket.IP = IpService.ReplaceVNIP(betDetail.Ticket.IP);
-                        betListDetail.TotalWinLoss += betDetail.Ticket.Winlost;
-                        betListDetail.TotalLicenseeWinLoss += betDetail.Ticket.AgentWinlost;
-                    }
 
                     return betListDetail;
                 }
@@ -293,7 +227,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
 
                     ticketHelper.IsShowOddsWithChoice = true;
                     var lastTicket = betDetails.LastOrDefault();
@@ -409,7 +343,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -680,7 +614,7 @@ namespace Fanex.BetList.Accounting.Services
                     IList<TicketDetail> betDetailsMergeModel = new List<TicketDetail>();
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
 
                     int from = pageSize * (pageIndex - 1);
                     int to = pageSize * pageIndex;
@@ -821,7 +755,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -873,7 +807,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                     foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -1021,88 +955,6 @@ namespace Fanex.BetList.Accounting.Services
             }
 
             return new List<BetListByIP_Username>();
-        }
-
-        /// <summary>
-        /// Gets the detail virtual horse racing popup.
-        /// </summary>
-        /// <param name="virtualHRPopupCriteria">The virtual horse racing popup criteria.</param>
-        /// <returns>The detail virtual horse racing popup.</returns>
-        public IList<VirtualHRPopupModel> GetDetailVirtualHRPopup(ResultPopupCriteria virtualHRPopupCriteria)
-        {
-            try
-            {
-                IList<VirtualHRPopupModel> detailList = new List<VirtualHRPopupModel>();
-
-                using (var db = new ObjectDb(virtualHRPopupCriteria.GetSettingKey()))
-                {
-                    DataSet dataSet = db.ExecuteDataSet(virtualHRPopupCriteria);
-                    if (dataSet != null &&
-                        dataSet.Tables.Count > 0)
-                    {
-                        foreach (DataRow r in dataSet.Tables[0].Rows)
-                        {
-                            detailList.Add(new VirtualHRPopupModel
-                            {
-                                EventTime = Converter.ToDateTime(r["EventTime"]),
-                                Place = Converter.To<int>(r["placing"]),
-                                HorseNumber = Converter.To<int>(r["HorseNo"]),
-                                HorseName = RefData.GetHorseTeamName(r["runner"].ToString(), "en"),
-                                WinOdds = Converter.To<decimal>(r["WinOdds"]),
-                                PlaceOdds = Converter.To<decimal>(r["PlaceOdds"]),
-                                Status = r["IsFavor"].ToString()
-                            });
-                        }
-                    }
-                }
-
-                return detailList ?? new List<VirtualHRPopupModel>();
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return new List<VirtualHRPopupModel>();
-        }
-
-        /// <summary>
-        /// Gets the detail virtual tennis popup.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The detail virtual tennis popup.</returns>
-        public VirtualTennisModel GetDetailVirtualTennisPopup(ResultPopupCriteria criteria)
-        {
-            try
-            {
-                VirtualTennisModel virtualTennis = new VirtualTennisModel();
-
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    DataSet dataSet = db.ExecuteDataSet(criteria);
-                    if (dataSet != null &&
-                        dataSet.Tables.Count > 0 &&
-                        dataSet.Tables[0].Rows.Count > 0)
-                    {
-                        DataRow row = dataSet.Tables[0].Rows[0];
-                        virtualTennis.KickOffTime = Converter.To<DateTime>(row["kickofftime"]);
-                        virtualTennis.HomeName = AccBetListCore.CacheRef.GetTeamName(row["homeID"]);
-                        virtualTennis.AwayName = AccBetListCore.CacheRef.GetTeamName(row["awayID"]);
-                        virtualTennis.HomePoints = Converter.To<int>(row["finalhomescore"]);
-                        virtualTennis.AwayPoints = Converter.To<int>(row["finalawayscore"]);
-                        virtualTennis.EventStatus = row["eventstatus"].ToString();
-                        virtualTennis.LeageName = AccBetListCore.CacheRef.GetLeagueName(row["LeagueID"]);
-                    }
-                }
-
-                return virtualTennis ?? new VirtualTennisModel();
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return new VirtualTennisModel();
         }
 
         /// <summary>
@@ -1291,7 +1143,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                     BetListHelper betlistHelper = new BetListHelper();
 
                     int from = pageSize * (pageIndex - 1);
@@ -1491,7 +1343,7 @@ namespace Fanex.BetList.Accounting.Services
 
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
@@ -1547,135 +1399,6 @@ namespace Fanex.BetList.Accounting.Services
             }
 
             return custid;
-        }
-
-        public CombinationParlay GetCombinationMP(ICriteria criteria)
-        {
-            return this._betListRepository.BetList_SelDetailCombinationMP(criteria);
-        }
-
-        /// <summary>
-        /// Get Bet list Racing Tote Win Loss.
-        /// </summary>
-        /// <param name="criteria">The bet list win loss tote criteria.</param>
-        /// <returns>The bet list racing tote win loss.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-      "SP2101:MethodMustNotContainMoreLinesThan",
-      Justification = "Reviewed. Suppression is OK here.")]
-        public BetListRacingToteWinLoss GetBetListRacingToteWinLoss(BetListRacingWinLossToteCriteria criteria)
-        {
-            var betListRacing = new BetListRacingToteWinLoss
-            {
-                BetListDetail = new List<BetListRacingToteWinLoss>()
-            };
-            try
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    DataSet dataSet = db.ExecuteDataSet(criteria);
-                    if (dataSet != null && dataSet.Tables.Count > 0)
-                    {
-                        decimal stakeTotal = 0,
-                            memberWinLossTotal = 0,
-                            playerCommTotal = 0,
-                            agencyWinLossTotal = 0,
-                            agencyCommIncomeTotal = 0,
-                            ibcWinLossTotal = 0,
-                            ibcCommIncomeTotal = 0,
-                            dividendTotal = 0;
-                        var dataTable = dataSet.Tables[0];
-                        int no = 0;
-                        foreach (DataRow row in dataTable.Rows)
-                        {
-                            var stake = Converter.ToDecimal(row["stake"]);
-                            var memberWinLoss = Converter.ToDecimal(row["winlost"]);
-                            var playerComm = Converter.ToDecimal(row["playercomm"]);
-                            var agencyWinLoss = Converter.ToDecimal(row["WLPTAgency"]);
-                            var agencyCommIncome = Converter.ToDecimal(row["commIncomeAgency"]);
-                            var ibcWinLoss = Converter.ToDecimal(row["WLPTIBC"]);
-                            var ibcCommIncome = Converter.ToDecimal(row["commIncomeIBC"]);
-                            var dividend = Converter.ToDecimal(row["dividend"]);
-                            var betList = new BetListRacingToteWinLoss()
-                            {
-                                No = ++no,
-                                Username = Converter.ToString2(row["username"]),
-                                TransId = Converter.ToString2(row["transid"]),
-                                TransDate = Converter.ToString2(row["transdate"]),
-                                BettypeId = Converter.ToInt(row["bettype"]),
-                                WinOdds = Converter.ToDecimal(row["winOdds"]).ToString("0.#####"),
-                                PlaceOdds = Converter.ToDecimal(row["placeOdds"]).ToString("0.#####"),
-                                Odds = "<b>" + Converter.ToDecimal(row["odds"]).ToString("0.#####") + "</b>",
-                                Stake = stake.ToString("#,##0"),
-                                MemberWinLoss = memberWinLoss.Format(2),
-                                PlayerComm = playerComm.Format(2),
-                                AgencyCommIncome = agencyCommIncome.Format(2),
-                                AgencyPTWinLoss = agencyWinLoss.Format(2),
-                                IBCCommIncome = ibcCommIncome.Format(2),
-                                IBCPTWinLoss = ibcWinLoss.Format(2),
-                                Dividend = dividend.Format(2),
-                                WinStatus = Converter.ToString2(row["winStatus"]).Format(2),
-                                PlaceStatus = Converter.ToString2(row["placeStatus"]).Format(2),
-                                Status = Converter.ToString2(row["status"]).Format(2),
-                                HorseId = Converter.ToInt(row["HorseID"]),
-                                HorseNo = Converter.ToInt(row["HorseNo"]),
-                                VirtualRate = Converter.ToDecimal(row["virtualrate"]).ToString("0.#####"),
-                                IsShowOTExRate = Converter.ToBool(row["isShowOTExRate"])
-                            };
-                            betList.Choice = betList.HorseNo + " - " + Fanex.BetList.Core.TicketHelper.CacheRef.GetHorseTeamName(betList.HorseId);
-                            betList.BettypeName = Fanex.BetList.Core.TicketHelper.CacheRef.GetBettype(betList.BettypeId);
-                            if (betList.IsShowOTExRate)
-                            {
-                                betList.Stake += "<br/>" + "<span class='extra'>" + betList.VirtualRate + "</span><br/>" + "<span class='extra'>(" + Labels.Ex_Rate_2 + ")</span>";
-                            }
-
-                            if (betList.BettypeId == 31 || betList.BettypeId == 32)
-                            {
-                                if (!betList.Status.ToLower().Equals(BetStatus.Won) && !betList.Status.ToLower().Equals(BetStatus.Refund))
-                                {
-                                    betList.Odds = "-";
-                                }
-                            }
-                            else
-                            {
-                                betList.WinOdds = betList.WinStatus.ToLower().Equals(BetStatus.Won) ? betList.WinOdds : "0";
-                                betList.PlaceOdds = betList.PlaceStatus.ToLower().Equals(BetStatus.Won) ||
-                                betList.PlaceStatus.ToLower().Equals(BetStatus.Lose) ?
-                                betList.PlaceOdds.Format(2) : "0.00";
-                                betList.Odds = "<span>Win:<b>" + betList.WinOdds + "</b></span><br/><span>Place:<b>" + betList.PlaceOdds + "</b></span>";
-                                betList.Status = "<span>Win:<b>" + betList.WinStatus + "</b></span></br><span>Place:<b>" + betList.PlaceStatus + "</b></span>";
-                            }
-
-                            stakeTotal += stake;
-                            memberWinLossTotal += memberWinLoss;
-                            playerCommTotal += playerComm;
-                            agencyWinLossTotal += agencyWinLoss;
-                            agencyCommIncomeTotal += agencyCommIncome;
-                            ibcCommIncomeTotal += ibcCommIncome;
-                            ibcWinLossTotal += ibcWinLoss;
-                            dividendTotal += dividend;
-                            betListRacing.BetListDetail.Add(betList);
-                        }
-
-                        betListRacing.Total = new BetListRacingToteWinLoss()
-                        {
-                            Stake = stakeTotal.ToString("#,##0"),
-                            MemberWinLoss = memberWinLossTotal.Format(2),
-                            PlayerComm = playerCommTotal.Format(2),
-                            AgencyCommIncome = agencyCommIncomeTotal.Format(2),
-                            AgencyPTWinLoss = agencyWinLossTotal.Format(2),
-                            IBCCommIncome = ibcCommIncomeTotal.Format(2),
-                            IBCPTWinLoss = ibcWinLossTotal.Format(2),
-                            Dividend = dividendTotal.Format(2)
-                        };
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return betListRacing;
         }
 
         /// <summary>

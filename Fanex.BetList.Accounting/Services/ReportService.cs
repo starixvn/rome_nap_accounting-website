@@ -17,6 +17,7 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.BetList.Accounting.Resources;
     using Fanex.Common.Extensions;
     using Fanex.Data;
+    using Fanex.Tarus.Infrastructure.Caching;
 
     /// <summary>
     /// TODO: Update summary.
@@ -54,7 +55,7 @@ namespace Fanex.BetList.Accounting.Services
         {
             get
             {
-                var ipVnList = CacheManager.Get<List<IPVNBean>>(CacheIPVN);
+                var ipVnList = CacheHelper.Get<List<IPVNBean>>(CacheIPVN);
                 if (ipVnList == null)
                 {
                     try
@@ -75,7 +76,7 @@ namespace Fanex.BetList.Accounting.Services
                             }
                         }
 
-                        CacheManager.Set<List<IPVNBean>>(CacheIPVN, ipVnList);
+                        CacheHelper.Set<List<IPVNBean>>(CacheIPVN, ipVnList);
                     }
                     catch (Exception ex)
                     {

@@ -16,6 +16,7 @@ namespace Fanex.BetList.Accounting.Core
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
+    using Fanex.BetList.Core.TicketHelper;
 
     /// <summary>
     /// TODO: Update summary.

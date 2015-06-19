@@ -24,6 +24,7 @@ namespace Fanex.BetList.Accounting.Repositories
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
+    using Fanex.BetList.Core.TicketHelper;
 
     /// <summary>
     /// TODO: Update summary.

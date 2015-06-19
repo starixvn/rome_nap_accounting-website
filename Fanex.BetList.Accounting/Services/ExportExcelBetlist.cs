@@ -184,7 +184,7 @@ namespace Fanex.BetList.Accounting.Services
                     }
                 }
 
-                GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                 BetListExcelFactory factory = new BetListExcelFactory();
                 BetListExcelBuilder builder = factory.CreateBuilder();
                 IList<ITicket> tickets = new List<ITicket>();
@@ -258,7 +258,7 @@ namespace Fanex.BetList.Accounting.Services
                 criteria.MoveBetsDay = ReportService.BalanceUp.MoveBetsDay;
                 criteria.BalanceUpDay = ReportService.BalanceUp.BalanceUpDay;
 
-                GetCachePropertyById funcGetOddsTypeName = AccBetListCore.CacheRef.GetOddsTypeName;
+                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                 BetListExcelFactory factory = new BetListExcelFactory();
                 BetListExcelBuilder builder = factory.CreateBuilder();
 

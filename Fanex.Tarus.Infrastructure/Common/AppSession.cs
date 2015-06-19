@@ -112,5 +112,17 @@ namespace Fanex.Tarus.Infrastructure.Common
             return sessionState[key];
 
         }
+
+        public static bool IsU3Account
+        {
+            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsU3Account"], false); }
+            set { HttpContext.Current.Session["IsU3Account"] = value; }
+        }
+
+        public static bool IsU3SpecialAccount
+        {
+            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsU3SpecialAccount"], false); }
+            set { HttpContext.Current.Session["IsU3SpecialAccount"] = value; }
+        }
     }
 }

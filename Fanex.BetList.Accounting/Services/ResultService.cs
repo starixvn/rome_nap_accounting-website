@@ -19,6 +19,7 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
+    using Fanex.BetList.Core.TicketHelper;
 
     /// <summary>
     /// Result service.

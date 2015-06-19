@@ -7,7 +7,6 @@
 namespace Fanex.BetList.Accounting.Criteria
 {
     using System;
-    using Fanex.AccountingReports.Core.Web;
     using Fanex.BetList.Accounting.Services;
     using Fanex.NAP.Framework.Data;
 

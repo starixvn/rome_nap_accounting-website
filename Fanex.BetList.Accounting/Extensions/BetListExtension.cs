@@ -26,12 +26,6 @@ namespace Fanex.BetList.Accounting.Extensions
     /// </summary>
     public static class BetListExtension
     {
-        public static BetListHTMLBuilder AddLicenseeWinLoss(this BetListHTMLBuilder factory, int index, string openTag, string closeTag)
-        {
-            factory.Append(string.Join(null, new string[] { openTag, index.ToString(), closeTag }));
-            return factory;
-        }
-
         /// <summary>
         /// Builds the stake.
         /// </summary>

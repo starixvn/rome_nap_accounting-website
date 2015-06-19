@@ -22,12 +22,7 @@ namespace Fanex.BetList.Accounting.Services
     public interface IBetListService
     {
         BetListDetail GetWinLossMemberBetList(WinLossMemberBetListCriteria winLossMemberBetListCriteria);
-
-        BetListDetail GetWinLossMemberBetList(
-            WinLossMemberBetListCriteria winLossMemberBetListCriteria,
-            string userName,
-            CurrencyContants baseCurrency);
-
+        
         IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
 
         IList<TicketDetail> GetBetListByRefNoTickets(BetListByRefNoCriteria betListByRefNoCriteria);
@@ -57,10 +52,6 @@ namespace Fanex.BetList.Accounting.Services
             bool isCache,
             ref int quanlity);
 
-        IList<VirtualHRPopupModel> GetDetailVirtualHRPopup(ResultPopupCriteria virtualHRPopupCriteria);
-
-        VirtualTennisModel GetDetailVirtualTennisPopup(ResultPopupCriteria criteria);
-
         IList<TicketDetail> GetBetListByIP_Soccer(
             int custId,
             string ip,
@@ -82,10 +73,6 @@ namespace Fanex.BetList.Accounting.Services
             ref decimal totalWinlost);
 
         int GetCustIDByUsername(string username);
-
-        CombinationParlay GetCombinationMP(ICriteria criteria);
-
-        BetListRacingToteWinLoss GetBetListRacingToteWinLoss(BetListRacingWinLossToteCriteria criteria);
 
         bool IsU3SpecialCustomers(int custId);
     }
