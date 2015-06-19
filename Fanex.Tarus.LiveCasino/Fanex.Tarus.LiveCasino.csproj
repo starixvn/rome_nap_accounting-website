@@ -46,9 +46,6 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Caching">
-      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>

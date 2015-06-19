@@ -27,8 +27,6 @@ namespace Sunplus.Accounting.Business.BetList
 
         CombinationDetailMP GetCombinationDetailMP(string refNo);
 
-        TicketsListingBetlistDTO GetTicketsListingBetlist(bool isMain, int Type, int matchID, string Licensees, string bettypes, string bettypesLive, int groupBy, int Language, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
-
         SystemParlayDetail GetBetListSystemParlayDetailByTransId(string refNo, int custId);
     }
 }

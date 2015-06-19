@@ -30,7 +30,6 @@ using Sunplus.Accounting.Business.Report.Racing;
 using Sunplus.Accounting.Business.Report.ResetWinning;
 using Sunplus.Accounting.Business.Settle;
 using Sunplus.Accounting.Business.SpecialDelete.NumberGame;
-using Sunplus.Accounting.Business.SpecialDelete.TicketsListing;
 using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
@@ -119,7 +118,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<ILogDisplayDAO, LogDisplayDAO>()
                 .RegisterType<ISettingManager, SettingManager>()
                 .RegisterType<IServiceDailyTran, DailyTransManager>()
-                .RegisterType<ITicketsListing, TicketsListing>()
                 .RegisterType<ITicketsListingDAO, TicketsListingDAO>()
                 ;
 

@@ -164,8 +164,6 @@
     <Compile Include="Settle\SettlementService.cs" />
     <Compile Include="SpecialDelete\ISpecialDeleteService.cs" />
     <Compile Include="SpecialDelete\SpecialDeleteService.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\ITicketsListingService.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\TicketsListingService.cs" />
     <Compile Include="SystemInfo.cs" />
     <Compile Include="UserControlService.cs" />
   </ItemGroup>
@@ -208,7 +206,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

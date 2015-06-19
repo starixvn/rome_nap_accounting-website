@@ -297,8 +297,6 @@
     <Compile Include="SpecialDelete\SpecialDeleteMixparlay.cs" />
     <Compile Include="SpecialDelete\SpecialDeleteService.cs" />
     <Compile Include="SpecialDelete\Sportbook\SpecialDeleteSBService.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\ITicketsListing.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\TicketsListing.cs" />
     <Compile Include="Transaction\DailyTransManager.cs" />
     <Compile Include="IServiceCustomerInfo.cs" />
     <Compile Include="IServiceSuspend.cs" />
@@ -557,7 +555,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

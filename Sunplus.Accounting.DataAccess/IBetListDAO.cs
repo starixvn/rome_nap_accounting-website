@@ -23,12 +23,7 @@ namespace Sunplus.Accounting.DataAccess
 
         DataTable GetCurrency();
 
-        CombinationDetailMP GetCombinationDetailMP(string refNo);
-
-        TicketsListingBetlistDTO GetTicketsListingBetlist(bool fromCache, bool isMain, int Type, int matchID,
-                                                          string Licensees, string bettypes, string bettypesLive,
-                                                          int groupBy, int Language, string LiveType, string HomeScore,
-                                                          string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
+        CombinationDetailMP GetCombinationDetailMP(string refNo);     
 
         DataSet GetBetListSystemParlayByTransId(string transId, int custId, DateTime moveBetDay, DateTime balanceUpDay);
 
