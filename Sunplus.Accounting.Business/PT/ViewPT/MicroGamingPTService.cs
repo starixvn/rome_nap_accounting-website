@@ -162,6 +162,7 @@
                 "{0} - {1}",
                 Converter.ToString2(dr["typename"]),
                 (new MicroGamingBetTypesSectionServices()).GetGameTypeName(betType));
+            positionTakingDTO.EnableAutoMaster = !Sunplus.Accounting.Core.Configurations.WebSettings.disableAutoM;
             positionTakingDTO.DisableFlagCss = "disableFlag";
             positionTakingDTO.DisableAutoCss = "disColorMPT";
         }

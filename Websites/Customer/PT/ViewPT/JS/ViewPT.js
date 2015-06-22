@@ -222,7 +222,7 @@ var ViewPT = {
                     <br />\
                     <!--/tbl-->\
                 {{/each}}',
-    TplMicroGamingPtInfo: '{{each(i, pt) PotionTakingDetail}}\
+    TplNoAutoPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
                     <table class="layout_table ViewPTTable c">\
 	                    <tr class="ViewPTHeader b">\
@@ -630,15 +630,7 @@ var ViewPT = {
                     {{if ($data.IsLiveCasino)}}\
                         {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
                     {{else}}\
-                        {{if ($data.IsGoldDeluxe)}}\
-                            {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
-                        {{else}}\
-                            {{if ($data.IsMicroGaming)}}\
-                                {{tmpl($data) ViewPT.TplMicroGamingPtInfo}}\
-                            {{else}}\
-                                {{tmpl($data) ViewPT.TplPtInfo}}\
-                            {{/if}}\
-                        {{/if}}\
+                        {{tmpl($data) ViewPT.TplPtInfo}}\
                     {{/if}}\
                 {{/if}}\
             {{/if}}\
