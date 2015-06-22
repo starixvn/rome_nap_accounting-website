@@ -1191,4 +1191,13 @@
   <data name="disable202_1502" xml:space="preserve">
     <value>Disable Bejing</value>
   </data>
+  <data name="v203_2001PT" xml:space="preserve">
+    <value>Baccarat</value>
+  </data>
+  <data name="v203_2005PT" xml:space="preserve">
+    <value>Baccarat-Playboy</value>
+  </data>
+  <data name="Sub_acc_name" xml:space="preserve">
+    <value>Sub Acc Name</value>
+  </data>
 </root>
