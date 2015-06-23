@@ -12,7 +12,7 @@ namespace Fanex.Tarus.BetList.Business.Results
     using System.Collections.Generic;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
-    using Fanex.Result.Core.GoldDeLuxe.DTO;
+    using Fanex.Result.Core.GoldDeluxe.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
 
