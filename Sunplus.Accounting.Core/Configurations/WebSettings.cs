@@ -101,8 +101,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
                 _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
 
-                _directABSUrl = ConfigurationManager.AppSettings["link_ABS_url"];
-
                 // _baseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.BaseCurrency"];
                 //Phuong.Nguyen
                 //Get Horseracing visibility from Web.config
