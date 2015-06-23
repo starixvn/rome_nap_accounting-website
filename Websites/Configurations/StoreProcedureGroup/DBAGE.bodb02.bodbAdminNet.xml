@@ -90,7 +90,7 @@
     <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet"  />

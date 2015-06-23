@@ -51,13 +51,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.2.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.2.4.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.Core">
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.2.4.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.GoldDeluxe">
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
