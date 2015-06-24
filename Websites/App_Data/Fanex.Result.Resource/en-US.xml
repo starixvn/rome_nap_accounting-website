@@ -115,4 +115,5 @@
     <item key="GameID">Game ID</item>
     <item key="Banker">Banker</item>
     <item key="Player">Player</item>
+    <item key="VS">vs</item>
 </root>

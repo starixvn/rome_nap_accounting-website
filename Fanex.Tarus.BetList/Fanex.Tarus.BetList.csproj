@@ -86,6 +86,9 @@
     <Reference Include="Fanex.Result.Core.LiveCasino">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.LiveCasino.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Result.Core.MetricGaming">
+      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MetricGaming.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Result.Core.NumberGame">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.NumberGame.dll</HintPath>
     </Reference>
