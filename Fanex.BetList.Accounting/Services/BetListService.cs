@@ -45,6 +45,16 @@ namespace Fanex.BetList.Accounting.Services
             _betListRepository = new BetListRepository();
         }
 
+        public static bool IsMetricGaming(int betType)
+        {
+            return betType == 801 ||
+                betType == 802 ||
+                betType == 803 ||
+                betType == 804 ||
+                betType == 805 ||
+                betType == 806;
+        }
+
         /// <summary>
         /// Gets the win loss member bet list.
         /// </summary>
@@ -107,7 +117,8 @@ namespace Fanex.BetList.Accounting.Services
                         TransDate = Converter.ToDateTime(r["transdate"]),
                         TransId = Converter.To<long>(r["transid"]),
                         Winlost = Converter.ToDecimal(r["winlost"]),
-                        WinlostDate = Convert.ToDateTime(r["winlostdate"])
+                        WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                        TransDesc = Converter.ToString2(r["transdesc"])
                     },
                     ChoiceHtml = string.Empty,
                     OddHtml = string.Empty,
@@ -316,6 +327,7 @@ namespace Fanex.BetList.Accounting.Services
                     UserName = Converter.ToString2(r["username"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -514,6 +526,7 @@ namespace Fanex.BetList.Accounting.Services
                     TransId = Converter.To<long>(r["transid"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -719,6 +732,7 @@ namespace Fanex.BetList.Accounting.Services
                     TransId = Converter.To<long>(r["transid"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -1096,6 +1110,7 @@ namespace Fanex.BetList.Accounting.Services
                                 UserName = Converter.ToString2(r["username"]),
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                                TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"])
                             },
@@ -1289,6 +1304,7 @@ namespace Fanex.BetList.Accounting.Services
                                 UserName = Converter.ToString2(r["username"]),
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                                TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"])
                             },

@@ -79,6 +79,12 @@ namespace Fanex.BetList.Accounting.Core
                 Math.Round(input * 100, 2).ToString() + Labels.Symbol_Percent;
         }
 
+        public bool IsMetricGamingBetType(int betType)
+        {
+            return BetTypeContants.MetricGaming60sofKick <= betType ||
+                betType <= BetTypeContants.MetricGamingEndBetType;
+        }
+
         /// <summary>
         /// Gets the status reference no.
         /// </summary>
@@ -97,7 +103,7 @@ namespace Fanex.BetList.Accounting.Core
             bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
             bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
-            
+
             if (betlistHelper.IsHRWinPlaceBettype(ticketDetail.Ticket.BetTypeId) &&
                 (isWonStatus || isLoseStatus))
             {
@@ -117,7 +123,7 @@ namespace Fanex.BetList.Accounting.Core
             {
                 statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
             }
-            
+
             string resultLink = string.Empty;
             if (betlistHelper.IsHRBettype(ticketDetail.Ticket.BetTypeId))
             {
@@ -215,9 +221,23 @@ namespace Fanex.BetList.Accounting.Core
                                     resultLink = "ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")";
                                     break;
                                 default:
-                                    resultLink = "ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
-                                        ticketDetail.Ticket.BetTypeId + "," +
-                                        ticketDetail.Ticket.BetId + ")";
+                                    if (betlistHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
+                                    {
+                                        resultLink = "ViewResultMetricGaming(" +
+                                            ticketDetail.Ticket.MatchId.ToString() + "," +
+                                            ticketDetail.Ticket.BetTypeId + "," +
+                                            ticketDetail.Ticket.BetId + "," +
+                                            ticketDetail.Ticket.SportTypeId + "," +
+                                            "'" + CacheRef.GetSportName(ticketDetail.Ticket.SportTypeId) + "'" + "," +
+                                            "'" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "'" + ")";
+                                    }
+                                    else
+                                    {
+                                        resultLink = "ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
+                                            ticketDetail.Ticket.BetTypeId + "," +
+                                            ticketDetail.Ticket.BetId + ")";
+                                    }
+
                                     break;
                             }
 
@@ -265,7 +285,7 @@ namespace Fanex.BetList.Accounting.Core
             bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
             var betlistHelper = new BetListHelper();
-            
+
             if (sportTypeId <= 42 ||
                 sportTypeId == SportContants.OtherSports ||
                 sportTypeId == SportContants.ESport)
@@ -359,7 +379,7 @@ namespace Fanex.BetList.Accounting.Core
                         break;
                 }
             }
-            
+
             string resultLink = string.Empty;
             if (betlistHelper.IsHRBettype(ticketDetail.Ticket.BetTypeId))
             {

@@ -69,8 +69,8 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.MetricGaming">
-      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.MetricGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.3.3-beta\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
