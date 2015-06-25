@@ -1,25 +1,25 @@
-namespace Fanex.Tarus.BetList.Business.Results.MetricGaming
+namespace Fanex.Tarus.BetList.Business.Results
 {
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
-    using Fanex.Tarus.BetList.Criteria.Results.MetricGaming;
-    using Fanex.Tarus.BetList.DataAccess.Results.MetricGaming;
+    using Fanex.Tarus.BetList.Criteria.Results;
+    using Fanex.Tarus.BetList.DataAccess.Results;
 
-    public class ResultService : IResultService
+    public class MetricGamingResultService : IMetricGamingResultService
     {
-        private IResultDataAccess _resultDataAccess;
+        private IMetricGamingResultDataAccess _resultDataAccess;
 
-        public ResultService(IResultDataAccess resultDataAccess)
+        public MetricGamingResultService(IMetricGamingResultDataAccess resultDataAccess)
         {
-            this._resultDataAccess = resultDataAccess ?? new ResultDataAccess();
+            this._resultDataAccess = resultDataAccess ?? new MetricGamingResultDataAccess();
         }
 
-        public ResultService()
+        public MetricGamingResultService()
             : this(null)
         {
         }
 
-        public string GetResult(ViewResultCriteria criteria)
+        public string GetResult(GetMetricGamingResultCriteria criteria)
         {
             var resultData = this._resultDataAccess.GetResult(criteria);
             if (resultData != null && resultData.Count > 0)

@@ -1,14 +1,14 @@
-namespace Fanex.Tarus.BetList.DataAccess.Results.MetricGaming
+namespace Fanex.Tarus.BetList.DataAccess.Results
 {
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Common;
     using Fanex.Data;
-    using Fanex.Tarus.BetList.Criteria.Results.MetricGaming;
+    using Fanex.Tarus.BetList.Criteria.Results;
 
-    public class ResultDataAccess : IResultDataAccess
+    public class MetricGamingResultDataAccess : IMetricGamingResultDataAccess
     {
-        public List<Fanex.Result.Core.MetricGaming.DTO.MetricGaming> GetResult(ViewResultCriteria criteria)
+        public List<Fanex.Result.Core.MetricGaming.DTO.MetricGaming> GetResult(GetMetricGamingResultCriteria criteria)
         {
             var result = new List<Fanex.Result.Core.MetricGaming.DTO.MetricGaming>();
 
@@ -26,7 +26,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results.MetricGaming
             return result;
         }
 
-        private static Fanex.Result.Core.MetricGaming.DTO.MetricGaming BindResultData(IDataReader reader, ViewResultCriteria criteria)
+        private static Fanex.Result.Core.MetricGaming.DTO.MetricGaming BindResultData(IDataReader reader, GetMetricGamingResultCriteria criteria)
         {
             return new Fanex.Result.Core.MetricGaming.DTO.MetricGaming
             {

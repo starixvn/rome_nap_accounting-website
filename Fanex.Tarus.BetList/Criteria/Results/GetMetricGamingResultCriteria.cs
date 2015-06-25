@@ -1,9 +1,8 @@
-﻿
-namespace Fanex.Tarus.BetList.Criteria.Results.MetricGaming
+﻿namespace Fanex.Tarus.BetList.Criteria.Results
 {
     using Fanex.NAP.Framework.Data;
 
-    public class ViewResultCriteria : CriteriaBase
+    public class GetMetricGamingResultCriteria : CriteriaBase
     {
         [SpParam(Ignored = true)]
         public long TransId { get; set; }
