@@ -66,6 +66,13 @@
           "BetList/{action}",
           new { controller = "BetList", action = "Index", id = UrlParameter.Optional }
           );
+
+        routes.MapRoute(
+            "GoldDeluxeDepositSetting",
+            "GoldDeluxe/{action}",
+            new { controller = "GoldDeluxe", action = "Index", id = UrlParameter.Optional },
+            new[] { "Fanex.Tarus.Customer.Controller" }
+          );
     }
     
     static void RegisterRoutes(RouteCollection routes)
