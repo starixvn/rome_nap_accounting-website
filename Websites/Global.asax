@@ -66,8 +66,8 @@
 
         routes.MapRoute(
             "GoldDeluxeDepositSetting",
-            "{controller}/{action}",
-            new { controller = "GoldDeluxe", action = "Index"},
+            "GoldDeluxe/{action}",
+            new { controller = "GoldDeluxe", action = "Index", id = UrlParameter.Optional },
             new[] { "Fanex.Tarus.Customer.Controller" }
           );
     }
