@@ -123,6 +123,12 @@
   <data name="BetList_MemberReport" xml:space="preserve">
     <value>Member Bet List from {0} to {1} - {2} {3}</value>
   </data>
+  <data name="Bought" xml:space="preserve">
+    <value>Bought</value>
+  </data>
+  <data name="Comm" xml:space="preserve">
+    <value>Comm</value>
+  </data>
   <data name="Dividend" xml:space="preserve">
     <value>Dividend</value>
   </data>
@@ -137,5 +143,8 @@
   </data>
   <data name="MemberWL" xml:space="preserve">
     <value>Member WinLoss/Comm</value>
+  </data>
+  <data name="Sold" xml:space="preserve">
+    <value>Sold</value>
   </data>
 </root>

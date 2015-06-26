@@ -71,6 +71,13 @@ namespace Fanex.BetList.Accounting.Core
                 betType == BetTypeContants.VirtualSportWinPlace;
         }
 
+        public bool IsBetTradeBettype(int betType)
+        {
+            return betType == BetTypeContants.BetTradeBought ||
+                betType == BetTypeContants.BetTradeSold ||
+                betType == BetTypeContants.BetTradeCommision;
+        }
+
         public string PercentFormat(decimal input)
         {
             var isInputInterger = (input * 100) % 1 == 0;
@@ -79,10 +86,40 @@ namespace Fanex.BetList.Accounting.Core
                 Math.Round(input * 100, 2).ToString() + Labels.Symbol_Percent;
         }
 
-        public bool IsMetricGamingBetType(int betType)
+           public bool IsMetricGamingBetType(int betType)
         {
             return BetTypeContants.MetricGaming60sofKick <= betType &&
                 betType <= BetTypeContants.MetricGamingEndBetType;
+        }
+
+       public string GetBetTradeStatus(TicketDetail betDetail)
+        {
+            var result = CacheRef.GetBettype(betDetail.Ticket.BetTypeId);
+            switch (betDetail.Ticket.BetTypeId)
+            {
+                case BetTypeContants.BetTradeBought:
+                    result = BetListResources.Bought;
+                    break;
+                case BetTypeContants.BetTradeSold:
+                    result = BetListResources.Sold;
+                    break;
+                case BetTypeContants.BetTradeCommision:
+                    result = BetListResources.Comm;
+                    break;
+                default:
+                    result = string.Empty;
+                    break;
+            }
+
+            var status = betDetail.Ticket.Status.ToLower();
+            if (status.Equals("void") || status.Equals("refund"))
+            {
+                result = string.Format("{0}<br/><div style='font-weight: normal;'>({1})</div>",
+                    betDetail.Ticket.Status,
+                    result);
+            }
+
+            return "<div class=\"bl_status c\">" + result + "</div>";
         }
 
         /// <summary>
@@ -95,11 +132,16 @@ namespace Fanex.BetList.Accounting.Core
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusRefNo(TicketDetail ticketDetail)
         {
+            BetListHelper betlistHelper = new BetListHelper();
+            if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
+            {
+                return betlistHelper.GetBetTradeStatus(ticketDetail);
+            }
+
             string status = ticketDetail.Ticket.Status.ToLower();
             int _liveAwayScore = ticketDetail.Ticket.LiveAwayScore;
             int _liveHomeScore = ticketDetail.Ticket.LiveHomeScore;
             string statusLabel = string.Empty;
-            BetListHelper betlistHelper = new BetListHelper();
             bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
             bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
@@ -268,6 +310,12 @@ namespace Fanex.BetList.Accounting.Core
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusStatement(TicketDetail ticketDetail)
         {
+            BetListHelper betlistHelper = new BetListHelper();
+            if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
+            {
+                return betlistHelper.GetBetTradeStatus(ticketDetail);
+            }
+
             string statusHtml = string.Empty;
             int betTypeId = ticketDetail.Ticket.BetTypeId;
             int sportTypeId = ticketDetail.Ticket.SportTypeId;
@@ -284,7 +332,6 @@ namespace Fanex.BetList.Accounting.Core
             bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
             bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
-            var betlistHelper = new BetListHelper();
 
             if (sportTypeId <= 42 ||
                 sportTypeId == SportContants.OtherSports ||

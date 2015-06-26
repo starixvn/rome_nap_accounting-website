@@ -95,5 +95,8 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int MetricGaming60sofKick = 801;
         public const int MetricGamingEndBetType = 899;
+        public const int BetTradeSold = 901;
+        public const int BetTradeBought = 902;
+        public const int BetTradeCommision = 903;
     }
 }
