@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.Core.2.4.6-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.BetTrade">
+      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.BetTrade.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.GoldDeluxe.dll</HintPath>
