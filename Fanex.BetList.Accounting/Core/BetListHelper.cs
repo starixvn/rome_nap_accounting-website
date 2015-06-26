@@ -114,7 +114,8 @@ namespace Fanex.BetList.Accounting.Core
             var status = betDetail.Ticket.Status.ToLower();
             if (status.Equals("void") || status.Equals("refund"))
             {
-                result = string.Format("{0}<br/><div style='font-weight: normal;'>({1})</div>",
+                result = string.Format(
+                    "{0}<br/><div style='font-weight: normal;'>({1})</div>",
                     betDetail.Ticket.Status,
                     result);
             }

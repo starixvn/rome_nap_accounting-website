@@ -141,9 +141,15 @@ namespace Fanex.BetList.Accounting.Services
 
         public static bool IsGoldDeluxe(int betTypeId)
         {
-            return betTypeId == BetTypeContants.GoldDeluxeBaccarat || 
-                betTypeId == BetTypeContants.GoldDeluxeParlayBaccarat || 
+            return betTypeId == BetTypeContants.GoldDeluxeBaccarat ||
+                betTypeId == BetTypeContants.GoldDeluxeParlayBaccarat ||
                 betTypeId == BetTypeContants.GoldDeluxeRoulette;
+        }
+
+        public static bool IsMicroGaming(int betTypeId)
+        {
+            return BetTypeContants.MicroGamingBaccarat <= betTypeId &&
+                betTypeId <= BetTypeContants.MicroGamingEndBetType;
         }
 
         #endregion StaticMethods

@@ -403,22 +403,7 @@ namespace Fanex.BetList.Accounting.Services
                     {
                         string betTypeNameTmp = r["typenamee"].ToString();
                         int betTypeIdTmp = Converter.To<int>(r["typeid"]);
-                        if (ReportService.IsVirtualSportBetType(betTypeIdTmp))
-                        {
-                            betTypeNameTmp += " (" + Labels.Virtual_Sports + ")";
-                        }
-
-                        if (ReportService.IsGoldDeluxe(betTypeIdTmp))
-                        {
-                            betTypeNameTmp += " (" + Labels.Gold_Deluxe + ")";
-                        }
-
-                        if (betTypeIdTmp == BetTypeContants.OverUnder ||
-                            betTypeIdTmp == BetTypeContants.OddEven)
-                        {
-                            betTypeNameTmp += " (" + Labels.Number_Game + ")";
-                        }
-
+                        betTypeNameTmp += GetSportNameSuffixByBetType(betTypeIdTmp);
                         betTypeList.Add(new BetType
                         {
                             BetTypeID = betTypeIdTmp,
@@ -1455,6 +1440,30 @@ namespace Fanex.BetList.Accounting.Services
         {
             return betTypeId == BetTypeContants.MixParlay ||
                 betTypeId == BetTypeContants.SystemParlay;
+        }
+
+        private string GetSportNameSuffixByBetType(int betTypeId)
+        {
+            var sportName = string.Empty;
+            if (ReportService.IsVirtualSportBetType(betTypeId))
+            {
+                sportName = Labels.Virtual_Sports;
+            }
+            else if (ReportService.IsGoldDeluxe(betTypeId))
+            {
+                sportName = Labels.Gold_Deluxe;
+            }
+            else if (ReportService.IsMicroGaming(betTypeId))
+            {
+                sportName = Labels.Microgaming;
+            }
+            else if (betTypeId == BetTypeContants.OverUnder ||
+                betTypeId == BetTypeContants.OddEven)
+            {
+                sportName += Labels.Number_Game;
+            }
+
+            return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
     }
 }

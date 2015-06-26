@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="BetListController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2012.12.12">Created</change>
-// </history>
-
-namespace Fanex.BetList.Accounting.Controllers
+﻿namespace Fanex.BetList.Accounting.Controllers
 {
     using System;
     using System.Collections;
@@ -21,9 +12,6 @@ namespace Fanex.BetList.Accounting.Controllers
     using Fanex.Common;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class BetListController : Controller
     {
         private readonly IBetListService _betListService;
