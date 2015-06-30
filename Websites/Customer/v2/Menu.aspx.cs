@@ -10,6 +10,7 @@ using System.Threading;
 using Fanex.Common;
 using System.Configuration;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -40,6 +41,7 @@ public partial class Others_Menu : System.Web.UI.Page
         var uplineId = CastAide.AsInt32(arrCustID[3].Split('=')[1]);
         int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
         var casinoPath = string.Empty;
+        var goldDeluxePath = string.Empty;
 
         if (roleid == 1)
         {
@@ -50,6 +52,7 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
+            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
         }
         else if (roleid == 2)
         {
@@ -60,6 +63,7 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
+            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
         }
         else if (roleid == 3)
         {
@@ -70,6 +74,7 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
+            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
         }
         else
         {
@@ -81,6 +86,7 @@ public partial class Others_Menu : System.Web.UI.Page
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
+            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
         }
       
         if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
@@ -109,6 +115,11 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "Keno");
         }
 
+        if (!WebSettings.IsShowGoldDeluxeSettingForCredit)
+        {
+            TemplateHandler.RemoveBlock(ref tplMenu, "GoldDeluxe");
+        }
+
         TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
         TemplateHandler.Assign(ref tplMenu, "{urlCasino}", casinoPath);
@@ -117,6 +128,7 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref tplMenu, "{urlLiveCasino}", liveCasinoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlVirtualSports}", virtualSportsPath);
         TemplateHandler.Assign(ref tplMenu, "{urlKeno}", kenoPath);
+        TemplateHandler.Assign(ref tplMenu, "{urlgolddeluxe}", goldDeluxePath);
 
         this.sMenu.Text = tplMenu;
     }

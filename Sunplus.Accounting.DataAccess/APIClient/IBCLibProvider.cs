@@ -168,7 +168,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                             _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["SuperMaxTransfer"]));
                         }
                     }
-                    
+
                     if (_custSetting.CasinoSync)
                     {
                         var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);
@@ -444,6 +444,9 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     !CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableHRFixedOdds"], false) :
                     false;
 
+                _cust.IsDisableGoldDeluxe = WebSettings.EnableGoldDeluxe ?
+                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableGoldDeluxe"], false) :
+                    true;
                 return _cust;
             }
             catch (Exception ex)

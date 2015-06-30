@@ -254,6 +254,16 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         };
 
                         return (new KenoPT()).ViewPositionTaking(viewPTCriteria);
+
+                    case Constants.Sport.GoldDeluxe:
+                        var goldDeluxeCriteria = new ViewGoldDeluxePTCriteria
+                        {
+                            BetType = 1701,
+                            SportId = sportId,
+                            Username = userName
+                        };
+
+                        return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
                 }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
@@ -1390,6 +1400,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     Bettype = kenoPT.GetBettypeByKeno()
                 };
                 sports.SportsList.Add(sport);
+            }
+
+            if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+            {
+                var goldDeluxe = new Sport
+                {
+                    SportId = Constants.Sport.GoldDeluxe,
+                    SportName = "Gold Deluxe",
+                    Bettype = new BettypeDTO()
+                };
+                sports.SportsList.Add(goldDeluxe);
             }
 
             #endregion live casino

@@ -1137,4 +1137,49 @@
   <data name="g1106" xml:space="preserve">
     <value>No Card Baccarat</value>
   </data>
+  <data name="Auto_v255mpositiontaking_1701" xml:space="preserve">
+    <value>Master Auto PT</value>
+  </data>
+  <data name="Auto_v255mpositiontaking_mem_1701" xml:space="preserve">
+    <value>Master Auto PT</value>
+  </data>
+  <data name="Auto_v255spositiontaking_1701" xml:space="preserve">
+    <value>Super Auto PT</value>
+  </data>
+  <data name="Isauto_v255mpositiontaking_1701" xml:space="preserve">
+    <value>Is Master Auto PT</value>
+  </data>
+  <data name="Isauto_v255mpositiontaking_mem_1701" xml:space="preserve">
+    <value>Is Master Auto PT</value>
+  </data>
+  <data name="Isauto_v255spositiontaking_1701" xml:space="preserve">
+    <value>Is Super Auto PT</value>
+  </data>
+  <data name="Min_v255positiontaking_1701" xml:space="preserve">
+    <value>Min PT</value>
+  </data>
+  <data name="V255apositiontaking_1701" xml:space="preserve">
+    <value>Agent PT</value>
+  </data>
+  <data name="V255discount_1701" xml:space="preserve">
+    <value>Comm</value>
+  </data>
+  <data name="V255mpositiontaking_1701" xml:space="preserve">
+    <value>Master PT</value>
+  </data>
+  <data name="V255spositiontaking_1701" xml:space="preserve">
+    <value>Super PT</value>
+  </data>
+  <data name="V255updateautopositiontaking_1701" xml:space="preserve">
+    <value>Update Auto PT</value>
+  </data>
+  <data name="V255updatepositiontaking_1701" xml:space="preserve">
+    <value>Update PT</value>
+  </data>
+  <data name="v255playerdiscount_1701" xml:space="preserve">
+    <value>Comm</value>
+  </data>
+  <data name="Discount255_1701" xml:space="preserve">
+    <value>Comm</value>
+  </data>
 </root>

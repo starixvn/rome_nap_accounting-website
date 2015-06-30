@@ -1,20 +1,20 @@
-﻿head.ready(function (event) {
+﻿var gridOpts = {
+    tblContentId: 'tblContent',
+    manualCopyHeader: true,
+    isShowPager: true,
+    fullWidth: true,
+    fullHeight: true,
+    gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
+    gridHeight: 10,
+    freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+    numberFreezeCol: 0
+};
+
+head.ready(function (event) {
     try { parent.BlockUI(); } catch (e) { }
     $('#btnExport').click(function () {
         exportExcel();
     });
-
-    var gridOpts = {
-        tblContentId: 'tblContent',
-        manualCopyHeader: true,
-        isShowPager: true,
-        fullWidth: true,
-        fullHeight: true,
-        gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 10,
-        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 0
-    };
 
     $("#BetlistStatement").initGrid(gridOpts);
     $('#BetlistStatement').removeClass("display-none").gridScroller(gridOpts);
@@ -22,11 +22,22 @@
     try { parent.jQuery.unblockUI(); } catch (e) { }
 });
 
-function exportExcel(){
-    url = window.rootUrl + 'BetList/ExportBetlistStatement?CustID=' + _custidMember + '&TransType=' + _transType + '&FromDate=' + _fromDate ;
+function exportExcel() {
+    url = window.rootUrl + 'BetList/ExportBetlistStatement?username=' + _custName + '&TransType=' + _transType + '&FromDate=' + _fromDate;
     $('#frm').attr('src', url);
 }
 
+function showDetail(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block') {
+        e.style.display = 'none';
+    }
+    else {
+        e.style.display = 'block';
+    }
+
+    $('#BetlistStatement').gridScroller(gridOpts);
+}
 
 function showMP(transid, refno) {
     var gridOpts = {

@@ -30,8 +30,10 @@
                     $('#choice_left a:first').replaceWith(divReplace);
                 }
 
-
-                $("#hidden0").removeAttr("href");
+                $("a:[id^='hidden']").each(function () {
+                    this.click();
+                    $(this).removeAttr("href");
+                });
                 $("#result").attr('style', 'cursor: pointer;cursor: hand;');
             },
             error: function () {
@@ -47,11 +49,19 @@
     }
 };
 
-
-
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
     var username = $(".combinationLink span:last").html();
     showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)
 }
 
+function showDetail(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block') {
+        e.style.display = 'none';
+    }
+    else {
+        e.style.display = 'block';
+    }
 
+    $("#BetlistByRefNo").gridScroller(BetList.gridOpts);
+}

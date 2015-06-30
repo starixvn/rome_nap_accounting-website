@@ -193,6 +193,11 @@
                         <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">AG
                             Casino</li>
                     }
+                       @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    {
+                        <li class="canchange" onclick="SuperList.goldDeluxeSetting('@superItem.ChildID');">
+                            Gold Deluxe</li>
+                    }
                 </ul>
             </div>
         </td>

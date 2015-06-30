@@ -121,10 +121,8 @@ function changeDisable(obj, type) {
 
                 if (oldStatus != newStatus) {
                     $("#" + obj.id + "DL").attr('disabled', '');
-
                 }
                 else {
-
                     if ($("#" + obj.id + "hdfDL").val() == "1") {
                         $("#" + obj.id + "DL").attr("checked", true);
                     }
@@ -261,6 +259,19 @@ function changeDisable(obj, type) {
             $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
         }
     }
+
+    var productName = "GoldDeluxe";
+    if (type == productName) {
+        var oldCheckboxValue = $('#chkOldValue' + productName).val();
+        var checkbox1 = $("#" + chk1);
+        var buttonUpdate = $("#disabledGoldDeluxePop .btn:first");
+        if ((checkbox1.attr('checked') == true && oldCheckboxValue == '1') ||
+            (checkbox1.attr('checked') == false && oldCheckboxValue == '0')) {
+            buttonUpdate.removeAttr("disabled");
+        } else {
+            buttonUpdate.attr("disabled", "disabled");
+        }
+    }
 }
 function ShowDisablePop(obj) {
     DisabeAllCheckBox();
@@ -361,4 +372,15 @@ function DisabeAllCheckBox() {
     $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledVSPop .btn:first").attr("disabled", "disabled");
     $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
+    $("#disabledGoldDeluxePop .btn:first").attr("disabled", "disabled");
 };
+
+function ShowDisablePopGoldDeluxe(obj, hasDownline) {
+    ShowDisablePop(obj);
+    if (hasDownline) {
+        $("#" + obj.id + 'boxDL').css("display", 'inline');
+    }
+    else {
+        $("#" + obj.id + 'boxDL').css("display", 'none');
+    }
+}

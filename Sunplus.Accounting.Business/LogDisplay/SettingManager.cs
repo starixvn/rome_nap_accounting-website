@@ -680,7 +680,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         {
             var attrName = attr.Name.ToString();
 
-            if(attrName.Contains(vSportId))
+            if (attrName.Contains(vSportId))
             {
                 string[] lines = Regex.Split(attrName, vSportId);
 
@@ -742,9 +742,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     //});
                     foreach (XAttribute attr in node.Attributes())
                     {
-                        if (!hiddenField.Contains<string>(attr.Name.ToString().ToLower()))
+                        var fieldName = attr.Name.ToString().ToLower();
+                        var isGoldDeluxeGameType = IsGoldDeluxeGameType(fieldName, attr.Value);
+                        if (!hiddenField.Contains<string>(fieldName) || isGoldDeluxeGameType)
                         {
                             var elm = LogFormater.FormatElement(attr, filter);
+                            if (isGoldDeluxeGameType)
+                            {
+                                elm.Val = CacheRef.GetBettype(attr.Value);
+                            }
+
                             trackingNode.Vals.Add(elm);
                         }
                     }
@@ -888,6 +895,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
 
             return log;
+        }
+
+        private bool IsGoldDeluxeGameType(string fieldName, string gameTypeId)
+        {
+            var goldDeluxeGameType = new string[] { "1701", "1702" };
+            return string.Equals(fieldName, "gametypeid", StringComparison.OrdinalIgnoreCase) &&
+                goldDeluxeGameType.Contains(gameTypeId);
         }
     }
 }

@@ -18,6 +18,10 @@
 @away-color:#008d95;
 @bg_pending: Yellow;
 @bg_postponed: #FDFD87;
+@color-red:#CC0000;
+@color-black:#000000;
+@color-green:#33CC33;
+
 div.fn-rs-content-header
 {
     border: 1px solid @border-color;
@@ -318,7 +322,80 @@ table
 		.cl-result
         {
         	width:334px;
+			
         }
+		
+		.cl-match
+        {
+			.gd
+            {
+            	display:table;
+				width:100%;
+				margin-top: 2px ;
+				
+            }
+			.banker,.player
+            {
+				display:table-cell;
+				width:50%;
+				padding:0;
+				margin: 0;
+				li
+                {
+					float: left;
+					margin-left:15px;
+					line-height:20px;
+                }
+				li:first-child
+                {
+                	margin-left:0px;
+                }
+				.diamond,.heart,.club,.spade
+                {
+					.icon
+                    {
+                    	font-size:19px;
+                    }
+					.card
+                    {
+						margin-left:2px;
+						font-size:14px;
+                    }
+					
+                }
+				.diamond,.heart
+				{
+            		color: @color-red;
+					
+				}
+				.club,.space
+				{
+            		color: @color-black;
+				}
+            }
+			
+		
+			.green,.red,.black
+			 {
+        		font-size:28px;
+				font-weight:bold;
+				text-align:center;
+				display:table-cell;
+			 }
+			.green
+			{
+        		color: @color-green;
+			}
+			.red
+			{
+        		color: @color-red;
+			}
+			.black
+			{
+        		color:@color-black;
+			}
+		}
+
     }
 	&.racing
     {

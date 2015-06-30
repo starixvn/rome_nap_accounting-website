@@ -5,17 +5,14 @@
 <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
 <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
 <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
-<STYLE type="text/css">
-
-.grid-toolbox {
-    float: left !important;
-   padding-top: 0 !important;
-   padding-left: 5px !important;
-}
-
-</STYLE>
-
-
+<style type="text/css">
+    .grid-toolbox
+    {
+        float: left !important;
+        padding-top: 0 !important;
+        padding-left: 5px !important;
+    }
+</style>
 @* margin-left: 5px !important;
     margin-top: -2px !important;
     padding-right: 2px !important;
@@ -35,7 +32,6 @@
     decimal total = totalComm + totalWinlost;
     string[] renderResult = Render(ref NumberBegining, ref arrTransID);
 }
-
 @functions {
     public string[] Render(ref int NumberBegining, ref long[] arrTransID)
     {
@@ -43,7 +39,7 @@
         int i = 0;
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202)
+            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -67,7 +63,7 @@
         <td class="c">
             <div class="width120">
                 <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202)
+                    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
@@ -107,7 +103,7 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width80">
-                 @Html.Raw(betdetail.StatusHtml)
+                @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">
@@ -120,7 +116,7 @@
                 @if (ip != "-")
                 {
                     <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
-                   @* <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>*@
+@* <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>*@
                 }
             </div>
         </td>
@@ -137,8 +133,8 @@
                         Bet list</div>
                 }
             </div>
-               <div class="grid-toolbox">
-                <input type="button" id="btnExport" class="btnExcel" title="Export to Excel"/>
+            <div class="grid-toolbox">
+                <input type="button" id="btnExport" class="btnExcel" title="Export to Excel" />
             </div>
         </div>
     </div>
@@ -310,8 +306,8 @@
         </div>
     </div>
 </div>
- <div id="Popup" style="display: none;">
-            </div>
+<div id="Popup" style="display: none;">
+</div>
 <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
 <script src="@Url.Content("~/Js/head.load.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/js/jQuery/jquery.js")" type="text/javascript"></script>
@@ -330,12 +326,12 @@
             "@Url.Content("~/js/BetList.js")",
              "@Url.Content("~/Views/BetList/BetListStatement/Scripts/BetListStatement.js?ver=34")",
              "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js")");
-
-   var _custid = @betdetail.Ticket.CustId;
+    var _custid = @betdetail.Ticket.CustId;
     var _arrayTransID = @serializer.Serialize(arrTransID);
-     var _lengthSprortype = @ViewBag.Quantity;
+    var _lengthSprortype = @ViewBag.Quantity;
 
-      var _custidMember =  @ViewBag.CustID;
+    var _custidMember =  @ViewBag.CustID;
+    var _custName = '@ViewBag.CustName';
     var _transType =  @ViewBag.TransType;
-     var _fromDate = '@ViewBag.FromDate'; 
+    var _fromDate = '@ViewBag.FromDate'; 
 </script>

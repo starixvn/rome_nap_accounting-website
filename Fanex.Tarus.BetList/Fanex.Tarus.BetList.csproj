@@ -44,16 +44,16 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.Accounting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.1.0.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.Core, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.Core.2.1.0.8-beta2\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,6 +82,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -97,6 +101,8 @@
   <ItemGroup>
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
+    <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IVirtualTennisResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
     <Compile Include="Business\Results\IRacingResultService.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />
@@ -124,6 +131,8 @@
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IRacingResultDataAccess.cs" />
@@ -144,7 +153,6 @@
     <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />
-    <Compile Include="Helper\test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs" />
   </ItemGroup>
@@ -155,6 +163,10 @@
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
       <Name>Fanex.AuthenticationFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.BetList.Accounting\BetList.csproj">
+      <Project>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</Project>
+      <Name>BetList</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>

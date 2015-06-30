@@ -439,6 +439,114 @@ var ViewPT = {
                     <br />\
                     <!--/tbl-->\
                 {{/each}}',
+    TplGoldDeluxePtInfo: '{{each(i, pt) PotionTakingDetail}}\
+                    <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
+                    <table class="layout_table ViewPTTable c">\
+	                    <tr class="ViewPTHeader b">\
+		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+		                    <th width="40">s</th>\
+		                    <th width="40">m</th>\
+		                    <th width="40">a</th>\
+		                    <th width="40">us</th>\
+		                    <th width="40">is</th>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <th width="40">um</th>\
+		                        <th width="40">im</th>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <th width="40">n</th>\
+		                    <th width="40">comm</th>\
+	                    </tr>\
+	                    <!--r4-->\
+                        {{if (Super != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Super [4]</td>\
+		                    <td>${Super.Super}</td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Super.MinPt}</td>\
+		                    <td>${Super.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r4-->\
+	                    <!--r3-->\
+                        {{if (Master != null)}}\
+	                    <tr  class="trbgov" >\
+		                    <td class="ViewPTHeader l">Master [3]</td>\
+		                    <td>${Master.Super}</td>\
+		                    <td>${Master.Master}</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Master.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableFlagCss}"></td>\
+		                        <td class="${DisableFlagCss}"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Master.MinPt}</td>\
+		                    <td>${Master.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r3-->\
+	                    <!--r2-->\
+                        {{if (Agent != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Agent [2]</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Agent.Master}</td>\
+		                    <td>${Agent.Agent}</td>\
+		                    <!--DisableAutoMPT-->\
+                            {{if (!EnableAutoMaster)}}\
+		                        <td>${Agent.SuperAuto}</td>\
+		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+		                    <!--/DisableAutoMPT-->\
+		                    <!--AutoMPT-->\
+                            {{else}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Agent.MinPt}</td>\
+		                    <td>${Agent.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r2-->\
+	                    <!--r1-->\
+                        {{if (Member != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Member [1]</td>\
+		                    <td>${Member.Super}</td>\
+		                    <td>${Member.Master}</td>\
+		                    <td>${Member.Agent}</td>\
+		                    <td>${Member.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td class="disable"></td>\
+		                    <td>${Member.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r1-->\
+                    </table>\
+                    <br />\
+                    <!--/tbl-->\
+                {{/each}}',
     TplPt: '<div style="padding-left: 20px;">\
             {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
             <div style="padding-left: 20px;">\
@@ -459,7 +567,11 @@ var ViewPT = {
                     {{if ($data.IsLiveCasino)}}\
                         {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
                     {{else}}\
-                        {{tmpl($data) ViewPT.TplPtInfo}}\
+                        {{if ($data.IsGoldDeluxe)}}\
+                            {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
+                        {{else}}\
+                            {{tmpl($data) ViewPT.TplPtInfo}}\
+                        {{/if}}\
                     {{/if}}\
                 {{/if}}\
             {{/if}}\

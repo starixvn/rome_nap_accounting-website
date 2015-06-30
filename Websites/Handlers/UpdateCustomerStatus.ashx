@@ -289,7 +289,7 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid isupddonwline parameters");
                     new CustomerUpdateStatus().CustomerUpdateDisabledEsport(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;    
+                    break;
 
                 case "enableHorseRacingFixedOdds":
                     // Louis.Nguyen: Enable Horse Racing Fixed Odds
@@ -305,6 +305,16 @@ public class UpdateCustomerStatus : BaseHandler
                         status,
                         context.Request.UserHostAddress,
                         isUpdDownline);
+                    s = "parent.changeDisplayStatus();";
+                    break;
+                case "disabledGoldDeluxe":
+                    isUpdDownline = false;
+                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
+                    {
+                        throw new AccException("Invalid isupddonwline parameters");
+                    }
+
+                    new CustomerUpdateStatus().CustomerUpdateDisabledGoldDeluxe(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
                 //End

@@ -99,6 +99,7 @@
 
     getBetListByCustInfo: function (isCache) {
         var params = BetListByCustInfo.getParams();
+        var isByDateRange = $('input[name=type]:checked').val() == "-2";
         BetListByCustInfo.paramGetBetBetlist.isCache = isCache;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -112,6 +113,13 @@
                     BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
                     $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                     $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
+                    if (!isByDateRange) {
+                        $("a:[id^='hidden']").each(function () {
+                            this.click();
+                            $(this).removeAttr("href");
+                        });
+                    }
+
                     BetListByCustInfo.initPager(_length,
                     BetListByCustInfo.paramGetBetBetlist.pageSize,
                     BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
@@ -300,6 +308,18 @@ var Helper = {
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
     var username = $(".combinationLink span:last").html();
     showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)
+}
+
+function showDetail(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block') {
+        e.style.display = 'none';
+    }
+    else {
+        e.style.display = 'block';
+    }
+
+    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
 }
 
 function showMP(transid, refno) {

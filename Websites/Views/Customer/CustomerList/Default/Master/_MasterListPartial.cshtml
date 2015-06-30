@@ -195,6 +195,11 @@
                         <li class="canchange" onclick="masterList.kenoSetting('@masterItem.ChildID');">
                             Keno</li>
                     }
+                       @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    {
+                        <li class="canchange" onclick="masterList.goldDeluxeSetting('@masterItem.ChildID', '@Model.ParentId');">
+                            Gold Deluxe</li>
+                    }
                 </ul>
             </div>
         </td>
