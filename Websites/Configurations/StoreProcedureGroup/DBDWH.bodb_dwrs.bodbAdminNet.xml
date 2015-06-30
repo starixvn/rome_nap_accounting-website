@@ -31,7 +31,7 @@
     <Setting Key="DailyWLDirect_VirtualSports_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualSports_Bettype_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />    
-    <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old_xtest" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_HorseRacing_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_HorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Finance_WH" SpName="Acc_Rpt_DailyWLDirect_Finance" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
