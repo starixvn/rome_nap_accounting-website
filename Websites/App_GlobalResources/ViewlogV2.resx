@@ -1182,4 +1182,13 @@
   <data name="Discount255_1701" xml:space="preserve">
     <value>Comm</value>
   </data>
+  <data name="disablegolddeluxe" xml:space="preserve">
+    <value>Disable Gold Deluxe</value>
+  </data>
+  <data name="hidegolddeluxe" xml:space="preserve">
+    <value>Hide Gold Deluxe</value>
+  </data>
+  <data name="disable202_1502" xml:space="preserve">
+    <value>Disable Bejing</value>
+  </data>
 </root>
