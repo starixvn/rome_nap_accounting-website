@@ -16,15 +16,14 @@ namespace Fanex.BetList.Accounting.Repositories
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.BetList.Accounting.Constants;
-    using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
     using Fanex.BetList.Core.Entities;
+    using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
-    using Fanex.BetList.Core.TicketHelper;
 
     /// <summary>
     /// TODO: Update summary.

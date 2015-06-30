@@ -30,9 +30,6 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
     using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
-    using RemotingRef;
-    using AccBetListCore = Fanex.BetList.Accounting.Core;
     using Fanex.Tarus.Infrastructure.Common;
 
     /// <summary>

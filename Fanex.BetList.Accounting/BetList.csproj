@@ -131,7 +131,6 @@
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Controllers\BetListController.cs" />
-    <Compile Include="Controllers\ScoreInformationController.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />

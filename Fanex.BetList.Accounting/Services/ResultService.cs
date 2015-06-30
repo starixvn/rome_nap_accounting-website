@@ -15,11 +15,11 @@ namespace Fanex.BetList.Accounting.Services
     using System.Linq;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Models;
+    using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
-    using Fanex.BetList.Core.TicketHelper;
 
     /// <summary>
     /// Result service.

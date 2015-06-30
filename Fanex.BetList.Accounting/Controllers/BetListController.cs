@@ -15,13 +15,11 @@ namespace Fanex.BetList.Accounting.Controllers
     using System.Web.Mvc;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
+    using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     using Fanex.Common;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
-    using Fanex.BetList.Accounting.Extensions;
 
     /// <summary>
     /// TODO: Update summary.
