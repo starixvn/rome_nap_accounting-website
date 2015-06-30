@@ -75,9 +75,20 @@
     <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="UpdateSuperLiveCSComm" SpName="Acc_CustomerUpdSuperLiveCS_CommissionForAllLevels" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBTXN.CustDB.bodbAdminNet"  />    
   </Function>
 
+  <Function Name="Gold Deluxe">
+    <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+  
   <Function Name="Customer Status">
     <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
@@ -176,8 +187,8 @@
   </Function>
 
   <Function Name="Move Customer">
-    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBTXN.CustDB.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent_xtest" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster_xtest" DbName="DBTXN.CustDB.bodbAdminNet"  />
     <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="DBTXN.CustDB.bodbAdminNet"  />
     <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
@@ -264,7 +275,7 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.CustDB.bodbAdminNet_ex" Plain="0" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_xtest" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBTXN.CustDB.bodbAdminNet"/>
