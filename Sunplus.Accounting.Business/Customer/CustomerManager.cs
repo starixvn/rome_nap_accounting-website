@@ -252,7 +252,7 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
-
+                          
                             if (new SmartPunterPermissionService().IsDeniedViewSmartPunter(custId, userName))
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
