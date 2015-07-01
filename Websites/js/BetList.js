@@ -183,6 +183,28 @@ function ViewResultNumberGame(url) {
     parent.OpenNextPopup("NumberGamePopup", url, 'Number Game', 750, 200, true, false, window, 0, null, null);
 }
 
+function ViewMicroGamingPopup(custId, siteName, gameId) {
+    var width = 750;
+    var params = $.param({
+        custId: custId,
+        siteName: siteName,
+        gameId: gameId
+    });
+
+    parent.OpenNextPopup(
+        "MicrogamingResult",
+        'Report/ViewMicroGamingResult.aspx?' + params,
+        "Microgaming Result",
+        width,
+        500,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewResultLiveCasino(url) {
     parent.OpenNextPopup("LiveCasinoPopup", url, 'Live Casino', 760, 200, true, false, window, 0, null, null);
 }

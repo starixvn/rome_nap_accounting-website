@@ -92,6 +92,9 @@
     <Reference Include="Fanex.Result.Core.LiveCasino">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.LiveCasino.dll</HintPath>
     </Reference>
+      <Reference Include="Fanex.Result.Core.MicroGaming">
+      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MicroGaming.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MetricGaming.dll</HintPath>
     </Reference>
@@ -101,7 +104,8 @@
     <Reference Include="Fanex.Result.Core.Racing">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.Racing.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook">
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -143,7 +147,9 @@
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
+    <Compile Include="Business\Results\IMicroGamingResultService.cs" />
     <Compile Include="Business\Results\IVirtualTennisResultService.cs" />
+    <Compile Include="Business\Results\MicroGamingResultService.cs" />
     <Compile Include="Business\Results\MetricGamingResultService.cs" />
     <Compile Include="Business\Results\IMetricGamingResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
@@ -164,6 +170,7 @@
     <Compile Include="Constants\BetListContants.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />

@@ -17,6 +17,7 @@ namespace Fanex.BetList.Accounting.Core
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
     using Fanex.BetList.Core.TicketHelper;
+    using Fanex.Tarus.Infrastructure.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -231,6 +232,11 @@ namespace Fanex.BetList.Accounting.Core
                                 ticketDetail.Ticket.BetTypeId + "," +
                                 ticketDetail.Ticket.BetId + ",'" +
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
+                            break;
+                        case SportContants.MicroGaming:
+                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                               "'" + AppSession.SiteName + "'," +
+                               ticketDetail.Ticket.BetId + ")";
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)

@@ -29,6 +29,12 @@ namespace Fanex.Tarus.Infrastructure.Common
             set { HttpContext.Current.Session["custid"] = value; }
         }
 
+        public static string SiteName
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["sitename"], string.Empty); }
+            set { HttpContext.Current.Session["sitename"] = value; }
+        }
+
         public static string SYSTEM
         {
             get
