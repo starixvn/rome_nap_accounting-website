@@ -246,7 +246,7 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.MicroGaming:
                             resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
                                "'" + AppSession.SiteName + "'," +
-                               ticketDetail.Ticket.BetId + ")";
+                               ticketDetail.Ticket.BetCheck + ")";
                             break;
                         case SportContants.MicroGaming:
                             resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
