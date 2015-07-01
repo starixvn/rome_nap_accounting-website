@@ -266,7 +266,3 @@
         }
     }
 }
-            return isCheck ? " checked='checked'" : string.Empty;
-        }
-    }
-}

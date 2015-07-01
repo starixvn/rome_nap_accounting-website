@@ -1360,12 +1360,8 @@ namespace Sunplus.Accounting.Business.Customer
                 roleId,
                 isManageCustomerAccess,
                 disabledGoldDeluxeParent,
-                isAllowEditGoldDeluxe);
-                isManageCustomerAccess,
-                disabledGoldDeluxeParent,
-                isAllowEditGoldDeluxe,
-                hasDownline);
-            TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
+                isAllowEditGoldDeluxe
+                );
         }
 
         private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit)
@@ -2808,7 +2804,6 @@ namespace Sunplus.Accounting.Business.Customer
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableGoldDeluxe"),
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, productName);
-            }
             }
         }
     }
