@@ -24,7 +24,7 @@ using Sunplus.Accounting.Presentation;
         {
             base.OnInit(e);
             if (AppSession.AccId == 0 || AppSession.RoleAccess == null || AppSession.PageAccess == null ||
-                AppSession.UserMenu == null || AppSession.ReportMenu == null)
+                AppSession.UserMenu == null)
             {
                 LogOut();
             }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?> 
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -300,7 +300,6 @@
     <Compile Include="Transaction\DailyTransManager.cs" />
     <Compile Include="IServiceCustomerInfo.cs" />
     <Compile Include="IServiceSuspend.cs" />
-    <Compile Include="PT\MiniGame\IServiceMinigame.cs" />
     <Compile Include="Report\Reports.cs" />
     <Compile Include="Security\AuthManager.cs" />
     <Compile Include="BaseManager.cs" />
@@ -350,7 +349,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\Bingo\BingoManager.cs" />
     <Compile Include="PT\Bingo\IBingoService.cs" />
-    <Compile Include="PT\MiniGame\MiniGameManager.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
     <Compile Include="PT\SportBooks\NumberGameManager.cs" />
     <Compile Include="PT\SportBooks\SportBooksBase.cs" />
@@ -418,7 +416,6 @@
     <Compile Include="Report\Other\HedgeRecord.cs" />
     <Compile Include="Report\Other\M88Winloss.cs" />
     <Compile Include="Report\Other\OtherWinLossReport.cs" />
-    <Compile Include="Report\Other\ReportingServices.cs" />
     <Compile Include="Report\Other\SuperMovement.cs" />
     <Compile Include="Report\Other\Trader.cs" />
     <Compile Include="Report\Other\TraderPerformance.cs" />
@@ -555,7 +552,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -63,10 +63,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
             {
                 context.Response.Write(LoginFailedHandler.WriteJS(username));
                 goto end;
-            }
-            //string countryName = IpManagement.ReplaceCountryName("202.78.230.82");
-            //var ipManager = new Sunplus.Accounting.Core.Helper.IP.IpManager();
-            //string countryName = ipManager.GetCountryNameByIp(context.Request.UserHostAddress);
+            }          
 
             AppSession.CurrentSystemName = "accounting";
 
@@ -157,9 +154,6 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                         SubMenu= null
                     });
                 }
-                
-                menuService.GetReportMenu("ACC-REPORT");
-                menuService.GetBAMenu();
 				
 				// Progressive Bonus
 				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
