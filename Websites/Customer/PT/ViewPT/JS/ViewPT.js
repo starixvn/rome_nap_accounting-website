@@ -775,7 +775,7 @@ var ViewPT = {
     },
     getBettype: function (ind) {
         var sport = ViewPT.getCurrentSportIndex(ind);
-        var betTypes = sport.Bettype.BettypeList;
+        var betTypes = sport.Bettype ? sport.Bettype.BettypeList : null;
 
         var bettypeSelect = $('#ddlBettype');
         var options = bettypeSelect.attr('options');
