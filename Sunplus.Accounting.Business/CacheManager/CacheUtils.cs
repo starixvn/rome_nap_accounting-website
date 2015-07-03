@@ -26,7 +26,8 @@ namespace Sunplus.Accounting.Business.CacheManager
                 catch (Exception ex)
                 {
                     exchange = IBCProvider.Utils.GetExchange();
-                    Exchange = exchange;
+                    // Exchange = exchange;
+                    Logs.Write(ex.ToString());
                 }
 
                 return exchange;
