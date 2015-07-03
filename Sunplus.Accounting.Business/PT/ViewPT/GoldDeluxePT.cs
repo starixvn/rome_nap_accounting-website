@@ -202,7 +202,8 @@
                     SuperIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["i1"], false)),
                     MasterAuto = FormatPTValue(dr["um1"]),
                     MasterIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im1"], false)),
-                    MaxPt = FormatPTValue(dr["l1"])
+                    MaxPt = FormatPTValue(dr["l1"]),
+                    Com = IBCUtils.FormatHandler.FormatNumber4(dr["playerdiscount"])
                 };
 
                 positionTakingDTO.Member = memberPt;
@@ -219,7 +220,8 @@
                     MasterAuto = FormatPTValue(dr["um2"]),
                     MasterIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["im2"], false)),
                     MinPt = FormatPTValue(dr["n2"]),
-                    MaxPt = FormatPTValue(dr["l2"])
+                    MaxPt = FormatPTValue(dr["l2"]),
+                    Com = IBCUtils.FormatHandler.FormatNumber4(dr["discount"])
                 };
 
                 positionTakingDTO.Agent = agentPt;
@@ -234,7 +236,8 @@
                     SuperAuto = FormatPTValue(dr["u3"]),
                     SuperIsAuto = CheckIsAutoBox(CastAide.AsBoolean(dr["i3"], false)),
                     MinPt = FormatPTValue(dr["n3"]),
-                    MaxPt = FormatPTValue(dr["l3"])
+                    MaxPt = FormatPTValue(dr["l3"]),
+                    Com = IBCUtils.FormatHandler.FormatNumber4(dr["adiscount"])
                 };
 
                 positionTakingDTO.Master = masterPt;
@@ -248,7 +251,8 @@
                     Master = FormatPTValue(dr["m4"]),
                     Agent = FormatPTValue(dr["a4"]),
                     MinPt = FormatPTValue(dr["n4"]),
-                    MaxPt = FormatPTValue(dr["l4"])
+                    MaxPt = FormatPTValue(dr["l4"]),
+                    Com = IBCUtils.FormatHandler.FormatNumber4(dr["sdiscount"])
                 };
 
                 positionTakingDTO.Super = superPt;
