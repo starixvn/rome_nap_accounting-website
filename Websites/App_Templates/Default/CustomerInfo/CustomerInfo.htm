@@ -198,24 +198,44 @@
                     </td>
                 </tr>   
                 <!--/Row_ProgressiveBonus_AGCasinoStatus-->
-                <!--EnableKeno-->
+                <!--/Row_Keno_GoldDeluxe-->
                 <tr>
-                    <td class="l" colspan="2"><span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span></td>
-	                <td class="l" colspan="2">
-                        <!--GoldDeluxe-->             
+                    <!--EnableKeno-->
+                    <td class="l" colspan="2">
+                            <span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span>
+                    </td>
+                    <!--/EnableKeno-->
+                    <td class="l" colspan="2">
+                        <!--GoldDeluxe-->
                         <span class="canchange" onclick="updateGoldDeluxe({CustId},'{UserName}')">Enable Gold Deluxe</span>
                         <!--/GoldDeluxe-->
                     </td>
                 </tr>
-                <!--/EnableKeno-->
-                 <!--autosuspendstatus-->
-                <tr>
-                    <!--autosuspendstatusenable-->             
-                    <td class="l" colspan="2" ><span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span></td>
-                    <!--/autosuspendstatusenable-->
-                    <td class="l" colspan="2"></td>
+                <!--/Row_Keno_GoldDeluxe-->
+                <!--/Row_AutoSuspend_BetTrade-->
+                <tr>           
+                    <!--autosuspendstatus-->  
+                    <td class="l" colspan="2" >
+                        <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span>
+                    </td>
+                    <!--/autosuspendstatus-->
+                    <td class="l" colspan="2">
+                        <!--BetTrade-->             
+                        <span class="canchange" onclick="leftPanelManager.updateBetTrade({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, {betTradeId})">Enable BetTrade</span>
+                        <!--/BetTrade-->
+                    </td>
                 </tr> 
-                 <!--/autosuspendstatus-->         
+                <!--/Row_AutoSuspend_BetTrade-->
+                <!--/Row_Microgaming-->
+                 <tr>
+                    <!--Microgaming-->        
+                    <td class="l" colspan="2">        
+                        <span class="canchange" onclick="leftPanelManager.updateMicroGaming({CustId},'{UserName}', {RoleId}, {HasDownline})">Enable Microgaming</span>
+                    </td>
+                    <!--/Microgaming-->
+                    <td class="l" colspan="2" ></td>
+                </tr> 
+                <!--/Row_Microgaming-->
                 <tr>
                     <td style="width: 100px;" class="l">
                         Special

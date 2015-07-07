@@ -53,11 +53,11 @@ namespace Fanex.Tarus.Security.Web
         {
             get
             {
-                throw new System.NotImplementedException();
+                return string.Empty;
             }
             set
             {
-                throw new System.NotImplementedException();
+                value = string.Empty;
             }
         }
 

@@ -9,6 +9,7 @@
 
 namespace Fanex.Tarus.Customer.Criteria.GoldDeluxe
 {
+    using System.Globalization;
     using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Infrastructure.Helper;
 
@@ -34,6 +35,14 @@ namespace Fanex.Tarus.Customer.Criteria.GoldDeluxe
             get
             {
                 return Utils.GetClientIP();
+            }
+        }
+
+        public string Language
+        {
+            get
+            {
+                return CultureInfo.CurrentCulture.Name;
             }
         }
 
