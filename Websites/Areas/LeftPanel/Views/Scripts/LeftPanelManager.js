@@ -23,7 +23,7 @@ var LeftPanelManager = function () {
             });
 
         var width = 475;
-        var height = 200;
+        var height = 220;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };
 
@@ -38,7 +38,7 @@ var LeftPanelManager = function () {
 
         var url = 'MicroGaming/UpdateStatusView' + '?' + $.param(param);
         var width = 475;
-        var height = 200;
+        var height = 220;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };
 };
