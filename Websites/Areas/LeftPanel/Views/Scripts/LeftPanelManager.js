@@ -5,7 +5,8 @@ var LeftPanelManager = function () {
         username,
         roleId,
         hasDownline,
-        accId) {
+        accId,
+        productId) {
         var title = 'Update Bet Trade Status';
         var url = 'customersetting/enablestatus/productstatus?' +
             $.param({
@@ -19,26 +20,39 @@ var LeftPanelManager = function () {
                 enable: true,
                 enabledownlines: true,
                 enableuplines: true,
-                product: 13
+                product: productId
             });
 
         var width = 475;
-        var height = 220;
+        var height = 300;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };
 
-    self.updateMicroGaming = function (custId, username, roleId, hasDownline) {
+    self.updateMicroGaming = function (
+        custId,
+        username,
+        roleId,
+        hasDownline,
+        accId,
+        productId) {
         var title = 'Update Microgaming Status';
-        var param = {
-            custId: custId,
-            username: username,
-            hasDownline: hasDownline,
-            roleId: roleId
-        };
+        var url = 'customersetting/enablestatus/productstatus?' +
+            $.param({
+                custId: custId,
+                username: username,
+                hasdownline: hasDownline,
+                level: roleId,
+                uplineid: 0,
+                userid: accId,
+                productid: 'MicroGaming',
+                enable: true,
+                enabledownlines: true,
+                enableuplines: true,
+                product: productId
+            });
 
-        var url = 'MicroGaming/UpdateStatusView' + '?' + $.param(param);
         var width = 475;
-        var height = 220;
+        var height = 300;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };
 };
