@@ -54,10 +54,9 @@
     <Reference Include="Fanex.BetList.BetTrade">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.0-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core">
+    <Reference Include="Fanex.BetList.Core, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
-
     <Reference Include="Fanex.BetList.GoldDeluxe">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
@@ -67,8 +66,9 @@
     <Reference Include="Fanex.BetList.Microgaming">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.0-beta\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Microgaming">
-      <HintPath>..\packages\Fanex.BetList.Core.2.4.5-beta\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.Microgaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.4.6-beta\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>

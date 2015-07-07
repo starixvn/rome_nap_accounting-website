@@ -55,12 +55,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.Core.2.3.4-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.Core.2.4.6-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.BetList.BetTrade">
-      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
