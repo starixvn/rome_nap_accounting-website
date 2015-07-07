@@ -1,6 +1,8 @@
 ﻿\\*.local.config
+\\*.local2.config
 \\*.master.config
 \\*.uat.config
 \\*.pro.config
 \\*.dev.config
 \\*.kbt67.config
+\\*.bkkbt67.config
