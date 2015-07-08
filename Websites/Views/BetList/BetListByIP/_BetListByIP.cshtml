@@ -43,11 +43,7 @@
         <td class="c">
             <div class="width120">
                 <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71 ||
-                        betdetail.Ticket.SportTypeId == 202 ||
-                        betdetail.Ticket.SportTypeId == 255 ||
-                        BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId)||
-                        BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
+                    @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
