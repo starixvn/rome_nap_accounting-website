@@ -16,6 +16,7 @@ namespace Fanex.BetList.Accounting.Core
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
+    using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Tarus.Infrastructure.Common;
 
@@ -34,6 +35,15 @@ namespace Fanex.BetList.Accounting.Core
         public static bool IsNumeric(string value)
         {
             return IsNumericRegex.IsMatch(value);
+        }
+
+        public static bool IsUseRefNoInsteadOfTransId(ITicket ticket)
+        {
+            return ticket.BetTypeId == 73 ||
+                ticket.BetTypeId == 71 ||
+                ticket.SportTypeId == 202 ||
+                ticket.SportTypeId == 255 ||
+                ticket.SportTypeId == SportContants.MicroGaming;
         }
 
         public string IsNegative(decimal input)

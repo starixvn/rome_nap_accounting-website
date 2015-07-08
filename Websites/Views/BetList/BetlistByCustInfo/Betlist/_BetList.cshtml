@@ -22,7 +22,8 @@
             if (betdetail.Ticket.BetTypeId == 73 ||
                 betdetail.Ticket.BetTypeId == 71 ||
                 betdetail.Ticket.SportTypeId == 202 ||
-                betdetail.Ticket.SportTypeId == 255)
+                betdetail.Ticket.SportTypeId == 255 ||
+                BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
             {
                 betdetail.Ticket.TransId = CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -49,7 +50,8 @@
                         betdetail.Ticket.BetTypeId == 71 ||
                         betdetail.Ticket.SportTypeId == 202 ||
                         betdetail.Ticket.SportTypeId == 255 ||
-                        BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
+                        BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId) ||
+                        BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket) )
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
