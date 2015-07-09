@@ -500,6 +500,11 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.GoldDeluxe:
                             resultLink = "\"ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")\"";
                             break;
+                        case SportContants.MicroGaming:
+                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                               "'" + AppSession.SiteName + "'," +
+                               ticketDetail.Ticket.BetCheck + ")";
+                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
