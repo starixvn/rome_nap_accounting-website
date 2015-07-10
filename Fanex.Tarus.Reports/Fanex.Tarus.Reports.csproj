@@ -42,9 +42,6 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Fanex\Couchbase.dll</HintPath>
-    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>

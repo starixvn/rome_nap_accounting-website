@@ -3,17 +3,12 @@
 namespace Fanex.Tarus.LiveCasino.Business
 {
     using System.Collections.Generic;
-    using Fanex.Caching;
     using Sunplus.Accounting.Core.Common;
 
     public class BaseManager
     {
-
-        protected readonly ICache CacheService = null;
-
         public BaseManager()
         {
-            CacheService = Fanex.Caching.CacheService.CreateInstance(CacheType.MemCache);
         }
 
         public static bool HasPermission(string functionName)
@@ -24,7 +19,7 @@ namespace Fanex.Tarus.LiveCasino.Business
             var roleAccess = (Dictionary<string, int>)roleAccessSession;
             return roleAccess.ContainsKey("[" + functionName.Trim().ToLower() + "]");
         }
-               
+
         public bool GetHostPermission<T>(T function, Dictionary<string, int> roleAccess)
         {
             if (roleAccess == null)
@@ -37,20 +32,5 @@ namespace Fanex.Tarus.LiveCasino.Business
             }
             return false;
         }
-
-        //public bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess)
-        //{
-        //    if (pageAccess == null)
-        //        return false;
-        //    if (string.IsNullOrEmpty(actionPath))
-        //        return false;
-
-        //    if (pageAccess.ContainsKey(actionPath.ToLower()))
-        //    {
-        //        return pageAccess[actionPath.ToLower()] == 3;
-        //    }
-        //    return false;
-        //}
-
     }
 }

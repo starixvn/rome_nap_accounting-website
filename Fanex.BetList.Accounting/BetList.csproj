@@ -57,9 +57,6 @@
     <Reference Include="Fanex.BetList.GoldDeluxe">
       <HintPath>..\packages\Fanex.BetList.Core.2.2.5.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Caching">
-      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>

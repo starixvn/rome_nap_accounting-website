@@ -2,27 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using DNAide.Core;
 using Fanex.Tarus.Settlement.DataAccess;
 using Fanex.Tarus.Settlement.Entity;
-using Sunplus.Accounting.Core.Cache;
 
 namespace Fanex.Tarus.Settlement.Business
 {
-    using Fanex.Caching;
-
     public class BaseSettlement
     {
-        protected readonly ICache CacheService;
-        
         private BaseDataAccess _baseDataAccess;
 
         public BaseSettlement()
         {
             _baseDataAccess = new BaseDataAccess();
-            CacheService = Fanex.Caching.CacheService.CreateInstance(CacheType.MemCache);
         }
 
         public List<League> GetLeagues(string fdate, string tdate)
