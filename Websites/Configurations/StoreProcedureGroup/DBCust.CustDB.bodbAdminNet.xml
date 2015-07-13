@@ -6,7 +6,6 @@
     <Setting Key="Customer_BetTrade_GetStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_BetTrade_UpdateStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
-  </Function>
   <Function Name="AG Casino">
     <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />

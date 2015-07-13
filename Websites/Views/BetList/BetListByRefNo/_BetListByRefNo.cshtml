@@ -49,7 +49,7 @@
         <td class="c">
             <div class="width120 table-cell">
                 <div class="refno ">
-                    @if (BetListService.IsMetricGaming(betdetail.Ticket.BetTypeId))
+                    @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }

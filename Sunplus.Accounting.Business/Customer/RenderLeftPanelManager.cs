@@ -58,7 +58,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public static void RenderEditMicrogamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
+        public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
             if (!WebSettings.EnableMicrogaming)
             {

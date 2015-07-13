@@ -45,16 +45,6 @@ namespace Fanex.BetList.Accounting.Services
             _betListRepository = new BetListRepository();
         }
 
-        public static bool IsMetricGaming(int betType)
-        {
-            return betType == 801 ||
-                betType == 802 ||
-                betType == 803 ||
-                betType == 804 ||
-                betType == 805 ||
-                betType == 806;
-        }
-
         /// <summary>
         /// Gets the win loss member bet list.
         /// </summary>

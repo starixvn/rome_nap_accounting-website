@@ -43,7 +43,14 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.BetTypeId == 71 ||
                 ticket.SportTypeId == 202 ||
                 ticket.SportTypeId == 255 ||
-                ticket.SportTypeId == SportContants.MicroGaming;
+                ticket.SportTypeId == SportContants.MicroGaming ||
+                IsMetricGamingBetType(ticket.BetTypeId);
+        }
+
+        public static bool IsMetricGamingBetType(int betType)
+        {
+            return BetTypeContants.MetricGaming60sofKick <= betType ||
+                betType <= BetTypeContants.MetricGamingEndBetType;
         }
 
         public string IsNegative(decimal input)
@@ -96,14 +103,14 @@ namespace Fanex.BetList.Accounting.Core
                 Math.Round(input * 100, 0).ToString() + Labels.Symbol_Percent :
                 Math.Round(input * 100, 2).ToString() + Labels.Symbol_Percent;
         }
-
-           public bool IsMetricGamingBetType(int betType)
+        
+        public bool IsMetricGamingBetType(int betType)
         {
             return BetTypeContants.MetricGaming60sofKick <= betType &&
                 betType <= BetTypeContants.MetricGamingEndBetType;
         }
-
-       public string GetBetTradeStatus(TicketDetail betDetail)
+        
+        public string GetBetTradeStatus(TicketDetail betDetail)
         {
             var result = CacheRef.GetBettype(betDetail.Ticket.BetTypeId);
             switch (betDetail.Ticket.BetTypeId)
@@ -248,11 +255,6 @@ namespace Fanex.BetList.Accounting.Core
                                "'" + AppSession.SiteName + "'," +
                                ticketDetail.Ticket.BetCheck + ")";
                             break;
-                        case SportContants.MicroGaming:
-                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                               "'" + AppSession.SiteName + "'," +
-                               ticketDetail.Ticket.BetCheck + ")";
-                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -285,7 +287,7 @@ namespace Fanex.BetList.Accounting.Core
                                     resultLink = "ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")";
                                     break;
                                 default:
-                                    if (betlistHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
+                                    if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
                                     {
                                         resultLink = "ViewResultMetricGaming(" +
                                             ticketDetail.Ticket.MatchId.ToString() + "," +

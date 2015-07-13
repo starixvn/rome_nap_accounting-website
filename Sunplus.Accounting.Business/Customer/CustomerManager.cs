@@ -252,7 +252,7 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
-                          
+
                             if (new SmartPunterPermissionService().IsDeniedViewSmartPunter(custId, userName))
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
@@ -790,7 +790,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     HasDownline = Converter.ToBool(row1["HasDownline"])
                                 };
 
-                                var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4;
+                                var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
@@ -965,7 +965,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         break;
                                 }
 
-                                RenderLeftPanelManager.RenderEditMicrogamingLink(ref htmlcontent, renderLeftPanelParameter);
+                                RenderLeftPanelManager.RenderEditMicroGamingLink(ref htmlcontent, renderLeftPanelParameter);
                                 switch (WebSettings.IsShowCustomerSettingRenovation)
                                 {
                                     case 1:
@@ -1474,7 +1474,7 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Virtual Sports</a>";
                         }
-                    } 
+                    }
                     if (isShowSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";

@@ -36,4 +36,5 @@ namespace Fanex.Tarus.Customer.Controller
             var result = _microGamingService.EditSetting(criteria);
             return Json(result);
         }
+    }
 }
