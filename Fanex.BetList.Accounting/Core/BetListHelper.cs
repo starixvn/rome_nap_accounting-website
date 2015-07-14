@@ -81,7 +81,7 @@ namespace Fanex.BetList.Accounting.Core
 
         public bool IsMetricGamingBetType(int betType)
         {
-            return BetTypeContants.MetricGaming60sofKick <= betType ||
+            return BetTypeContants.MetricGaming60sofKick <= betType &&
                 betType <= BetTypeContants.MetricGamingEndBetType;
         }
 
