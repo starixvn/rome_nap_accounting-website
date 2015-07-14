@@ -15,7 +15,7 @@ public partial class Report_ViewResult : System.Web.UI.Page
             {
                 TransId = CastAide.AsInt64(Request.QueryString["transId"], 0),
                 BetType = CastAide.AsInt32(Request.QueryString["bettype"], 0),
-                BetId = CastAide.AsInt32(Request.QueryString["betid"], 0),
+                BetId = CastAide.AsInt64(Request.QueryString["betid"], 0),
                 SportType = CastAide.AsInt32(Request.QueryString["sporttype"], 0)
             };
 
