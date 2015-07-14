@@ -160,7 +160,7 @@ function ViewResultMetricGaming(
     parent.OpenNextPopup(
         "VirtualResult",
         'Report/ViewMetricGamingResult.aspx?' + params,
-        sportName + ' - ' + leagueName,
+        "Result",
         width,
         500,
         true,

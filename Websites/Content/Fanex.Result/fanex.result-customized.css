@@ -249,3 +249,8 @@ table.fn-rs tbody tr td ul li {
 	list-style: none;
 }
 /* End Gold Deluxe Result*/
+
+.data-header
+{
+    font-weight: bold;
+}
