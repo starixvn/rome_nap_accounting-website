@@ -23,6 +23,7 @@
                                           <xs:attribute name="name" type="xs:string" use="required" />
                                           <xs:attribute name="mapproperty" type="xs:string" use="required" />
                                           <xs:attribute name="reverse" type="xs:boolean" use="optional" />
+                                          <xs:attribute name="default" type="xs:string" use="optional" />
                                         </xs:complexType>
                                       </xs:element>
                                     </xs:sequence>                                    
@@ -36,6 +37,7 @@
                                           <xs:attribute name="name" type="xs:string" use="required" />
                                           <xs:attribute name="mapproperty" type="xs:string" use="required" />
                                           <xs:attribute name="reverse" type="xs:boolean" use="optional" />
+                                          <xs:attribute name="default" type="xs:string" use="optional" />
                                         </xs:complexType>
                                       </xs:element>
                                     </xs:sequence>
