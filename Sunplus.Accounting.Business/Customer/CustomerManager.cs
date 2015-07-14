@@ -791,7 +791,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 };
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
-                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming;
+                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
