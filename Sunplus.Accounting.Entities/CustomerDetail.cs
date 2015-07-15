@@ -593,6 +593,10 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
+        public int AccId { get; set; }
+
+        public bool HasDownline { get; set; }
+
         public bool IsDisableLiveCasino { get; set; }
 
         public bool IsLiveCasinoSync { get; set; }

@@ -6,7 +6,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-
+    using Fanex.Common;
     using Sunplus.Accounting.Core.Extensions;
 
     /// <summary>
@@ -88,6 +88,22 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             get
             {
                 return _admin_SMATurnover_FunctionId;
+            }
+        }
+
+        public static int ProductIdBetTrade
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdBetTrade"]);
+            }
+        }
+
+        public static int ProductIdMicrogaming
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdMicrogaming"]);
             }
         }
 

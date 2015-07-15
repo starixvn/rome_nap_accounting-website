@@ -70,5 +70,25 @@
 
             return gameTypeName;
         }
+
+        public Dictionary<int, string> GetGameTypes()
+        {
+            var result = new Dictionary<int, string>();
+            var bettypesConfig = MicroGamingBetTypesSection.Instance.BetTypes;
+            if (bettypesConfig == null)
+            {
+                return result;
+            }
+
+            foreach (MicroGamingBetTypesElement betType in bettypesConfig)
+            {
+                if (!result.ContainsValue(betType.GameType))
+                {
+                    result.Add(betType.Id, betType.GameType);
+                }
+            }
+
+            return result;
+        }
     }
 }

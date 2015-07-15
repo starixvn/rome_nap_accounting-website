@@ -713,8 +713,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                // Gold Deluxe
-                                if (!WebSettings.EnableGoldDeluxe || roleId != 4 || !isLicensee)
+                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isLicensee;
+                                if (!isShowGoldDeluxe)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
                                 }
@@ -782,13 +782,13 @@ namespace Sunplus.Accounting.Business.Customer
 
 
                                 #endregion Progressive Bonus
-                                 var customerDetail = new CustomerDetail
-                                {
-                                    CustID = custId,
-                                    RoleId = roleId,
-                                    AccId = AppSession.AccId,
-                                    HasDownline = Converter.ToBool(row1["HasDownline"])
-                                };
+                                var customerDetail = new CustomerDetail
+                               {
+                                   CustID = custId,
+                                   RoleId = roleId,
+                                   AccId = AppSession.AccId,
+                                   HasDownline = Converter.ToBool(row1["HasDownline"])
+                               };
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;

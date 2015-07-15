@@ -463,6 +463,22 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableBetTrade
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableBetTrade"] == "1");
+            }
+        }
+
+        public static bool EnableMicrogaming
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableMicrogaming"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get

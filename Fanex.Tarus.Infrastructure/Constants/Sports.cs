@@ -55,6 +55,7 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int VirtualSoccer = 180;
         public const int Darts = 25;
 
+        public const int MicroGaming = 203;
 
         /// <summary>
         /// Gets the sport name.

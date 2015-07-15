@@ -1,34 +1,25 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="UpdateMicroGamingStatusCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="UpdateGoldDeluxeStatusCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+//   <change who="Kan.Nguyen" date="2015.03.13">Created</change>
 // </history>
 
-namespace Fanex.Tarus.Customer.Criteria.MicroGaming
+namespace Fanex.Tarus.Customer.Criteria.GoldDeluxe
 {
-    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Infrastructure.Helper;
 
-    public class UpdateStatusCriteria : CriteriaBase
+    /// <summary>
+    /// Update Gold Deluxe status criteria.
+    /// </summary>
+    public class UpdateGoldDeluxeStatusCriteria : GetGoldDeluxeStatusCriteria
     {
-        public int CustId { get; set; }
-
         public bool IsEnable { get; set; }
 
         public bool ApplyToMember { get; set; }
-
-        public int ProductId
-        {
-            get
-            {
-                return AppSettings.ProductIdMicrogaming;
-            }
-        }
 
         public int UserId
         {
@@ -50,7 +41,7 @@ namespace Fanex.Tarus.Customer.Criteria.MicroGaming
 
         public override string GetSettingKey()
         {
-            return "Customer_MicroGaming_UpdateStatus";
+            return "Acc_3rdProductUpdSuperStatus";
         }
     }
 }

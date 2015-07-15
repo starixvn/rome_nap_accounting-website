@@ -1,15 +1,16 @@
 ﻿namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using System.Configuration;
+    using Fanex.Common;
 
     public class MicroGamingBetTypesElement : ConfigurationElement
     {
-        [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
-        public string Id
+        [ConfigurationProperty("id", DefaultValue = 0, IsRequired = true, IsKey = true)]
+        public int Id
         {
             get
             {
-                return (string)this["id"];
+                return Converter.ToInt(this["id"]);
             }
 
             set
@@ -23,7 +24,7 @@
         {
             get
             {
-                return (string)this["name"];
+                return Converter.ToString2(this["name"]);
             }
 
             set
@@ -37,7 +38,7 @@
         {
             get
             {
-                return (bool)this["active"];
+                return Converter.ToBool(this["active"]);
             }
 
             set
@@ -51,7 +52,7 @@
         {
             get
             {
-                return (string)this["gameType"];
+                return Converter.ToString2(this["gameType"]);
             }
 
             set

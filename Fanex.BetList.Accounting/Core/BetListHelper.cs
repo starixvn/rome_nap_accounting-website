@@ -103,13 +103,7 @@ namespace Fanex.BetList.Accounting.Core
                 Math.Round(input * 100, 0).ToString() + Labels.Symbol_Percent :
                 Math.Round(input * 100, 2).ToString() + Labels.Symbol_Percent;
         }
-        
-        public bool IsMetricGamingBetType(int betType)
-        {
-            return BetTypeContants.MetricGaming60sofKick <= betType &&
-                betType <= BetTypeContants.MetricGamingEndBetType;
-        }
-        
+
         public string GetBetTradeStatus(TicketDetail betDetail)
         {
             var result = CacheRef.GetBettype(betDetail.Ticket.BetTypeId);
