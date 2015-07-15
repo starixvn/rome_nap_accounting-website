@@ -1421,12 +1421,7 @@ namespace Sunplus.Accounting.Business.Customer
                         minMaxPtUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}", parentId, custId, userName);
                         masterPtUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}", parentId, custId, userName);
                     }
-                    //HuyNguyen Menu Member
-                    submenu1 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/EditSuperOnMemberFI.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu1 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"SuperEditMemberPTRacing/Index?custid={0}&superid={1}\");' target='centerFr'>Racing</a>", custId, superId);
@@ -1461,10 +1456,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI)
-                    {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/EditMasterOnMemberFI.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                  
                     if (!WebSettings.disabledHR)
                     {
                         submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
@@ -1513,10 +1505,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + parentId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Agent";
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                    
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/AgentMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1534,10 +1523,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Master";
 
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1553,10 +1539,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Super";
                     submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    if (!WebSettings.disabledFI && !AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                    {
-                        submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/v2/MinMaxFinancePT.aspx?uplineid=" + parentId + "&custid=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Finance</a>";
-                    }
+                   
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperMinUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
