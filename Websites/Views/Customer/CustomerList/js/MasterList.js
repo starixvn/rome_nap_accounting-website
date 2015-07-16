@@ -335,7 +335,7 @@
     },
     goldDeluxeSetting: function (custId, uplineId) {
         showPopup("Gold Deluxe"
-                , window.rootUrl + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=3"
+                , window.rootUrl + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=3"
                 , 0, 0, 880, 580, false, 2000, null);
     },
     reCalculateGrid: function () {

@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using DNAide.Core;
 using Fanex.Tarus.Business.Implement;
-using Sunplus.Data.DataAbstract.Storage.Cache;
 using Fanex.Tarus.Infrastructure.Caching;
 
 /// <summary>
@@ -13,11 +12,7 @@ using Fanex.Tarus.Infrastructure.Caching;
 /// </summary>
 public class LoginFailedHandler
 {
-    private static ICache _cache;
-
-    
-
-    /// <summary>
+      /// <summary>
     /// Before pass info through into DB, we will invoke this function to check "Reach max times wrong password."
     /// Get info of this username from the caching server.
     /// If (this username is being locked)//Reach max times wrong password.

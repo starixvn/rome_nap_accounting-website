@@ -83,7 +83,6 @@
   <ItemGroup>
     <Compile Include="AdminService.cs" />
     <Compile Include="BaseService.cs" />
-    <Compile Include="CacheService.cs" />
     <Compile Include="CacheUtils.cs" />
     <Compile Include="CommonService.cs" />
     <Compile Include="Customer\DepositCustomerService.cs" />

@@ -297,12 +297,9 @@
     <Compile Include="SpecialDelete\SpecialDeleteMixparlay.cs" />
     <Compile Include="SpecialDelete\SpecialDeleteService.cs" />
     <Compile Include="SpecialDelete\Sportbook\SpecialDeleteSBService.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\ITicketsListing.cs" />
-    <Compile Include="SpecialDelete\TicketsListing\TicketsListing.cs" />
     <Compile Include="Transaction\DailyTransManager.cs" />
     <Compile Include="IServiceCustomerInfo.cs" />
     <Compile Include="IServiceSuspend.cs" />
-    <Compile Include="PT\MiniGame\IServiceMinigame.cs" />
     <Compile Include="Report\Reports.cs" />
     <Compile Include="Security\AuthManager.cs" />
     <Compile Include="BaseManager.cs" />
@@ -340,7 +337,6 @@
     <Compile Include="PositionTaking\HRParamHandle.cs" />
     <Compile Include="PositionTaking\HRPositionTakingManager.cs" />
     <Compile Include="PositionTaking\HRUtilities.cs" />
-    <Compile Include="PositionTaking\PositionTakingManager.cs" />
     <Compile Include="PositionTaking\SportBook\AgentPT.cs" />
     <Compile Include="PositionTaking\SportBook\BasePT.cs" />
     <Compile Include="PositionTaking\SportBook\BettypeDetail.cs" />
@@ -353,7 +349,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\Bingo\BingoManager.cs" />
     <Compile Include="PT\Bingo\IBingoService.cs" />
-    <Compile Include="PT\MiniGame\MiniGameManager.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
     <Compile Include="PT\SportBooks\NumberGameManager.cs" />
     <Compile Include="PT\SportBooks\SportBooksBase.cs" />
@@ -421,7 +416,6 @@
     <Compile Include="Report\Other\HedgeRecord.cs" />
     <Compile Include="Report\Other\M88Winloss.cs" />
     <Compile Include="Report\Other\OtherWinLossReport.cs" />
-    <Compile Include="Report\Other\ReportingServices.cs" />
     <Compile Include="Report\Other\SuperMovement.cs" />
     <Compile Include="Report\Other\Trader.cs" />
     <Compile Include="Report\Other\TraderPerformance.cs" />
@@ -511,10 +505,6 @@
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
       <Name>Sunplus.Accounting.DataAccess</Name>
@@ -562,7 +552,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

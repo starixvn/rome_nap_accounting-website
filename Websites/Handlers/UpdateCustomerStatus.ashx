@@ -40,7 +40,6 @@ public class UpdateCustomerStatus : BaseHandler
             string errmsg = "";
             if (Permissions.CheckPermission(_accid, Enumerations.Functions.Customer.OtherCust, ref errmsg) != 0)
             {
-
                 context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(errmsg) + "</script>");
                 return;
             }
@@ -200,14 +199,7 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid isupddonwline parameters");
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledHROpenTote(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledFinancial":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledFinancial(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;               
                 case "disabledCS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))

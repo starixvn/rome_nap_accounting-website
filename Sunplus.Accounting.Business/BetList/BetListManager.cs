@@ -59,22 +59,7 @@ namespace Sunplus.Accounting.Business.BetList
             }
             ;
         }
-
-        //public BABetList GetBABetList(int pagesize, int pageindex, string fromdate, string todate, string refno, string username)
-        //{
-        //    try
-        //    {
-        //        var betList = _betlistDAO.GetBABetList(pagesize, pageindex, fromdate, todate, refno, username, IpManagement.IPVNList);
-        //        return betList;
-
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        LogExtensions.ExceptionHandler(exception);
-        //        return new BABetList() { Items=null, totalItem=0};
-        //    }
-
-        //}
+       
 
         public BABetList GetBABetList(int pagesize, int pageindex, string fromdate, string todate, string refno, string username, int currency, int bettype, int fromStake, int toStake, int excludeTest)
         {
@@ -190,21 +175,7 @@ namespace Sunplus.Accounting.Business.BetList
                 currencylist.Add(currency);
             }
             return currencylist;
-        }
-
-        public TicketsListingBetlistDTO GetTicketsListingBetlist(bool isMain, int Type, int matchID, string Licensees, string bettypes, string bettypesLive, int groupBy, int Language, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter)
-        {
-            try
-            {
-                var betList = _betlistDAO.GetTicketsListingBetlist(false, isMain, Type, matchID, Licensees, bettypes, bettypesLive, groupBy, Language, LiveType, HomeScore, AwayScore, FromTransDate, ToTransDate, SAFilter);
-                return betList;
-            }
-            catch (Exception exception)
-            {
-                LogExtensions.ExceptionHandler(exception);
-                return null;
-            }
-        }
+        }       
 
         #region IBetListManager Members
 

@@ -14,8 +14,7 @@
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
 
-    var disabledHR = WebSettings.disabledHR;
-    var disabledFI = WebSettings.disabledFI;
+    var disabledHR = WebSettings.disabledHR; 
     var enableBingo = BingoSettings.BingoGame.Enabled;
     var EnableLiveCasino = WebSettings.EnableLiveCasino;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
@@ -66,8 +65,7 @@
     hash.Add("disabledHR", disabledHR);
     hash.Add("enableBingo", enableBingo);
     hash.Add("EnableLiveCasino", EnableLiveCasino);
-    hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("disabledFI", disabledFI);
+    hash.Add("EnableVirtualSports", EnableVirtualSports);  
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
@@ -145,14 +143,7 @@
                         var onclickCS = (IsOnclickCS == true ? "AgentList.casino('" + agentItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
-                    <!--/casino-edit-->
-                    <!--finance-edit-->
-                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
-                    {
-                        <li class="canchange" onclick="OpenEditFI('@agentItem.ChildID', '@Model.ParentId', '2')" >
-                            Finance</li>
-                    }
-                    <!--/finance-edit-->
+                    <!--/casino-edit-->                  
                     <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {

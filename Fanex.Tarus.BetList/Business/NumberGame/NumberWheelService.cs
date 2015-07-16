@@ -4,14 +4,12 @@ namespace Fanex.Tarus.BetList.Business.NumberGame
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Web;
-
-    using Fanex.Tarus.BetList.Entities.NumberGame;
-    using Fanex.Tarus.Business.Implement;
-    using Fanex.Tarus.Entities;
-
-    using Sunplus.Accounting.Core.Extensions;
     using System.Linq;
+    using System.Web;
+    using Fanex.Tarus.BetList.Entities.NumberGame;
+    using Fanex.Tarus.Entities;
+    using Sunplus.Accounting.Core.Extensions;
+    using Fanex.Tarus.Infrastructure.Caching;
 
     public class NumberWheelService : INumberWheelService
     {
@@ -23,12 +21,12 @@ namespace Fanex.Tarus.BetList.Business.NumberGame
         {
             _listChoice = new List<NumberWheelChoice>();
 
-            var objListChoice = CacheService.Get(NumberWheelChoiceKey);
+            var objListChoice = CacheHelper.Get(NumberWheelChoiceKey);
 
             if(objListChoice == null)
             {
                 _listChoice = GetDefaultChoiceList();
-                CacheService.Set(NumberWheelChoiceKey, _listChoice, TimeSpan.FromHours(3));
+                CacheHelper.Set(NumberWheelChoiceKey, _listChoice, TimeSpan.FromHours(3));
             }
             else
             {

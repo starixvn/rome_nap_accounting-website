@@ -399,11 +399,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsClosed = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["Closed"], true);
                 _cust.IsAutoSuspend = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["AutoSuspend"], true);
                 _cust.IsSuspended = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["Suspend"], true);
-                _cust.IsDisabledFI = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableFI"], true);
-                // _cust.IsDisabledHR = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableHorseracing"],
-                //                                        true);
-                //_cust.IsDisabledOpenTote = CastAide.AsBoolean(
-                //    drCustomer.ResultSet.Tables[0].Rows[0]["DisableOpenTote"], true);
                 _cust.IsDisableCasino = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableCasino"], true);
                 _cust.IsCasinoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncCasino"], false);
                 _cust.IsBingoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncBingo"], false);

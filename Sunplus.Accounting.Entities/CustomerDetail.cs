@@ -12,7 +12,6 @@ namespace Sunplus.Accounting.Entities
         private int _CustID;
         private int _RoleId;
         private bool _IsDisabledFIUL = false;
-        private bool _IsDisabledFI = false;
         private bool _IsDisabledFIDL = false;
         private bool _IsDisabledHRUL = false;
         private bool _IsDisabledHR = false;
@@ -230,21 +229,6 @@ namespace Sunplus.Accounting.Entities
             set
             {
                 _Fax = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledFI
-        {
-            get
-            {
-                return _IsDisabledFI;
-            }
-            set
-            {
-                _IsDisabledFI = value;
             }
         }
 

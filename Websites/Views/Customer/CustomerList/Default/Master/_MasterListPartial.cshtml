@@ -149,13 +149,6 @@
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
                     <!--/casino-edit-->
-                    <!--finance-edit-->
-                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
-                    {
-                        <li class="canchange" onclick="OpenEditFI('@masterItem.ChildID', '@Model.ParentId', '3')" >
-                            Finance</li>
-                    }
-                    <!--/finance-edit-->
                     <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {

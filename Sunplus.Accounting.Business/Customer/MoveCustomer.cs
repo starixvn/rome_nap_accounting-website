@@ -243,7 +243,7 @@ namespace Sunplus.Accounting.Business.Customer
                         return StringUtils.ParseToJSMsg(error.ErrorMsg + "<br/>" + errMsgMoveLiveCasino);
                     }
 
-                    //Rollback minigame if error
+                  
                     return StringUtils.ParseToJSMsg(error.ErrorMsg);
                 }
 

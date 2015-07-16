@@ -494,50 +494,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// Update disableFinancial status for customer
-        /// sp: Acc_CustomerUpdDisableFincancial
-        /// @phuong.nguyen
-        /// Create date: <2008-10-22>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledFinancial(int accid, int custid, bool disabledFinancial, string Ip, bool isUpdDownline)
-        {
-            try
-            {
-                Hashtable output = new Hashtable();
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableFI"))
-                {
-                    Hashtable param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disablefinancial", disabledFinancial);
-                    param.Add("language", "E");
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-                    param.Add("ip", Ip);
-                    param.Add("disabledownlinefi", isUpdDownline);
-
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    output = db.GetOuputParams();
-                }
-
-                if ((int)output["errcode"] > 0)
-                    throw new AccException(output["errmsg"].ToString());
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
+        }       
 
         /// <summary>
         /// Update customer Internal status

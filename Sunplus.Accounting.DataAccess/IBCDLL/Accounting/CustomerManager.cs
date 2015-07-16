@@ -97,38 +97,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-        }
-
-        public static bool IsDisabledFinancial(int custId)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("custid", custId);
-
-                DbResult result = null;
-                using (ObjectDb db = new ObjectDb("CustomerSelDisableFI"))
-                {
-                    db.AssignParamValues(param);
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    result = new DbResult(output, ds);
-                }
-
-                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
-                bool parentDisabledHR = Convert.IsDBNull(row1["DisableFinancial"])
-                                            ? false
-                                            : Convert.ToBoolean(row1["DisableFinancial"]);
-                return parentDisabledHR;
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
+        }        
 
         /// <summary>
         /// call store procedure Acc_CustomerSelDisableOutright

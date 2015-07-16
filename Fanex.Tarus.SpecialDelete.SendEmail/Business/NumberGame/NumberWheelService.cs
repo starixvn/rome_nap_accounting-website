@@ -15,6 +15,7 @@ namespace Fanex.Tarus.SpecialDelete.SendEmail.Business.NumberGame
     using System.IO;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Business.Implement;
+    using Fanex.Tarus.Infrastructure.Caching;
 
     /// <summary>
     /// TODO: Update summary.
@@ -29,12 +30,12 @@ namespace Fanex.Tarus.SpecialDelete.SendEmail.Business.NumberGame
         {
             _listChoice = new List<NumberWheelChoice>();
 
-            var objListChoice = CacheService.Get(NumberWheelChoiceKey) as List<NumberWheelChoice>;
+            var objListChoice = CacheHelper.Get(NumberWheelChoiceKey) as List<NumberWheelChoice>;
 
             if (objListChoice == null)
             {
                 _listChoice = GetDefaultChoiceList();
-                CacheService.Set(NumberWheelChoiceKey, _listChoice); 
+                CacheHelper.Set(NumberWheelChoiceKey, _listChoice); 
             }
             else
             {

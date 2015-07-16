@@ -22,7 +22,6 @@ namespace Fanex.Tarus.SpecialDelete.Core
             SpecialDelete = 0,
             NumberGame = 1,
             EarlyKick_Off = 2,
-            TicketListing = 3,
             MixParlay = 4
         }
     }

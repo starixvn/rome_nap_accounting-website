@@ -3,12 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using DNAide.Core;
-
-using Sunplus.Accounting.Core.Common;
-
-
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -26,15 +21,9 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _directABSUrl;
 
         private static readonly string _getCountry;
-        private static readonly string _getDateMixparlayDailyWL;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
-
-        //Phuong.Nguyen
-        //Create disable horseracing property
         private static readonly bool _disabledHR;
-
-        //Financial disable option
         private static readonly bool _disabledFI;
 
         private static double _UkMeetingMax = 0.03;
@@ -48,9 +37,6 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly bool _disableOR;
         private static readonly bool _disableInternal;
         private static readonly bool _IncludeAccuBalInStatement;
-
-        private static readonly double _MaxPTFI;
-        private static readonly bool _DisableMinPTFI;
         private static readonly bool _Disable1x2Comm;
         private static readonly double _Group1x2Max = 0.0025;
         private static readonly bool _DisableHRPT_Tote;
@@ -63,15 +49,12 @@ namespace Sunplus.Accounting.Core.Configurations
         private static string _iplocation;
         private static readonly bool _isAllowMoveToBingo;
 
-        //henry
         private static readonly string _version;
 
         private static readonly bool _disableM88BetList;
         private static readonly bool _disableVR;
 
         private static readonly string _IgnoreGroups;
-
-        private static string _swapVersionUrl;
 
         private static string _externalSite;
         private static readonly int _maxTransLength;
@@ -87,7 +70,6 @@ namespace Sunplus.Accounting.Core.Configurations
 
         public static readonly int _isShowCustomerSettingRenovation = 0;
 
-        // private static bool _useNewSpecialDelete;
         static WebSettings()
         {
             try
@@ -104,55 +86,33 @@ namespace Sunplus.Accounting.Core.Configurations
                 _internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
                 _directBAUrl = ConfigurationManager.AppSettings["link_BA_url"];
                 _getCountry = ConfigurationManager.AppSettings["link_Country_url"];
-                _getDateMixparlayDailyWL = ConfigurationManager.AppSettings["date_MixparlayAdvance"];
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
                 _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
 
-                _directABSUrl = ConfigurationManager.AppSettings["link_ABS_url"];
-
-                // _baseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.BaseCurrency"];
-                //Phuong.Nguyen
-                //Get Horseracing visibility from Web.config
                 _disabledHR = (ConfigurationManager.AppSettings["disabledHR"] == "1");
-                //Get Financial visibility from webconfig
                 _disabledFI = (ConfigurationManager.AppSettings["disabledFI"] == "1");
                 _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
                 _disableAutoMasterFI = (ConfigurationManager.AppSettings["disableAutoMasterFI"] == "1");
                 _disableAutoMasterHR = (ConfigurationManager.AppSettings["disableAutoMasterHR"] == "1");
                 _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
                 _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
-
-                _MaxPTFI = CastAide.AsDouble(ConfigurationManager.AppSettings["maxPTFI"]);
-
-                _DisableMinPTFI = (ConfigurationManager.AppSettings["disableMinPTFI"] == "1");
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
                 _Group1x2Max = CastAide.AsDouble(ConfigurationManager.AppSettings["group1x2max"]);
                 _DisableHRPT_OpenTote = (ConfigurationManager.AppSettings["disableHRPT_OpenTote"] == "1");
                 _DisableHRPT_Tote = (ConfigurationManager.AppSettings["disableHRPT_Tote"] == "1");
                 _disableInternal = (ConfigurationManager.AppSettings["disableInternal"] == "1");
                 _IncludeAccuBalInStatement = (ConfigurationManager.AppSettings["IncludeAccuBalInStatement"] == "1");
-                //_useNewSpecialDelete = (System.Configuration.ConfigurationManager.AppSettings["useNewSpecialDelete"] == "1");
                 _CacheExpire = CastAide.AsInt32(ConfigurationManager.AppSettings["CacheExpire"]);
-
-                //henry
                 _version = ConfigurationManager.AppSettings["version"];
                 _disableM88BetList = (ConfigurationManager.AppSettings["disableM88BetList"] == "1");
                 _disableVR = (ConfigurationManager.AppSettings["disableVR"] == "1");
                 _iplocation = ConfigurationManager.AppSettings["iplocation"];
-                _swapVersionUrl = ConfigurationManager.AppSettings["SwapVersionURL"];
-                OpenMiniGame = (ConfigurationManager.AppSettings["OpenMiniGame"] == "1");
                 _IgnoreGroups = ConfigurationManager.AppSettings["IgnoreGroups"];
-
                 _externalSite = CastAide.AsString(ConfigurationManager.AppSettings["ExternalSite"]);
-
                 _isAllowMoveToBingo = ConfigurationManager.AppSettings["isMoveBingo"] == "1";
-
                 _maxTransLength = CastAide.AsInt32(ConfigurationManager.AppSettings["MaxTransLength"]);
-
                 IsUMTime = ConfigurationManager.AppSettings["UM"] == "1";
-
                 LbServiceUrl = ConfigurationManager.AppSettings["LBUrl"];
-
                 var exceptionAction = ConfigurationManager.AppSettings["NotAuthenticateAction"].Split(';');
                 NotAuthenticateAction = new List<string>();
                 if (exceptionAction.Length != 0)
@@ -191,15 +151,7 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string DirectABSUrl
         {
             get { return _directABSUrl; }
-        }
-
-        public static bool OpenMiniGame { get; set; }
-
-        public static string SwapVersionUrl
-        {
-            get { return _swapVersionUrl + "?uid=" + AppSession.AccId + "&sid=" + HttpContext.Current.Session.SessionID; }
-            set { _swapVersionUrl = value; }
-        }
+        }        
 
         /// <summary>
         /// Template folder
@@ -237,11 +189,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string getCountryName
         {
             get { return _getCountry; }
-        }
-
-        public static string getDateDailyWLMP
-        {
-            get { return _getDateMixparlayDailyWL; }
         }
 
         public static bool VirtualDir
@@ -318,16 +265,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static double OtherMeeting
         {
             get { return _OtherMeeting; }
-        }
-
-        public static double MaxPTFI
-        {
-            get { return _MaxPTFI; }
-        }
-
-        public static bool DisableMinPTFI
-        {
-            get { return _DisableMinPTFI; }
         }
 
         public static bool Disable1x2Comm
@@ -467,6 +404,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
             }
         }
+
         public static bool EnableProgressiveBonus { get; set; }
 
         public static string ExternalBettingLimitConfig

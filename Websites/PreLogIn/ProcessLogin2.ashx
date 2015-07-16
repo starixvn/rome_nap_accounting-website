@@ -69,7 +69,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
 
                     IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                     menuService.GetUserMenu();
-                    menuService.GetReportMenu("ACC-REPORT");
+                    
 					bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
                     if (isShowNap)
                     {

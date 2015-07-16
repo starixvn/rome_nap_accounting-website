@@ -9,12 +9,12 @@ namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Fanex.Tarus.SpecialDelete.Entity.NumberGame;
-    using System.Web;
     using System.IO;
+    using System.Linq;
+    using System.Web;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Extensions;
-    using Fanex.Tarus.Business.Implement;
+    using Fanex.Tarus.SpecialDelete.Entity.NumberGame;
 
     /// <summary>
     /// TODO: Update summary.
@@ -29,12 +29,12 @@ namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
         {
             _listChoice = new List<NumberWheelChoice>();
 
-            var objListChoice = CacheService.Get(NumberWheelChoiceKey) as List<NumberWheelChoice>;
+            var objListChoice = CacheHelper.Get(NumberWheelChoiceKey) as List<NumberWheelChoice>;
 
             if (objListChoice == null)
             {
                 _listChoice = GetDefaultChoiceList();
-                CacheService.Set(NumberWheelChoiceKey, _listChoice); 
+                CacheHelper.Set(NumberWheelChoiceKey, _listChoice); 
             }
             else
             {

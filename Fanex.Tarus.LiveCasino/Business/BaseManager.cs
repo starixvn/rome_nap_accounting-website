@@ -7,10 +7,6 @@ namespace Fanex.Tarus.LiveCasino.Business
 
     public class BaseManager
     {
-        public BaseManager()
-        {
-        }
-
         public static bool HasPermission(string functionName)
         {
             var roleAccessSession = AppSession.RoleAccess;

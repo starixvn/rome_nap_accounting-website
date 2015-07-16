@@ -2,7 +2,6 @@
 using System;
 using System.Configuration;
 using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Configurations;
 
 public partial class InternalView : System.Web.UI.Page
 {
@@ -16,8 +15,7 @@ public partial class InternalView : System.Web.UI.Page
         strParams = _custName + "&" + _accId + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-        var internalAgentForExAcccUrl = ConfigurationManager.AppSettings["int_agent_url_exacc"];
-        var internalAgentUrl = !AccountingCoreAppSession.CurrentSystemNAME.Equals(AccountingCoreAppSession.AccountingSystem.Accounting) ? internalAgentForExAcccUrl : ConfigurationManager.AppSettings["int_agent_url"];
+        var internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
         url = (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl) + "?params=" + strParams;
         Response.Redirect(url);
         Response.End();

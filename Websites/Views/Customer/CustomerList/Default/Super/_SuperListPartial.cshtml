@@ -144,13 +144,6 @@
                         <li class="canchange" onclick="SuperList.casino('@superItem.ChildID');">Casino</li>
                     }
                     <!--/casino-edit-->
-                    <!--finance-edit-->
-                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
-                    {
-                        <li class="canchange" onclick="OpenEditFI('@superItem.ChildID', '@Model.ParentId', '4')" >
-                            Finance</li>
-                    }
-                    <!--/finance-edit-->
                     <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {

@@ -76,8 +76,6 @@ namespace Sunplus.Accounting.Business.Security
                 DataTable dtb = DataAccess.IBCDLL.Accounting.UserControl.FunctionInfoSelect();
                 foreach (DataRow dr in dtb.Rows)
                 {
-                    //if (CastAide.AsInt32(dr["SubFuncCount"]) == 0)
-                    //{
                     string strFilesName = dr["FileNames"].ToString();
                     string strFuncName = dr["FuncName"].ToString();
                     string[] strListFiles = strFilesName.Split(';');
@@ -86,21 +84,13 @@ namespace Sunplus.Accounting.Business.Security
                         if (!pages.ContainsKey(strListFiles[i].Trim()))
                         {
                             pages.Add(strListFiles[i].Trim(), strFuncName.Trim() + "-1");
-                        }
-                        //try
-                        //{
-                        //    pages.Add(strListFiles[i].Trim(), strFuncName.Trim() + "-1");
-                        //}
-                        //catch
-                        //{
-                        //}
+                        }                   
                     }
                 }
             }
             catch (Exception ex)
             {
             }
-            //Application["AccessPermission"] = pages;
             AppCache.AccessPermission = pages;
         }
 
@@ -248,14 +238,7 @@ namespace Sunplus.Accounting.Business.Security
         public static bool IsDenyView2HOther
         {
             get { return false; }
-        }
-
-        public static bool IsAllowEditMG()
-        {
-            if (WebSettings.OpenMiniGame)
-                return true;
-            return false;
-        }
+        }      
 
         /// <summary>
         /// T: Enumeration.Functions enum (Customer, Setting...)
