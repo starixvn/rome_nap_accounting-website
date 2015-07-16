@@ -17,33 +17,11 @@ public partial class _Default : System.Web.UI.Page
                 AccCommon.LeaveSSL();
                 accUsername = AppSession.AccUserName;
                 listMenuIgnore = ConfigurationManager.AppSettings["ListIgnoreMenu"].ToString();
-                //if (AppSession.CurrentSystem == Enumerations.AccountingSystem.Thai)
-                //{
-                //    mainMenu = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplateBySystem("MainMenu/MainMenu.htm", true);
-                //    isThai = "true";
-                //}
-                //else
-                //{
-                //    mainMenu = "";
-                //}
             }
             catch (Exception ex)
             {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            //News news = new News();
-            //LastestNewsList = news.ShowLastNewsRotaion();
         }
     }
-
-    //public string GetUTCOffSet()
-    //{
-    //    if (TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours > 0)
-    //    {
-    //        return "+" + TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours.ToString();
-    //    }
-    //    else
-    //    {
-    //        return TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours.ToString();
-    //    }
-    //}
 }
