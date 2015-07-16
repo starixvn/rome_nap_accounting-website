@@ -1,5 +1,4 @@
-﻿
-namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer.MicroGaming
+﻿namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer.MicroGaming
 {
     using DNAide.Data;
     using Fanex.Data;

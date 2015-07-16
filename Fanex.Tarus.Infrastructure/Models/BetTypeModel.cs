@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.Tarus.Infrastructure.Models
+﻿namespace Fanex.Tarus.Infrastructure.Models
 {
     using System.Collections.Generic;
 

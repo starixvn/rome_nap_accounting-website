@@ -10,9 +10,8 @@
 namespace Sunplus.Accounting.Business.Customer
 {
     using DNAide.Web;
-    using Sunplus.Accounting.Entities;
-    using Fanex.Tarus.Infrastructure.Constants;
     using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Entities;
 
     /// <summary>
     /// Render Left Panel Manager.

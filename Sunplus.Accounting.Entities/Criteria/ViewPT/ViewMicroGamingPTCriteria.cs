@@ -1,5 +1,4 @@
-﻿
-namespace Sunplus.Accounting.Entities.Criteria.ViewPT
+﻿namespace Sunplus.Accounting.Entities.Criteria.ViewPT
 {
     using System.Collections;
 

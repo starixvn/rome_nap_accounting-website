@@ -69,7 +69,6 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
     </Reference>
@@ -201,12 +200,6 @@
     <Compile Include="Helper\SendEmail3rdParty.cs" />
     <Compile Include="Helper\StringUtils.cs" />
     <Compile Include="Helper\Utils.cs" />
-    <Compile Include="TplCore\App_Templates\Default\BetList\DeleteBet.htm.cs" />
-    <Compile Include="TplCore\App_Templates\Default\BetList\Soccer.htm.cs" />
-    <Compile Include="TplCore\App_Templates\Default\CustomerInfo\CustomerInfo.htm.cs" />
-    <Compile Include="TplCore\App_Templates\Default\DangerousCust.htm.cs" />
-    <Compile Include="TplCore\App_Templates\Default\SpecialDelete\Mixpalay\TplSendMailMixparlayFromBetList.htm.cs" />
-    <Compile Include="TplCore\App_Templates\Default\SpecialDelete\OutrightList.htm.cs" />
     <Compile Include="Web\HtmlHelper.cs" />
     <Compile Include="Web\PagerManager.cs" />
     <Compile Include="Web\TplCore\App_Templates\Balance\BalanceForm.htm.cs" />
@@ -228,10 +221,6 @@
     <Compile Include="Web\TplCore\App_Templates\CustomerInfo\CustomerInfo.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\CustomerInfo\LoginDetail.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Customer\ChangeSite.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Customer\SuperAgentListHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Customer\SuperAgentListRow.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Customer\SuperListHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Customer\SuperListRow.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Customer\v2\AccInfo.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\DirectBalance\BalanceMovement.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\DirectBalance\DirectBalance_Downline.htm.cs" />
@@ -372,7 +361,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
