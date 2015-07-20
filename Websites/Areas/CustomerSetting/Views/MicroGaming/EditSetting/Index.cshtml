@@ -1,0 +1,124 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+@using Fanex.Tarus.Customer.Entities.MicroGaming;
+@using Newtonsoft.Json;
+@using Fanex.Tarus.Business.Implement;
+@using Sunplus.Accounting.Core.Common;
+@model MicroGamingCustomerInfo
+@{
+    Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
+    ViewBag.Title = @Customer_Labels.Update_Microgamming_Setting;
+
+    var serializerSetting = new JsonSerializerSettings();
+    serializerSetting.NullValueHandling = NullValueHandling.Ignore;
+    var customerInfo = JsonConvert.SerializeObject(Model, Formatting.None, serializerSetting);
+    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
+}
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/MicroGaming/EditSetting/Styles/EditSetting.css" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/AGCasino/EditGameSetting/Styles/EditGameSetting.css" />
+<div class="main">
+    <div class="maincontent">
+        <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC fixfont">
+                        @ViewBag.Title
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="maincontent_box">
+            <div id="result-message">
+            </div>
+        </div>
+        <div id="setting-content">
+            <table class="tblcollapse table-setting-container">
+                <tbody>
+                    <tr class="title1">
+                        <td class="c" colspan="4">
+                            @Customer_Labels.Customer_Information
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="25%" class="l">
+                            @Customer_Labels.Username
+                        </td>
+                        <td width="25%" class="l customer-username">
+                            @Model.Username
+                        </td>
+                        <td width="25%" class="l">
+                            @Customer_Labels.Nick_name
+                        </td>
+                        <td width="25%" class="l customer-nickname">
+                            @Model.NickName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            @Customer_Labels.First_Name
+                        </td>
+                        <td class="l customer-firstname">
+                            @Model.FirstName
+                        </td>
+                        <td class="l">
+                            @Customer_Labels.Last_Name
+                        </td>
+                        <td class="l customer-lastname">
+                            @Model.LastName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            @Customer_Labels.Phone
+                        </td>
+                        <td class="l customer-phone">
+                            @Model.Phone
+                        </td>
+                        <td class="l">
+                            @Customer_Labels.Mobile_Phone
+                        </td>
+                        <td class="l customer-mobilephone">
+                            @Model.Mobile
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            @Customer_Labels.Fax
+                        </td>
+                        <td class="l customer-fax" colspan="3">
+                            @Model.Fax
+                        </td>
+                    </tr>
+                    <tr class="title1">
+                        <td class="c" colspan="4">
+                            @Customer_Labels.Position_Taking
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <input class="btn-update-setting" type="button" value="@Customer_Labels.Update" disabled="disabled"/>
+    </div>
+</div>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js"></script>
+<script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
+<script type="text/javascript" src="~/Areas/CustomerSetting/Views/MicroGaming/EditSetting/Scripts/EditSettingManager.js"></script>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';  
+    var customerInfo = @Html.Raw(customerInfo);     
+    var viewResources = {
+        HasHostPermission: @hasHostPermission,
+        Error_SystemError: '@Customer_Labels.Error_SystemError'
+    }; 
+</script>

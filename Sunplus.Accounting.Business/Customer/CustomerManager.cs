@@ -780,7 +780,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
                                 }
 
-
                                 #endregion Progressive Bonus
                                 var customerDetail = new CustomerDetail
                                {
@@ -852,7 +851,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     disalbedVSParent,
                                     disabledEsportsParent,
                                     Permissions.IsAllowEditGoldDeluxe(parentId),
-                                    _custparent.IsDisableGoldDeluxe);
+                                    _custparent.IsDisableGoldDeluxe,
+                                    isDeposit);
 
                                 #endregion Setting
 
@@ -1184,7 +1184,8 @@ namespace Sunplus.Accounting.Business.Customer
             bool disabledVSParent,
             bool disabledEsportsParent,
             bool isAllowEditGoldDeluxe,
-            bool disabledGoldDeluxeParent)
+            bool disabledGoldDeluxeParent,
+            bool isDeposit)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1279,7 +1280,7 @@ namespace Sunplus.Accounting.Business.Customer
             //TemplateHandler.Assign(ref htmlcontent, "{chkUKTote}", disabledHROpenTote ? 1 : 0);
 
             #endregion HR
-                    
+
             #region Enable Casino
 
             bool disabledCasino = Convert.IsDBNull(row1["disablecasino"]) ? false : Convert.ToBoolean(row1["disablecasino"]);
@@ -1407,18 +1408,22 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Esports
 
-            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
-                false :
-                Convert.ToBoolean(row1["HasDownline"]);
-            RenderEnableGoldDeluxeBox(
-                row1,
-                sg,
-                ref htmlcontent,
-                roleId,
-                isManageCustomerAccess,
-                disabledGoldDeluxeParent,
-                isAllowEditGoldDeluxe,
-                hasDownline);
+            if (WebSettings.IsShowGoldDeluxeSettingForCredit && !isDeposit)
+            {
+                var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
+                    false :
+                    Convert.ToBoolean(row1["HasDownline"]);
+                RenderEnableGoldDeluxeBox(
+                    row1,
+                    sg,
+                    ref htmlcontent,
+                    roleId,
+                    isManageCustomerAccess,
+                    disabledGoldDeluxeParent,
+                    isAllowEditGoldDeluxe,
+                    hasDownline);
+            }
+
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
@@ -1486,7 +1491,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
-                  
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
@@ -1535,7 +1540,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + parentId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Agent";
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/AgentMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1553,7 +1558,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Master";
 
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                   
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1569,7 +1574,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Super";
                     submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                   
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperMinUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";

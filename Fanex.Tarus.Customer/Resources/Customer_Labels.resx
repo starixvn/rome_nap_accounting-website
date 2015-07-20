@@ -414,4 +414,64 @@
   <data name="GoldDeluxeUpdateConfirm" xml:space="preserve">
     <value>Are you sure you want to update Gold Deluxe status on this customer?</value>
   </data>
+  <data name="BetTradeStatusUpdatedSuccessfully" xml:space="preserve">
+    <value>Bet Trade status updated successfully.</value>
+  </data>
+  <data name="MicroGamingStatusUpdatedSuccessfully" xml:space="preserve">
+    <value>Microgming status updated successfully.</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="Enable_BetTrade" xml:space="preserve">
+    <value>Enable BetTrade</value>
+  </data>
+  <data name="Enable_BetTrade_for_members" xml:space="preserve">
+    <value>Enable BetTrade for members</value>
+  </data>
+  <data name="Invalid_Customer" xml:space="preserve">
+    <value>Invalid Customer.</value>
+  </data>
+  <data name="Enable_Downlines" xml:space="preserve">
+    <value>Enable Downlines</value>
+  </data>
+  <data name="Enable_Microgaming" xml:space="preserve">
+    <value>Enable Microgaming</value>
+  </data>
+  <data name="Customer_Information" xml:space="preserve">
+    <value>Customer Information</value>
+  </data>
+  <data name="Update_Microgamming_Setting" xml:space="preserve">
+    <value>Update Microgaming Setting</value>
+  </data>
+  <data name="Nick_name" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="First_Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Last_Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Mobile_Phone" xml:space="preserve">
+    <value>Mobile Phone</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Position_Taking" xml:space="preserve">
+    <value>Position Taking</value>
+  </data>
+  <data name="Error_NoPermissionOnFunction" xml:space="preserve">
+    <value>You don't have permission on this function.</value>
+  </data>
+  <data name="MicroGaming_UpdateSuccess" xml:space="preserve">
+    <value>Microgaming setting updated successfully</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>There is a problem! Please try again!</value>
+  </data>
 </root>

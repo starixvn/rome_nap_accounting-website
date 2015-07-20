@@ -65,7 +65,7 @@ namespace Sunplus.Accounting.Business.Customer
                 return;
             }
 
-            var editSettingLink = "MicroGaming/EditSetting?" +
+            var editSettingLink = "MicroGaming/EditSettingView?" +
                 "parentId={0}&custId={1}&roleId={2}";
             editSettingLink = string.Format(
                 editSettingLink,
