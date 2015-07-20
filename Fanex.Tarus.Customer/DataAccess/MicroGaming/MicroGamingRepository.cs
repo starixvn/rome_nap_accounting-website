@@ -10,7 +10,6 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.MicroGaming;
     using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
-    using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
     using Fanex.Tarus.Infrastructure.Constants;
 
     public class MicroGamingRepository : IMicroGamingRepository
