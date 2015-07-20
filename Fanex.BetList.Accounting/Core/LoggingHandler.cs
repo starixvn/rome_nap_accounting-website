@@ -12,6 +12,7 @@ namespace Fanex.BetList.Accounting.Core
     using System;
     using System.Web;
     using Fanex.Logging;
+    using Sunplus.Accounting.Core.Extensions;
 
     public enum LogType : int
     {
@@ -38,14 +39,14 @@ namespace Fanex.BetList.Accounting.Core
         public static void Log(Exception ex)
         {
             string message = ex.Message +
-                              "<br>\r\nSOURCE: " + ex.Source +
-                              "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                              "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                              "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
-                              "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
-                              "<br>\r\nTARGETSITE: " + ex.TargetSite +
-                              "<br>\r\nSTACKTRACE: " + ex.StackTrace;
-            Logger.Log.Error(message);
+                             "\r\nSOURCE: " + ex.Source +
+                             "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "\r\nREFERRER: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.UrlReferrer.ToString()) +
+                             "\r\nFORM: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
+                             "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
+                             "\r\nTARGETSITE: " + ex.TargetSite +
+                             "\r\nSTACKTRACE: " + ex.StackTrace;
+            Fanex.Logging.Logger.Log.Error(message);
         }
 
         /// <summary>
@@ -55,13 +56,14 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="logType">Type of the log.</param>
         public static void Log(string message = "", LogType logType = LogType.Error)
         {
+            var ex = new Exception(message);
             switch (logType)
             {
                 case LogType.Info:
-                    LogService.Info(message);
+                    LogService.Info(ex.FormatSensitiveInfo(message));
                     break;
                 case LogType.Error:
-                    LogService.Error(message);
+                    LogService.Error(ex.FormatSensitiveInfo(message));
                     break;
             }
         }

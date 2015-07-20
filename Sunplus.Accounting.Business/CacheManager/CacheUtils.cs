@@ -5,6 +5,7 @@ using System.Linq;
 using DNAide.Core;
 using SharedCache.WinServiceCommon.Provider.Cache;
 using Sunplus.Accounting.DataAccess;
+using Fanex.Tarus.Infrastructure.Caching;
 
 namespace Sunplus.Accounting.Business.CacheManager
 {
@@ -17,22 +18,24 @@ namespace Sunplus.Accounting.Business.CacheManager
         {
             get
             {
-                Dictionary<int, string> exchange;
+                object exchange = null;
                 try
                 {
-                    exchange = IndexusDistributionCache.SharedCache.Get("exchange") as Dictionary<int, string> ??
-                               IBCProvider.Utils.GetExchange();
+                    exchange = CacheHelper.Get("exchange");
+                    if (exchange == null)
+                    {
+                        exchange = IBCProvider.Utils.GetExchange();
+                        CacheHelper.Set("exchange", exchange, DateTime.Now.AddHours(5));
+                    }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    exchange = IBCProvider.Utils.GetExchange();
-                    // Exchange = exchange;
-                    Logs.Write(ex.ToString());
+                    exchange = IBCProvider.Utils.GetExchange();                    
                 }
 
-                return exchange;
+                return exchange as Dictionary<int, string>;
             }
-            set { IndexusDistributionCache.SharedCache.Add("exchange", value, DateTime.Now.AddHours(5)); }
+            set { CacheHelper.Set("exchange", value, DateTime.Now.AddHours(5)); }
         }
 
         public static string GetAllSiteNames
@@ -41,14 +44,14 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return IndexusDistributionCache.SharedCache.Get("AccGetAllSiteNames") as string;
+                    return CacheHelper.Get("AccGetAllSiteNames") as string;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }
             }
-            set { IndexusDistributionCache.SharedCache.Add("AccGetAllSiteNames", value, DateTime.Now.AddHours(5)); }
+            set { CacheHelper.Set("AccGetAllSiteNames", value, DateTime.Now.AddHours(5)); }
         }
 
         public static string GetExchangeName(int id)

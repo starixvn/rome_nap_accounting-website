@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Web;
-
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     using System;
+    using System.Web;
+    using Sunplus.Accounting.Core.Extensions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -21,9 +21,9 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             string message = ex.Message +
                              "\r\nSOURCE: " + ex.Source +
                              "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                             "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                             "\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
-                             "\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "\r\nREFERRER: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.UrlReferrer.ToString()) +
+                             "\r\nFORM: " +ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
+                             "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
                              "\r\nTARGETSITE: " + ex.TargetSite +
                              "\r\nSTACKTRACE: " + ex.StackTrace;
             Fanex.Logging.Logger.Log.Error(message);

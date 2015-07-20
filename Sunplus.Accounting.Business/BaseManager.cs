@@ -4,7 +4,7 @@ using System.Web;
 using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Core.CachingLib;
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 /// <summary>
 /// Summary description for BaseManager
@@ -33,7 +33,7 @@ namespace Sunplus.Accounting.Business
 
         protected virtual void CacheData(string key, object value, DateTime expire)
         {
-            SCCACHE.SharedCache.Add(key, value, expire);
+            SCCACHE.Set(key, value, expire);
         }
 
         protected virtual void CacheData(string key, object value, int minutesExpire)
@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.Business
         {
             try
             {
-                return CastAide.AsString(SCCACHE.SharedCache.Get(key));
+                return CastAide.AsString(SCCACHE.Get(key));
             }
             catch (Exception ex)
             {
