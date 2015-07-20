@@ -78,20 +78,34 @@
             SuperList.params.pageIndex = 1;
         }
         var search = $("#txtSearch");
+        if (search.val() == "All") {
+            SuperList.params.searchText = "";
+        }
         if (search.length > 0 && search.val() != "All" && SuperList.params.searchText != search.val()) {
             SuperList.params.searchText = search.val();
         }
 
         var firstLetter = $("#listAlpha");
-        if (firstLetter.length > 0 && firstLetter.val() != "All" && SuperList.params.selectAlpha != firstLetter.val()) {
-            SuperList.params.selectAlpha = firstLetter.val();
+        if (firstLetter.val() == "All") {
+            SuperList.params.selectAlpha = "";
+        }
+        else {
+            if (firstLetter.length > 0 && SuperList.params.selectAlpha != firstLetter.val()) {
+                SuperList.params.selectAlpha = firstLetter.val();
+            }
         }
 
         var currrency = $("#listCurrency")
-        if (currrency.length > 0 && currrency.val() != "-1" && SuperList.params.selectCurreny != currrency.val()) {
-            SuperList.params.selectCurreny = currrency.val();
+        if (currrency.val() == "-1") {
+            SuperList.params.selectCurreny = "";
         }
-        else { SuperList.params.selectCurreny = ""; }
+        else
+        {
+            if (currrency.length > 0 && SuperList.params.selectCurreny != currrency.val()) {
+                SuperList.params.selectCurreny = currrency.val();
+            }
+        }
+       
 
         var dcomm = $("#DComm");
         if (dcomm.length > 0 && SuperList.params.dComm != dcomm.val()) {
