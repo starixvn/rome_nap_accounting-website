@@ -44,10 +44,6 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\BetListCore\Fanex.BetList.Accounting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
@@ -213,6 +209,10 @@
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
       <Name>Fanex.AuthenticationFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.BetList.Accounting\BetList.csproj">
+      <Project>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</Project>
+      <Name>BetList</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
