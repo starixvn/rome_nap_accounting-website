@@ -800,8 +800,14 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     ParentId = parentId,
                                     RoleId = roleId,
-                                    CustId = custId
+                                    CustId = custId,
+                                    IsDeposit = isDeposit,
+                                    Username = userName,
+                                    AccId = AppSession.AccId
                                 };
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
 
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
@@ -850,9 +856,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     disabledLCSParent,
                                     disalbedVSParent,
                                     disabledEsportsParent,
-                                    Permissions.IsAllowEditGoldDeluxe(parentId),
-                                    _custparent.IsDisableGoldDeluxe,
-                                    isDeposit);
+                                    renderLeftPanelParameter);
 
                                 #endregion Setting
 
@@ -1183,9 +1187,7 @@ namespace Sunplus.Accounting.Business.Customer
             bool disableLiveCasinoParent,
             bool disabledVSParent,
             bool disabledEsportsParent,
-            bool isAllowEditGoldDeluxe,
-            bool disabledGoldDeluxeParent,
-            bool isDeposit)
+            RenderLeftPanelParameter renderLeftPanelParameter)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1408,21 +1410,33 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Esports
 
-            if (WebSettings.IsShowGoldDeluxeSettingForCredit && !isDeposit)
+            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
+                false :
+                Convert.ToBoolean(row1["HasDownline"]);
+            if (WebSettings.IsShowGoldDeluxeSettingForCredit && !renderLeftPanelParameter.IsDeposit)
             {
-                var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
-                    false :
-                    Convert.ToBoolean(row1["HasDownline"]);
                 RenderEnableGoldDeluxeBox(
                     row1,
                     sg,
                     ref htmlcontent,
                     roleId,
                     isManageCustomerAccess,
-                    disabledGoldDeluxeParent,
-                    isAllowEditGoldDeluxe,
+                    CustParent.IsDisableGoldDeluxe,
+                     Permissions.IsAllowEditGoldDeluxe(parentID),
                     hasDownline);
             }
+
+            RenderLeftPanelManager.RenderEnableProductBox(
+                row1,
+                sg,
+                ref htmlcontent,
+                isManageCustomerAccess,
+                CustParent.IsDisableMetricGaming,
+                hasDownline,
+                "SuperLive",
+                WebSettings.EnableMetricGaming,
+                renderLeftPanelParameter,
+                "Update Super Live Status");
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }

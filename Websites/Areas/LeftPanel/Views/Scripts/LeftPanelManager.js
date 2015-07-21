@@ -1,53 +1,29 @@
 var LeftPanelManager = function () {
     var self = this;
-    self.updateBetTrade = function (
+    self.updateStatus = function (
         custId,
         username,
         roleId,
         hasDownline,
         accId,
+        enable,
+        enableuplines,
+        enabledownlines,
+        title,
+        productName,
         productId) {
-        var title = 'Update Bet Trade Status';
         var url = 'customersetting/enablestatus/productstatus?' +
             $.param({
                 custId: custId,
                 username: username,
-                hasdownline: hasDownline,
+                hasdownline: hasDownline ? true : false,
                 level: roleId,
                 uplineid: 0,
                 userid: accId,
-                productid: 'BetTrade',
-                enable: true,
-                enabledownlines: true,
-                enableuplines: true,
-                product: productId
-            });
-
-        var width = 475;
-        var height = 300;
-        parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
-    };
-
-    self.updateMicroGaming = function (
-        custId,
-        username,
-        roleId,
-        hasDownline,
-        accId,
-        productId) {
-        var title = 'Update Microgaming Status';
-        var url = 'customersetting/enablestatus/productstatus?' +
-            $.param({
-                custId: custId,
-                username: username,
-                hasdownline: hasDownline,
-                level: roleId,
-                uplineid: 0,
-                userid: accId,
-                productid: 'MicroGaming',
-                enable: true,
-                enabledownlines: true,
-                enableuplines: true,
+                productid: productName,
+                enable: !enable,
+                enabledownlines: enabledownlines ? true : false,
+                enableuplines: enableuplines ? true : false,
                 product: productId
             });
 

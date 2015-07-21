@@ -221,7 +221,7 @@
                     <!--/autosuspendstatus-->
                     <td class="l" colspan="2">
                         <!--BetTrade-->             
-                        <span class="canchange" onclick="leftPanelManager.updateBetTrade({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, {betTradeId})">Enable BetTrade</span>
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status','BetTrade', {betTradeId})">Enable BetTrade</span>
                         <!--/BetTrade-->
                     </td>
                 </tr> 
@@ -230,7 +230,7 @@
                  <tr>
                     <!--Microgaming-->        
                     <td class="l" colspan="2">        
-                        <span class="canchange" onclick="leftPanelManager.updateMicroGaming({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, {microGamingId})">Enable Microgaming</span>
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMicrogaming}, true, 'Update Microgaming Status','MicroGaming', {microGamingId})">Enable Microgaming</span>
                     </td>
                     <!--/Microgaming-->
                     <td class="l" colspan="2" ></td>
@@ -383,5 +383,6 @@ target="_blank">
 <input type="hidden" id="chkOldValueEnableHorseRacingFixedOdds" name="chkOldValueEnableHorseRacingFixedOdds" value="{chkEnableHorseRacingFixedOdds}"/>
 <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}"/>
 <input type="hidden" id="chkOldValueGoldDeluxe" name="chkOldValueGoldDeluxe" value="{chkGoldDeluxe}"/>
+<input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}"/>
 <!--/checkbox-oldvalue-->
 </form>

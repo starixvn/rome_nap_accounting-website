@@ -479,6 +479,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableMetricGaming
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableMetricGaming"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get

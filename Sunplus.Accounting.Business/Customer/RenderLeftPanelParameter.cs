@@ -31,5 +31,9 @@ namespace Sunplus.Accounting.Business.Customer
         public int CustId { get; set; }
 
         public bool IsDeposit { get; set; }
+
+        public string Username { get; set; }
+
+        public int AccId { get; set; }
     }
 }

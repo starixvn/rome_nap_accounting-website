@@ -442,6 +442,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsDisableGoldDeluxe = WebSettings.EnableGoldDeluxe ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableGoldDeluxe"], false) :
                     true;
+
+                _cust.IsDisableMetricGaming = WebSettings.EnableMetricGaming ?
+                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableSuperLive"], false) :
+                    true;
+
+                _cust.IsDisableMicroGaming = WebSettings.EnableMicrogaming ?
+                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMicrogame"], false) :
+                    true;
                 return _cust;
             }
             catch (Exception ex)

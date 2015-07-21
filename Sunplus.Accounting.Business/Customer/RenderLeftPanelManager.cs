@@ -1,16 +1,11 @@
-// --------------------------------------------------------------------------
-// <copyright file="BetListAreaRegistration.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
-
 namespace Sunplus.Accounting.Business.Customer
 {
+    using System.Data;
     using DNAide.Web;
+    using Fanex.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities;
 
     /// <summary>
@@ -59,7 +54,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (!WebSettings.EnableMicrogaming)
+            if (!WebSettings.EnableMicrogaming || !renderLeftPanelParameter.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
                 return;
@@ -73,6 +68,109 @@ namespace Sunplus.Accounting.Business.Customer
                 renderLeftPanelParameter.CustId,
                 renderLeftPanelParameter.RoleId);
             TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
+        }
+
+        public static void RenderEnableProductBox(
+            DataRow custInfoRow,
+            SettingGroup settingGroup,
+            ref string htmlcontent,
+            bool isManageCustomerAccess,
+            bool disabledProductParent,
+            bool hasDownline,
+            string productName,
+            bool isSupport,
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            string title)
+        {
+            if (isSupport)
+            {
+                var columnName = "Disable" + productName;
+                bool isDisabled = Converter.ToBool(custInfoRow[columnName], false);
+
+                columnName = "DisableDownlines" + productName;
+                bool disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
+
+                var isCustomerEnabled = custInfoRow["Enabled"].ToString();
+                settingGroup.Add(GetProductSettingControl(
+                    renderLeftPanelParameter,
+                    isManageCustomerAccess,
+                    "disabled" + productName,
+                    !isDisabled,
+                    hasDownline,
+                    true,
+                    Converter.ToBool(isCustomerEnabled),
+                    disabledProductParent,
+                    disableDownlines,
+                    productName,
+                    title));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
+            }
+        }
+
+        private static SettingControl GetProductSettingControl(
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
+            bool isAllowEdit,
+            bool isEnabled,
+            bool disabledUpline,
+            bool disableDownLine,
+            string productName,
+            string title)
+        {
+            string classname = string.Empty;
+            string jsonclick = string.Empty;
+            string jsonmouseover = string.Empty;
+            string jsonmouseout = string.Empty;
+            if (isAllowEdit && isManageCustomerAccess)
+            {
+                var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
+                classname = canChange ? "canchange" : "cannotchange";
+
+                var parameters = new string[]
+                {
+                    renderLeftPanelParameter.CustId.ToString(),
+                    "'" + renderLeftPanelParameter.Username + "'",
+                    renderLeftPanelParameter.RoleId.ToString(),
+                    hasDownLine ? "1" : "0",
+                    renderLeftPanelParameter.AccId.ToString(),
+                    currStatus ? "1" : "0",
+                    disabledUpline ? "0" : "1",
+                    disableDownLine ? "0" : "1" ,
+                    "'" + title + "'",
+                    "'" + productName + "'"
+                };
+
+                jsonclick = canChange ?
+                    string.Format("return leftPanelManager.updateStatus({0});", string.Join(",", parameters)) :
+                    string.Empty;
+                jsonmouseout = canChange ? string.Empty : "UnTip()";
+                jsonmouseover = canChange ? string.Empty :
+                     string.Format(
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+            }
+
+            return
+                new SettingControl(
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
+                    isAllowEdit ? currStatus : false,
+                    !isAllowEdit,
+                    jsonclick,
+                    jsonmouseout,
+                    jsonmouseover,
+                    classname,
+                    statusName,
+                    renderLeftPanelParameter.RoleId,
+                    disableDownLine,
+                    productName);
         }
     }
 }

@@ -611,6 +611,10 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableGoldDeluxe { get; set; }
 
+        public bool IsDisableMetricGaming { get; set; }
+
+        public bool IsDisableMicroGaming { get; set; }
+
         #endregion Properties
     }
 }
