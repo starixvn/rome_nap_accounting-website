@@ -2,7 +2,7 @@
 <Functions>
   <Function Name="ResetWinning">
     <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
   <Function Name="Balance Report">
     <Setting Key="masterbalance" SpName="Acc_Rpt_Balance_Master" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -31,7 +31,7 @@
     <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Betlist">
-    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer_bettrade" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_FULL2" SpName="Acc_AllStatement_FULL2" DbName="DBACC.bodb02.bodbAdminNet" />
