@@ -1148,8 +1148,8 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
-
         }
+
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
         {
             try
