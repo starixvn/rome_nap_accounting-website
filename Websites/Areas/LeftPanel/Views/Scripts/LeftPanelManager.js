@@ -24,7 +24,8 @@ var LeftPanelManager = function () {
                 enable: !enable,
                 enabledownlines: enabledownlines ? true : false,
                 enableuplines: enableuplines ? true : false,
-                product: productId
+                product: productId,
+                hideDownline: !hasDownline
             });
 
         var width = 475;
