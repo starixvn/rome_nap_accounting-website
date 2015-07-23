@@ -15,18 +15,8 @@ namespace Sunplus.Accounting.Core.Extensions
     {
         public static string FormatSensitiveInfo(this Exception ex, string info)
         {
-            var formatedInfo = string.IsNullOrWhiteSpace(info) ? string.Empty : info;
-            var infos = formatedInfo.Split('&');
-
-            foreach (var item in infos)
-            {
-                if (item.ToLower().Contains("pass") || item.ToLower().Contains("pwd") || item.ToLower().Contains("security"))
-                {
-                    return string.Empty;
-                }
-            }
-
-            return formatedInfo;
+            var formatedInfo = string.IsNullOrWhiteSpace(info) ? string.Empty : info.ToLower(); 
+            return formatedInfo.Contains("pass") || formatedInfo.Contains("pwd") || formatedInfo.Contains("security") ? string.Empty : formatedInfo;
         }
 
         public static void WriteLog(this Exception ex)
