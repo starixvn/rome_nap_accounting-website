@@ -11,6 +11,7 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
     using Fanex.Tarus.Customer.Entities.MicroGaming;
     using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
     using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Infrastructure.Caching;
 
     public class MicroGamingRepository : IMicroGamingRepository
     {
@@ -96,7 +97,7 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
                     custInfo.GameTypeList.Add(new GameTypeModel
                     {
                         Id = betTypeId,
-                        Name = gameTypeList[betTypeId],
+                        Name = string.Format("{0} ({1})", CacheRef.GetBettype(betTypeId), gameTypeList[betTypeId]),
                         PositionTaking = Converter.ToDecimal(dataRow["pt"]),
                         MaxPositionTaking = Converter.ToDecimal(dataRow["MaxPositionTaking"]),
                         HasMinPositionTaking = !Convert.IsDBNull(dataRow["MinPositionTaking"]),

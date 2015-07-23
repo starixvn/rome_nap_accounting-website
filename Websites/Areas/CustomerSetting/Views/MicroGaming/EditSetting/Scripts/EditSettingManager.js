@@ -99,8 +99,8 @@ var EditSettingManager = function () {
         for (var i = 0; i < gameTypeListLength; i++) {
             var gameType = customerInfo.GameTypeList[i];
             html += '<tr class="game-type-row">\
-                        <td class="l">' + gameType.Name + '</td>\
-                        <td class="l" colspan="3">' + self.renderDropdownPT(gameType) + '</td>\
+                        <td class="l" colspan="2">' + gameType.Name + '</td>\
+                        <td class="l" colspan="2">' + self.renderDropdownPT(gameType) + '</td>\
                     </tr>';
         }
 
