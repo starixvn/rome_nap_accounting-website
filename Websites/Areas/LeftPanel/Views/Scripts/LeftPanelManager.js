@@ -22,7 +22,7 @@ var LeftPanelManager = function () {
                 userid: accId,
                 productid: productName,
                 enable: !enable,
-                enabledownlines: enabledownlines ? true : false,
+                enabledownlines: false,
                 enableuplines: enableuplines ? true : false,
                 product: productId,
                 hideDownline: !hasDownline
