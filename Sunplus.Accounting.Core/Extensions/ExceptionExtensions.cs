@@ -20,7 +20,7 @@ namespace Sunplus.Accounting.Core.Extensions
 
             foreach (var item in infos)
             {
-                if (item.ToLower().Contains("pass") || item.ToLower().Contains("pwd"))
+                if (item.ToLower().Contains("pass") || item.ToLower().Contains("pwd") || item.ToLower().Contains("security"))
                 {
                     return string.Empty;
                 }
