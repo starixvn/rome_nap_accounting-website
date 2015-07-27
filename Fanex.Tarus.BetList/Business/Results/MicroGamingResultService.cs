@@ -11,7 +11,7 @@ namespace Fanex.Tarus.BetList.Business.Results
             return ParserService.Instance.Parser(new MicroGaming
             {
                 DepositCustId = criteria.CustId,
-                SiteName = "spondemo" ?? criteria.SiteName,
+                SiteName = criteria.SiteName,
                 GameId = criteria.GameId
             });
         }
