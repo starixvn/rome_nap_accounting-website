@@ -9,9 +9,9 @@ namespace Fanex.Tarus.Customer.DataAccess.MicroGaming
     using Fanex.Tarus.Customer.Criteria.MicroGaming;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.MicroGaming;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
     using Fanex.Tarus.Infrastructure.Constants;
-    using Fanex.Tarus.Infrastructure.Caching;
 
     public class MicroGamingRepository : IMicroGamingRepository
     {

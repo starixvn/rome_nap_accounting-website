@@ -143,7 +143,7 @@ namespace Sunplus.Accounting.Business.Customer
                     renderLeftPanelParameter.AccId.ToString(),
                     currStatus ? "1" : "0",
                     disabledUpline ? "0" : "1",
-                    disableDownLine ? "0" : "1" ,
+                    disableDownLine ? "0" : "1",
                     "'" + title + "'",
                     "'" + productName + "'"
                 };
