@@ -25,7 +25,9 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                              "\r\nFORM: " +ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
                              "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
                              "\r\nTARGETSITE: " + ex.TargetSite +
-                             "\r\nSTACKTRACE: " + ex.StackTrace;
+                             "\r\nSTACKTRACE: " + ex.StackTrace +
+                             ex.FormatSqlException();
+
             Fanex.Logging.Logger.Log.Error(message);
         }
     }

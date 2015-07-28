@@ -3,7 +3,6 @@
 namespace Sunplus.Accounting.Core.Extensions
 {
     using System;
-    using System.Collections.Generic;
     using System.Web;
 
     /**
@@ -14,11 +13,6 @@ namespace Sunplus.Accounting.Core.Extensions
 
     public static class LogExtensions
     {
-        private static Queue<Exception> _queueEx = new Queue<Exception>();
-        /**
-         * Function: Exception Handler
-         */
-
         public static void ExceptionHandler(Exception ex)
         {
             string message = ex.Message +
@@ -28,7 +22,9 @@ namespace Sunplus.Accounting.Core.Extensions
                              "\r\nFORM: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
                              "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
                              "\r\nTARGETSITE: " + ex.TargetSite +
-                             "\r\nSTACKTRACE: " + ex.StackTrace;
+                             "\r\nSTACKTRACE: " + ex.StackTrace +
+                             ex.FormatSqlException();
+
             Fanex.Logging.Logger.Log.Error(message);
         }
     }
