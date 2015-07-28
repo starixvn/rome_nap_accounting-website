@@ -93,8 +93,6 @@ namespace Sunplus.Accounting.Business.Others
                     resultMessage = CastAide.AsString(rs.Outputs["errmsg"]);
                     newsID = CastAide.AsInt32(rs.Outputs["newsid"]);
 
-                    //delete cache news detail
-                    CacheExtension.RegexDelete(string.Format(KEY_CACHE_ALLPAGE, appId));
                     if (feature == 1)
                     {
                         var newsFeature = CacheExtension.Get<NewsItem>(string.Format(KEY_CACHE_FEATURE, appId));
@@ -177,7 +175,6 @@ namespace Sunplus.Accounting.Business.Others
 
                     //delete cache news detail
                     CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsID));
-                    CacheExtension.RegexDelete(string.Format(KEY_CACHE_ALLPAGE, appId));
                     if (feature == 1)
                     {
                         var newsFeature = CacheExtension.Get<NewsItem>(string.Format(KEY_CACHE_FEATURE, appId));
@@ -249,7 +246,6 @@ namespace Sunplus.Accounting.Business.Others
                     //delete cache news detail
                     CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsID));
                     CacheExtension.Delete(string.Format(KEY_CACHE_FEATURE, appId));
-                    CacheExtension.RegexDelete(string.Format(KEY_CACHE_ALLPAGE, appId));
                 }
                 catch (SqlException exception)
                 {

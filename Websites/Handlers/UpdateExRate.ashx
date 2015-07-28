@@ -15,7 +15,7 @@ using DNAide.Core;
 using DNAide.Web;
 using System.Collections.Generic;
 
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 
 public class UpdateExRate : IHttpHandler,IRequiresSessionState {
@@ -55,7 +55,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     System.Threading.Thread.Sleep(3000);
                     Dictionary <int, string> exchange;
                     exchange = IBCProvider.Utils.GetExchange();
-                    SCCACHE.SharedCache.Add("exchange", exchange, DateTime.Now.AddHours(5));
+                    SCCACHE.Set("exchange", exchange, DateTime.Now.AddHours(5));
                     //context.Response.Write("ok|"+ Resources.Language.lblInsertExSuccessful );
                     context.Response.Write("ok|Insert exchange rate successfully!");
                     //context.Response.Write("ok|" + exRate.GenListContent());

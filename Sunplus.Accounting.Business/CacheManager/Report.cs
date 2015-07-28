@@ -4,7 +4,7 @@ using DNAide.Core;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 
 
@@ -21,7 +21,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("acctrader." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("acctrader." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("acctrader." + AppSession.Username, value,
+                SCCACHE.Set("acctrader." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -42,7 +42,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accdirectbal." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accdirectbal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -52,7 +52,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accdirectbal." + AppSession.Username, value,
+                SCCACHE.Set("accdirectbal." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -63,7 +63,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreport2amatchwl." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreport2amatchwl." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +73,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreport2amatchwl." + AppSession.Username, value,
+                SCCACHE.Set("accreport2amatchwl." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -84,7 +84,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("acctraderdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("acctraderdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -94,7 +94,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("acctraderdetail." + AppSession.Username, value,
+                SCCACHE.Set("acctraderdetail." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -105,7 +105,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accsupermovementbase." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accsupermovementbase." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +115,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accsupermovementbase." + AppSession.Username, value,
+                SCCACHE.Set("accsupermovementbase." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -126,7 +126,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accsupermovementoriginal." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accsupermovementoriginal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -136,7 +136,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accsupermovementoriginal." + AppSession.Username, value,
+                SCCACHE.Set("accsupermovementoriginal." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -147,7 +147,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportcomstatement." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportcomstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -157,7 +157,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportcomstatement." + AppSession.Username, value,
+                SCCACHE.Set("accreportcomstatement." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -168,7 +168,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportstatement." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -178,7 +178,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportstatement." + AppSession.Username, value,
+                SCCACHE.Set("accreportstatement." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -189,7 +189,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportstatementdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportstatementdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -199,7 +199,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportstatementdetail." + AppSession.Username, value,
+                SCCACHE.Set("accreportstatementdetail." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -210,7 +210,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportstatementaudit." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportstatementaudit." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -220,7 +220,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportstatementaudit." + AppSession.Username, value,
+                SCCACHE.Set("accreportstatementaudit." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -232,7 +232,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                 try
                 {
                     return
-                        CastAide.AsString(SCCACHE.SharedCache.Get("accreportleaguewinlosssport." + AppSession.Username));
+                        CastAide.AsString(SCCACHE.Get("accreportleaguewinlosssport." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -242,7 +242,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportleaguewinlosssport." + AppSession.Username, value,
+                SCCACHE.Set("accreportleaguewinlosssport." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -253,7 +253,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportm88winlossdaily." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportm88winlossdaily." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -263,7 +263,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportm88winlossdaily." + AppSession.Username, value,
+                SCCACHE.Set("accreportm88winlossdaily." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -275,7 +275,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                 try
                 {
                     return
-                        CastAide.AsString(SCCACHE.SharedCache.Get("accreportm88winlossmonthly." + AppSession.Username));
+                        CastAide.AsString(SCCACHE.Get("accreportm88winlossmonthly." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -285,7 +285,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportm88winlossmonthly." + AppSession.Username, value,
+                SCCACHE.Set("accreportm88winlossmonthly." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -296,7 +296,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportm88winlosssport." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportm88winlosssport." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -306,7 +306,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportm88winlosssport." + AppSession.Username, value,
+                SCCACHE.Set("accreportm88winlosssport." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
@@ -317,7 +317,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.SharedCache.Get("accreportm88winlossdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get("accreportm88winlossdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -327,7 +327,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             }
             set
             {
-                SCCACHE.SharedCache.Add("accreportm88winlossdetail." + AppSession.Username, value,
+                SCCACHE.Set("accreportm88winlossdetail." + AppSession.Username, value,
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }

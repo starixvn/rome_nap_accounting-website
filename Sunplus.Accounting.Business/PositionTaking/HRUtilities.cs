@@ -13,7 +13,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Entities;
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 /// <summary>
 /// Summary description for FinanceManager
 /// </summary>
@@ -243,10 +243,10 @@ namespace Sunplus.Accounting.Business.PositionTaking
                 Hashtable listHrCurrency;
                 try
                 {
-                    listHrCurrency = SCCACHE.SharedCache.Get("HRAllowCurrencyList") as Hashtable ??
+                    listHrCurrency = SCCACHE.Get("HRAllowCurrencyList") as Hashtable ??
                                      GetSaToteCurrencies();
                 }
-                catch (Exception ex)
+                catch
                 {
                     listHrCurrency = GetSaToteCurrencies();
                     SaToteCurrencies = listHrCurrency;
@@ -255,7 +255,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
                 return listHrCurrency;
             }
-            set { SCCACHE.SharedCache.Add("HRAllowCurrencyList", value, DateTime.Now.AddHours(5)); }
+            set { SCCACHE.Set("HRAllowCurrencyList", value, DateTime.Now.AddHours(5)); }
         }
 
         /// <summary>

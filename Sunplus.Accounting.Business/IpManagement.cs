@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using SharedCache.WinServiceCommon.Provider.Cache;
+using Fanex.Tarus.Infrastructure.Caching;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper.IP;
@@ -21,19 +21,19 @@ namespace Sunplus.Accounting.Business
         {
             get
             {
-                List<IPVNBean> listIpvn;
+                object listIpvn = null;
                 try
                 {
-                    listIpvn = IndexusDistributionCache.SharedCache.Get("ipvnlist") as List<IPVNBean> ?? IBCProvider.Utils.GetIPVN();
+                    listIpvn = CacheHelper.Get("ipvnlist") ?? IBCProvider.Utils.GetIPVN();
                 }
-                catch (Exception ex)
+                catch
                 {
                     listIpvn = IBCProvider.Utils.GetIPVN();
-                    IPVNList = listIpvn;
+                    IPVNList = listIpvn as List<IPVNBean>;
                 }
-                return listIpvn;
+                return listIpvn as List<IPVNBean>;
             }
-            set { IndexusDistributionCache.SharedCache.Add("ipvnlist", value, DateTime.Now.AddMinutes(WebSettings.CacheExpire)); }
+            set { CacheHelper.Set("ipvnlist", value, DateTime.Now.AddMinutes(WebSettings.CacheExpire)); }
         }
 
         public static bool IsVNIP(string IP)

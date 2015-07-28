@@ -4,6 +4,8 @@ using DNAide.Core;
 using SharedCache.WinServiceCommon.Provider.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Couchbase;
+using Enyim.Caching.Memcached;
 
 namespace Sunplus.Accounting.Core.Cache
 {
@@ -13,13 +15,15 @@ namespace Sunplus.Accounting.Core.Cache
 
     public class ReportCache
     {
+        private static CouchbaseClient CacheHelper = new CouchbaseClient();
+
         public static string REPORT_TRADER
         {
             get
             {
                 try 
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("acctrader." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("acctrader." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -31,7 +35,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("acctrader." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set, "acctrader." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -41,7 +45,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accdirectbal." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accdirectbal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -53,7 +57,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accdirectbal." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set, "accdirectbal." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -63,7 +67,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accreport2amatchwl." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accreport2amatchwl." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -75,7 +79,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accreport2amatchwl." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set, "accreport2amatchwl." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -85,7 +89,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("acctraderdetail." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("acctraderdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +101,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("acctraderdetail." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set, "acctraderdetail." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -107,7 +111,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accsupermovementbase." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accsupermovementbase." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -119,7 +123,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accsupermovementbase." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set, "accsupermovementbase." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -129,7 +133,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accsupermovementoriginal." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accsupermovementoriginal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -141,7 +145,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accsupermovementoriginal." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set,"accsupermovementoriginal." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -151,7 +155,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accreportcomstatement." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accreportcomstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -163,7 +167,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accreportcomstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set,"accreportcomstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -173,7 +177,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accreportstatement." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accreportstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -185,7 +189,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accreportstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set,"accreportstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -195,7 +199,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accreportstatementdetail." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accreportstatementdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +211,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accreportstatementdetail." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set,"accreportstatementdetail." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
 
@@ -217,7 +221,7 @@ namespace Sunplus.Accounting.Core.Cache
             {
                 try
                 {
-                    return CastAide.AsString(IndexusDistributionCache.SharedCache.Get("accreportstatementaudit." + AppSession.Username));
+                    return CastAide.AsString(CacheHelper.Get("accreportstatementaudit." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -229,7 +233,7 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                IndexusDistributionCache.SharedCache.Add("accreportstatementaudit." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+                CacheHelper.ExecuteStore(StoreMode.Set,"accreportstatementaudit." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
     }
