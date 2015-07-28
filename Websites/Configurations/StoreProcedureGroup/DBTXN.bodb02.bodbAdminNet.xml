@@ -15,7 +15,7 @@
     <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Live Casino">
-    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02.bodbAdminNet">
+    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS_xpre" DbName="DBTXN.BODB02.bodbAdminNet">
       <Mapping DataField="LCSWinPercent" ObjectProperty="WinPercent">
       </Mapping>
     </Setting>
