@@ -27,10 +27,9 @@ namespace Sunplus.Accounting.Core.Extensions
 
         public static string FormatSqlException(this Exception ex)
         {
-            if (ex is SqlException)
+            var sqlEx = ex as SqlException;
+            if (sqlEx != null)
             {
-                var sqlEx = ex as SqlException;
-
                 var message = "\r\nProcedure: " + sqlEx.Procedure +
                         "\r\nLine Number: " + sqlEx.LineNumber +
                         "\r\nServer: " + sqlEx.Server;
