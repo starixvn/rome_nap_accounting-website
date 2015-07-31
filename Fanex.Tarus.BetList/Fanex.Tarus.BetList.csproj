@@ -89,7 +89,7 @@
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.LiveCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.MicroGaming">
-      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MicroGaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MetricGaming.dll</HintPath>
