@@ -304,5 +304,11 @@ span.cannotchangeinternal:hover
 
 .note-info-message:hover
 {
-     background: url("../Images/information-icon2-hover.png") no-repeat scroll 0 3px transparent;
+    background: url("../Images/information-icon2-hover.png") no-repeat scroll 0 3px transparent;
+}
+
+.iframe-rs
+{
+    width: 98%;
+    height: 430px;
 }
