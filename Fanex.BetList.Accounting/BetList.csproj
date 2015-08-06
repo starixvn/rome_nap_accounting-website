@@ -91,8 +91,9 @@
     <Reference Include="Fanex.Result.Core.Base">
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.0.7\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.GoldDeLuxe">
-      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.GoldDeLuxe.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.0.4\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.LiveCasino">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.LiveCasino.dll</HintPath>
