@@ -237,4 +237,7 @@
   <data name="Gold_Deluxe" xml:space="preserve">
     <value>Gold Deluxe</value>
   </data>
+  <data name="Microgaming" xml:space="preserve">
+    <value>Microgaming</value>
+  </data>
 </root>

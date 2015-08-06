@@ -10,7 +10,7 @@
 namespace Fanex.Tarus.BetList.DataAccess.Results
 {
     using System.Collections.Generic;
-    using Fanex.Result.Core.DTO;
+    using Fanex.Result.Core.LiveCasino.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
 
     /// <summary>

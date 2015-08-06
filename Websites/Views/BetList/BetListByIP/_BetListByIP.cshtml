@@ -1,7 +1,8 @@
-﻿ @using Fanex.BetList.Accounting.Models;
+﻿@using Fanex.BetList.Accounting.Models;
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Services;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -20,7 +21,7 @@
         int i = 0;
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+            if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -41,8 +42,8 @@
         </td>
         <td class="c">
             <div class="width120">
-                 <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+                <div class="refno ">
+                    @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
@@ -82,7 +83,7 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width80">
-               @Html.Raw(betdetail.StatusHtml)
+                @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">
@@ -99,14 +100,14 @@
     <div class="grid-title r">
         <div class="grid-title-lable" id="gridtitleCheckBet" style="width: 100%;">
             <div id="subtitle" style="display: inline-block; float: left;" class="b">
-            @if (Model.Count > 0)
-            {
-                <div>Bet list - @Model[0].Ticket.UserName</div>
-            }
+                @if (Model.Count > 0)
+                {
+                    <div>
+                        Bet list - @Model[0].Ticket.UserName</div>
+                }
             </div>
         </div>
     </div>
-    
     <div class="col_header row-headers-background scroll-y">
         <div class="header-container">
             <table class="grid-fixed-table col_header_content">
@@ -209,7 +210,6 @@
             </table>
         </div>
     </div>
-    
     <div class="col_footer row-footer-background scroll-y">
         <div class="footer-container">
             <table id="GridFooterCol" class="grid-fixed-table col_footer_content">

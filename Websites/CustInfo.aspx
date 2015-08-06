@@ -308,6 +308,7 @@
             }
         }
     </script>
+    <script type="text/javascript" src="Areas/LeftPanel/Views/Scripts/LeftPanelManager.js"></script>
 </head>
 <body>
     <script type="text/javascript">

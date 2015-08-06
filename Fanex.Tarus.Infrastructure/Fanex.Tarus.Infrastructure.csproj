@@ -55,6 +55,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
@@ -92,6 +96,10 @@
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesCollection.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesElement.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesSection.cs" />
+    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesCollection.cs" />
+    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesElement.cs" />
+    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSection.cs" />
+    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSectionServices.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />
@@ -132,6 +140,7 @@
     <Compile Include="Helper\SportHelper\CalcOdds.cs" />
     <Compile Include="Helper\Utils.cs" />
     <Compile Include="Helper\WebUtils.cs" />
+    <Compile Include="Models\BetTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\ErrorLanguage.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -174,7 +183,6 @@
     <Folder Include="Business\" />
     <Folder Include="Criteria\" />
     <Folder Include="DataAccess\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

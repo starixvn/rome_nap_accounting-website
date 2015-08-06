@@ -342,7 +342,8 @@ namespace Fanex.BetList.Accounting.Repositories
                                 SuperComm = Converter.ToDecimal(r["scomm"]),
                                 AgentComm = Converter.ToDecimal(r["acomm"]),
                                 Comm = Converter.ToDecimal(r["comm"]),
-                                BetTypeId = 29
+                                BetTypeId = 29,
+                                TransDesc = Converter.ToString2(r["transdesc"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -375,7 +376,8 @@ namespace Fanex.BetList.Accounting.Repositories
                                 IsNeutral = Converter.ToBool(r["isNeutral"]),
                                 MatchCode = Converter.ToString2(r["matchcode"]),
                                 MatchId = Converter.To<int>(r["matchid"]),
-                                BetCheck = Converter.ToString2(r["BetCheck"])
+                                BetCheck = Converter.ToString2(r["BetCheck"]),
+                                TransDesc = Converter.ToString2(r["transdesc"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

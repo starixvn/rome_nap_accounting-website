@@ -18,7 +18,7 @@ using Fanex.Common;
 public partial class Statement_CustomerStatement : PageBase
 {
     public int isInternalCustomer = 1;
-    public int isOldStatementTab = 0;
+    public int isNewStatementTab = 0;
     public string newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     public string balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.BalanceUpDay);
     public string moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportUtils.BalanceUp.MoveBetsDay);
@@ -36,7 +36,7 @@ public partial class Statement_CustomerStatement : PageBase
             int reportNo = 1;
             reportNo = CastAide.AsInt32(Request.QueryString["repno"], 1);
             var tabId = CastAide.AsInt32(Request.QueryString["repno"], 1);
-            isOldStatementTab = tabId == 6 ? 1 : 0;
+            isNewStatementTab = tabId == 1 ? 1 : 0;
 
             if (reportNo < 1 || reportNo > 5 || reportNo == 2)
             {

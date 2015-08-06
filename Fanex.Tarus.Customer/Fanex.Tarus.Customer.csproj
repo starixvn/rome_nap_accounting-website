@@ -158,6 +158,8 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
+    <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
+    <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
+    <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\GoldDeluxeController.cs" />
@@ -212,6 +215,8 @@
     <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
+    <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
+    <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
@@ -228,6 +233,8 @@
     <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
+    <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
@@ -254,6 +261,8 @@
     <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
+    <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
+    <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
@@ -333,6 +342,9 @@
     <Compile Include="Entities\ExportExcelInfo.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
+    <Compile Include="Entities\MicroGaming\GameTypeModel.cs" />
+    <Compile Include="Entities\MicroGaming\MicroGamingCustomerInfo.cs" />
+    <Compile Include="Entities\MicroGaming\MicroGamingStatus.cs" />
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />

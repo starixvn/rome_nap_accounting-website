@@ -92,5 +92,14 @@ namespace Fanex.BetList.Accounting.Constants
         public const int GoldDeluxeBaccarat = 1701;
         public const int GoldDeluxeRoulette = 1702;
         public const int GoldDeluxeParlayBaccarat = 1703;
+
+        public const int MetricGaming60sofKick = 801;
+        public const int MetricGamingEndBetType = 899;
+        public const int BetTradeSold = 901;
+        public const int BetTradeBought = 902;
+        public const int BetTradeCommision = 903;
+
+        public const int MicroGamingBaccarat = 2001;
+        public const int MicroGamingEndBetType = 2009;
     }
 }

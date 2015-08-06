@@ -11,6 +11,7 @@ namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Linq;
     using Fanex.Result.Core;
+    using Fanex.Result.Core.Base;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
 

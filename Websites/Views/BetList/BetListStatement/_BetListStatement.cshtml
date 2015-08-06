@@ -1,4 +1,5 @@
-﻿<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+﻿@using Fanex.BetList.Accounting.Services;
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
 <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
@@ -39,7 +40,7 @@
         int i = 0;
         foreach (var betdetail in Model)
         {
-            if (betdetail.Ticket.BetTypeId == 73 || betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+            if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
@@ -63,7 +64,7 @@
         <td class="c">
             <div class="width120">
                 <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.SportTypeId == 202 || betdetail.Ticket.SportTypeId == 255)
+                    @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
                     {
                         <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }

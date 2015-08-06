@@ -14,7 +14,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     using System.Data;
     using System.Linq;
     using Fanex.Data;
-    using Fanex.Result.Core.DTO;
+    using Fanex.Result.Core.NumberGame.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
 
     /// <summary>

@@ -61,6 +61,15 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent.
+        /// </summary>
+        public static string Agent {
+            get {
+                return ResourceManager.GetString("Agent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Total.
         /// </summary>
         public static string All_Total {
@@ -331,6 +340,24 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Master.
+        /// </summary>
+        public static string Master {
+            get {
+                return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member Win Loss.
         /// </summary>
         public static string Member_Win_Loss {
@@ -435,6 +462,15 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         public static string SubTabHeadLineIcon_Expand_Image {
             get {
                 return ResourceManager.GetString("SubTabHeadLineIcon_Expand_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super.
+        /// </summary>
+        public static string Super {
+            get {
+                return ResourceManager.GetString("Super", resourceCulture);
             }
         }
         

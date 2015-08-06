@@ -95,7 +95,7 @@ function completeUpdateIsInternal(rs) {
                 });
 
     var reportNo = obj('repno').value;
-    if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
+    if (!isInternalCustomer && reportNo == 1 && isNewStatementTab == "1") {
         if (!statementReportManager.checkCriteria(criteria)) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
             return;
@@ -192,7 +192,7 @@ function ExportToExcel() {
             };
 
             var reportNo = obj('repno').value;
-            if (!isInternalCustomer && reportNo == 1 && isOldStatementTab == "0") {
+            if (!isInternalCustomer && reportNo == 1 && isNewStatementTab == "1") {
                 if (!statementReportManager.checkCriteria(criteria)) {
                     parent.jQuery.unblockUI();
                     return;
@@ -400,7 +400,7 @@ jQuery(document).ready(function () {
         }
     });
 
-    if (isOldStatementTab == "1") {
+    if (isNewStatementTab == "0") {
         $("#notemessage").addClass("display-none");
     }
 });

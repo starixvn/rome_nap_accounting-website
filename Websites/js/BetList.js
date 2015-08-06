@@ -10,12 +10,12 @@ function showMP(refno, listType) {
             $.ajax({
                 url: '../Handlers/GenMixParlay.ashx?refno=' + refno + '&listType=' + listType + '&type=1',
                 dataType: 'html',
-                success: function(data) {
+                success: function (data) {
                     spEvent.innerHTML = data;
                     spEvent.className = '';
                     $.unblockUI();
                 }
-                , error: function() {
+                , error: function () {
                     $.unblockUI();
                 }
             });
@@ -33,7 +33,7 @@ function showMP(refno, listType) {
 function showCMP(event, refno, listType) {
     var spEvent = obj('spEvent_' + refno);
     var target = event.target ? event.target : event.srcElement;
-    $(target).parents("td:first").find("div").each(function(index, element) {
+    $(target).parents("td:first").find("div").each(function (index, element) {
         if ($(element).attr("id").indexOf("spEvent") >= 0) {
             spEvent = element;
         }
@@ -44,17 +44,17 @@ function showCMP(event, refno, listType) {
             $.ajax({
                 url: '../Handlers/GenMixParlay.ashx?refno=' + refno + '&listType=' + listType + '&type=1',
                 dataType: 'html',
-                success: function(data) {
+                success: function (data) {
                     spEvent.innerHTML = data;
                     spEvent.className = '';
 
-                    $(event.target).parents("tr:first").find("td").each(function(index, element) {
+                    $(event.target).parents("tr:first").find("td").each(function (index, element) {
                         element.style.verticalAlign = "top";
                     });
 
                     $.unblockUI();
                 }
-                , error: function() {
+                , error: function () {
                     $.unblockUI();
                 }
             });
@@ -62,14 +62,14 @@ function showCMP(event, refno, listType) {
         }
         else {
             spEvent.className = '';
-            $(event.target).parents("tr:first").find("td").each(function(index, element) {
+            $(event.target).parents("tr:first").find("td").each(function (index, element) {
                 element.style.verticalAlign = "top";
             });
         }
     }
     else {
         spEvent.className = 'hide';
-        $(event.target).parents("tr:first").find("td").each(function(index, element) {
+        $(event.target).parents("tr:first").find("td").each(function (index, element) {
             element.style.verticalAlign = "middle";
         });
     }
@@ -78,7 +78,7 @@ function showCMP(event, refno, listType) {
 function showDetailsCMP(refno, title, transid, betid, custid) {
     //OpenPopup(url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose) {
     if (custid == null) {
-        parent.OpenNextPopup("systemPartlay","BetList/CombinationMPDetail.aspx?refno=" + refno + "&transid=" + transid + "&betid=" + betid, title, 720, 500, true, false, window, 0, null, null);
+        parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno + "&transid=" + transid + "&betid=" + betid, title, 720, 500, true, false, window, 0, null, null);
     }
     else {
         parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno + "&transid=" + transid + "&betid=" + betid + "&custid=" + custid, title, 720, 500, true, false, window, 0, null, null);
@@ -118,7 +118,7 @@ function ViewMixParlayResult(refno, matchid, bettype, betid) {
     var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;
     parent.OpenNextPopup("ViewMixParlayResult", url, 'Mix Parlay', width, 500, true, false, window, 0, null, null);
 
-//    window.top.frames["content"].frames["innerFrameViewCombinationMixParlayResult"];
+    //    window.top.frames["content"].frames["innerFrameViewCombinationMixParlayResult"];
 }
 
 
@@ -142,6 +142,35 @@ function ViewResult(matchid, bettype, betid, sporttype) {
     parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
 }
 
+function ViewResultMetricGaming(
+    matchid,
+    bettype,
+    betid,
+    sporttype,
+    sportName,
+    leagueName) {
+    var width = 750;
+    var params = $.param({
+        matchid: matchid,
+        bettype: bettype,
+        betid: betid,
+        sporttype: sporttype
+    });
+
+    parent.OpenNextPopup(
+        "VirtualResult",
+        'Report/ViewMetricGamingResult.aspx?' + params,
+        "Result",
+        width,
+        500,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewResultHR(url) {
     OpenPopup(url, '', 300, 100, true, false, window, 0, null, null);
 }
@@ -152,6 +181,28 @@ function openHRresult(url, title, width, heigh) {
 
 function ViewResultNumberGame(url) {
     parent.OpenNextPopup("NumberGamePopup", url, 'Number Game', 750, 200, true, false, window, 0, null, null);
+}
+
+function ViewMicroGamingPopup(custId, siteName, gameId) {
+    var width = 750;
+    var params = $.param({
+        custId: custId,
+        siteName: siteName,
+        gameId: gameId
+    });
+
+    parent.OpenNextPopup(
+        "MicrogamingResult",
+        'Report/ViewMicroGamingResult.aspx?' + params,
+        "Microgaming Result",
+        width,
+        500,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
 }
 
 function ViewResultLiveCasino(url) {
@@ -294,15 +345,15 @@ function PreSubmit(e) {
         obj("btnSubmit").click();
 }
 
-String.prototype.trimLeft = function() {
+String.prototype.trimLeft = function () {
     return this.replace(/^\s*/, "");
 }
 
-String.prototype.trimRight = function() {
+String.prototype.trimRight = function () {
     return this.replace(/\s*$/, "");
 }
 
-String.prototype.trim = function() {
+String.prototype.trim = function () {
     return this.trimRight().trimLeft();
 }
 function ViewBLIPReport() {
@@ -331,10 +382,10 @@ function GeneralAjaxCall(urlLink) {
     $.ajax({
         url: urlLink + '&nocache=' + new Date().getTime(),
         dataType: 'html',
-        success: function(data) {
+        success: function (data) {
             obj('sContent').innerHTML = data;
 
-            $(".pagenav_ibtn").click(function() {
+            $(".pagenav_ibtn").click(function () {
                 if (isNumberNotNull("txtpage")) {
                     var pageIndex = $("#txtpage").val();
                     GotoPage(pageIndex);
@@ -404,7 +455,7 @@ function ChangeDateTime() {
     $.ajax({
         url: urlLink + '&nocache=' + new Date().getTime(),
         dataType: 'html',
-        success: function(data) {
+        success: function (data) {
             if (data != "") {
                 obj('spanBettype').innerHTML = "<select id='dlBettype'><option value='0'>All</option>" + data + "</select>";
                 obj('bettypeArea').style.display = 'inline';
@@ -445,5 +496,5 @@ function ExportBetListToExcel() {
     var iframe = $('<iframe width="0px" height="0px" class="display-none"></iframe>');
     iframe.appendTo('body').attr('src', downloadUrl);
     setTimeout(function () { iframe.remove(); }, 5000);
-   // GeneralAjaxCall(urlLink);
+    // GeneralAjaxCall(urlLink);
 }

@@ -12,7 +12,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Data;
-    using Fanex.Result.Core.DTO;
+    using Fanex.Result.Core.GoldDeluxe.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
 
     /// <summary>
@@ -33,10 +33,10 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
             {
                 using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                 {
-                            while (reader.Read())
-                            {
-                                result.Add(BindGoldDeluxeData(reader, criteria.Bettype));
-                            }
+                    while (reader.Read())
+                    {
+                        result.Add(BindGoldDeluxeData(reader, criteria.Bettype));
+                    }
                 }
             }
 

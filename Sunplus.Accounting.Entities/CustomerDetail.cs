@@ -593,6 +593,10 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
+        public int AccId { get; set; }
+
+        public bool HasDownline { get; set; }
+
         public bool IsDisableLiveCasino { get; set; }
 
         public bool IsLiveCasinoSync { get; set; }
@@ -606,6 +610,10 @@ namespace Sunplus.Accounting.Entities
         public bool IsDisableEsports { get; set; }
 
         public bool IsDisableGoldDeluxe { get; set; }
+
+        public bool IsDisableMetricGaming { get; set; }
+
+        public bool IsDisableMicroGaming { get; set; }
 
         #endregion Properties
     }

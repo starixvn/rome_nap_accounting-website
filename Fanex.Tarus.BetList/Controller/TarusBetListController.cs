@@ -37,7 +37,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// Betlist by refno
         /// </summary>
         /// <returns></returns>
-        
+
         public ActionResult BetListByRefNo_Main()
         {
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
@@ -49,13 +49,13 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <param name="CustID"></param>
         /// <returns></returns>
-       
+
         public ActionResult BetListByCustInfo(int CustID)
         {
             ViewBag.CustID = CustID;
             var dateTmp = new DateTime(0001, 1, 1);
             DateTime fromDate = CastAide.AsDateTime(AppSession.GetSession(System.Web.HttpContext.Current.Session, "FROM_DATE"));
-            DateTime toDate = CastAide.AsDateTime(AppSession.GetSession(System.Web.HttpContext.Current.Session, "TO_DATE")) ;
+            DateTime toDate = CastAide.AsDateTime(AppSession.GetSession(System.Web.HttpContext.Current.Session, "TO_DATE"));
             ViewBag.FromDate = fromDate == dateTmp ? DateTime.Today.AddDays(-1) : fromDate;
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
@@ -76,7 +76,7 @@ namespace Fanex.Tarus.BetList.Controller
         public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, bool IsCache)
         {
             int quantity = 0;
-            PageIndex= PageIndex <= 0 ? 1 : PageIndex;
+            PageIndex = PageIndex <= 0 ? 1 : PageIndex;
             var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity, IsCache);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
@@ -91,12 +91,10 @@ namespace Fanex.Tarus.BetList.Controller
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
-
- 
         public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
             ViewBag.FromDate = FromDate;
-            ViewBag.Ip= IP;
+            ViewBag.Ip = IP;
             ViewBag.IsLink = IsLink;
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }

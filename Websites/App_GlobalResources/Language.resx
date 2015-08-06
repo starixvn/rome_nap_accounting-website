@@ -2458,4 +2458,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblDisabledGoldDeluxeUpline" xml:space="preserve">
     <value>Gold Deluxe status has been disabled at upline</value>
   </data>
+  <data name="enableSuperLive" xml:space="preserve">
+    <value>Enable Super Live</value>
+  </data>
+  <data name="lblDisabledSuperLiveUpline" xml:space="preserve">
+    <value>Super Live status has been disabled at upline</value>
+  </data>
 </root>

@@ -107,7 +107,8 @@ namespace Fanex.BetList.Accounting.Services
                         TransDate = Converter.ToDateTime(r["transdate"]),
                         TransId = Converter.To<long>(r["transid"]),
                         Winlost = Converter.ToDecimal(r["winlost"]),
-                        WinlostDate = Convert.ToDateTime(r["winlostdate"])
+                        WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                        TransDesc = Converter.ToString2(r["transdesc"])
                     },
                     ChoiceHtml = string.Empty,
                     OddHtml = string.Empty,
@@ -316,6 +317,7 @@ namespace Fanex.BetList.Accounting.Services
                     UserName = Converter.ToString2(r["username"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -391,22 +393,7 @@ namespace Fanex.BetList.Accounting.Services
                     {
                         string betTypeNameTmp = r["typenamee"].ToString();
                         int betTypeIdTmp = Converter.To<int>(r["typeid"]);
-                        if (ReportService.IsVirtualSportBetType(betTypeIdTmp))
-                        {
-                            betTypeNameTmp += " (" + Labels.Virtual_Sports + ")";
-                        }
-
-                        if (ReportService.IsGoldDeluxe(betTypeIdTmp))
-                        {
-                            betTypeNameTmp += " (" + Labels.Gold_Deluxe + ")";
-                        }
-
-                        if (betTypeIdTmp == BetTypeContants.OverUnder ||
-                            betTypeIdTmp == BetTypeContants.OddEven)
-                        {
-                            betTypeNameTmp += " (" + Labels.Number_Game + ")";
-                        }
-
+                        betTypeNameTmp += GetSportNameSuffixByBetType(betTypeIdTmp);
                         betTypeList.Add(new BetType
                         {
                             BetTypeID = betTypeIdTmp,
@@ -514,6 +501,7 @@ namespace Fanex.BetList.Accounting.Services
                     TransId = Converter.To<long>(r["transid"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -719,6 +707,7 @@ namespace Fanex.BetList.Accounting.Services
                     TransId = Converter.To<long>(r["transid"]),
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                    TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"])
                 },
@@ -1096,6 +1085,7 @@ namespace Fanex.BetList.Accounting.Services
                                 UserName = Converter.ToString2(r["username"]),
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                                TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"])
                             },
@@ -1289,6 +1279,7 @@ namespace Fanex.BetList.Accounting.Services
                                 UserName = Converter.ToString2(r["username"]),
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
+                                TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"])
                             },
@@ -1439,6 +1430,30 @@ namespace Fanex.BetList.Accounting.Services
         {
             return betTypeId == BetTypeContants.MixParlay ||
                 betTypeId == BetTypeContants.SystemParlay;
+        }
+
+        private string GetSportNameSuffixByBetType(int betTypeId)
+        {
+            var sportName = string.Empty;
+            if (ReportService.IsVirtualSportBetType(betTypeId))
+            {
+                sportName = Labels.Virtual_Sports;
+            }
+            else if (ReportService.IsGoldDeluxe(betTypeId))
+            {
+                sportName = Labels.Gold_Deluxe;
+            }
+            else if (ReportService.IsMicroGaming(betTypeId))
+            {
+                sportName = Labels.Microgaming;
+            }
+            else if (betTypeId == BetTypeContants.OverUnder ||
+                betTypeId == BetTypeContants.OddEven)
+            {
+                sportName += Labels.Number_Game;
+            }
+
+            return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
     }
 }

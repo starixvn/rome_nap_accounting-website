@@ -61,5 +61,7 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int ESport = 43;
         public const int GoldDeluxe = 255;
+
+        public const int MicroGaming = 203;
     }
 }

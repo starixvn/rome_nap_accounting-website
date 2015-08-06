@@ -253,7 +253,6 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
-
                             if (new SmartPunterPermissionService().IsDeniedViewSmartPunter(custId, userName))
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
@@ -714,8 +713,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                // Gold Deluxe
-                                if (!WebSettings.EnableGoldDeluxe || roleId != 4 || !isLicensee)
+                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isLicensee;
+                                if (!isShowGoldDeluxe)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
                                 }
@@ -782,6 +781,39 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
 
                                 #endregion Progressive Bonus
+                                var customerDetail = new CustomerDetail
+                               {
+                                   CustID = custId,
+                                   RoleId = roleId,
+                                   AccId = AppSession.AccId,
+                                   HasDownline = Converter.ToBool(row1["HasDownline"])
+                               };
+
+                                var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
+                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
+                                var renderLeftPanelParameter = new RenderLeftPanelParameter
+                                {
+                                    IsShowKeno = isShowKenoStatus,
+                                    IsShowGoldDeluxe = isShowGoldDeluxe,
+                                    IsShowEnableBetTrade = isShowEnableBetTrade,
+                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                    ParentId = parentId,
+                                    RoleId = roleId,
+                                    CustId = custId,
+                                    IsDeposit = isDeposit,
+                                    Username = userName,
+                                    AccId = AppSession.AccId
+                                };
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
+
+                                TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
+                                TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
+                                RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
+                                RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
+                                RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
 
                                 #region Abnormal
 
@@ -824,8 +856,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     disabledLCSParent,
                                     disalbedVSParent,
                                     disabledEsportsParent,
-                                    Permissions.IsAllowEditGoldDeluxe(parentId),
-                                    _custparent.IsDisableGoldDeluxe);
+                                    renderLeftPanelParameter);
 
                                 #endregion Setting
 
@@ -938,6 +969,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         break;
                                 }
 
+                                RenderLeftPanelManager.RenderEditMicroGamingLink(ref htmlcontent, renderLeftPanelParameter);
                                 switch (WebSettings.IsShowCustomerSettingRenovation)
                                 {
                                     case 1:
@@ -1116,8 +1148,8 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
-
         }
+
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
         {
             try
@@ -1155,8 +1187,7 @@ namespace Sunplus.Accounting.Business.Customer
             bool disableLiveCasinoParent,
             bool disabledVSParent,
             bool disabledEsportsParent,
-            bool isAllowEditGoldDeluxe,
-            bool disabledGoldDeluxeParent)
+            RenderLeftPanelParameter renderLeftPanelParameter)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1251,7 +1282,7 @@ namespace Sunplus.Accounting.Business.Customer
             //TemplateHandler.Assign(ref htmlcontent, "{chkUKTote}", disabledHROpenTote ? 1 : 0);
 
             #endregion HR
-                    
+
             #region Enable Casino
 
             bool disabledCasino = Convert.IsDBNull(row1["disablecasino"]) ? false : Convert.ToBoolean(row1["disablecasino"]);
@@ -1382,15 +1413,31 @@ namespace Sunplus.Accounting.Business.Customer
             var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
                 false :
                 Convert.ToBoolean(row1["HasDownline"]);
-            RenderEnableGoldDeluxeBox(
+            if (WebSettings.IsShowGoldDeluxeSettingForCredit && !renderLeftPanelParameter.IsDeposit)
+            {
+                RenderEnableGoldDeluxeBox(
+                    row1,
+                    sg,
+                    ref htmlcontent,
+                    roleId,
+                    isManageCustomerAccess,
+                    CustParent.IsDisableGoldDeluxe,
+                     Permissions.IsAllowEditGoldDeluxe(parentID),
+                    hasDownline);
+            }
+
+            RenderLeftPanelManager.RenderEnableProductBox(
                 row1,
                 sg,
                 ref htmlcontent,
-                roleId,
                 isManageCustomerAccess,
-                disabledGoldDeluxeParent,
-                isAllowEditGoldDeluxe,
-                hasDownline);
+                CustParent.IsDisableMetricGaming,
+                hasDownline,
+                "SuperLive",
+                WebSettings.EnableMetricGaming,
+                renderLeftPanelParameter,
+                "Update Super Live Status");
+
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
@@ -1458,7 +1505,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
-                  
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
@@ -1507,7 +1554,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + parentId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Agent";
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                    
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/AgentMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1525,7 +1572,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Master";
 
                     submenu3 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                   
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -1541,7 +1588,7 @@ namespace Sunplus.Accounting.Business.Customer
                     minMaxPtRenovationUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
                     minMaxPtUrl = WebSettings.IsShowCustomerSettingRenovation == 3 ? minMaxPtRenovationUrl : "Customer/v2/EditMinMaxPT.aspx?set=1&custId=" + custId + "&type=Super";
                     submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
-                   
+
                     if (!WebSettings.disabledHR)
                     {
                         submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperMinUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
@@ -2404,6 +2451,7 @@ namespace Sunplus.Accounting.Business.Customer
                     Convert.ToString(loginData["LastChangedSecurityCodeDate"]);
 
                 var site = new CustSettingMoveSite();
+                AppSession.SiteName = customerSite;
                 customerSite = site.GetSiteNameByCustId(custId, roleId, customerSite, username);
 
                 string createdate = Convert.IsDBNull(loginData["createdate"]) ? "" : Convert.ToDateTime(loginData["createdate"]).ToShortDateString();

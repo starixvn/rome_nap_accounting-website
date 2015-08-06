@@ -84,6 +84,12 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["custid"] = value; }
         }
 
+        public static string SiteName
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["sitename"], string.Empty); }
+            set { HttpContext.Current.Session["sitename"] = value; }
+        }
+
         /// <summary>
         /// Admin RoleId
         /// </summary>

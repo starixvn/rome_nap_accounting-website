@@ -222,6 +222,69 @@ var ViewPT = {
                     <br />\
                     <!--/tbl-->\
                 {{/each}}',
+    TplNoAutoPtInfo: '{{each(i, pt) PotionTakingDetail}}\
+                    <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
+                    <table class="layout_table ViewPTTable c">\
+	                    <tr class="ViewPTHeader b">\
+		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+		                    <th width="40">s</th>\
+		                    <th width="40">m</th>\
+		                    <th width="40">a</th>\
+		                    <th width="40">n</th>\
+		                    <th width="40">l</th>\
+	                    </tr>\
+	                    <!--r4-->\
+                        {{if (Super != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Super [4]</td>\
+		                    <td>${Super.Super}</td>\
+		                    <td>${Super.Master}</td>\
+		                    <td>${Super.Agent}</td>\
+		                    <td>${Super.MinPt}</td>\
+		                    <td>${Super.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r4-->\
+	                    <!--r3-->\
+                        {{if (Master != null)}}\
+	                    <tr  class="trbgov" >\
+		                    <td class="ViewPTHeader l">Master [3]</td>\
+		                    <td>${Master.Super}</td>\
+		                    <td>${Master.Master}</td>\
+		                    <td class="disable"></td>\
+                            <td>${Master.MinPt}</td>\
+		                    <td>${Master.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r3-->\
+	                    <!--r2-->\
+                        {{if (Agent != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Agent [2]</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Agent.Master}</td>\
+		                    <td>${Agent.Agent}</td>\
+		                    <td>${Agent.MinPt}</td>\
+		                    <td>${Agent.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r2-->\
+	                    <!--r1-->\
+                        {{if (Member != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Member [1]</td>\
+		                    <td>${Member.Super}</td>\
+		                    <td>${Member.Master}</td>\
+		                    <td>${Member.Agent}</td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r1-->\
+                    </table>\
+                    <br />\
+                    <!--/tbl-->\
+                {{/each}}',
     TplCasinoPt: '{{each(i, currentPt) PotionTakingDetail}}\
                     <div style="padding-left: 20px;">\
                     <!--tbl-->\
@@ -567,11 +630,7 @@ var ViewPT = {
                     {{if ($data.IsLiveCasino)}}\
                         {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
                     {{else}}\
-                        {{if ($data.IsGoldDeluxe)}}\
-                            {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
-                        {{else}}\
-                            {{tmpl($data) ViewPT.TplPtInfo}}\
-                        {{/if}}\
+                        {{tmpl($data) ViewPT.TplPtInfo}}\
                     {{/if}}\
                 {{/if}}\
             {{/if}}\
@@ -716,7 +775,7 @@ var ViewPT = {
     },
     getBettype: function (ind) {
         var sport = ViewPT.getCurrentSportIndex(ind);
-        var betTypes = sport.Bettype.BettypeList;
+        var betTypes = sport.Bettype ? sport.Bettype.BettypeList : null;
 
         var bettypeSelect = $('#ddlBettype');
         var options = bettypeSelect.attr('options');

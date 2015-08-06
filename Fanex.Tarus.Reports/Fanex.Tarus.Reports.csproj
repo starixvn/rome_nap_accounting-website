@@ -42,6 +42,10 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Couchbase">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Cache\Memcached\Couchbase.dll</HintPath>
+    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
