@@ -342,8 +342,7 @@ namespace Fanex.BetList.Accounting.Repositories
                                 SuperComm = Converter.ToDecimal(r["scomm"]),
                                 AgentComm = Converter.ToDecimal(r["acomm"]),
                                 Comm = Converter.ToDecimal(r["comm"]),
-                                BetTypeId = 29,
-                                TransDesc = Converter.ToString2(r["transdesc"])
+                                BetTypeId = 29
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
