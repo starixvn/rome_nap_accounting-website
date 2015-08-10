@@ -375,8 +375,7 @@ namespace Fanex.BetList.Accounting.Repositories
                                 IsNeutral = Converter.ToBool(r["isNeutral"]),
                                 MatchCode = Converter.ToString2(r["matchcode"]),
                                 MatchId = Converter.To<int>(r["matchid"]),
-                                BetCheck = Converter.ToString2(r["BetCheck"]),
-                                TransDesc = Converter.ToString2(r["transdesc"])
+                                BetCheck = Converter.ToString2(r["BetCheck"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
