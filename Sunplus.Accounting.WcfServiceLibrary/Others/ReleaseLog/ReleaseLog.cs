@@ -119,7 +119,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Others
                             contentHtml = contentHtml.Replace(matchTmp, "<img src=\"cid:" + contentId + "\"/>");
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception) { }
                 }
                 if (linkedList.Count > 0)
                 {

@@ -212,7 +212,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
             return tickets;
         }
 
-        private string UppercaseFirst(string s)
+        private new string UppercaseFirst(string s)
         {
             // Check for empty string.
             if (string.IsNullOrEmpty(s))
@@ -632,7 +632,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
         }
 
 
-        public string CheckMatchIDwithRefno(string matchid, string f_transid, string t_transid, Fanex.Tarus.SpecialDelete.Core.Sport.SportType sportType)
+        public new string CheckMatchIDwithRefno(string matchid, string f_transid, string t_transid, Fanex.Tarus.SpecialDelete.Core.Sport.SportType sportType)
         {
             string rs = string.Empty;
             try
@@ -647,7 +647,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
             return rs;   
         }
 
-        public List<NegativeBalance> SelNegativeBalanceCustomer(string transid, Function.ActionType actionType, bool excludeRunning)
+        public new List<NegativeBalance> SelNegativeBalanceCustomer(string transid, Function.ActionType actionType, bool excludeRunning)
         {
             return base.SelNegativeBalanceCustomer(transid, actionType, excludeRunning);
         }

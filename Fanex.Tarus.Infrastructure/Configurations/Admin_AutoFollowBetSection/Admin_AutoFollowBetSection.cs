@@ -56,7 +56,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public Admin_AutoFollowBetCollection this[string name]
+        public new Admin_AutoFollowBetCollection this[string name]
         {
             get
             {

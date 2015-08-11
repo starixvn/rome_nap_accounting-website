@@ -23,7 +23,7 @@ namespace Fanex.Tarus.Infrastructure.Helper
                 string value = dr[key].ToString();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -36,7 +36,7 @@ namespace Fanex.Tarus.Infrastructure.Helper
                 string value = dr[key].ToString();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

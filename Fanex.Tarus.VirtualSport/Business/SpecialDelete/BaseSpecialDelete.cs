@@ -901,10 +901,6 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                     string ToMailCSD = "";
                                     string CC = "", BCC = "";
 
-                                    string _ToMailCSD = "";
-
-                                    bool isSendBoth = false;
-
                                     ToMailCSD = dataforMailing.To;
                                     CC = dataforMailing.Cc;
                                     BCC = dataforMailing.Bcc;
@@ -1245,14 +1241,14 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
         #region WriteLogMail
 
-        protected void WriteLogMail(string content)
+        protected new void WriteLogMail(string content)
         {
             SpecialDeleteBase.WriteLogMail(content);
         }
 
         #endregion WriteLogMail
 
-        protected Dictionary<int, Dictionary<string, object>> GetDeleteBetConfig()
+        protected new Dictionary<int, Dictionary<string, object>> GetDeleteBetConfig()
         {
             return SpecialDeleteBase.GetDeleteBetConfig();
         }

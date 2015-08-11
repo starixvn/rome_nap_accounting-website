@@ -62,13 +62,7 @@ namespace Fanex.Tarus.Reports.DataAccess.PunterAnalysis
 
         private PunterAnalysisParam setParamDefault(PunterAnalysisParam param)
         {
-            int byleague = 1;
             string products = param.ProductIds;
-            if (param.SearchBy == "0") //search by user
-            {
-                byleague = 0;
-            }
-
             return param;
         }
 

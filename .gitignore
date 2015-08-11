@@ -37,3 +37,4 @@ Websites/[Bb]in/*.pdb
 *.csproj.user
 *Sunplus.Data.DataAbstract/DLL/*
 *.cache
+packages/*

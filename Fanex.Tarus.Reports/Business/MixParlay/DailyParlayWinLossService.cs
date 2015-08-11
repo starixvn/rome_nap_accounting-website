@@ -755,7 +755,6 @@ namespace Fanex.Tarus.Reports.Business.MixParlay
 
                 #region Content
                 int index = 2;
-                decimal  margin = 0;
                 int r = 255, g = 255, b = 255;
                 foreach (DailyParlayWinLoss livetype in parlay.Rows)
                 {

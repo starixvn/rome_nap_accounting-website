@@ -74,7 +74,7 @@ namespace Fanex.Tarus.Infrastructure.Common
                 {
                     return CastAide.AsInt32(HttpContext.Current.Session["AccId"], 0);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return 0;
                 }

@@ -17,17 +17,17 @@ namespace Fanex.Tarus.Infrastructure.Utils
 
             var numberRegex = Regex.Match(value, @"\d{1,3}.\d{0,4}");
 
-            if(numberRegex.Success)
+            if (numberRegex.Success)
             {
                 try
                 {
                     result = Convert.ToDouble(numberRegex.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     result = .0;
                 }
-                
+
             }
 
             return result;
@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Infrastructure.Utils
                 Convert.ToDouble(objNumber);
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 return false;

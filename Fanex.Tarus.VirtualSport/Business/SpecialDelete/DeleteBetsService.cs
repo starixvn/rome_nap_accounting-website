@@ -79,7 +79,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
             return bettypes;
         }
 
-        public List<Result> CheckRefNo(string matchid, string fromRefno, string toRefno)
+        public new List<Result> CheckRefNo(string matchid, string fromRefno, string toRefno)
         {
             List<Result> listMessage = new List<Result>();
             Result checkResult = new Result();

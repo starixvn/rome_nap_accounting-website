@@ -44,7 +44,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
             _numberWheelService = numberWheelService ?? new NumberWheelService();
         }
 
-        public List<BettypeModel> SelBettype(Product.ProductType productType)
+        public new List<BettypeModel> SelBettype(Product.ProductType productType)
         {
             return base.SelBettype(productType);
         }
@@ -171,7 +171,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
             };
         }
 
-        public string CheckMatchIDwithRefno(string MatchID, string FromRefNo, string ToRefNo, Sport.SportType sportType)
+        public new string CheckMatchIDwithRefno(string MatchID, string FromRefNo, string ToRefNo, Sport.SportType sportType)
         {
             string rs = string.Empty;
             try
