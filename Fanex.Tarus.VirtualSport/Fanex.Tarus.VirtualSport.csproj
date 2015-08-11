@@ -80,8 +80,7 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\Dependency\Fanex\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -271,6 +270,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
