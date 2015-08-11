@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Cache\Memcached\Enyim.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.2.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.5-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
