@@ -226,16 +226,20 @@
                     </td>
                 </tr> 
                 <!--/Row_AutoSuspend_BetTrade-->
-                <!--/Row_Microgaming-->
+                <!--/Row_Microgaming_VoidBridge-->
                  <tr>
                     <!--Microgaming-->        
                     <td class="l" colspan="2">        
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMicrogaming}, true, 'Update Microgaming Status','MicroGaming', {microGamingId})">Enable Microgaming</span>
                     </td>
                     <!--/Microgaming-->
-                    <td class="l" colspan="2" ></td>
+                    <!--Voidbridge--> 
+                    <td class="l" colspan="2" >
+                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusVoidbridge}, true, 'Update Voidbridge Status','Voidbridge', {voidbridgeId})">Enable Voidbridge</span>
+                    </td>
+                    <!--/Voidbridge-->
                 </tr> 
-                <!--/Row_Microgaming-->
+                <!--/Row_Microgaming_VoidBridge-->
                 <tr>
                     <td style="width: 100px;" class="l">
                         Special

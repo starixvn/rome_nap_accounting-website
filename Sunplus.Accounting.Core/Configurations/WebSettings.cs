@@ -487,6 +487,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableVoidbridge
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableVoidbridge"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get
