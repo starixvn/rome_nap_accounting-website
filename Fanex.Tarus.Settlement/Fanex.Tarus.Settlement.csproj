@@ -39,38 +39,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Couchbase">
+      <HintPath>..\Dependency\Cache\Memcached\Couchbase.dll</HintPath>
+    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\Dependency\Cache\Memcached\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data, Version=1.0.116.14, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile">
       <HintPath>..\Dependency\3rdParty\LiveCasino\IBCFile.dll</HintPath>
     </Reference>
-    <Reference Include="LVAPIDBLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LVAPIDBLibrary">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVAPIDBLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="LVAPILibrary, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LVAPILibrary">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVAPILibrary.dll</HintPath>
     </Reference>
-    <Reference Include="LVAPILibrary_GameRule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LVAPILibrary_GameRule">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVAPILibrary_GameRule.dll</HintPath>
     </Reference>
-    <Reference Include="LVCasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LVCasinoSetting">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="LVCasinoUtility">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVCasinoUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="NotifyPropertyChanged">
       <HintPath>..\Dependency\3rdParty\LiveCasino\NotifyPropertyChanged.dll</HintPath>
@@ -127,6 +133,11 @@
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

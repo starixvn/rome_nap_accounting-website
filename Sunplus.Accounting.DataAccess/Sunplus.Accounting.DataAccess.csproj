@@ -240,8 +240,7 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="DNAide, Version=2.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data">
