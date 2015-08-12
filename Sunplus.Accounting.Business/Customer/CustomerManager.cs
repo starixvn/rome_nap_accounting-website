@@ -792,27 +792,31 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowVoidbridge = WebSettings.EnableVoidbridge && roleId == 4 && isLicensee;
-                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
-                                {
-                                    IsShowKeno = isShowKenoStatus,
-                                    IsShowGoldDeluxe = isShowGoldDeluxe,
-                                    IsShowVoidbridge = isShowVoidbridge,
-                                    IsShowEnableBetTrade = isShowEnableBetTrade,
-                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
-                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
-                                    ParentId = parentId,
-                                    RoleId = roleId,
-                                    CustId = custId,
-                                    IsDeposit = isDeposit,
-                                    Username = userName,
-                                    AccId = AppSession.AccId
-                                };
+                                var renderLeftPanelParameter = new RenderLeftPanelParameter
+                               {
+                                   IsShowKeno = isShowKenoStatus,
+                                   IsShowGoldDeluxe = isShowGoldDeluxe,
+                                   IsShowVoidbridge = isShowVoidbridge,
+                                   IsShowEnableBetTrade = isShowEnableBetTrade,
+                                   IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                                   IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                   ParentId = parentId,
+                                   RoleId = roleId,
+                                   CustId = custId,
+                                   IsDeposit = isDeposit,
+                                   Username = userName,
+                                   AccId = AppSession.AccId
+                               };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
-                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
-
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusVoidbridge}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{voidbridgeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVoidbridge);
+
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
@@ -1424,7 +1428,7 @@ namespace Sunplus.Accounting.Business.Customer
                     roleId,
                     isManageCustomerAccess,
                     CustParent.IsDisableGoldDeluxe,
-                     Permissions.IsAllowEditGoldDeluxe(parentID),
+                    Permissions.IsAllowEditGoldDeluxe(parentID),
                     hasDownline);
             }
 
