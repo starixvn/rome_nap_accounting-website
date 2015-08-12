@@ -630,7 +630,15 @@ var ViewPT = {
                     {{if ($data.IsLiveCasino)}}\
                         {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
                     {{else}}\
-                        {{tmpl($data) ViewPT.TplPtInfo}}\
+                        {{if ($data.IsGoldDeluxe)}}\
+                            {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
+                        {{else}}\
+                            {{if ($data.IsMicroGaming)}}\
+                                {{tmpl($data) ViewPT.TplMicroGamingPtInfo}}\
+                            {{else}}\
+                                {{tmpl($data) ViewPT.TplPtInfo}}\
+                            {{/if}}\
+                        {{/if}}\
                     {{/if}}\
                 {{/if}}\
             {{/if}}\
