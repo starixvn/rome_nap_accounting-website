@@ -25,9 +25,9 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
             }
 
-            if (!renderLeftPanelParameter.IsShowVoidbridge)
+            if (!renderLeftPanelParameter.IsShowMacau)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Voidbridge");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
         }
 
@@ -51,9 +51,9 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Row_AutoSuspend_BetTrade");
             }
 
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming && !renderLeftPanelParameter.IsShowVoidbridge)
+            if (!renderLeftPanelParameter.IsShowEnableMicrogaming && !renderLeftPanelParameter.IsShowMacau)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Microgaming_VoidBridge");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Microgaming_Macau");
             }
         }
 

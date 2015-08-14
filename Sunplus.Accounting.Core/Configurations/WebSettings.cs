@@ -487,11 +487,11 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool EnableVoidbridge
+        public static bool EnableMacau
         {
             get
             {
-                return (ConfigurationManager.AppSettings["EnableVoidbridge"] == "1");
+                return (ConfigurationManager.AppSettings["EnableMacau"] == "1");
             }
         }
 

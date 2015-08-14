@@ -791,12 +791,12 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
-                                var isShowVoidbridge = WebSettings.EnableVoidbridge && roleId == 4 && isLicensee;
+                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
                                    IsShowGoldDeluxe = isShowGoldDeluxe,
-                                   IsShowVoidbridge = isShowVoidbridge,
+                                   IsShowMacau = isShowMacau,
                                    IsShowEnableBetTrade = isShowEnableBetTrade,
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
@@ -814,8 +814,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
 
-                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusVoidbridge}", "1");
-                                TemplateHandler.Assign(ref htmlcontent, "{voidbridgeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVoidbridge);
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);

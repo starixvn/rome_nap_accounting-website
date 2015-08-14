@@ -107,11 +107,11 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public static int ProductIdVoidbridge
+        public static int ProductIdMacau
         {
             get
             {
-                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdVoidbridge"]);
+                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdMacau"]);
             }
         }
 
