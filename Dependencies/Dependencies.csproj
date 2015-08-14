@@ -39,11 +39,17 @@
     <Reference Include="Enyim.Caching">
       <HintPath>..\Dependency\Cache\Memcached\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne">
+      <HintPath>..\Dependency\EnableStatus\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino">
       <HintPath>..\Dependency\Casino\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.CloneSetting">
+      <HintPath>..\Dependency\Fanex\Fanex.CustomerSetting.Module.CloneSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -60,7 +66,7 @@
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.SecurityL">
+    <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting">
@@ -71,6 +77,9 @@
     </Reference>
     <Reference Include="Fanex.Module.Statement">
       <HintPath>..\Dependency\Modules\Statement\Fanex.Module.Statement.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTSetting.BettypeReference">
+      <HintPath>..\Dependency\Fanex\PTSettingInfo\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
