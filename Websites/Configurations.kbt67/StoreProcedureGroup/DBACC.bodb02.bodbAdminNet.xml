@@ -98,7 +98,7 @@
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Bet List - Result">
-    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBACC.bodb02.bodbAdminNet">
+    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
       <Mapping ObjectProperty="MatchId" DataField="MatchID" />
       <Mapping ObjectProperty="GameId" DataField="GameID" />
