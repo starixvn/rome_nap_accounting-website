@@ -3,8 +3,10 @@
 @using Fanex.Tarus.Customer.Entities.ConfigureDirectAccount;
 @using Fanex.Tarus.Business.Implement;
 @using Sunplus.Accounting.Core.Common;
+@using Fanex.Tarus.Security.Permission;
 @{
-    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
+    var permissionService = new PermissionService();
+    var hasHostPermission = permissionService.GetHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount, permissionService.GetRoleAccess(AppSession.AccId));
     var userId = AppSession.AccId;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />

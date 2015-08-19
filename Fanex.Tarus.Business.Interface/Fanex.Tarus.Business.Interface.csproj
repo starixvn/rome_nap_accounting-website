@@ -55,7 +55,6 @@
     <Compile Include="IAdminService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="IHelper.cs" />
-    <Compile Include="IPermissionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\ILiveCasinoWinLossService.cs" />
     <Compile Include="Report\IMatchAnalysisService.cs" />

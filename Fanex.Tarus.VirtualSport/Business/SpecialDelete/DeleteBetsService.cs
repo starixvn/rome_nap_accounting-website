@@ -6,15 +6,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using DNAide.Core;
-using Fanex.Tarus.Business.Implement;
+using Fanex.Tarus.Entities.Sport;
 using Fanex.Tarus.Infrastructure.Caching;
-using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.VirtualSport.Business.Constants;
 using Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete;
 using Fanex.Tarus.VirtualSport.Entities;
 using Fanex.Tarus.VirtualSport.Entities.SpecialDelete;
-using Fanex.Tarus.Entities.Sport;
+using Fanex.Tarus.Infrastructure.Common;
+using AppSession = Sunplus.Accounting.Core.Common.AppSession;
 
 namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 {
@@ -27,16 +28,20 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
         // GET: /RecoverBetsAccess/
         private readonly IDeleteBetsAccess _deleteBetsAccess;
 
+        private PermissionService _permissionService;
+
         #endregion IFields
         #region IConstructions
 
         public DeleteBetsService()
             : this(null)
         {
+            this._permissionService = this._permissionService ?? new PermissionService();
         }
 
         public DeleteBetsService(IDeleteBetsAccess deleteBetsAccess)
         {
+            this._permissionService = this._permissionService ?? new PermissionService();
             _deleteBetsAccess = deleteBetsAccess ?? new DeleteBetsAccess();
         }
 
@@ -186,8 +191,8 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
             Result result = new Result(0, string.Empty);
             try
             {
-
-                if (!PermissionService.HasHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteVirtualSports))
+                var roleAccess = this._permissionService.GetRoleAccess(AppSession.AccId);
+                if (!this._permissionService.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteVirtualSports, roleAccess))
                 {
                     result.ErrorCode = ErrorCode.SystemError; //AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                     result.ErrorMessage = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500");

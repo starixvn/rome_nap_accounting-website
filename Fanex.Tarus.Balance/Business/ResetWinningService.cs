@@ -12,6 +12,7 @@ namespace Fanex.Tarus.Balance.Business
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using Fanex.Tarus.Security.Permission;
 
     public class ResetWinningService : IResetWinningService
     {
@@ -30,8 +31,9 @@ namespace Fanex.Tarus.Balance.Business
         public bool CheckPermissionToReset()
         {
             var permissionService = new PermissionService();
+            var pageAccess = permissionService.GetPageAccess(AppSession.AccId);
             var pathActionName = "ResetWinningNew/Index";
-            bool hasPermission = permissionService.GetHostPermission(pathActionName, AppSession.PageAccess);
+            bool hasPermission = permissionService.GetHostPermission(pathActionName, pageAccess);
 
             return hasPermission;
         }

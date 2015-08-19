@@ -90,7 +90,6 @@
     <Compile Include="CommonService.cs" />
     <Compile Include="Customer\DepositCustomerService.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="PermissionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\CacheUtils.cs" />
     <Compile Include="Report\Common\RMReportUtils.cs" />

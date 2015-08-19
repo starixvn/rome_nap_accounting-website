@@ -17,6 +17,7 @@ namespace Fanex.Tarus.Admin.Business.MailingList
     using DNAide.Core;
     using Sunplus.Accounting.Core.Extensions;
     using Fanex.Tarus.Admin.Entities.MailingList;
+using Fanex.Tarus.Web.Controllers.Filters;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -33,6 +34,7 @@ namespace Fanex.Tarus.Admin.Business.MailingList
             _specialDeleteAccess = specialDeleteAccess ?? new SpecialDeleteAccess();
         }
 
+        [AuthenticateRead]
         public SpecialDeleteMailing GetMailing()
         {
             var model = new SpecialDeleteMailing();
@@ -73,6 +75,7 @@ namespace Fanex.Tarus.Admin.Business.MailingList
             return model;
         }
 
+        [AuthenticateHost]
         public Result UpdateInsertMailing(MailLicensee mailLicensee, bool update)
         {
             try

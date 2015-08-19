@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DNAide">
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -113,6 +116,10 @@
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
       <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
       <Name>Fanex.AuthenticationFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
+      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
+      <Name>Sunplus.Accounting.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>

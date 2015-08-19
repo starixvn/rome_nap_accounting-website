@@ -5,16 +5,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
-using Fanex.Tarus.Business.Implement;
 using Fanex.Tarus.Infrastructure.Caching;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Infrastructure.Helper;
+using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.VirtualSport.Business.Constants;
 using Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete;
 using Fanex.Tarus.VirtualSport.Entities;
 using Fanex.Tarus.VirtualSport.Entities.SpecialDelete;
-
+using AppSession = Sunplus.Accounting.Core.Common.AppSession;
 
 namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 {
@@ -27,16 +27,20 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
         // GET: /RecoverBetsAccess/
         private readonly IRecoverBetsAccess _recoverBetsAccess;
 
+        private PermissionService _permissionService;
+
         #endregion IFields
         #region IConstructions
 
         public RecoverBetsService()
             : this(null)
         {
+            this._permissionService = this._permissionService ?? new PermissionService();
         }
 
         public RecoverBetsService(IRecoverBetsAccess recoverBetsAccess)
         {
+            this._permissionService = this._permissionService ?? new PermissionService();
             _recoverBetsAccess = recoverBetsAccess ?? new RecoverBetsAccess();
         }
 
@@ -97,7 +101,8 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
             Result result = new Result(0, string.Empty);
             try
             {
-                if (!PermissionService.HasHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteVirtualSports))
+                var roleAccess = this._permissionService.GetRoleAccess(AppSession.AccId);
+                if (!this._permissionService.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteVirtualSports, roleAccess))
                 {
                     result.ErrorCode = ErrorCode.NotAuthorized;
                     result.ErrorMessage = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500");

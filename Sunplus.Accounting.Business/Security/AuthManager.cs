@@ -11,6 +11,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL;
+using Fanex.Tarus.Security.Permission;
 
 
 
@@ -58,46 +59,10 @@ namespace Sunplus.Accounting.Business.Security
             {
                 var pageAcess = new Dictionary<string, int>();
                 var roleAccess = new Dictionary<string, int>();
-                char[] delimiterChars = { ';' };
-
-                //DataResult ds = UserControl.SelectAdminPolicy(custid);
-                DbResult ds = DataAccess.IBCDLL.Accounting.UserControl.Acc_Con_FileNameSelByCustID(custid);
-                if (ds != null)
-                {
-                    string filenames = "";
-                    if (ds.ResultSet.Tables[0].Rows.Count > 0)
-                    {
-                        AppSession.GroupID = CastAide.AsInt32(ds.ResultSet.Tables[0].Rows[0]["groupid"], 0);
-                    }
-                    foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
-                    {
-                        //result.Add(row["pagenames"].ToString().ToLower());
-                        filenames = CastAide.AsString(row["filenames"], string.Empty).ToLower();
-
-                        string functionName = CastAide.AsString(row["funcname"], string.Empty).ToLower();
-                        int actualPolicy = CastAide.AsInt32(row["actual_policy"], 0);
-                        if (!roleAccess.ContainsKey(functionName))
-                        {
-                            roleAccess.Add(functionName, actualPolicy);
-                        }
-
-                        if (string.IsNullOrEmpty(filenames))
-                            continue;
-                        string[] fileList = filenames.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string file in fileList)
-                        {
-                            var cleanFilePath = file.Trim();
-                            if (!cleanFilePath.IndexOf("?").Equals(-1))
-                            {
-                                cleanFilePath = file.Substring(0, file.IndexOf('?'));
-                                cleanFilePath = cleanFilePath.Trim();
-                            }
-
-                            if (!pageAcess.ContainsKey(cleanFilePath))
-                                pageAcess.Add(cleanFilePath, actualPolicy);
-                        }
-                    }
-                }
+                int groupId = 0;
+                PermissionService permissionService = new PermissionService();
+                permissionService.GetPageAccessAndRoleAccess(custid, pageAcess, roleAccess, ref groupId);
+                AppSession.GroupID = groupId;
                 AppSession.PageAccess = pageAcess;
                 AppSession.RoleAccess = roleAccess;
                 AppSession.ViewIPVN = Permissions.HasPermission(Enumerations.Functions.ViewIPVN);

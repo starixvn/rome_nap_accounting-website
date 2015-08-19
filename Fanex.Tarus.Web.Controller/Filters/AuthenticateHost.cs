@@ -5,19 +5,20 @@ namespace Fanex.Tarus.Web.Controllers.Filters
 {
     using System.Web.Mvc;
     using System.Web.Routing;
-
-    using Fanex.Tarus.Business.Implement;
-    using Fanex.Tarus.Business.Interface;
-
+    using Fanex.Tarus.Security.Permission;
     using Sunplus.Accounting.Core.Common;
 
     public class AuthenticateHost: ActionFilterAttribute
     {
-        private readonly IPermissionService _permissionService;
-        public AuthenticateHost():this(null){}
-        public AuthenticateHost(IPermissionService permissionService)
+        private readonly PermissionService _permissionService;
+        public AuthenticateHost():this(null)
         {
-            _permissionService = permissionService ?? new PermissionService();
+            this._permissionService = this._permissionService ?? new PermissionService();
+        }
+
+        public AuthenticateHost(PermissionService permissionService)
+        {
+            this._permissionService = permissionService ?? new PermissionService();
         }
         
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -25,16 +26,15 @@ namespace Fanex.Tarus.Web.Controllers.Filters
 
             var actionName = filterContext.ActionDescriptor.ActionName;
             var controlName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-
             var pathActionName = controlName + "/" + actionName;
-
-            bool hasPermissionHost = _permissionService.GetHostPermission(pathActionName, AppSession.PageAccess);
-
+            var pageAccess = this._permissionService.GetPageAccess(AppSession.AccId);
+            bool hasPermissionHost = this._permissionService.GetHostPermission(pathActionName, pageAccess);
             if (!hasPermissionHost)
             {
                 UpdateActionDenied(filterContext);
                 return;
             }
+
             base.OnActionExecuting(filterContext);
         }
 

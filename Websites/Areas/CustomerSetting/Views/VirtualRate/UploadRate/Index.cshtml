@@ -3,10 +3,12 @@
 @using Newtonsoft.Json;
 @using Fanex.Tarus.Business.Implement;
 @using Sunplus.Accounting.Core.Common;
+@using Fanex.Tarus.Security.Permission;
 @{    
     ViewBag.Title = Customer_Labels.Virtual_Rate;
     Layout = "";
-    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.UploadVR);
+    var permissionService = new PermissionService();
+    var hasHostPermission = permissionService.GetHostPermission(Enumerations.Functions.Customer.UploadVR, permissionService.GetRoleAccess(AppSession.AccId));
     var userId = AppSession.AccId;
 
     var numberColumnSuccess = 6;
