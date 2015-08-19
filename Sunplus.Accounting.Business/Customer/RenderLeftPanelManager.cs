@@ -24,6 +24,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
             }
+
+            if (!renderLeftPanelParameter.IsShowMacau)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
+            }
         }
 
         public static void AssignCustomerInfo(ref string htmlcontent, CustomerDetail customerDetail)
@@ -46,9 +51,9 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Row_AutoSuspend_BetTrade");
             }
 
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
+            if (!renderLeftPanelParameter.IsShowEnableMicrogaming && !renderLeftPanelParameter.IsShowMacau)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Microgaming");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Microgaming_Macau");
             }
         }
 

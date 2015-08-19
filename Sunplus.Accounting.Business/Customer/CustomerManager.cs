@@ -791,26 +791,32 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
+                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
-                                {
-                                    IsShowKeno = isShowKenoStatus,
-                                    IsShowGoldDeluxe = isShowGoldDeluxe,
-                                    IsShowEnableBetTrade = isShowEnableBetTrade,
-                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
-                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
-                                    ParentId = parentId,
-                                    RoleId = roleId,
-                                    CustId = custId,
-                                    IsDeposit = isDeposit,
-                                    Username = userName,
-                                    AccId = AppSession.AccId
-                                };
+                               {
+                                   IsShowKeno = isShowKenoStatus,
+                                   IsShowGoldDeluxe = isShowGoldDeluxe,
+                                   IsShowMacau = isShowMacau,
+                                   IsShowEnableBetTrade = isShowEnableBetTrade,
+                                   IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                                   IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                   ParentId = parentId,
+                                   RoleId = roleId,
+                                   CustId = custId,
+                                   IsDeposit = isDeposit,
+                                   Username = userName,
+                                   AccId = AppSession.AccId
+                               };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
-                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
-
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
+
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
@@ -1422,7 +1428,7 @@ namespace Sunplus.Accounting.Business.Customer
                     roleId,
                     isManageCustomerAccess,
                     CustParent.IsDisableGoldDeluxe,
-                     Permissions.IsAllowEditGoldDeluxe(parentID),
+                    Permissions.IsAllowEditGoldDeluxe(parentID),
                     hasDownline);
             }
 

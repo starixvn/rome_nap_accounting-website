@@ -487,6 +487,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableMacau
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableMacau"] == "1");
+            }
+        }
+
         public static string AGCasinoAPILink
         {
             get

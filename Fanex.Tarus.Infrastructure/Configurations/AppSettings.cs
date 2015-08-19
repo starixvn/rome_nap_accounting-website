@@ -107,6 +107,14 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        public static int ProductIdMacau
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdMacau"]);
+            }
+        }
+
         static AppSettings()
         {
             try
