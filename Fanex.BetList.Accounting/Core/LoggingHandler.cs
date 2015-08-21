@@ -12,7 +12,9 @@ namespace Fanex.BetList.Accounting.Core
     using System;
     using System.Web;
     using Fanex.Logging;
+    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.UMControllerLibrary;
 
     public enum LogType : int
     {
@@ -38,6 +40,15 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="ex">The exception.</param>
         public static void Log(Exception ex)
         {
+            var um = new UMBusiness();
+            var isUM = um.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl);
+
+            // Has check UM time and is UM time.
+            if (WebSettings.IsUMTime && isUM)
+            {
+                return;
+            }
+
             string message = ex.Message +
                              "\r\nSOURCE: " + ex.Source +
                              "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
@@ -58,6 +69,15 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="logType">Type of the log.</param>
         public static void Log(string message = "", LogType logType = LogType.Error)
         {
+            var um = new UMBusiness();
+            var isUM = um.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl);
+
+            // Has check UM time and is UM time.
+            if (WebSettings.IsUMTime && isUM)
+            {
+                return;
+            }
+
             var ex = new Exception(message);
             switch (logType)
             {
