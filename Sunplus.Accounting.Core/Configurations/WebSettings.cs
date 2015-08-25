@@ -518,5 +518,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return Convert.ToDecimal(ConfigurationManager.AppSettings["KenoPositionTaking_Max"]);
             }
         }
+
+        public static bool IsShowColossusBet
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowColossusBet"] == "1");
+            }
+        }
     }
 }

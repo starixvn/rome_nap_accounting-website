@@ -191,6 +191,11 @@
                         <li class="canchange" onclick="SuperList.goldDeluxeSetting('@superItem.ChildID');">
                             Gold Deluxe</li>
                     }
+                     @if (WebSettings.IsShowColossusBet)
+                    {
+                        <li class="canchange" onclick="SuperList.colossusBetSetting('@superItem.ChildID', '@Model.ParentId');">
+                            Colossus Bet</li>
+                    }
                 </ul>
             </div>
         </td>

@@ -164,6 +164,11 @@
                         <li class="canchange" onclick="MemberList.goldDeluxeSetting('@memberItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
                     }
+                     @if (WebSettings.IsShowColossusBet)
+                    {
+                        <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
+                            Colossus Bet</li>
+                    }
                 </ul>
             </div>
         </td>
