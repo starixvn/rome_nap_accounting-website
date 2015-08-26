@@ -114,7 +114,8 @@
     text-align: left;
     vertical-align: middle;
     /* color: #ff5411; */
-    font-size: 13px;
+    font-size: 12px;
+    font-family: Tahoma !important;
     clear: both;
     padding-left: 30px;
     white-space: pre-line;
@@ -124,7 +125,7 @@
     padding-top: 5px;
     max-height: 180px;
     overflow: auto;
-    width: 285px !important;
+    width: 385px !important;
     display: block !important;
     font-weight: normal !important;
 }

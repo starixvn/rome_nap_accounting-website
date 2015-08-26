@@ -283,7 +283,7 @@
         }
         function showhideKeno(id, uplineid, roleid, subAccountId, userid) {
             var title = 'Update Enable Keno';
-            var url = 'CustomerSetting/keno/enablestatus/index?id=' + id + '&uplineId=' + uplineid + '&roleId=' + roleid + '&subAccountId=' + subAccountId + '&userid=' + userid;
+            var url = 'CustomerSetting/enablestatus/productstatus/index?custid=' + id + '&uplineId=' + uplineid + '&level=' + roleid + '&subAccId=' + subAccountId + '&userid=' + userid + '&productid=keno';
             var width = 480;
             var height = 450;
             parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
