@@ -41,7 +41,7 @@ public partial class Others_Menu : System.Web.UI.Page
         int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
         var casinoPath = string.Empty;
         var goldDeluxePath = string.Empty;
-        var colossusBetPath = string.Empty;
+        var colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?");
 
         if (roleid == 1)
         {
@@ -52,7 +52,7 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
-            colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
+            colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1";
         }
         else if (roleid == 2)
         {
@@ -63,7 +63,7 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
-            colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1"); 
+            colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2";
         }
         else if (roleid == 3)
         {
@@ -74,7 +74,7 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
-            colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
+            colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3";
         }
         else
         {
@@ -86,7 +86,7 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
-            colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
+            colossusBetPath += "custid=" + custID  + "&roleid=4";
         }
       
         if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
