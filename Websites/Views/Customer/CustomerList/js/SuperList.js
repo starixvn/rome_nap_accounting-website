@@ -333,9 +333,9 @@
                 , 0, 0, 880, 580, false, 2000, null);
     },
     colossusBetSetting: function (custId, uplineId) {
-        showPopup("Gold Deluxe"
-                , "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=2"
-                , 0, 0, 880, 580, false, 2000, null);
+        showPopup("Colossus Bet"
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId
+                , 0, 0, 880, 400, false, 2000, null);
     },
     asianGamingCasino: function (custId) {
         showPopup("Update AG Casino Setting",

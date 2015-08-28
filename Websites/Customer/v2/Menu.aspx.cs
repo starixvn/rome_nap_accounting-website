@@ -41,7 +41,7 @@ public partial class Others_Menu : System.Web.UI.Page
         int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
         var casinoPath = string.Empty;
         var goldDeluxePath = string.Empty;
-        var colossusBetPath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?");
+        var colossusBetPath = Page.ResolveUrl("~/customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?");
 
         if (roleid == 1)
         {

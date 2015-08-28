@@ -973,7 +973,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={1}&roleid=4",custId);
+                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4",custId);
                                         break;
 
                                     default:
@@ -1028,6 +1028,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetLinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
