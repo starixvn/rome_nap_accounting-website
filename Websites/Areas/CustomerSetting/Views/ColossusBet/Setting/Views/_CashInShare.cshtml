@@ -10,11 +10,8 @@
         case 3: 
             cashInShareLabel = Messages.MasterCashInShare;
             break;
-        case 2: 
-            cashInShareLabel = Messages.AgentCashInShare;
-            break;
         default: 
-            cashInShareLabel = Messages.MemberCashInShare;
+            cashInShareLabel = Messages.AgentCashInShare;
             break;
     }                            
 }
@@ -39,7 +36,7 @@
             }
             else
             {
-                 <input disabled ng-model="cashInSharePartial.MaxCashInShareValue" class="r" type="text"  style="text-align: right; padding-right: 5px; width:100px;" />
+                 <input disabled ng-model="cashInSharePartial.CashInShareValue" class="r" type="text"  style="text-align: right; padding-right: 5px; width:100px;" />
             }
             </div>
         </td>
