@@ -519,11 +519,11 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool IsShowColossusBet
+        public static bool IsShowColossusBets
         {
             get
             {
-                return (ConfigurationManager.AppSettings["IsShowColossusBet"] == "1");
+                return (ConfigurationManager.AppSettings["IsShowColossusBets"] == "1");
             }
         }
     }

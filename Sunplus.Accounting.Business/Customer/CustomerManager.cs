@@ -792,7 +792,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
-                                var isShowColossusBetForCredit = WebSettings.IsShowColossusBet && !isLicensee;
+                                var isShowColossusBetsForCredit = WebSettings.IsShowColossusBets && !isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -801,7 +801,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableBetTrade = isShowEnableBetTrade,
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
-                                   IsShowColossusBetForCredit = isShowColossusBetForCredit,
+                                   IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -888,7 +888,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var agCasinoLinkSetting = string.Empty;
                                 var casinoLinkSetting = string.Empty;
                                 var goldDeluxeLinkSetting = string.Empty;
-                                var colossusBetLinkSetting = string.Empty;
+                                var colossusBetsLinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -910,7 +910,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1", custId, parentId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1", custId, parentId);
                                         break;
 
                                     case 2: // agent
@@ -932,7 +932,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2", custId, _masterID);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2", custId, _masterID);
                                         break;
 
                                     case 3: // master
@@ -953,7 +953,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3", custId, _superID);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3", custId, _superID);
                                         break;
 
                                     case 4: // super
@@ -975,7 +975,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4", custId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4", custId);
                                         break;
 
                                     default:
@@ -1030,7 +1030,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
-                                TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
@@ -1122,7 +1122,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
 
-                                if (!WebSettings.IsShowColossusBet)
+                                if (!WebSettings.IsShowColossusBets)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
@@ -1462,12 +1462,12 @@ namespace Sunplus.Accounting.Business.Customer
                sg,
                ref htmlcontent,
                isManageCustomerAccess,
-               CustParent.IsDisableColossusBet,
+               CustParent.IsDisableColossusBets,
                hasDownline,
                "ColossusBet",
-               renderLeftPanelParameter.IsShowColossusBetForCredit,
+               renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
-               "Update Colossus Bet Status");
+               "Update Colossus Bets Status");
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }

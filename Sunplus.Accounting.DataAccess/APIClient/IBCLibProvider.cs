@@ -451,7 +451,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMicrogame"], false) :
                     true;
 
-                _cust.IsDisableColossusBet = WebSettings.IsShowColossusBet ?
+                _cust.IsDisableColossusBets = WebSettings.IsShowColossusBets ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) :
                     true;
 

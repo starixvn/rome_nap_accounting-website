@@ -2465,12 +2465,12 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Super Live status has been disabled at upline</value>
   </data>
   <data name="enableColossusBet" xml:space="preserve">
-    <value>Enable Colossus Bet</value>
+    <value>Colossus Bets</value>
   </data>
   <data name="lblDisabledColossusBet" xml:space="preserve">
-    <value>Enable Colossus Bet</value>
+    <value>Enable Colossus Bets</value>
   </data>
   <data name="lblDisabledColossusBetUpline" xml:space="preserve">
-    <value>Colossus Bet was disabled at upline</value>
+    <value>Colossus Bets was disabled at upline</value>
   </data>
 </root>
