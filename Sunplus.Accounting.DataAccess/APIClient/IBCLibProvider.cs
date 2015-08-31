@@ -450,6 +450,11 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsDisableMicroGaming = WebSettings.EnableMicrogaming ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMicrogame"], false) :
                     true;
+
+                _cust.IsDisableColossusBet = WebSettings.IsShowColossusBet ?
+                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) :
+                    true;
+
                 return _cust;
             }
             catch (Exception ex)

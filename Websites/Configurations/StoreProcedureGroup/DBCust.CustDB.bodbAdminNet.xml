@@ -292,6 +292,7 @@
     </Function>
     <Function Name="Update Setting">
       <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet" DbName="DBCust.CustDB.bodbAdminNet"/>
+      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet"/>
     </Function>
   </Function>
 </Functions>

@@ -792,6 +792,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
+                                var isShowColossusBetForCredit = WebSettings.IsShowColossusBet && !isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -800,6 +801,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableBetTrade = isShowEnableBetTrade,
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                   IsShowColossusBetForCredit = isShowColossusBetForCredit,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -973,7 +975,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
-                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4",custId);
+                                        colossusBetLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4", custId);
                                         break;
 
                                     default:
@@ -1454,6 +1456,18 @@ namespace Sunplus.Accounting.Business.Customer
                 WebSettings.EnableMetricGaming,
                 renderLeftPanelParameter,
                 "Update Super Live Status");
+
+            RenderLeftPanelManager.RenderEnableProductBox(
+               row1,
+               sg,
+               ref htmlcontent,
+               isManageCustomerAccess,
+               CustParent.IsDisableColossusBet,
+               hasDownline,
+               "ColossusBet",
+               renderLeftPanelParameter.IsShowColossusBetForCredit,
+               renderLeftPanelParameter,
+               "Update Colossus Bet Status");
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }

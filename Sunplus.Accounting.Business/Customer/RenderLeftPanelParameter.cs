@@ -24,6 +24,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowGoldDeluxe { get; set; }
 
+        public bool IsShowColossusBetForCredit { get; set; }
+
         public bool IsShowAutoSuspend { get; set; }
 
         public int ParentId { get; set; }
