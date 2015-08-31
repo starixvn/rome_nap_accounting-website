@@ -48,11 +48,26 @@ namespace Fanex.Tarus.Web.Controllers.Filters
 
         private static void UpdateActionDenied(ActionExecutingContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                controller = "Common",
-                action = "UpdateActionDenied"
-            }));
+                filterContext.Result = new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = 
+                        new
+                        {   
+                            ErrorCode = 999,
+                            ErrorMessage = "You are not authorized on this function" 
+                        }
+                };
+            }
+            else
+            {
+                filterContext.Result = new PartialViewResult
+                {
+                    ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+                };
+            }
         }
     }
 }

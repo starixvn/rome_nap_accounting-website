@@ -96,26 +96,30 @@ function formatAlertMessage(msg, type) {
 function showEnrichMessage(containerid, ErrorHandler) {
     var isSuccess = true;
     var result = '';
-     if (ErrorHandler != null && ErrorHandler.length > 0) {
-         $.each(ErrorHandler, function (index, value) {
-             if (value.Key > 0) {
-                 result += formatAlertMessage(value.Value, 1);
-                 isSuccess = false;
-             }
-             else {
-                 result += formatAlertMessage(value.Value, 0);
-             }
-         });
+    if (ErrorHandler != null) {
+        if (ErrorHandler.length > 0) {
+            $.each(ErrorHandler, function (index, value) {
+                if (value.Key > 0) {
+                    result += formatAlertMessage(value.Value, 1);
+                    isSuccess = false;
+                }
+                else {
+                    result += formatAlertMessage(value.Value, 0);
+                }
+            });
+        }
+        else {
+            if (ErrorHandler.ErrorCode <= 0) {
+                result = '<div class="boxscc">' + result + '</div>';
+                t1 = setTimeout("clearMessage('" + containerid + "')", 8000);
+            }
+            else {
+                result = '<div class="boxerr">' + ErrorHandler.ErrorMessage + '</div>';
+                t2 = setTimeout("clearSuccessMessages()", 8000);
+            }
+        }
      }
-     
-     if (isSuccess) {
-         result = '<div class="boxscc">' + result + '</div>';
-         t1 = setTimeout("clearMessage('" + containerid + "')", 8000);
-     }
-     else {
-         result = '<div class="boxerr">' + result + '</div>';
-         t2 = setTimeout("clearSuccessMessages()", 8000);
-     }
+          
      $("#".concat(containerid)).html(result);
      window.scroll(0, 0);
      parent.scroll(0, 0);

@@ -51,36 +51,39 @@ function showEnrichMessage(containerid, ErrorHandler) {
      var isError500=true;
      var isSuccess = true;
      var result = '';
-     if (ErrorHandler != null && ErrorHandler.length > 0) {
-         $.each(ErrorHandler, function (index, Result) {
-             if (Result.ErrorCode == 100 || Result.ErrorCode == 99 || Result.ErrorCode == 98) {
-                 if (isError500) {
-                     result += formatAlertMessage(Result.ErrorMessage, 2);
+     if (ErrorHandler != null) {
+         if (ErrorHandler.length > 0) {
+             $.each(ErrorHandler, function (index, Result) {
+                 if (Result.ErrorCode == 100 || Result.ErrorCode == 99 || Result.ErrorCode == 98) {
+                     if (isError500) {
+                         result += formatAlertMessage(Result.ErrorMessage, 2);
+                     }
+                     isSuccess = false;
                  }
-                 isSuccess = false;
-             }
-             else if (Result.ErrorCode > 0) {
-                 if (isError500)
-                 {
-                     result += formatAlertMessage(Result.ErrorMessage, 1);
+                 else if (Result.ErrorCode > 0) {
+                     if (isError500) {
+                         result += formatAlertMessage(Result.ErrorMessage, 1);
+                     }
+                     isSuccess = false;
                  }
-                 isSuccess = false;
+                 else {
+                     result += formatAlertMessage(Result.ErrorMessage, 0);
+                 }
+                 if (Result.ErrorCode == 500) isError500 = false;
+             });
+         }
+         else {
+             if (ErrorHandler.ErrorCode <= 0) {
+                 result = '<div class="boxscc">' + result + '</div>';
+                 t1 = setTimeout("clearMessage('" + containerid + "')", 8000);
              }
              else {
-                 result += formatAlertMessage(Result.ErrorMessage, 0);
+                 result = '<div class="boxerr">' + ErrorHandler.ErrorMessage + '</div>';
+                 t2 = setTimeout("clearSuccessMessages()", 8000);
              }
-             if (Result.ErrorCode == 500) isError500 = false;
-         });
+         }
      }
      
-     if (isSuccess) {
-         result = '<div class="boxscc">' + result + '</div>';
-         t1 = setTimeout("clearMessage('" + containerid + "')", 8000);
-     }
-     else {
-         result = '<div class="boxerr">' + result + '</div>';
-         t2 = setTimeout("clearSuccessMessages()", 8000);
-     }
      
      $("#".concat(containerid)).html(result);
   
