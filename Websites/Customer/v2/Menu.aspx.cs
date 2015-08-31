@@ -120,7 +120,7 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "GoldDeluxe");
         }
 
-        if (!WebSettings.IsShowColossusBet)
+        if (!WebSettings.IsShowColossusBets)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "ColossusBet");
         }
