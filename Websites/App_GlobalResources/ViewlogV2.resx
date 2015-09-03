@@ -1203,4 +1203,10 @@
   <data name="Sub_acc_name" xml:space="preserve">
     <value>Sub Acc Name</value>
   </data>
+  <data name="v204discountvalue_cashinshare" xml:space="preserve">
+    <value>Cash-In Share</value>
+  </data>
+  <data name="v204discountvalue_commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
 </root>
