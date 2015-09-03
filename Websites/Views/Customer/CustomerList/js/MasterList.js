@@ -340,7 +340,7 @@
     },
     colossusBetSetting: function (custId, uplineId) {
         showPopup("Colossus Bet"
-                ,"customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" +custId  + "&srecommend=" + uplineId +"&roleid=3"
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + custId + "&srecommend=" + uplineId + "&roleid=3" + "&UserId=" + _adminID
                 , 0, 0, 880, 400, false, 2000, null);
     },
     reCalculateGrid: function () {

@@ -334,7 +334,7 @@
     },
     colossusBetSetting: function (custId, uplineId) {
         showPopup("Colossus Bet"
-                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId + "&UserId=" + _adminID
                 , 0, 0, 880, 400, false, 2000, null);
     },
     asianGamingCasino: function (custId) {
