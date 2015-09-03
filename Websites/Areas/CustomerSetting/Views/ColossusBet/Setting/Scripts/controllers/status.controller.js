@@ -3,6 +3,8 @@
 ColossusBetModule.controller('statusController', function ($scope, colossusBetRepositories) {
     colossusBetRepositories.getData().then(function () {
         $scope.originalstatusPartial = angular.copy($scope.statusPartial);
+        $scope.IsDownlinechkDisabled = true;
+
         $scope.$watch('[statusPartial.IsEnabled, statusPartial.IsDownlinesEnabled]', function (newValue, oldValue) {
             if (newValue !== oldValue) {
                 if ($scope.originalstatusPartial.IsEnabled) {
@@ -30,6 +32,8 @@ ColossusBetModule.controller('statusController', function ($scope, colossusBetRe
                 }
             }
         }, true);
+
+
 
     }, function (reason) { }, function (update) { });
 });
