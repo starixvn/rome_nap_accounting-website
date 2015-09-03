@@ -254,6 +254,8 @@ accManager.accounts = {
         $.post("UpdateAdminPolicy", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
                 accManager.utils.showErr(data.ErrorMessage);
+                accManager.utils.unBlock();
+                return;
             }
             else {
                 accManager.utils.showSuccess("Update successfully!");
