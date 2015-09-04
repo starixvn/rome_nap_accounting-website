@@ -101,5 +101,13 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int MicroGamingBaccarat = 2001;
         public const int MicroGamingEndBetType = 2009;
+
+        public const int ColossusBetsSummary = 18000;
+        public const int ColossusBetsPoolBet = 18001;
+        public const int ColossusBetsCashOut = 18002;
+        public const int ColossusBetsWinningShare = 18003;
+        public const int ColossusBetsConsolationPrize = 18004;
+        public const int ColossusBetsJackpotPrize = 18005;
+        public const int ColossusBetsBonusPrize = 18006;
     }
 }

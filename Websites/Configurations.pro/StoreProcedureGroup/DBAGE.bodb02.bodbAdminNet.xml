@@ -286,5 +286,7 @@
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-  
+  <Function Name="Colossus Bets">
+    <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function>  
 </Functions>

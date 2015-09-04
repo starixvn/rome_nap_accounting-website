@@ -96,6 +96,17 @@ namespace Fanex.BetList.Accounting.Core
                 betType == BetTypeContants.BetTradeCommision;
         }
 
+        public bool IsColossusBetType(int betType)
+        {
+            return betType == BetTypeContants.ColossusBetsSummary ||
+                betType == BetTypeContants.ColossusBetsPoolBet ||
+                betType == BetTypeContants.ColossusBetsCashOut ||
+                betType == BetTypeContants.ColossusBetsWinningShare ||
+                betType == BetTypeContants.ColossusBetsConsolationPrize ||
+                betType == BetTypeContants.ColossusBetsJackpotPrize ||
+                betType == BetTypeContants.ColossusBetsBonusPrize;
+        }
+
         public string PercentFormat(decimal input)
         {
             var isInputInterger = (input * 100) % 1 == 0;
@@ -212,9 +223,8 @@ namespace Fanex.BetList.Accounting.Core
             }
             else
             {
-                if (isWonStatus ||
-                    isLoseStatus ||
-                    isDrawStatus)
+                if ((isWonStatus || isLoseStatus || isDrawStatus) &&
+                    !IsColossusBetType(ticketDetail.Ticket.BetTypeId))
                 {
                     int sportTypeId = ticketDetail.Ticket.SportTypeId;
                     switch (ticketDetail.Ticket.SportTypeId)

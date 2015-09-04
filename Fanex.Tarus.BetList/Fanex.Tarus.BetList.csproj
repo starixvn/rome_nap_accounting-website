@@ -54,6 +54,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Core, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.5.7\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
@@ -130,6 +134,8 @@
   <ItemGroup>
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\ColossusBetsService.cs" />
+    <Compile Include="Business\IColossusBetsService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IMicroGamingResultService.cs" />
@@ -153,7 +159,9 @@
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
+    <Compile Include="Controller\ColossusBetsController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Criteria\GetColossusBetsBetDetailsCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
@@ -165,6 +173,8 @@
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMetricGamingResultCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
+    <Compile Include="DataAccess\ColossusBetsRepository.cs" />
+    <Compile Include="DataAccess\IColossusBetsRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
     <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />
