@@ -146,7 +146,8 @@ namespace Fanex.BetList.Accounting.Services
                                     UserName = Converter.ToString2(r["username"]),
                                     Winlost = Converter.ToDecimal(r["winlost"]),
                                     WinlostDate = Convert.ToDateTime(r["transdate"]),
-                                    TransDesc = Converter.ToString2(r["TransDesc"])
+                                    TransDesc = Converter.ToString2(r["TransDesc"]),
+                                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                                 },
                                 ChoiceHtml = string.Empty,
                                 OddHtml = string.Empty,
