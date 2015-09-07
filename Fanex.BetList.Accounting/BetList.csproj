@@ -75,8 +75,9 @@
     <Reference Include="Fanex.BetList.Microgaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.MyanmarOdds">
-      <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
+    <Reference Include="Fanex.BetList.MyanmarOdds, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.1\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
