@@ -56,7 +56,7 @@
             @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CashInShare.cshtml", Model)
             @Html.Hidden("UpdateSettingtUrl", Url.Content("~/customersetting/colossusBetSetting/colossusBetSetting/UpdateSetting"))
         </div>
-        <div ng-if="customerInformationPartial.RoleId >1" class="btnLeft">
+        <div  class="btnLeft">
             <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"
                 value="Update" type="button" class="btnUpdate b" />
         </div>
