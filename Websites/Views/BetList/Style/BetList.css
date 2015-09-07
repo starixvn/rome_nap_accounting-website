@@ -423,3 +423,9 @@ div.ticketList div.void > div.match, div.ticketList div.void div.firstGoal, div.
 span.ui-dialog-title-dialog-modal-TennisResult {
 	margin-left: 25px;
 }
+
+.main-ticket
+{
+	color: #0066cc;
+}
+
