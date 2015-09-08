@@ -433,7 +433,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                         var entity = new Statement();
                         entity.RefNo = (long)(reader["refno"]);
                         entity.CreatedDate = Convert.ToDateTime(reader["accdate"]);
-                        entity.TotalAmount = Convert.ToDouble(reader["totalamt"]);
+                        entity.TotalAmount = reader.IsDBNull(reader.GetOrdinal("totalamt")) ?
+                            0 :
+                            Convert.ToDouble(reader["totalamt"]);
                         entity.TransType = reader.IsDBNull(reader.GetOrdinal("transtype"))
                                                ? string.Empty
                                                : reader["transtype"].ToString();
@@ -645,7 +647,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hash.Add("menuid", menuId);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
-                
+
                 var output = new Hashtable();
                 using (ObjectDb db = new ObjectDb("Acc_MenuDel", 600))
                 {
@@ -719,7 +721,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 {
                     var ds = db.ExecuteDataSet();
                     var dt = new DataTable();
-                    if (ds!=null && ds.Tables.Count > 0)
+                    if (ds != null && ds.Tables.Count > 0)
                     {
                         dt = ds.Tables[0];
                         foreach (DataRow dr in dt.Select())
