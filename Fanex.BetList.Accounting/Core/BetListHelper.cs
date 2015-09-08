@@ -44,13 +44,25 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 202 ||
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGaming ||
-                IsMetricGamingBetType(ticket.BetTypeId);
+                IsMetricGamingBetType(ticket.BetTypeId) ||
+                IsColossusBetType(ticket.BetTypeId);
         }
 
         public static bool IsMetricGamingBetType(int betType)
         {
             return BetTypeContants.MetricGaming60sofKick <= betType &&
                 betType <= BetTypeContants.MetricGamingEndBetType;
+        }
+
+        public static bool IsColossusBetType(int betType)
+        {
+            return betType == BetTypeContants.ColossusBetsSummary ||
+                betType == BetTypeContants.ColossusBetsPoolBet ||
+                betType == BetTypeContants.ColossusBetsCashOut ||
+                betType == BetTypeContants.ColossusBetsWinningShare ||
+                betType == BetTypeContants.ColossusBetsConsolationPrize ||
+                betType == BetTypeContants.ColossusBetsJackpotPrize ||
+                betType == BetTypeContants.ColossusBetsBonusPrize;
         }
 
         public string IsNegative(decimal input)
@@ -94,17 +106,6 @@ namespace Fanex.BetList.Accounting.Core
             return betType == BetTypeContants.BetTradeBought ||
                 betType == BetTypeContants.BetTradeSold ||
                 betType == BetTypeContants.BetTradeCommision;
-        }
-
-        public bool IsColossusBetType(int betType)
-        {
-            return betType == BetTypeContants.ColossusBetsSummary ||
-                betType == BetTypeContants.ColossusBetsPoolBet ||
-                betType == BetTypeContants.ColossusBetsCashOut ||
-                betType == BetTypeContants.ColossusBetsWinningShare ||
-                betType == BetTypeContants.ColossusBetsConsolationPrize ||
-                betType == BetTypeContants.ColossusBetsJackpotPrize ||
-                betType == BetTypeContants.ColossusBetsBonusPrize;
         }
 
         public string PercentFormat(decimal input)
