@@ -15,18 +15,25 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Services;
 using IBCUtils;
 using System.Data;
+using System.Text;
+using System.Text.RegularExpressions;
 using Fanex.Nap.SSO.Repositories;
 using Fanex.Nap.SSO.Criteria;
+using log4net;
+using RobotDetection.Core;
+using RobotDetection.Core.Rules;
 
 
 public class ProcessLogin : IHttpHandler, IRequiresSessionState
 {
-
+	private static readonly ILog Log = LogManager.GetLogger("RobotDetectionLog");
+	
     public void ProcessRequest(HttpContext context)
     {
         try
         {
-
+			LogRobotDetection(context);
+			
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             string username = context.Request.Form["TxtUsername"];
@@ -206,6 +213,42 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
     //    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(logContent);
     //}
 
-    
+	/// <summary>
+	/// Log Robot Detection.
+	/// </summary>
+	private void LogRobotDetection(HttpContext httpRequest)
+	{
+		try
+		{
+			bool isRobot = BotDetection.Instance.IsRobot(new HttpRequestWrapper(httpRequest.Request), httpRequest.Request.Form["Ga"]);
 
+			if (isRobot == false)
+			{
+				Log.Info(httpRequest.Request.UserHostAddress + " Human");
+			}
+			else
+			{
+				Log.Warn(httpRequest.Request.UserHostAddress + " Robot");
+			}
+
+			StringBuilder sb = new StringBuilder();
+			RuleDataContext ruleDataContext = BotDetection.Instance.RuleDataContext;
+			foreach (var property in ruleDataContext.GetType().GetProperties())
+			{
+				if (property.CanRead && property.CanWrite)
+				{
+					string propValue = property.GetValue(ruleDataContext, null) == null
+						? ""
+						: property.GetValue(ruleDataContext, null).ToString();
+					sb.Append(property.Name + ": " + Regex.Replace(propValue, @"\r\n?|\n", " ") + "; ");
+				}
+			}
+
+			Log.Info("Additional Info: " + sb);
+		}
+		catch (Exception ex)
+		{
+			Log.Error(ex.Message);
+		}
+	}
 }
