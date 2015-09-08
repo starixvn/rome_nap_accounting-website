@@ -84,7 +84,8 @@
             Transfer_Details: "<%=Labels.Transfer_Details%>",
             Bet_List: '<%=Labels.Bet_List%>',
             Statement_Guidelines: '<%=Labels.Statement_Guidelines%>',
-            New_Statement_Guidelines: '<%=Labels.New_Statement_Guidelines%>'
+            New_Statement_Guidelines: '<%=Labels.New_Statement_Guidelines%>',
+            GrandPrize: '<%=Labels.GrandPrize%>'
         };
 
         GetDataReport();

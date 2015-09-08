@@ -423,7 +423,7 @@ namespace Sunplus.Accounting.Business.Statement
                             remark.ToLowerInvariant(),
                             "accumulated balance", true) == 0;
 
-                        if (string.Compare(type.ToLowerInvariant(), "bet", true) == 0
+                        if ((string.Compare(type.ToLowerInvariant(), "bet", true) == 0 || string.Compare(type.ToLowerInvariant(), "gp", true) == 0)
                             && accDate >= balanceUpDay)
                         {
                             TemplateHandler.Assign(ref rowHtml, "link",
