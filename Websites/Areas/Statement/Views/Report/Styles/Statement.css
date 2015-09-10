@@ -21,7 +21,8 @@
 .column-transfer-amount:hover,
 .column-void-cancelled:hover,
 .column-outstanding:hover,
-.column-winloss:hover
+.column-winloss:hover,
+.column-grandprize:hover
 {
     color: #996600;
 }
