@@ -187,7 +187,7 @@
                         <li class="canchange" onclick="AgentList.goldDeluxeSetting('@agentItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
                     }
-                     @if (WebSettings.IsShowColossusBets)
+                     @if (!agentItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="AgentList.colossusBetSetting('@agentItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>

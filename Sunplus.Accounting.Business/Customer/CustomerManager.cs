@@ -282,6 +282,8 @@ namespace Sunplus.Accounting.Business.Customer
                             bool autosuspend = Convert.IsDBNull(row1["autosuspend"]) ? false : Convert.ToBoolean(row1["autosuspend"]);
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
+                            bool isHideColossusBets = CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets;
+
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
                             arrcontent.Add("isba", isBA);
@@ -792,7 +794,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
-                                var isShowColossusBetsForCredit = WebSettings.IsShowColossusBets && !isLicensee;
+                                var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -1122,7 +1124,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
 
-                                if (!WebSettings.IsShowColossusBets)
+                                if (isHideColossusBets)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }

@@ -18,8 +18,8 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         string tplMenu = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
-        
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports;
+
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets;
         string[] arrCustID = Request.UrlReferrer.Query.Split('&');
         string custID = arrCustID[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -31,6 +31,7 @@ public partial class Others_Menu : System.Web.UI.Page
         AllowedPoker = true;
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
         allowVirtualSports = true ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
+        hideColossusbets = !CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets;
 
         int roleid = CastAide.AsInt32(arrCustID[2].Split('=')[1]);
         string bingopath = "../PT/Bingo/";
@@ -89,13 +90,13 @@ public partial class Others_Menu : System.Web.UI.Page
             colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
         }
       
-        if (Sunplus.Accounting.Core.Configurations.WebSettings.disabledHR)
+        if (WebSettings.disabledHR)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "HorceRacing");
             if (!Sunplus.Accounting.Core.Configurations.WebSettings.disableCS)
                 defaultUrl = "../PositionTakingCS.aspx" + Request.UrlReferrer.Query;
         }
-        if (Sunplus.Accounting.Core.Configurations.WebSettings.disableCS || !AllowedCS)
+        if (WebSettings.disableCS || !AllowedCS)
             TemplateHandler.RemoveBlock(ref tplMenu, "Casino");
         if (!BingoSettings.BingoGame.Enabled || !AllowedBI)
         {
@@ -120,7 +121,7 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "GoldDeluxe");
         }
 
-        if (!WebSettings.IsShowColossusBets)
+        if (hideColossusbets)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "ColossusBet");
         }

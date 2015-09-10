@@ -193,7 +193,7 @@
                         <li class="canchange" onclick="masterList.goldDeluxeSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
                     }
-                     @if (WebSettings.IsShowColossusBets)
+                     @if (!masterItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="masterList.colossusBetSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>

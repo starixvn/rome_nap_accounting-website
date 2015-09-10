@@ -19,6 +19,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.DataAccess.SettingCustomer;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class CustomerListService : BaseDataAccess, ICustomerListService
     {
@@ -110,6 +111,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         superItem.Others = CastAide.AsDouble(row["discountcs"]);
+
+                        superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -226,6 +229,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         masterItem.Others = CastAide.AsDouble(row["discountcs"]);
 
+                        masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
+
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
 
@@ -303,6 +308,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         agentItem.Others = CastAide.AsDouble(row["discountcs"]);
+
+                        agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -383,6 +390,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);
+
+                        memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
