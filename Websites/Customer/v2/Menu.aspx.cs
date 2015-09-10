@@ -31,7 +31,7 @@ public partial class Others_Menu : System.Web.UI.Page
         AllowedPoker = true;
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
         allowVirtualSports = true ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
-        hideColossusbets = !CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets;
+       
 
         int roleid = CastAide.AsInt32(arrCustID[2].Split('=')[1]);
         string bingopath = "../PT/Bingo/";
@@ -42,6 +42,7 @@ public partial class Others_Menu : System.Web.UI.Page
         int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
         var casinoPath = string.Empty;
         var goldDeluxePath = string.Empty;
+        hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
         var colossusBetPath = Page.ResolveUrl("~/customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?");
 
         if (roleid == 1)

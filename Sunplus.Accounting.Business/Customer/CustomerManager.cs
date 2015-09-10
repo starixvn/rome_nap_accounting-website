@@ -282,7 +282,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool autosuspend = Convert.IsDBNull(row1["autosuspend"]) ? false : Convert.ToBoolean(row1["autosuspend"]);
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
-                            bool isHideColossusBets = CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets;
+                            bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
 
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
