@@ -508,7 +508,7 @@ var StatementReportManager = function () {
                 title: statementResources.Transfer_Details + " (" + self.cachedData.statementReportCriteria.username + ")",
                 left: 400,
                 top: 100,
-                width: 800,
+                width: 840,
                 height: 600
             });
         }
