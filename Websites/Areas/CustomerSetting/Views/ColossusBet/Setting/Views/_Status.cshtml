@@ -12,9 +12,9 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4" class="formatCol l betSetting" style="height: 34px;">
-            <span class="b" style="padding-left: 30px;">Colossus Bet </span>
-            <div style="display: inline-block; padding-left: 30px;">
+         <td colspan="4" class="formatCol l betSetting height34">
+            <span class="b padding-left30">@Messages.ColossusBet</span>
+            <div class="divInline padding-left30" >
                 <input ng-disabled="!statusPartial.Upline.IsEnabled" type="checkbox" ng-model="statusPartial.IsEnabled" />
                 @Messages.Enable
                 @if (Model.CustomerInformationPartial.RoleId != 1 && Model.StatusPartial.IsHasDownlines)
