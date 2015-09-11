@@ -32,7 +32,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
             { sportname: 'Bingo', sportvalue: 'tabBingo' },
             { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
-            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' }
+            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
+            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' }
     ];
 
     $scope.sports = angular.copy(sports);
@@ -180,6 +181,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmBingo").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
         $("#frmGoldDleluxe").attr('src', "");
+        $("#frmColossusBets").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -218,7 +220,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmRacingMinPT", url);
                 $scope.resize("#frmRacingMinPT");
                 break;
-            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper/" + $scope.existedUser.userid +"/0/true";
+            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper/" + $scope.existedUser.userid + "/0/true";
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
                 break;
@@ -237,6 +239,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
                 $scope.loadData("#frmGoldDleluxe", url);
                 $scope.resize("#frmGoldDleluxe");
+                break;
+            case 'tabColossusBets': url += "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + $scope.existedUser.userid + "&UserId=" + adminId + "&ReadOnly=true";
+                $scope.loadData("#frmColossusBets", url);
+                $scope.resize("#frmColossusBets");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }

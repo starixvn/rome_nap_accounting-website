@@ -56,10 +56,13 @@
             @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CashInShare.cshtml", Model)
             @Html.Hidden("UpdateSettingtUrl", Url.Content("~/customersetting/colossusBetSetting/colossusBetSetting/UpdateSetting"))
         </div>
+          @if (!Model.CustomerInformationPartial.ReadOnly)
+          {
         <div  class="btnLeft">
             <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"
                 value="Update" type="button" class="btnUpdate b" />
         </div>
+          }
     </div>
 </body>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
