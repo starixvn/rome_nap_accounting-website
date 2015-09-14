@@ -901,7 +901,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=2&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=1", parentId, parentId, AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
@@ -921,10 +921,10 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
                                         downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=3&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=2", _masterID, _masterID, AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _masterID, roleId);
@@ -943,9 +943,9 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&uplineLevel=4&actorId={2}&customerId={4}&customerLevel=3", _superID, _superID, AppSession.AccId, AppSession.AccUserName, custId);
@@ -963,11 +963,11 @@ namespace Sunplus.Accounting.Business.Customer
                                         RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                                         bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId={0}&actorUsername={1}&customerId={2}&customerLevel=4", AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, CastAide.AsInt32(row1["exchangeid"]));

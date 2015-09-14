@@ -90,7 +90,11 @@ ans.initCommission = function () {
     {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
     }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, commissionSetting.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, 0);
+    }
 };
+
 // check valid user input
 ans.checkValidInput = function () {
     //    if (!ValidateUserName(customer.userName)) {
@@ -139,6 +143,9 @@ ans.checkValidInput = function () {
     if(parseBool2(_isOfferHRFixedOdds))
     {
         commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
+    }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
     }
     //get pt setting
     customer.ptSetting = ptGrid.Save();
