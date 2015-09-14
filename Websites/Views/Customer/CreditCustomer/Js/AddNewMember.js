@@ -91,6 +91,9 @@ anmb.initCommission = function () {
     {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
     }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, Math.max(commissionSetting.discountMyanmarOddsMax, commissionSetting.discountMyanmarOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
+    }
     $('#ddlUGruop').change(function () {
         var $this = $(this);
         var lastCharacter = $this.val()[$this.val().length - 1];
@@ -144,6 +147,9 @@ anmb.checkValidInput = function () {
     if(parseBool2(_isOfferHRFixedOdds))
     {
         commissionSetting.playerDiscountHRFixedOdds = $('#listHRFixOddsComm').val();
+    }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
     }
     // get user group
     customer.group = $('#ddlUGruop').val();

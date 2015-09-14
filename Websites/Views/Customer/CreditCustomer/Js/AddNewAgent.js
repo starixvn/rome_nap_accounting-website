@@ -110,6 +110,9 @@ ana.initCommission = function () {
     {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
     }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, Math.max(commissionSetting.discountMyanmarOddsMax, commissionSetting.discountMyanmarOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
+    }
 };
 //render Transfer Option
 // check valid user input
@@ -157,6 +160,9 @@ ana.checkValidInput = function () {
     if(parseBool2(_isOfferHRFixedOdds))
     {
         commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
+    }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
     }
     //get pt setting
     customer.ptSetting = ptGrid.Save();
