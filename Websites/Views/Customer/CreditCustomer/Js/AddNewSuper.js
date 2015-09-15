@@ -27,6 +27,14 @@ ans.initForKnockout = function () {
         };
     };
     ko.applyBindings(new CustomerModel(customer));
+    $("#listSite").change(function () {
+        if ($('#listSite').val() == "766666") {
+            $('#myanmarOddsTr').show();
+        }
+        else {
+            $('#myanmarOddsTr').hide();
+        }
+    });
 };
 //get context of form
 ans.initContext = function () {
@@ -140,8 +148,7 @@ ans.checkValidInput = function () {
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
     commissionSetting.discountNumber = $('#listGameComm').val();
-    if(parseBool2(_isOfferHRFixedOdds))
-    {
+    if (parseBool2(_isOfferHRFixedOdds)) {
         commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
     }
     if (parseBool2(_isShowMyanmarOdds)) {

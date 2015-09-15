@@ -648,20 +648,27 @@ else
                             </select>
                         </td>
                         <!--/hr-fixed-odds-->
-                         }
-                          @if (isShowMyanmarOdds)
+                         }                       
+                    </tr>
+                    
+                     @if (isShowMyanmarOdds)
                           {
-                         <!--MyanmarOdds-->
-                               <td class="r">
+                          <!--MyanmarOdds-->
+                    <tr id="myanmarOddsTr">
+                        
+                               <td  class="r">
                              Myanmar Odds
                         </td>
                         <td class="l">
                             <select class="selectcomm" name="listMyanmarOdds" id="listMyanmarOdds">
                             </select>
                         </td>
-                        <!--/MyanmarOdds-->
-                          }
+                       
+                          
                     </tr>
+                         <!--/MyanmarOdds-->
+                          }
+                          
                 </table>
             }
             else
