@@ -1209,8 +1209,8 @@
   <data name="discounthrfixedodds" xml:space="preserve">
     <value>HR Fixed Odds</value>
   </data>
-  <data name="v204discountvalue_commission" xml:space="preserve">
-    <value>Commission</value>
+  <data name="discountmyanmarodds" xml:space="preserve">
+    <value>% Odds Comm</value>
   </data>
   <data name="discountonextwo" xml:space="preserve">
     <value>1x2</value>

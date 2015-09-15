@@ -749,6 +749,11 @@ var ViewPT = {
                             <td rowspan="2">Number Game Comm</td>\
                         {{/if}}\
                         <!--/numbergame-->\
+                         <!--myanmarodds-->\
+                        {{if ($data.Comm[0].GameComm != null)}}\
+                            <td rowspan="2">% Odds</td>\
+                        {{/if}}\
+                        <!--/myanmarodds-->\
                     </tr>\
                     <tr class="ViewPTHeader b">\
                         {{if ($data.Comm[0].HorseRacing != null  && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
@@ -816,6 +821,11 @@ var ViewPT = {
 				                <td>${GameComm.Comm}</td>\
 			                {{/if}}\
 			                <!--/numbergame-->\
+                             <!--myanmarodds-->\
+			                {{if (GameComm != null && GameComm.Status)}}\
+				                <td>${GameComm.Comm}</td>\
+			                {{/if}}\
+			                <!--/myanmarodds-->\
 		                </tr>\
 	                {{/each}}\
 	                <!--/row-->\
