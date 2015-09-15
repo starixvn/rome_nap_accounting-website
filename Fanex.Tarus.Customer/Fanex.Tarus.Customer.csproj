@@ -319,6 +319,7 @@
     <Compile Include="Entities\AGCasino\AGCasinoCustomerInfo.cs" />
     <Compile Include="Entities\AGCasino\GameType.cs" />
     <Compile Include="Entities\AGCasino\GameTypeGroup.cs" />
+    <Compile Include="Entities\AGCasino\PositionTaking.cs" />
     <Compile Include="Entities\AGCasino\ProductInfo.cs" />
     <Compile Include="Entities\AGCasino\SettingLimit.cs" />
     <Compile Include="Entities\AGCasino\ViewResources.cs" />

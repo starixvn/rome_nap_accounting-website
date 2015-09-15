@@ -46,6 +46,8 @@ namespace Fanex.Tarus.Customer.Entities.AGCasino
 
         public bool UplineEnableAGCasino { get; set; }
 
+        public PositionTaking PT { get; set; }
+
         public BaseModel DefaultAGCasinoGroup { get; set; }
 
         public string AGCasinoCheckedGroup { get; set; }

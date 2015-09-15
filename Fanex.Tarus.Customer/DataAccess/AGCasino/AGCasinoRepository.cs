@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
     using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Common.Extensions;
     using Fanex.Tarus.Customer.Criteria.AGCasino;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.AGCasino;
@@ -89,7 +90,8 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 RoleId = criteria.RoleId,
                 UplineId = criteria.UplineId,
                 ExchangeId = criteria.ExchangeId,
-                SelectResult = new SelectResult()
+                SelectResult = new SelectResult(),
+                PT = new PositionTaking()
             };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -149,6 +151,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 custInfo.Fax = Converter.ToString2(reader["Fax"]);
                 custInfo.SiteName = Converter.ToString2(reader["SiteName"]);
                 custInfo.ExchangeId = Converter.ToInt(reader["Currency"]);
+
                 break;
             }
         }
