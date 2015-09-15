@@ -120,12 +120,13 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
         showPopup("Update Racing Setting", url, "", "", 1050, 700, false, 2000, null);
     }
 
-    function EditSportsBookSetting(roleid, custid, uplineid, username) {
+    function EditSportsBookSetting(roleid, custid, uplineid, username, isMyanmarOdds) {
         var url = "";
         var title = "";
+        var siteName = isMyanmarOdds == 1 ? "766666" : "";
         switch (roleid) {
             case 4:
-                url = "EditSuper/EditSuperPage?custId=" + custid + '&uname=' + username;
+                url = "EditSuper/EditSuperPage?custId=" + custid + '&uname=' + username ;
                 title = "Edit Super Setting";
                 break;
             case 3:
@@ -141,7 +142,7 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
                  title = "Edit Member Setting";
                 break;
         }
-        showPopup(title, url, "", "", 900, 700, false, 2000, null);
+        showPopup(title, url + "&siteName=" + siteName, "", "", 900, 700, false, 2000, null);
     }
 
 

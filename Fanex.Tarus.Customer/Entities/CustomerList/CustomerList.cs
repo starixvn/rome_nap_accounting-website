@@ -42,6 +42,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double Others { get; set; }
         public double NumberGame { get; set; }
         public string LastLoginIP { get; set; }
+        public bool IsMyanmarOdds { get; set; }
         public bool IsSynCasinoUpline { get; set; }
         public bool IsHideColossusBets { get; set; }
         public int ParentMasterDirect { get; set; } // just for Direct Master

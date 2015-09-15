@@ -119,8 +119,8 @@
             @{
                 int parentMasterID = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
                 }
-                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName');">@masterItem.Status</a>
-                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName');" class="status-button" >
+                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', @masterItem.IsMyanmarOdds ? 1 : 0);">@masterItem.Status</a>
+                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', @masterItem.IsMyanmarOdds ? 1 : 0);" class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>

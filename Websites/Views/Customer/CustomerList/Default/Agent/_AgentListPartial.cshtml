@@ -115,8 +115,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a  onclick="EditSportsBookSetting(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName');" >@agentItem.Status</a>
-                <span  onclick="EditSportsBookSetting(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName');"  class="status-button" >
+                <a  onclick="EditSportsBookSetting(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName', @agentItem.IsMyanmarOdds ? 1 : 0);" >@agentItem.Status</a>
+                <span  onclick="EditSportsBookSetting(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName', @agentItem.IsMyanmarOdds ? 1 : 0);"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>

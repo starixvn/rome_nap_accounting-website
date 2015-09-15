@@ -116,7 +116,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         // superItem.IsLicensee = CastAide.AsBoolean(row["IsLicensee"]);
                         superItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
@@ -233,7 +233,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        masterItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         masterItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -313,7 +313,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         agentItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         agentItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -395,7 +395,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         memberItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         memberItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);

@@ -100,8 +100,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');">@memberItem.Status</a>
-                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');"  class="status-button" >
+                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', @memberItem.IsMyanmarOdds ? 1 : 0);">@memberItem.Status</a>
+                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', @memberItem.IsMyanmarOdds ? 1 : 0);"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
