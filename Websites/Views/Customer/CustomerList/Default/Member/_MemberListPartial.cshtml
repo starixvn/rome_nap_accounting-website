@@ -92,6 +92,7 @@
     {
         var bg = rowCSS(memberItem);
         var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
+        string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
     <tr name="tr_@memberItem.ChildID" class ="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -100,8 +101,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', @memberItem.IsMyanmarOdds ? 1 : 0);">@memberItem.Status</a>
-                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', @memberItem.IsMyanmarOdds ? 1 : 0);"  class="status-button" >
+                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');">@memberItem.Status</a>
+                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>

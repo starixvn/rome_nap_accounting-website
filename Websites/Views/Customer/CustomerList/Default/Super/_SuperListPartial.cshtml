@@ -108,6 +108,7 @@
     {
         var bg = rowCSS(superItem);
         var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
+        string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -116,8 +117,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', @superItem.IsMyanmarOdds ? 1 : 0);"  >@superItem.Status</a>
-                <span onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', @superItem.IsMyanmarOdds ? 1 : 0);"   class="status-button" >
+                <a onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', '@siteName');"  >@superItem.Status</a>
+                <span onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', '@siteName');"   class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>

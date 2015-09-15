@@ -120,10 +120,9 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
         showPopup("Update Racing Setting", url, "", "", 1050, 700, false, 2000, null);
     }
 
-    function EditSportsBookSetting(roleid, custid, uplineid, username, isMyanmarOdds) {
+    function EditSportsBookSetting(roleid, custid, uplineid, username, siteName) {
         var url = "";
         var title = "";
-        var siteName = isMyanmarOdds == 1 ? "766666" : "";
         switch (roleid) {
             case 4:
                 url = "EditSuper/EditSuperPage?custId=" + custid + '&uname=' + username ;

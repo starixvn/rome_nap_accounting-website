@@ -204,7 +204,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         var url = $("#currentURL").val();
         switch (tabId) {
             case 'tabSportsbook':
-                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
+                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.existedUser.selectedSite.SiteName;
                 $scope.loadData("#frmSportbook", url);
                 $scope.resize("#frmSportbook");
                 break;
