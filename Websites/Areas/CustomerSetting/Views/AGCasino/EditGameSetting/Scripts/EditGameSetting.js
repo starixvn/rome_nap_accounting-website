@@ -193,9 +193,13 @@ var AGCasinoSetting = function () {
 
         for (var i = max; i >= min; i -= 1) {
             var value = (i / 100);
-            var selected = value == pt.Current ? 'selected="true"' : '';
-            $('#ptGameType').append('<option value="' + value + ' ' + selected + '">' + value + '</option>');
+            var selected = (i == pt.Current * 100) ? 'selected="true"' : '';
+            $('#ptGameType').append('<option value="' + value + '" ' + selected + '>' + value + '</option>');
         }
+
+        $('#ptGameType').change(function () {
+            self.EnableUpdateButton();
+        });
     };
 
     self.RenderCustomerGameSettingGroupName = function (gameType, gameTypeIndex) {
@@ -254,7 +258,8 @@ var AGCasinoSetting = function () {
             (self.CacheData.selectedDefaultGroup &&
             self.CacheData.selectedDefaultGroup.Name !== self.CacheData.customerSetting.DefaultAGCasinoGroup.Name) ||
             (self.CacheData.selectedApplyGroup &&
-            self.CacheData.selectedApplyGroup.Name !== self.CacheData.firstSelectedApplyGroup.Name);
+            self.CacheData.selectedApplyGroup.Name !== self.CacheData.firstSelectedApplyGroup.Name) ||
+            self.CacheData.customerSetting.PT.Current.toFixed(2) != parseFloat($('#ptGameType').val().trim()).toFixed(2);
         if (isChanged) {
             self.Tables.buttonUpdate.attr("disabled", null);
         } else {
