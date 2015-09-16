@@ -104,6 +104,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 {
                     MappingCustomerSetting(reader, result);
                 }
+
+                if (reader.NextResult())
+                {
+                    MappingCustomerPT(reader, result);
+                }
             }
 
             return result;
@@ -171,6 +176,21 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                     Name = Converter.ToString2(reader["DefaultGroup"])
                 };
                 custInfo.EnableAGCasino = Converter.ToBool(reader["IsEnabled"]);
+                break;
+            }
+        }
+
+        private void MappingCustomerPT(IDataReader reader, AGCasinoCustomerInfo custInfo)
+        {
+            while (reader.Read())
+            {
+                custInfo.PT = new PositionTaking
+                {
+                    Min = Converter.ToDecimal(reader["minpositiontaking"]),
+                    Max = Converter.ToDecimal(reader["maxpositiontaking"]),
+                    Current = Converter.ToDecimal(reader["pt"])
+                };
+
                 break;
             }
         }

@@ -63,8 +63,7 @@ namespace Fanex.Tarus.Customer.Controller
                 {
                     CustomerId = customerInfo.CustomerId,
                     RoleId = customerInfo.RoleId,
-                    UplineId = customerInfo.UplineId,
-                    ExchangeId = customerInfo.UplineId
+                    UplineId = customerInfo.UplineId
                 });
         }
 

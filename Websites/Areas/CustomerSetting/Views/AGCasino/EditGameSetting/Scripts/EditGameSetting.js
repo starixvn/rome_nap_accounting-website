@@ -186,8 +186,15 @@ var AGCasinoSetting = function () {
         $('#ptGameType').empty();
         $('#gameType').html('Baccarat');
 
-        for (var i = 0.0; i <= pt.Max; i += 0.01) {
-            $('#ptGameType').append('<option value="' + i + '">' + i + '</option>');
+        var min = pt.Min.toFixed(2) * 100;
+        var max = pt.Max.toFixed(2) * 100;
+        min = Math.round(min);
+        max = Math.round(max);
+
+        for (var i = max; i >= min; i -= 1) {
+            var value = (i / 100);
+            var selected = value == pt.Current ? 'selected="true"' : '';
+            $('#ptGameType').append('<option value="' + value + ' ' + selected + '">' + value + '</option>');
         }
     };
 
@@ -309,7 +316,7 @@ var AGCasinoSetting = function () {
         self.Tables.resultMessage.empty();
         var cutomerInfoHtml = self.RenderCustomerInfo(customerSetting);
         self.Tables.tableInfoBody.empty().append(cutomerInfoHtml);
-                
+
         self.RenderPT(customerSetting.PT);
 
         var customerSettingHtml = '';

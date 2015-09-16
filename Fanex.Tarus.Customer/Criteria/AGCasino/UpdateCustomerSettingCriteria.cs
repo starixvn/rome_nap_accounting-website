@@ -56,6 +56,8 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
 
         public BaseModel ApplyGroupToMember { get; set; }
 
+        public PositionTaking PT { get; set; }
+
         public string GetSettingKey()
         {
             return "Acc_CustomerUpdAGCasinoSetting";
@@ -102,6 +104,7 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
             storeProcedureParams.Add("langkey", Language);
+            storeProcedureParams.Add("v250_1801pt", PT.Current);
             return storeProcedureParams;
         }
     }
