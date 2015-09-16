@@ -243,6 +243,8 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
+                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];
+                            var isLicensee = IsLicensee(Convert.ToString(siteName));
 
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
@@ -762,9 +764,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
                                 }
 
-                                var canEditAGCasinoStatus = WebSettings.EnableAGCasino &&
-                                    roleId == 4 &&
-                                    isDeposit;
+                                var canEditAGCasinoStatus = WebSettings.EnableAGCasino && isLicensee;
                                 if (!canEditAGCasinoStatus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
@@ -1058,7 +1058,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", sportsbook2LinkSetting);
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
+                                if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
                                 }

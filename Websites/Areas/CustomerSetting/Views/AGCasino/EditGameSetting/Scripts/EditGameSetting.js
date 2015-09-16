@@ -25,7 +25,7 @@ var AGCasinoSetting = function () {
 
     self.CacheData = {
         customerSetting: null,
-        isShowUpdate: false,
+        isShowUpdate: true,
 
         changInfo: {},
 
@@ -103,8 +103,7 @@ var AGCasinoSetting = function () {
         self.blockUI();
         self.cachedDOMElements();
 
-        self.CacheData.isShowUpdate = viewResources.RoleId !== self.Constants.RoleId.MASTER &&
-            viewResources.RoleId !== self.Constants.RoleId.AGENT;
+        self.CacheData.isShowUpdate = true;
         if (!self.CacheData.isShowUpdate) {
             self.Tables.buttonUpdate.remove();
         }
@@ -117,7 +116,7 @@ var AGCasinoSetting = function () {
         self.Tables.tableInfo = $("#settingcontent .tableinfo");
         self.Tables.tableInfoBody = self.Tables.tableInfo.find("tbody");
 
-        self.Tables.tableSetting = $("#settingcontent .tablesetting");
+        self.Tables.tableSetting = $("#tblgamesetting");
         self.Tables.tableSettingBody = self.Tables.tableSetting.find("tbody");
 
         self.Tables.buttonUpdate = $(".btn-update");
@@ -333,7 +332,7 @@ var AGCasinoSetting = function () {
             self.Tables.tableSettingBody.empty().append(customerSettingHtml);
         }
 
-        if (self.CacheData.customerSetting.SelectResult.Code || customerSetting.RoleId !== self.Constants.RoleId.SUPER) {
+        if (self.CacheData.customerSetting.SelectResult.Code) {
             self.Tables.copyToMemberContainer.remove();
             self.Tables.defautGroupNewMemberContainer.remove();
             self.Tables.buttonUpdate.remove();
