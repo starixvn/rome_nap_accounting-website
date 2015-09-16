@@ -487,6 +487,8 @@ var AGCasinoSetting = function () {
                 }
             }
         }
+
+        self.Params.updateCustomerInfo.PT.Current = parseFloat($('#ptGameType').val().trim());
     };
     self.CheckUpdateParams = function () {
         if (!self.Params.updateCustomerInfo.hasChecked) {
