@@ -78,7 +78,6 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
             storeProcedureParams.Add("custid", CustomerId);
             storeProcedureParams.Add("userid", UserId);
             storeProcedureParams.Add("ip", IP);
-            storeProcedureParams.Add("roleid", RoleId);
 
             var gameTypeLength = ProductInfo == null ? 0 : ProductInfo.Count;
             var checkedGroup = new List<string>();
