@@ -1298,7 +1298,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                 {
                                                     Status = myanmarOdds.Status,
                                                     Name = myanmarOdds.Name,
-                                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_2"], 4)
+                                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
                                                 },
                                                 HorseRacing = memberRacingInfo,
                                                 Greyhound = memberGreyhoundInfo,
