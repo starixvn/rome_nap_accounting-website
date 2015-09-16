@@ -27,6 +27,7 @@ ans.initForKnockout = function () {
         };
     };
     ko.applyBindings(new CustomerModel(customer));
+    $('#myanmarOddsTr').hide();
     $("#listSite").change(function () {
         if ($('#listSite').val() == "766666") {
             $('#myanmarOddsTr').show();

@@ -746,7 +746,7 @@ var ViewPT = {
                         <!--/P2P-->\
                         <!--numbergame-->\
                         {{if ($data.Comm[0].GameComm != null)}}\
-                            <td rowspan="2">Number Game Comm</td>\
+                            <td rowspan="2">Number Game </br> Comm</td>\
                         {{/if}}\
                         <!--/numbergame-->\
                          <!--myanmarodds-->\
