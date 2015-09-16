@@ -268,7 +268,7 @@
     <Setting Key="CustomerSelBelonging" SpName="Age_CustomerSelBelonging" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="View Pt">
-    <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="GetPT" SpName="Acc_MT_GetPT_MO" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBCust.CustDB.bodbAdminNet" />

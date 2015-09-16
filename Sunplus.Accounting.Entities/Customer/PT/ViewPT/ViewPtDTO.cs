@@ -297,6 +297,9 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         //public string GameComm { get; set; }
         [DataMember]
         public AllowViewSport LiveCasinoComm { get; set; }
+
+        [DataMember]
+        public AllowViewSport MyanmarOdds { get; set; }
     }
 
     [DataContract]

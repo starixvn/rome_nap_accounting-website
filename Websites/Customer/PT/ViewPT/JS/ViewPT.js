@@ -823,7 +823,7 @@ var ViewPT = {
 			                <!--/numbergame-->\
                              <!--myanmarodds-->\
 			                {{if (GameComm != null && GameComm.Status)}}\
-				                <td>${GameComm.Comm}</td>\
+				                <td>${MyanmarOdds.Comm}</td>\
 			                {{/if}}\
 			                <!--/myanmarodds-->\
 		                </tr>\

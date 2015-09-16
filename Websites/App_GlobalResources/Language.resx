@@ -2467,6 +2467,9 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableColossusBet" xml:space="preserve">
     <value>Colossus Bets</value>
   </data>
+  <data name="MyanmarOdds" xml:space="preserve">
+    <value>MyanmarOdds</value>
+  </data>
   <data name="lblDisabledColossusBet" xml:space="preserve">
     <value>Enable Colossus Bets</value>
   </data>
