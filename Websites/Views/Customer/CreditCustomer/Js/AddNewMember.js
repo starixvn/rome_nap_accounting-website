@@ -149,7 +149,7 @@ anmb.checkValidInput = function () {
         commissionSetting.playerDiscountHRFixedOdds = $('#listHRFixOddsComm').val();
     }
     if (parseBool2(_isShowMyanmarOdds)) {
-        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
+        commissionSetting.playerDiscountMyanmarOdds = $('#listMyanmarOdds').val();
     }
     // get user group
     customer.group = $('#ddlUGruop').val();
