@@ -100,7 +100,7 @@ ans.initCommission = function () {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
     }
     if (parseBool2(_isShowMyanmarOdds)) {
-        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, commissionSetting.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, 0);
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, commissionSetting.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
     }
 };
 

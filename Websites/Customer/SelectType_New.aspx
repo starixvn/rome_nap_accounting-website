@@ -10,7 +10,7 @@
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript">
-        function OpenFormAdd(parentId, parentRoleId) {
+        function OpenFormAdd(parentId, parentRoleId, siteName) {
             var roleId = '';
             var tfHeigth = "30";
             obj("errMsg").innerHTML = "";
@@ -29,12 +29,12 @@
                 //f.location.href="AddNewMember.aspx?agentId="+parentId + "&username="+obj("txtUsername").value;
                 //Khoa.tran add new member (Original code from IBCAgent)
                 //f.location.href = "v2/AddNewMember.aspx?agentId=" + parentId + "&username=" + obj("txtUsername").value;
-                f.location.href = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + obj("txtUsername").value;
+                f.location.href = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
             }
             else if (roleId == '3') {
                 parent.document.body.rows = tfHeigth + ",*";
                 //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-                f.location.href = "../AddNewAgent/AddNewAgentPage?masterId=" + parentId + "&username=" + obj("txtUsername").value;
+                f.location.href = "../AddNewAgent/AddNewAgentPage?masterId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
             }
             else if (roleId == '4') {
                 parent.document.body.rows = tfHeigth + ",*";
@@ -49,8 +49,10 @@
                 else {
                     if (obj("exSuper").checked) {
                         uname = obj("listSuper").options[obj("listSuper").selectedIndex].text;
-                        custId = obj("listSuper").options[obj("listSuper").selectedIndex].value;
-                        url += "superId=" + custId + "&username=" + uname;
+                        var custId_siteName = obj("listSuper").options[obj("listSuper").selectedIndex].value;
+                        custId = custId_siteName.split('_')[0];
+                        siteNameFromSuperList = custId_siteName.split('_')[1];
+                        url += "superId=" + custId + "&username=" + uname + "&siteName=" + siteNameFromSuperList;
                         f.location.href = url;
                         return;
                     }
@@ -58,7 +60,7 @@
                         uname = obj("listCurrency").options[obj("listCurrency").selectedIndex].text;
                         custId = obj("listCurrency").options[obj("listCurrency").selectedIndex].value;
                         var site = obj("listSite").value;
-                        url += "superId=" + custId + "&username=" + uname + "&site=" + site;
+                        url += "superId=" + custId + "&username=" + uname + "&siteName=" + site;
                         f.location.href = url;
                         return;
                     }
