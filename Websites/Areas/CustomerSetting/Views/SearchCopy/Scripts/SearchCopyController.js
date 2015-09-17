@@ -21,6 +21,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '', IsSyncCasino: 0, IsSyncBingo: 0, IsSyncLiveCasino: 0 };
     $scope.newUser = {};
+    $scope.siteName = '';
 
     var sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
@@ -204,7 +205,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         var url = $("#currentURL").val();
         switch (tabId) {
             case 'tabSportsbook':
-                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.existedUser.selectedSite.SiteName;
+                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.siteName;
                 $scope.loadData("#frmSportbook", url);
                 $scope.resize("#frmSportbook");
                 break;
@@ -353,6 +354,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
 
                 $scope.existedUser.selectedSite.SiteName = custInfo.Site;
+                $scope.siteName = custInfo.Site;
                 $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
