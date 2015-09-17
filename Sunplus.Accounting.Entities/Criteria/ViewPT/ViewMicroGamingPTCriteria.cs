@@ -22,6 +22,7 @@
         {
             var storeProcedureParam = new Hashtable();
             storeProcedureParam.Add("username", Username);
+            storeProcedureParam.Add("sporttype", SportId);
             storeProcedureParam.Add("bettype", BetType);
             storeProcedureParam.Add("islive", IsLive);
             storeProcedureParam.Add("hascomm", HasCommission);

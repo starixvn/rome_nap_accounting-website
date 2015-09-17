@@ -266,6 +266,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
 
+                    case Constants.Sport.AGCasino:
                     case Constants.Sport.MicroGaming:
                         var microGamingViewPTCriteria = new ViewMicroGamingPTCriteria
                         {
@@ -1473,6 +1474,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                 };
                 sports.SportsList.Add(microgaming);
+            }
+
+            if (WebSettings.EnableAGCasino)
+            {
+                var agCasino = new Sport
+                {
+                    SportId = Constants.Sport.AGCasino,
+                    SportName = "AG Casino",
+                    Bettype = new BettypeDTO()
+                };
+                sports.SportsList.Add(agCasino);
             }
 
             #endregion live casino
