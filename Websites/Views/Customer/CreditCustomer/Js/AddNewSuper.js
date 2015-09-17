@@ -89,14 +89,15 @@ ans.initPtGrid = function () {
 ans.initCommission = function () {
     var commissionSetting = customer.commissionSetting;
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupA'), 0, commissionSetting.groupA, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupA);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupB'), 0, commissionSetting.groupB, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupB);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupC'), 0, commissionSetting.groupC, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupC);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, commissionSetting.groupD, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
+    if (!parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupB'), 0, commissionSetting.groupB, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupB);
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupC'), 0, commissionSetting.groupC, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupC);
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, commissionSetting.groupD, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
+    }
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, 0);
-    if(parseBool2(_isOfferHRFixedOdds))
-    {
+    if (parseBool2(_isOfferHRFixedOdds)) {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
     }
     if (parseBool2(_isShowMyanmarOdds)) {
@@ -142,10 +143,11 @@ ans.checkValidInput = function () {
     //get commision
     var commissionSetting = customer.commissionSetting;
     commissionSetting.groupA = $('#listGroupA').val();
-    commissionSetting.groupB = $('#listGroupB').val();
-    commissionSetting.groupA = $('#listGroupA').val();
-    commissionSetting.groupC = $('#listGroupC').val();
-    commissionSetting.groupD = $('#listGroupD').val();
+    if (!parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.groupB = $('#listGroupB').val();
+        commissionSetting.groupC = $('#listGroupC').val();
+        commissionSetting.groupD = $('#listGroupD').val();
+    }
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
     commissionSetting.discountNumber = $('#listGameComm').val();
