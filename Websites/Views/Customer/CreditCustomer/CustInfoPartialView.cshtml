@@ -447,13 +447,13 @@ else
         <td colspan="4">
             @if (Model.IsMemberSetting == false)
             {
-                if (isShowMyanmarOdds)
+                if (Model.IsSuperSetting && Model.IsInsertPage)
                 {
-                   @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommWithinMyanmarOdds.cshtml")
+                     @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForAddNewSuper.cshtml")
                 }
                 else
                 {
-                 @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommWithoutMyanmarOdds.cshtml")
+                       @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForTheRest.cshtml")
                 }
             }
             else
