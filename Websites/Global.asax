@@ -15,6 +15,7 @@
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
 <%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
+<%@ Import Namespace="log4net.Config" %>
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -40,6 +41,7 @@
         AutoMapperConfiguration.Configure();
         // ViewEngines.Engines.Add(new CustomView());
 
+		XmlConfigurator.Configure();
     }
 
 

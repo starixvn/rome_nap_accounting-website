@@ -2,6 +2,7 @@
 using System;
 using System.Web.Security;
 using System.Web.UI;
+using RobotDetection.Core;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
@@ -12,6 +13,10 @@ public partial class SignIn : System.Web.UI.Page
 
     public string LoginTheme = "Login";
 
+	public string curDate = string.Empty;
+
+	public string curTick = string.Empty;
+
     protected void Page_PreInit(object sender, EventArgs e)
     {
         Page.Theme = LoginTheme;
@@ -19,6 +24,12 @@ public partial class SignIn : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+		if (!IsPostBack)
+		{
+			curDate = BotDetection.Instance.GetDateKey();
+			curTick = BotDetection.Instance.GetTickKey();
+		}
+
         if (Session["Username"] != null) FormsAuthentication.RedirectFromLoginPage(DNAide.Core.CastAide.AsString(Session["Username"]), false);
 
         AccCommon.Redirect2SSL();
