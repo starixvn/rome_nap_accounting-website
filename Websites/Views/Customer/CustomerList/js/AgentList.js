@@ -320,6 +320,9 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+        if (_isParentMyanmarOdds == "True") {
+            initWidth += 75;
+        } 
         AgentList.gridOption.gridWidth = initWidth;
     }
 };

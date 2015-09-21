@@ -41,6 +41,19 @@
     {
         colspanCom++;
     }
+    bool isParentMyanmarOdds = false;
+    foreach (var memberItem in Model.ListChildren)
+    {
+        if (memberItem.IsMyanmarOdds)
+        {
+            isParentMyanmarOdds = true;
+            break;
+        }
+    }
+    if (isParentMyanmarOdds)
+    {
+        colspanCom++;
+    }
     Hashtable hash = new Hashtable();
     hash.Add("p2pSetting", p2pSetting);
     hash.Add("visibleP2PSetting", visibleP2PSetting);
@@ -54,6 +67,7 @@
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
+    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     
     string[] renderResult = Render(Model, hash);
 }
@@ -299,6 +313,14 @@
                 </div>
             </td>
         }
+          @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
+          {
+             <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @memberItem.DiscountMyanmarOdds
+                </div>
+            </td>
+          }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a></div>
@@ -499,6 +521,13 @@
                                 </div>
                             </th>
                         }
+                          @if (isParentMyanmarOdds)
+                       {
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
+                       }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP</div>
@@ -614,6 +643,13 @@
                                 </div>
                             </th>
                         }
+                          @if (isParentMyanmarOdds)
+                       {
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
+                       }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP</div>
@@ -642,5 +678,6 @@
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
+    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
 </script>

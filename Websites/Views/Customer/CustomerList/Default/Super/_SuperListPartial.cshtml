@@ -42,7 +42,7 @@
         IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
     }
     int colspan = 4;
-    int colspanCom = 6;
+    int colspanCom = 7;
     if (IsVisibleMaxExposure)
     {
         colspan++;
@@ -109,6 +109,7 @@
         var bg = rowCSS(superItem);
         var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
         string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
+       
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -228,6 +229,7 @@
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
     {
         var bg = rowCSS(superItem);
+        string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class ="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -318,6 +320,10 @@
                 </div>
             </td>
         }
+         <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">              
+                @discountMyanmarOdss</div>
+        </td>
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@superItem.LastLoginIP')">@superItem.LastLoginIP</a></div>
@@ -516,6 +522,10 @@
                                 </div>
                             </th>
                         }
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP</div>
@@ -640,6 +650,10 @@
                                 </div>
                             </th>
                         }
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP</div>

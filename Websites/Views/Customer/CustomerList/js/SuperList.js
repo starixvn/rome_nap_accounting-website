@@ -353,7 +353,7 @@
                 , "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0", 0, 0, 1024, 700, false, 2000, null);
     },
     reCalculateGrid: function () {
-        var initWidth = 1385;
+        var initWidth = 1460;
         if (_IsVisibleMaxExposure == "True") {
             initWidth += 85;
         }

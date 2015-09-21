@@ -319,6 +319,9 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+        if (_isParentMyanmarOdds == "True") {
+            initWidth += 75;
+        } 
         MemberList.gridOption.gridWidth = initWidth;
     }
 };

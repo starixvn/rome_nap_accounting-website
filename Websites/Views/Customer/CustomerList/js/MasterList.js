@@ -22,7 +22,7 @@
         isShowPager: true, //=totalColumnWidth + totalColumn*4 +totalColumn
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 1600,
+        gridWidth: 1675,
         gridHeight: 40,
         freezeWidth: 365, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 5
@@ -354,6 +354,9 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+        if (_isShowMyanmarOdds == "True") {
+            initWidth += 75;
+        } 
         masterList.gridOption.gridWidth = initWidth;
     }
 };

@@ -111,7 +111,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         superItem.Others = CastAide.AsDouble(row["discountcs"]);
-
+                        superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
@@ -232,6 +232,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
+                        masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         masterItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
@@ -308,7 +309,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         agentItem.Others = CastAide.AsDouble(row["discountcs"]);
-
+                        agentItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
@@ -390,9 +391,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);
-
+                        memberItem.DiscountMyanmarOdds = CastAide.AsDouble(row["playerdiscountMyanmarOdds"]);
                         memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
-
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
