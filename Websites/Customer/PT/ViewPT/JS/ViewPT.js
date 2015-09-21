@@ -714,9 +714,11 @@ var ViewPT = {
                     <tr class="ViewPTHeader b">\
                         <td rowspan="2" width="60">&nbsp;</td>\
                         <td rowspan="2">Group A</td>\
-                        <td rowspan="2">Group B</td>\
-                        <td rowspan="2">Group C</td>\
-                        <td rowspan="2">Group D</td>\
+                        {{if ($data.Comm[0].MyanmarOdds != null && !$data.Comm[0].MyanmarOdds.Status)}}\
+                            <td rowspan="2">Group B</td>\
+                            <td rowspan="2">Group C</td>\
+                            <td rowspan="2">Group D</td>\
+                        {{/if}}\
                         <td rowspan="2">Other</td>\
                         <!--1X2-->\
                             <td rowspan="2">1x2</td>\
@@ -750,7 +752,7 @@ var ViewPT = {
                         {{/if}}\
                         <!--/numbergame-->\
                          <!--myanmarodds-->\
-                        {{if ($data.Comm[0].GameComm != null)}}\
+                        {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
                             <td rowspan="2">% Odds</td>\
                         {{/if}}\
                         <!--/myanmarodds-->\
@@ -781,9 +783,11 @@ var ViewPT = {
 		                <tr class="trbgov">\
 			                <td class="tdtitle b">${RoleName}</td>\
 			                <td>${GroupA.Comm}</td>\
-			                <td>${GroupB.Comm}</td>\
-			                <td>${GroupC.Comm}</td>\
-			                <td>${GroupD.Comm}</td>\
+                            {{if (MyanmarOdds != null && !MyanmarOdds.Status)}}\
+				                <td>${GroupB.Comm}</td>\
+			                    <td>${GroupC.Comm}</td>\
+			                    <td>${GroupD.Comm}</td>\
+			                {{/if}}\
 			                <td>${Other.Comm}</td>\
 			                <!--1X2-->\
 			                {{if (OneXTwo != null && OneXTwo.Status)}}\
@@ -822,7 +826,7 @@ var ViewPT = {
 			                {{/if}}\
 			                <!--/numbergame-->\
                              <!--myanmarodds-->\
-			                {{if (GameComm != null && GameComm.Status)}}\
+			                {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
 				                <td>${MyanmarOdds.Comm}</td>\
 			                {{/if}}\
 			                <!--/myanmarodds-->\

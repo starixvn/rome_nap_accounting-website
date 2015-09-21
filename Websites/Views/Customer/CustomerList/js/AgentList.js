@@ -321,7 +321,7 @@
             initWidth += 75;
         }
         if (_isParentMyanmarOdds == "True") {
-            initWidth += 75;
+            initWidth -= 150;
         } 
         AgentList.gridOption.gridWidth = initWidth;
     }
