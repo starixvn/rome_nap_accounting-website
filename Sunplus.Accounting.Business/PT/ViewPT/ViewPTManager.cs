@@ -1256,21 +1256,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                 GroupB =
                                                     new AllowViewSport()
                                                         {
-                                                            Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                            Status = groupB.Status,
                                                             Name = groupB.Name,
                                                             Comm = group.Equals("b") ? memberComm : string.Empty
                                                         },
                                                 GroupC =
                                                     new AllowViewSport()
                                                         {
-                                                            Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                            Status = groupC.Status,
                                                             Name = groupC.Name,
                                                             Comm = group.Equals("c") ? memberComm : string.Empty
                                                         },
                                                 GroupD =
                                                     new AllowViewSport()
                                                         {
-                                                            Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                            Status = groupD.Status,
                                                             Name = groupD.Name,
                                                             Comm = group.Equals("d") ? memberComm : string.Empty
                                                         },
@@ -1290,13 +1290,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                         },
                                                 HRFixedOdds = new AllowViewSport()
                                                 {
-                                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                    Status = hrFixedOdd.Status,
                                                     Name = hrFixedOdd.Name,
                                                     Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm"], 4)
                                                 },
                                                 MyanmarOdds = new AllowViewSport()
                                                 {
-                                                    Status = myanmarOdds.Status,
+                                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                                     Name = myanmarOdds.Name,
                                                     Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
                                                 },
