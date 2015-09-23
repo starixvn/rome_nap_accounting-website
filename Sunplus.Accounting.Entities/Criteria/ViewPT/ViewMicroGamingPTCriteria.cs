@@ -18,6 +18,10 @@
 
         public string ErrorMessage { get; set; }
 
+        public bool IsMicroGaming { get; set; }
+
+        public bool IsAGCasino { get; set; }
+
         public Hashtable GetSpParam()
         {
             var storeProcedureParam = new Hashtable();

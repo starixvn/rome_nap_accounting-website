@@ -267,16 +267,27 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
 
                     case Constants.Sport.AGCasino:
-                    case Constants.Sport.MicroGaming:
-                        var microGamingViewPTCriteria = new ViewMicroGamingPTCriteria
+                        var agCasinoViewPTCriteria = new ViewMicroGamingPTCriteria
                         {
                             Username = userName,
                             SportId = sportId,
                             BetType = bettypeId,
-                            IsLive = isLive
+                            IsLive = isLive,
+                            IsAGCasino = true
                         };
 
-                        return new MicroGamingPTService().ViewPositionTaking(microGamingViewPTCriteria);
+                        return new MicroGamingPTService().ViewPositionTaking(agCasinoViewPTCriteria);
+                    case Constants.Sport.MicroGaming:
+                        var microgamingViewPTCriteria = new ViewMicroGamingPTCriteria
+                        {
+                            Username = userName,
+                            SportId = sportId,
+                            BetType = bettypeId,
+                            IsLive = isLive,
+                            IsMicroGaming = true
+                        };
+
+                        return new MicroGamingPTService().ViewPositionTaking(microgamingViewPTCriteria);
                 }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
