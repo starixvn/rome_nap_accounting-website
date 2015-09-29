@@ -24,7 +24,6 @@ public partial class Others_Menu : System.Web.UI.Page
         string custID = arrCustID[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
         var HRURL = string.Empty;
-        string PokerURL = "../PT/Poker/";
         Thread.Sleep(2000);
         DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));        
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
@@ -47,7 +46,6 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             bingopath += "MemberUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditMemberPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
-            PokerURL += "MemberUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId="+custID+"&customerLevel=1");
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
@@ -58,7 +56,6 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             bingopath += "AgentUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditAgentPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
-            PokerURL += "AgentUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=2");
             virtualSportsPath = "../../VirtualSportAgentPT/EditAgent?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
@@ -69,7 +66,6 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             bingopath += "MasterUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditMasterPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
-            PokerURL += "MasterUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=4&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=3");
             virtualSportsPath = "../../VirtualSportMasterPT/EditMaster?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
@@ -81,7 +77,6 @@ public partial class Others_Menu : System.Web.UI.Page
             var exChangeId = CastAide.AsInt32(arrCustID[4].Split('=')[1]);
             bingopath += "SuperUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditSuperPTRacing/Index?custid={0}", custID);
-            PokerURL += "SuperUpdate.aspx?custId=" + custID.ToString() + "&roleId=" + roleid.ToString();
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=4");
             virtualSportsPath = "../../VirtualSportSuperPT/EditSuper?custId=" + custID;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
@@ -124,7 +119,6 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
         TemplateHandler.Assign(ref tplMenu, "{urlCasino}", casinoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlBingo}", bingopath);
-        TemplateHandler.Assign(ref tplMenu, "{urlPoker}", PokerURL);
         TemplateHandler.Assign(ref tplMenu, "{urlLiveCasino}", liveCasinoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlVirtualSports}", virtualSportsPath);
         TemplateHandler.Assign(ref tplMenu, "{urlKeno}", kenoPath);
