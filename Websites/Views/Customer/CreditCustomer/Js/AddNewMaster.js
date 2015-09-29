@@ -3,6 +3,9 @@
 /// <reference path="../../../../js/PT/CommonPT.js" />
 /// <reference path="../../../../js/common.js" />
 
+var items = location.href.split('&');
+var siteName = items[items.length - 1].split('=')[1];
+
 //load function
 $(function () {
     anm.init();
@@ -177,6 +180,8 @@ anm.addNewMaster = function () {
             return;
         }
         try { parent.parent.BlockUI(); } catch (e) { parent.BlockUI(); }
+
+        context.siteName = siteName;
 
         $.ajax({
             type: "POST",
