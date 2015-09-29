@@ -71,7 +71,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// </summary>
         /// <returns>Current context object</returns>
         [HttpPost]
-        public JsonResult GetContextObject(int superId)
+        public JsonResult GetContextObject(int superId, string siteName)
         {
             //init context for add new supper
             IRequestContext currentContext = new RequestContext()
@@ -82,7 +82,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 TargetRoleId = 3,
                 FormId = FormType.Add,
                 SubAccId = 0,
-                AdminId = AppSession.AccId
+                AdminId = AppSession.AccId,
+                SiteName = siteName
             };
             //format json return
 

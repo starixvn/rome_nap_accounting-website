@@ -45,7 +45,7 @@ anm.initContext = function () {
         url: "GetContextObject",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: '{"superId":' + JSON.stringify(superId) + '}',
+        data: '{"superId":' + JSON.stringify(superId) + ',siteName:"' + _siteName + '"}',
         success: function (stringContext) {
             context = JSON.parse(stringContext);
             anm.initCustomer();
