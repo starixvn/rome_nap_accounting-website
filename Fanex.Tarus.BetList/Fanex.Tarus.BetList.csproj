@@ -48,28 +48,24 @@
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.5.8.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.ColossusBets">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.0.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.5.8.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.5.8.1\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.2\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Microgaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.BetList.MyanmarOdds, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.MyanmarOdds, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.1\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.3\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
@@ -135,10 +131,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\NumberGame\INumberWheelService.cs" />
-    <Compile Include="Business\NumberGame\NumberWheelService.cs" />
     <Compile Include="Business\ColossusBetsService.cs" />
     <Compile Include="Business\IColossusBetsService.cs" />
+    <Compile Include="Business\NumberGame\INumberWheelService.cs" />
+    <Compile Include="Business\NumberGame\NumberWheelService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IMicroGamingResultService.cs" />
