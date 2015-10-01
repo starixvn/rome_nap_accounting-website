@@ -224,7 +224,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
 
 			if (isRobot == false)
 			{
-				Log.Info(httpRequest.Request.UserHostAddress + " Human");
+                Log.Info(httpRequest.Request.UserHostAddress + " " + httpRequest.Session.SessionID + " Human");
 			}
 			else
 			{
@@ -233,6 +233,11 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
 
 			StringBuilder sb = new StringBuilder();
 			RuleDataContext ruleDataContext = BotDetection.Instance.RuleDataContext;
+
+            Log.Info("User Agent: " + httpRequest.Request.UserAgent);
+            Log.Info("_Ga: " + httpRequest.Request.Form["Ga"]);
+			Log.Info("ClientData Json: " + BotDetection.Instance.ClientDataJson);
+
 			foreach (var property in ruleDataContext.GetType().GetProperties())
 			{
 				if (property.CanRead && property.CanWrite)
