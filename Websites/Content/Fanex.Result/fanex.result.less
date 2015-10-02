@@ -22,13 +22,13 @@
 @color-black:#000000;
 @color-green:#33CC33;
 
-div.fn-rs-content-header
+.fn-rs-content-header
 {
     border: 1px solid @border-color;
     padding-right: 15px;
 }
 
-div.fn-rs-content-scroll
+.fn-rs-content-scroll
 {
 	max-height: 740px;
 	overflow-y: scroll;
@@ -38,7 +38,7 @@ div.fn-rs-content-scroll
 	width: 100%;
 	max-height: 780px;
 }
-div.goal-record
+.goal-record
     {
 		float:right;
 		padding::5px 0px;
@@ -286,6 +286,42 @@ table
 
         }
     }
+	&.metric-gaming
+    {
+     /*header*/
+		td,th
+        {
+			line-height: 25px;
+        }
+		.header
+        {
+			td
+            {
+				border-left:solid 1px @header-background;
+				border-right:solid 1px @header-background;
+				text-align:center !important;
+            }
+			
+        }
+		.data-header
+        {
+        	td,th
+            {
+            	background:@league-background;
+				font-weight: bold;
+				
+            }
+        }
+		.cl-result
+        {
+        	width:150px;
+			text-align:left;
+        }
+		.cl-event
+        {
+        	text-align:left;
+        }
+    }
 	&.number-game
     {
 		 /*header*/
@@ -316,6 +352,69 @@ table
             }
 	
     }
+	&.ag-cs
+    {
+    	/*header*/
+		.cl-match
+        {
+			.gd
+            {
+            	display:table;
+				width:100%;
+				margin-top: 2px ;
+				text-align:center;
+				
+            }
+			.banker,.player,.dragon,.tiger
+            {
+				display:table-cell;
+				width:50%;
+				padding:0;
+				margin: 0;
+				li
+                {
+					float: left;
+					margin-left:15px;
+					line-height:20px;
+                }
+				li:first-child
+                {
+                	margin-left:0px;
+                }
+				.diamond,.heart,.club,.spade
+                {
+					.icon
+                    {
+                    	font-size:19px;
+                    }
+					.card
+                    {
+						margin-left:2px;
+						font-size:14px;
+                    }
+					
+                }
+				.diamond,.heart
+				{
+            		color: @color-red;
+					
+				}
+				.club,.spade
+				{
+            		color: @color-black;
+				}
+            }
+		
+			.black
+			{
+        		color:@color-black;
+				font-size:28px;
+				font-weight:bold;
+				text-align:center;
+				display:table-cell;
+			}
+		}
+    }
 	&.casino
     {
     	/*header*/
@@ -332,6 +431,7 @@ table
             	display:table;
 				width:100%;
 				margin-top: 2px ;
+				text-align:center;
 				
             }
 			.banker,.player
@@ -368,7 +468,7 @@ table
             		color: @color-red;
 					
 				}
-				.club,.space
+				.club,.spade
 				{
             		color: @color-black;
 				}
@@ -448,4 +548,22 @@ table
     tr.data:hover
     {
     }
+}
+
+.iframe-rs
+{
+	width:100%;
+	height:100%;
+	border:none;
+}
+.no-info-rs
+{
+	 min-width: 650px !important;
+	 height:30px;
+	 font-weight:bold;
+	 text-align:center;
+}
+.iframe-rs-wrap
+{
+
 }
