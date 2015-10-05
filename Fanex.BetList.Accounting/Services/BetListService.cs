@@ -319,7 +319,8 @@ namespace Fanex.BetList.Accounting.Services
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
-                    BetCheck = Convert.ToString(r["betcheck"])
+                    BetCheck = Convert.ToString(r["betcheck"]),
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -503,7 +504,8 @@ namespace Fanex.BetList.Accounting.Services
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
-                    BetCheck = Convert.ToString(r["betcheck"])
+                    BetCheck = Convert.ToString(r["betcheck"]),
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -709,7 +711,8 @@ namespace Fanex.BetList.Accounting.Services
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
-                    BetCheck = Convert.ToString(r["betcheck"])
+                    BetCheck = Convert.ToString(r["betcheck"]),
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -1087,7 +1090,8 @@ namespace Fanex.BetList.Accounting.Services
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                                 TransDesc = Converter.ToString2(r["transdesc"]),
 
-                                BetCheck = Convert.ToString(r["betcheck"])
+                                BetCheck = Convert.ToString(r["betcheck"]),
+                                OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1281,7 +1285,8 @@ namespace Fanex.BetList.Accounting.Services
                                 WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                                 TransDesc = Converter.ToString2(r["transdesc"]),
 
-                                BetCheck = Convert.ToString(r["betcheck"])
+                                BetCheck = Convert.ToString(r["betcheck"]),
+                                OddsSpread = Convert.ToDecimal(r["OddsSpread"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

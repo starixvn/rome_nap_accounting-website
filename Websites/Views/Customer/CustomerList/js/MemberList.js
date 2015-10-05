@@ -306,6 +306,11 @@
                 , "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=1"
                 , 0, 0, 880, 580, false, 2000, null);
     },
+    colossusBetSetting: function (custId, uplineId) {
+        showPopup("Colossus Bet"
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + custId + "&recommend=" + uplineId + "&roleid=1" + "&UserId=" + _adminID
+                , 0, 0, 880, 400, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1370;
         if (_IsVisibleVirtualRate == "True") {
@@ -314,6 +319,9 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+        if (_isParentMyanmarOdds == "True") {
+            initWidth += 75;
+        } 
         MemberList.gridOption.gridWidth = initWidth;
     }
 };

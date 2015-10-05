@@ -8,7 +8,8 @@ var StatementReportManager = function () {
         TransactionType: {
             WinLoss: 1,
             VoidCancelled: 2,
-            Outstanding: 3
+            Outstanding: 3,
+            GrandPrize: 4
         }
     };
     self.Constants = {
@@ -223,6 +224,7 @@ var StatementReportManager = function () {
             bodyRows: bodyData,
             headerColumnHeight: 24,
             bodyRowHeight: 25,
+            noDataText: statementResources.Message_NoDataReport,
             numberOfFrozenColumn: 0,
             gridExpandHeight: 100,
             showHighlightRow: false,
@@ -274,7 +276,6 @@ var StatementReportManager = function () {
             for (var i = 0; i < statementListLength; i++) {
                 var dataRowIndex = ' data-rowindex="' + i + '"';
                 var statement = rs.StatementList[i];
-                var canViewBetList = new Date(balanceUpDay) <= new Date(statement.StatementDateString);
                 var currentRow = {
                     Columns: [
                         {
@@ -300,10 +301,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColVoid_Cancelled",
                             Value: statement.VoidCancelled.HasData ?
-                               ('<div class="' +
-                                    (canViewBetList ? 'column-void-cancelled ' : '') +
-                                    (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') +
-                                    '"' + dataRowIndex + '>' +
+                               ('<div class="column-void-cancelled ' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -311,9 +309,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColOutstanding",
                             Value: statement.Outstanding.HasData ?
-                               ('<div class="' +
-                                    (canViewBetList ? 'column-outstanding ' : '') +
-                                    (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="column-outstanding ' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -321,9 +317,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="' +
-                                    (canViewBetList ? 'column-winloss ' : '') +
-                                    (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="column-winloss ' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -332,6 +326,14 @@ var StatementReportManager = function () {
                             Name: "ColCommission",
                             Value: statement.Commission.HasData ?
                                 statement.Commission.Value :
+                                statementResources.Symbol_NoData
+                        },
+                        {
+                            Name: "ColGrandPrize",
+                            Value: statement.GrandPrize.HasData ?
+                                 ('<div class="column-grandprize ' + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                 numeral(statement.GrandPrize.Value).format(self.Constants.Format.Number.TwoDecimal) +
+                                '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
@@ -411,6 +413,15 @@ var StatementReportManager = function () {
                 FormatNegative: '$'
             },
             {
+                HeaderText: statementResources.GrandPrize,
+                Width: 120,
+                Name: "ColGrandPrize",
+                HeaderAlign: "center",
+                CellAlign: "right",
+                FormatNumber: self.Constants.Format.Number.TwoDecimal,
+                FormatNegative: '$'
+            },
+            {
                 HeaderText: statementResources.Transfer_Amt,
                 Width: 120,
                 Name: "ColTransferAmount",
@@ -432,6 +443,7 @@ var StatementReportManager = function () {
             bodyRows: bodyData,
             headerColumnHeight: 24,
             bodyRowHeight: 25,
+            noDataText: statementResources.Message_NoDataReport,
             numberOfFrozenColumn: 0,
             gridExpandHeight: 100,
             showHighlightRow: false,
@@ -475,6 +487,10 @@ var StatementReportManager = function () {
             var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
             self.viewBetList(rowIndex, self.Enums.TransactionType.WinLoss);
         });
+        reportGrid.find(".column-grandprize").click(function () {
+            var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
+            self.viewBetList(rowIndex, self.Enums.TransactionType.GrandPrize);
+        });
     };
     self.viewTransferDetails = function (rowIndex) {
         var statement = self.cachedData.statementReport.StatementList[rowIndex];
@@ -484,8 +500,7 @@ var StatementReportManager = function () {
             RoleId: self.cachedData.statementReportCriteria.roleId,
             TransferDate: statement.StatementDateString,
             Username: self.cachedData.statementReportCriteria.username,
-            BalanceUpDate: balanceUpDay,
-            SiteName: 'NAP'
+            BalanceUpDate: balanceUpDay
         };
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
@@ -493,7 +508,7 @@ var StatementReportManager = function () {
                 title: statementResources.Transfer_Details + " (" + self.cachedData.statementReportCriteria.username + ")",
                 left: 400,
                 top: 100,
-                width: 950,
+                width: 840,
                 height: 600
             });
         }

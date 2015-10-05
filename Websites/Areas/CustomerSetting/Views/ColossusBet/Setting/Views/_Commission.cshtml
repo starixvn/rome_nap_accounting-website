@@ -1,0 +1,47 @@
+﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
+@{
+    var commissionLabel = string.Empty;
+    switch ((int)Model.CustomerInformationPartial.RoleId)
+    {
+        case 4:
+            commissionLabel = Messages.SuperCommision;
+            break;
+        case 3:
+            commissionLabel = Messages.MasterCommision;
+            break;
+        default:
+            commissionLabel = Messages.AgentCommision;
+            break;
+    }                            
+}
+<table class="tableColor tableWidth" ng-controller="commissionController">
+    <tr>
+        <td colspan="4" class="header c b">
+            <span>@Messages.Commission</span>
+               @if ((Model.CustomerInformationPartial.RoleId > 1) && !Model.CustomerInformationPartial.ReadOnly)
+               {
+            <input ng-class-name="btnSave" check-disable-element ng-model="comissionPartial.IsCommisionUpdated"
+                ng-click="updated(true, 'ComissionPartial')" type="button" />
+               }
+        </td>
+    </tr>
+    <tr>
+          <td colspan="4" class="formatCol l betSetting height34">
+            <div class="b divInline col150 padding-left30">
+                    <span>@commissionLabel</span>
+            </div>
+               <div class="divInline padding-left30" >
+             @if (Model.CustomerInformationPartial.RoleId > 1)
+            {
+                <input input-format  id="commissionInputId" ng-model="comissionPartial.CommisionValue" class="r col100" type="text" title=""/>
+                 <span>  <= <label ng-bind="comissionPartial.MaxCommisionValue"></label>% </span>  
+            }
+            else
+            {
+                <input disabled ng-model="comissionPartial.CommisionValue"   class="r col100" type="text"/>
+            }
+            </div>
+        </td>
+    </tr>
+</table>

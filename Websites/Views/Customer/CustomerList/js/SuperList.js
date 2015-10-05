@@ -332,6 +332,11 @@
                 , window.rootUrl + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=0&uplineLevel=0&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=4"
                 , 0, 0, 880, 580, false, 2000, null);
     },
+    colossusBetSetting: function (custId, uplineId) {
+        showPopup("Colossus Bet"
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId + "&UserId=" + _adminID
+                , 0, 0, 880, 400, false, 2000, null);
+    },
     asianGamingCasino: function (custId) {
         showPopup("Update AG Casino Setting",
         "AGCasino/EditAGCasinoGameSetting?customerId=" + _userId + "&uplineId=0&roleId=4&exchangeId=0" + _userId,
@@ -348,7 +353,7 @@
                 , "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0", 0, 0, 1024, 700, false, 2000, null);
     },
     reCalculateGrid: function () {
-        var initWidth = 1385;
+        var initWidth = 1460;
         if (_IsVisibleMaxExposure == "True") {
             initWidth += 85;
         }

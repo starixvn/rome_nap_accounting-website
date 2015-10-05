@@ -19,6 +19,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.DataAccess.SettingCustomer;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class CustomerListService : BaseDataAccess, ICustomerListService
     {
@@ -110,10 +111,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         superItem.Others = CastAide.AsDouble(row["discountcs"]);
+                        superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
+                        superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         // superItem.IsLicensee = CastAide.AsBoolean(row["IsLicensee"]);
                         superItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
@@ -226,9 +229,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         masterItem.Others = CastAide.AsDouble(row["discountcs"]);
 
-                        masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
-                        masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
+                        masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
+                        masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
+                        masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
+                        masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
+                        masterItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         masterItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -303,10 +309,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         agentItem.Others = CastAide.AsDouble(row["discountcs"]);
+                        agentItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
+                        agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         agentItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         agentItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -383,10 +391,11 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);
-
+                        memberItem.DiscountMyanmarOdds = CastAide.AsDouble(row["playerdiscountMyanmarOdds"]);
+                        memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-
+                        memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         memberItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         memberItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);

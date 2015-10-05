@@ -194,7 +194,7 @@
   </Function>
   <Function Name="Helper">
     <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
@@ -287,5 +287,7 @@
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
- 
+  <Function Name="Colossus Bets">
+    <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function> 
 </Functions>

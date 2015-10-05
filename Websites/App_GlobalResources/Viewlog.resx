@@ -3738,4 +3738,10 @@
   <data name="gametypeid" xml:space="preserve">
     <value>Game Type</value>
   </data>
+  <data name="Disablecolossusbet" xml:space="preserve">
+    <value>Disable Colossus Bets</value>
+  </data>
+  <data name="Hidecolossusbet" xml:space="preserve">
+    <value>Hide Colossus Bets</value>
+  </data>
 </root>

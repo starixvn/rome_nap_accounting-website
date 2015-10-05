@@ -79,7 +79,7 @@ var StatementDetailsManager = function () {
             },
             {
                 HeaderText: statementResources.Remark,
-                Width: 400,
+                Width: 300,
                 Name: "ColRemark",
                 HeaderAlign: "center",
                 CellAlign: "left"

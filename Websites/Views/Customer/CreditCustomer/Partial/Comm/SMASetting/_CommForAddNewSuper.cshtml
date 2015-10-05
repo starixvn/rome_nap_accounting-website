@@ -1,0 +1,67 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@{
+    bool isOfferHRFixedOdds = WebSettings.OfferHorseRacingFixedOdds;
+  
+}
+<table width="100%" class="noneborder" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <div class="commDiv">
+                <label>
+                    Group A</label><select class="selectcomm" name="listGroupB" id="listGroupA">
+                    </select>
+            </div>
+            <div id="groupBDiv" class="commDiv">
+                <label>
+                    Group B</label>
+                <select class="selectcomm" name="listGroupB" id="listGroupB">
+                </select>
+            </div>
+            <div id="groupCDiv" class="commDiv">
+                <label>
+                    Group C</label>
+                <select class="selectcomm" name="listGroupC" id="listGroupC">
+                </select>
+            </div>
+            <div id="groupDDiv" class="commDiv">
+                <label>
+                    Group D</label>
+                <select class="selectcomm" name="listGroupD" id="listGroupD">
+                </select>
+            </div>
+            <div class="commDiv">
+                <label>
+                    @Resources.Language.lbl1x2Comm</label>
+                <select class="selectcomm" name="listGroup1x2" id="listGroup1x2">
+                </select>
+            </div>
+            <div class="commDiv">
+                <label>
+                    @Resources.Language.OtherComm</label>
+                <select class="selectcomm" name="listOther" id="listOther">
+                </select>
+            </div>
+            <div class="commDiv">
+                <label>
+                    @Resources.Language.lblGameComm</label>
+                <select class="selectcomm" name="listGameComm" id="listGameComm">
+                </select>
+            </div>
+            @if (isOfferHRFixedOdds)
+            {
+                <div class="commDiv">
+                    <label>
+                        HR Fixed Odds</label>
+                    <select class="selectcomm" name="listHRFixOddsComm" id="listHRFixOddsComm">
+                    </select>
+                </div>
+            }
+            <div id="myanmarOddsDiv" class="commDiv">
+                <label>
+                    % Odds</label>
+                <select class="selectcomm" name="listMyanmarOdds" id="listMyanmarOdds">
+                </select>
+            </div>
+        </td>
+    </tr>
+</table>

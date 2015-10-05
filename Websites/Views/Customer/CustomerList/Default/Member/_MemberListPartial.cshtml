@@ -41,6 +41,19 @@
     {
         colspanCom++;
     }
+    bool isParentMyanmarOdds = false;
+    foreach (var memberItem in Model.ListChildren)
+    {
+        if (memberItem.IsMyanmarOdds)
+        {
+            isParentMyanmarOdds = true;
+            break;
+        }
+    }
+    if (isParentMyanmarOdds)
+    {
+        colspanCom++;
+    }
     Hashtable hash = new Hashtable();
     hash.Add("p2pSetting", p2pSetting);
     hash.Add("visibleP2PSetting", visibleP2PSetting);
@@ -54,6 +67,7 @@
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
+    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     
     string[] renderResult = Render(Model, hash);
 }
@@ -92,6 +106,7 @@
     {
         var bg = rowCSS(memberItem);
         var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
+        string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
     <tr name="tr_@memberItem.ChildID" class ="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -100,8 +115,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');">@memberItem.Status</a>
-                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');"  class="status-button" >
+                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');">@memberItem.Status</a>
+                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
@@ -163,6 +178,11 @@
                     {
                         <li class="canchange" onclick="MemberList.goldDeluxeSetting('@memberItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
+                    }
+                     @if (!memberItem.IsHideColossusBets)
+                    {
+                        <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
+                            Colossus Bets</li>
                     }
                 </ul>
             </div>
@@ -293,6 +313,14 @@
                 </div>
             </td>
         }
+          @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
+          {
+             <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @memberItem.DiscountMyanmarOdds
+                </div>
+            </td>
+          }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a></div>
@@ -493,6 +521,13 @@
                                 </div>
                             </th>
                         }
+                          @if (isParentMyanmarOdds)
+                       {
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
+                       }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP</div>
@@ -608,6 +643,13 @@
                                 </div>
                             </th>
                         }
+                          @if (isParentMyanmarOdds)
+                       {
+                          <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                % Odds</div>
+                        </th>
+                       }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP</div>
@@ -636,5 +678,6 @@
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
+    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
 </script>

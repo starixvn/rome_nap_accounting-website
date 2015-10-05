@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// <param name="userName">Name of Master</param>
         /// <returns></returns>
         [AuthenticateRead]
-        public ActionResult AddNewAgentPage(int masterId, string userName)
+        public ActionResult AddNewAgentPage(int masterId, string userName, string siteName)
         {
             if (userName == null || userName == string.Empty)
             {
@@ -46,7 +46,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 IsAgentSetting = true,
                 CustId = masterId,
                 CustUserName = userName,
-                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
+                SiteName = siteName
             };
             return View("~/Views/Customer/CreditCustomer/AddNewAgent.cshtml", customerSettingView);
         }

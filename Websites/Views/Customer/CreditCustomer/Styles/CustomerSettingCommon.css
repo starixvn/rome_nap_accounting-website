@@ -93,3 +93,11 @@
 	height: 16px;
 	width: 16px;
 }
+.commDiv
+{
+    display: inline-block;
+    width : 200px; 
+    float: left;
+     margin-bottom:5px; 
+     text-align:right;
+}

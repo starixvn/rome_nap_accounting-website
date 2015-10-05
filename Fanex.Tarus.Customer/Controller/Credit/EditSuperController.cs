@@ -35,7 +35,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// </summary>
         /// <returns></returns>
         [AuthenticateRead]
-        public ActionResult EditSuperPage(int custId, string uname)
+        public ActionResult EditSuperPage(int custId, string uname, string siteName)
         {
             //save super id
             // Setting edit page
@@ -49,7 +49,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 IsMemberSetting = false,
                 CustId = custId,
                 CustUserName = uname,
-                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
+                SiteName = siteName
             };
             return View("~/Views/Customer/CreditCustomer/EditSuper.cshtml", customerSettingView);
         }

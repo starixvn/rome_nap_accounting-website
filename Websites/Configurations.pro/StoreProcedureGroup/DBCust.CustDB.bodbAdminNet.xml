@@ -283,4 +283,8 @@
     <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Update Setting">
+    <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet" DbName="DBCust.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet"/>
+  </Function>
 </Functions>

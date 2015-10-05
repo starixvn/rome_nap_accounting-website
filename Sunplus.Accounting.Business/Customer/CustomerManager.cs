@@ -282,6 +282,8 @@ namespace Sunplus.Accounting.Business.Customer
                             bool autosuspend = Convert.IsDBNull(row1["autosuspend"]) ? false : Convert.ToBoolean(row1["autosuspend"]);
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
+                            bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
+
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
                             arrcontent.Add("isba", isBA);
@@ -792,6 +794,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
+                                var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -800,6 +803,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableBetTrade = isShowEnableBetTrade,
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                   IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -870,7 +874,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit);
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -886,6 +890,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var agCasinoLinkSetting = string.Empty;
                                 var casinoLinkSetting = string.Empty;
                                 var goldDeluxeLinkSetting = string.Empty;
+                                var colossusBetsLinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -896,7 +901,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=2&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=1", parentId, parentId, AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
@@ -907,6 +912,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
                                         break;
 
                                     case 2: // agent
@@ -915,10 +921,10 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
                                         downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=3&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=2", _masterID, _masterID, AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _masterID, roleId);
@@ -928,6 +934,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
                                         break;
 
                                     case 3: // master
@@ -936,9 +943,9 @@ namespace Sunplus.Accounting.Business.Customer
                                         bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&uplineLevel=4&actorId={2}&customerId={4}&customerLevel=3", _superID, _superID, AppSession.AccId, AppSession.AccUserName, custId);
@@ -948,6 +955,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
                                         break;
 
                                     case 4: // super
@@ -955,11 +963,11 @@ namespace Sunplus.Accounting.Business.Customer
                                         RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                                         bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
                                         pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
-                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName + "&siteName=" + customerSite;
                                         addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
                                         downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
                                         detailUrl = isDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
-                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName + "&siteName=" + customerSite;
                                         infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                                         liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId={0}&actorUsername={1}&customerId={2}&customerLevel=4", AppSession.AccId, AppSession.AccUserName, custId);
                                         agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, CastAide.AsInt32(row1["exchangeid"]));
@@ -969,6 +977,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
+                                        colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
                                         break;
 
                                     default:
@@ -1023,6 +1032,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
@@ -1112,6 +1122,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (!WebSettings.IsShowGoldDeluxeSettingForCredit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
+                                }
+
+                                if (isHideColossusBets)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
@@ -1444,10 +1459,22 @@ namespace Sunplus.Accounting.Business.Customer
                 renderLeftPanelParameter,
                 "Update Super Live Status");
 
+            RenderLeftPanelManager.RenderEnableProductBox(
+               row1,
+               sg,
+               ref htmlcontent,
+               isManageCustomerAccess,
+               CustParent.IsDisableColossusBets,
+               hasDownline,
+               "ColossusBet",
+               renderLeftPanelParameter.IsShowColossusBetsForCredit,
+               renderLeftPanelParameter,
+               "Update Colossus Bets Status");
+
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName)
         {
             int parentId;
             string submenu1 = "";
@@ -1471,8 +1498,8 @@ namespace Sunplus.Accounting.Business.Customer
                     masterPtUrl = "Customer/v2/EditMasterOnMember.aspx?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
                     if (WebSettings.IsShowCustomerSettingRenovation == 3)
                     {
-                        minMaxPtUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}", parentId, custId, userName);
-                        masterPtUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}", parentId, custId, userName);
+                        minMaxPtUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", parentId, custId, userName, siteName);
+                        masterPtUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", parentId, custId, userName, siteName);
                     }
 
                     submenu1 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";

@@ -91,6 +91,10 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                             }
                         }
                     }
+                    else if (dt.Rows[0]["site"].ToString().ToLower() == "766666")
+                    {
+                        currencies = "a";
+                    }
                     else if (dt.Rows[0]["currency"].ToString().ToLower() == "won")
                     {
                         foreach (CustomerElement currency in currenciesGroup)

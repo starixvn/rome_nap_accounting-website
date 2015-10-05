@@ -475,8 +475,6 @@ function reset_date() {
     document.getElementById(tdateId).value = (td.getMonth() + 1) + "/" + td.getDate() + "/" + td.getFullYear();
 }
 
-
-
 function GetBetListFromCheckBet(transId, custId) {
     $('#boxheader').addClass('hidden');
     $('#maincontent_betlist').addClass('hidden');

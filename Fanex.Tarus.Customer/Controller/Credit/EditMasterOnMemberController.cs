@@ -32,7 +32,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// <param name="userName">Name of agent</param>
         /// <returns></returns>
         [AuthenticateRead]
-        public ActionResult EditMasterOnMemberPage(int agentId, int custId, string uname)
+        public ActionResult EditMasterOnMemberPage(int agentId, int custId, string uname, string siteName)
         {
             //// Setting for customer information section
             CustomerSettingView customerSettingView = new CustomerSettingView
@@ -46,7 +46,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 CustId = custId,
                 CustUserName = uname,
                 UplineCustId = agentId,
-                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
+                SiteName = siteName
             };
             return View("~/Views/Customer/CreditCustomer/EditMasterOnMember.cshtml", customerSettingView);
         }

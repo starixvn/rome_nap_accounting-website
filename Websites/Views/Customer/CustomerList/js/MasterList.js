@@ -22,7 +22,7 @@
         isShowPager: true, //=totalColumnWidth + totalColumn*4 +totalColumn
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 1600,
+        gridWidth: 1675,
         gridHeight: 40,
         freezeWidth: 365, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 5
@@ -338,6 +338,11 @@
                 , window.rootUrl + "GoldDeluxeSettings/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=3"
                 , 0, 0, 880, 580, false, 2000, null);
     },
+    colossusBetSetting: function (custId, uplineId) {
+        showPopup("Colossus Bet"
+                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + custId + "&srecommend=" + uplineId + "&roleid=3" + "&UserId=" + _adminID
+                , 0, 0, 880, 400, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {
@@ -349,6 +354,13 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+        if (_directMaster == "True") {
+            initWidth += 75;
+        }
+        else if (_isParentMyanmarOdds == "True") {
+            initWidth -= 150;
+        }
+        
         masterList.gridOption.gridWidth = initWidth;
     }
 };

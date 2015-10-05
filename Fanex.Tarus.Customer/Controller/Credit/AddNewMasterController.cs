@@ -32,7 +32,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// <param name="userName">Name of super</param>
         /// <returns></returns>
         [AuthenticateRead]
-        public ActionResult AddNewMasterPage(int superId, string userName, string site)
+        public ActionResult AddNewMasterPage(int superId, string userName, string siteName)
         {
             if (userName == null || userName == string.Empty)
             {
@@ -49,9 +49,10 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 IsMemberSetting = false,
                 CustId = superId,
                 CustUserName = userName,
-                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
+                SiteName = siteName
             };
-            System.Web.HttpContext.Current.Session["SettingSiteName"] = site;
+            System.Web.HttpContext.Current.Session["SettingSiteName"] = siteName;
             return View("~/Views/Customer/CreditCustomer/AddNewMaster.cshtml", customerSettingView);
         }
 
@@ -70,7 +71,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// </summary>
         /// <returns>Current context object</returns>
         [HttpPost]
-        public JsonResult GetContextObject(int superId)
+        public JsonResult GetContextObject(int superId, string siteName)
         {
             //init context for add new supper
             IRequestContext currentContext = new RequestContext()
@@ -81,7 +82,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 TargetRoleId = 3,
                 FormId = FormType.Add,
                 SubAccId = 0,
-                AdminId = AppSession.AccId
+                AdminId = AppSession.AccId,
+                SiteName = siteName
             };
             //format json return
 

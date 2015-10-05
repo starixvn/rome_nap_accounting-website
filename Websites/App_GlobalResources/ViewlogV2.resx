@@ -1203,4 +1203,19 @@
   <data name="Sub_acc_name" xml:space="preserve">
     <value>Sub Acc Name</value>
   </data>
+  <data name="v204discountvalue_cashinshare" xml:space="preserve">
+    <value>Cash-In Share</value>
+  </data>
+  <data name="discounthrfixedodds" xml:space="preserve">
+    <value>HR Fixed Odds</value>
+  </data>
+  <data name="discountmyanmarodds" xml:space="preserve">
+    <value>% Odds Comm</value>
+  </data>
+  <data name="discountonextwo" xml:space="preserve">
+    <value>1x2</value>
+  </data>
+  <data name="v204discountvalue_commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
 </root>

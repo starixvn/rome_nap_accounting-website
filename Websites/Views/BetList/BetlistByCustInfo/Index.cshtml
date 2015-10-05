@@ -26,8 +26,8 @@
                     <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByRef" value="-1"
                         name="type" />
                     <span style="font-weight: bold">By Ref No:</span>
-                    <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;" autocomplete="off"
-                        onkeypress="return KeyPress(event);" /></div>
+                    <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;"
+                        autocomplete="off" onkeypress="return KeyPress(event);" /></div>
                 <div>
                     <span style="font-weight: bold">
                         <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2"
@@ -89,8 +89,9 @@
             "@Url.Content("~/js/BlockUI.js")", 
             "@Url.Content("~/js/common.js")", 
             "@Url.Content("~/js/BetList.js")",
+            "@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Scripts/BetDetails.js")",
             "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=20131218")",
-             "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=20131218")");
+            "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=20131218")");
         </script>
 </body>
 </html>

@@ -92,15 +92,19 @@ edm.initPtGrid = function () {
 edm.initCommission = function () {
     var commissionSetting = customer.commissionSetting;
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupA'), 0, Math.max(commissionSetting.groupAMax, commissionSetting.groupA), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupA);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupB'), 0, Math.max(commissionSetting.groupBMax, commissionSetting.groupB), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupB);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupC'), 0, Math.max(commissionSetting.groupCMax, commissionSetting.groupC), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupC);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, Math.max(commissionSetting.groupDMax, commissionSetting.groupD), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
+    if (!parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupB'), 0, Math.max(commissionSetting.groupBMax, commissionSetting.groupB), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupB);
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupC'), 0, Math.max(commissionSetting.groupCMax, commissionSetting.groupC), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupC);
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, Math.max(commissionSetting.groupDMax, commissionSetting.groupD), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
+    }
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, Math.max(commissionSetting.discountCSMax, commissionSetting.discountCS), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, Math.max(commissionSetting.discount1x2Max, commissionSetting.discount1x2), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, Math.max(commissionSetting.discountNumberMax, commissionSetting.discountNumber), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountNumber);
-    if(parseBool2(_isOfferHRFixedOdds))
-    {
+    if (parseBool2(_isOfferHRFixedOdds)) {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
+    }
+    if (parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, Math.max(commissionSetting.discountMyanmarOddsMax, commissionSetting.discountMyanmarOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
     }
 };
 //render Transfer Option
@@ -120,18 +124,20 @@ edm.checkValidInput = function () {
     //get commision
     var commissionSetting = customer.commissionSetting;
     commissionSetting.groupA = $('#listGroupA').val();
-    commissionSetting.groupB = $('#listGroupB').val();
-    commissionSetting.groupA = $('#listGroupA').val();
-    commissionSetting.groupC = $('#listGroupC').val();
-    commissionSetting.groupD = $('#listGroupD').val();
+    if (!parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.groupB = $('#listGroupB').val();
+        commissionSetting.groupC = $('#listGroupC').val();
+        commissionSetting.groupD = $('#listGroupD').val();
+    }
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
     commissionSetting.discountNumber = $('#listGameComm').val();
-    if(parseBool2(_isOfferHRFixedOdds))
-    {
+    if (parseBool2(_isOfferHRFixedOdds)) {
         commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
     }
-
+    if (parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
+    }
     return true;
 };
 // handel change auto pt

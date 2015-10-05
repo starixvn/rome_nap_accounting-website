@@ -6,7 +6,6 @@
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
-
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
@@ -27,6 +26,7 @@
     bool allowLiveCS = false;
     int IsShowCustomerSettingRenovation = 0;
     bool directMaster = (Model.ParentId == 0 ? true : false);
+
     if (Model.ParentId == 0)
     {
         allowCS = true;
@@ -56,6 +56,26 @@
     {
         colspanCom++;
     }
+    bool isParentMyanmarOdds = false;
+    foreach (var masterItem in Model.ListChildren)
+    {
+        if (masterItem.IsMyanmarOdds)
+        {
+            isParentMyanmarOdds = true;
+            break;
+        }
+    }
+    bool isShowMyanmarOdds = directMaster || isParentMyanmarOdds;
+    if(directMaster)
+    {
+        colspanCom++;    
+    }
+    else if (isParentMyanmarOdds)
+    {
+        colspanCom = colspanCom - 2;
+    }
+   
+
     Hashtable hash = new Hashtable();
     hash.Add("p2pSetting", p2pSetting);
     hash.Add("visibleP2PSetting", visibleP2PSetting);
@@ -71,7 +91,8 @@
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    
+    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
+
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -108,6 +129,8 @@
     {
         var bg = rowCSS(masterItem);
         var idAllow = masterItem.ChildID.ToString() + '_' + masterItem.UserName;
+        string siteName = masterItem.IsMyanmarOdds ? "766666" : string.Empty;
+       
     <tr name="tr_@masterItem.ChildID" class="@bg">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -116,11 +139,11 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-            @{
-                int parentMasterID = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
+                @{
+                    int parentMasterID = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
                 }
-                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName');">@masterItem.Status</a>
-                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName');" class="status-button" >
+                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', '@siteName');">@masterItem.Status</a>
+                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', '@siteName');" class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
@@ -137,14 +160,15 @@
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="EditHorseracingSetting(3, '@masterItem.ChildID', '@parentMasterID');" >Racing</li>
+                        <li class="canchange" onclick="EditHorseracingSetting(3, '@masterItem.ChildID', '@parentMasterID');" >
+                            Racing</li>
                     }
                     <!--/horseracing-edit-->
                     <!--casino-edit-->
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : masterItem.IsSynCasinoUpline;
-                        var parentCustIdTmp = Model.ParentId == 0 ? masterItem.ParentMasterDirect :  Model.ParentId;
+                        var parentCustIdTmp = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
                         var onclickCS = (IsOnclickCS == true ? "masterList.casino('" + masterItem.ChildID + "','" + parentCustIdTmp + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
@@ -183,15 +207,19 @@
                             Virtual Sports</li>
                     }
                     <!--/edit-virtualSports-->
-                       @if (CastAide.AsBoolean(hash["allowKeno"]))
+                    @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
-                        <li class="canchange" onclick="masterList.kenoSetting('@masterItem.ChildID');">
-                            Keno</li>
+                        <li class="canchange" onclick="masterList.kenoSetting('@masterItem.ChildID');">Keno</li>
                     }
-                       @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
                         <li class="canchange" onclick="masterList.goldDeluxeSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
+                    }
+                     @if (!masterItem.IsHideColossusBets)
+                    {
+                        <li class="canchange" onclick="masterList.colossusBetSetting('@masterItem.ChildID', '@Model.ParentId');">
+                            Colossus Bets</li>
                     }
                 </ul>
             </div>
@@ -235,6 +263,7 @@
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList masterItem, Hashtable hash)
     {
         var bg = rowCSS(masterItem);
+        string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@masterItem.ChildID" class ="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -272,9 +301,9 @@
         {
             <td>
                 <div class="table-cell c" style="width: 60px; height: 18px;">
-                     <span title="Edit" onclick="OpenEditVirtualExRate('@masterItem.ChildID','@masterItem.UserName','Master',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
-                     </span>         
-                 </div>
+                    <span title="Edit" onclick="OpenEditVirtualExRate('@masterItem.ChildID','@masterItem.UserName','Master',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
+                    </span>
+                </div>
             </td>
         }
         <td>
@@ -296,19 +325,22 @@
                 @masterItem.GroupA
             </div>
         </td>
-        <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @masterItem.GroupB</div>
-        </td>
-        <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @masterItem.GroupC
-            </div>
-        </td>
-        <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @masterItem.GroupD</div>
-        </td>
+        @if (CastAide.AsBoolean(hash["directMaster"]) || !CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @masterItem.GroupB</div>
+            </td>
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @masterItem.GroupC
+                </div>
+            </td>
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @masterItem.GroupD</div>
+            </td>
+        }
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem._1x2</div>
@@ -324,6 +356,13 @@
                     @masterItem.NumberGame
                 </div>
             </td>
+        }
+        @if (CastAide.AsBoolean(hash["directMaster"]) || CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @discountMyanmarOdss</div>
+            </td>                 
         }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
@@ -433,7 +472,7 @@
                                 &nbsp;</div>
                         </th>
                         <th colspan="@colspanCom">
-                            <div class="table-cell" style="height: 17px; width: 400px;">
+                            <div class="table-cell" style="height: 17px;">
                                 Commission</div>
                         </th>
                         <th>
@@ -503,19 +542,22 @@
                                 Group A
                             </div>
                         </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group B</div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group C
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group D</div>
-                        </th>
+                        @if (directMaster || !isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group B</div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group C
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group D</div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2</div>
@@ -533,6 +575,13 @@
                                     Game
                                 </div>
                             </th>
+                        }
+                          @if (directMaster || isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    % Odds</div>
+                            </th> 
                         }
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
@@ -627,19 +676,22 @@
                                 Group A
                             </div>
                         </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group B</div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group C
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                Group D</div>
-                        </th>
+                        @if (directMaster || !isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group B</div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group C
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Group D</div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2</div>
@@ -657,6 +709,13 @@
                                     Game
                                 </div>
                             </th>
+                        }
+                          @if (directMaster || isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    % Odds</div>
+                            </th> 
                         }
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
@@ -687,5 +746,7 @@
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
+    var _directMaster = "@directMaster";
+    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
 </script>

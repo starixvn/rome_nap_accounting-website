@@ -1,0 +1,63 @@
+﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
+<table class="tableColor tableWidth">
+    <tr>
+        <td colspan="4" class=" header c b ">
+            @Messages.GeneralInformation
+        </td>
+    </tr>
+    <tr>
+        <td class="col15percent formatCol r b betSetting">
+            @Messages.Username
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span >@Model.CustomerInformationPartial.Username</span>
+        </td>
+        <td class="col15percent formatCol r b betSetting">
+            @Messages.Nickname
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.NickName</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col15percent formatCol r b betSetting">
+            @Messages.FirstName
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.FirstName</span>
+        </td>
+        <td class="formatCol r b betSetting">
+            @Messages.Phone
+        </td>
+        <td class="formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.Phone</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col15percent formatCol r b betSetting">
+            @Messages.LastName
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.LastName</span>
+        </td>
+        <td class="formatCol r b betSetting">
+            @Messages.MobilePhone
+        </td>
+        <td class="formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.MobilePhone</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol r b betSetting">
+            @Messages.Fax
+        </td>
+        <td class="formatCol l betSetting">
+            <span>@Model.CustomerInformationPartial.Fax</span>
+        </td>
+        <td class="formatCol r b betSetting">
+        </td>
+        <td class="formatCol l betSetting">
+        </td>
+    </tr>
+</table>

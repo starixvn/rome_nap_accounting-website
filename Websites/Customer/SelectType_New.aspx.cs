@@ -175,7 +175,7 @@ public partial class NewCustomer_SelectType_New : PageBase
                 DataTable tbl = ds.Tables[0];
                 foreach (DataRow dr in tbl.Rows)
                 {
-                    html.Append("<option value=\"" + dr["custid"] + "\">" + dr["username"] + "</option>");
+                    html.Append("<option value=\"" + dr["custid"] + "_" + dr["siteName"] + "\">" + dr["username"] + "</option>");
                 }
             }
         }
