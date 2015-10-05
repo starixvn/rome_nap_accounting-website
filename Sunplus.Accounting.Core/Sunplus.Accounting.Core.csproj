@@ -16,8 +16,6 @@
     </SccProjectName>
     <SccLocalPath>
     </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
     <SccProvider>
     </SccProvider>
     <TargetFrameworkProfile />
@@ -69,11 +67,13 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Core">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.2\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
     </Reference>
