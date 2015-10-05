@@ -102,8 +102,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.3\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.MetricGaming">
-      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MetricGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.0.3\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.MicroGaming">
       <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MicroGaming.dll</HintPath>
