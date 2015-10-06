@@ -277,7 +277,7 @@
     <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?</value>
   </data>
   <data name="VirtualRate_UpdateSuccess" xml:space="preserve">
-    <value>Virtual rate setting updated successfully</value>
+    <value>Update Virtual Exchange Rate Successfully</value>
   </data>
   <data name="Virtual_Rate" xml:space="preserve">
     <value>Virtual Rate</value>

@@ -193,36 +193,6 @@ var VirtualRateController = function () {
         liveHtml += '</tr>';
         return liveHtml;
     };
-    self.getSubSportHtml = function (liveVirtualRate, subSport, sport, startBetTypeIndex, liveType) {
-        var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
-        var betTypeLength = sport.BetTypeList.length;
-        var liveHtml = '<tr>';
-        liveHtml += '<td class="first-column l">' + subSport.Name + '</td>';
-        var i = 0;
-        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
-            var liveRate = liveVirtualRate[i];
-            var value = (liveRate.PercentRate + 1) * customerVirtualRateModel.ActualExchangeRate;
-            liveHtml +=
-                '<td class="bettypevalue-column c">' +
-                    (liveRate.HasData ?
-                        self.renderDropdownRate(customerVirtualRateModel.MinVirtualRate,
-                            customerVirtualRateModel.MaxVirtualRate,
-                            liveRate.PercentRate,
-                            customerVirtualRateModel.ActualExchangeRate,
-                            subSport,
-                            liveType,
-                            i == 0 ? 'source' : 'target',
-                            sport.BetTypeList[i].Id) :
-                        '') +
-                '</td>';
-
-            i++;
-        }
-
-        liveHtml += self.renderPaddingEmptyColumn(startBetTypeIndex, endBetTypeIndex, i);
-        liveHtml += '</tr>';
-        return liveHtml;
-    };
 
     self.renderPaddingEmptyColumn = function (startBetTypeIndex, endBetTypeIndex, i) {
         var html = '';
