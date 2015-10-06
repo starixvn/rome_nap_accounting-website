@@ -103,5 +103,5 @@
   </Function>
   <Function Name="Gold deluxe win limit">
     <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbAdminNet"/>
-  </Function>
+  </Function> 
 </Functions>
