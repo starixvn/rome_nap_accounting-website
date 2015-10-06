@@ -276,6 +276,7 @@ var StatementReportManager = function () {
             for (var i = 0; i < statementListLength; i++) {
                 var dataRowIndex = ' data-rowindex="' + i + '"';
                 var statement = rs.StatementList[i];
+                var canViewBetList = new Date(balanceUpDay) <= new Date(statement.StatementDateString);
                 var currentRow = {
                     Columns: [
                         {
@@ -301,7 +302,10 @@ var StatementReportManager = function () {
                         {
                             Name: "ColVoid_Cancelled",
                             Value: statement.VoidCancelled.HasData ?
-                               ('<div class="column-void-cancelled ' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-void-cancelled ' : '') +
+                                    (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') +
+                                    '"' + dataRowIndex + '>' +
                                     numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -309,7 +313,9 @@ var StatementReportManager = function () {
                         {
                             Name: "ColOutstanding",
                             Value: statement.Outstanding.HasData ?
-                               ('<div class="column-outstanding ' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-outstanding ' : '') +
+                                    (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -317,7 +323,9 @@ var StatementReportManager = function () {
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="column-winloss ' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="' +
+                                    (canViewBetList ? 'column-winloss ' : '') +
+                                    (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -500,7 +508,8 @@ var StatementReportManager = function () {
             RoleId: self.cachedData.statementReportCriteria.roleId,
             TransferDate: statement.StatementDateString,
             Username: self.cachedData.statementReportCriteria.username,
-            BalanceUpDate: balanceUpDay
+            BalanceUpDate: balanceUpDay,
+            SiteName: 'NAP'
         };
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
