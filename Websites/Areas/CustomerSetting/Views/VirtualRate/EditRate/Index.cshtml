@@ -9,10 +9,10 @@
     Layout = "";
     var customerVirtualRateModel = JsonConvert.SerializeObject(Model);
     var maxBetTypeColumn = 6;
-    var tableColumnCount = maxBetTypeColumn + 1;
+    var tableColumnCount = maxBetTypeColumn + 2;
 
     var leftColumn = 4;
-    var rightColumn = 3;
+    var rightColumn = 4;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />

@@ -106,7 +106,7 @@ var VirtualRateController = function () {
                 ' sport-id="' + sport.Id + '"/>';
 
         var titleHtml = '<tr class="table-header">';
-        titleHtml += '<td class="first-column">&nbsp;</td>';
+        titleHtml += '<td class="first-column" colspan="2">&nbsp;</td>';
         var betTypeLength = betTypeList.length;
         var i;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; i++) {
@@ -132,7 +132,7 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        liveHtml += '<td class="first-column l">' + self.getLiveTypeName(liveType) + '</td>';
+        liveHtml += '<td class="first-column l" colspan="2">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
             var liveRate = liveVirtualRate[i];
@@ -163,10 +163,11 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        liveHtml +=
-            '<td class="first-column l">' +
-                subSport.Name + ' - ' + self.getLiveTypeName(liveType) +
-            '</td>';
+        if (liveType === self.Constants.LiveType.Live) {
+            liveHtml += '<td class="subsport-first-column r" rowspan="2">' + subSport.Name + '</td>';
+        }
+
+        liveHtml += '<td class="subsport-livetype-column l">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
             var liveRate = liveVirtualRate[i];

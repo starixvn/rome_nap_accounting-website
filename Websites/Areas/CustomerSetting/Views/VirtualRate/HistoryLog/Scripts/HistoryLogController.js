@@ -99,7 +99,7 @@ var HistoryLogController = function () {
     };
     self.renderHistoryLogReportBody = function (historyLogReport) {
         var bodyData = [];
-        var logLength = historyLogReport.HistoryLog.length;
+        var logLength = historyLogReport && historyLogReport.HistoryLog ? historyLogReport.HistoryLog.length : 0;
         if (logLength) {
             var maxColumnIndex = 7;
             for (var i = 0; i < logLength; i++) {
@@ -162,7 +162,7 @@ var HistoryLogController = function () {
                                     });
                                     columns.push({
                                         Name: "ColVirtualRate",
-                                        Value: numeral((virtualRate.PercentRate - 1)*100).format(self.Constants.Format.Number.Rate)
+                                        Value: numeral((virtualRate.PercentRate - 1) * 100).format(self.Constants.Format.Number.Rate)
                                     });
                                     sportBetTypeRow.push({
                                         Columns: columns
