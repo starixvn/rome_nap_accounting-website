@@ -30,6 +30,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             }
 
             string message = ex.Message +
+                             "\r\nURL: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Url.OriginalString) + 
                              "\r\nSOURCE: " + ex.Source +
                              "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
                              "\r\nREFERRER: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.UrlReferrer.ToString()) +
