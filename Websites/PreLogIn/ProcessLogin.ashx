@@ -216,44 +216,57 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
 	/// <summary>
 	/// Log Robot Detection.
 	/// </summary>
-	private void LogRobotDetection(HttpContext httpRequest)
-	{
-		try
-		{
-			bool isRobot = BotDetection.Instance.IsRobot(new HttpRequestWrapper(httpRequest.Request), httpRequest.Request.Form["Ga"]);
+    private void LogRobotDetection(HttpContext httpRequest)
+    {
+        try
+        {
+            bool isRobot = BotDetection.Instance.IsRobot(new HttpRequestWrapper(httpRequest.Request), httpRequest.Request.Form["Ga"]);
 
-			if (isRobot == false)
-			{
+            if (isRobot == false)
+            {
                 Log.Info(httpRequest.Request.UserHostAddress + " " + httpRequest.Session.SessionID + " Human");
-			}
-			else
-			{
-				Log.Warn(httpRequest.Request.UserHostAddress + " Robot");
-			}
+            }
+            else
+            {
+                Log.Warn(httpRequest.Request.UserHostAddress + " " + httpRequest.Session.SessionID + " Robot");
+            }
 
-			StringBuilder sb = new StringBuilder();
-			RuleDataContext ruleDataContext = BotDetection.Instance.RuleDataContext;
+            Log.Info(
+                string.Format(
+                    "Connection: {0}; Accept: {1}; Accept-Encoding: {2}; Accept-Language: {3}; Host: {4}; HttpMethod: {5}; Referer: {6}; Expect: {7}",
+                    httpRequest.Request.Headers["Connection"],
+                    httpRequest.Request.Headers["Accept"],
+                    httpRequest.Request.Headers["Accept-Encoding"],
+                    httpRequest.Request.Headers["Accept-Language"],
+                    httpRequest.Request.Headers["Host"],
+                    httpRequest.Request.HttpMethod,
+                    httpRequest.Request.Headers["Referer"],
+                    httpRequest.Request.Headers["Expect"]
+                    ));
+
+            StringBuilder sb = new StringBuilder();
+            RuleDataContext ruleDataContext = BotDetection.Instance.RuleDataContext;
 
             Log.Info("User Agent: " + httpRequest.Request.UserAgent);
             Log.Info("_Ga: " + httpRequest.Request.Form["Ga"]);
-			Log.Info("ClientData Json: " + BotDetection.Instance.ClientDataJson);
+            Log.Info("ClientData Json: " + BotDetection.Instance.ClientDataJson);
 
-			foreach (var property in ruleDataContext.GetType().GetProperties())
-			{
-				if (property.CanRead && property.CanWrite)
-				{
-					string propValue = property.GetValue(ruleDataContext, null) == null
-						? ""
-						: property.GetValue(ruleDataContext, null).ToString();
-					sb.Append(property.Name + ": " + Regex.Replace(propValue, @"\r\n?|\n", " ") + "; ");
-				}
-			}
+            foreach (var property in ruleDataContext.GetType().GetProperties())
+            {
+                if (property.CanRead && property.CanWrite)
+                {
+                    string propValue = property.GetValue(ruleDataContext, null) == null
+                        ? ""
+                        : property.GetValue(ruleDataContext, null).ToString();
+                    sb.Append(property.Name + ": " + Regex.Replace(propValue, @"\r\n?|\n", " ") + "; ");
+                }
+            }
 
-			Log.Info("Additional Info: " + sb);
-		}
-		catch (Exception ex)
-		{
-			Log.Error(ex.Message);
-		}
-	}
+            Log.Info("Additional Info: " + sb);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex.Message);
+        }
+    }
 }
