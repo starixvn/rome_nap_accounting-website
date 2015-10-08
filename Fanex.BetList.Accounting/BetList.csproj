@@ -59,6 +59,9 @@
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.ColossusBets">
+      <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.0.5\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.7.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
@@ -106,8 +109,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.0.3\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.MicroGaming">
-      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MicroGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

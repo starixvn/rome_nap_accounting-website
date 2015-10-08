@@ -94,8 +94,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.0.3\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.MicroGaming">
-      <HintPath>..\Dependency\FanexResult\Fanex.Result.Core.MicroGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
