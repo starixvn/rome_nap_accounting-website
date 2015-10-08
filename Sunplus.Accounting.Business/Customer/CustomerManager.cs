@@ -1434,18 +1434,18 @@ namespace Sunplus.Accounting.Business.Customer
             var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
                 false :
                 Convert.ToBoolean(row1["HasDownline"]);
-            if (WebSettings.IsShowGoldDeluxeSettingForCredit && !renderLeftPanelParameter.IsDeposit)
-            {
-                RenderEnableGoldDeluxeBox(
-                    row1,
-                    sg,
-                    ref htmlcontent,
-                    roleId,
-                    isManageCustomerAccess,
-                    CustParent.IsDisableGoldDeluxe,
-                    Permissions.IsAllowEditGoldDeluxe(parentID),
-                    hasDownline);
-            }
+            //if (WebSettings.IsShowGoldDeluxeSettingForCredit && !renderLeftPanelParameter.IsDeposit)
+            //{
+            //    RenderEnableGoldDeluxeBox(
+            //        row1,
+            //        sg,
+            //        ref htmlcontent,
+            //        roleId,
+            //        isManageCustomerAccess,
+            //        CustParent.IsDisableGoldDeluxe,
+            //        Permissions.IsAllowEditGoldDeluxe(parentID),
+            //        hasDownline);
+            //}
 
             RenderLeftPanelManager.RenderEnableProductBox(
                 row1,
