@@ -1,2 +1,0 @@
-2015-09-14 11:15:27,518 [INFO]: ::1 Human
-2015-09-14 11:15:27,523 [INFO]: Additional Info: DwellTime: 5127; IsActivated: True; IsKeyOrMouseExist: True; IsKeyPressExist: True; KeyPressNums: 9; KeyAveragePressDwellTime: 114.7778; IsMouseClickExist: True; MouseClickNums: 2; MouseAverageClickDwellTime: 87.5; MouseMoveSegmentNums: 1; MouseAverageMoveEfficiency: 0.4769326; ExceptionMessage: ; 
