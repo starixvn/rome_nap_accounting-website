@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
 {
     using System;
+    using System.Linq;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Resources;
     using Fanex.Tarus.Infrastructure.Extensions;
@@ -94,6 +95,11 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             var rateStyle = NpoiExcelExtensions.IntPercentStyle(exportExcelInfo.ExcelFile, NpoiExcelExtensions.BackGroundColorIndex, false);
 
             var rowCount = templateData.Count;
+            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName("View Log")
+                .Select(bettype => bettype.Id)
+                .ToList();
+
+            var maxColumnIndex = betTypeList.Count + 3 - 1;
             for (var i = 0; i < rowCount; i++)
             {
                 var group = templateData[i];
@@ -111,18 +117,21 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         NpoiExcelExtensions.RenderCurrentCell(exportExcelInfo, rate.LiveTypeName, textStyle);
                     }
 
-                    if (rate == null)
+                    if (rate == null && j <= maxColumnIndex)
                     {
                         NpoiExcelExtensions.RenderCurrentCell(exportExcelInfo, string.Empty, rateStyle);
+                        continue;
                     }
-                    else
+                    else if (rate == null || !betTypeList.Contains(rate.BetTypeId))
                     {
-                        decimal rateValue;
-                        NpoiExcelExtensions.RenderCurrentCell(
-                            exportExcelInfo,
-                            decimal.TryParse(rate.VirtualRateString, out rateValue) ? (object)(rateValue / 100) : rate.VirtualRateString,
-                            rateStyle);
+                        continue;
                     }
+
+                    decimal rateValue;
+                    NpoiExcelExtensions.RenderCurrentCell(
+                        exportExcelInfo,
+                        decimal.TryParse(rate.VirtualRateString, out rateValue) ? (object)(rateValue / 100) : rate.VirtualRateString,
+                        rateStyle);
                 }
 
                 exportExcelInfo.CurrentRow++;

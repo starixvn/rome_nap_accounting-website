@@ -64,7 +64,9 @@ var VirtualRateController = function () {
                 self.cachedData.copyFromSportId = sport.Id;
             }
 
-            settingHtml +=
+            var betTypeLength = sport.BetTypeList.length;
+            if (betTypeLength) {
+                settingHtml +=
                 '<tr class="sport-title">\
                     <td colspan="' + tableColumnCount + '">' +
                         sport.Name +
@@ -72,8 +74,8 @@ var VirtualRateController = function () {
                         (i == 0 ? iconCopySport : '') +
                     '</td>\
                  </tr>';
+            }
 
-            var betTypeLength = sport.BetTypeList.length;
             for (var j = startBetTypeIndex; j < betTypeLength; j += maxBetTypeColumn) {
                 settingHtml += self.getBetTypeTitle(sport.BetTypeList, sport, j);
                 if (sport.SubSportList && sport.SubSportList.length) {
@@ -479,7 +481,7 @@ var VirtualRateController = function () {
                     '[liveType="' + self.Constants.LiveType.Live + '"]' +
                     '[bettype-id="' + betTypeId + '"]').val();
             if (sport.LiveVirtualRate && sport.LiveVirtualRate[j].HasData) {
-                criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate.toFixed(2);
+                criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = self.toFixed(criteria.LastSettings.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate, 2);
                 customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
             }
 
@@ -488,7 +490,7 @@ var VirtualRateController = function () {
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
                     '[bettype-id="' + betTypeId + '"]').val();
             if (sport.NonLiveVirtualRate && sport.NonLiveVirtualRate[j].HasData) {
-                criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate.toFixed(2);
+                criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = self.toFixed(criteria.LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate, 2);
                 customerVirtualRateModel.SportVirtualRateList[i].NonLiveVirtualRate[j].PercentRate = (parseInt(nonliveRate) / 100 + 1).toFixed(2);
             }
         }
@@ -507,11 +509,7 @@ var VirtualRateController = function () {
                 criteria.LastSettings.SportVirtualRateList[i]
                     .SubSportList[k]
                     .LiveVirtualRate[j]
-                    .PercentRate =
-                criteria.LastSettings.SportVirtualRateList[i]
-                    .SubSportList[k]
-                    .LiveVirtualRate[j]
-                    .PercentRate.toFixed(2);
+                    .PercentRate = self.toFixed(criteria.LastSettings.SportVirtualRateList[i].SubSportList[k].LiveVirtualRate[j].PercentRate, 2);
                 customerVirtualRateModel.SportVirtualRateList[i]
                     .SubSportList[k]
                     .LiveVirtualRate[j]
@@ -526,11 +524,7 @@ var VirtualRateController = function () {
                 criteria.LastSettings.SportVirtualRateList[i]
                     .SubSportList[k]
                     .NonLiveVirtualRate[j]
-                    .PercentRate =
-                criteria.LastSettings.SportVirtualRateList[i]
-                    .SubSportList[k]
-                    .NonLiveVirtualRate[j]
-                    .PercentRate.toFixed(2);
+                    .PercentRate = self.toFixed(criteria.LastSettings.SportVirtualRateList[i].SubSportList[k].NonLiveVirtualRate[j].PercentRate, 2);
                 customerVirtualRateModel.SportVirtualRateList[i]
                     .SubSportList[k]
                     .NonLiveVirtualRate[j]
@@ -572,6 +566,13 @@ var VirtualRateController = function () {
         }
         catch (e) {
         }
+    };
+    self.toFixed = function (value, decimalNumber) {
+        if (typeof (value) === "string") {
+            return value;
+        }
+
+        return value.toFixed(decimalNumber);
     };
 };
 

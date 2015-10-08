@@ -109,7 +109,9 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             {
                 var sportVirtualRate = SportVirtualRateList[i];
                 var sportId = sportVirtualRate.Id;
-                var betTypeCount = sportVirtualRate.BetTypeList.Count;
+                var betTypeCount = sportVirtualRate.BetTypeList != null ?
+                    sportVirtualRate.BetTypeList.Count :
+                    0;
                 for (var j = 0; j < betTypeCount; j++)
                 {
                     var betType = sportVirtualRate.BetTypeList[j];

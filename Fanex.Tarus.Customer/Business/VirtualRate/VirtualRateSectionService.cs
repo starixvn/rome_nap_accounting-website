@@ -171,7 +171,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static List<BetTypeModel> BetTypeList(int sportId)
         {
             var result = new List<BetTypeModel>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
+            var sport = VirtualRateSection.Instance.Sports[SportNameKey(sportId)];
+            if (sport == null)
+            {
+                return result;
+            }
+
+            var virtualRateBetTypes = sport.BetTypes;
             foreach (VirtualRateElement betType in virtualRateBetTypes)
             {
                 if (!betType.Active)
@@ -208,7 +214,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static Dictionary<int, int> BetTypeIndexList(int sportId)
         {
             var result = new Dictionary<int, int>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
+            var sport = VirtualRateSection.Instance.Sports[SportNameKey(sportId)];
+            if (sport == null)
+            {
+                return result;
+            }
+
+            var virtualRateBetTypes = sport.BetTypes;
             var index = 0;
             foreach (VirtualRateElement betType in virtualRateBetTypes)
             {
@@ -359,7 +371,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static Dictionary<int, int> BetTypeIndexListViewLog(int sportId)
         {
             var result = new Dictionary<int, int>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
+            var sport = VirtualRateSection.Instance.Sports[SportNameKey(sportId)];
+            if (sport == null)
+            {
+                return result;
+            }
+
+            var virtualRateBetTypes = sport.BetTypes;
             var index = 0;
             foreach (VirtualRateElement betType in virtualRateBetTypes)
             {
@@ -467,7 +485,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                 case Sports.OtherSports:
                     return "Other Sports";
                 default:
-                    return string.Empty;
+                    return CacheRef.GetSportName(sportId);
             }
         }
 

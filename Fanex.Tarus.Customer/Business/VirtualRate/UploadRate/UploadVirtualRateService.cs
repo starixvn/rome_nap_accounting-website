@@ -293,8 +293,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 }
 
                 DataRow dataRow = customerVirtualRateDataTable.NewRow();
+                var columnCount = customerVirtualRateDataTable.Columns.Count;
                 var count = 0;
-                for (int i = 0; i < row.LastCellNum; i++)
+                for (int i = 0; i < row.LastCellNum && i < columnCount; i++)
                 {
                     ICell cell = row.GetCell(i);
                     count += ReadImportVirtualRateTemplateCell(cell, dataRow, uploadResult, i);
