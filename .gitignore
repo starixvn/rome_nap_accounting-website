@@ -38,3 +38,5 @@ Websites/[Bb]in/*.pdb
 *Sunplus.Data.DataAbstract/DLL/*
 *.cache
 packages/*
+Websites/LogCS/CasinoLibrary.txt
+Websites/RobotDetection/Log.txt
