@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DNAide.Core;
-using SharedCache.WinServiceCommon.Provider.Cache;
-using Sunplus.Accounting.DataAccess;
 using Fanex.Tarus.Infrastructure.Caching;
+using Sunplus.Accounting.DataAccess;
 
 namespace Sunplus.Accounting.Business.CacheManager
 {
@@ -30,7 +29,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch
                 {
-                    exchange = IBCProvider.Utils.GetExchange();                    
+                    exchange = IBCProvider.Utils.GetExchange();
                 }
 
                 return exchange as Dictionary<int, string>;

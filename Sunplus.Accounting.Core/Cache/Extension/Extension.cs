@@ -2,8 +2,6 @@
 using System;
 using Couchbase;
 using Enyim.Caching.Memcached;
-using SharedCache.WinServiceCommon.Provider.Cache;
-using System.Text.RegularExpressions;
 
 namespace Sunplus.Accounting.Core.Cache.Extension
 {

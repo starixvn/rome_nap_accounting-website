@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using DNAide.Core;
 using Fanex.Tarus.LiveCasino.DataAccess;
-using SharedCache.WinServiceCommon.Provider.Cache;
 using Sunplus.Accounting.Core.Extensions;
 
 namespace Fanex.Tarus.LiveCasino.Business
@@ -19,7 +18,6 @@ namespace Fanex.Tarus.LiveCasino.Business
                 Dictionary<int, string> exchange;
                 try
                 {
-
                     exchange =
                         SessionExtension.GetSession(HttpContext.Current.Session, "exchangeratedata") as
                         Dictionary<int, string> ??
@@ -31,12 +29,11 @@ namespace Fanex.Tarus.LiveCasino.Business
                     Exchange = exchange;
                 }
 
-
                 return exchange;
             }
             set { SessionExtension.AddSession(HttpContext.Current.Session, "exchangeratedata", value); }
         }
-        
+
         public static string GetExchangeName(int id)
         {
             Dictionary<int, string> exchange = Exchange;
@@ -45,6 +42,7 @@ namespace Fanex.Tarus.LiveCasino.Business
                             select k.Value).FirstOrDefault();
             return CastAide.AsString(value);
         }
+
         public static string GetExchangeName(Dictionary<int, string> exchange, int id)
         {
             string value = (from k in exchange
