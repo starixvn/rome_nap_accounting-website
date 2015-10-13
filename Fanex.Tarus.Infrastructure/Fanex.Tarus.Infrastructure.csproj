@@ -161,6 +161,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\SMALevelNameConstants.cs" />
     <Compile Include="Constants\Sports.cs" />
+    <Compile Include="Constants\TransactionTypeConstants.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />
     <Compile Include="Extensions\ResourceExtension.cs" />
     <Compile Include="Extensions\SendMailExtension.cs" />
