@@ -11,13 +11,12 @@ using DNAide.Data;
 using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Cache.Extension;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
-using Sunplus.Core.CachingLib;
 
 namespace Sunplus.Accounting.Business.Customer
 {
@@ -26,19 +25,14 @@ namespace Sunplus.Accounting.Business.Customer
     /// </summary>
     public class CustomerService
     {
-        private ICustomerDAO _customerDAO;
-
-        /// <summary>
-        /// Cache key
-        /// </summary>
-        ///
         private const string ListSystemUsernameKey = "ListSystemUsername";
-
         private const string ListSystemUserIdKey = "ListSystemUserid";
         private const string ListSystemCurrencyIdKey = "ListSystemCurrencyId";
-        private static readonly ICache Cache = CacheService.CreateInstance(CacheType.ShareCached);
+
         private static Dictionary<string, StringCollection> _listSystemUser;
         private static Dictionary<string, StringCollection> _listSystemCurrency;
+
+        private ICustomerDAO _customerDAO;
 
         public CustomerService(ICustomerDAO customerDao)
         {
@@ -169,7 +163,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 var dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.CustSelByUsername(userName, accountingSystem);
                 isValidUser = (dr != null
-                               && dr != null
+                               && dr.Tables != null
                                && dr.Tables.Count > 0
                                && dr.Tables[0].Rows.Count > 0);
 
@@ -225,7 +219,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 var dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.CustSelById(custId, accountingSystem);
                 isValidUser = (dr != null
-                               && dr != null
+                               && dr.Tables != null
                                && dr.Tables.Count > 0
                                && dr.Tables[0].Rows.Count > 0);
 
@@ -309,8 +303,8 @@ namespace Sunplus.Accounting.Business.Customer
         /// </summary>
         public static void ClearSystemUsers()
         {
-            Cache.Remove(ListSystemUsernameKey);
-            Cache.Remove(ListSystemUserIdKey);
+            CacheExtension.Delete(ListSystemUsernameKey);
+            CacheExtension.Delete(ListSystemUserIdKey);
         }
 
         /// <summary>
@@ -320,11 +314,11 @@ namespace Sunplus.Accounting.Business.Customer
         {
             get
             {
-                return Cache.Get(ListSystemUsernameKey) as Dictionary<string, StringCollection>;
+                return CacheExtension.Get(ListSystemUsernameKey) as Dictionary<string, StringCollection>;
             }
             set
             {
-                Cache.Add(ListSystemUsernameKey, value, 1000 * 3600 * 5);
+                CacheExtension.Set(ListSystemUsernameKey, value, DateTime.Now.AddHours(5));
             }
         }
 
@@ -335,11 +329,11 @@ namespace Sunplus.Accounting.Business.Customer
         {
             get
             {
-                return Cache.Get(ListSystemUserIdKey) as Dictionary<string, StringCollection>;
+                return CacheExtension.Get(ListSystemUserIdKey) as Dictionary<string, StringCollection>;
             }
             set
             {
-                Cache.Add(ListSystemUserIdKey, value, 1000 * 3600 * 5);
+                CacheExtension.Set(ListSystemUserIdKey, value, DateTime.Now.AddHours(5));
             }
         }
 
@@ -350,11 +344,11 @@ namespace Sunplus.Accounting.Business.Customer
         {
             get
             {
-                return Cache.Get(ListSystemCurrencyIdKey) as Dictionary<string, StringCollection>;
+                return CacheExtension.Get(ListSystemCurrencyIdKey) as Dictionary<string, StringCollection>;
             }
             set
             {
-                Cache.Add(ListSystemCurrencyIdKey, value, 1000 * 3600 * 5);
+                CacheExtension.Set(ListSystemCurrencyIdKey, value, DateTime.Now.AddHours(5));
             }
         }
 
@@ -363,10 +357,10 @@ namespace Sunplus.Accounting.Business.Customer
             string uplineId = data["uplineid"] ?? data["agentId"];
             var uplineDetail = new CSCustomerDetail();
             var customer = new CustDetail
-                               {
-                                   Closed = false,
-                                   Suspend = false
-                               };
+            {
+                Closed = false,
+                Suspend = false
+            };
 
             if (!string.IsNullOrEmpty(uplineId))
             {

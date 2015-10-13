@@ -14,16 +14,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// </summary>
     public static class AppSettings
     {
-        //private static bool _useNewSpecialDelete;
-        public static string _getReportLegendUrl;
-        public static string GetReportLegendUrl
-        {
-            get
-            {
-                return _getReportLegendUrl;
-            }
-        }
-
+        
         public static bool _isLegendEnable;
         public static bool IsLegendEnable
         {
@@ -127,8 +118,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         {
             try
             {
-                // _calendarTheme = ConfigurationManager.AppSettings["UMCtrlUrl"];
-                _getReportLegendUrl = ConfigurationManager.AppSettings["GetReportLegendUrl"];
                 _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
                 _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
                 _liveCasinoFinancialReport_MinDate = Convert.ToDateTime(ConfigurationManager.AppSettings["LiveCasinoFinancialReport_MinDate"]);
