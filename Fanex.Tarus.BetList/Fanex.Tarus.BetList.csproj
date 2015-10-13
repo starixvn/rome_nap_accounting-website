@@ -151,6 +151,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AGCasino\AGCasinoService.cs" />
+    <Compile Include="Business\AGCasino\IAGCasinoService.cs" />
+    <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
+    <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
@@ -176,7 +180,11 @@
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
+    <Compile Include="Controller\AGCasinoBetListController.cs" />
+    <Compile Include="Controller\MicroGamingBetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Criteria\GetMicroGamingBetDetailsCriteria.cs" />
+    <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
@@ -188,6 +196,10 @@
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMetricGamingResultCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
+    <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
+    <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
+    <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
+    <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
     <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />

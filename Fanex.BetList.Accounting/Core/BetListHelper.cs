@@ -43,7 +43,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.BetTypeId == 71 ||
                 ticket.SportTypeId == 202 ||
                 ticket.SportTypeId == 255 ||
-                ticket.SportTypeId == SportContants.MicroGaming ||
+                (ticket.SportTypeId == SportContants.MicroGaming && ticket.BetTypeId != 2008 && ticket.BetTypeId != 2009) ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
                 IsColossusBetType(ticket.BetTypeId);
         }
