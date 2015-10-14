@@ -262,10 +262,13 @@ namespace Fanex.BetList.Accounting.Core
                                 "'" + AppSession.SiteName + "'," +
                                 ticketDetail.Ticket.BetCheck + ")";
                             break;
-                        case SportContants.AGCasino:
-                            resultLink = string.Empty;
-                            break;
                         default:
+                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc))
+                            {
+                                resultLink = string.Empty;
+                                break;
+                            }
+
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
                                 case BetTypeContants.SystemParlay:
