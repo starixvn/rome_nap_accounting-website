@@ -256,9 +256,14 @@ namespace Fanex.BetList.Accounting.Core
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
                         case SportContants.MicroGaming:
-                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                               "'" + AppSession.SiteName + "'," +
-                               ticketDetail.Ticket.BetCheck + ")";
+                            resultLink = (ticketDetail.Ticket.BetTypeId == 2008 || ticketDetail.Ticket.BetTypeId == 2009) ?
+                                string.Empty :
+                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                                "'" + AppSession.SiteName + "'," +
+                                ticketDetail.Ticket.BetCheck + ")";
+                            break;
+                        case SportContants.AGCasino:
+                            resultLink = string.Empty;
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)

@@ -63,5 +63,6 @@ namespace Fanex.BetList.Accounting.Constants
         public const int GoldDeluxe = 255;
 
         public const int MicroGaming = 203;
+        public const int AGCasino = 250;
     }
 }
