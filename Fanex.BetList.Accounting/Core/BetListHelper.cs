@@ -256,7 +256,7 @@ namespace Fanex.BetList.Accounting.Core
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
                         case SportContants.MicroGaming:
-                            resultLink = (ticketDetail.Ticket.BetTypeId == 2008 || ticketDetail.Ticket.BetTypeId == 2009) ?
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewMicroGamingPopup(" + AppSession.CustID + "," +
                                 "'" + AppSession.SiteName + "'," +
