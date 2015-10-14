@@ -327,6 +327,7 @@ IBCWnd_calculateViewport = function()
 IBCWnd_createIframe = function()
 {
     var iframe = document.createElement("iframe"); iframe.setAttribute("border", 0); iframe.className = "IBCWndNoPadding";
+    iframe.id = "AGEWndIframe"; iframe.name = "AGEWndIframe";
     iframe.setAttribute("frameborder", 0); iframe.style.backgroundColor = "#ffffff";
     iframe.width = "100%"; iframe.height = "100%";
     return iframe;

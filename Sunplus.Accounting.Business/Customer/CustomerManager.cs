@@ -891,6 +891,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var casinoLinkSetting = string.Empty;
                                 var goldDeluxeLinkSetting = string.Empty;
                                 var colossusBetsLinkSetting = string.Empty;
+                                var sportsbook2LinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -913,6 +914,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId={0}", custId);
                                         break;
 
                                     case 2: // agent
@@ -935,6 +937,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=2&customerId={0}", custId);
                                         break;
 
                                     case 3: // master
@@ -956,6 +959,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=3&customerId={0}", custId);
                                         break;
 
                                     case 4: // super
@@ -978,6 +982,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=4&customerId={0}", custId);
                                         break;
 
                                     default:
@@ -1033,6 +1038,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", sportsbook2LinkSetting);
 
                                 if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
                                 {
@@ -1125,6 +1131,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
 
                                 if (isHideColossusBets)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
+                                }
+
+                                if (!WebSettings.IsShowSportsbook2)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }

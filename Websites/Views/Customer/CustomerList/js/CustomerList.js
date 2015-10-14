@@ -162,3 +162,9 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
     }
 
 
+    function EditSportsbook2 (custId) {
+        showPopup("sportsbook 2", "", 0, 0, 880, 550, false, 2000, null);
+        document.getElementById('productId').value = 16;
+        document.getElementById('customerId').value = custId;
+        document.getElementById("target").submit();
+    }
