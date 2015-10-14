@@ -263,7 +263,7 @@ namespace Fanex.BetList.Accounting.Core
                                 ticketDetail.Ticket.BetCheck + ")";
                             break;
                         default:
-                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc))
+                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) && ticketDetail.Ticket.SportTypeId == SportContants.AGCasino)
                             {
                                 resultLink = string.Empty;
                                 break;
