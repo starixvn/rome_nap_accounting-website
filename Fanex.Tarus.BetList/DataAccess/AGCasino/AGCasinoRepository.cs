@@ -39,8 +39,7 @@
                                 Comm = Converter.ToDecimal(reader["comm"]),
                                 PlayerComm = Converter.ToDecimal(reader["playercomm"]),
                                 IP = Converter.ToString2(reader["ip"]),
-                                TransDesc = Converter.ToString2(reader["transdesc"]),
-                                BetCheck = Converter.ToString2(reader["betcheck"])
+                                TransDesc = Converter.ToString2(reader["transdesc"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

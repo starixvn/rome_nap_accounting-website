@@ -72,7 +72,8 @@
                 @if (ip != "-")
                 {
                     <br />
-                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                    <a onclick="viewBetListByIP('@betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betdetail.Ticket.IP');"
+                       href="">@ip</a>
                 }
             </div>
         </td>
@@ -198,9 +199,26 @@
     <script type="text/javascript" src="~/js/BetList.js"></script>
     <script type="text/javascript" src="~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js"></script>
     <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+
         $(document).ready(function () {
             agCasinoBetDetailsManager.initPage();
         });
+
+        function viewBetListByIP(fromDate, ip) {
+            var parentIndex = 1;
+            parent[parentIndex].location = window.rootUrl + 'TarusBetList/BetListByIP?IsLink=true&FromDate=' + fromDate + '&IP=' + ip;
+
+            var betListPopUp = parent.$(".ui-dialog");
+            if (betListPopUp && betListPopUp.length) {
+                betListPopUp.dialog('close');
+                betListPopUp.remove();
+            }
+
+            var detailPopUp = parent.$("#dialog-modalAGCasinoDetails");
+            detailPopUp.dialog('close');
+            detailPopUp.remove();
+        }
     </script>
 </body>
 </html>

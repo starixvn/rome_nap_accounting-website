@@ -521,11 +521,19 @@ namespace Fanex.BetList.Accounting.Core
                             resultLink = "\"ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")\"";
                             break;
                         case SportContants.MicroGaming:
-                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                               "'" + AppSession.SiteName + "'," +
-                               ticketDetail.Ticket.BetCheck + ")";
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                                "'" + AppSession.SiteName + "'," +
+                                ticketDetail.Ticket.BetCheck + ")";
                             break;
                         default:
+                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) && ticketDetail.Ticket.SportTypeId == SportContants.AGCasino)
+                            {
+                                resultLink = string.Empty;
+                                break;
+                            }
+
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
                                 case BetTypeContants.SystemParlay:

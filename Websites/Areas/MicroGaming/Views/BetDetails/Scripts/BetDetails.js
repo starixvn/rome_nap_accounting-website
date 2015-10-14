@@ -1,26 +1,4 @@
-﻿function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        TransType: transType,
-        CustId: custId
-    });
-
-    parent.OpenNextPopup(
-        "MicrogamingDetails",
-        'MicroGamingBetList/BetDetails?' + params,
-        'Microgaming Details',
-        900,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
-}
-
-var MicroGamingBetDetailsManager = function () {
+﻿var MicroGamingBetDetailsManager = function () {
     var self = this;
     self.initPage = function () {
         var gridContainer = $("#betlist-details");

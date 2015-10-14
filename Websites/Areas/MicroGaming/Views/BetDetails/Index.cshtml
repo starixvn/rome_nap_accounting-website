@@ -34,7 +34,7 @@
         </td>
         <td class="c column-transdate">
             <div class="width120 table-cell">
-                 @Html.Raw(betdetail.TransDateHtml)
+                @Html.Raw(betdetail.TransDateHtml)
             </div>
         </td>
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
@@ -72,7 +72,8 @@
                 @if (ip != "-")
                 {
                     <br />
-                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                    <a onclick="viewBetListByIP('@betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betdetail.Ticket.IP');"
+                       href="">@ip</a>
                 }
             </div>
         </td>
@@ -198,9 +199,25 @@
     <script type="text/javascript" src="~/js/BetList.js"></script>
     <script type="text/javascript" src="~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js"></script>
     <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
         $(document).ready(function () {
             microGamingBetDetailsManager.initPage();
         });
+
+        function viewBetListByIP(fromDate, ip) {
+            var parentIndex = 1;
+            parent[parentIndex].location = window.rootUrl + 'TarusBetList/BetListByIP?IsLink=true&FromDate=' + fromDate + '&IP=' + ip;
+
+            var betListPopUp = parent.$(".ui-dialog");
+            if (betListPopUp && betListPopUp.length) {
+                betListPopUp.dialog('close');
+                betListPopUp.remove();
+            }
+
+            var detailPopUp = parent.$("#dialog-modalMicrogamingDetails");
+            detailPopUp.dialog('close');
+            detailPopUp.remove();
+        }
     </script>
 </body>
 </html>

@@ -529,3 +529,47 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
             parent.$("#innerFrameColossusBetsDetails").contents().find(".memberchoice-betdetail").addClass("display-none");
         });
 }
+
+function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "MicrogamingDetails",
+        'MicroGamingBetList/BetDetails?' + params,
+        'Microgaming Details',
+        900,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function showAGCasinoDetails(refno, winlossDate, custId, transType) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "AGCasinoDetails",
+        'AGCasinoBetList/BetDetails?' + params,
+        'AG Casino Details',
+        900,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}

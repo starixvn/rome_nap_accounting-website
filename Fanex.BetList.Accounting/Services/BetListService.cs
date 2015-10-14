@@ -1452,6 +1452,10 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName = Labels.Microgaming;
             }
+            else if (ReportService.IsAGCasino(betTypeId))
+            {
+                sportName = Labels.AGCasino;
+            }
             else if (betTypeId == BetTypeContants.OverUnder ||
                 betTypeId == BetTypeContants.OddEven)
             {
