@@ -13,35 +13,21 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-<<<<<<< HEAD
         private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
             return _customerSettingAttribute.AllowRead(GetActionName());
-=======
-        public override bool VerifyQueryPermission(PermissionContext permissionContext)
-        {
-            return true;
->>>>>>> #45358 - integrate Sportsbook2
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-<<<<<<< HEAD
             return _customerSettingAttribute.AllowUpdate(GetActionName());
-=======
-            return true;
->>>>>>> #45358 - integrate Sportsbook2
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-<<<<<<< HEAD
             return false;
-=======
-            return true;
->>>>>>> #45358 - integrate Sportsbook2
         }
 
         public override SettingContext FetchSettingContext()
@@ -112,24 +98,21 @@
 
             return null;
         }
-<<<<<<< HEAD
 
         private string GetActionName()
-        {   
+        {
             var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
             if (routeValues != null)
             {
                 if (routeValues.ContainsKey("action"))
                 {
-                   var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
-                   var  actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
-                   return controllerName + '/' + actionName;
+                    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                    var actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+                    return controllerName + '/' + actionName;
                 }
             }
 
             return string.Empty;
         }
-=======
->>>>>>> #45358 - integrate Sportsbook2
     }
 }
