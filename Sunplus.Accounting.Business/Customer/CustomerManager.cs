@@ -1504,7 +1504,9 @@ namespace Sunplus.Accounting.Business.Customer
                "Sportsbook2",
                renderLeftPanelParameter.IsShowSportsbook2,
                renderLeftPanelParameter,
-               "Update Sportsbook2 Status");
+               "Update Sportsbook2 Status",
+               16,
+               4);
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }

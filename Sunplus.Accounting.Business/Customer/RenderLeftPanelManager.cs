@@ -128,7 +128,9 @@ namespace Sunplus.Accounting.Business.Customer
             string productName,
             bool isSupport,
             RenderLeftPanelParameter renderLeftPanelParameter,
-            string title)
+            string title,
+            int productId = 0,
+            int settingType = 0)
         {
             if (isSupport)
             {
@@ -139,7 +141,7 @@ namespace Sunplus.Accounting.Business.Customer
                 bool disableDownlines = Converter.ToBool(productInfo[columnName], false);
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
-                settingGroup.Add(GetProductSettingControlDCS(
+                settingGroup.Add(GetProductSettingControl(
                     renderLeftPanelParameter,
                     isManageCustomerAccess,
                     "disabled" + productName,
@@ -150,7 +152,9 @@ namespace Sunplus.Accounting.Business.Customer
                     disabledProductParent,
                     disableDownlines,
                     productName,
-                    title));
+                    title,
+                    productId,
+                    settingType));
 
                 TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
             }
@@ -171,7 +175,9 @@ namespace Sunplus.Accounting.Business.Customer
             bool disabledUpline,
             bool disableDownLine,
             string productName,
-            string title)
+            string title,
+            int productId = 0,
+            int settingType = 0)
         {
             string classname = string.Empty;
             string jsonclick = string.Empty;
@@ -194,8 +200,8 @@ namespace Sunplus.Accounting.Business.Customer
                     disableDownLine ? "0" : "1",
                     "'" + title + "'",
                     "'" + productName + "'",
-                    "16",
-                    "4"
+                    productId.ToString(),
+                    settingType.ToString()
                 };
 
                 jsonclick = canChange ?
