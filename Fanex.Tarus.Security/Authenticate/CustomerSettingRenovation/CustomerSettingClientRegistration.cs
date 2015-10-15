@@ -1,4 +1,4 @@
-﻿namespace Sunplus.Accounting.CustomerSettingRenovation
+﻿namespace Fanex.Tarus.Security.Authenticate
 {
     using System;
     using System.Collections.Generic;
