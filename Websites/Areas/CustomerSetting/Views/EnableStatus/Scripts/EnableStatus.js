@@ -19,6 +19,11 @@ function EnableStatusController($scope) {
     }
 
     $scope.Init = function () {
+        if ($scope.context.newMode) {
+            $('#submit').addClass('disabledButton');
+            $('#submit').attr('disabled', true);
+        }
+
         $('#title').html('Enable ' + model.requestContext.productId);
         $scope.sortedModel = groupBy($scope.entities, function (item) {
             return [item.sportTypeName];
@@ -40,8 +45,19 @@ function EnableStatusController($scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
 
+        if ($scope.context.newMode) {
+            if (preVal == scope.item.enable) {
+                $('#submit').addClass('disabledButton');
+                $('#submit').attr('disabled', true);
+            }
+            else {
+                $('#submit').removeClass('disabledButton');
+                $('#submit').attr('disabled', false);
+            } 
+        }
+
         if (preVal) {
-            if (scope.item.enable) {                
+            if (scope.item.enable) {
                 scope.item.enableDownline = scope.item.preValDownline;
                 scope.item.disableDownline = true;
 
