@@ -34,7 +34,7 @@
         {
             return new ResultSetting
             {
-                SportType = SportType.Soccer,
+                SportType = SportType.AGCasino,
                 IsOutRight = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,
