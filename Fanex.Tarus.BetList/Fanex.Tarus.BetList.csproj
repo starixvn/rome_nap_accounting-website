@@ -92,6 +92,10 @@
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.2.0\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Result.Core.AGCasino">
+      <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
+    </Reference>
+
     <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.0.6\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
@@ -131,6 +135,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.NAP.3.5.0\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RemotingRef.1.0.0.3\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
@@ -157,6 +162,8 @@
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\Results\AGCasinoResultService.cs" />
+    <Compile Include="Business\Results\IAGCasinoResultService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IMicroGamingResultService.cs" />
@@ -185,6 +192,7 @@
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Criteria\GetMicroGamingBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
+    <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
@@ -201,6 +209,8 @@
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IAGCasinoResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\AGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />

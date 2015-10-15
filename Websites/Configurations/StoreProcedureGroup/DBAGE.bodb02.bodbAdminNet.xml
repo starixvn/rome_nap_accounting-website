@@ -295,4 +295,18 @@
   <Function Name="MicroGaming">
     <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail_xpre" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Bet List - Result">
+    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
+      <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
+      <Mapping ObjectProperty="MatchId" DataField="MatchID" />
+      <Mapping ObjectProperty="GameId" DataField="GameID" />
+      <Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
+      <Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
+      <Mapping ObjectProperty="GameResult" DataField="GameResult" />
+      <Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
+      <Mapping ObjectProperty="HomeId" DataField="homeid" />
+      <Mapping ObjectProperty="AwayId" DataField="awayid" />
+    </Setting>
+    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

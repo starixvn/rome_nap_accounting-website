@@ -262,13 +262,12 @@ namespace Fanex.BetList.Accounting.Core
                                 "'" + AppSession.SiteName + "'," +
                                 ticketDetail.Ticket.BetCheck + ")";
                             break;
+                        case SportContants.AGCasino:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
+                            break;
                         default:
-                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) && ticketDetail.Ticket.SportTypeId == SportContants.AGCasino)
-                            {
-                                resultLink = string.Empty;
-                                break;
-                            }
-
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
                                 case BetTypeContants.SystemParlay:
@@ -527,13 +526,12 @@ namespace Fanex.BetList.Accounting.Core
                                 "'" + AppSession.SiteName + "'," +
                                 ticketDetail.Ticket.BetCheck + ")";
                             break;
+                        case SportContants.AGCasino:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
+                            break;
                         default:
-                            if (string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) && ticketDetail.Ticket.SportTypeId == SportContants.AGCasino)
-                            {
-                                resultLink = string.Empty;
-                                break;
-                            }
-
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
                                 case BetTypeContants.SystemParlay:

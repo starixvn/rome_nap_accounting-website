@@ -205,6 +205,27 @@ function ViewMicroGamingPopup(custId, siteName, gameId) {
         null);
 }
 
+function ViewAGCasinoPopup(transId, betType) {
+    var width = 750;
+    var params = $.param({
+        transId: transId,
+        BetType: betType
+    });
+
+    parent.OpenNextPopup(
+        "AGCasinoResult",
+        'Report/ViewAGCasinoResult.aspx?' + params,
+        "AG Casino Result",
+        width,
+        500,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewResultLiveCasino(url) {
     parent.OpenNextPopup("LiveCasinoPopup", url, 'Live Casino', 760, 200, true, false, window, 0, null, null);
 }
