@@ -1137,7 +1137,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 if (!WebSettings.IsShowSportsbook2)
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));

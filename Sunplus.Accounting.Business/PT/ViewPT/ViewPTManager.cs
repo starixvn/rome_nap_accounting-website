@@ -1475,6 +1475,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 sports.SportsList.Add(microgaming);
             }
 
+            if (WebSettings.IsShowSportsbook2)
+            {
+                var sportsbook2 = new Sport
+                {
+                    SportId = Constants.Sport.Sportsbook2,
+                    SportName = Labels.Microgaming,
+                    Bettype = new BettypeDTO
+                    {
+                        BettypeList = (new MicroGamingBetTypesSectionServices()).BetTypes
+                            .Select(betType => new Bettype
+                            {
+                                BettypeId = betType.Id,
+                                BettypeName = string.Format("{0} ({1})", betType.Name, betType.GameType)
+                            }).ToList()
+                    }
+                };
+                sports.SportsList.Add(microgaming);
+            }
+
             #endregion live casino
 
             #region All Sports
