@@ -115,6 +115,22 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        public static string ColossusBetsAPI_GetToken
+        {
+            get
+            {
+                return Converter.ToString2(ConfigurationManager.AppSettings["ColossusBetsAPI_GetToken"]);
+            }
+        }
+
+        public static string ColossusBetsAPI_MemberChoice
+        {
+            get
+            {
+                return Converter.ToString2(ConfigurationManager.AppSettings["ColossusBetsAPI_MemberChoice"]);
+            }
+        }
+
         static AppSettings()
         {
             try

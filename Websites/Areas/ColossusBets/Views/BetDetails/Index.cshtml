@@ -1,6 +1,10 @@
-﻿@model string
+﻿@using Fanex.Tarus.BetList.Entities.ColossusBets;
+@using Newtonsoft.Json;
+@model ColossusBetsDetailModel
 <html>
 <head>
+    <link type="text/css" rel="Stylesheet" 
+        href="@Url.Content("~/App_Themes/Public/Message.css")" />
     <link type="text/css" rel="Stylesheet" 
         href="@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Styles/BetDetails.less")" />
     <link type="text/css" rel="Stylesheet"  
@@ -8,6 +12,30 @@
     <title>Colossus Bets</title>
 </head>
 <body>
-    @Html.Raw(Model)
+    <table class="memberchoice-betdetail" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td id="column-memberchoice" class="column-memberchoice">
+                </td>
+                <td class="column-separator">
+                    <div class="separator">
+                        &nbsp;
+                    </div>
+                </td>
+                <td class="column-tickerdetail">
+                    @Html.Raw(Model.TicketDetails)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="~/Areas/ColossusBets/Views/BetDetails/Scripts/BetDetails.js"></script>
+    <script type="text/javascript">
+        var memberChoice = @Html.Raw(JsonConvert.SerializeObject(Model.MemberChoice));
+    </script>
 </body>
 </html>

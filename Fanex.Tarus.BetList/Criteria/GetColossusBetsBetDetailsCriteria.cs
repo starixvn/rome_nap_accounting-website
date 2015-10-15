@@ -9,6 +9,8 @@
 
         public long Refno { get; set; }
 
+        public long EventId { get; set; }
+
         [SpParam(Ignored = true)]
         public long TransID { get; set; }
 

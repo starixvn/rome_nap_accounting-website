@@ -126,4 +126,7 @@
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned</value>
   </data>
+  <data name="ColossusBetsAPI_FailedToConnect" xml:space="preserve">
+    <value>Cannot connect to Colossus Bets API! Please contact Adminstrator.</value>
+  </data>
 </root>

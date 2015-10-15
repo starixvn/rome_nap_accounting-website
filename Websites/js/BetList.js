@@ -496,3 +496,26 @@ function ExportBetListToExcel() {
     setTimeout(function () { iframe.remove(); }, 5000);
     // GeneralAjaxCall(urlLink);
 }
+
+function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransId: transId,
+        CustId: custId,
+        EventId: eventId || 30000047
+    });
+
+    parent.OpenNextPopup(
+        "ColossusBetsDetails",
+        'ColossusBets/BetDetails?' + params,
+        'Ticket details of ' + refno,
+        900,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
