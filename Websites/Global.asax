@@ -17,7 +17,6 @@
 <%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
 <%@ Import Namespace="log4net.Config" %>
 <%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
-<%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <script RunAt="server">
 
