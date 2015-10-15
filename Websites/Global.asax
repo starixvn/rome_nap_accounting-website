@@ -16,7 +16,10 @@
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
 <%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
 <%@ Import Namespace="log4net.Config" %>
+<<<<<<< HEAD
 <%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
+=======
+>>>>>>> #45358 - integrate Sportsbook2
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <script RunAt="server">
 
