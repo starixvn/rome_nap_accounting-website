@@ -116,6 +116,8 @@ var AGCasinoSetting = function () {
         self.Tables.tableInfo = $("#settingcontent .tableinfo");
         self.Tables.tableInfoBody = self.Tables.tableInfo.find("tbody");
 
+
+        self.Tables.tablePT = $("#tblPT");
         self.Tables.tableSetting = $("#tblgamesetting");
         self.Tables.tableSettingBody = self.Tables.tableSetting.find("tbody");
 
@@ -338,6 +340,7 @@ var AGCasinoSetting = function () {
                 var tableWidth = 605 + (groupLength - 4) * 120;
                 self.Tables.tableSetting.attr("style", "width:" + tableWidth + "px;");
                 self.Tables.tableInfo.attr("style", "width:" + tableWidth + "px;");
+                self.Tables.tablePT.attr("style", "width:" + tableWidth + "px;");
             }
 
             customerSettingHtml = self.RenderCustomerGameSetting(customerSetting);
