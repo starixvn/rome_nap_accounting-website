@@ -2476,4 +2476,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblDisabledColossusBetUpline" xml:space="preserve">
     <value>Colossus Bets was disabled at upline</value>
   </data>
+  <data name="enableSportsbook2" xml:space="preserve">
+    <value>Enable Sportsbook2</value>
+  </data>
 </root>

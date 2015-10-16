@@ -11,7 +11,8 @@ var LeftPanelManager = function () {
         enabledownlines,
         title,
         productName,
-        productId) {
+        productId,
+        settingType) {
         var url = 'customersetting/enablestatus/productstatus?' +
             $.param({
                 custId: custId,
@@ -25,7 +26,8 @@ var LeftPanelManager = function () {
                 enabledownlines: false,
                 enableuplines: enableuplines ? true : false,
                 product: productId,
-                hideDownline: !hasDownline
+                hideDownline: !hasDownline,
+                settingType: settingType
             });
 
         var width = 475;

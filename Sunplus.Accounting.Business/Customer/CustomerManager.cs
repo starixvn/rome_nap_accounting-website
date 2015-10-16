@@ -875,7 +875,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     disabledLCSParent,
                                     disalbedVSParent,
                                     disabledEsportsParent,
-                                    renderLeftPanelParameter);
+                                    renderLeftPanelParameter,
+                                    row4);
 
                                 #endregion Setting
 
@@ -1228,7 +1229,8 @@ namespace Sunplus.Accounting.Business.Customer
             bool disableLiveCasinoParent,
             bool disabledVSParent,
             bool disabledEsportsParent,
-            RenderLeftPanelParameter renderLeftPanelParameter)
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            DataRow row4 = null)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1491,8 +1493,9 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
 
-            RenderLeftPanelManager.RenderEnableProductBox(
+            RenderLeftPanelManager.RenderEnableProductBoxDCS(
                row1,
+               row4,
                sg,
                ref htmlcontent,
                isManageCustomerAccess,

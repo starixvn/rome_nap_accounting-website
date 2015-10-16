@@ -456,7 +456,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     true;
 
                 _cust.IsDisableSportsbook2 = WebSettings.IsShowSportsbook2 ?
-                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableSportsbook2"], false) :
+                    CastAide.AsBoolean(drCustomer.ResultSet.Tables[1].Rows[0]["isDisabled"], false) :
                     true;
 
                 return _cust;

@@ -117,6 +117,49 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
+        public static void RenderEnableProductBoxDCS(
+            DataRow custInfoRow,
+            DataRow productInfo,
+            SettingGroup settingGroup,
+            ref string htmlcontent,
+            bool isManageCustomerAccess,
+            bool disabledProductParent,
+            bool hasDownline,
+            string productName,
+            bool isSupport,
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            string title)
+        {
+            if (isSupport)
+            {
+                var columnName = "IsDisabled";
+                bool isDisabled = Converter.ToBool(productInfo[columnName], false);
+
+                columnName = "IsDisabledDownline";
+                bool disableDownlines = Converter.ToBool(productInfo[columnName], false);
+
+                var isCustomerEnabled = custInfoRow["Enabled"].ToString();
+                settingGroup.Add(GetProductSettingControlDCS(
+                    renderLeftPanelParameter,
+                    isManageCustomerAccess,
+                    "disabled" + productName,
+                    !isDisabled,
+                    hasDownline,
+                    true,
+                    Converter.ToBool(isCustomerEnabled),
+                    disabledProductParent,
+                    disableDownlines,
+                    productName,
+                    title));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
+            }
+        }
+
         private static SettingControl GetProductSettingControl(
             RenderLeftPanelParameter renderLeftPanelParameter,
             bool isManageCustomerAccess,
@@ -150,7 +193,9 @@ namespace Sunplus.Accounting.Business.Customer
                     disabledUpline ? "0" : "1",
                     disableDownLine ? "0" : "1",
                     "'" + title + "'",
-                    "'" + productName + "'"
+                    "'" + productName + "'",
+                    "16",
+                    "4"
                 };
 
                 jsonclick = canChange ?
