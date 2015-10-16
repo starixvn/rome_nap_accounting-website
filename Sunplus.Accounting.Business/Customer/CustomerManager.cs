@@ -226,7 +226,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 row3 = ds.ResultSet.Tables[2].Rows[0];
                                 if (ds.ResultSet.Tables.Count > 3)
                                 {
-                                    row4 = ds.ResultSet.Tables[3].Rows[0];
+                                    row4 = ds.ResultSet.Tables[4].Rows[0];
                                 }
                             }
                             userName = row1["username"].ToString();
