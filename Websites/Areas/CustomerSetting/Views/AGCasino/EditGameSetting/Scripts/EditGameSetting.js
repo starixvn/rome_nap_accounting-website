@@ -351,7 +351,9 @@ var AGCasinoSetting = function () {
             self.Tables.copyToMemberContainer.remove();
             self.Tables.defautGroupNewMemberContainer.remove();
             self.Tables.buttonUpdate.remove();
-        } else {
+        } else if (self.CacheData.customerSetting.RoleId == self.Constants.RoleId.SUPER ||
+            self.CacheData.customerSetting.RoleId == self.Constants.RoleId.MASTER ||
+            self.CacheData.customerSetting.RoleId == self.Constants.RoleId.AGENT) {
             self.Tables.copyToMemberContainer.removeClass("hide");
             self.Tables.defautGroupNewMemberContainer.removeClass("hide");
         }

@@ -77,7 +77,22 @@
                 }
             </div>
         </td>
-    </tr> 
+        <td class="r">
+            <div id="comm_@betdetail.Ticket.TransId" class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_SuperPTCom.cshtml", betdetail)
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_MasterPTCom.cshtml", betdetail)
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
+            </div>
+        </td>
+    </tr>
 }
 <html>
 <head>
@@ -123,11 +138,29 @@
                             </th>
                             <th>
                                 <div class="column-winloss height34 table-cell">
-                                    Win Loss/Comm</div>
+                                    Win Loss</div>
                             </th>
                             <th>
                                 <div class="width100 height34 table-cell">
                                     Status</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Super
+                                    <br />
+                                    PT/Comm</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Master
+                                    <br />
+                                    PT/Comm</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Agent
+                                    <br />
+                                    PT/Comm</div>
                             </th>
                         </tr>
                     </thead>
@@ -161,11 +194,29 @@
                             </th>
                             <th>
                                 <div class="column-winloss height34 table-cell">
-                                    Win Loss/Comm</div>
+                                    Win Loss</div>
                             </th>
                             <th>
                                 <div class="width100 height34 table-cell">
                                     Status</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Super
+                                    <br />
+                                    PT/Comm</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Master
+                                    <br />
+                                    PT/Comm</div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Agent
+                                    <br />
+                                    PT/Comm</div>
                             </th>
                         </tr>
                     </thead>
@@ -178,7 +229,7 @@
                         else
                         { 
                             <tr class="c">
-                                <td colspan="7" class="r column-no-data">
+                                <td colspan="10" class="r column-no-data">
                                     <div class="c b">
                                         There is no data
                                     </div>

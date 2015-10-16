@@ -67,6 +67,12 @@ namespace Fanex.Tarus.Customer.Controller
                 });
         }
 
+        [AuthenticateRead]
+        public ActionResult AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
+        {
+            return View("~/Areas/AGCasino/Views/APITest/Index.cshtml", null, _agCasinoService.AGCasinoAPIResult(criteria));
+        }
+
         [HttpPost]
         [AuthenticateRead]
         public JsonResult CustomerStatus(GetCustomerStatusCriteria criteria)

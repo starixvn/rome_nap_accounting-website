@@ -22,5 +22,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
         AGCasinoCustomerInfo CustomerSetting(GetCustomerSettingCriteria criteria);
 
         Result UpdateCustomerSetting(UpdateCustomerSettingCriteria criteria);
+
+        string AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria);
     }
 }

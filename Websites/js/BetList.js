@@ -585,7 +585,7 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
         "AGCasinoDetails",
         'AGCasinoBetList/BetDetails?' + params,
         'AG Casino Details',
-        900,
+        1030,
         600,
         true,
         false,

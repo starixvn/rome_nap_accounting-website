@@ -193,7 +193,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Asian Gaming Casino API result.</returns>
-        private string AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
+        public string AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
         {
             try
             {
