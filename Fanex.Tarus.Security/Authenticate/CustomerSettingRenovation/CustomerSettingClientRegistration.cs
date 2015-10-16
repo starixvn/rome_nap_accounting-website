@@ -1,14 +1,11 @@
 ﻿namespace Fanex.Tarus.Security.Authenticate
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Web;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
-    using System.Web.Routing;
-    using System.Net;
-    using System.Web.Mvc;
     using Sunplus.Accounting.Core.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
