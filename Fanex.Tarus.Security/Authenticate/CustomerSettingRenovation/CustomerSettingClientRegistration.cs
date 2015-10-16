@@ -13,19 +13,21 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
+        private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
+
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            return true;
+            return _customerSettingAttribute.AllowRead(GetActionName());
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return true;
+            return _customerSettingAttribute.AllowUpdate(GetActionName());
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return true;
+            return false;
         }
 
         public override SettingContext FetchSettingContext()
@@ -95,6 +97,22 @@
             }
 
             return null;
+        }
+
+        private string GetActionName()
+        {   
+            var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+            if (routeValues != null)
+            {
+                if (routeValues.ContainsKey("action"))
+                {
+                   var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                   var  actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+                   return controllerName + '/' + actionName;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }
