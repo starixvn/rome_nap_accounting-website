@@ -39,5 +39,7 @@ namespace Sunplus.Accounting.Business.Customer
         public string Username { get; set; }
 
         public int AccId { get; set; }
+
+        public bool IsShowSportsbook2 { get; set; }
     }
 }

@@ -220,9 +220,14 @@ namespace Sunplus.Accounting.Business.Customer
 
                             DataRow row2 = ds.ResultSet.Tables[1].Rows[0];
                             DataRow row3 = null;
+                            DataRow row4 = null;
                             if (ds.ResultSet.Tables.Count > 2)
                             {
                                 row3 = ds.ResultSet.Tables[2].Rows[0];
+                                if (ds.ResultSet.Tables.Count > 3)
+                                {
+                                    row4 = ds.ResultSet.Tables[3].Rows[0];
+                                }
                             }
                             userName = row1["username"].ToString();
                             AppSession.CustUName = userName;
@@ -283,6 +288,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
+                            bool isHideSportsbook2 = CastAide.AsInt32(row4["productID"]) == 16 && (CastAide.AsBoolean(row4["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
 
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
@@ -795,6 +801,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
+                                var isShowSportsbook2 = !isHideSportsbook2 && !isLicensee;
+                                
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -804,6 +812,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
+                                   IsShowSportsbook2 = isShowSportsbook2,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -1481,6 +1490,18 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
+
+            RenderLeftPanelManager.RenderEnableProductBox(
+               row1,
+               sg,
+               ref htmlcontent,
+               isManageCustomerAccess,
+               CustParent.IsDisableSportsbook2,
+               hasDownline,
+               "Sportsbook2",
+               renderLeftPanelParameter.IsShowSportsbook2,
+               renderLeftPanelParameter,
+               "Update Sportsbook2 Status");
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
