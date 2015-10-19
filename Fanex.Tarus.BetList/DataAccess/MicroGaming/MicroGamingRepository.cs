@@ -36,11 +36,29 @@
                                Stake = Converter.ToDecimal(reader["stake"]),
                                ActualStake = Converter.ToDecimal(reader["actual_stake"]),
                                Winlost = Converter.ToDecimal(reader["WinLost"]),
-                               Comm = Converter.ToDecimal(reader["comm"]),
-                               PlayerComm = Converter.ToDecimal(reader["playercomm"]),
                                IP = Converter.ToString2(reader["ip"]),
                                TransDesc = Converter.ToString2(reader["transdesc"]),
-                               BetCheck = Converter.ToString2(reader["betcheck"])
+                               BetCheck = Converter.ToString2(reader["betcheck"]),
+
+                               OddsType = Converter.ToString2(reader["OddsType"]),
+                               PlayerComm = Converter.ToDecimal(reader["commission"]),
+                               AgentWinlost = Converter.ToDecimal(reader["awinlost"]),
+                               AgentPositionTaking = Converter.ToDecimal(reader["apositiontaking"]),
+                               Comm = Converter.ToDecimal(reader["comm"]),
+                               AgentDiscount = Converter.ToDecimal(reader["discount"]),
+
+                               MasterWinlost = Converter.ToDecimal(reader["mwinlost"]),
+                               MasterPositionTaking = Converter.ToDecimal(reader["mpositiontaking"]),
+                               AgentComm = Converter.ToDecimal(reader["acomm"]),
+                               MasterDiscount = Converter.ToDecimal(reader["adiscount"]),
+                               MasterOdds = Converter.ToDecimal(reader["modds"]),
+
+                               SuperWinlost = Converter.ToDecimal(reader["swinlost"]),
+                               SuperPositionTaking = Converter.ToDecimal(reader["spositiontaking"]),
+                               SuperComm = Converter.ToDecimal(reader["scomm"]),
+                               SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
+
+                               OddsSpread = Converter.ToDecimal(reader["OddsSpread"])
                            },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

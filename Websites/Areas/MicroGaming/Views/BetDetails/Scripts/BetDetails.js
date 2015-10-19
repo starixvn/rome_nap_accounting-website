@@ -8,7 +8,7 @@
             isShowPager: true,
             fullWidth: true,
             fullHeight: true,
-            gridWidth: 765,
+            gridWidth: 930,
             gridHeight: 20,
             freezeWidth: 0,
             numberFreezeCol: 0

@@ -563,7 +563,7 @@ function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
         "MicrogamingDetails",
         'MicroGamingBetList/BetDetails?' + params,
         'Microgaming Details',
-        900,
+        1030,
         600,
         true,
         false,
