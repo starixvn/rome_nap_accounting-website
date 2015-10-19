@@ -419,7 +419,7 @@ namespace Sunplus.Accounting.Business.Statement
 
                         #region Processing for balance
 
-                        var isGrandPrize = entity.TransTypeId == TransactionTypeConstants.GrandPrize;
+                        var isGrandPrize = string.Equals(entity.TransType, "GP", StringComparison.OrdinalIgnoreCase);
                         bool isAccBal = string.Compare(
                             remark.ToLowerInvariant(),
                             "accumulated balance", true) == 0;
