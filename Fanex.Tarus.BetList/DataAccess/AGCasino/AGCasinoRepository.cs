@@ -39,7 +39,6 @@
                                 IP = Converter.ToString2(reader["ip"]),
                                 TransDesc = Converter.ToString2(reader["transdesc"]),
 
-                                OddsType = Converter.ToString2(reader["OddsType"]),
                                 PlayerComm = Converter.ToDecimal(reader["commission"]),
                                 AgentWinlost = Converter.ToDecimal(reader["awinlost"]),
                                 AgentPositionTaking = Converter.ToDecimal(reader["apositiontaking"]),
@@ -50,14 +49,11 @@
                                 MasterPositionTaking = Converter.ToDecimal(reader["mpositiontaking"]),
                                 AgentComm = Converter.ToDecimal(reader["acomm"]),
                                 MasterDiscount = Converter.ToDecimal(reader["adiscount"]),
-                                MasterOdds = Converter.ToDecimal(reader["modds"]),
 
                                 SuperWinlost = Converter.ToDecimal(reader["swinlost"]),
                                 SuperPositionTaking = Converter.ToDecimal(reader["spositiontaking"]),
                                 SuperComm = Converter.ToDecimal(reader["scomm"]),
-                                SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
-
-                                OddsSpread = Converter.ToDecimal(reader["OddsSpread"])
+                                SuperDiscount = Converter.ToDecimal(reader["sdiscount"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
