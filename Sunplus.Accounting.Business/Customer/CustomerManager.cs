@@ -802,7 +802,12 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
                                 var isShowSportsbook2 = !isHideSportsbook2 && !isLicensee;
-                                
+
+                                if (!isShowSportsbook2)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
+                                }
+
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -829,6 +834,10 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
+                                TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
@@ -1492,21 +1501,6 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
-
-            RenderLeftPanelManager.RenderEnableProductBoxDCS(
-               row1,
-               row4,
-               sg,
-               ref htmlcontent,
-               isManageCustomerAccess,
-               CustParent.IsDisableSportsbook2,
-               hasDownline,
-               "Sportsbook2",
-               renderLeftPanelParameter.IsShowSportsbook2,
-               renderLeftPanelParameter,
-               "Update Sportsbook2 Status",
-               16,
-               4);
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
