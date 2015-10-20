@@ -26,9 +26,10 @@ public partial class SignIn : System.Web.UI.Page
     {
 		if (!IsPostBack)
 		{
-			curDate = BotDetection.Instance.GetDateKey();
-			curTick = BotDetection.Instance.GetTickKey();
-		}
+            Keys keys = BotDetection.Instance.GetKeys();
+            curDate = keys.DateKey;
+            curTick = keys.TickKey;
+        }
 
         if (Session["Username"] != null) FormsAuthentication.RedirectFromLoginPage(DNAide.Core.CastAide.AsString(Session["Username"]), false);
 

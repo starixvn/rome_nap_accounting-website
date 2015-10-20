@@ -214,13 +214,13 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
     //}
 
 	/// <summary>
-	/// Log Robot Detection.
-	/// </summary>
+    /// Log Robot Detection.
+    /// </summary>
     private void LogRobotDetection(HttpContext httpRequest)
     {
         try
         {
-            bool isRobot = BotDetection.Instance.IsRobot(new HttpRequestWrapper(httpRequest.Request), httpRequest.Request.Form["Ga"]);
+            bool isRobot = BotDetection.Instance.IsRobot(httpRequest.Request.Form["_Ga"]);
 
             if (isRobot == false)
             {
@@ -245,24 +245,31 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     ));
 
             StringBuilder sb = new StringBuilder();
-            RuleDataContext ruleDataContext = BotDetection.Instance.RuleDataContext;
+            DebugInfo debugInfo = BotDetection.Instance.DebugInfo;
 
-            Log.Info("User Agent: " + httpRequest.Request.UserAgent);
-            Log.Info("_Ga: " + httpRequest.Request.Form["Ga"]);
-            Log.Info("ClientData Json: " + BotDetection.Instance.ClientDataJson);
+            Log.Info("UserAgent: " + httpRequest.Request.UserAgent);
+            Log.Info("Ga: " + debugInfo.Ga);
+            Log.Info(string.Format("Keys: DateKey = {0}, TickKey = {1}", debugInfo.Keys.DateKey, debugInfo.Keys.TickKey));
+            Log.Info("ClientDataJson: " + debugInfo.ClientDataJson);
 
-            foreach (var property in ruleDataContext.GetType().GetProperties())
+            if (debugInfo.RuleDataContext != null)
             {
-                if (property.CanRead && property.CanWrite)
+                RuleDataContext ruleDataContext = debugInfo.RuleDataContext;
+                foreach (var property in ruleDataContext.GetType().GetProperties())
                 {
-                    string propValue = property.GetValue(ruleDataContext, null) == null
-                        ? ""
-                        : property.GetValue(ruleDataContext, null).ToString();
-                    sb.Append(property.Name + ": " + Regex.Replace(propValue, @"\r\n?|\n", " ") + "; ");
+                    if (property.CanRead && property.CanWrite)
+                    {
+                        string propValue = property.GetValue(ruleDataContext, null) == null
+                            ? ""
+                            : property.GetValue(ruleDataContext, null).ToString();
+                        sb.Append(property.Name + " = " + propValue + "; ");
+                    }
                 }
             }
 
-            Log.Info("Additional Info: " + sb);
+            Log.Info("RuleDataContext: " + sb);
+
+            Log.Info("ExceptionMessage: " + Regex.Replace(debugInfo.ExceptionMessage, @"\r\n?|\n", " "));
         }
         catch (Exception ex)
         {
