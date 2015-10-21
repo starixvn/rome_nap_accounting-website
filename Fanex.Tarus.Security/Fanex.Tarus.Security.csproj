@@ -35,8 +35,9 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.0.0.5\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.CustomerSetting.1.0.0.6\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.Core.dll</HintPath>

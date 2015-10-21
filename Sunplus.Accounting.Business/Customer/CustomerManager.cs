@@ -893,7 +893,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite);
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1154,7 +1154,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
 
-                                if (!WebSettings.IsShowSportsbook2 || isDeposit)
+                                if (isHideSportsbook2 || isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
                                 }
@@ -1505,7 +1505,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2)
         {
             int parentId;
             string submenu1 = "";
@@ -1567,7 +1567,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
-                    if (WebSettings.IsShowSportsbook2 && !isDeposit)
+                    if (!isHideSportsbook2 && !isDeposit)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Sportsbook 2</a>";
                     }
@@ -1609,7 +1609,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + masterId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
-                    if (WebSettings.IsShowSportsbook2 && !isDeposit)
+                    if (!isHideSportsbook2 && !isDeposit)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Sportsbook 2</a>";
                     }
