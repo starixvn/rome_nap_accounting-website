@@ -82,8 +82,8 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
             var gameTypeLength = ProductInfo == null ? 0 : ProductInfo.Count;
 
             var checkedGroup = new List<string>();
-            var addedGroup = string.Empty;
-            var deletedGroup = string.Empty;
+            var addedGroup = new List<string>();
+            var deletedGroup = new List<string>();
             for (var i = 0; i < gameTypeLength; i++)
             {
                 var gameType = ProductInfo[i];
@@ -100,19 +100,19 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
 
                     if (group.Checked && !group.OldChecked)
                     {
-                        addedGroup += "," + group.Name;
+                        addedGroup.Add(group.Name);
                     }
 
                     if (!group.Checked && group.OldChecked)
                     {
-                        deletedGroup += "," + group.Name;
+                        deletedGroup.Add(group.Name);
                     }
                 }
             }
 
             storeProcedureParams.Add("checkedgroup", string.Join(",", checkedGroup));
-            storeProcedureParams.Add("addedgroup", addedGroup);
-            storeProcedureParams.Add("deletedgroup", deletedGroup);
+            storeProcedureParams.Add("addedgroup", string.Join(",", addedGroup));
+            storeProcedureParams.Add("deletedgroup", string.Join(",", deletedGroup));
 
             storeProcedureParams.Add("applygrouptomember", ApplyGroupToMember.Name);
             storeProcedureParams.Add("defaultgroup", DefaultAGCasinoGroup.Name);
