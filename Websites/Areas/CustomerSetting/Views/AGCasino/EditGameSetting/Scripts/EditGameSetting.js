@@ -229,6 +229,10 @@ var AGCasinoSetting = function () {
         return html;
     };
     self.checkGroup = function (container) {
+        if (self.CacheData.customerSetting.RoleId == self.Constants.RoleId.MEMBER) {
+            $(".col-gamekindgroup span[id^='checkbox-gametype']").removeClass("checkbox-checked").addClass("checkbox-unchecked");
+        }
+
         var gameType = self.CacheData.customerSetting.ProductInfo[container.attr("data-gametypeindex")];
         var group = gameType.GameTypeGroup[container.attr("data-groupindex")];
         var checkbox = $("#checkbox-gametype-" + gameType.Id + "-group-" + group.Id);
