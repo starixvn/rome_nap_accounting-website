@@ -217,9 +217,10 @@ var AGCasinoSetting = function () {
                         ' class="col-gamekindgroup label-for-checkbox' + (j === groupLength - 1 ? ' last-group' : '') + '" for="checkbox' + groupSuffix + '"' +
                         ' data-gametypeindex="' + gameTypeIndex + '"' +
                         ' data-groupindex="' + j + '"' +
-                        ' onclick="agCasinoSetting.checkGroup($(this));">\
+                        (group.Enable ? ' onclick="agCasinoSetting.checkGroup($(this));"' : ' title="' + viewResources.Upline_Disabled + '"') +
+                            '>\
                             <span id="checkbox' + "-gametype-" + gameType.Id + groupSuffix + '"' +
-                            ' class="' + (group.Enable ? "checkbox-checked" : "checkbox-unchecked") + '"></span>\
+                            ' class="' + (group.Checked ? "checkbox-checked" : "checkbox-unchecked") + '"></span>\
                             <label id="label' + groupSuffix + '">' + group.Name + '</label>\
                         </div>';
         }
@@ -238,7 +239,7 @@ var AGCasinoSetting = function () {
             checkbox.removeClass("checkbox-unchecked").addClass("checkbox-checked");
         }
 
-        self.CacheData.changeInfo["gametype-" + gameType.Id + "-group-" + group.Id] = isChecked == group.Enable;
+        self.CacheData.changeInfo["gametype-" + gameType.Id + "-group-" + group.Id] = isChecked == group.Checked;
 
         self.updateSelectedGroup();
         self.EnableUpdateButton();
@@ -489,7 +490,7 @@ var AGCasinoSetting = function () {
                 var group = gameType.GameTypeGroup[j];
                 var checkbox = $("#checkbox-gametype-" + gameType.Id + "-group-" + group.Id);
                 var isChecked = checkbox.hasClass("checkbox-checked");
-                self.Params.updateCustomerInfo.ProductInfo[i].GameTypeGroup[j].Enable = isChecked;
+                self.Params.updateCustomerInfo.ProductInfo[i].GameTypeGroup[j].Checked = isChecked;
                 if (isChecked) {
                     self.Params.updateCustomerInfo.hasChecked = true;
                 }

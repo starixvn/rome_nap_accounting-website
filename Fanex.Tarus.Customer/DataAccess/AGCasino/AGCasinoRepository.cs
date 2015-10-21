@@ -171,6 +171,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
             while (reader.Read())
             {
                 custInfo.AGCasinoCheckedGroup = Converter.ToString2(reader["CheckedGroup"]);
+                custInfo.AGCasinoUplineCheckedGroup = Converter.ToString2(reader["UplineCheckedGroup"]);
                 custInfo.DefaultAGCasinoGroup = new BaseModel
                 {
                     Name = Converter.ToString2(reader["DefaultGroup"])

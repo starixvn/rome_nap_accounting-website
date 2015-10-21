@@ -4,7 +4,7 @@
     isShowPager: true,
     fullWidth: true,
     fullHeight: true,
-    gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
+    gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
     gridHeight: 10,
     freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
     numberFreezeCol: 0
@@ -46,7 +46,7 @@ function showMP(transid, refno) {
         isShowPager: true,
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 10,
         freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 3

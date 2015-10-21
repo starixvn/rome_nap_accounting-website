@@ -4,6 +4,7 @@
 @using Fanex.Tarus.Customer.Entities.AGCasino;
 @using Fanex.Tarus.Business.Implement;
 @using Fanex.Tarus.Security.Permission;
+@using Fanex.Tarus.Customer.Resources;
 @model AGCasinoCustomerInfo
 @{
     var permissionService = new PermissionService();
@@ -167,6 +168,7 @@
             HasHostPermission: @hasHostPermission,
             CurrentRole: @roleId,
             UplineId: @uplineId,
-            ExchangeId: @exchangeId
+            ExchangeId: @exchangeId,
+            Upline_Disabled: '@Customer_Labels.Upline_Disabled'
         };
 </script>

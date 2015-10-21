@@ -450,3 +450,8 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     color: #000000;
     font-weight: bold;
 }
+
+.column-winloss
+{
+    width: 100px;
+}

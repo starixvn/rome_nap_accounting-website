@@ -510,4 +510,7 @@
   <data name="VirtualRate_CopyFromHDP" xml:space="preserve">
     <value>Copy Virtual Rate value from Handicap bet type to others</value>
   </data>
+  <data name="Upline_Disabled" xml:space="preserve">
+    <value>Upline's disabled</value>
+  </data>
 </root>

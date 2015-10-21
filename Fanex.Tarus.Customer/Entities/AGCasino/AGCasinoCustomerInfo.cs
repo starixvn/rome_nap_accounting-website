@@ -52,6 +52,8 @@ namespace Fanex.Tarus.Customer.Entities.AGCasino
 
         public string AGCasinoCheckedGroup { get; set; }
 
+        public string AGCasinoUplineCheckedGroup { get; set; }
+
         public List<ProductInfo> ProductInfo { get; set; }
     }
 }

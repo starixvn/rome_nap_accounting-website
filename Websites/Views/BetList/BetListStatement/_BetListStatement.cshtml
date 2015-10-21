@@ -98,7 +98,7 @@
             </div>
         </td>
         <td class="r">
-            <div class="width80">
+            <div class="column-winloss">
                 @Html.Partial("~/Views/BetList/_WinLoss.cshtml", betdetail)
             </div>
         </td>
@@ -165,7 +165,7 @@
                                 Stake</div>
                         </th>
                         <th>
-                            <div class="width80 height34 table-cell">
+                            <div class="column-winloss height34 table-cell">
                                 Win Loss</div>
                         </th>
                         <th>
@@ -207,7 +207,7 @@
                                 Stake</div>
                         </th>
                         <th>
-                            <div class="width80 height34 table-cell">
+                            <div class="column-winloss height34 table-cell">
                                 Win Loss</div>
                         </th>
                         <th>
@@ -258,7 +258,7 @@
                                 @subTotalTmp</div>
                         </th>
                         <th>
-                            <div class="@betlistHelper.IsNegative(totalWinlost) height17 table-cell r width80">
+                            <div class="@betlistHelper.IsNegative(totalWinlost) height17 table-cell r column-winloss">
                                 @totalWinlost.Format(2)</div>
                         </th>
                         <th>
@@ -276,7 +276,7 @@
                                 SubTotal (com)</div>
                         </th>
                         <th>
-                            <div class="@betlistHelper.IsNegative(totalComm) height17 table-cell r width80">
+                            <div class="@betlistHelper.IsNegative(totalComm) height17 table-cell r column-winloss">
                                 @totalComm.Format(2)</div>
                         </th>
                         <th>
@@ -294,7 +294,7 @@
                                 Total</div>
                         </th>
                         <th>
-                            <div  class="@betlistHelper.IsNegative(total) width80 height17 table-cell r">
+                            <div  class="@betlistHelper.IsNegative(total) column-winloss height17 table-cell r">
                                 @total.Format(2)</div>
                         </th>
                         <th>
