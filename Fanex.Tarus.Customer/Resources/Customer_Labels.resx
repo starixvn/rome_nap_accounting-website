@@ -277,7 +277,7 @@
     <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?</value>
   </data>
   <data name="VirtualRate_UpdateSuccess" xml:space="preserve">
-    <value>Update Virtual Exchange Rate Successfully</value>
+    <value>Virtual rate setting updated successfully</value>
   </data>
   <data name="Virtual_Rate" xml:space="preserve">
     <value>Virtual Rate</value>
@@ -344,6 +344,9 @@
   </data>
   <data name="VirtualRate_UploadFile_NotNumberRate" xml:space="preserve">
     <value>Virtual Rate must be a number</value>
+  </data>
+  <data name="VirtualRate_UploadFile_NotSupportBetType" xml:space="preserve">
+    <value>Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren't supported by Soccer sport type.</value>
   </data>
   <data name="VirtualRate_UploadFile_ExceedFileSize" xml:space="preserve">
     <value>Your upload file Size must be &lt;= 1 MB</value>
@@ -551,5 +554,8 @@
   </data>
   <data name="VirtualRate_CopyFromHDP" xml:space="preserve">
     <value>Copy Virtual Rate value from Handicap bet type to others</value>
+  </data>
+  <data name="Upline_Disabled" xml:space="preserve">
+    <value>Upline's disabled</value>
   </data>
 </root>

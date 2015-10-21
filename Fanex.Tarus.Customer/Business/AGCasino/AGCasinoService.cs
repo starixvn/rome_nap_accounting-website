@@ -426,6 +426,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
             {
                 var group = asianGamingProductInfo.GameTypeGroup[i];
                 var groupName = group.Name;                
+
                 var isChecked = checkGroupArray.Contains(groupName);
                 customerSetting.ProductInfo[0].GameTypeGroup[i].Checked = isChecked;
                 customerSetting.ProductInfo[0].GameTypeGroup[i].OldChecked = isChecked;
