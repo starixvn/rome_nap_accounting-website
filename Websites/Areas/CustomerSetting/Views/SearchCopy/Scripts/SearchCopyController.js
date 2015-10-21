@@ -34,7 +34,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             { sportname: 'Bingo', sportvalue: 'tabBingo' },
             { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
             { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
-            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' }
+            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
+            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
     ];
 
     $scope.sports = angular.copy(sports);
@@ -183,6 +184,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmLiveCasino").attr('src', "");
         $("#frmGoldDleluxe").attr('src', "");
         $("#frmColossusBets").attr('src', "");
+        $("#frmSportsbook2").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -244,6 +246,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabColossusBets': url += "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + $scope.existedUser.userid + "&UserId=" + adminId + "&ReadOnly=true";
                 $scope.loadData("#frmColossusBets", url);
                 $scope.resize("#frmColossusBets");
+                break;
+            case 'tabSportsbook2': url += "DCS/ViewCustomerSetting?productId=16&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmSportsbook2", url);
+                $scope.resize("#frmSportsbook2");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
