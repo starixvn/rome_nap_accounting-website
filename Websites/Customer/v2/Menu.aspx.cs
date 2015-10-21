@@ -56,7 +56,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
-            sportsbook2Path += "&customerLevel=1&customerId=" + custID;
+            sportsbook2Path += "&customerLevel=1&uplinelevel=2&customerId=" + custID;
         }
         else if (roleid == 2)
         {
