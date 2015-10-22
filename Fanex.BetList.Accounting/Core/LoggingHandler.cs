@@ -10,11 +10,8 @@
 namespace Fanex.BetList.Accounting.Core
 {
     using System;
-    using System.Web;
-    using Fanex.Logging;
-    using Sunplus.Accounting.Core.Configurations;
+    using Fanex.Module.Logs.Services;
     using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.UMControllerLibrary;
 
     public enum LogType : int
     {
@@ -40,27 +37,7 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="ex">The exception.</param>
         public static void Log(Exception ex)
         {
-            var um = new UMBusiness();
-            var isUM = um.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl);
-
-            // Has check UM time and is UM time.
-            if (WebSettings.IsUMTime && isUM)
-            {
-                return;
-            }
-
-            string message = ex.Message +
-                             "\r\nURL: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Url.OriginalString) + 
-                             "\r\nSOURCE: " + ex.Source +
-                             "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                             "\r\nREFERRER: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.UrlReferrer.ToString()) +
-                             "\r\nFORM: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
-                             "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
-                             "\r\nTARGETSITE: " + ex.TargetSite +
-                             "\r\nSTACKTRACE: " + ex.StackTrace +
-                             ex.FormatSqlException();
-
-            Fanex.Logging.Logger.Log.Error(message);
+            ex.WriteLog();
         }
 
         /// <summary>
@@ -70,25 +47,8 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="logType">Type of the log.</param>
         public static void Log(string message = "", LogType logType = LogType.Error)
         {
-            var um = new UMBusiness();
-            var isUM = um.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl);
-
-            // Has check UM time and is UM time.
-            if (WebSettings.IsUMTime && isUM)
-            {
-                return;
-            }
-
             var ex = new Exception(message);
-            switch (logType)
-            {
-                case LogType.Info:
-                    LogService.Info(ex.FormatSensitiveInfo(message));
-                    break;
-                case LogType.Error:
-                    LogService.Error(ex.FormatSensitiveInfo(message));
-                    break;
-            }
+            ex.Write();
         }
     }
 }

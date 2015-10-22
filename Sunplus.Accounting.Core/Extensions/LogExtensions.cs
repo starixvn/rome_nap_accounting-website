@@ -3,9 +3,7 @@
 namespace Sunplus.Accounting.Core.Extensions
 {
     using System;
-    using System.Web;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.UMControllerLibrary;
+    using Fanex.Module.Logs.Services;
 
     /**
      * public class Log Extensions
@@ -17,27 +15,7 @@ namespace Sunplus.Accounting.Core.Extensions
     {
         public static void ExceptionHandler(Exception ex)
         {
-            var um = new UMBusiness();
-            var isUM = um.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl);
-
-            // Has check UM time and is UM time.
-            if (WebSettings.IsUMTime && isUM)
-            {
-                return;
-            }
-
-            string message = ex.Message +
-                             "\r\nURL: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Url.OriginalString) + 
-                             "\r\nSOURCE: " + ex.Source +
-                             "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                             "\r\nREFERRER: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.UrlReferrer.ToString()) +
-                             "\r\nFORM: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.Form.ToString()) +
-                             "\r\nQUERYSTRING: " + ex.FormatSensitiveInfo(HttpContext.Current.Request.QueryString.ToString()) +
-                             "\r\nTARGETSITE: " + ex.TargetSite +
-                             "\r\nSTACKTRACE: " + ex.StackTrace +
-                             ex.FormatSqlException();
-
-            Fanex.Logging.Logger.Log.Error(message);
+            ex.Write();
         }
     }
 }
