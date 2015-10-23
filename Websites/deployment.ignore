@@ -6,5 +6,4 @@
 \\*.dev.config
 \\*.kbt67.config
 \\*.bkkbt67.config
-\\LogCS
-\\RobotDetection
+\\*.txt
