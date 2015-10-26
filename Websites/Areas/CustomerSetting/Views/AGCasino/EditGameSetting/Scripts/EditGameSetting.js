@@ -546,6 +546,19 @@ var AGCasinoSetting = function () {
         showAlertMessage("result-message", updateResult.ErrorMessage, 0);
         self.Tables.buttonUpdate.attr("disabled", "disabled");
         self.CacheData.customerSetting = self.Params.updateCustomerInfo;
+
+        var gameTypeLength = self.CacheData.customerSetting.ProductInfo.length;
+        for (var i = 0; i < gameTypeLength; i++) {
+            var gameType = self.CacheData.customerSetting.ProductInfo[i];
+            var groupLength = gameType.GameTypeGroup.length;
+            for (var j = 0; j < groupLength; j++) {
+                var group = gameType.GameTypeGroup[j];
+                var isChecked = self.CacheData.customerSetting.ProductInfo[i].GameTypeGroup[j].Checked;
+                self.CacheData.customerSetting.ProductInfo[i].GameTypeGroup[j].OldChecked = isChecked;
+            }
+        }
+
+
         self.CacheData.selectedDefaultGroup = self.CacheData.customerSetting.DefaultAGCasinoGroup;
         self.CacheData.firstSelectedApplyGroup = self.Params.updateCustomerInfo.ApplyGroupToMember;
         setTimeout(function () {
