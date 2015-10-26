@@ -1,12 +1,11 @@
 namespace Fanex.Tarus.Security.Permission
 {
+    using System;
     using System.Collections.Generic;
-    using Fanex.Tarus.Security.Web;
-    using Sunplus.Accounting.DataAccess.IBCDLL;
     using System.Data;
     using DNAide.Core;
-    using System;
     using DNAide.Data;
+    using Fanex.Tarus.Security.Web;
 
     /// <summary>
     /// Class PermissionService.
@@ -108,7 +107,7 @@ namespace Fanex.Tarus.Security.Permission
             DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserControl.Acc_Con_FileNameSelByCustID(custid);
             if (ds != null)
             {
-                string filenames = "";
+                string filenames = string.Empty;
                 if (ds.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     groupId = CastAide.AsInt32(ds.ResultSet.Tables[0].Rows[0]["groupid"], 0);
@@ -138,7 +137,9 @@ namespace Fanex.Tarus.Security.Permission
                             }
 
                             if (!pageAcess.ContainsKey(cleanFilePath))
+                            {
                                 pageAcess.Add(cleanFilePath, actualPolicy);
+                            }
                         }
                     }
                 }
@@ -157,7 +158,7 @@ namespace Fanex.Tarus.Security.Permission
             DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserControl.Acc_Con_FileNameSelByCustID(custid);
             if (ds != null)
             {
-                string filenames = "";
+                string filenames = string.Empty;
                 foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
                 {
                     filenames = CastAide.AsString(row["filenames"], string.Empty).ToLower();
@@ -175,7 +176,9 @@ namespace Fanex.Tarus.Security.Permission
                             }
 
                             if (!pageAcess.ContainsKey(cleanFilePath))
+                            {
                                 pageAcess.Add(cleanFilePath, actualPolicy);
+                            }
                         }
                     }
                 }
@@ -196,7 +199,7 @@ namespace Fanex.Tarus.Security.Permission
             DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserControl.Acc_Con_FileNameSelByCustID(custid);
             if (ds != null)
             {
-                string filenames = "";
+                string filenames = string.Empty;
                 foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
                 {
                     filenames = CastAide.AsString(row["filenames"], string.Empty).ToLower();

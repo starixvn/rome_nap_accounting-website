@@ -10,16 +10,15 @@
 namespace Fanex.Tarus.Customer.Controller
 {
     using System.Web.Mvc;
-    using Fanex.Tarus.Business.Implement;
     using Fanex.Tarus.Customer.Business.GoldDeluxe;
     using Fanex.Tarus.Customer.Criteria.GoldDeluxe;
     using Fanex.Tarus.Customer.Entities.GoldDeluxe;
     using Fanex.Tarus.Customer.Resources;
+    using Fanex.Tarus.Security.Permission;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
-using Fanex.Tarus.Security.Permission;
 
     /// <summary>
     /// Gold Deluxe controller.
@@ -28,6 +27,7 @@ using Fanex.Tarus.Security.Permission;
     {
         private readonly IGoldDeluxeService _goldDeluxeService;
         private PermissionService _permissionService;
+
         public GoldDeluxeController()
             : this(null)
         {
