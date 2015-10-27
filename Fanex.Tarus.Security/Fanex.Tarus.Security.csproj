@@ -42,6 +42,7 @@
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.0.7\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
