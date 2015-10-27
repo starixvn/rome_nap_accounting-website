@@ -97,6 +97,9 @@
                 </div>
             </div>
             <div class="bg_table" id="divcontainer">
+             <iframe id="frmSportsbook2" name="frmSportsbook2" src="" marginwidth="0" scrolling="auto"
+                    marginheight="0" frameborder="0" vspace="0" hspace="0" style="width: 99%; height: 825px;">
+                </iframe>
                 <div id="sContent" style="overflow: auto; height: auto; max-height: 700px">
                 </div>
                 <div id="err">
@@ -104,6 +107,7 @@
             </div>
         </div>
     </div>
+  
     <script src="../../../js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="../../../js/jQuery/jquery.json-2.2.min.js" type="text/javascript"></script>
     <script src="../../../js/jQuery/jquery.tmpl.js" type="text/javascript"></script>

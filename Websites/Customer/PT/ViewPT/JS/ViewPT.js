@@ -920,6 +920,13 @@ var ViewPT = {
                     sportId,
                     betTypeId,
                     isLive);
+                $("#frmSportsbook2").attr('src', "");
+                $("#frmSportsbook2").hide();
+                break;
+            case 44: //Sportsbook 2 
+                $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=44&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+                $("#frmSportsbook2").show();
+                parent.jQuery.unblockUI(); 
                 break;
             default:
                 //jQuery.blockUI(); 
@@ -931,6 +938,8 @@ var ViewPT = {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (resp) {
+                        $("#frmSportsbook2").attr('src', "");
+                        $("#frmSportsbook2").hide();
                         if (resp != null) {
                             if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
                                 showAlertMessage("err", resp.ErrorMessage, 1);

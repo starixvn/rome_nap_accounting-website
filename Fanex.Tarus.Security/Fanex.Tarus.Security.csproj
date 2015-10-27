@@ -39,6 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.CustomerSetting.1.0.0.7\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.MatrixClient">
+      <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.0.6\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -91,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
+    <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authenticate\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />

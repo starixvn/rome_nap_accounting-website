@@ -47,6 +47,9 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.3\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.MatrixClient">
+      <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.0.6\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
