@@ -792,7 +792,7 @@ namespace Sunplus.Accounting.Business.Customer
                                };
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
-                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit && roleId == 4;
+                                var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
