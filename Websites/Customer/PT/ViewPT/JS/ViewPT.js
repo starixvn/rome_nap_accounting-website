@@ -1030,6 +1030,8 @@ var ViewPT = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (resp) {
+                $("#frmSportsbook2").attr('src', "");
+                $("#frmSportsbook2").hide();
                 if (resp != null) {
                     if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
                         showAlertMessage("err", resp.ErrorMessage, 1);

@@ -206,8 +206,11 @@
                         <li class="canchange" onclick="AgentList.colossusBetSetting('@agentItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>
                     }
+                      @if (!agentItem.IsHideSportsbook2)
+                    {
                      <li class="canchange" onclick="EditSportsbook2('@agentItem.ChildID');">
                             Sportsbook 2</li>
+                          }
                 </ul>
             </div>
         </td>
