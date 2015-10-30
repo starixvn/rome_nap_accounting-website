@@ -1,4 +1,7 @@
-﻿body
+﻿@popup-height: 800px;
+@popup-content-height: 739px;
+
+body
 {
     font-family: Tahoma,Arial,helvetica,sans-serif;
     overflow: auto;
@@ -34,15 +37,14 @@
     .memberchoice-iframe
     {
         width: 350px;
-        height: 500px;
+        height: @popup-content-height;
     }
 }
 
 .column-tickerdetail
 {
-    width: 450px;
     vertical-align: top;
-    min-height: 500px;
+    min-height: @popup-content-height;
 }
 
 .bet-details-container
@@ -58,6 +60,7 @@
 {
     border-collapse: collapse;
     font-size: 12px;
+    width: 1220px;
 }
 
 .column-separator
@@ -69,7 +72,49 @@
     {
         width: 3px;
         background-color: #000;
-        min-height: 538px;
+        min-height: @popup-content-height;
         height: 100%;
     }
 }
+
+.bet-details-table
+{
+    .column-date
+    {
+        width: 140px;
+    }
+    
+    .column-transactiontype
+    {
+       width: 110px;
+    }
+    
+    .column-winloss
+    {
+        width: 120px;
+    }
+            
+    .column-note
+    {
+        width: 140px;
+    }
+    
+    .column-super-comm,
+    .column-master-comm,
+    .column-agent-comm
+    {
+        width: 60px;
+    }
+    
+    .column-status
+    {
+        width: 60px;
+    }
+}
+
+.alertboxerr{margin-top: 2px;margin-bottom: 2px;  font-weight:bold;}
+.alertboxerr div{padding:2px 4px 2px 21px;margin-left:5px;text-align:left;}
+.alertboxerr div{background:#f6f5f2 url(Images/error.gif) no-repeat center left;color:#f40000;  }
+.alertboxerr{background:#f6f5f2; border:solid 1px #f40000; font-family: Tahoma; font-size:8pt}
+
+

@@ -10,8 +10,10 @@ var BetDetailsManager = function () {
 
     var iframeError;
     self.initPage = function () {
-        if (memberChoice.ActionInfo.ErrCode) {
-            showAlertMessage("column-memberchoice", memberChoice.ActionInfo.ErrMsg, 1);
+        $(".column-separator").height($(".column-tickerdetail").height());
+
+        if (memberChoice.ActionInfo.ResultCode) {
+            self.showAlertMessage("column-memberchoice", memberChoice.ActionInfo.ResultMessage, 1);
             self.drawSeparator();
         } else {
             self.iframe = memberChoice.Iframe;
@@ -34,21 +36,33 @@ var BetDetailsManager = function () {
     };
     self.setIframe = function (iframe) {
         $("#column-memberchoice").html(iframe);
-        var mustRetry = $(".memberchoice-iframe").contents().find("body > *").length == 0;
-        if (mustRetry) {
-            setTimeout(self.retryGetIFrame, 1000);
-        } else {
-            self.drawSeparator();
-        }
+        self.drawSeparator();
     }
 
     self.drawSeparator = function () {
         var memberChoiceHeight = $("#column-memberchoice").height();
-        console.log($("#column-memberchoice").height());
-
         var detailHeight = $(".column-tickerdetail").height();
         var separatorHeight = detailHeight >= memberChoiceHeight ? detailHeight : memberChoiceHeight;
         $(".column-separator").height(separatorHeight);
+    };
+    self.showAlertMessage = function (containerid, msg, type) {
+        $("#" + containerid).removeClass("hidden");
+        switch (type) {
+            case 0:
+                document.getElementById(containerid).innerHTML = "<div class='alertboxscc'><div>" + msg + "</div></div>";
+                break;
+            case 1:
+                document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg + "</div></div>";
+                break;
+            case 2:
+                document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>";
+                break;
+            case 3:
+                document.getElementById(containerid).innerHTML = msg;
+                break;
+            default:
+                break
+        }
     };
 };
 

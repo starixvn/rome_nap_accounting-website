@@ -1,10 +1,74 @@
-﻿@using Fanex.Tarus.BetList.Entities.ColossusBets;
-@using Newtonsoft.Json;
+﻿@using Newtonsoft.Json;
+@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Core.Utils;
+@using Fanex.BetList.Core.Factories;
+@using Fanex.BetList.Core.Builder;
+@using Fanex.BetList.ColossusBets.Builder;
+@using Fanex.BetList.Core.TicketHelper;
+@using System.Text;
+@using Fanex.CustomerSetting.Module.ColossusBets.Models;
+@using Fanex.CustomerSetting.Module.ColossusBets.Resources;
+@using Fanex.CustomerSetting.Module.ColossusBets.Helpers;
+@using Fanex.CustomerSetting.Module.Core.Extensions;
 @model ColossusBetsDetailModel
+@{
+    decimal soldPercent = 0;
+    decimal winloss = 0;
+    decimal totalWinloss = 0;
+    decimal totalSuperComm = 0;
+    decimal totalMasterComm = 0;
+    decimal totalAgentComm = 0;
+    var detailTickets = Model.TicketDetails;
+    var bodyHtml = new StringBuilder();
+
+    ITicketHelper ticketHelper = new TicketHelper();
+    foreach (var ticket in detailTickets)
+    {
+        string statusTemp = ticket.Status.ToLower();
+
+        totalWinloss += ticket.Winlost;
+        totalSuperComm += statusTemp == "running" ? 0 : ticket.SuperComm;
+        totalMasterComm += statusTemp == "running" ? 0 : ticket.AgentComm;
+        totalAgentComm += statusTemp == "running" ? 0 : ticket.Comm;
+        bodyHtml.Append(BodyRow(ticket, ticketHelper));
+        if (ticket.BetTypeId == 18002)
+        {
+            soldPercent += ticket.Handicap1 * 100;
+            winloss += ticket.Winlost;
+        }
+    }
+
+    var ownPercent = 100 - soldPercent;
+}
+@functions {    
+    string BodyRow(ITicket detailTicket, ITicketHelper ticketHelper)
+    {
+        string statusTemp = detailTicket.Status.ToLower();
+        var rowHtml =
+            "<tr>" +
+                "<td class='c transaction-date'>" + detailTicket.TransDate.ToString() + "</td>" +
+                "<td class='transaction-type'>" + BuilderExtension.BuildColossusBetsTransactionType(detailTicket.BetTypeId, detailTicket.Handicap1, ticketHelper) + "</td>" +
+                "<td class='win-loss'>" + BuilderExtension.BuildColossusBetsWinLoss(detailTicket.Winlost) + "</td>" +
+                "<td class='c status'>" + BuilderExtension.BuildColossusBetsDetailStatus(detailTicket.Status) + "</td>" +
+                "<td class='r'><div id='comm_" + detailTicket.TransId + "' class='width60 table-cell'>" +
+                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.SuperDiscount) + "</span>" +
+                    (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.SuperComm.Format(2) + "</div>" : "") +
+                "</div></td>" +
+                "<td class='r'><div class='width60 table-cell'>" +
+                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.MasterDiscount) + "</span>" +
+                    (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.AgentComm.Format(2) + "</div>" : "") +
+                "</div></td>" +
+                "<td class='r'><div class='width60 table-cell'>" +
+                   "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.AgentDiscount) + "</span>" +
+                    (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.Comm.Format(2) + "</div>" : "") +
+                "</div></td>" +
+                "<td class='l note'>" + string.Format(Labels.ColossusBets_Notes, Formatter.DecFormat(detailTicket.OddsSpread, (byte)2)) + "</td>" +
+            "</tr>";
+        return rowHtml;
+    }
+}
 <html>
 <head>
-    <link type="text/css" rel="Stylesheet" 
-        href="@Url.Content("~/App_Themes/Public/Message.css")" />
     <link type="text/css" rel="Stylesheet" 
         href="@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Styles/BetDetails.less")" />
     <link type="text/css" rel="Stylesheet"  
@@ -23,16 +87,83 @@
                     </div>
                 </td>
                 <td class="column-tickerdetail">
-                    @Html.Raw(Model.TicketDetails)
+                    <div class="bet-details-container">
+                        <p class="cash-own">
+                            @Html.Raw(string.Format(Labels.YouOwnPercent, (int)ownPercent))</p>
+                        <p class="cash-sold">
+                            @Html.Raw(soldPercent == 0 ? Labels.YouSoldZeroPercent : string.Format(Labels.YouSoldPercent, (int)soldPercent, BuilderExtension.BuildColossusBetsWinLoss(winloss)))
+                        </p>
+                        <table class="bet-details-table">
+                            <thead>
+                                <tr>
+                                    <th class="c column-date">
+                                        @Labels.Date
+                                    </th>
+                                    <th class="c column-transactiontype">
+                                        @Labels.Transaction_Type
+                                    </th>
+                                    <th class="c column-winloss">
+                                        @Labels.Win_Loss
+                                    </th>
+                                    <th class="c column-status">
+                                        @Labels.Status
+                                    </th>
+                                    <th class="c column-super-comm">
+                                        @Labels.Super_Comm
+                                    </th>
+                                    <th class="c column-master-comm">
+                                        @Labels.Master_Comm
+                                    </th>
+                                    <th class="c column-agent-comm">
+                                        @Labels.Agent_Comm
+                                    </th>
+                                    <th class="c column-note">
+                                        @Labels.Notes
+                                    </th>
+                                </tr>
+                            </thead>
+                            @if (detailTickets.Any())
+                            {
+                                <tbody>
+                                    @Html.Raw(bodyHtml)
+                                </tbody>
+                                <tfoot>
+                                    <td class="r" colspan="2">
+                                        @Labels.Total
+                                    </td>
+                                    <td class="r">
+                                        @Html.Raw(BuilderExtension.BuildColossusBetsWinLoss(totalWinloss))
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td class="r">
+                                        @totalSuperComm.Format(2)
+                                    </td>
+                                    <td class="r">
+                                        @totalMasterComm.Format(2)
+                                    </td>
+                                    <td class="r">
+                                        @totalAgentComm.Format(2)
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tfoot>
+                            }
+                            else
+                            {
+                                <tbody>
+                                    <td class="c" colspan="8">
+                                        @Labels.ThereIsNoTicketDetailAvailable
+                                    </td>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
-    <script type="text/javascript" src="~/js/common.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/json2.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
-    <script type="text/javascript" src="~/js/BlockUI.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
     <script type="text/javascript" src="~/Areas/ColossusBets/Views/BetDetails/Scripts/BetDetails.js"></script>
     <script type="text/javascript">
         var memberChoice = @Html.Raw(JsonConvert.SerializeObject(Model.MemberChoice));

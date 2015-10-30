@@ -503,15 +503,23 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         WinLossDate: winlossDate,
         TransId: transId,
         CustId: custId,
-        EventId: eventId || 30000047
+        EventId: eventId,
+        RoleId: 0,
+        AccId: _accId
     });
+
+    var width = $(window).width();
+    var widthForDetail = 1300;
+    if (width > widthForDetail) {
+        width = widthForDetail;
+    }
 
     parent.OpenNextPopup(
         "ColossusBetsDetails",
         'ColossusBets/BetDetails?' + params,
         'Ticket details of ' + refno,
-        900,
-        600,
+        width,
+        800,
         true,
         false,
         window,
