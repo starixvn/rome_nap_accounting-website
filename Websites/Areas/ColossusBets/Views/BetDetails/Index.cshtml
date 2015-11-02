@@ -10,6 +10,7 @@
 @using Fanex.CustomerSetting.Module.ColossusBets.Resources;
 @using Fanex.CustomerSetting.Module.ColossusBets.Helpers;
 @using Fanex.CustomerSetting.Module.Core.Extensions;
+@using Fanex.BetList.Core.Resources;
 @model ColossusBetsDetailModel
 @{
     decimal soldPercent = 0;
@@ -89,24 +90,24 @@
                 <td class="column-tickerdetail">
                     <div class="bet-details-container">
                         <p class="cash-own">
-                            @Html.Raw(string.Format(Labels.YouOwnPercent, (int)ownPercent))</p>
+                            @Html.Raw(string.Format(ColosussBetsLabel.YouOwnPercent, (int)ownPercent))</p>
                         <p class="cash-sold">
-                            @Html.Raw(soldPercent == 0 ? Labels.YouSoldZeroPercent : string.Format(Labels.YouSoldPercent, (int)soldPercent, BuilderExtension.BuildColossusBetsWinLoss(winloss)))
+                            @Html.Raw(soldPercent == 0 ? ColosussBetsLabel.YouSoldZeroPercent : string.Format(ColosussBetsLabel.YouSoldPercent, (int)soldPercent, BuilderExtension.BuildColossusBetsWinLoss(winloss)))
                         </p>
                         <table class="bet-details-table">
                             <thead>
                                 <tr>
                                     <th class="c column-date">
-                                        @Labels.Date
+                                        @Fanex.BetList.Core.App_GlobalResources.CoreBetList.date
                                     </th>
                                     <th class="c column-transactiontype">
-                                        @Labels.Transaction_Type
+                                        @ColosussBetsLabel.TransactionType
                                     </th>
                                     <th class="c column-winloss">
-                                        @Labels.Win_Loss
+                                        @Fanex.BetList.Core.App_GlobalResources.CoreBetList.winloss
                                     </th>
                                     <th class="c column-status">
-                                        @Labels.Status
+                                        @Fanex.BetList.Core.App_GlobalResources.CoreBetList.status
                                     </th>
                                     <th class="c column-super-comm">
                                         @Labels.Super_Comm
@@ -128,33 +129,37 @@
                                     @Html.Raw(bodyHtml)
                                 </tbody>
                                 <tfoot>
-                                    <td class="r" colspan="2">
-                                        @Labels.Total
-                                    </td>
-                                    <td class="r">
-                                        @Html.Raw(BuilderExtension.BuildColossusBetsWinLoss(totalWinloss))
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td class="r">
-                                        @totalSuperComm.Format(2)
-                                    </td>
-                                    <td class="r">
-                                        @totalMasterComm.Format(2)
-                                    </td>
-                                    <td class="r">
-                                        @totalAgentComm.Format(2)
-                                    </td>
-                                    <td>
-                                    </td>
+                                    <tr>
+                                        <td class="r" colspan="2">
+                                            @Fanex.BetList.Core.App_GlobalResources.CoreBetList.total
+                                        </td>
+                                        <td class="r">
+                                            @Html.Raw(BuilderExtension.BuildColossusBetsWinLoss(totalWinloss))
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td class="r">
+                                            @totalSuperComm.Format(2)
+                                        </td>
+                                        <td class="r">
+                                            @totalMasterComm.Format(2)
+                                        </td>
+                                        <td class="r">
+                                            @totalAgentComm.Format(2)
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
                                 </tfoot>
                             }
                             else
                             {
                                 <tbody>
-                                    <td class="c" colspan="8">
-                                        @Labels.ThereIsNoTicketDetailAvailable
-                                    </td>
+                                    <tr>
+                                        <td class="c" colspan="8">
+                                            @Fanex.BetList.Core.App_GlobalResources.CoreBetList.ThereIsNoTicketDetailAvailable
+                                        </td>
+                                    </tr>
                                 </tbody>
                             }
                         </table>
