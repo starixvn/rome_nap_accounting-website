@@ -525,5 +525,7 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         window,
         0,
         null,
-        null);
+        function () {
+            parent.$("#innerFrameColossusBetsDetails").contents().find(".memberchoice-betdetail").addClass("display-none");
+        });
 }
