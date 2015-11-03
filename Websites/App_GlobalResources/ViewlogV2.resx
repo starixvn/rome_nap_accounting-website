@@ -1219,22 +1219,22 @@
     <value>Commission</value>
   </data>
   <data name="agentminpt" xml:space="preserve">
-    <value>Agent Min Position Taking</value>
+    <value>Agent PT</value>
   </data>
   <data name="automasterpt" xml:space="preserve">
-    <value>Auto Master Position Taking</value>
+    <value>Auto Master PT</value>
   </data>
   <data name="autosuperpt" xml:space="preserve">
-    <value>Auto Super Position Taking</value>
+    <value>Auto Super PT</value>
   </data>
   <data name="bettype" xml:space="preserve">
     <value>Bet Type</value>
   </data>
   <data name="isautomasterpt" xml:space="preserve">
-    <value>Is Auto Master Position Taking</value>
+    <value>Is Auto Master PT</value>
   </data>
   <data name="isautosuperpt" xml:space="preserve">
-    <value>Is Auto Super Position Taking</value>
+    <value>Is Auto Super PT</value>
   </data>
   <data name="isdisabled" xml:space="preserve">
     <value>Is Disabled</value>
@@ -1246,25 +1246,25 @@
     <value>Is Live</value>
   </data>
   <data name="masterminpt" xml:space="preserve">
-    <value>Master Min Position Taking</value>
+    <value>Master Min PT</value>
   </data>
   <data name="masterpt" xml:space="preserve">
-    <value>Master Position Taking</value>
+    <value>Master PT</value>
   </data>
   <data name="newmasterpt" xml:space="preserve">
-    <value>New Master Position Taking</value>
+    <value>New Master PT</value>
   </data>
   <data name="newsuperpt" xml:space="preserve">
-    <value>New Super Position Taking</value>
+    <value>New Super PT</value>
   </data>
   <data name="sporttype" xml:space="preserve">
     <value>Sport Type</value>
   </data>
   <data name="superminpt" xml:space="preserve">
-    <value>Super Min Position Taking</value>
+    <value>Super Min PT</value>
   </data>
   <data name="superpt" xml:space="preserve">
-    <value>Super Position Taking</value>
+    <value>Super PT</value>
   </data>
   <data name="updallmems" xml:space="preserve">
     <value>Updated all members</value>
