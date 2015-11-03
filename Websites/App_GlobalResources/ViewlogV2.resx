@@ -1219,7 +1219,7 @@
     <value>Commission</value>
   </data>
   <data name="agentminpt" xml:space="preserve">
-    <value>Agent PT</value>
+    <value>Agent Min PT</value>
   </data>
   <data name="automasterpt" xml:space="preserve">
     <value>Auto Master PT</value>

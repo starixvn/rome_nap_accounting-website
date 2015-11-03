@@ -11,10 +11,10 @@
   </Function>
   <Function Name="Customer - New Licensee">
     <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
