@@ -521,7 +521,7 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         width,
         800,
         true,
-        false,
+        true,
         window,
         0,
         null,
