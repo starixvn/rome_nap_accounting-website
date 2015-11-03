@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="ResetWinning">
-    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty_xpre" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
   <Function Name="Balance Report">
     <Setting Key="masterbalance" SpName="Acc_Rpt_Balance_Master" DbName="DBACC.bodb02.bodbAdminNet" />
