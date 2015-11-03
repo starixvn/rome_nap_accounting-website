@@ -64,7 +64,7 @@
                     (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.Comm.Format(2) + "</div>" : "") +
                 "</div></td>" +
                 "<td class='l note'>" +
-                    (detailTicket.BetTypeId == 18002 ? string.Format(Labels.ColossusBets_Notes, Formatter.DecFormat(detailTicket.OddsSpread, (byte)2)) : "") + 
+                    (detailTicket.BetTypeId == 18002 ? string.Format(Labels.ColossusBets_Notes, Formatter.DecFormat(detailTicket.OddsSpread, (byte)2)) : "") +
                  "</td>" +
             "</tr>";
         return rowHtml;
@@ -72,14 +72,14 @@
 }
 <html>
 <head>
-    <link type="text/css" rel="Stylesheet" 
-        href="@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Styles/BetDetails.less")" />
     <link type="text/css" rel="Stylesheet"  
         href="@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Styles/ColossusBets.css")" />
+    <link type="text/css" rel="Stylesheet" 
+        href="@Url.Content("~/Areas/ColossusBets/Views/BetDetails/Styles/BetDetails.less")" />
     <title>Colossus Bets</title>
 </head>
 <body>
-    <table class="memberchoice-betdetail" cellspacing="0" cellpadding="0">
+    <table class="memberchoice-betdetail display-none" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
                 <td id="column-memberchoice" class="column-memberchoice">

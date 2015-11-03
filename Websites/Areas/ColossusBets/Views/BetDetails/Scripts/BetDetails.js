@@ -10,6 +10,7 @@ var BetDetailsManager = function () {
 
     var iframeError;
     self.initPage = function () {
+        $(".memberchoice-betdetail").removeClass("display-none");
         $(".column-separator").height($(".column-tickerdetail").height());
 
         if (memberChoice.ActionInfo.ResultCode) {
