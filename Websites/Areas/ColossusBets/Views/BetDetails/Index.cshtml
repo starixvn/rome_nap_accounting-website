@@ -63,7 +63,9 @@
                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.AgentDiscount) + "</span>" +
                     (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.Comm.Format(2) + "</div>" : "") +
                 "</div></td>" +
-                "<td class='l note'>" + string.Format(Labels.ColossusBets_Notes, Formatter.DecFormat(detailTicket.OddsSpread, (byte)2)) + "</td>" +
+                "<td class='l note'>" +
+                    (detailTicket.BetTypeId == 18002 ? string.Format(Labels.ColossusBets_Notes, Formatter.DecFormat(detailTicket.OddsSpread, (byte)2)) : "") + 
+                 "</td>" +
             "</tr>";
         return rowHtml;
     }
