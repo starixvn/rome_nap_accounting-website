@@ -799,9 +799,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
-                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
-                                var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
-                                var isShowSportsbook2 = !isHideSportsbook2 && !isLicensee;
+                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isDeposit;
+                                var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
+                                var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
 
                                 if (!isShowSportsbook2)
                                 {
