@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="VirtualRateRepository.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
-
-namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
+﻿namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -18,18 +9,10 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
-    using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
 
-    /// <summary>
-    /// Virtual Rate Repository.
-    /// </summary>
     public class VirtualRateRepository : IVirtualRateRepository
     {
-        /// <summary>
-        /// Gets the customer virtual rate.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The customer virtual rate.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -97,11 +80,6 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
             return result;
         }
 
-        /// <summary>
-        /// Updates the settings.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Update result.</returns>
         public Result UpdateSettings(UpdateSettingsCriteria criteria)
         {
             Hashtable outputParams = new Hashtable();
@@ -121,11 +99,6 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
             return updateResult;
         }
 
-        /// <summary>
-        /// Gets the history log.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The history log.</returns>
         public List<HistoryLogEntity> HistoryLog(ViewHistoryLogCriteria criteria)
         {
             var result = new List<HistoryLogEntity>();
@@ -141,6 +114,30 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
                         LogDate = Converter.ToDateTime(reader["logdate"]),
                         Username = Converter.ToString2(reader["Username"]),
                         TrackingValue = Converter.ToString2(reader["TrackingValue"])
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        public List<SportBetTypeReferencesEntity> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria)
+        {
+            var result = new List<SportBetTypeReferencesEntity>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                while (reader.Read())
+                {
+                    result.Add(new SportBetTypeReferencesEntity
+                    {
+                        SportType = Converter.ToInt(reader["SportType"]),
+                        BetType = Converter.ToInt(reader["BetType"]),
+                        SportTypeRef = Converter.ToInt(reader["SportTypeRef"]),
+                        BetTypeRef = Converter.ToInt(reader["BetTypeRef"]),
+
+                        IsActive = Converter.ToBool(reader["IsActive"])
                     });
                 }
             }

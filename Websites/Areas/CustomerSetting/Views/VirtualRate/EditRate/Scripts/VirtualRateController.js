@@ -49,6 +49,9 @@ var VirtualRateController = function () {
         $("#btnSubmit").click(function () {
             self.updateSettings();
         });
+        $(".infoIcon").click(function () {
+            window.open(window.rootUrl + "VirtualRate/GetSportBetTypeReferences", '_blank');
+        });
     };
     self.renderVirtualRateSetting = function () {
         var tableBody = $("#virtual-rate-setting tbody");
@@ -71,7 +74,6 @@ var VirtualRateController = function () {
                     <td colspan="' + tableColumnCount + '">' +
                         sport.Name +
                         (sport.Notes && sport.Notes != '' ? ' (' + sport.Notes + ')' : '') +
-                        (i == 0 ? iconCopySport : '') +
                     '</td>\
                  </tr>';
             }
@@ -97,6 +99,7 @@ var VirtualRateController = function () {
             }
         }
 
+        settingHtml += '<tr class="padding-row end-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
         tableBody.empty().append(settingHtml);
     };
 
@@ -200,8 +203,8 @@ var VirtualRateController = function () {
     self.renderPaddingEmptyColumn = function (startBetTypeIndex, endBetTypeIndex, i) {
         var html = '';
         if (startBetTypeIndex < maxBetTypeColumn) {
-            for (; i < endBetTypeIndex; i++) {
-                html += '<td class="bettypevalue-column c"></td>';
+            if (i < endBetTypeIndex) {
+                html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - i) + '"></td>';
             }
         } else if (i < endBetTypeIndex) {
             html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - maxBetTypeColumn) + '"></td>';

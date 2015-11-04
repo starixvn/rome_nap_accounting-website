@@ -78,7 +78,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     },
                     null,
                     null,
-                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "Other Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.SetXWinner,
+                        VirtualRateString = "40"
+                    },
                     null
                 }
             });
@@ -197,7 +203,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     },
                     null,
                     null,
-                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "Other Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.SetXWinner,
+                        VirtualRateString = "40"
+                    },
                     null
                 }
             });
@@ -210,7 +222,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     new ImportVirtualRateResult
                     {
                         SportName = "Other Sports",
-                        LiveTypeName = string.Empty,
+                        LiveTypeName = "Live",
                         BetTypeId = BetType.Handicap
                     },
                     null,

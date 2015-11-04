@@ -498,4 +498,16 @@
   <data name="Volleyball" xml:space="preserve">
     <value>Volleyball</value>
   </data>
+  <data name="VirtualRate_ViewSetting_Title" xml:space="preserve">
+    <value>Click to view Virtual Rate Setting Information page</value>
+  </data>
+  <data name="Sport_BetType_Referrences" xml:space="preserve">
+    <value>Sport Bet Type Referrences</value>
+  </data>
+  <data name="BetType" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="Followed_By" xml:space="preserve">
+    <value>Followed By</value>
+  </data>
 </root>

@@ -79,5 +79,10 @@ namespace Fanex.Tarus.Customer.Controller
         {
             return Json(_virtualRateService.DeleteTempRate());
         }
+
+        public ActionResult GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria)
+        {
+            return View("~/Areas/CustomerSetting/Views/VirtualRate/SportBetTypesReferences/Index.cshtml", _virtualRateService.GetSportBetTypeReferences(criteria));
+        }
     }
 }

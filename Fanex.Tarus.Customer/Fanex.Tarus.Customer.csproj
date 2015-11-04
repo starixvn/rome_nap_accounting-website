@@ -243,6 +243,7 @@
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\DeleteTempRateCriteria.cs" />
@@ -367,6 +368,9 @@
     <Compile Include="Entities\VirtualRate\HistoryLogEntity.cs" />
     <Compile Include="Entities\VirtualRate\HistoryLogReportModel.cs" />
     <Compile Include="Entities\VirtualRate\LogBySportEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\SportBetTypeReferencesEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\SportBetTypeReferencesModel.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\TargetReferencesModel.cs" />
     <Compile Include="Entities\VirtualRate\SportPositionModel.cs" />
     <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateInfo.cs" />
