@@ -509,7 +509,7 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
     });
 
     var width = $(window).width();
-    var widthForDetail = 1100;
+    var widthForDetail = 1120;
     if (width > widthForDetail) {
         width = widthForDetail;
     }
