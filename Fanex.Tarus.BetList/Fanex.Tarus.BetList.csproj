@@ -86,9 +86,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.0.6\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.3\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.4\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,9 +97,9 @@
     <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.0.3\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.0.5\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
