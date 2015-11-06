@@ -355,13 +355,15 @@
         process: function () {
             if (this.qDiff.length > 0) {
                 var row = this.qDiff.shift(), ID = row.ID;
+                var idx = 0;
                 for (e in row.Diffs) {
                     var elms = row.Diffs[e];
+                    ++idx;
                     for (var i = 0; i < elms.length; i++) {
                         var item = elms[i];
 
                         for (var j = 0; j < row.Groups; j++) {
-                            var relClass = 'div.'.concat(ID).concat('-').concat(j + 1).concat('-').concat(item.P);
+                            var relClass = 'div.'.concat(ID).concat('-').concat(idx + j + 1).concat('-').concat(item.P);
 
                             if ($(relClass).text().length < 8) {
                                 $(relClass).parent().css({ 'background-color': '#ffa' });
@@ -370,10 +372,12 @@
 
                                 $(relClass).append('<br /><font color="blue">' + val_diff + '</font>');
 
-                                if ($(relClass).parent()[0]) break;
+                                if ($(relClass).parent()[0]) {
+                                    break;
+                                }
                             }
                         }
-                    }
+                    }                    
                 }
                 window.setTimeout(function () {
                     LogPT.queue.process();
