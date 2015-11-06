@@ -18,9 +18,6 @@
     <Setting Key="GetLogCredit" SpName="Acc_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogCreditTotal" SpName="Acc_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
-  <Function Name="Report - WinLoss">
-    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-  </Function>
   <Function Name="Live Casino - Stake Level Setting">
     <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>

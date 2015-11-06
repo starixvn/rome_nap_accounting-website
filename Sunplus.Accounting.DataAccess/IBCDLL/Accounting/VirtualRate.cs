@@ -60,9 +60,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("arrusernames", arrUsernames);
-                hash.Add("arrvirtualrates", arrVirtualRates);                
+                hash.Add("arrvirtualrates", arrVirtualRates);
 
-                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulInsTmpExcel"))
+                using (ObjectDb db = new ObjectDb("Customer_VirtualRate_InsertTemp"))
                 {
                     db.AssignParamValues(hash);
 
@@ -87,7 +87,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulSelCheck"))
+                using (ObjectDb db = new ObjectDb("Customer_VirtualRate_CheckImport"))
                 {
                     db.AssignParamValues(hash);
 
@@ -113,8 +113,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                
-                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulDelTmpExcel"))
+
+                using (ObjectDb db = new ObjectDb("Customer_VirtualRate_DeleteTemp"))
                 {
                     db.AssignParamValues(hash);
                     var ds = db.ExecuteDataSet();
@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objDB = new ObjectDb("Acc_VirtualRateMulUpd", 600))
+                using (ObjectDb objDB = new ObjectDb("Customer_VirtualRate_UpdateMultiple", 600))
                 {
                     var hash = new Hashtable();
                     hash.Add("userid", AppSession.AccId);

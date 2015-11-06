@@ -172,7 +172,6 @@
     <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Virtual Rate">
-    <Setting Key="Acc_VirtualRateMulUpd" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>

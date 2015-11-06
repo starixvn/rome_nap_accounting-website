@@ -14,11 +14,10 @@ var VirtualRateController = function () {
         var referrenceCount = sportBetTypesReferences.Count;
         for (var i = 0; i < sportBetTypesReferences.length; i++) {
             var sportType = sportBetTypesReferences[i];
-            contentHtml += '<div class="sports">\
+            contentHtml += '<div class="sport">\
                     <div class="header-sport' + (i == 0 ? ' first-child' : '') + '">\
                         <span class="iconBox expand-icon"></span>' + sportType.Name +
                     '</div>\
-                </div>\
                 <div>\
                     <table>\
                         <thead>\
@@ -35,11 +34,11 @@ var VirtualRateController = function () {
             var betTypeLength = sportType.SubTypes.length;
             for (var j = 0; j < betTypeLength; j++) {
                 var betType = sportType.SubTypes[j];
-                var betTypeReferrenceCount = betType.SourceReferences.Count;
+                var betTypeReferrenceCount = betType.SourceReferences.length;
                 for (var k = 0; k < betTypeReferrenceCount; k++) {
                     var referrence = betType.SourceReferences[k];
                     contentHtml += '<tr>' +
-                                        (k == 0 ? '<td class="bettype" rowspan="' + referrenceCount + '">' + betType.Name + '</td>' : '') +
+                                        (k == 0 ? '<td class="bettype" rowspan="' + betTypeReferrenceCount + '">' + betType.Name + '</td>' : '') +
                                         '<td class="right followedByCol">' + referrence.SportTypeRef.Name + '</td>\
                                         <td class="left followedByCol">' + referrence.BetTypeRef.Name + '</td>\
                                     </tr>';
@@ -47,7 +46,8 @@ var VirtualRateController = function () {
             }
 
             contentHtml += '</tbody>\
-                    </table>\
+                        </table>\
+                    </div>\
                 </div>';
         }
 
@@ -57,13 +57,13 @@ var VirtualRateController = function () {
         });
     };
     self.toggleSport = function (e) {
-        var t = e.nextSibling;
-        if (t.className.length === 0) {
-            t.className = "hide";
-            e.children[0].className = "iconBox collapse-icon";
-        } else {
-            t.className = "";
+        var t = $(e).next();
+        if (t.hasClass("hide")) {
+            t.removeClass("hide");
             e.children[0].className = "iconBox expand-icon";
+        } else {
+            t.addClass("hide");
+            e.children[0].className = "iconBox collapse-icon";
         }
     }
 };

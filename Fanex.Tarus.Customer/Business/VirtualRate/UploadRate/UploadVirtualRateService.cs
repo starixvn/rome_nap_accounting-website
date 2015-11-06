@@ -74,13 +74,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     return GroupCheckImportResult(checkImportResult);
                 }
 
-                var importDirectAccountCriteria = new InsertTempRateCriteria
+                var uploadCriteria = new InsertTempRateCriteria
                 {
                     UserId = userId,
                     CustomerVirtualRateList = CustomerVirtualRateList(importList)
                 };
 
-                if (importDirectAccountCriteria.CustomerVirtualRateList.Count == 0)
+                if (uploadCriteria.CustomerVirtualRateList.Count == 0)
                 {
                     checkImportResult.ResultCode = ErrorCode.InvalidFormatFile;
                     checkImportResult.ResultMessage = Customer_Labels.VirtualRate_UploadFile_InvalidFormat;
@@ -95,7 +95,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 var databaseCheckResult = _uploadRateRepository.InsertTempRate(new InsertTempRateCriteria
                 {
                     UserId = userId,
-                    CustomerVirtualRateList = importDirectAccountCriteria.CustomerVirtualRateList
+                    CustomerVirtualRateList = uploadCriteria.CustomerVirtualRateList
                 });
 
                 if (databaseCheckResult.ResultCode != ErrorCode.NoneError)

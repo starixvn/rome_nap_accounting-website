@@ -113,7 +113,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
        
         public DataSet GetVirtualRateUpdateHistory(int customerId)
         {
-            using (ObjectDb objdb = new ObjectDb("Acc_CustomerSelVirtualRateHistory"))
+            using (ObjectDb objdb = new ObjectDb("Customer_VirtualRate_GetLog"))
             {
                 var param = new Hashtable();
                 param.Add("custid", customerId);

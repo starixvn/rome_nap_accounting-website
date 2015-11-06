@@ -142,7 +142,7 @@
             {
                 var result = new List<SportBetTypeReferencesModel>();
                 var rawData = _virtualRateRepository.GetSportBetTypeReferences(criteria);
-                var sportGroups = rawData.GroupBy(referrence => referrence.SportType);
+                var sportGroups = rawData.GroupBy(referrence => referrence.SportTypeRef);
 
                 var sportNameDictionary = new Dictionary<int, string>();
                 var betTypeNameDictionary = new Dictionary<int, string>();
@@ -156,7 +156,7 @@
                         SubTypes = new List<SportBetTypeReferencesModel>()
                     };
 
-                    var betTypeGroups = sportGroup.GroupBy(referrence => referrence.BetType);
+                    var betTypeGroups = sportGroup.GroupBy(referrence => referrence.BetTypeRef);
                     foreach (var betTypeGroup in betTypeGroups)
                     {
                         CacheResourceName(betTypeGroup.Key, betTypeNameDictionary, CacheRef.GetBettype);
@@ -169,19 +169,19 @@
 
                         foreach (var data in betTypeGroup)
                         {
-                            CacheResourceName(data.SportTypeRef, sportNameDictionary, CacheRef.GetSportName);
-                            CacheResourceName(data.BetTypeRef, betTypeNameDictionary, CacheRef.GetBettype);
+                            CacheResourceName(data.SportType, sportNameDictionary, CacheRef.GetSportName);
+                            CacheResourceName(data.BetType, betTypeNameDictionary, CacheRef.GetBettype);
                             var sourceReferrence = new SourceReferenceModel
                             {
                                 SportTypeRef = new BaseModel
                                 {
                                     Id = data.SportTypeRef,
-                                    Name = sportNameDictionary[data.SportTypeRef]
+                                    Name = sportNameDictionary[data.SportType]
                                 },
                                 BetTypeRef = new BaseModel
                                 {
                                     Id = data.BetTypeRef,
-                                    Name = betTypeNameDictionary[data.BetTypeRef]
+                                    Name = betTypeNameDictionary[data.BetType]
                                 }
                             };
 
@@ -193,6 +193,8 @@
 
                     result.Add(sport);
                 }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -206,7 +208,7 @@
         {
             if (!resourceDictionary.ContainsKey(resourceId))
             {
-                resourceDictionary.Add(resourceId, CacheRef.GetSportName(resourceId));
+                resourceDictionary.Add(resourceId, getResourceNameFunction(resourceId));
             }
         }
 

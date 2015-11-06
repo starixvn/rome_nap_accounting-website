@@ -134,10 +134,8 @@
                     {
                         SportType = Converter.ToInt(reader["SportType"]),
                         BetType = Converter.ToInt(reader["BetType"]),
-                        SportTypeRef = Converter.ToInt(reader["SportTypeRef"]),
-                        BetTypeRef = Converter.ToInt(reader["BetTypeRef"]),
-
-                        IsActive = Converter.ToBool(reader["IsActive"])
+                        SportTypeRef = Converter.ToInt(reader["SportTypeRefVirtualRate"]),
+                        BetTypeRef = Converter.ToInt(reader["BetTypeRefVirtualRate"])
                     });
                 }
             }

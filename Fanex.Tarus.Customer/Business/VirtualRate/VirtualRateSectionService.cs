@@ -536,6 +536,11 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                 }
             }
 
+            if (result.ContainsKey("OtherSports"))
+            {
+                result.Add("Other Sports", result["OtherSports"]);
+            }
+
             return result;
         }
     }
