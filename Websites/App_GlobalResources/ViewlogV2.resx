@@ -1269,4 +1269,10 @@
   <data name="updallmems" xml:space="preserve">
     <value>Updated all members</value>
   </data>
+  <data name="Disable44_3" xml:space="preserve">
+    <value>Disabled Muay Thai</value>
+  </data>
+  <data name="Hidesportsbook2" xml:space="preserve">
+    <value>Hide Sportsbook 2</value>
+  </data>
 </root>

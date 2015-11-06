@@ -8,7 +8,7 @@
     viewBy: '',
     logType: 'setting',
     Rows: null,
-    doSearch: function(_page, _size) {
+    doSearch: function (_page, _size) {
 
         var _custName = "", _custId = custId, _fromDate = "", _toDate = "", _viewBy = "";
         if (typeof _page == 'undefined') {
@@ -38,12 +38,12 @@
         this.getPage();
     },
     getPage: function (_page) {
-       
+
         if (typeof _page != 'undefined') {
             this.page = _page;
         }
         var _method = '', _param = null;
-        
+
         _param = { custName: this.custName, fromDate: this.fromDate, toDate: this.toDate, page: this.page, pageSize: this.pageSize };
         switch (this.logType) {
             case 'setting':
@@ -65,20 +65,20 @@
         JAjax.call({
             url: 'Services/Setting.svc/'.concat(_method),
             data: _param,
-            success: function(resp) {
+            success: function (resp) {
                 $('#log_content').empty();
 
                 if (typeof (resp) != 'undefined') {
                     LogPT.mapTemplate(resp);
                 }
             },
-            error: function(err, msg) {
+            error: function (err, msg) {
                 $('#log_content').html('<div id="log_scroll"><p align="center">There is no information available.</p></div>').show();
             },
             isRefresh: true
         });
     },
-    mapTemplate: function(resp) {
+    mapTemplate: function (resp) {
         //$('#log_content').hide();
         switch (resp.Type) {
             case 1: // for setting
@@ -106,7 +106,7 @@
             // set rows data 
             LogPT.Rows = resp.Rows;
 
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 var log_height = 0, scroll_height, max_height;
                 max_height = $('#log_scroll').attr('maxheight');
                 if (resp.Type == 1 || resp.Type == 2) {
@@ -121,7 +121,7 @@
             // render diff
             LogPT.diffValue(resp.Rows);
             // set paging
-            var opt = { callback: function(page, size) { LogPT.doSearch((page + 1), size) } };
+            var opt = { callback: function (page, size) { LogPT.doSearch((page + 1), size) } };
             opt["items_per_page"] = LogPT.pageSize;
             opt["current_page"] = LogPT.page - 1;
             $('#pagination').pagination(resp.Total, opt).show();
@@ -129,7 +129,7 @@
             $('#pagination').empty().hide();
         }
     },
-    showTracking: function(tracking, tbl, diff, action) {
+    showTracking: function (tracking, tbl, diff, action) {
         var clsDiff = typeof (diff) == 'undefined' ? '' : ' diff';
         if (typeof (action) == undefined) { var action = ""; }
         var tpl_tracking = '<table class="tblDesc tbl' + tbl + '"><tbody>';
@@ -175,7 +175,7 @@
                             for (var r1 = 0; r1 < 3; r1++) {
                                 var _elm, _etmp = { N: "", Val: "", P: "" };
                                 _elm = (typeof node.Vals[ind] != 'undefined') ? node.Vals[ind] : _etmp;
-                                tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
                                 ind++;
                             }
                             tpl_tracking += '</tr>';
@@ -199,7 +199,7 @@
                                 for (var r1 = 0; r1 < 3; r1++) {
                                     var _elm, _etmp = { N: "", Val: "", P: "" };
                                     _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
-                                    tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                    tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
                                     ind_g++;
                                 }
                                 tpl_tracking += '</tr>';
@@ -215,13 +215,13 @@
         tpl_tracking += '</tbody></table>';
         return tpl_tracking;
     },
-    showHide: function(rel) {
+    showHide: function (rel) {
         if (rel) {
             $('div.' + rel.replace(/ /g, '.')).slideToggle();
         }
         return false;
     },
-    redirect: function(tab) {
+    redirect: function (tab) {
         if (tab) {
             var cls = 'current', idTab = $(tab).parent().attr('id').toString();
             $('li.tablog').removeClass(cls);
@@ -248,7 +248,7 @@
         }
         return false;
     },
-    setTab: function(tab) {
+    setTab: function (tab) {
         var cls = 'current';
         if (tab.toLowerCase().indexOf('setting') != -1) {
             this.logType = 'setting';
@@ -266,10 +266,11 @@
         $('input#tabid').val(tab);
         $('#' + this.logType).addClass(cls);
     },
-    diffValue: function(rows) {
+    diffValue: function (rows) {
         for (r in rows) {
             var row = rows[r], ID = row.ID;
-            this.queue.push({ Diffs: row.Diffs, ID: row.ID });
+            var Groups = row.Detail.Vals ? row.Detail.Vals.length : 1;
+            this.queue.push({ Diffs: row.Diffs, ID: row.ID, Groups: Groups });
             //            for (e in row.Diffs) {
             //                var elm = row.Diffs[e], relClass = 'div.'.concat(ID).concat('-').concat(elm.P);
             //                $(relClass).parent().css({ 'background-color': '#ffa' });
@@ -280,13 +281,13 @@
         }
         this.queue.process();
     },
-    diffTip: function(elm, is_show) {
+    diffTip: function (elm, is_show) {
         var pos = $(elm).position(), diff = $(elm).attr('diff');
         var diffTip = $("div#diffTip");
         if (diffTip.length == 0) {
             diffTip = $('<div />').attr('id', 'diffTip')
                 .addClass('diffTip')
-                .bind('mouseout', function(e) { $(this).hide(); })
+                .bind('mouseout', function (e) { $(this).hide(); })
                 .appendTo('body');
         }
         var pos_left = parseInt(pos.left);
@@ -299,7 +300,7 @@
         }
         return false;
     },
-    diffPopup: function(elm) {
+    diffPopup: function (elm) {
         var pos = $(elm).position(), ID = $(elm).attr('rel'), tracking = null;
         var diffPopup = $("div#diffPopup");
         if (diffPopup.length == 0) {
@@ -316,12 +317,12 @@
         }
         diffPopup.empty();
         $('#tpl_diff_popup').tmpl({ ID: ID, tracking: tracking, Act: row.Act }).appendTo(diffPopup);
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             diffPopup.css({ top: parseInt(pos.top - 30), position: 'absolute', width: 450, left: parseInt(pos.left - 830) }).show();
             $(diffPopup).draggable({
                 handle: '#diffhead'
             });
-            $('#diffclose').bind('click', function(e) { $("div#diffPopup").hide(); });
+            $('#diffclose').bind('click', function (e) { $("div#diffPopup").hide(); });
             if ($.browser.msie) {
                 $('#diffclose').css({ 'margin-top': -17 });
             }
@@ -334,7 +335,7 @@
         }, 500);
         return false;
     },
-    formatDiff: function(rows) {
+    formatDiff: function (rows) {
         for (r in rows) {
             var row = rows[r], ID = row.ID;
             for (e in row.Diffs) {
@@ -346,22 +347,35 @@
     },
     queue: {
         qDiff: [],
-        push: function(item) {
+        push: function (item) {
             if (item) {
                 this.qDiff.push(item);
             }
         },
-        process: function() {
+        process: function () {
             if (this.qDiff.length > 0) {
                 var row = this.qDiff.shift(), ID = row.ID;
                 for (e in row.Diffs) {
-                    var elm = row.Diffs[e], relClass = 'div.'.concat(ID).concat('-').concat(elm.P);
-                    $(relClass).parent().css({ 'background-color': '#ffa' });
-                    $(relClass).css({ color: 'red' });
-                    var val_diff = $.trim(elm.Val).length == 0 ? '_' : $.trim(elm.Val);
-                    $(relClass).append('<br /><font color="blue">' + val_diff + '</font>');
+                    var elms = row.Diffs[e];
+                    for (var i = 0; i < elms.length; i++) {
+                        var item = elms[i];
+
+                        for (var j = 0; j < row.Groups; j++) {
+                            var relClass = 'div.'.concat(ID).concat('-').concat(j + 1).concat('-').concat(item.P);
+
+                            if ($(relClass).text().length < 8) {
+                                $(relClass).parent().css({ 'background-color': '#ffa' });
+                                $(relClass).css({ color: 'red' });
+                                var val_diff = $.trim(item.Val).length == 0 ? '_' : $.trim(item.Val);
+
+                                $(relClass).append('<br /><font color="blue">' + val_diff + '</font>');
+
+                                if ($(relClass).parent()[0]) break;
+                            }
+                        }
+                    }
                 }
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     LogPT.queue.process();
                 }, 100);
             }

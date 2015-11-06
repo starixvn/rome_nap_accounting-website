@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.Entities.LogDisplay
         public TrackingLog Detail { get; set; } // log detail*/
 
         [DataMember]
-        public List<TrackingValue> Diffs { get; set; }
+        public List<List<TrackingValue>> Diffs { get; set; }
 
         [DataMember]
         public TrackingLog Old { get; set; } // log detail*/

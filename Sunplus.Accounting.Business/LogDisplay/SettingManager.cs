@@ -196,7 +196,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(CastAide.AsString(row["trackingvalue"], string.Empty), CastAide.AsString(row["trackingvalueold"], string.Empty));
                         record.Diffs = diffVals;
-                        if (diffVals.Count<TrackingValue>() > 0)
+                        if (diffVals.Count > 0)
                         {
                             record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         }
@@ -761,8 +761,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingNode;
         }
 
-        private List<TrackingValue> _DiffsTrackingValue(string trackingValue, string trackingValue2)
+        private List<List<TrackingValue>> _DiffsTrackingValue(string trackingValue, string trackingValue2)
         {
+            var result = new List<List<TrackingValue>>();
             var diffs = new List<TrackingValue>();
             if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
             {
@@ -792,21 +793,38 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     //        diffs.Add(elm2);
                     //    }
                     //});
-                    foreach (var elm in listVal)
+
+                    var index = 0;
+                    foreach (var elms in listVal)
                     {
-                        var elm2 = listVal2[elm.Key];
-                        if (!elm.Value.Val.Equals(elm2.Val))
+                        var isDiff = false;
+                        diffs = new List<TrackingValue>();
+                        foreach (var elm in elms)
                         {
-                            diffs.Add(elm2);
+                            var elm2 = listVal2.ElementAt(index)[elm.Key];
+                            if (!elm.Value.Val.Equals(elm2.Val))
+                            {
+                                isDiff = true;
+                                diffs.Add(elm2);
+                            }   
+                        }
+
+                        ++index;
+
+                        if (isDiff)
+                        {
+                            result.Add(diffs);
                         }
                     }
                 }
             }
-            return diffs;
+
+            return result;
         }
 
-        private Dictionary<string, TrackingValue> _GetTrackingParams(string trackingValue)
+        private List<Dictionary<string, TrackingValue>> _GetTrackingParams(string trackingValue)
         {
+            var result = new List<Dictionary<string, TrackingValue>>();
             var listVal = new Dictionary<string, TrackingValue>();
             try
             {
@@ -842,14 +860,23 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
                 }
 
-                foreach (var attr in xmlValue.Nodes().Cast<XElement>().Attributes())
+                result.Add(listVal);
+                
+                foreach (var elm in xmlValue.Elements())
                 {
-                    if (listVal.ContainsKey(attr.Name.ToString()))
+                    listVal = new Dictionary<string, TrackingValue>();
+
+                    foreach (var attr in elm.Attributes())
                     {
-                        continue;
+                        if (listVal.ContainsKey(attr.Name.ToString()))
+                        {
+                            continue;
+                        }
+
+                        listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));   
                     }
 
-                    listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
+                    result.Add(listVal);
                 }
             }
             catch (Exception ex)
@@ -857,7 +884,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return listVal;
+            return result;
         }
 
         private void _LoopParams(XElement xElement, ref Dictionary<string, TrackingValue> listParam)
