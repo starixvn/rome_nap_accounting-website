@@ -38,11 +38,10 @@
 
         AreaRegistration.RegisterAllAreas();
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-        CustomerSettingRegistration.Init();
-        SettingMatrixRegistration.Init();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
-
+        CustomerSettingRegistration.Init();
+        SettingMatrixRegistration.Init();
         AutoMapperConfiguration.Configure();
     }
 
