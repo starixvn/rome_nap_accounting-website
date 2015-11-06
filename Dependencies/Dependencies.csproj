@@ -50,7 +50,7 @@
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.0.9\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
       <Private>True</Private>
-    </Reference>
+     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
