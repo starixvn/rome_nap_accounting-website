@@ -297,7 +297,7 @@
   </Function>
   <Function Name="Sportsbook2">
     <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.bodbAdminNet"/>
+      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_uat2" DbName="DBCust.CustDB.bodbAdminNet"/>
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet"/>
     </Function>
   </Function>
