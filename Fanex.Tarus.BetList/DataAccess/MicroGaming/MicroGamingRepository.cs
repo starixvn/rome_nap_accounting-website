@@ -23,7 +23,7 @@
                         {
                             Ticket = new Ticket
                            {
-                               TransId = Converter.ToInt(reader["transid"]),
+                               TransId = Converter.To<long>(reader["transid"]),
                                SportTypeId = Converter.ToInt(reader["SportType"]),
                                BetTypeId = Converter.ToInt(reader["BetType"]),
                                TransDate = Converter.ToDateTime(reader["transdate"]),
