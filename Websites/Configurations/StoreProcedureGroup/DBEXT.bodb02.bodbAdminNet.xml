@@ -15,8 +15,8 @@
     <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin-BACustomer">
     <Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
