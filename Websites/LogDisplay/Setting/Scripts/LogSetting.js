@@ -145,7 +145,7 @@
                     for (var r1 = 0; r1 < 3; r1++) {
                         var _attr, _etmp = { N: "", Val: "", P: "" };
                         _attr = (typeof tracking.Attrs[ind] != 'undefined') ? tracking.Attrs[ind] : _etmp;
-                        tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _attr.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + _attr.P + clsDiff + '">' + _attr.Val + '</div></td>';
+                        tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _attr.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (r + 1) + '-' + _attr.P + clsDiff + '">' + _attr.Val + '</div></td>';
                         ind++;
                     }
                     tpl_tracking += '</tr>';
@@ -363,7 +363,8 @@
                         var item = elms[i];
 
                         for (var j = 0; j < row.Groups; j++) {
-                            var relClass = 'div.'.concat(ID).concat('-').concat(idx + j + 1).concat('-').concat(item.P);
+                            var tmpIdx = row.Groups > 1 ? j + 1 : j;
+                            var relClass = 'div.'.concat(ID).concat('-').concat(idx + tmpIdx).concat('-').concat(item.P);
 
                             if ($(relClass).text().indexOf('<br />') == -1) {
                                 $(relClass).parent().css({ 'background-color': '#ffa' });
@@ -377,7 +378,7 @@
                                 }
                             }
                         }
-                    }                    
+                    }
                 }
                 window.setTimeout(function () {
                     LogPT.queue.process();
