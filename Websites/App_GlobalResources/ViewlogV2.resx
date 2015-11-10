@@ -1275,4 +1275,22 @@
   <data name="Hidesportsbook2" xml:space="preserve">
     <value>Hide Sportsbook 2</value>
   </data>
+  <data name="Minbv44" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="Maxbv44" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="Mpmv44" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="V44spt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>
+  <data name="V44mpt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>
+  <data name="V44apt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>  
 </root>
