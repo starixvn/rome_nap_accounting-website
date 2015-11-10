@@ -50,7 +50,7 @@
     <div id="betListContent" style="margin-top: 10px;">
     </div>
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="WebResources/js/CustomerStatement.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
+    <script src="WebResources/js/CustomerStatement.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
     <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
