@@ -303,9 +303,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
 
                 if (count != row.LastCellNum && row.RowNum > 0)
                 {
-                    var username = Converter.ToString2(dataRow[0]);
-                    var sportName = Converter.ToString2(dataRow[1]);
-                    var liveType = Converter.ToString2(dataRow[2]);
+                    var username = Converter.ToString2(dataRow[0]).Trim();
+                    var sportName = Converter.ToString2(dataRow[1]).Trim();
+                    var liveType = Converter.ToString2(dataRow[2]).Trim();
                     if (string.IsNullOrEmpty(username))
                     {
                         uploadResult.FailedInfoList.Add(new ImportVirtualRateResult
@@ -353,7 +353,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
 
                     var customerVirtualRateModel = new CustomerVirtualRateModel
                     {
-                        Username = Converter.ToString2(dataRow[0]),
+                        Username = Converter.ToString2(dataRow[0]).Trim(),
                         SportVirtualRateList = new List<SportVirtualRateModel>
                         {
                              new SportVirtualRateModel
@@ -367,7 +367,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     for (var i = 0; i < betTypeCount; i++)
                     {
                         var betType = betTypeList[i];
-                        var rateString = Converter.ToString2(dataRow[3 + i]);
+                        var rateString = Converter.ToString2(dataRow[3 + i]).Trim();
                         if (string.IsNullOrEmpty(rateString))
                         {
                             continue;
