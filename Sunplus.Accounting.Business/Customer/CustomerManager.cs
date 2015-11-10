@@ -243,7 +243,6 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-                            var isLicensee = IsLicensee(Convert.ToString(row1["site"]));
 
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
@@ -716,12 +715,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isLicensee;
+                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit;
                                 if (!isShowGoldDeluxe)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
@@ -765,7 +764,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var canEditAGCasinoStatus = WebSettings.EnableAGCasino &&
                                     roleId == 4 &&
-                                    isLicensee;
+                                    isDeposit;
                                 if (!canEditAGCasinoStatus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
@@ -1059,7 +1058,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", sportsbook2LinkSetting);
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
                                 }
@@ -2910,16 +2909,7 @@ namespace Sunplus.Accounting.Business.Customer
             });
 
             return !progressiveStatus.DisableUplinesCasinoBonus;
-        }
-
-        private bool IsLicensee(string siteName)
-        {
-
-            var licenseeAccess = new DepositCustomerAccess();
-            var dtLicensee = licenseeAccess.SelAllLicensee();
-            bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
-            return result;
-        }
+        }        
 
         private void RenderEnableGoldDeluxeBox(
             DataRow custInfoRow,
