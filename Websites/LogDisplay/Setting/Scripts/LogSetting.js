@@ -365,7 +365,7 @@
                         for (var j = 0; j < row.Groups; j++) {
                             var relClass = 'div.'.concat(ID).concat('-').concat(idx + j + 1).concat('-').concat(item.P);
 
-                            if ($(relClass).text().length < 8) {
+                            if ($(relClass).text().indexOf('<br />') == -1) {
                                 $(relClass).parent().css({ 'background-color': '#ffa' });
                                 $(relClass).css({ color: 'red' });
                                 var val_diff = $.trim(item.Val).length == 0 ? '_' : $.trim(item.Val);
