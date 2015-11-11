@@ -952,33 +952,6 @@ var ViewPT = {
         });
     },
     getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive) {
-        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
-        $.ajax({
-            type: "POST",
-            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
-            data: params,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (resp) {
-                $("#frmSportsbook2").attr('src', "");
-                $("#frmSportsbook2").hide();
-                if (resp != null) {
-                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
-                        showAlertMessage("err", resp.ErrorMessage, 1);
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                        return;
-                    }
-                    $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
-                else {
-                    showAlertMessage("err", "There is no information available.", 1);
-                }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            },
-            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
-        });
-
         $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=44&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
