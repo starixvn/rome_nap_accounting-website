@@ -801,12 +801,19 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         diffs = new List<TrackingValue>();
                         foreach (var elm in elms)
                         {
-                            var elm2 = listVal2.ElementAt(index)[elm.Key];
-                            if (!elm.Value.Val.Equals(elm2.Val))
+                            try
                             {
-                                isDiff = true;
-                                diffs.Add(elm2);
-                            }   
+                                var elm2 = listVal2.ElementAt(index)[elm.Key];
+                                if (!elm.Value.Val.Equals(elm2.Val))
+                                {
+                                    isDiff = true;
+                                    diffs.Add(elm2);
+                                }
+                            }
+                            catch
+                            {
+                                continue;
+                            }
                         }
 
                         ++index;
