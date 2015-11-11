@@ -299,6 +299,7 @@
     <Function Name="Enable Status">
       <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_uat2" DbName="DBCust.CustDB.bodbAdminNet"/>
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd_uat2" DbName="DBCust.CustDB.bodbAdminNet"/>
+      <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit_uat2" DbName="DBCust.CustDB.bodbAdminNet"/>
     </Function>
   </Function>
 </Functions>
