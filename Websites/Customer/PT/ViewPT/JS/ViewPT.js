@@ -924,39 +924,92 @@ var ViewPT = {
                 $("#frmSportsbook2").hide();
                 break;
             case 44: //Sportsbook 2 
-                $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=44&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
-                $("#frmSportsbook2").show();
-                parent.jQuery.unblockUI(); 
+                ViewPT.checkIsDepositCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:
-                //jQuery.blockUI(); 
-                var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
-                $.ajax({
-                    type: "POST",
-                    url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
-                    data: params,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (resp) {
-                        $("#frmSportsbook2").attr('src', "");
-                        $("#frmSportsbook2").hide();
-                        if (resp != null) {
-                            if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
-                                showAlertMessage("err", resp.ErrorMessage, 1);
-                                try { parent.jQuery.unblockUI(); } catch (e) { }
-                                return;
-                            }
-                            $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
-                            try { parent.jQuery.unblockUI(); } catch (e) { }
-                        }
-                        else {
-                            showAlertMessage("err", "There is no information available.", 1);
-                        }
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                    },
-                    error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
-                });
+                ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
+
         }
+    },
+    checkIsDepositCustomer: function (userName, sportId, betTypeId, isLive) {
+        var params = '{"userName":"' + userName + '"}';
+        $.ajax({
+            type: "POST",
+            url: "../../../ViewPT/CheckDepositCustomer",
+            data: params,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (isDepositCustomer) {
+                if (isDepositCustomer != null) {
+                    isDepositCustomer ? ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive) : ViewPT.getViewPTFromDynamicSettingFormat(userName, sportId, betTypeId, isLive);
+                }
+                else {
+                    showAlertMessage("err", "There is no information available.", 1);
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+        });
+    },
+    getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive) {
+        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
+            data: params,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (resp) {
+                $("#frmSportsbook2").attr('src', "");
+                $("#frmSportsbook2").hide();
+                if (resp != null) {
+                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
+                        showAlertMessage("err", resp.ErrorMessage, 1);
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                        return;
+                    }
+                    $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+                else {
+                    showAlertMessage("err", "There is no information available.", 1);
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+        });
+
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=44&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").show();
+        parent.jQuery.unblockUI();
+    },
+    getViewPTOldFormat: function (userName, sportId, betTypeId, isLive) {
+        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
+            data: params,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (resp) {
+                $("#frmSportsbook2").attr('src', "");
+                $("#frmSportsbook2").hide();
+                if (resp != null) {
+                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
+                        showAlertMessage("err", resp.ErrorMessage, 1);
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                        return;
+                    }
+                    $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+                else {
+                    showAlertMessage("err", "There is no information available.", 1);
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+        });
     },
     getPTSetting: function (userName,
         sportId,
