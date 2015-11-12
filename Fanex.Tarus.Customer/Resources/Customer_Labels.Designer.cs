@@ -1141,15 +1141,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren&apos;t supported by Soccer sport type..
-        /// </summary>
-        public static string VirtualRate_UploadFile_NotSupportBetType {
-            get {
-                return ResourceManager.GetString("VirtualRate_UploadFile_NotSupportBetType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times..
         /// </summary>
         public static string VirtualRate_UploadFile_RepeatBetType {

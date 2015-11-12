@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Business.VirtualRate;
@@ -10,6 +11,7 @@
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
+    using Fanex.Tarus.Infrastructure.Caching;
 
     public class VirtualRateRepository : IVirtualRateRepository
     {
@@ -26,6 +28,7 @@
                 SportVirtualRateList = new List<SportVirtualRateModel>()
             };
 
+            var virtualRateEntities = new List<VirtualRateEntity>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
@@ -40,41 +43,86 @@
 
                 if (reader.NextResult())
                 {
-                    var sportDictionaryList = VirtualRateSectionService.SportDictionaryList();
-                    var sportList = VirtualRateSectionService.SportList();
-                    var sportBetTypeIndexList = VirtualRateSectionService.SportBetTypeIndexList();
                     while (reader.Read())
                     {
-                        var sportId = Converter.ToInt(reader["sporttype"]);
-                        var isLive = Converter.ToBool(reader["isLive"]);
-                        var betType = Converter.ToInt(reader["bettype"]);
-
-                        var sportPosition = sportDictionaryList[sportId];
-                        var targetIndex = sportBetTypeIndexList[sportPosition.SportIndex];
-                        if (!targetIndex.ContainsKey(betType))
+                        virtualRateEntities.Add(new VirtualRateEntity
                         {
-                            continue;
+                            CustId = Converter.ToInt(reader["CustId"]),
+                            SportType = Converter.ToInt(reader["SportType"]),
+                            BetType = Converter.ToInt(reader["BetType"]),
+                            IsLive = Converter.ToBool(reader["IsLive"]),
+                            Rate = Converter.ToDecimal(reader["virtualMultiplier"])
+                        });
+                    }
+                }
+
+                virtualRateEntities = virtualRateEntities.ToList();
+                var sportDictionaryList = VirtualRateSectionService.SportDictionaryList();
+                var sportList = VirtualRateSectionService.SportList();
+                var sportGroups = virtualRateEntities.GroupBy(data => data.SportType);
+                var betTypeNames = new Dictionary<int, string>();
+
+                foreach (var sportGroup in sportGroups)
+                {
+                    var sportPosition = sportDictionaryList[sportGroup.Key];
+                    var targetSport = sportPosition.IsSubSport ?
+                        sportList[sportPosition.SportIndex].SubSportList[sportPosition.SubSportIndex] :
+                        sportList[sportPosition.SportIndex];
+
+                    var betTypeOrderDictionary = new Dictionary<int, int>();
+                    var betTypeOrderList = sportList[sportPosition.SportIndex].BetTypeOrder.Split(',').Select(betType => Converter.ToInt(betType));
+                    var orderIndex = 0;
+                    foreach (var betType in betTypeOrderList)
+                    {
+                        if (!betTypeOrderDictionary.ContainsKey(betType))
+                        {
+                            betTypeOrderDictionary.Add(betType, orderIndex++);
+                        }
+                    }
+
+                    var betTypes = sportGroup.Select(data => data.BetType)
+                        .Distinct()
+                        .OrderBy(data => betTypeOrderDictionary.ContainsKey(data) ? betTypeOrderDictionary[data] : betTypeOrderDictionary.Count)
+                        .ToList();
+                    var betTypeIndexes = new Dictionary<int, int>();
+                    var index = 0;
+                    foreach (var betType in betTypes)
+                    {
+                        if (!betTypeNames.ContainsKey(betType))
+                        {
+                            betTypeNames.Add(betType, VirtualRateSectionService.ShortBetTypeName(betType));
                         }
 
-                        var targetSport = sportPosition.IsSubSport ?
-                            sportList[sportPosition.SportIndex].SubSportList[sportPosition.SubSportIndex] :
-                            sportList[sportPosition.SportIndex];
-                        var betTypeIndex = targetIndex[betType];
-                        var rate = Converter.ToDecimal(reader["virtualMultiplier"]);
-                        if (isLive && targetSport.LiveVirtualRate != null)
+                        targetSport.BetTypeList.Add(new BetTypeModel
+                        {
+                            Id = betType,
+                            Name = betTypeNames[betType]
+                        });
+
+                        betTypeIndexes.Add(betType, index++);
+                    }
+
+                    targetSport.LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypes.Count);
+                    targetSport.NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypes.Count);
+
+                    foreach (var virtualRateEntity in sportGroup)
+                    {
+                        var betTypeIndex = betTypeIndexes[virtualRateEntity.BetType];
+
+                        if (virtualRateEntity.IsLive && targetSport.LiveVirtualRate != null)
                         {
                             targetSport.LiveVirtualRate[betTypeIndex].HasData = true;
-                            targetSport.LiveVirtualRate[betTypeIndex].PercentRate = rate;
+                            targetSport.LiveVirtualRate[betTypeIndex].PercentRate = virtualRateEntity.Rate;
                         }
                         else if (targetSport.NonLiveVirtualRate != null)
                         {
                             targetSport.NonLiveVirtualRate[betTypeIndex].HasData = true;
-                            targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = rate;
+                            targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = virtualRateEntity.Rate;
                         }
                     }
-
-                    result.SportVirtualRateList = sportList;
                 }
+
+                result.SportVirtualRateList = sportList;
             }
 
             return result;

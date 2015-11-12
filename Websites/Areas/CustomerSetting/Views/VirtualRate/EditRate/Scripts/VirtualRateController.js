@@ -120,7 +120,7 @@ var VirtualRateController = function () {
                 self.cachedData.copyFromBetTypeId = betType.Id;
             }
 
-            var title = betType.Name + ' (' + viewResources.Symbol_Percent + ')' + (i == 0 ? iconCopyBetType : '');
+            var title = betType.Name + ' (' + viewResources.Symbol_Percent + ')' + (betType.Id == 1 ? iconCopyBetType : '');
             var multiBetTypeLength = betType.MultiBetTypeNames ? betType.MultiBetTypeNames.length : 0;
             for (var j = 0; j < multiBetTypeLength; j++) {
                 title += '<br />' + betType.MultiBetTypeNames[j];

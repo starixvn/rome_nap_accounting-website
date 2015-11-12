@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using System.Configuration;
+    using Fanex.Common;
 
     /// <summary>
     /// Virtual Rate Bet Types Element.
@@ -111,6 +112,20 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             set
             {
                 this["supportBetTypes"] = value;
+            }
+        }
+
+        [ConfigurationProperty("bettypeOrder", DefaultValue = "", IsRequired = false, IsKey = false)]
+        public string BetTypeOrder
+        {
+            get
+            {
+                return Converter.ToString2(this["bettypeOrder"]);
+            }
+
+            set
+            {
+                this["bettypeOrder"] = value;
             }
         }
 

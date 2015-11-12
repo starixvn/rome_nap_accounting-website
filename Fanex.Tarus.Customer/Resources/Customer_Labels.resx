@@ -345,9 +345,6 @@
   <data name="VirtualRate_UploadFile_NotNumberRate" xml:space="preserve">
     <value>Virtual Rate must be a number</value>
   </data>
-  <data name="VirtualRate_UploadFile_NotSupportBetType" xml:space="preserve">
-    <value>Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren't supported by Soccer sport type.</value>
-  </data>
   <data name="VirtualRate_UploadFile_ExceedFileSize" xml:space="preserve">
     <value>Your upload file Size must be &lt;= 1 MB</value>
   </data>

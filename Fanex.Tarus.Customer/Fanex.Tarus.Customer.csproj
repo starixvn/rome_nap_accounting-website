@@ -378,6 +378,7 @@
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResultGroup.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\CheckImportResult.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\UploadResult.cs" />
+    <Compile Include="Entities\VirtualRate\VirtualRateEntity.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Customer_Labels.Designer.cs">
@@ -442,7 +443,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

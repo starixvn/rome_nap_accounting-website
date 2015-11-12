@@ -54,7 +54,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             var headerStyle = NpoiExcelExtensions.HeaderStyle(exportExcelInfo.ExcelFile);
             exportExcelInfo.CreateCurrentRow();
 
-            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName("View Log");
+            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction);
             var betTypeCount = betTypeList.Count;
             var currentColumn = 0;
             exportExcelInfo.SetColumnWidthByFontSize(currentColumn++, 120);
@@ -95,7 +95,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             var rateStyle = NpoiExcelExtensions.IntPercentStyle(exportExcelInfo.ExcelFile, NpoiExcelExtensions.BackGroundColorIndex, false);
 
             var rowCount = templateData.Count;
-            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName("View Log")
+            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction)
                 .Select(bettype => bettype.Id)
                 .ToList();
 

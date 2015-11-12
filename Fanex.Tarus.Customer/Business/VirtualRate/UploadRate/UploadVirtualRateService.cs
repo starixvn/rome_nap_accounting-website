@@ -259,10 +259,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
 
             ISheet sheet = workbook.GetSheetAt(0);
             IEnumerator rows = sheet.GetRowEnumerator();
-            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName("View Log");
+            var betTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction);
             var betTypeCount = betTypeList.Count;
 
-            Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
             var customerVirtualRateDataTable = new DataTable();
             customerVirtualRateDataTable.Columns.Add("Username");
             customerVirtualRateDataTable.Columns.Add("Sport");
@@ -389,22 +388,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                                 LiveTypeName = liveType,
                                 BetTypeName = betType.Name,
                                 VirtualRateString = rateString
-                            });
-
-                            continue;
-                        }
-
-                        if (!betTypeIndexList[sportId].ContainsKey(betType.Id))
-                        {
-                            uploadResult.FailedInfoList.Add(new ImportVirtualRateResult
-                            {
-                                ResultCode = ErrorCode.InvalidFormatFile,
-                                ResultMessage = Customer_Labels.VirtualRate_UploadFile_NotSupportBetType,
-                                Username = username,
-                                SportName = sportName,
-                                LiveTypeName = liveType,
-                                BetTypeName = betType.Name,
-                                VirtualRateString = oldRateString
                             });
 
                             continue;
@@ -592,7 +575,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             List<CustomerVirtualRateModel> customerVirtualRateList = new List<CustomerVirtualRateModel>();
             var userGroups = importList.GroupBy(data => data.Username);
 
-            Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
+            var functionName = VirtualRateSectionService.UploadVirtualFunction;
+            Dictionary<int, int> betTypeIndexList = VirtualRateSectionService.BetTypeIndexListByFunctionName(functionName);
             foreach (var userGroup in userGroups)
             {
                 var customerVirtualRateModel = new CustomerVirtualRateModel
@@ -604,24 +588,23 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 var sportGroups = userGroup.GroupBy(data => data.SportType);
                 foreach (var sportGroup in sportGroups)
                 {
-                    var targetIndex = betTypeIndexList[sportGroup.Key];
                     var sportRate = new SportVirtualRateModel
                     {
                         Id = sportGroup.Key,
                         Name = Sports.SportName(sportGroup.Key),
-                        BetTypeList = VirtualRateSectionService.BetTypeListViewLog(sportGroup.Key),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(targetIndex.Count),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(targetIndex.Count)
+                        BetTypeList = VirtualRateSectionService.BetTypeListByFunctionName(functionName),
+                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeIndexList.Count),
+                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeIndexList.Count)
                     };
 
                     foreach (var betType in sportGroup)
                     {
-                        if (!targetIndex.ContainsKey(betType.BetType))
+                        if (!betTypeIndexList.ContainsKey(betType.BetType))
                         {
                             continue;
                         }
 
-                        var betTypeIndex = targetIndex[betType.BetType];
+                        var betTypeIndex = betTypeIndexList[betType.BetType];
                         if (betType.LiveType == LiveTypeConstants.Live)
                         {
                             sportRate.LiveVirtualRate[betTypeIndex].HasData = true;

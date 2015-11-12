@@ -94,7 +94,7 @@
                     Username = log.Username
                 });
 
-                Dictionary<int, Dictionary<int, int>> betTypeIndexList = VirtualRateSectionService.SportBetTypeIndexListViewLog();
+                Dictionary<int, int> betTypeIndexList = VirtualRateSectionService.BetTypeIndexListByFunctionName(VirtualRateSectionService.UploadVirtualFunction);
                 foreach (var data in rawData)
                 {
                     var historyLogByDate = new HistoryLogByDateModel
@@ -217,7 +217,7 @@
             Justification = "Reviewed. Suppression is OK here.")]
         private List<HistoryLogDetailModel> ParseHistoryLog(
             HistoryLogEntity historyLog,
-            Dictionary<int, Dictionary<int, int>> betTypeIndexList)
+            Dictionary<int, int> betTypeIndexList)
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
@@ -259,28 +259,22 @@
 
                 foreach (var sportGroup in sportGroups)
                 {
-                    if (!betTypeIndexList.ContainsKey(sportGroup.Key.SportType))
-                    {
-                        continue;
-                    }
-
-                    var sportBetTypeIndex = betTypeIndexList[sportGroup.Key.SportType];
-                    var betTypeCount = sportBetTypeIndex.Count;
+                    var betTypeCount = betTypeIndexList.Count;
                     var historyLogDetail = new HistoryLogDetailModel
                     {
                         UpdateType = historyLog.ActionId,
                         SportId = sportGroup.Key.SportType,
                         SportName = Sports.SportName(sportGroup.Key.SportType),
                         LiveType = sportGroup.Key.LiveType,
-                        BetTypeList = VirtualRateSectionService.BetTypeListViewLog(sportGroup.Key.SportType),
+                        BetTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction),
                         VirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
                     };
 
                     foreach (var data in sportGroup)
                     {
-                        if (sportBetTypeIndex.ContainsKey(data.BetType))
+                        if (betTypeIndexList.ContainsKey(data.BetType))
                         {
-                            var betTypeIndex = sportBetTypeIndex[data.BetType];
+                            var betTypeIndex = betTypeIndexList[data.BetType];
                             historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
                             historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
                         }
