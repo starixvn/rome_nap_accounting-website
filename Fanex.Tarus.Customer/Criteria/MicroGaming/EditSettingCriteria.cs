@@ -21,7 +21,7 @@
         {
             get
             {
-                return Sports.MicroGaming;
+                return Sports.MicroGamingLiveCasino;
             }
         }
 

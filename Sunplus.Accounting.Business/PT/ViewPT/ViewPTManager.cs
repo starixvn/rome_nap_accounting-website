@@ -277,7 +277,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         };
 
                         return new MicroGamingPTService().ViewPositionTaking(agCasinoViewPTCriteria);
-                    case Constants.Sport.MicroGaming:
+                    case Constants.Sport.MicroGamingLiveCasino:
                         var microgamingViewPTCriteria = new ViewMicroGamingPTCriteria
                         {
                             Username = userName,
@@ -860,12 +860,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                     Name = hrFixedOdd.Name,
                                                     Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm_3"], 4)
                                                 },
-                                               MyanmarOdds = new AllowViewSport()
-                                               {
-                                                   Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                                   Name = myanmarOdds.Name,
-                                                   Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
-                                               },
+                                                MyanmarOdds = new AllowViewSport()
+                                                {
+                                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                    Name = myanmarOdds.Name,
+                                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
+                                                },
                                                 HorseRacing = masterRacingInfo,
                                                 Greyhound = masterGreyhoundInfo,
                                                 Harness = masterHarnessInfo,
@@ -1472,7 +1472,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 var microgaming = new Sport
                 {
-                    SportId = Constants.Sport.MicroGaming,
+                    SportId = Constants.Sport.MicroGamingLiveCasino,
                     SportName = Labels.Microgaming,
                     Bettype = new BettypeDTO
                     {

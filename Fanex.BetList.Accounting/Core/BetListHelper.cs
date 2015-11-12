@@ -43,7 +43,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.BetTypeId == 71 ||
                 ticket.SportTypeId == 202 ||
                 ticket.SportTypeId == 255 ||
-                (ticket.SportTypeId == SportContants.MicroGaming && ticket.BetTypeId != 2008 && ticket.BetTypeId != 2009) ||
+                ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
                 IsColossusBetType(ticket.BetTypeId);
         }
@@ -255,7 +255,14 @@ namespace Fanex.BetList.Accounting.Core
                                 ticketDetail.Ticket.BetId + ",'" +
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
-                        case SportContants.MicroGaming:
+                        case SportContants.MicroGamingLiveCasino:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                                "'" + AppSession.SiteName + "'," +
+                                ticketDetail.Ticket.BetCheck + ")";
+                            break;
+                        case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewMicroGamingPopup(" + AppSession.CustID + "," +
@@ -519,7 +526,14 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.GoldDeluxe:
                             resultLink = "\"ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")\"";
                             break;
-                        case SportContants.MicroGaming:
+                        case SportContants.MicroGamingLiveCasino:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                                "'" + AppSession.SiteName + "'," +
+                                ticketDetail.Ticket.BetCheck + ")";
+                            break;
+                        case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewMicroGamingPopup(" + AppSession.CustID + "," +
