@@ -59,7 +59,6 @@
     <Reference Include="Fanex.BetList.BetTrade">
       <HintPath>..\packages\Fanex.BetList.Core.2.6.0.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.2\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
