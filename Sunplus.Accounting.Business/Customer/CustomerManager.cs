@@ -828,8 +828,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
 
-                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
-                                TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);

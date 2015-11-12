@@ -44,8 +44,9 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.AGCasino">
-      <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.1\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
+    <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.2\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Age">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
@@ -96,7 +97,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\ResultCore\Fanex.Result.Core.AGCasino.dll</HintPath>
     </Reference>
-
     <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.0.6\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
