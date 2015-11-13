@@ -63,6 +63,10 @@ var VirtualRateController = function () {
         var startBetTypeIndex = 0;
         for (var i = 0; i < sportLength; i++) {
             var sport = customerVirtualRateModel.SportVirtualRateList[i];
+            if (!sport.BetTypeList || !sport.BetTypeList.length) {
+                continue;
+            }
+
             if (i == 0) {
                 self.cachedData.copyFromSportId = sport.Id;
             }
