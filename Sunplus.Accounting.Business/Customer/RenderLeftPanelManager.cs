@@ -117,6 +117,53 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
+        public static void RenderEnableProductBoxDCS(
+            DataRow custInfoRow,
+            DataRow productInfo,
+            SettingGroup settingGroup,
+            ref string htmlcontent,
+            bool isManageCustomerAccess,
+            bool disabledProductParent,
+            bool hasDownline,
+            string productName,
+            bool isSupport,
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            string title,
+            int productId = 0,
+            int settingType = 0)
+        {
+            if (isSupport)
+            {
+                var columnName = "IsDisabled";
+                bool isDisabled = Converter.ToBool(productInfo[columnName], false);
+
+                columnName = "IsDisabledDownline";
+                bool disableDownlines = Converter.ToBool(productInfo[columnName], false);
+
+                var isCustomerEnabled = custInfoRow["Enabled"].ToString();
+                settingGroup.Add(GetProductSettingControl(
+                    renderLeftPanelParameter,
+                    isManageCustomerAccess,
+                    "disabled" + productName,
+                    !isDisabled,
+                    hasDownline,
+                    true,
+                    Converter.ToBool(isCustomerEnabled),
+                    disabledProductParent,
+                    disableDownlines,
+                    productName,
+                    title,
+                    productId,
+                    settingType));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
+            }
+        }
+
         private static SettingControl GetProductSettingControl(
             RenderLeftPanelParameter renderLeftPanelParameter,
             bool isManageCustomerAccess,
@@ -128,7 +175,9 @@ namespace Sunplus.Accounting.Business.Customer
             bool disabledUpline,
             bool disableDownLine,
             string productName,
-            string title)
+            string title,
+            int productId = 0,
+            int settingType = 0)
         {
             string classname = string.Empty;
             string jsonclick = string.Empty;
@@ -150,7 +199,9 @@ namespace Sunplus.Accounting.Business.Customer
                     disabledUpline ? "0" : "1",
                     disableDownLine ? "0" : "1",
                     "'" + title + "'",
-                    "'" + productName + "'"
+                    "'" + productName + "'",
+                    productId.ToString(),
+                    settingType.ToString()
                 };
 
                 jsonclick = canChange ?

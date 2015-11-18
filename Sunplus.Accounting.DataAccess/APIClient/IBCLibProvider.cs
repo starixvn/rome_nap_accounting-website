@@ -455,6 +455,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) :
                     true;
 
+                _cust.IsDisableSportsbook2 = WebSettings.IsShowSportsbook2 ?
+                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMuayThai"], false) :
+                    true;
+
                 return _cust;
             }
             catch (Exception ex)

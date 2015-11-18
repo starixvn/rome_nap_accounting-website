@@ -19,6 +19,7 @@
 @bg_pending: Yellow;
 @bg_postponed: #FDFD87;
 @color-red:#CC0000;
+@color-blue:#4169E1;
 @color-black:#000000;
 @color-green:#33CC33;
 
@@ -152,6 +153,25 @@ table
             {
             	text-align:left;
             }
+			.cl-match-mt
+            {
+				text-align:left;
+                font-size: 12px;
+                padding-left: 3px;
+				 &.home
+                {
+                    color: @color-red;
+                }
+                &.away
+                {
+                    color: @color-blue;
+                }
+				&.win
+                {
+                
+					font-weight:bold;
+                }
+            }
             .cl-match
             {
                 text-align:left;
@@ -275,6 +295,11 @@ table
 					color: #D2592D;
 				}
 			}
+			.ko
+            {
+				color:#677AE0;
+				font-weight: bold;
+            }
         }
 		.cl-bg-pending
         {

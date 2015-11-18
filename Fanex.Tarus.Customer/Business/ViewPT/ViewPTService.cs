@@ -60,6 +60,11 @@ namespace Fanex.Tarus.Customer.Business.ViewPT
             return null;
         }
 
+        public bool CheckDepositCustomer(string username)
+        {
+            return _repositoryManager.CheckDepositCustomer(username);
+        }
+
         private List<PostionTakingInfo> GetPTSetting_Bingo(GetPTSettingCriteria criteria)
         {
             var rawData = this._repositoryManager.GetPTSetting_Bingo(criteria);

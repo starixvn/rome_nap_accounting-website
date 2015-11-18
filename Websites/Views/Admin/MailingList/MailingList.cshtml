@@ -123,6 +123,7 @@
      var _model = @Html.Raw(serializer.Serialize(Model)); 
      var _isReload = '@ViewBag.Reload'; 
      var _groupId = @Sunplus.Accounting.Core.Common.AppSession.GroupID;
+  var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
     window.rootUrl = '@Url.Content("~")';
    
     head.js("@Url.Content("~/js/jQuery/jquery-1.7.js")",

@@ -1218,4 +1218,79 @@
   <data name="v204discountvalue_commission" xml:space="preserve">
     <value>Commission</value>
   </data>
+  <data name="agentminpt" xml:space="preserve">
+    <value>Agent Min PT</value>
+  </data>
+  <data name="automasterpt" xml:space="preserve">
+    <value>Auto Master PT</value>
+  </data>
+  <data name="autosuperpt" xml:space="preserve">
+    <value>Auto Super PT</value>
+  </data>
+  <data name="bettype" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="isautomasterpt" xml:space="preserve">
+    <value>Is Auto Master PT</value>
+  </data>
+  <data name="isautosuperpt" xml:space="preserve">
+    <value>Is Auto Super PT</value>
+  </data>
+  <data name="isdisabled" xml:space="preserve">
+    <value>Is Disabled</value>
+  </data>
+  <data name="isdisableddownline" xml:space="preserve">
+    <value>Is Disabled Downline</value>
+  </data>
+  <data name="islive" xml:space="preserve">
+    <value>Is Live</value>
+  </data>
+  <data name="masterminpt" xml:space="preserve">
+    <value>Master Min PT</value>
+  </data>
+  <data name="masterpt" xml:space="preserve">
+    <value>Master PT</value>
+  </data>
+  <data name="newmasterpt" xml:space="preserve">
+    <value>New Master PT On Member</value>
+  </data>
+  <data name="newsuperpt" xml:space="preserve">
+    <value>New Super PT On Member</value>
+  </data>
+  <data name="sporttype" xml:space="preserve">
+    <value>Sport Type</value>
+  </data>
+  <data name="superminpt" xml:space="preserve">
+    <value>Super Min PT</value>
+  </data>
+  <data name="superpt" xml:space="preserve">
+    <value>Super PT</value>
+  </data>
+  <data name="updallmems" xml:space="preserve">
+    <value>Updated all members</value>
+  </data>
+  <data name="Disable44_3" xml:space="preserve">
+    <value>Disabled Muay Thai</value>
+  </data>
+  <data name="Hidesportsbook2" xml:space="preserve">
+    <value>Hide Sportsbook 2</value>
+  </data>
+  <data name="Minbv44" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="Maxbv44" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="Mpmv44" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="V44spt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>
+  <data name="V44mpt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>
+  <data name="V44apt_3" xml:space="preserve">
+    <value>Over/Under</value>
+  </data>  
 </root>

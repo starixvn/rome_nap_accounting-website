@@ -2,45 +2,23 @@
 using System;
 using System.Web.Security;
 using System.Web.UI;
-using RobotDetection.Core;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 
 public partial class SignIn : System.Web.UI.Page
 {
-    protected string submitUrl;
-
-    public string LoginTheme = "Login";
-
-	public string curDate = string.Empty;
-
-	public string curTick = string.Empty;
-
     protected void Page_PreInit(object sender, EventArgs e)
     {
-        Page.Theme = LoginTheme;
+        Page.Theme = "Login";
+
+        FanexOneyed.RobotTrap.ISessionBookmark sessionBookmark = FanexOneyed.RobotTrap.SessionBookmarkFactory.CreateSessionBookmark(Session);
+        sessionBookmark.Mark("SignIn");
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		if (!IsPostBack)
-		{
-            Keys keys = BotDetection.Instance.GetKeys();
-            curDate = keys.DateKey;
-            curTick = keys.TickKey;
-        }
-
         if (Session["Username"] != null) FormsAuthentication.RedirectFromLoginPage(DNAide.Core.CastAide.AsString(Session["Username"]), false);
-
         AccCommon.Redirect2SSL();
-
-        int endPos = Request.Url.AbsoluteUri.IndexOf("/SignIn.aspx", StringComparison.CurrentCultureIgnoreCase);
-
-        submitUrl = Request.Url.AbsoluteUri.Substring(0, endPos).ToLower();
-        if (!WebSettings.IsLocalTest)
-        {
-            submitUrl = submitUrl.Replace("http://", "https://");
-        }
     }
 }

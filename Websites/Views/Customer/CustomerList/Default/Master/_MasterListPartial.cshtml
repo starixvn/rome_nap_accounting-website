@@ -221,6 +221,11 @@
                         <li class="canchange" onclick="masterList.colossusBetSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>
                     }
+                      @if (!masterItem.IsHideSportsbook2)
+                    {
+                      <li class="canchange" onclick="EditSportsbook2('@masterItem.ChildID');">
+                            Sportsbook 2</li>
+                          }
                 </ul>
             </div>
         </td>
@@ -735,6 +740,12 @@
     <ul>
     </ul>
 </div>
+ <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
+    <input type="hidden" name="language" id="language" value="en-US" /> 
+    <input type="hidden" name="customerLevel" id="customerLevel" value="3" />
+    <input type="hidden" name="productId" id="productId" value="" />
+    <input type="hidden" name="customerId" id="customerId" value="" />
+</form>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
     var _adminUserName = '@adminUserName'

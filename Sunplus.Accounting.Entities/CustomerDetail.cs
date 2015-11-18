@@ -617,6 +617,8 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableColossusBets { get; set; }
 
+        public bool IsDisableSportsbook2 { get; set; }
+
         #endregion Properties
     }
 }

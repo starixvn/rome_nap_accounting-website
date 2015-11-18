@@ -43,6 +43,15 @@ namespace Fanex.Tarus.Customer.Controller
             return jsonResult;
         }
 
+        [HttpPost]
+        public JsonResult CheckDepositCustomer(string username)
+        {
+            var isDepositCustomer = this._serviceManager.CheckDepositCustomer(username);
+
+            return Json(isDepositCustomer, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult GetBettypesReference()
         {
             return View("~/Views/PTInformation/Index.cshtml");

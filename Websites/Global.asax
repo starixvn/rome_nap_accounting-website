@@ -16,6 +16,9 @@
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
 <%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
 <%@ Import Namespace="log4net.Config" %>
+<%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
+<%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
+<%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -34,14 +37,14 @@
         RegisterRouteMiscController(RouteTable.Routes);
 
         AreaRegistration.RegisterAllAreas();
+        
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+        CustomerSettingRegistration.Init();
+        SettingMatrixRegistration.Init();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
-
+        
         AutoMapperConfiguration.Configure();
-        // ViewEngines.Engines.Add(new CustomView());
-
-		XmlConfigurator.Configure();
     }
 
 

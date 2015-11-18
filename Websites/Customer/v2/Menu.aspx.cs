@@ -44,6 +44,7 @@ public partial class Others_Menu : System.Web.UI.Page
         var goldDeluxePath = string.Empty;
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
         var colossusBetPath = Page.ResolveUrl("~/customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?");
+        var sportsbook2Path = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId=16");
 
         if (roleid == 1)
         {
@@ -55,6 +56,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
+            sportsbook2Path += "&customerLevel=1&uplinelevel=2&customerId=" + custID;
         }
         else if (roleid == 2)
         {
@@ -66,6 +68,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
             colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2&UserId=" + AppSession.AccId;
+            sportsbook2Path += "&customerLevel=2&customerId=" + custID;
         }
         else if (roleid == 3)
         {
@@ -77,6 +80,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
             colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3&UserId=" + AppSession.AccId;
+            sportsbook2Path += "&customerLevel=3&customerId=" + custID;
         }
         else
         {
@@ -89,6 +93,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
             colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
+            sportsbook2Path += "&customerLevel=4&customerId=" + custID;
         }
       
         if (WebSettings.disabledHR)
@@ -127,6 +132,11 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "ColossusBet");
         }
 
+        if (!WebSettings.IsShowSportsbook2)
+        {
+            TemplateHandler.RemoveBlock(ref tplMenu, "sportsbook2");
+        }
+
         TemplateHandler.Assign(ref tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref tplMenu, "{urlHorse}", HRURL);
         TemplateHandler.Assign(ref tplMenu, "{urlCasino}", casinoPath);
@@ -136,6 +146,7 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref tplMenu, "{urlKeno}", kenoPath);
         TemplateHandler.Assign(ref tplMenu, "{urlgolddeluxe}", goldDeluxePath);
         TemplateHandler.Assign(ref tplMenu, "{urlColossusBet}", colossusBetPath);
+        TemplateHandler.Assign(ref tplMenu, "{sportsbook2LinkSetting}", sportsbook2Path);
 
         this.sMenu.Text = tplMenu;
     }

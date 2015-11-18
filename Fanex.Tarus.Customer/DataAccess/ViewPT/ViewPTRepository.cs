@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ViewPT
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.ViewPT;
+    using Fanex.Common;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class ViewPTRepository : IViewPTRepository
@@ -63,6 +64,23 @@ namespace Fanex.Tarus.Customer.DataAccess.ViewPT
            
 
             return rawData;
+        }
+
+        public bool CheckDepositCustomer(string username)
+        {
+            var criteria = new IsDepositCustomerCriteria()
+            {
+                UserName = username
+            };
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("username", DbType.String, criteria.UserName);
+                DataSet ds = objDb.ExecuteDataSet();
+
+                return Converter.ToBool(ds.Tables[0].Rows[0]["isdeposit"]);
+            }
+
         }
     }
 }

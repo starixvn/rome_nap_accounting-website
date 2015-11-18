@@ -19,5 +19,6 @@ namespace Fanex.Tarus.Customer.Business.ViewPT
     public interface IViewPTService
     {
         List<PostionTakingInfo> GetPTSetting(GetPTSettingCriteria criteria);
+        bool CheckDepositCustomer(string username);
     }
 }

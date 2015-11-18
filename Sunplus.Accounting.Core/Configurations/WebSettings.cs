@@ -526,5 +526,14 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowColossusBets"] == "1");
             }
         }
+
+        public static bool IsShowSportsbook2
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1");
+            }
+        }
+
     }
 }

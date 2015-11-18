@@ -220,9 +220,14 @@ namespace Sunplus.Accounting.Business.Customer
 
                             DataRow row2 = ds.ResultSet.Tables[1].Rows[0];
                             DataRow row3 = null;
+                            DataRow row4 = null;
                             if (ds.ResultSet.Tables.Count > 2)
                             {
                                 row3 = ds.ResultSet.Tables[2].Rows[0];
+                                if (ds.ResultSet.Tables.Count > 3)
+                                {
+                                    row4 = ds.ResultSet.Tables[4].Rows[0];
+                                }
                             }
                             userName = row1["username"].ToString();
                             AppSession.CustUName = userName;
@@ -238,7 +243,6 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-                            var isLicensee = IsLicensee(Convert.ToString(row1["site"]));
 
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
@@ -283,6 +287,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
+                            bool isHideSportsbook2 = CastAide.AsInt32(row4["productID"]) == 16 && (CastAide.AsBoolean(row4["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
 
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
@@ -710,12 +715,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                                 }
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isLicensee;
+                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit;
                                 if (!isShowGoldDeluxe)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
@@ -759,7 +764,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var canEditAGCasinoStatus = WebSettings.EnableAGCasino &&
                                     roleId == 4 &&
-                                    isLicensee;
+                                    isDeposit;
                                 if (!canEditAGCasinoStatus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
@@ -793,8 +798,15 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
-                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isLicensee;
-                                var isShowColossusBetsForCredit = !isHideColossusBets && !isLicensee;
+                                var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isDeposit;
+                                var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
+                                var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
+
+                                if (!isShowSportsbook2)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
+                                }
+
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -804,6 +816,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
+                                   IsShowSportsbook2 = isShowSportsbook2,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -820,6 +833,10 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
+                                TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
@@ -866,7 +883,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     disabledLCSParent,
                                     disalbedVSParent,
                                     disabledEsportsParent,
-                                    renderLeftPanelParameter);
+                                    renderLeftPanelParameter,
+                                    row4);
 
                                 #endregion Setting
 
@@ -874,7 +892,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite);
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -891,6 +909,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var casinoLinkSetting = string.Empty;
                                 var goldDeluxeLinkSetting = string.Empty;
                                 var colossusBetsLinkSetting = string.Empty;
+                                var sportsbook2LinkSetting = string.Empty;
 
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
@@ -913,6 +932,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId={0}&uplinelevel=2", custId);
                                         break;
 
                                     case 2: // agent
@@ -935,6 +955,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=2&customerId={0}", custId);
                                         break;
 
                                     case 3: // master
@@ -956,6 +977,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=3&customerId={0}", custId);
                                         break;
 
                                     case 4: // super
@@ -978,6 +1000,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
+                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=4&customerId={0}", custId);
                                         break;
 
                                     default:
@@ -1033,8 +1056,9 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", sportsbook2LinkSetting);
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isLicensee)
+                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
                                 }
@@ -1129,6 +1153,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
 
+                                if (isHideSportsbook2 || isDeposit)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1208,7 +1237,8 @@ namespace Sunplus.Accounting.Business.Customer
             bool disableLiveCasinoParent,
             bool disabledVSParent,
             bool disabledEsportsParent,
-            RenderLeftPanelParameter renderLeftPanelParameter)
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            DataRow row4 = null)
         {
             //Convert value disable --> enable
             //Render Setting Control
@@ -1474,7 +1504,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2)
         {
             int parentId;
             string submenu1 = "";
@@ -1536,6 +1566,10 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
+                    if (!isHideSportsbook2 && !isDeposit)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Sportsbook 2</a>";
+                    }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
@@ -1574,6 +1608,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + masterId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
 
                     }
+                    if (!isHideSportsbook2 && !isDeposit)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Sportsbook 2</a>";
+                    }
+
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 
@@ -2870,16 +2909,7 @@ namespace Sunplus.Accounting.Business.Customer
             });
 
             return !progressiveStatus.DisableUplinesCasinoBonus;
-        }
-
-        private bool IsLicensee(string siteName)
-        {
-
-            var licenseeAccess = new DepositCustomerAccess();
-            var dtLicensee = licenseeAccess.SelAllLicensee();
-            bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
-            return result;
-        }
+        }        
 
         private void RenderEnableGoldDeluxeBox(
             DataRow custInfoRow,

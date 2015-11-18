@@ -20,20 +20,19 @@ using System.Text.RegularExpressions;
 using Fanex.Nap.SSO.Repositories;
 using Fanex.Nap.SSO.Criteria;
 using log4net;
-using RobotDetection.Core;
-using RobotDetection.Core.Rules;
+
 
 
 public class ProcessLogin : IHttpHandler, IRequiresSessionState
 {
-	private static readonly ILog Log = LogManager.GetLogger("RobotDetectionLog");
-	
     public void ProcessRequest(HttpContext context)
     {
         try
         {
-			LogRobotDetection(context);
-			
+            var robotHandler = FanexOneyed.RobotTrap.HandlerFactory.CreateHandler(context.Session);
+            robotHandler.CalculateSessionVariable()
+                   .Log(context.Request["TxtUsername"], context.Request["guid"]);
+            
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             string username = context.Request.Form["TxtUsername"];
@@ -203,77 +202,5 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
         {
             return false;
         }
-    }
-    
-    //private static void LogUserInfo(HttpContext context, string userName)
-    //{
-    //    var userBrowser = context.Request.Browser.Browser + "\n";
-    //    userBrowser += context.Request.Browser.Version + "\n";
-    //    var logContent = new Exception( userName + "\n" + DateTime.Now + "\n" + userBrowser);
-    //    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(logContent);
-    //}
-
-	/// <summary>
-    /// Log Robot Detection.
-    /// </summary>
-    private void LogRobotDetection(HttpContext httpRequest)
-    {
-        try
-        {
-            bool isRobot = BotDetection.Instance.IsRobot(httpRequest.Request.Form["_Ga"]);
-
-            if (isRobot == false)
-            {
-                Log.Info(httpRequest.Request.UserHostAddress + " " + httpRequest.Session.SessionID + " Human");
-            }
-            else
-            {
-                Log.Warn(httpRequest.Request.UserHostAddress + " " + httpRequest.Session.SessionID + " Robot");
-            }
-
-            Log.Info(
-                string.Format(
-                    "Connection: {0}; Accept: {1}; Accept-Encoding: {2}; Accept-Language: {3}; Host: {4}; HttpMethod: {5}; Referer: {6}; Expect: {7}",
-                    httpRequest.Request.Headers["Connection"],
-                    httpRequest.Request.Headers["Accept"],
-                    httpRequest.Request.Headers["Accept-Encoding"],
-                    httpRequest.Request.Headers["Accept-Language"],
-                    httpRequest.Request.Headers["Host"],
-                    httpRequest.Request.HttpMethod,
-                    httpRequest.Request.Headers["Referer"],
-                    httpRequest.Request.Headers["Expect"]
-                    ));
-
-            StringBuilder sb = new StringBuilder();
-            DebugInfo debugInfo = BotDetection.Instance.DebugInfo;
-
-            Log.Info("UserAgent: " + httpRequest.Request.UserAgent);
-            Log.Info("Ga: " + debugInfo.Ga);
-            Log.Info(string.Format("Keys: DateKey = {0}, TickKey = {1}", debugInfo.Keys.DateKey, debugInfo.Keys.TickKey));
-            Log.Info("ClientDataJson: " + debugInfo.ClientDataJson);
-
-            if (debugInfo.RuleDataContext != null)
-            {
-                RuleDataContext ruleDataContext = debugInfo.RuleDataContext;
-                foreach (var property in ruleDataContext.GetType().GetProperties())
-                {
-                    if (property.CanRead && property.CanWrite)
-                    {
-                        string propValue = property.GetValue(ruleDataContext, null) == null
-                            ? ""
-                            : property.GetValue(ruleDataContext, null).ToString();
-                        sb.Append(property.Name + " = " + propValue + "; ");
-                    }
-                }
-            }
-
-            Log.Info("RuleDataContext: " + sb);
-
-            Log.Info("ExceptionMessage: " + Regex.Replace(debugInfo.ExceptionMessage, @"\r\n?|\n", " "));
-        }
-        catch (Exception ex)
-        {
-            Log.Error(ex.Message);
-        }
-    }
+    }    
 }

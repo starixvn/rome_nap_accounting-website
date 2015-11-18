@@ -126,4 +126,49 @@
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned</value>
   </data>
+  <data name="ColossusBetsAPI_FailedToConnect" xml:space="preserve">
+    <value>Cannot connect to Colossus Bets API! Please contact Adminstrator.</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>Transaction Type</value>
+  </data>
+  <data name="YouOwnPercent" xml:space="preserve">
+    <value>You own {0}% of this ticket</value>
+  </data>
+  <data name="YouSoldPercent" xml:space="preserve">
+    <value>You have sold {0}% of this ticket for {1}</value>
+  </data>
+  <data name="YouSoldZeroPercent" xml:space="preserve">
+    <value>You have sold 0% of this ticket</value>
+  </data>
+  <data name="Agent_Comm" xml:space="preserve">
+    <value>Agent Comm</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Master_Comm" xml:space="preserve">
+    <value>Master Comm</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Super_Comm" xml:space="preserve">
+    <value>Super Comm</value>
+  </data>
+  <data name="ThereIsNoTicketDetailAvailable" xml:space="preserve">
+    <value>There is no ticket detail available.</value>
+  </data>
+  <data name="Transaction_Type" xml:space="preserve">
+    <value>Transaction Type</value>
+  </data>
+  <data name="Win_Loss" xml:space="preserve">
+    <value>Win Loss</value>
+  </data>
+  <data name="ColossusBets_Notes" xml:space="preserve">
+    <value>Cash-in Margin={0}</value>
+  </data>
 </root>
