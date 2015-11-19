@@ -243,10 +243,9 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];
-                            var isLicensee = IsLicensee(Convert.ToString(siteName));
-
+                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];                        
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
+                            var isLicensee = isDeposit;
 
                             Hashtable jsparam = new Hashtable();
                             jsparam.Add("custid", custId);
