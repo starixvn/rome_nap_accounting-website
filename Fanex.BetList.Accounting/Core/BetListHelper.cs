@@ -256,9 +256,7 @@ namespace Fanex.BetList.Accounting.Core
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
                         case SportContants.MicroGamingLiveCasino:
-                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
-                                string.Empty :
-                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
+                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
                                 "'" + AppSession.SiteName + "'," +
                                 ticketDetail.Ticket.BetCheck + ")";
                             break;
