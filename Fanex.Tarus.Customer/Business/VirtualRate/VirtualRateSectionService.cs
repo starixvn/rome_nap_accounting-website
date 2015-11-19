@@ -24,7 +24,14 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     /// </summary>
     public static class VirtualRateSectionService
     {
-        public static string UploadVirtualFunction = "Upload Virtual Rate";
+        public const string UploadVirtualFunction = "Upload Virtual Rate";
+
+        public static VirtualRateCollection VirtualRateSports { get; set; }
+
+        static VirtualRateSectionService()
+        {
+            VirtualRateSports = VirtualRateSection.Instance.Sports;
+        }
 
         /// <summary>
         /// Gets the sport list.
@@ -33,10 +40,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static List<SportVirtualRateModel> SportList()
         {
             List<SportVirtualRateModel> result = new List<SportVirtualRateModel>();
-            var sportLength = VirtualRateSection.Instance.Sports.Count;
+            var sportLength = VirtualRateSports.Count;
             for (var i = 0; i < sportLength; i++)
             {
-                var sport = VirtualRateSection.Instance.Sports[i];
+                var sport = VirtualRateSports[i];
                 var sportId = sport.Id;
                 var sportVirtualRateModel = new SportVirtualRateModel
                 {
@@ -89,10 +96,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static Dictionary<int, SportPositionModel> SportDictionaryList()
         {
             Dictionary<int, SportPositionModel> result = new Dictionary<int, SportPositionModel>();
-            var sportLength = VirtualRateSection.Instance.Sports.Count;
+            var sportLength = VirtualRateSports.Count;
             for (var i = 0; i < sportLength; i++)
             {
-                var sport = VirtualRateSection.Instance.Sports[i];
+                var sport = VirtualRateSports[i];
                 if (sport.SubSports != null)
                 {
                     var subSportListLength = sport.SubSports.Count;
@@ -283,10 +290,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public static Dictionary<string, int> SportIdFromNameDictionary()
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
-            var sportLength = VirtualRateSection.Instance.Sports.Count;
+            var sportLength = VirtualRateSports.Count;
             for (var i = 0; i < sportLength; i++)
             {
-                var sport = VirtualRateSection.Instance.Sports[i];
+                var sport = VirtualRateSports[i];
                 var sportName = string.Empty;
                 if (sport.SubSports != null && sport.SubSports.Count > 0)
                 {
