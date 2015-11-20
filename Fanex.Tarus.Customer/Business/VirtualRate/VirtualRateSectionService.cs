@@ -29,10 +29,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             VirtualRateSports = VirtualRateSection.Instance.Sports;
         }
 
-        public const string UploadVirtualFunction = "Upload Virtual Rate";
-
-        public static VirtualRateCollection VirtualRateSports { get; set; }
-
         /// <summary>
         /// Gets the sport list.
         /// </summary>
@@ -168,6 +164,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
             return result;
         }
+
+        public const string UploadVirtualFunction = "Upload Virtual Rate";
+
+        public static VirtualRateCollection VirtualRateSports { get; set; }
 
         /// <summary>
         /// </summary>
