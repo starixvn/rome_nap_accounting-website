@@ -997,6 +997,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Virtual Rate value from Handicap bet type to others.
+        /// </summary>
+        public static string VirtualRate_CopyFromHDP {
+            get {
+                return ResourceManager.GetString("VirtualRate_CopyFromHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?.
         /// </summary>
         public static string VirtualRate_UpdateConfirm {

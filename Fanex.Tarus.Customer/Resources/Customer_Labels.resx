@@ -507,4 +507,7 @@
   <data name="Followed_By" xml:space="preserve">
     <value>Followed By</value>
   </data>
+  <data name="VirtualRate_CopyFromHDP" xml:space="preserve">
+    <value>Copy Virtual Rate value from Handicap bet type to others</value>
+  </data>
 </root>

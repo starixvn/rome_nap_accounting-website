@@ -111,7 +111,7 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var iconCopyBetType = '<input id="button-copy-bettype-settings-' + sport.Id +
                 '" class="icon-copy-setting bettype-setting" type="button" title="' +
-                viewResources.Copy + '"' +
+                viewResources.VirtualRate_CopyFromHDP + '"' +
                 ' sport-id="' + sport.Id + '"/>';
 
         var titleHtml = '<tr class="table-header">';
