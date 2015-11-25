@@ -50,7 +50,6 @@
     <div id="betListContent" style="margin-top: 10px;">
     </div>
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="WebResources/js/CustomerStatement.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
     <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
@@ -58,6 +57,14 @@
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Pagination.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/moment.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/numeral.js"></script>
+    <script src="../js/jQuery/autocomplete/jquery.autocomplete.min.js" type="text/javascript"></script>
+    <%--<script src="../js/IBCWnd/IBCWnd.js" type="text/javascript"></script>--%>
+    <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+    <script src="../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
+    <script src="../js/showhidepopup.js" type="text/javascript"></script>
+    <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+    <script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
+    <script src="WebResources/js/CustomerStatement.js" type="text/javascript"></script>
     <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         window.rootUrl = '<%=rootUrl%>'; 
@@ -93,11 +100,5 @@
             });
         });
     </script>
-    <script src="../js/jQuery/autocomplete/jquery.autocomplete.min.js" type="text/javascript"></script>
-    <%--<script src="../js/IBCWnd/IBCWnd.js" type="text/javascript"></script>--%>
-    <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
-    <script src="../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
-    <script src="../js/showhidepopup.js" type="text/javascript"></script>
-    <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
 </body>
 </html>
