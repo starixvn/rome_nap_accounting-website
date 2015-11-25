@@ -310,5 +310,5 @@ span.cannotchangeinternal:hover
 .iframe-rs
 {
     width: 98%;
-    height: 430px;
+    height: 430px !important;
 }

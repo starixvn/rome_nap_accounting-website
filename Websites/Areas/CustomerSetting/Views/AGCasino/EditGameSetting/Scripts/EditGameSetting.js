@@ -195,7 +195,7 @@ var AGCasinoSetting = function () {
 
         for (var i = max; i >= min; i -= 1) {
             var value = (i / 100);
-            var selected = (i == pt.Current * 100) ? 'selected="true"' : '';
+            var selected = (value == pt.Current) ? 'selected="true"' : '';
             $('#ptGameType').append('<option value="' + value + '" ' + selected + '>' + value + '</option>');
         }
 
