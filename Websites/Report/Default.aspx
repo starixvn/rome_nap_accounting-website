@@ -30,12 +30,10 @@
     <script type="text/javascript" src="../js/jQuery/CustomScrollbar/mousehold.js"></script>
     <script type="text/javascript" src="../js/jQuery/CustomScrollbar/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="../js/jQuery/CustomScrollbar/aplweb.scrollbars.js"></script>
-    <script src="Scripts/FanexLegend.js?version=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script type="text/javascript">
         //menu setting
         var listMenuIgnore = "<%=listMenuIgnore%>";
-        var arrayMenuNameIgnore = listMenuIgnore.split(";");
-        var getReportLegendUrl = "<%=getReportLegendUrl%>";
+        var arrayMenuNameIgnore = listMenuIgnore.split(";");       
         var noteViewCountToCollapse = "<%=noteViewCountToCollapse%>";
         var isLegendEnable = "<%=isLegendEnable%>";
         var currentUserId = "<%=currentUserId%>";

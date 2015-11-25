@@ -10,34 +10,30 @@ namespace Fanex.Tarus.Web.Controllers.Filters
     using Fanex.Tarus.Business.Interface;
 
     using Sunplus.Accounting.Core.Common;
+    using Fanex.Tarus.Security.Permission;
 
     public class AuthenticateRead: FilterAttribute, IActionFilter
     {
-        private readonly IPermissionService _permissionService;
+        private readonly PermissionService _permissionService;
         public AuthenticateRead():this(null){}
-        public AuthenticateRead(IPermissionService permissionService)
+        public AuthenticateRead(PermissionService permissionService)
         {
-            _permissionService = permissionService ?? new PermissionService();
+            this._permissionService = permissionService ?? new PermissionService();
         }
         
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
             var actionName = filterContext.ActionDescriptor.ActionName;
             var controlName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-
             var pathActionName = controlName + "/" + actionName;
-
-            bool hasPermissionRead = _permissionService.HasPermission(pathActionName, AppSession.PageAccess);
-
+            var pageAccess = this._permissionService.GetPageAccess(AppSession.AccId);
+            bool hasPermissionRead = this._permissionService.HasPermission(pathActionName, pageAccess);
             if(!hasPermissionRead)
             {
                 AccessDenied(filterContext);
                 return;
             }
         }
-
-        
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -52,6 +48,5 @@ namespace Fanex.Tarus.Web.Controllers.Filters
                 action = "AccessDenied"
             }));
         }
-       
     }
 }

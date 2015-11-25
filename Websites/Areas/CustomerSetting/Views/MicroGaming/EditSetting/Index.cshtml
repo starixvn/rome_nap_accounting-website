@@ -3,6 +3,7 @@
 @using Newtonsoft.Json;
 @using Fanex.Tarus.Business.Implement;
 @using Sunplus.Accounting.Core.Common;
+@using Fanex.Tarus.Security.Permission;
 @model MicroGamingCustomerInfo
 @{
     Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
@@ -11,7 +12,8 @@
     var serializerSetting = new JsonSerializerSettings();
     serializerSetting.NullValueHandling = NullValueHandling.Ignore;
     var customerInfo = JsonConvert.SerializeObject(Model, Formatting.None, serializerSetting);
-    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
+    var permissionService = new PermissionService();
+    var hasHostPermission = permissionService.GetHostPermission(Enumerations.Functions.Customer.ViewInfo, permissionService.GetRoleAccess(AppSession.AccId)) ? 1 : 0;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />

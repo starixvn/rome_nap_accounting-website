@@ -189,6 +189,10 @@
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
+      <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
+      <Name>Fanex.Tarus.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
       <Project>{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD}</Project>
       <Name>Fanex.Tarus.Web.Models</Name>

@@ -13,13 +13,15 @@ namespace Fanex.Tarus.Web.Controllers
 
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
+    using Fanex.Tarus.Security.Permission;
+    using System.Collections.Generic;
 
     public class BaseController : Controller
     {
         private readonly ICommonService _commonService;
-        private readonly IPermissionService _permissionService;
+        private readonly PermissionService _permissionService;
         public BaseController() : this(null, null) { }
-        public BaseController(ICommonService commonService, IPermissionService permissionService)
+        public BaseController(ICommonService commonService, PermissionService permissionService)
         {
             _commonService = commonService ?? new CommonService();
             _permissionService = permissionService ?? new PermissionService();
@@ -49,8 +51,14 @@ namespace Fanex.Tarus.Web.Controllers
             {
                 if (!WebSettings.NotAuthenticateAction.Contains(filterContext.ActionDescriptor.ActionName.ToLower()))
                 {
-
-                    if (null == AppSession.PageAccess || null == AppSession.RoleAccess)
+                    Dictionary<string,int> pageAccess = new Dictionary<string,int>();
+                    Dictionary<string,int> roleAccess = new Dictionary<string,int>();
+                    int groupId = 0;
+                    this._permissionService.GetPageAccessAndRoleAccess(AppSession.AccId, pageAccess, roleAccess, ref groupId);
+                    AppSession.PageAccess = pageAccess;
+                    AppSession.RoleAccess = roleAccess;
+                    AppSession.GroupID = groupId;
+                    if (pageAccess.Count == 0 || roleAccess.Count == 0)
                     {
                         System.Web.HttpContext.Current.Session.Clear();
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName) { Expires = DateTime.Now.AddDays(-1) };

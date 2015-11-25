@@ -12,7 +12,6 @@ public partial class _Default : PageBase
     public string accUsername = "";
     protected string fromDate = string.Empty;
     protected string toDate = string.Empty;
-    protected string getReportLegendUrl = string.Empty;
     public string listMenuIgnore = string.Empty;
     protected int noteViewCountToCollapse;
     protected bool isLegendEnable;
@@ -20,12 +19,12 @@ public partial class _Default : PageBase
     protected string inlineImageExpand = string.Empty;
     protected string inlineImageCollapse = string.Empty;
 
-    #endregion
+    #endregion local variables
+
     protected void Page_Load(object sender, EventArgs e)
     {
         fromDate = DateTime.Now.ToShortDateString();
         toDate = DateTime.Now.ToShortDateString();
-        getReportLegendUrl = AppSettings.GetReportLegendUrl;
         noteViewCountToCollapse = AppSettings.NoteViewCountToCollapse;
         isLegendEnable = AppSettings.IsLegendEnable;
 
@@ -60,4 +59,3 @@ public partial class _Default : PageBase
         }
     }
 }
-

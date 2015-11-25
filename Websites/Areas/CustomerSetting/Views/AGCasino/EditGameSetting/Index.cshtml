@@ -3,15 +3,17 @@
 @using Sunplus.Accounting.Core.Configurations;
 @using Fanex.Tarus.Customer.Entities.AGCasino;
 @using Fanex.Tarus.Business.Implement;
+@using Fanex.Tarus.Security.Permission;
 @model AGCasinoCustomerInfo
 @{
+    var permissionService = new PermissionService();
     Layout = "~/Areas/CustomerSetting/Views/AGCasino/Shared/_Layout.cshtml";
     ViewBag.Title = "Update AG Casino Setting";
     var customerId = Model.CustomerId;
     var roleId = Model.RoleId;
     var uplineId = Model.UplineId;
     var exchangeId = Model.ExchangeId;
-    var hasHostPermission = PermissionService.HasHostPermission(Enumerations.Functions.Customer.ViewInfo) ? 1 : 0;
+    var hasHostPermission = permissionService.GetHostPermission(Enumerations.Functions.Customer.ViewInfo, permissionService.GetRoleAccess(AppSession.AccId)) ? 1 : 0;
 }
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />

@@ -7,13 +7,12 @@
 
 namespace Fanex.Tarus.SpecialDelete.Controller.MailList
 {
-    using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.Tarus.Web.Controllers;
-    using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Business.MailingList;
+    using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.MailingList;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -58,6 +57,7 @@ namespace Fanex.Tarus.SpecialDelete.Controller.MailList
         }
 
         [HttpPost]
+        [AuthenticateHost]
         public JsonResult UpdateInsertMailingList(MailLicensee mailLicensee, bool isUpdate)
         {
             Result result;
