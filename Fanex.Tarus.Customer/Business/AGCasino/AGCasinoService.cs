@@ -426,11 +426,23 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
             {
                 var group = asianGamingProductInfo.GameTypeGroup[i];
                 var groupName = group.Name;
-
+                var enableUpline = uplineCheckGroupArray.Contains(groupName);                
                 var isChecked = checkGroupArray.Contains(groupName);
-                customerSetting.ProductInfo[0].GameTypeGroup[i].Checked = isChecked;
+
+                if (customerSetting.RoleId != RoleIdConstants.Member)
+                {
+                    customerSetting.ProductInfo[0].GameTypeGroup[i].Checked = (isChecked && enableUpline);
+                }
+                else
+                {
+                    if (customerSetting.ProductInfo[0].GameTypeGroup.TrueForAll(status => !status.Checked))
+                    {
+                        customerSetting.ProductInfo[0].GameTypeGroup[i].Checked = enableUpline;
+                    }
+                }
+
                 customerSetting.ProductInfo[0].GameTypeGroup[i].OldChecked = isChecked;
-                customerSetting.ProductInfo[0].GameTypeGroup[i].Enable = customerSetting.RoleId == RoleIdConstants.Super || uplineCheckGroupArray.Contains(groupName);
+                customerSetting.ProductInfo[0].GameTypeGroup[i].Enable = customerSetting.RoleId == RoleIdConstants.Super || enableUpline;
             }
         }
     }
