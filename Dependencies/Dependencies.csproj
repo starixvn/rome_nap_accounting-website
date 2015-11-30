@@ -39,13 +39,12 @@
     <Reference Include="Enyim.Caching">
       <HintPath>..\Dependency\Cache\Memcached\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.3\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Client40, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.1.0.2.1\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.2\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.5.8.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
