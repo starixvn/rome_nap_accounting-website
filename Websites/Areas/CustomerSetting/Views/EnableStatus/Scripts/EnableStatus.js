@@ -45,18 +45,26 @@ function EnableStatusController($scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
 
+        scope.item.isDirty = preVal != scope.item.enable;
+
         if ($scope.context.newMode) {
-            if (preVal == scope.item.enable) {
+            var dirty = false;
+            for (var i = 0; i < $scope.entities.length; i++) {
+                if ($scope.entities[i].isDirty) {
+                    dirty = true;
+                    break;
+                }
+            }
+
+            if (!dirty) {
                 $('#submit').addClass('disabledButton');
-                $('#submit').attr('disabled', true);                
+                $('#submit').attr('disabled', true);
             }
             else {
                 $('#submit').removeClass('disabledButton');
                 $('#submit').attr('disabled', false);
             }
         }
-
-        scope.item.isDirty = preVal != scope.item.enable;
 
         if (preVal) {
             if (scope.item.enable) {
