@@ -711,18 +711,22 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool FullResetMaxTransfer(string listIBCCustID, string FromIP, int ModifyBy,
                                                   string ModifyByUsername, int FromSystem, string siteName)
         {
-            bool isResetSuccessfull = false;
+            bool isResetSuccessfull = true;
             try
             {
                 var cust = new Customer();
                 cust.SiteName = siteName;
-                isResetSuccessfull = cust.FullSettlementResetMaxTransfer(listIBCCustID, FromIP, ModifyBy,
-                                                                         ModifyByUsername, FromSystem);
+                var custIds = listIBCCustID.Split(',');
+                foreach (var custId in custIds)
+                {
+                    isResetSuccessfull = cust.FullSettlementResetMaxTransfer(custId, FromIP, ModifyBy,
+                                                                             ModifyByUsername, FromSystem);
+                }
             }
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                throw ex;
+                ex.WriteLog();
             }
 
             return isResetSuccessfull;
