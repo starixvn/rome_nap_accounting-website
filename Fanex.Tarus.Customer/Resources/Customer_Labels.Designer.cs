@@ -1157,10 +1157,7 @@ namespace Fanex.Tarus.Customer.Resources {
                 return ResourceManager.GetString("VirtualRate_UploadFile_NotNumberRate", resourceCulture);
             }
         }
-        
-        /// <summary>
-        public static string VirtualRate_UploadFile_NotSupportBetType
-        {
+
         ///   Looks up a localized string similar to This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times..
         /// </summary>
         public static string VirtualRate_UploadFile_RepeatBetType {
