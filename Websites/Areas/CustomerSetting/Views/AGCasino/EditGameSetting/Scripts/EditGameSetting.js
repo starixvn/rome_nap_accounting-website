@@ -220,7 +220,7 @@ var AGCasinoSetting = function () {
                         (group.Enable ? ' onclick="agCasinoSetting.checkGroup($(this));"' : ' title="' + viewResources.Upline_Disabled + '"') +
                             '>\
                             <span id="checkbox' + "-gametype-" + gameType.Id + groupSuffix + '"' +
-                            ' class="' + (group.Checked ? "checkbox-checked" : "checkbox-unchecked") + '"></span>\
+                            ' class="' + (group.Checked ? "checkbox-checked" : (group.Enable && !group.Checked ? "checkbox-unchecked" : "checkbox-disabled")) + '"></span>\
                             <label id="label' + groupSuffix + '">' + group.Name + '</label>\
                         </div>';
         }
