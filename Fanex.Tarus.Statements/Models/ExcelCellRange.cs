@@ -24,22 +24,28 @@
 
         public virtual int RenderCellRange(ISheet sheet, short rowHeight = 0)
         {
-            IRow row = sheet.CreateRow(FirstRow);
-            if (rowHeight > 0)
-            {
-                row.Height = rowHeight;
-            }
-
-            ICell cell = row.CreateCell(FirstColumn);
-            if (CellStyle != null)
-            {
-                cell.CellStyle = CellStyle;
-            }
-
-            SetCellValue(cell);
-
+            IRow row;
+            ICell cell;
             CellRangeAddress cellRangeAddress = new CellRangeAddress(FirstRow, LastRow, FirstColumn, LastColumn);
             sheet.AddMergedRegion(cellRangeAddress);
+            for (var i = FirstRow; i <= LastRow; i++)
+            {
+                row = sheet.CreateRow(i);
+                for (var j = FirstColumn; j <= LastColumn; j++)
+                {
+                    cell = row.CreateCell(j);
+                    if (i == FirstRow || i == LastRow || j == FirstColumn || j == LastColumn)
+                    {
+                        cell.CellStyle = CellStyle;
+                    }
+
+                    if (i == FirstRow && j == FirstColumn)
+                    {
+                        SetCellValue(cell);
+                    }
+                }
+            }
+
             return ++LastColumn;
         }
     }
