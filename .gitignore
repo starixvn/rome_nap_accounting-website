@@ -41,3 +41,6 @@ packages/*
 Websites/LogCS/CasinoLibrary.txt
 Websites/RobotDetection/Log.txt
 CasinoLibrary.txt
+*/LogCS/*
+*/RobotDetection/*
+*/TrapLogs/*
