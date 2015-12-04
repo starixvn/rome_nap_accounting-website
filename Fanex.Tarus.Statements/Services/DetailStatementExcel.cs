@@ -110,7 +110,7 @@
 
             // Total.
             ICellStyle footerStyle = NpoiExcelUtils.HeaderStyle(HSSFWorkbook);
-            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex + 1, StartColumnIndex, 6, "Total:    " + total.ToString("N4"), footerStyle);
+            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex, StartColumnIndex, 6, "Total:    " + total.ToString("N4"), footerStyle);
             cellrange.RenderCellRange(Worksheet);
         }
 
