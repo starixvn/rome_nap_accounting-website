@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="VirtualRateService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
-
-namespace Fanex.Tarus.Customer.Business.VirtualRate
+﻿namespace Fanex.Tarus.Customer.Business.VirtualRate
 {
     using System;
     using System.Collections.Generic;
@@ -21,14 +12,13 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     using Fanex.Tarus.Customer.DataAccess.VirtualRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
     using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
     using Fanex.Tarus.Customer.Resources;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Constants;
     using Fanex.Tarus.Infrastructure.Extensions;
 
-    /// <summary>
-    /// Virtual Rate Service.
-    /// </summary>
     public class VirtualRateService : IVirtualRateService
     {
         private readonly IVirtualRateRepository _virtualRateRepository;
@@ -48,11 +38,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             _uploadVirtualRateService = uploadVirtualRateService ?? new UploadVirtualRateService();
         }
 
-        /// <summary>
-        /// Gets the customer virtual rate.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The customer virtual rate.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -71,11 +56,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             return null;
         }
 
-        /// <summary>
-        /// Updates the settings.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Update result.</returns>
         public Result UpdateSettings(UpdateSettingsCriteria criteria)
         {
             try
@@ -96,11 +76,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             return null;
         }
 
-        /// <summary>
-        /// Gets the history log.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The history log.</returns>
         public HistoryLogReportModel HistoryLog(ViewHistoryLogCriteria criteria)
         {
             try
@@ -112,7 +87,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     HistoryLog = new List<HistoryLogByDateModel>()
                 };
 
-                // Fix bug #32374
                 var rawData = _virtualRateRepository.HistoryLog(criteria).OrderByDescending(m => m.LogDate).ThenBy(m => m.ActionId);
                 var logGroups = rawData.GroupBy(log => new
                 {
@@ -120,10 +94,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     Username = log.Username
                 });
 
-                Dictionary<int, Dictionary<int, int>> betTypeIndexList = new Dictionary<int, Dictionary<int, int>>();
-                betTypeIndexList.Add(Sports.Soccer, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.Soccer));
-                betTypeIndexList.Add(Sports.OtherSports, VirtualRateSectionService.BetTypeIndexListViewLog(Sports.OtherSports));
-
+                Dictionary<int, int> betTypeIndexList = VirtualRateSectionService.BetTypeIndexListByFunctionName(VirtualRateSectionService.UploadVirtualFunction);
                 foreach (var data in rawData)
                 {
                     var historyLogByDate = new HistoryLogByDateModel
@@ -165,20 +136,88 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             return _uploadVirtualRateService.DeleteTempRate();
         }
 
-        /// <summary>
-        /// Parses the history log.
-        /// </summary>
-        /// <param name="historyLog">The history log.</param>
-        /// <param name="betTypeIndexList">The bet type index list.</param>
-        /// <returns>
-        /// The History Log Detail List.
-        /// </returns>
+        public List<SportBetTypeReferencesModel> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria)
+        {
+            try
+            {
+                var result = new List<SportBetTypeReferencesModel>();
+                var rawData = _virtualRateRepository.GetSportBetTypeReferences(criteria);
+                var sportGroups = rawData.GroupBy(referrence => referrence.SportTypeRef);
+
+                var sportNameDictionary = new Dictionary<int, string>();
+                var betTypeNameDictionary = new Dictionary<int, string>();
+                foreach (var sportGroup in sportGroups)
+                {
+                    CacheResourceName(sportGroup.Key, sportNameDictionary, CacheRef.GetSportName);
+                    var sport = new SportBetTypeReferencesModel
+                    {
+                        Id = sportGroup.Key,
+                        Name = sportNameDictionary[sportGroup.Key],
+                        SubTypes = new List<SportBetTypeReferencesModel>()
+                    };
+
+                    var betTypeGroups = sportGroup.GroupBy(referrence => referrence.BetTypeRef);
+                    foreach (var betTypeGroup in betTypeGroups)
+                    {
+                        CacheResourceName(betTypeGroup.Key, betTypeNameDictionary, CacheRef.GetBettype);
+                        var betType = new SportBetTypeReferencesModel
+                        {
+                            Id = betTypeGroup.Key,
+                            Name = betTypeNameDictionary[betTypeGroup.Key],
+                            SourceReferences = new List<SourceReferenceModel>()
+                        };
+
+                        foreach (var data in betTypeGroup)
+                        {
+                            CacheResourceName(data.SportType, sportNameDictionary, CacheRef.GetSportName);
+                            CacheResourceName(data.BetType, betTypeNameDictionary, CacheRef.GetBettype);
+                            var sourceReferrence = new SourceReferenceModel
+                            {
+                                SportTypeRef = new BaseModel
+                                {
+                                    Id = data.SportTypeRef,
+                                    Name = sportNameDictionary[data.SportType]
+                                },
+                                BetTypeRef = new BaseModel
+                                {
+                                    Id = data.BetTypeRef,
+                                    Name = betTypeNameDictionary[data.BetType]
+                                }
+                            };
+
+                            betType.SourceReferences.Add(sourceReferrence);
+                        }
+
+                        sport.SubTypes.Add(betType);
+                    }
+
+                    result.Add(sport);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        private void CacheResourceName(int resourceId, Dictionary<int, string> resourceDictionary, Func<object, string> getResourceNameFunction)
+        {
+            if (!resourceDictionary.ContainsKey(resourceId))
+            {
+                resourceDictionary.Add(resourceId, getResourceNameFunction(resourceId));
+            }
+        }
+
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         private List<HistoryLogDetailModel> ParseHistoryLog(
             HistoryLogEntity historyLog,
-            Dictionary<int, Dictionary<int, int>> betTypeIndexList)
+            Dictionary<int, int> betTypeIndexList)
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
@@ -220,28 +259,22 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
                 foreach (var sportGroup in sportGroups)
                 {
-                    if (!betTypeIndexList.ContainsKey(sportGroup.Key.SportType))
-                    {
-                        continue;
-                    }
-
-                    var sportBetTypeIndex = betTypeIndexList[sportGroup.Key.SportType];
-                    var betTypeCount = sportBetTypeIndex.Count;
+                    var betTypeCount = betTypeIndexList.Count;
                     var historyLogDetail = new HistoryLogDetailModel
                     {
                         UpdateType = historyLog.ActionId,
                         SportId = sportGroup.Key.SportType,
                         SportName = Sports.SportName(sportGroup.Key.SportType),
                         LiveType = sportGroup.Key.LiveType,
-                        BetTypeList = VirtualRateSectionService.BetTypeListViewLog(sportGroup.Key.SportType),
+                        BetTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction),
                         VirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
                     };
 
                     foreach (var data in sportGroup)
                     {
-                        if (sportBetTypeIndex.ContainsKey(data.BetType))
+                        if (betTypeIndexList.ContainsKey(data.BetType))
                         {
-                            var betTypeIndex = sportBetTypeIndex[data.BetType];
+                            var betTypeIndex = betTypeIndexList[data.BetType];
                             historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
                             historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
                         }

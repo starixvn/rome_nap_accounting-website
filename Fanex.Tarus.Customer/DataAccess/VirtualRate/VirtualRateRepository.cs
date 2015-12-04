@@ -1,35 +1,20 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="VirtualRateRepository.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
-
-namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
+﻿namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
 {
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Business.VirtualRate;
     using Fanex.Tarus.Customer.Criteria.VirtualRate;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
-    using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
+    using Fanex.Tarus.Infrastructure.Caching;
 
-    /// <summary>
-    /// Virtual Rate Repository.
-    /// </summary>
     public class VirtualRateRepository : IVirtualRateRepository
     {
-        /// <summary>
-        /// Gets the customer virtual rate.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The customer virtual rate.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -43,6 +28,7 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
                 SportVirtualRateList = new List<SportVirtualRateModel>()
             };
 
+            var virtualRateEntities = new List<VirtualRateEntity>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
@@ -57,64 +43,91 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
 
                 if (reader.NextResult())
                 {
-                    var soccerBetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.Soccer);
-                    var otherSportbetTypeIndex = VirtualRateSectionService.BetTypeIndexList(Sports.OtherSports);
-                    var soccerSport = new SportVirtualRateModel
-                    {
-                        Id = Sports.Soccer,
-                        Name = Sports.SportName(Sports.Soccer),
-                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.Soccer),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(soccerBetTypeIndex.Count)
-                    };
-                    var otherSport = new SportVirtualRateModel
-                    {
-                        Id = Sports.OtherSports,
-                        Name = Sports.SportName(Sports.OtherSports),
-                        BetTypeList = VirtualRateSectionService.BetTypeList(Sports.OtherSports),
-                        LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count),
-                        NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(otherSportbetTypeIndex.Count)
-                    };
-
                     while (reader.Read())
                     {
-                        var sportId = Converter.ToInt(reader["sporttype"]);
-                        var isLive = Converter.ToBool(reader["isLive"]);
-                        var betType = Converter.ToInt(reader["bettype"]);
-                        var targetIndex = sportId == Sports.Soccer ? soccerBetTypeIndex : otherSportbetTypeIndex;
-                        if (!targetIndex.ContainsKey(betType))
+                        virtualRateEntities.Add(new VirtualRateEntity
                         {
-                            continue;
-                        }
+                            CustId = Converter.ToInt(reader["CustId"]),
+                            SportType = Converter.ToInt(reader["SportType"]),
+                            BetType = Converter.ToInt(reader["BetType"]),
+                            IsLive = Converter.ToBool(reader["IsLive"]),
+                            Rate = Converter.ToDecimal(reader["virtualMultiplier"])
+                        });
+                    }
+                }
 
-                        var targetSport = sportId == Sports.Soccer ? soccerSport : otherSport;
-                        var betTypeIndex = targetIndex[betType];
-                        var rate = Converter.ToDecimal(reader["virtualMultiplier"]);
-                        if (isLive)
+                virtualRateEntities = virtualRateEntities.ToList();
+                var sportDictionaryList = VirtualRateSectionService.SportDictionaryList();
+                var sportList = VirtualRateSectionService.SportList();
+                var sportGroups = virtualRateEntities.GroupBy(data => data.SportType);
+                var betTypeNames = new Dictionary<int, string>();
+
+                foreach (var sportGroup in sportGroups)
+                {
+                    var sportPosition = sportDictionaryList[sportGroup.Key];
+                    var targetSport = sportPosition.IsSubSport ?
+                        sportList[sportPosition.SportIndex].SubSportList[sportPosition.SubSportIndex] :
+                        sportList[sportPosition.SportIndex];
+
+                    var betTypeOrderDictionary = new Dictionary<int, int>();
+                    var betTypeOrderList = sportList[sportPosition.SportIndex].BetTypeOrder.Split(',').Select(betType => Converter.ToInt(betType));
+                    var orderIndex = 0;
+                    foreach (var betType in betTypeOrderList)
+                    {
+                        if (!betTypeOrderDictionary.ContainsKey(betType))
                         {
-                            targetSport.LiveVirtualRate[betTypeIndex].HasData = true;
-                            targetSport.LiveVirtualRate[betTypeIndex].PercentRate = rate;
-                        }
-                        else
-                        {
-                            targetSport.NonLiveVirtualRate[betTypeIndex].HasData = true;
-                            targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = rate;
+                            betTypeOrderDictionary.Add(betType, orderIndex++);
                         }
                     }
 
-                    result.SportVirtualRateList.Add(soccerSport);
-                    result.SportVirtualRateList.Add(otherSport);
+                    var betTypes = sportGroup.Select(data => data.BetType)
+                        .Distinct()
+                        .OrderBy(data => betTypeOrderDictionary.ContainsKey(data) ? betTypeOrderDictionary[data] : betTypeOrderDictionary.Count)
+                        .ToList();
+                    var betTypeIndexes = new Dictionary<int, int>();
+                    var index = 0;
+                    foreach (var betType in betTypes)
+                    {
+                        if (!betTypeNames.ContainsKey(betType))
+                        {
+                            betTypeNames.Add(betType, VirtualRateSectionService.ShortBetTypeName(betType));
+                        }
+
+                        targetSport.BetTypeList.Add(new BetTypeModel
+                        {
+                            Id = betType,
+                            Name = betTypeNames[betType]
+                        });
+
+                        betTypeIndexes.Add(betType, index++);
+                    }
+
+                    targetSport.LiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypes.Count);
+                    targetSport.NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypes.Count);
+
+                    foreach (var virtualRateEntity in sportGroup)
+                    {
+                        var betTypeIndex = betTypeIndexes[virtualRateEntity.BetType];
+
+                        if (virtualRateEntity.IsLive && targetSport.LiveVirtualRate != null)
+                        {
+                            targetSport.LiveVirtualRate[betTypeIndex].HasData = true;
+                            targetSport.LiveVirtualRate[betTypeIndex].PercentRate = virtualRateEntity.Rate;
+                        }
+                        else if (targetSport.NonLiveVirtualRate != null)
+                        {
+                            targetSport.NonLiveVirtualRate[betTypeIndex].HasData = true;
+                            targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = virtualRateEntity.Rate;
+                        }
+                    }
                 }
+
+                result.SportVirtualRateList = sportList;
             }
 
             return result;
         }
 
-        /// <summary>
-        /// Updates the settings.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Update result.</returns>
         public Result UpdateSettings(UpdateSettingsCriteria criteria)
         {
             Hashtable outputParams = new Hashtable();
@@ -134,11 +147,6 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
             return updateResult;
         }
 
-        /// <summary>
-        /// Gets the history log.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The history log.</returns>
         public List<HistoryLogEntity> HistoryLog(ViewHistoryLogCriteria criteria)
         {
             var result = new List<HistoryLogEntity>();
@@ -154,6 +162,28 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate
                         LogDate = Converter.ToDateTime(reader["logdate"]),
                         Username = Converter.ToString2(reader["Username"]),
                         TrackingValue = Converter.ToString2(reader["TrackingValue"])
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        public List<SportBetTypeReferencesEntity> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria)
+        {
+            var result = new List<SportBetTypeReferencesEntity>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                while (reader.Read())
+                {
+                    result.Add(new SportBetTypeReferencesEntity
+                    {
+                        SportType = Converter.ToInt(reader["SportType"]),
+                        BetType = Converter.ToInt(reader["BetType"]),
+                        SportTypeRef = Converter.ToInt(reader["SportTypeRefVirtualRate"]),
+                        BetTypeRef = Converter.ToInt(reader["BetTypeRefVirtualRate"])
                     });
                 }
             }

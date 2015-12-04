@@ -1,0 +1,100 @@
+@import 'variables.less';
+
+/* table */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Tahoma';
+    font-size: 12px;
+    color: @body-color;
+}
+
+.right {
+    text-align: right;
+}
+.left {
+    text-align: left;
+}
+
+.hide {
+    display: none;
+    visibility: hidden;
+}
+
+.followedByCol {
+    width: 35%;
+}
+.bettypeCol {
+	width: 30%;
+}
+.container {
+    padding: 15px;
+}
+
+.content {
+	.title {
+		padding: 15px 0;
+		font-weight: bold;
+	}
+	>p {
+		margin: 0 0 15px;
+	}
+	.sport {
+		width: 70%;
+		.header-sport {
+			background: @header-sport-colorbg;
+			color: @header-sport-color;
+			cursor: pointer;
+			padding: 5px;
+			border: 1px solid @table-border;
+			text-align: left;
+			font-weight: bold;
+			border-top: none;
+			&.first-child {
+				border-top: 1px solid @table-border;
+			}
+			.iconBox {
+				text-align: center;
+				font-weight: bold;
+				margin-right: 5px;
+				font-size: 13px;
+				display: inline-block;
+				width: 11px;
+				height: 11px;
+				position: relative;
+				top: 1px;
+				border: 1px solid @iconbox-border;
+				&.collapse-icon {
+					background: url(@expandicon-url) no-repeat @iconbox-colorbg center;
+				}
+				&.expand-icon {
+					background: url(@collapseicon-url) no-repeat @iconbox-colorbg center;
+				}
+			}
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: @table-colorbg;
+			thead {
+				color: @thead-color;
+				background: @thead-colorbg;
+				font-weight: bold;
+				text-align: center;
+				th {
+					padding: 5px;
+					border: 1px solid @table-border;
+					border-top: none;
+				}
+			}
+			tbody td {
+				padding: 5px;
+				border: 1px solid @table-border;
+				&.bettype {
+					background: @bettype-colorbg;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

@@ -79,6 +79,15 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basketball.
+        /// </summary>
+        public static string Basketball {
+            get {
+                return ResourceManager.GetString("Basketball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choosing image.
         /// </summary>
         public static string Choosing_image {
@@ -480,6 +489,15 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         public static string Table {
             get {
                 return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tennis.
+        /// </summary>
+        public static string Tennis {
+            get {
+                return ResourceManager.GetString("Tennis", resourceCulture);
             }
         }
         

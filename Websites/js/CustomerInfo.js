@@ -239,8 +239,8 @@ function OpenEditVirtualExRate(id, uname, type) {
         url,
         0,
         0,
-        830,
-        600,
+        850,
+        750,
         true,
         2000,
         null);

@@ -11,12 +11,12 @@
 namespace Fanex.Tarus.Business.Implement
 {
     using System;
+    using System.Web;
     using Fanex.Tarus.Business.Interface;
     using Fanex.Tarus.Entities;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.UMControllerLibrary;
-    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// Common Service.
@@ -37,7 +37,7 @@ namespace Fanex.Tarus.Business.Implement
                 IsDowntime = false
             };
 
-            if (!WebSettings.IsUMTime)
+            if (!WebSettings.IsUMTime || HttpContext.Current.Request.IsLocal)
             {
                 return downTime;
             }

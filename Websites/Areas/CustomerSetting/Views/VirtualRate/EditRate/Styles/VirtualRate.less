@@ -1,8 +1,7 @@
 ﻿
 #virtual-rate-setting-container
 {
-    margin-left: 10px;
-    margin-top: 10px;
+    margin: 10px 0 10px 10px;
 }
 
 #virtual-rate-setting
@@ -43,6 +42,20 @@
         font-weight: bold;
     }
     
+    td.subsport-first-column
+    {
+        width: 80px;
+        background-color: #FFFFFF;
+        font-weight: bold;
+    }
+    
+    td.subsport-livetype-column
+    {
+        width: 40px;
+        background-color: #FFFFFF;
+        font-weight: bold;
+    }
+    
     .bettype-separator-column
     {
         width: 20px;
@@ -67,6 +80,22 @@
             border-left: solid 1px #FFF;
             border-right: solid 1px #FFF;
         }
+    }
+    
+    .end-row
+    {
+        line-height: 0px;   
+        td{
+            border-bottom: medium none;
+        }     
+    }
+    
+    .table-header td.padding-column,
+    .padding-column
+    {
+        background-color: #fff !important;
+        border-bottom: medium none;
+        border-top: medium none;
     }
 }
 
@@ -101,4 +130,13 @@
 {
     margin-top: 3px;
     font-size: 11px;
+}
+
+.infoIcon {
+    background: rgba(0, 0, 0, 0) url("Images/info.png") no-repeat scroll right center;
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    float: right;
 }

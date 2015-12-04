@@ -12,6 +12,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Customer.Resources;
     using Fanex.Tarus.Infrastructure.Caching;
@@ -23,54 +24,137 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
     /// </summary>
     public static class VirtualRateSectionService
     {
-        /// <summary>
-        /// Gets the bet types type list.
-        /// </summary>
-        /// <param name="sportId">The sport identifier.</param>
-        /// <returns>
-        /// The bet types type list.
-        /// </returns>
-        public static List<BetTypeModel> BetTypeList(int sportId)
+        static VirtualRateSectionService()
         {
-            var result = new List<BetTypeModel>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
-            foreach (VirtualRateElement betType in virtualRateBetTypes)
-            {
-                if (!betType.Active)
-                {
-                    continue;
-                }
+            VirtualRateSports = VirtualRateSection.Instance.Sports;
+        }
 
-                var betTypeModel = new BetTypeModel
+        public const string UploadVirtualFunction = "Upload Virtual Rate";
+
+        public static VirtualRateCollection VirtualRateSports { get; set; }
+
+        /// <summary>
+        /// Gets the sport list.
+        /// </summary>
+        /// <returns>The sport list.</returns>
+        public static List<SportVirtualRateModel> SportList()
+        {
+            List<SportVirtualRateModel> result = new List<SportVirtualRateModel>();
+            var sportLength = VirtualRateSports.Count;
+            for (var i = 0; i < sportLength; i++)
+            {
+                var sport = VirtualRateSports[i];
+                var sportId = sport.Id;
+                var sportVirtualRateModel = new SportVirtualRateModel
                 {
-                    Id = Converter.ToInt(betType.Id)
+                    Id = sportId,
+                    Name = Sports.SportName(sportId),
+                    Notes = sport.Notes,
+                    SubSportList = new List<SportVirtualRateModel>(),
+                    BetTypeList = new List<BetTypeModel>(),
+                    BetTypeOrder = sport.BetTypeOrder
                 };
 
-                betTypeModel.Name = ShortBetTypeName(betTypeModel.Id);
-                if (!string.IsNullOrEmpty(betType.MultiBetTypes))
+                if (sport.SubSports != null && sport.SubSports.Count > 0)
                 {
-                    var betTypeIdList = betType.MultiBetTypes.Split(new char[] { ',' });
-                    betTypeModel.MultiBetTypes = betTypeIdList.Select(id => Converter.ToInt(id)).ToArray();
-                    betTypeModel.MultiBetTypeNames = betTypeModel.MultiBetTypes.Select(id => ShortBetTypeName(id)).ToArray();
+                    var groupLength = sport.SubSports.Count;
+                    sportVirtualRateModel.SubSportList = new List<SportVirtualRateModel>();
+                    for (var j = 0; j < groupLength; j++)
+                    {
+                        var sportGroup = sport.SubSports[j];
+                        var subSportList = sportGroup.SportList.Split(new char[] { ',' })
+                            .Select(s => new BaseModel
+                            {
+                                Id = Converter.ToInt(s),
+                                Name = CacheRef.GetSportName(s)
+                            })
+                            .ToList();
+                        var subSportLength = subSportList.Count;
+                        for (var k = 0; k < subSportLength; k++)
+                        {
+                            var subSport = subSportList[k];
+                            sportVirtualRateModel.SubSportList.Add(new SportVirtualRateModel
+                            {
+                                Id = subSport.Id,
+                                Name = subSport.Name,
+                                BetTypeList = new List<BetTypeModel>()
+                            });
+                        }
+                    }
                 }
 
-                result.Add(betTypeModel);
+                result.Add(sportVirtualRateModel);
             }
 
             return result;
         }
 
         /// <summary>
-        /// Gets the bet types type index list.
+        /// Gets the sports dictionary list.
         /// </summary>
-        /// <param name="sportId">The sport identifier.</param>
-        /// <returns>
-        /// The bet types type index list.
-        /// </returns>
-        public static Dictionary<int, int> BetTypeIndexList(int sportId)
+        /// <returns>The sports dictionary list.</returns>
+        public static Dictionary<int, SportPositionModel> SportDictionaryList()
         {
-            var result = new Dictionary<int, int>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
+            Dictionary<int, SportPositionModel> result = new Dictionary<int, SportPositionModel>();
+            var sportLength = VirtualRateSports.Count;
+            for (var i = 0; i < sportLength; i++)
+            {
+                var sport = VirtualRateSports[i];
+                if (sport.SubSports != null)
+                {
+                    var subSportListLength = sport.SubSports.Count;
+                    var subSportIndex = 0;
+
+                    if (subSportListLength > 0)
+                    {
+                        for (var j = 0; j < subSportListLength; j++)
+                        {
+                            var sportGroup = sport.SubSports[j];
+                            var subSportList = sportGroup.SportList.Split(new char[] { ',' })
+                                .Select(s => new BaseModel
+                                {
+                                    Id = Converter.ToInt(s),
+                                    Name = CacheRef.GetSportName(s)
+                                })
+                                .ToList();
+                            var subSportLength = subSportList.Count;
+                            for (var k = 0; k < subSportLength; k++)
+                            {
+                                var sportId = subSportList[k].Id;
+                                if (!result.ContainsKey(sportId))
+                                {
+                                    result.Add(
+                                        subSportList[k].Id,
+                                        new SportPositionModel
+                                        {
+                                            SportIndex = i,
+                                            IsSubSport = true,
+                                            SubSportIndex = subSportIndex
+                                        });
+                                    subSportIndex++;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result.Add(
+                            sport.Id,
+                            new SportPositionModel
+                            {
+                                SportIndex = i
+                            });
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static Dictionary<int, int> BetTypeIndexListByFunctionName(string functionName)
+        {
+            Dictionary<int, int> betTypeIndexList = new Dictionary<int, int>();
+            var virtualRateBetTypes = VirtualRateSection.Instance.Functions[functionName].BetTypes;
             var index = 0;
             foreach (VirtualRateElement betType in virtualRateBetTypes)
             {
@@ -79,11 +163,28 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     continue;
                 }
 
-                result.Add(Converter.ToInt(betType.Id), index);
-                index++;
+                if (!betTypeIndexList.ContainsKey(betType.Id))
+                {
+                    betTypeIndexList.Add(betType.Id, index);
+                    index++;
+                }
+
+                if (!string.IsNullOrEmpty(betType.MultiBetTypes))
+                {
+                    var betTypeIdList = betType.MultiBetTypes.Split(new char[] { ',' });
+                    foreach (var betTypeId in betTypeIdList)
+                    {
+                        var id = Converter.ToInt(betTypeId);
+                        if (!betTypeIndexList.ContainsKey(id))
+                        {
+                            betTypeIndexList.Add(id, index);
+                            index++;
+                        }
+                    }
+                }
             }
 
-            return result;
+            return betTypeIndexList;
         }
 
         public static List<VirtualRateModel> DefaultVirtualRateList(int betTypeCount)
@@ -92,88 +193,6 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             for (var i = 0; i < betTypeCount; i++)
             {
                 result.Add(new VirtualRateModel());
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the bet types type list for view log.
-        /// </summary>
-        /// <param name="sportId">The sport identifier.</param>
-        /// <returns>
-        /// The bet types type list for view log.
-        /// </returns>
-        public static List<BetTypeModel> BetTypeListViewLog(int sportId)
-        {
-            var result = new List<BetTypeModel>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
-            foreach (VirtualRateElement betType in virtualRateBetTypes)
-            {
-                if (!betType.Active)
-                {
-                    continue;
-                }
-
-                var betTypeModel = new BetTypeModel
-                {
-                    Id = Converter.ToInt(betType.Id)
-                };
-
-                betTypeModel.Name = ShortBetTypeName(betTypeModel.Id);
-                result.Add(betTypeModel);
-
-                if (!string.IsNullOrEmpty(betType.MultiBetTypes))
-                {
-                    var betTypeIdList = betType.MultiBetTypes.Split(new char[] { ',' });
-                    var betTypeIdLength = betTypeIdList.Length;
-                    for (var i = 0; i < betTypeIdLength; i++)
-                    {
-                        var betTypeId = Converter.ToInt(betTypeIdList[i]);
-                        result.Add(new BetTypeModel
-                        {
-                            Id = betTypeId,
-                            Name = ShortBetTypeName(betTypeId)
-                        });
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the bet types type index list for view log.
-        /// </summary>
-        /// <param name="sportId">The sport identifier.</param>
-        /// <returns>
-        /// The bet types type index list for view log.
-        /// </returns>
-        public static Dictionary<int, int> BetTypeIndexListViewLog(int sportId)
-        {
-            var result = new Dictionary<int, int>();
-            var virtualRateBetTypes = VirtualRateSection.Instance.Sports[SportNameKey(sportId)].BetTypes;
-            var index = 0;
-            foreach (VirtualRateElement betType in virtualRateBetTypes)
-            {
-                if (!betType.Active)
-                {
-                    continue;
-                }
-
-                result.Add(Converter.ToInt(betType.Id), index);
-                index++;
-
-                if (!string.IsNullOrEmpty(betType.MultiBetTypes))
-                {
-                    var betTypeIdList = betType.MultiBetTypes.Split(new char[] { ',' });
-                    var betTypeIdLength = betTypeIdList.Length;
-                    for (var i = 0; i < betTypeIdLength; i++)
-                    {
-                        result.Add(Converter.ToInt(betTypeIdList[i]), index);
-                        index++;
-                    }
-                }
             }
 
             return result;
@@ -253,11 +272,70 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
             {
                 case Sports.Soccer:
                     return "Soccer";
+                case Sports.Tennis:
+                    return "Tennis";
+                case Sports.Basketball:
+                    return "Basketball";
                 case Sports.OtherSports:
                     return "Other Sports";
                 default:
-                    return string.Empty;
+                    return CacheRef.GetSportName(sportId);
             }
+        }
+
+        /// <summary>
+        /// Gets the dictionary of sport identifier from name .
+        /// </summary>
+        /// <returns>The dictionary of sport identifier from name .</returns>
+        public static Dictionary<string, int> SportIdFromNameDictionary()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            var sportLength = VirtualRateSports.Count;
+            for (var i = 0; i < sportLength; i++)
+            {
+                var sport = VirtualRateSports[i];
+                var sportName = string.Empty;
+                if (sport.SubSports != null && sport.SubSports.Count > 0)
+                {
+                    var groupLength = sport.SubSports.Count;
+                    for (var j = 0; j < groupLength; j++)
+                    {
+                        var sportGroup = sport.SubSports[j];
+                        var subSportList = sportGroup.SportList.Split(new char[] { ',' })
+                            .Select(s => new BaseModel
+                            {
+                                Id = Converter.ToInt(s),
+                                Name = CacheRef.GetSportName(s)
+                            })
+                            .ToList();
+                        var subSportLength = subSportList.Count;
+                        for (var k = 0; k < subSportLength; k++)
+                        {
+                            var subSport = subSportList[k];
+                            sportName = CacheRef.GetSportName(subSport.Id);
+                            if (!result.ContainsKey(sportName))
+                            {
+                                result.Add(sportName, subSport.Id);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    sportName = CacheRef.GetSportName(sport.Id);
+                    if (!result.ContainsKey(sportName))
+                    {
+                        result.Add(sportName, sport.Id);
+                    }
+                }
+            }
+
+            if (result.ContainsKey("OtherSports"))
+            {
+                result.Add("Other Sports", result["OtherSports"]);
+            }
+
+            return result;
         }
     }
 }

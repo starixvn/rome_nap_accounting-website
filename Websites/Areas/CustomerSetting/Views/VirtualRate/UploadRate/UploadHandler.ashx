@@ -43,7 +43,7 @@ public class UploadHandler : IHttpHandler
                 }
 
                 var limitSize = 1024 * 1024;
-                if (isValidParams && uploadedFile.ContentLength / limitSize > 1)
+                if (isValidParams && uploadedFile.ContentLength > limitSize)
                 {
                     importResultString = GetImportResultString(new Result(1, Customer_Labels.VirtualRate_UploadFile_ExceedFileSize));
                     isValidParams = false;

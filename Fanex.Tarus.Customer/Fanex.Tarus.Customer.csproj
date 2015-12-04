@@ -196,7 +196,6 @@
     <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\LiveTypeNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
-    <Compile Include="Constants\SportNameConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
@@ -244,6 +243,7 @@
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\DeleteTempRateCriteria.cs" />
@@ -368,12 +368,17 @@
     <Compile Include="Entities\VirtualRate\HistoryLogEntity.cs" />
     <Compile Include="Entities\VirtualRate\HistoryLogReportModel.cs" />
     <Compile Include="Entities\VirtualRate\LogBySportEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\SportBetTypeReferencesEntity.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\SportBetTypeReferencesModel.cs" />
+    <Compile Include="Entities\VirtualRate\SportBetTypeReferences\TargetReferencesModel.cs" />
+    <Compile Include="Entities\VirtualRate\SportPositionModel.cs" />
     <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateInfo.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResult.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResultGroup.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\CheckImportResult.cs" />
     <Compile Include="Entities\VirtualRate\UploadRate\UploadResult.cs" />
+    <Compile Include="Entities\VirtualRate\VirtualRateEntity.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Customer_Labels.Designer.cs">
@@ -438,7 +443,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -108,26 +108,56 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             for (var i = 0; i < sportCount; i++)
             {
                 var sportVirtualRate = SportVirtualRateList[i];
-                var betTypeCount = sportVirtualRate.BetTypeList.Count;
+                var sportId = sportVirtualRate.Id;
+                var betTypeCount = sportVirtualRate.BetTypeList != null ?
+                    sportVirtualRate.BetTypeList.Count :
+                    0;
                 for (var j = 0; j < betTypeCount; j++)
                 {
                     var betType = sportVirtualRate.BetTypeList[j];
                     var virtualMultiplierFormat = "<Rate SportType=\"{0}\" BetType=\"{1}\" IsLive=\"{2}\" VirtualMultiplier=\"{3}\" /> ";
+                    if (sportVirtualRate.SubSportList != null && sportVirtualRate.SubSportList.Count > 0)
+                    {
+                        var subSportLength = sportVirtualRate.SubSportList.Count;
+                        for (var k = 0; k < subSportLength; k++)
+                        {
+                            var subSport = sportVirtualRate.SubSportList[k];
+                            var oldLiveRate = LastSettings.SportVirtualRateList[i].SubSportList[k].LiveVirtualRate[j];
+                            paramXML += AddBetTypeParam(
+                               subSport.LiveVirtualRate[j],
+                               oldLiveRate,
+                               subSport.Id,
+                               betType,
+                               LiveTypeConstants.Live,
+                               virtualMultiplierFormat);
 
-                    paramXML += AddBetTypeParam(
-                        sportVirtualRate.LiveVirtualRate[j],
-                        LastSettings.SportVirtualRateList[i].LiveVirtualRate[j],
-                        sportVirtualRate.Id,
-                        betType,
-                        LiveTypeConstants.Live,
-                        virtualMultiplierFormat);
-                    paramXML += AddBetTypeParam(
-                        sportVirtualRate.NonLiveVirtualRate[j],
-                        LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j],
-                        sportVirtualRate.Id,
-                        betType,
-                        LiveTypeConstants.NonLive,
-                        virtualMultiplierFormat);
+                            oldLiveRate = LastSettings.SportVirtualRateList[i].SubSportList[k].NonLiveVirtualRate[j];
+                            paramXML += AddBetTypeParam(
+                               subSport.NonLiveVirtualRate[j],
+                               oldLiveRate,
+                               subSport.Id,
+                               betType,
+                               LiveTypeConstants.NonLive,
+                               virtualMultiplierFormat);
+                        }
+                    }
+                    else
+                    {
+                        paramXML += AddBetTypeParam(
+                            sportVirtualRate.LiveVirtualRate[j],
+                            LastSettings.SportVirtualRateList[i].LiveVirtualRate[j],
+                            sportVirtualRate.Id,
+                            betType,
+                            LiveTypeConstants.Live,
+                            virtualMultiplierFormat);
+                        paramXML += AddBetTypeParam(
+                            sportVirtualRate.NonLiveVirtualRate[j],
+                            LastSettings.SportVirtualRateList[i].NonLiveVirtualRate[j],
+                            sportVirtualRate.Id,
+                            betType,
+                            LiveTypeConstants.NonLive,
+                            virtualMultiplierFormat);
+                    }
                 }
             }
 
