@@ -18,9 +18,9 @@
 
             // Title.
             ICellStyle titleStyle = NpoiExcelUtils.TextStyle(HSSFWorkbook, NpoiExcelUtils.BackgroundColorIndex, true, HorizontalAlignment.Left);
-            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex, StartColumnIndex, columnsWidth.Length - 1, title, titleStyle);
-            cellrange.RenderCellRange(Worksheet, 400);
-            CurrentRowIndex++;
+            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex + 1, StartColumnIndex, columnsWidth.Length - 1, title, titleStyle);
+            cellrange.RenderCellRange(Worksheet);
+            CurrentRowIndex += 2;
 
             // One more empty row.
             ExcelCellRange emptyRow = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex, StartColumnIndex, columnsWidth.Length - 1, string.Empty, null);
@@ -110,8 +110,8 @@
 
             // Total.
             ICellStyle footerStyle = NpoiExcelUtils.HeaderStyle(HSSFWorkbook);
-            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex, StartColumnIndex, 6, "Total:    " + total.ToString("N4"), footerStyle);
-            cellrange.RenderCellRange(Worksheet, 400);
+            ExcelCellRange cellrange = new ExcelCellRange(CurrentRowIndex, CurrentRowIndex + 1, StartColumnIndex, 6, "Total:    " + total.ToString("N4"), footerStyle);
+            cellrange.RenderCellRange(Worksheet);
         }
 
         protected override void RenderFooter()

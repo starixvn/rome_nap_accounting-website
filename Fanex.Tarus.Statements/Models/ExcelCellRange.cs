@@ -22,7 +22,7 @@
 
         protected int LastColumn { get; set; }
 
-        public virtual int RenderCellRange(ISheet sheet, short rowHeight = 0)
+        public virtual int RenderCellRange(ISheet sheet)
         {
             IRow row;
             ICell cell;
