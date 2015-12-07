@@ -184,8 +184,6 @@
                         BetType = Converter.ToInt(reader["BetType"]),
                         SportTypeRef = Converter.ToInt(reader["SportTypeRefVirtualRate"]),
                         BetTypeRef = Converter.ToInt(reader["BetTypeRefVirtualRate"])
-
-                        IsActive = Converter.ToBool(reader["IsActive"])
                     });
                 }
             }
