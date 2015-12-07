@@ -68,9 +68,8 @@
       <HintPath>..\packages\Fanex.BetList.Core.2.6.0.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.BetList.MetricGaming">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.3\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
@@ -108,8 +107,8 @@
       <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.4\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.0.5\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.0.6\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
