@@ -129,9 +129,9 @@ var EditSettingManager = function () {
         var pt = maxPT;
         var val;
         var hasSelected = false;
-        var ptStep = 0.01;
+        var ptStep = 0.005;
         while (pt > minPT) {
-            val = parseFloat(pt.toFixed(2));
+            val = parseFloat(pt.toFixed(3));
             var isSlected = ptValue == val;
             if (isSlected) {
                 hasSelected = true;
