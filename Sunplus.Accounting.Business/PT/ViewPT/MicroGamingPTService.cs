@@ -31,7 +31,7 @@
         {
             get
             {
-                return (byte)2;
+                return (byte)3;
             }
         }
 
