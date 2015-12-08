@@ -10,11 +10,7 @@
     TicketDetail betdetail = new TicketDetail();
     int numberBeginning = 1;
 
-    var startTime = DateTime.Now;
     string[] renderResult = Render(ref numberBeginning);
-    var endTime = DateTime.Now;
-
-    var duration = (endTime - startTime).TotalMilliseconds;
 }
 @functions {
     public string[] Render(ref int numberBeginning)
@@ -463,9 +459,6 @@
     <script type="text/javascript" src="~/js/BetList.js"></script>
     <script type="text/javascript" src="~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js"></script>
     <script type="text/javascript">
-
-        var duration = @duration;
-        console.log(duration);
         window.rootUrl = '@Url.Content("~")';
         $(document).ready(function () {
             microGamingBetDetailsManager.initPage();
