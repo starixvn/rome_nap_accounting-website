@@ -15,25 +15,38 @@ namespace Sunplus.Accounting.Business
     /// <summary>
     /// Utilities class for IP
     /// </summary>
-    public class IpManagement
+    public static class IpManagement
     {
+        private static List<IPVNBean> _ipVNList;
+
+        static IpManagement()
+        {
+            _ipVNList = IPVNList;
+        }
+
         public static List<IPVNBean> IPVNList
         {
             get
             {
-                object listIpvn = null;
-                try
+                if (_ipVNList == null)
                 {
-                    listIpvn = CacheHelper.Get("ipvnlist") ?? IBCProvider.Utils.GetIPVN();
+                    try
+                    {
+                        _ipVNList = CacheHelper.Get("ipvnlist") as List<IPVNBean> ?? IBCProvider.Utils.GetIPVN();
+                    }
+                    catch
+                    {
+                        _ipVNList = IBCProvider.Utils.GetIPVN();
+                    }
                 }
-                catch
-                {
-                    listIpvn = IBCProvider.Utils.GetIPVN();
-                    IPVNList = listIpvn as List<IPVNBean>;
-                }
-                return listIpvn as List<IPVNBean>;
+
+                return _ipVNList;
             }
-            set { CacheHelper.Set("ipvnlist", value, DateTime.Now.AddMinutes(WebSettings.CacheExpire)); }
+            set
+            {
+                _ipVNList = value;
+                CacheHelper.Set("ipvnlist", value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
+            }
         }
 
         public static bool IsVNIP(string IP)
