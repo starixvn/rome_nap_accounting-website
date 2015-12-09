@@ -41,11 +41,12 @@ namespace Fanex.BetList.Accounting.Core
         {
             return ticket.BetTypeId == 73 ||
                 ticket.BetTypeId == 71 ||
-                ticket.SportTypeId == 202 ||
+                ticket.SportTypeId == SportContants.Keno ||
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId);
+                IsColossusBetType(ticket.BetTypeId) ||
+                IsCockFightingBetType(ticket.BetTypeId);
         }
 
         public static bool IsMetricGamingBetType(int betType)
@@ -63,6 +64,17 @@ namespace Fanex.BetList.Accounting.Core
                 betType == BetTypeContants.ColossusBetsConsolationPrize ||
                 betType == BetTypeContants.ColossusBetsJackpotPrize ||
                 betType == BetTypeContants.ColossusBetsBonusPrize;
+        }
+
+        public static bool IsCockFightingBetType(int betType)
+        {
+            return betType == BetTypeContants.CockFighting;
+        }
+
+        public static bool IsHideResultLink(int sportType)
+        {
+            return sportType == SportContants.Keno ||
+                sportType == SportContants.CockFighting;
         }
 
         public string IsNegative(decimal input)
@@ -189,6 +201,11 @@ namespace Fanex.BetList.Accounting.Core
             else
             {
                 statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+            }
+
+            if (IsHideResultLink(ticketDetail.Ticket.SportTypeId))
+            {
+                return statusLabel;
             }
 
             string resultLink = string.Empty;
@@ -333,7 +350,7 @@ namespace Fanex.BetList.Accounting.Core
                 }
             }
 
-            var resultLink1 = ((string.IsNullOrEmpty(resultLink) == true) || (ticketDetail.Ticket.SportTypeId == 202)) ?
+            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
                 string.Empty :
                 "<br />" +
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
@@ -468,6 +485,11 @@ namespace Fanex.BetList.Accounting.Core
                 }
             }
 
+            if (IsHideResultLink(ticketDetail.Ticket.SportTypeId))
+            {
+                return statusHtml;
+            }
+
             string resultLink = string.Empty;
             if (betlistHelper.IsHRBettype(ticketDetail.Ticket.BetTypeId))
             {
@@ -572,7 +594,7 @@ namespace Fanex.BetList.Accounting.Core
                 }
             }
 
-            var resultLink1 = ((string.IsNullOrEmpty(resultLink) == true) || (ticketDetail.Ticket.SportTypeId == 202)) ?
+            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
                 string.Empty :
                 "<br />" +
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=" + resultLink + ">" + Labels.Result + "</a>" +

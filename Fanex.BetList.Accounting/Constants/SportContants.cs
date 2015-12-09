@@ -65,5 +65,7 @@ namespace Fanex.BetList.Accounting.Constants
         public const int MicroGamingLiveCasino = 203;
         public const int MicroGamingRNGCasino = 205;
         public const int AGCasino = 250;
+        public const int Keno = 202;
+        public const int CockFighting = 206;
     }
 }
