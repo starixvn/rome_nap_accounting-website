@@ -1203,6 +1203,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
                                 }
 
+                                if (isHideCockFighting || isDeposit)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
