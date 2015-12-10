@@ -56,6 +56,8 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
 
         public BaseModel ApplyGroupToMember { get; set; }
 
+        public PositionTaking PT { get; set; }
+
         public string GetSettingKey()
         {
             return "Acc_CustomerUpdAGCasinoSetting";
@@ -76,10 +78,12 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
             storeProcedureParams.Add("custid", CustomerId);
             storeProcedureParams.Add("userid", UserId);
             storeProcedureParams.Add("ip", IP);
-            storeProcedureParams.Add("roleid", RoleId);
 
             var gameTypeLength = ProductInfo == null ? 0 : ProductInfo.Count;
+
             var checkedGroup = new List<string>();
+            var addedGroup = new List<string>();
+            var deletedGroup = new List<string>();
             for (var i = 0; i < gameTypeLength; i++)
             {
                 var gameType = ProductInfo[i];
@@ -89,19 +93,33 @@ namespace Fanex.Tarus.Customer.Criteria.AGCasino
                 {
                     var group = gameType.GameTypeGroup[j];
                     var groupName = group.Name.ToLower();
-                    if (group.Enable)
+                    if (group.Checked)
                     {
                         checkedGroup.Add(group.Name);
+                    }
+
+                    if (group.Checked && !group.OldChecked)
+                    {
+                        addedGroup.Add(group.Name);
+                    }
+
+                    if (!group.Checked && group.OldChecked)
+                    {
+                        deletedGroup.Add(group.Name);
                     }
                 }
             }
 
             storeProcedureParams.Add("checkedgroup", string.Join(",", checkedGroup));
+            storeProcedureParams.Add("addedgroup", string.Join(",", addedGroup));
+            storeProcedureParams.Add("deletedgroup", string.Join(",", deletedGroup));
+
             storeProcedureParams.Add("applygrouptomember", ApplyGroupToMember.Name);
             storeProcedureParams.Add("defaultgroup", DefaultAGCasinoGroup.Name);
             storeProcedureParams.Add("errcode", 0);
             storeProcedureParams.Add("errmsg", string.Empty);
             storeProcedureParams.Add("langkey", Language);
+            storeProcedureParams.Add("v250_1801pt", PT.Current);
             return storeProcedureParams;
         }
     }

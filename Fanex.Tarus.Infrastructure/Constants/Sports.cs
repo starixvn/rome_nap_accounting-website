@@ -56,7 +56,8 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int VirtualSoccer = 180;
         public const int Darts = 25;
 
-        public const int MicroGaming = 203;
+        public const int MicroGamingLiveCasino = 203;
+        public const int MicroGamingRNGCasino = 205;
 
         /// <summary>
         /// Gets the sport name.
@@ -71,6 +72,10 @@ namespace Fanex.Tarus.Infrastructure.Constants
                     return Labels.Soccer;
                 case OtherSports:
                     return Labels.Other_Sports;
+                case Tennis:
+                    return Labels.Tennis;
+                case Basketball:
+                    return Labels.Basketball;
                 default:
                     return CacheRef.GetSportName(sportId);
             }

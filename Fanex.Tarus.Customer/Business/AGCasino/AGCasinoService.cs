@@ -21,6 +21,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.AGCasino;
     using Fanex.Tarus.Infrastructure.Configurations;
+    using Fanex.Tarus.Infrastructure.Constants;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
@@ -193,7 +194,7 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Asian Gaming Casino API result.</returns>
-        private string AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
+        public string AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
         {
             try
             {
@@ -420,11 +421,16 @@ namespace Fanex.Tarus.Customer.Business.AGCasino
         {
             var asianGamingProductInfo = customerSetting.ProductInfo[0];
             var checkGroupArray = customerSetting.AGCasinoCheckedGroup.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var uplineCheckGroupArray = customerSetting.AGCasinoUplineCheckedGroup.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             for (var i = 0; i < asianGamingProductInfo.GameTypeGroup.Count; i++)
             {
                 var group = asianGamingProductInfo.GameTypeGroup[i];
-                var groupName = group.Name;
-                customerSetting.ProductInfo[0].GameTypeGroup[i].Enable = checkGroupArray.Contains(groupName);
+                var groupName = group.Name;                
+
+                var isChecked = checkGroupArray.Contains(groupName);
+                customerSetting.ProductInfo[0].GameTypeGroup[i].Checked = isChecked;
+                customerSetting.ProductInfo[0].GameTypeGroup[i].OldChecked = isChecked;
+                customerSetting.ProductInfo[0].GameTypeGroup[i].Enable = customerSetting.RoleId == RoleIdConstants.Super || uplineCheckGroupArray.Contains(groupName);
             }
         }
     }

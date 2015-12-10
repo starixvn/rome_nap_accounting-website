@@ -25,7 +25,7 @@ var AGCasinoSetting = function () {
 
     self.CacheData = {
         customerSetting: null,
-        isShowUpdate: false,
+        isShowUpdate: true,
 
         changInfo: {},
 
@@ -103,8 +103,7 @@ var AGCasinoSetting = function () {
         self.blockUI();
         self.cachedDOMElements();
 
-        self.CacheData.isShowUpdate = viewResources.RoleId !== self.Constants.RoleId.MASTER &&
-            viewResources.RoleId !== self.Constants.RoleId.AGENT;
+        self.CacheData.isShowUpdate = true;
         if (!self.CacheData.isShowUpdate) {
             self.Tables.buttonUpdate.remove();
         }
@@ -117,7 +116,9 @@ var AGCasinoSetting = function () {
         self.Tables.tableInfo = $("#settingcontent .tableinfo");
         self.Tables.tableInfoBody = self.Tables.tableInfo.find("tbody");
 
-        self.Tables.tableSetting = $("#settingcontent .tablesetting");
+
+        self.Tables.tablePT = $("#tblPT");
+        self.Tables.tableSetting = $("#tblgamesetting");
         self.Tables.tableSettingBody = self.Tables.tableSetting.find("tbody");
 
         self.Tables.buttonUpdate = $(".btn-update");
@@ -182,6 +183,27 @@ var AGCasinoSetting = function () {
 
         return html;
     };
+
+    self.RenderPT = function (pt) {
+        $('#ptGameType').empty();
+        $('#gameType').html('Baccarat');
+
+        var min = pt.Min.toFixed(2) * 100;
+        var max = pt.Max.toFixed(2) * 100;
+        min = Math.round(min);
+        max = Math.round(max);
+
+        for (var i = max; i >= min; i -= 1) {
+            var value = (i / 100);
+            var selected = (value == pt.Current) ? 'selected="true"' : '';
+            $('#ptGameType').append('<option value="' + value + '" ' + selected + '>' + value + '</option>');
+        }
+
+        $('#ptGameType').change(function () {
+            self.EnableUpdateButton();
+        });
+    };
+
     self.RenderCustomerGameSettingGroupName = function (gameType, gameTypeIndex) {
         var html = "";
         var groupLength = gameType.GameTypeGroup.length;
@@ -195,9 +217,10 @@ var AGCasinoSetting = function () {
                         ' class="col-gamekindgroup label-for-checkbox' + (j === groupLength - 1 ? ' last-group' : '') + '" for="checkbox' + groupSuffix + '"' +
                         ' data-gametypeindex="' + gameTypeIndex + '"' +
                         ' data-groupindex="' + j + '"' +
-                        ' onclick="agCasinoSetting.checkGroup($(this));">\
+                        (group.Enable ? ' onclick="agCasinoSetting.checkGroup($(this));"' : ' title="' + viewResources.Upline_Disabled + '"') +
+                            '>\
                             <span id="checkbox' + "-gametype-" + gameType.Id + groupSuffix + '"' +
-                            ' class="' + (group.Enable ? "checkbox-checked" : "checkbox-unchecked") + '"></span>\
+                            ' class="' + (group.Checked ? "checkbox-checked" : (group.Enable && !group.Checked ? "checkbox-unchecked" : "checkbox-disabled")) + '"></span>\
                             <label id="label' + groupSuffix + '">' + group.Name + '</label>\
                         </div>';
         }
@@ -206,6 +229,10 @@ var AGCasinoSetting = function () {
         return html;
     };
     self.checkGroup = function (container) {
+        if (self.CacheData.customerSetting.RoleId == self.Constants.RoleId.MEMBER) {
+            $(".col-gamekindgroup span[id^='checkbox-gametype']").removeClass("checkbox-checked").addClass("checkbox-unchecked");
+        }
+
         var gameType = self.CacheData.customerSetting.ProductInfo[container.attr("data-gametypeindex")];
         var group = gameType.GameTypeGroup[container.attr("data-groupindex")];
         var checkbox = $("#checkbox-gametype-" + gameType.Id + "-group-" + group.Id);
@@ -216,7 +243,7 @@ var AGCasinoSetting = function () {
             checkbox.removeClass("checkbox-unchecked").addClass("checkbox-checked");
         }
 
-        self.CacheData.changeInfo["gametype-" + gameType.Id + "-group-" + group.Id] = isChecked == group.Enable;
+        self.CacheData.changeInfo["gametype-" + gameType.Id + "-group-" + group.Id] = isChecked == group.Checked;
 
         self.updateSelectedGroup();
         self.EnableUpdateButton();
@@ -238,7 +265,8 @@ var AGCasinoSetting = function () {
             (self.CacheData.selectedDefaultGroup &&
             self.CacheData.selectedDefaultGroup.Name !== self.CacheData.customerSetting.DefaultAGCasinoGroup.Name) ||
             (self.CacheData.selectedApplyGroup &&
-            self.CacheData.selectedApplyGroup.Name !== self.CacheData.firstSelectedApplyGroup.Name);
+            self.CacheData.selectedApplyGroup.Name !== self.CacheData.firstSelectedApplyGroup.Name) ||
+            self.CacheData.customerSetting.PT.Current.toFixed(2) != parseFloat($('#ptGameType').val().trim()).toFixed(2);
         if (isChanged) {
             self.Tables.buttonUpdate.attr("disabled", null);
         } else {
@@ -301,6 +329,8 @@ var AGCasinoSetting = function () {
         var cutomerInfoHtml = self.RenderCustomerInfo(customerSetting);
         self.Tables.tableInfoBody.empty().append(cutomerInfoHtml);
 
+        self.RenderPT(customerSetting.PT);
+
         var customerSettingHtml = '';
         if (self.CacheData.customerSetting.SelectResult.Code) {
             customerSettingHtml += '<tr class="title1"><td class="l" colspan="4">Game Setting</td></tr>';
@@ -315,17 +345,18 @@ var AGCasinoSetting = function () {
                 var tableWidth = 605 + (groupLength - 4) * 120;
                 self.Tables.tableSetting.attr("style", "width:" + tableWidth + "px;");
                 self.Tables.tableInfo.attr("style", "width:" + tableWidth + "px;");
+                self.Tables.tablePT.attr("style", "width:" + tableWidth + "px;");
             }
 
             customerSettingHtml = self.RenderCustomerGameSetting(customerSetting);
             self.Tables.tableSettingBody.empty().append(customerSettingHtml);
         }
 
-        if (self.CacheData.customerSetting.SelectResult.Code || customerSetting.RoleId !== self.Constants.RoleId.SUPER) {
+        if (self.CacheData.customerSetting.SelectResult.Code) {
             self.Tables.copyToMemberContainer.remove();
             self.Tables.defautGroupNewMemberContainer.remove();
             self.Tables.buttonUpdate.remove();
-        } else {
+        } else if (self.CacheData.customerSetting.RoleId == self.Constants.RoleId.AGENT) {
             self.Tables.copyToMemberContainer.removeClass("hide");
             self.Tables.defautGroupNewMemberContainer.removeClass("hide");
         }
@@ -463,12 +494,14 @@ var AGCasinoSetting = function () {
                 var group = gameType.GameTypeGroup[j];
                 var checkbox = $("#checkbox-gametype-" + gameType.Id + "-group-" + group.Id);
                 var isChecked = checkbox.hasClass("checkbox-checked");
-                self.Params.updateCustomerInfo.ProductInfo[i].GameTypeGroup[j].Enable = isChecked;
+                self.Params.updateCustomerInfo.ProductInfo[i].GameTypeGroup[j].Checked = isChecked;
                 if (isChecked) {
                     self.Params.updateCustomerInfo.hasChecked = true;
                 }
             }
         }
+
+        self.Params.updateCustomerInfo.PT.Current = parseFloat($('#ptGameType').val().trim());
     };
     self.CheckUpdateParams = function () {
         if (!self.Params.updateCustomerInfo.hasChecked) {
@@ -513,6 +546,19 @@ var AGCasinoSetting = function () {
         showAlertMessage("result-message", updateResult.ErrorMessage, 0);
         self.Tables.buttonUpdate.attr("disabled", "disabled");
         self.CacheData.customerSetting = self.Params.updateCustomerInfo;
+
+        var gameTypeLength = self.CacheData.customerSetting.ProductInfo.length;
+        for (var i = 0; i < gameTypeLength; i++) {
+            var gameType = self.CacheData.customerSetting.ProductInfo[i];
+            var groupLength = gameType.GameTypeGroup.length;
+            for (var j = 0; j < groupLength; j++) {
+                var group = gameType.GameTypeGroup[j];
+                var isChecked = self.CacheData.customerSetting.ProductInfo[i].GameTypeGroup[j].Checked;
+                self.CacheData.customerSetting.ProductInfo[i].GameTypeGroup[j].OldChecked = isChecked;
+            }
+        }
+
+
         self.CacheData.selectedDefaultGroup = self.CacheData.customerSetting.DefaultAGCasinoGroup;
         self.CacheData.firstSelectedApplyGroup = self.Params.updateCustomerInfo.ApplyGroupToMember;
         setTimeout(function () {

@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
     using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Common.Extensions;
     using Fanex.Tarus.Customer.Criteria.AGCasino;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.AGCasino;
@@ -89,7 +90,8 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 RoleId = criteria.RoleId,
                 UplineId = criteria.UplineId,
                 ExchangeId = criteria.ExchangeId,
-                SelectResult = new SelectResult()
+                SelectResult = new SelectResult(),
+                PT = new PositionTaking()
             };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -101,6 +103,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 if (reader.NextResult())
                 {
                     MappingCustomerSetting(reader, result);
+                }
+
+                if (reader.NextResult())
+                {
+                    MappingCustomerPT(reader, result);
                 }
             }
 
@@ -149,6 +156,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
                 custInfo.Fax = Converter.ToString2(reader["Fax"]);
                 custInfo.SiteName = Converter.ToString2(reader["SiteName"]);
                 custInfo.ExchangeId = Converter.ToInt(reader["Currency"]);
+
                 break;
             }
         }
@@ -163,11 +171,27 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
             while (reader.Read())
             {
                 custInfo.AGCasinoCheckedGroup = Converter.ToString2(reader["CheckedGroup"]);
+                custInfo.AGCasinoUplineCheckedGroup = Converter.ToString2(reader["UplineCheckedGroup"]);
                 custInfo.DefaultAGCasinoGroup = new BaseModel
                 {
                     Name = Converter.ToString2(reader["DefaultGroup"])
                 };
                 custInfo.EnableAGCasino = Converter.ToBool(reader["IsEnabled"]);
+                break;
+            }
+        }
+
+        private void MappingCustomerPT(IDataReader reader, AGCasinoCustomerInfo custInfo)
+        {
+            while (reader.Read())
+            {
+                custInfo.PT = new PositionTaking
+                {
+                    Min = Converter.ToDecimal(reader["minpositiontaking"]),
+                    Max = Converter.ToDecimal(reader["maxpositiontaking"]),
+                    Current = Converter.ToDecimal(reader["pt"])
+                };
+
                 break;
             }
         }

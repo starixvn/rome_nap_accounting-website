@@ -970,6 +970,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upline&apos;s disabled.
+        /// </summary>
+        public static string Upline_Disabled {
+            get {
+                return ResourceManager.GetString("Upline_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload Virtual Rate.
         /// </summary>
         public static string Upload_Virtual_Rate {
@@ -1148,8 +1157,7 @@ namespace Fanex.Tarus.Customer.Resources {
                 return ResourceManager.GetString("VirtualRate_UploadFile_NotNumberRate", resourceCulture);
             }
         }
-        
-        /// <summary>
+
         ///   Looks up a localized string similar to This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times..
         /// </summary>
         public static string VirtualRate_UploadFile_RepeatBetType {

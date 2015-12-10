@@ -266,16 +266,28 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
 
-                    case Constants.Sport.MicroGaming:
-                        var microGamingViewPTCriteria = new ViewMicroGamingPTCriteria
+                    case Constants.Sport.AGCasino:
+                        var agCasinoViewPTCriteria = new ViewMicroGamingPTCriteria
                         {
                             Username = userName,
                             SportId = sportId,
                             BetType = bettypeId,
-                            IsLive = isLive
+                            IsLive = isLive,
+                            IsAGCasino = true
                         };
 
-                        return new MicroGamingPTService().ViewPositionTaking(microGamingViewPTCriteria);
+                        return new MicroGamingPTService().ViewPositionTaking(agCasinoViewPTCriteria);
+                    case Constants.Sport.MicroGamingLiveCasino:
+                        var microgamingViewPTCriteria = new ViewMicroGamingPTCriteria
+                        {
+                            Username = userName,
+                            SportId = sportId,
+                            BetType = bettypeId,
+                            IsLive = isLive,
+                            IsMicroGaming = true
+                        };
+
+                        return new MicroGamingPTService().ViewPositionTaking(microgamingViewPTCriteria);
                 }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
@@ -848,12 +860,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                     Name = hrFixedOdd.Name,
                                                     Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm_3"], 4)
                                                 },
-                                               MyanmarOdds = new AllowViewSport()
-                                               {
-                                                   Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                                   Name = myanmarOdds.Name,
-                                                   Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
-                                               },
+                                                MyanmarOdds = new AllowViewSport()
+                                                {
+                                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                                    Name = myanmarOdds.Name,
+                                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
+                                                },
                                                 HorseRacing = masterRacingInfo,
                                                 Greyhound = masterGreyhoundInfo,
                                                 Harness = masterHarnessInfo,
@@ -1460,7 +1472,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 var microgaming = new Sport
                 {
-                    SportId = Constants.Sport.MicroGaming,
+                    SportId = Constants.Sport.MicroGamingLiveCasino,
                     SportName = Labels.Microgaming,
                     Bettype = new BettypeDTO
                     {
@@ -1473,6 +1485,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                 };
                 sports.SportsList.Add(microgaming);
+            }
+
+            if (WebSettings.EnableAGCasino)
+            {
+                var agCasino = new Sport
+                {
+                    SportId = Constants.Sport.AGCasino,
+                    SportName = "AG Casino",
+                    Bettype = new BettypeDTO()
+                };
+                sports.SportsList.Add(agCasino);
             }
 
             #endregion live casino

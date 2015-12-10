@@ -152,6 +152,11 @@ namespace Fanex.BetList.Accounting.Services
                 betTypeId <= BetTypeContants.MicroGamingEndBetType;
         }
 
+        public static bool IsAGCasino(int betTypeId)
+        {
+            return 1801 <= betTypeId && betTypeId <= 1804;
+        }
+
         #endregion StaticMethods
     }
 }

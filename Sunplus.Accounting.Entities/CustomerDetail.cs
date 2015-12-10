@@ -613,8 +613,6 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableMetricGaming { get; set; }
 
-        public bool IsDisableMicroGaming { get; set; }
-
         public bool IsDisableColossusBets { get; set; }
 
         public bool IsDisableSportsbook2 { get; set; }

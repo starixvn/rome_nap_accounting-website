@@ -433,3 +433,25 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 {
     color:#0017CD;
 }
+.ag-casino-bet-type {
+    color: #808080;
+}
+
+.ag-casino-game-name {
+    color: #000000;
+    font-weight: bold;
+}
+
+.micro-gaming-bet-type {
+    color: #808080;
+}
+
+.micro-gaming-game-name {
+    color: #000000;
+    font-weight: bold;
+}
+
+.column-winloss
+{
+    width: 120px;
+}

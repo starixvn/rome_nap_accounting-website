@@ -63,9 +63,14 @@ namespace Fanex.Tarus.Customer.Controller
                 {
                     CustomerId = customerInfo.CustomerId,
                     RoleId = customerInfo.RoleId,
-                    UplineId = customerInfo.UplineId,
-                    ExchangeId = customerInfo.UplineId
+                    UplineId = customerInfo.UplineId
                 });
+        }
+
+        [AuthenticateRead]
+        public ActionResult AGCasinoAPIResult(GetAGCasinoAPIResultCriteria criteria)
+        {
+            return View("~/Areas/AGCasino/Views/APITest/Index.cshtml", null, _agCasinoService.AGCasinoAPIResult(criteria));
         }
 
         [HttpPost]

@@ -84,6 +84,17 @@ input.btn-update[disabled]
     cursor: pointer;
 }
 
+.checkbox-disabled
+{
+    background: url("Images/uncheck.jpg") repeat scroll 0 0 #000;
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 3px -2px 0;
+    cursor: default;
+    opacity: 0.5;
+}
+
 .checkbox-checked.display-none, .checkbox-unchecked.display-none
 {
     display: none;

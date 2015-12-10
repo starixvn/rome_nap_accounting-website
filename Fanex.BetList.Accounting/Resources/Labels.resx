@@ -240,4 +240,7 @@
   <data name="Microgaming" xml:space="preserve">
     <value>Microgaming</value>
   </data>
+  <data name="AGCasino" xml:space="preserve">
+    <value>AG Casino</value>
+  </data>
 </root>

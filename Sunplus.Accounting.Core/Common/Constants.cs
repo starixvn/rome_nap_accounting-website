@@ -142,8 +142,10 @@ namespace Sunplus.Accounting.Core.Common
             public const int LiveCasino = 162;
             public const int Keno = 202;
             public const int GoldDeluxe = 255;
-            public const int MicroGaming = 203;
+            public const int MicroGamingLiveCasino = 203;
             public const int Sportsbook2 = 16;
+            public const int MicroGamingRNGCasino = 205;
+            public const int AGCasino = 250;
             public static readonly IEnumerable<int> Sports = new int[] { Soccer, Basketball, Football, Tennis, Baseball, Golf, Motorsports, OtherSports };
 
             public static string GetSportName(int sportId)

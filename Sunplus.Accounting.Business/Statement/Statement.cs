@@ -7,6 +7,7 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
+using Fanex.Tarus.Infrastructure.Constants;
 using IBCUtils;
 using Microsoft.Security.Application;
 using Sunplus.Accounting.Business.BootStrappers;
@@ -377,9 +378,9 @@ namespace Sunplus.Accounting.Business.Statement
 
                 string itemTemplate = TemplateHandler.CopyBlock(contentTemplate, "ReportContent");
                 //DbResult ds = null;
-                double total2 = 0;
                 int idx = 0;
-                double OpenBalance = 0, IsBalance = 0, linetotal = 0;
+                double OpenBalance = 0, linetotal = 0;
+                bool isBalance = false;
                 int gotopen = 0;
                 bool includeAccBal = false;
 
@@ -415,10 +416,10 @@ namespace Sunplus.Accounting.Business.Statement
 
                         string creator = entity.Creator.Username; // CastAide.AsString(row["creator"]);
                         double total = entity.TotalAmount; //CastAide.AsDecimal(row["totalamt"]);
-                        total2 += total;
 
                         #region Processing for balance
 
+                        var isGrandPrize = string.Equals(entity.TransType, "GP", StringComparison.OrdinalIgnoreCase);
                         bool isAccBal = string.Compare(
                             remark.ToLowerInvariant(),
                             "accumulated balance", true) == 0;
@@ -456,26 +457,19 @@ namespace Sunplus.Accounting.Business.Statement
                         //Total 2
                         //what is it
                         int index = remark.ToLower().IndexOf("opening balance");
-                        if (index >= 0 && type.ToLower().Equals("bal"))
+                        isBalance = index >= 0 && type.ToLower().Equals("bal");
+                        if (isBalance)
                         {
                             if (gotopen == 0)
                             {
                                 gotopen = 1;
                                 OpenBalance = total;
                                 if (idx == 1)
+                                {
                                     linetotal = OpenBalance;
+                                }
                             }
 
-                            IsBalance = 1;
-                        }
-                        else
-                        {
-                            linetotal += total;
-                            IsBalance = 0;
-                        }
-
-                        if (IsBalance == 1)
-                        {
                             if (Math.Abs(linetotal - total) > 1)
                             {
                                 string t =
@@ -493,8 +487,13 @@ namespace Sunplus.Accounting.Business.Statement
                         }
                         else
                         {
+                            if (!isGrandPrize)
+                            {
+                                linetotal += total;
+                            }
+
                             TemplateHandler.Assign(ref rowHtml, "{Total2}",
-                                                   FormatHandler.FormatNumber20(linetotal));
+                                FormatHandler.FormatNumber20(linetotal));
                             if (linetotal < 0)
                             {
                                 TemplateHandler.Assign(ref rowHtml, "{OkClass}", " class='text_red' ");

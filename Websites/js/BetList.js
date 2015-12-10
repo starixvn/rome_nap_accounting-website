@@ -205,6 +205,27 @@ function ViewMicroGamingPopup(custId, siteName, gameId) {
         null);
 }
 
+function ViewAGCasinoPopup(transId, betType) {
+    var width = 750;
+    var params = $.param({
+        transId: transId,
+        BetType: betType
+    });
+
+    parent.OpenNextPopup(
+        "AGCasinoResult",
+        'Report/ViewAGCasinoResult.aspx?' + params,
+        "AG Casino Result",
+        width,
+        500,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewResultLiveCasino(url) {
     parent.OpenNextPopup("LiveCasinoPopup", url, 'Live Casino', 760, 200, true, false, window, 0, null, null);
 }
@@ -528,4 +549,48 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         function () {
             parent.$("#innerFrameColossusBetsDetails").contents().find(".memberchoice-betdetail").addClass("display-none");
         });
+}
+
+function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "MicrogamingDetails",
+        'MicroGamingBetList/BetDetails?' + params,
+        'Microgaming Details',
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function showAGCasinoDetails(refno, winlossDate, custId, transType) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "AGCasinoDetails",
+        'AGCasinoBetList/BetDetails?' + params,
+        'AG Casino Details',
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
 }

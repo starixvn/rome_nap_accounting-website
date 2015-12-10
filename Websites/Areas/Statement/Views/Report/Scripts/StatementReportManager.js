@@ -339,7 +339,9 @@ var StatementReportManager = function () {
                         {
                             Name: "ColGrandPrize",
                             Value: statement.GrandPrize.HasData ?
-                                 ('<div class="column-grandprize ' + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                 ('<div class="' +
+                                    (canViewBetList ? 'column-grandprize ' : ' ')
+                                    + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                  numeral(statement.GrandPrize.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData

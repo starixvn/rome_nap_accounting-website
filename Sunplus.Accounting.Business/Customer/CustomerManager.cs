@@ -243,8 +243,9 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-
+                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];                        
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
+                            var isLicensee = isDeposit;
 
                             Hashtable jsparam = new Hashtable();
                             jsparam.Add("custid", custId);
@@ -762,9 +763,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
                                 }
 
-                                var canEditAGCasinoStatus = WebSettings.EnableAGCasino &&
-                                    roleId == 4 &&
-                                    isDeposit;
+                                var canEditAGCasinoStatus = WebSettings.EnableAGCasino && isLicensee;
                                 if (!canEditAGCasinoStatus)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
@@ -828,7 +827,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
 
-                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", _custparent.IsDisableMicroGaming ? "0" : "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
@@ -1058,7 +1057,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", sportsbook2LinkSetting);
 
-                                if (!WebSettings.EnableAGCasino || roleId != 4 || !isDeposit)
+                                if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
                                 }

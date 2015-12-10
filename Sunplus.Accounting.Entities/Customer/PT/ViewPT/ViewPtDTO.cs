@@ -89,6 +89,9 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         public bool IsMicroGaming { get; set; }
 
         [DataMember]
+        public bool IsAGCasino { get; set; }
+
+        [DataMember]
         public RacebookIbcPt IBCPt { get; set; }
 
         [DataMember]

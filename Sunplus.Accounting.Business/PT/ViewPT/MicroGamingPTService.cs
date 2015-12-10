@@ -31,7 +31,7 @@
         {
             get
             {
-                return (byte)2;
+                return (byte)3;
             }
         }
 
@@ -43,7 +43,8 @@
                 ErrorMessage = Converter.ToInt(rawData.Outputs["errcode"], -1) == 0 ?
                     string.Empty :
                     rawData.Outputs["errmsg"].ToString(),
-                IsMicroGaming = true
+                IsMicroGaming = criteria.IsMicroGaming,
+                IsAGCasino = criteria.IsAGCasino
             };
 
             if (rawData.ResultSet.Tables.Count == 0)
@@ -179,7 +180,12 @@
                     Super = FormatPTValue(dr["s1"]),
                     Master = FormatPTValue(dr["m1"]),
                     Agent = FormatPTValue(dr["a1"]),
-                    MaxPt = FormatPTValue(dr["l1"])
+                    MaxPt = FormatPTValue(dr["l1"]),
+                    Com = "0",
+                    SuperAuto = "0.00",
+                    SuperIsAuto = string.Empty,
+                    MasterAuto = "0.00",
+                    MasterIsAuto = string.Empty
                 };
 
                 positionTakingDTO.Member = memberPt;
@@ -192,7 +198,12 @@
                     Master = FormatPTValue(dr["m2"]),
                     Agent = FormatPTValue(dr["a2"]),
                     MinPt = FormatPTValue(dr["n2"]),
-                    MaxPt = FormatPTValue(dr["l2"])
+                    MaxPt = FormatPTValue(dr["l2"]),
+                    Com = "0",
+                    SuperAuto = "0.00",
+                    SuperIsAuto = string.Empty,
+                    MasterAuto = "0.00",
+                    MasterIsAuto = string.Empty
                 };
 
                 positionTakingDTO.Agent = agentPt;
@@ -205,7 +216,12 @@
                     Super = FormatPTValue(dr["s3"]),
                     Master = FormatPTValue(dr["m3"]),
                     MinPt = FormatPTValue(dr["n3"]),
-                    MaxPt = FormatPTValue(dr["l3"])
+                    MaxPt = FormatPTValue(dr["l3"]),
+                    Com = "0",
+                    SuperAuto = "0.00",
+                    SuperIsAuto = string.Empty,
+                    MasterAuto = "0.00",
+                    MasterIsAuto = string.Empty
                 };
 
                 positionTakingDTO.Master = masterPt;
@@ -219,7 +235,12 @@
                     Master = FormatPTValue(dr["m4"]),
                     Agent = FormatPTValue(dr["a4"]),
                     MinPt = FormatPTValue(dr["n4"]),
-                    MaxPt = FormatPTValue(dr["l4"])
+                    MaxPt = FormatPTValue(dr["l4"]),
+                    Com = "0",
+                    SuperAuto = "0.00",
+                    SuperIsAuto = string.Empty,
+                    MasterAuto = "0.00",
+                    MasterIsAuto = string.Empty
                 };
 
                 positionTakingDTO.Super = superPt;

@@ -4,6 +4,7 @@
 @using Fanex.Tarus.Customer.Entities.AGCasino;
 @using Fanex.Tarus.Business.Implement;
 @using Fanex.Tarus.Security.Permission;
+@using Fanex.Tarus.Customer.Resources;
 @model AGCasinoCustomerInfo
 @{
     var permissionService = new PermissionService();
@@ -98,7 +99,25 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="tblcollapse tablesetting">
+            <table id="tblPT" class="tblcollapse tablesetting">
+                <thead>
+                    <tr class="title1">
+                        <td class="l" colspan="4">
+                            Position Taking/Commission
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="r col-1">
+                            <div id="gameType"></div>
+                        </td>
+                        <td class="l" colspan="3">
+                            <select id="ptGameType">
+                            </select>
+                        </td>
+                    </tr>                
+                </thead>
+            </table>
+            <table id="tblgamesetting" class="tblcollapse tablesetting">
                 <thead>
                     <tr class="title1">
                         <td class="l" colspan="4">
@@ -149,6 +168,7 @@
             HasHostPermission: @hasHostPermission,
             CurrentRole: @roleId,
             UplineId: @uplineId,
-            ExchangeId: @exchangeId
+            ExchangeId: @exchangeId,
+            Upline_Disabled: '@Customer_Labels.Upline_Disabled'
         };
 </script>

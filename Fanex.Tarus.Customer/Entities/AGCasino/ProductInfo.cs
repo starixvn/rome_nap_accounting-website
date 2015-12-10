@@ -23,7 +23,7 @@ namespace Fanex.Tarus.Customer.Entities.AGCasino
         public bool EnableUpline { get; set; }
 
         public bool Enable { get; set; }
-
+        
         public bool EnableDownlines { get; set; }
 
         public List<GameTypeGroup> GameTypeGroup { get; set; }
