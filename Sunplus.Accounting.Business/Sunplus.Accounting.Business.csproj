@@ -78,8 +78,8 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.1.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>

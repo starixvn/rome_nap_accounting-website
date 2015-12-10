@@ -202,7 +202,12 @@
                     {
                       <li class="canchange" onclick="EditSportsbook2('@superItem.ChildID');">
                             Sportsbook 2</li>
-                       }
+                    }
+                     @if (!superItem.IsHideCockFighting)
+                    {
+                     <li class="canchange" onclick="EditCockFighting('@superItem.ChildID');">
+                            Cock Fighting</li>
+                    }
                 </ul>
             </div>
         </td>

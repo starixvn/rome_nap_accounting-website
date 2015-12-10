@@ -535,5 +535,12 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowCockFighting
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowCockFighting"] == "1");
+            }
+        }
     }
 }

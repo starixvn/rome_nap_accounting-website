@@ -184,11 +184,16 @@
                         <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>
                     }
-                      @if (!memberItem.IsHideSportsbook2)
+                    @if (!memberItem.IsHideSportsbook2)
                     {
                      <li class="canchange" onclick="EditSportsbook2('@memberItem.ChildID');">
                             Sportsbook 2</li>
-                          }
+                     }
+                    @if (!memberItem.IsHideCockFighting)
+                    {
+                     <li class="canchange" onclick="EditCockFighting('@memberItem.ChildID');">
+                            Cock Fighting</li>
+                    }
                 </ul>
             </div>
         </td>
