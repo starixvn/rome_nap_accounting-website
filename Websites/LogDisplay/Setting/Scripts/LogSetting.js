@@ -269,7 +269,7 @@
     diffValue: function (rows) {
         for (r in rows) {
             var row = rows[r], ID = row.ID;
-            var Groups = row.Detail.Vals ? row.Detail.Vals.length : 1;
+            var Groups = row.Detail && row.Detail.Vals ? row.Detail.Vals.length : 1;
             this.queue.push({ Diffs: row.Diffs, ID: row.ID, Groups: Groups });
             //            for (e in row.Diffs) {
             //                var elm = row.Diffs[e], relClass = 'div.'.concat(ID).concat('-').concat(elm.P);
