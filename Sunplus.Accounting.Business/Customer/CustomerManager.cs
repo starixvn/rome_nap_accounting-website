@@ -220,13 +220,13 @@ namespace Sunplus.Accounting.Business.Customer
 
                             DataRow row2 = ds.ResultSet.Tables[1].Rows[0];
                             DataRow row3 = null;
-                            DataRow row4 = null;
+                            DataTable dynamicSettingtable = null;
                             if (ds.ResultSet.Tables.Count > 2)
                             {
                                 row3 = ds.ResultSet.Tables[2].Rows[0];
                                 if (ds.ResultSet.Tables.Count > 3)
                                 {
-                                    row4 = ds.ResultSet.Tables[4].Rows[0];
+                                    dynamicSettingtable = ds.ResultSet.Tables[4];
                                 }
                             }
                             userName = row1["username"].ToString();
@@ -288,8 +288,28 @@ namespace Sunplus.Accounting.Business.Customer
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
-                            bool isHideSportsbook2 = CastAide.AsInt32(row4["productID"]) == 16 && (CastAide.AsBoolean(row4["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
-                            bool isHideCockFighting = CastAide.AsInt32(row4["productID"]) == 19 && (CastAide.AsBoolean(row4["IsHidden"]) || !WebSettings.IsShowCockFighting) && (roleId < 4);
+
+                            DataRow sportsBook2DataRow = null;
+                            DataRow cockFightingDataRow = null;
+                            foreach (DataRow row in dynamicSettingtable.Rows)
+                            {                               
+                                if (row["productID"] != null) 
+                                {
+                                    var productId = row["productID"].ToString();
+                                    switch(productId)
+                                    {
+                                        case "16":
+                                            sportsBook2DataRow = row;
+                                            break;
+                                        case "19":
+                                            cockFightingDataRow = row;
+                                            break;
+                                    }
+                                }                              
+                            }
+
+                            bool isHideSportsbook2 = (CastAide.AsBoolean(sportsBook2DataRow["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
+                            bool isHideCockFighting = (CastAide.AsBoolean(cockFightingDataRow["IsHidden"]) || !WebSettings.IsShowCockFighting) && (roleId < 4);
 
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
@@ -893,7 +913,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     disalbedVSParent,
                                     disabledEsportsParent,
                                     renderLeftPanelParameter,
-                                    row4);
+                                    dynamicSettingtable);
 
                                 #endregion Setting
 
@@ -1178,6 +1198,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
                                 }
 
+                                if (isHideCockFighting || isDeposit)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1258,7 +1283,7 @@ namespace Sunplus.Accounting.Business.Customer
             bool disabledVSParent,
             bool disabledEsportsParent,
             RenderLeftPanelParameter renderLeftPanelParameter,
-            DataRow row4 = null)
+            DataTable dcsTable = null)
         {
             //Convert value disable --> enable
             //Render Setting Control

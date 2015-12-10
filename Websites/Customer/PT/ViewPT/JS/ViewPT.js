@@ -1036,6 +1036,7 @@ var ViewPT = {
                 $("#frmSportsbook2").hide();
                 break;
             case 44: //Sportsbook 2 
+            case 206:
                 ViewPT.checkIsDepositCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:
@@ -1064,7 +1065,7 @@ var ViewPT = {
         });
     },
     getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive) {
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=44&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
