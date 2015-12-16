@@ -5,6 +5,8 @@
 
     public class ExcelCell
     {
+        protected const int DecimalDigits = 2;
+
         public ExcelCell()
         { 
         }
@@ -33,11 +35,7 @@
 
         protected virtual void SetCellValue(ICell cell)
         {
-            if (CellValue is string)
-            {
-                cell.SetCellValue(Convert.ToString(CellValue));
-            }
-            else if (CellValue is int)
+            if (CellValue is int)
             {
                 cell.SetCellValue(Convert.ToInt32(CellValue));
             }
@@ -45,21 +43,22 @@
             {
                 cell.SetCellValue(Convert.ToInt64(CellValue));
             }
-            else if (CellValue is double)
+            else if (CellValue is double || CellValue is decimal)
             {
-                cell.SetCellValue(Convert.ToDouble(CellValue));
-            }
-            else if (CellValue is decimal)
-            {
-                cell.SetCellValue(Convert.ToDouble(CellValue));
+                double roundValue = Math.Round(Convert.ToDouble(CellValue), DecimalDigits);
+                cell.SetCellValue(roundValue);
             }
             else if (CellValue is bool)
             {
                 cell.SetCellValue(Convert.ToBoolean(CellValue));
             }
-            else if (CellValue is System.DateTime)
+            else if (CellValue is DateTime)
             {
                 cell.SetCellValue(Convert.ToDateTime(CellValue));
+            }
+            else
+            {
+                cell.SetCellValue(Convert.ToString(CellValue));
             }
         }
     }
