@@ -67,8 +67,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.BetList.Core.2.6.0.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.MetricGaming">
-      <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.3\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.4\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Microgaming, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Microgaming.2.0.0.6\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>

@@ -16,8 +16,17 @@ public partial class InternalView : System.Web.UI.Page
         strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
         var internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
-        url = (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl) + "?params=" + strParams;
+        url = (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl) + "?params=" + strParams + "&isVpn=" + IsLocalOrVpnRequest(Request.Headers["Host"]);
         Response.Redirect(url);
         Response.End();
+    }
+
+    private static int IsLocalOrVpnRequest(string ip)
+    {
+        var ipReturn = string.IsNullOrWhiteSpace(ip) ? string.Empty : ip;
+        return ipReturn.Split('.').Length == 4 &&
+            (ipReturn.StartsWith("10.", StringComparison.OrdinalIgnoreCase) ||
+            ipReturn.StartsWith("172.16.", StringComparison.OrdinalIgnoreCase) ||
+            ipReturn.StartsWith("192.168.", StringComparison.OrdinalIgnoreCase)) ? 1 : 0;
     }
 }
