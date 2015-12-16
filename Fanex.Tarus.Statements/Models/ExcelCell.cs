@@ -46,7 +46,15 @@
             else if (CellValue is double || CellValue is decimal)
             {
                 double roundValue = Math.Round(Convert.ToDouble(CellValue), DecimalDigits);
-                cell.SetCellValue(roundValue);
+                if (roundValue == 0)
+                {
+                    // Fix bug: Excel 2007 show -0.00
+                    cell.SetCellValue(0);
+                }
+                else
+                {
+                    cell.SetCellValue(roundValue);
+                }
             }
             else if (CellValue is bool)
             {
