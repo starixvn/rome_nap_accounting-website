@@ -3,6 +3,7 @@ using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
+using System.Collections.Generic;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 {
@@ -31,6 +32,12 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
         {
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.ViewCommission(userName);
+        }
+
+        public IList<DCSProduct> GetProducts()
+        {
+            var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
+            return ptService.GetProducts();
         }
     }
 }

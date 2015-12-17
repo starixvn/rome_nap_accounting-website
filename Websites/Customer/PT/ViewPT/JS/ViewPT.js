@@ -970,6 +970,23 @@ var ViewPT = {
 
         });
     },
+    getProducts: function () {     
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/GetProducts",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (rs) {
+                if (rs != null) {
+                    var products = '<option value="0">SB/RC/NG</option>';
+                    $.each(rs, function (i, product) {
+                        products += '<option value="' + product.ProductId + '">' + product.ProductName + '</option>';
+                    });
+                    $("#ddlProduct").append($(products));
+                }
+            }
+        });     
+    },
     getBettype: function (ind) {
         var sport = ViewPT.getCurrentSportIndex(ind);
         var betTypes = sport.Bettype ? sport.Bettype.BettypeList : null;
@@ -1000,7 +1017,6 @@ var ViewPT = {
             else {
                 sports += '<option value="' + i + '">' + n.SportName + '</option>';
             }
-            //sports += '<option value="' + i + '">' + n.SportName + '</option>';
         });
 
         $("#ddlSporttype").append($(sports)).bind("change", function () {
@@ -1037,14 +1053,14 @@ var ViewPT = {
                 break;
             case 44: //Sportsbook 2 
             case 206:
-                ViewPT.checkIsDepositCustomer(userName, sportId, betTypeId, isLive);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
 
         }
     },
-    checkIsDepositCustomer: function (userName, sportId, betTypeId, isLive) {
+    viewPTBasedOnKindOfCustomer: function (userName, sportId, betTypeId, isLive) {
         var params = '{"userName":"' + userName + '"}';
         $.ajax({
             type: "POST",
@@ -1065,6 +1081,7 @@ var ViewPT = {
         });
     },
     getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive) {
+        $('#sContent').html('');
         $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
@@ -1149,6 +1166,20 @@ var ViewPT = {
         }
         return sport;
     },
+    viewCommBasedOnKindOfSetting: function () {
+        if ($("#ddlProduct").val() == '0') {
+            ViewPT.viewComm()
+        }
+        else {
+            ViewPT.viewCommFromDynamicSettingFormat();
+        }
+    },
+    viewCommFromDynamicSettingFormat: function () {
+        $('#sContent').html('');
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=3&productId=" + $("#ddlProduct").val() + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").show();
+        parent.jQuery.unblockUI();
+    },
     viewComm: function () {
 
         $("#err").html("");
@@ -1194,7 +1225,7 @@ var ViewPT = {
             ViewPT.getPt();
         }
         else {
-            ViewPT.viewComm();
+            ViewPT.viewCommBasedOnKindOfSetting();
         }
     }
 };
@@ -1218,9 +1249,20 @@ function gup(name) {
 }
 
 function ChangeType(rdo) {
-    if (rdo.id == 'rdoPT' && $('#tblPT').css('display', '')) return;
-    if (rdo.id == 'rdoComm' && $('#tblPT').css('display', 'none')) return;
+    if (rdo.id == 'rdoComm') {
+        var numberOfOptions = $('#ddlProduct option').length;
+        if (numberOfOptions == 0) {
+            ViewPT.getProducts();
+        }
+    }
+
+    if (rdo.id == 'rdoPT' && $('#tblPT').css('display', '') && $('#tblProducts').css('display', 'none')) return;
+    if (rdo.id == 'rdoComm' && $('#tblPT').css('display', 'none') && $('#tblProducts').css('display', '')) return;
+
     $('#tblPT').css('display', $('#rdoPT').css('display') = 'none' ? '' : 'none');
+    $('#tblProducts').css('display', $('#rdoPT').css('display') = 'none' ? 'none' : '');
+
+  
     $('#sContent').html('');
 }
 

@@ -58,6 +58,9 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -90,6 +93,7 @@
     <Compile Include="Country.cs" />
     <Compile Include="CreditTerm\Group.cs" />
     <Compile Include="CreditTerm\GroupEditing.cs" />
+    <Compile Include="Criteria\ViewComm\ViewCommDCSCriteria.cs" />
     <Compile Include="Criteria\ViewPT\ViewGoldDeluxePTCriteria.cs" />
     <Compile Include="Criteria\ViewPT\ViewKenoPTCriteria.cs" />
     <Compile Include="Criteria\ViewPT\ViewMicroGamingPTCriteria.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="Customer\CustDetail.cs" />
     <Compile Include="Customer\ForexAccount.cs" />
     <Compile Include="Customer\MasterList.cs" />
+    <Compile Include="Customer\PT\ViewPT\DCSProduct.cs" />
     <Compile Include="Customer\Racing\EnableRacebooksStatus.cs" />
     <Compile Include="ErrorBO.cs" />
     <Compile Include="ErrorDetail.cs" />
@@ -254,7 +259,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildAction="Both" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_BuildAction="Both" BuildVersion_AssemblyInfoFilename="" BuildVersion_UseGlobalSettings="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

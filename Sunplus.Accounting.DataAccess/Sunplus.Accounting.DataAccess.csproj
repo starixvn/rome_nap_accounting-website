@@ -76,6 +76,8 @@
     <Compile Include="IBCClient\HRPositionTakingProviderClient.cs" />
     <Compile Include="IBCClient\PositionTakingProviderClient.cs" />
     <Compile Include="IBCClient\UtilsProviderClient.cs" />
+    <Compile Include="IBCDLL\Customer\ViewCommDCS\IViewCommDCSRepository.cs" />
+    <Compile Include="IBCDLL\Customer\ViewCommDCS\ViewCommDCSRepository.cs" />
     <Compile Include="IBCDLL\Customer\MicroGaming\IMicroGamingPTRepository.cs" />
     <Compile Include="IBCDLL\Customer\MicroGaming\MicroGamingPTRepository.cs" />
     <Compile Include="IBCDLL\Customer\ViewGoldDeluxePTRepository.cs" />
@@ -243,11 +245,19 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
@@ -320,7 +330,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
