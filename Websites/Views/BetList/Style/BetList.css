@@ -455,3 +455,18 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 {
     width: 120px;
 }
+
+.meron-choice {
+    color: #f00;
+    font-weight: bold;
+}
+
+.wala-choice {
+    color: #000080;
+    font-weight: bold;
+}
+
+.ftd-choice, .bdd-choice {
+    color: #484848;
+    font-weight: bold;
+}
