@@ -36,7 +36,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
             { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
             { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
-            { sportname: 'Cock Fighting', sportvalue: 'tabCockFighting' },  
+            { sportname: 'Cockfighting', sportvalue: 'tabCockFighting' },  
     ];
 
     $scope.sports = angular.copy(sports);

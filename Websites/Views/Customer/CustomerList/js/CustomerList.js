@@ -170,7 +170,7 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
     }
 
     function EditCockFighting(custId) {
-        showPopup("Cock Fighting", "", 0, 0, 880, 550, false, 2000, null);
+        showPopup("Cockfighting", "", 0, 0, 880, 550, false, 2000, null);
         document.getElementById('productId').value = 19;
         document.getElementById('customerId').value = custId;
         document.getElementById("target").submit();

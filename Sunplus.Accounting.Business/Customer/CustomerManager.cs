@@ -289,8 +289,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
 
-                            DataRow sportsBook2DataRow = null;
-                            DataRow cockFightingDataRow = null;
+                            bool isHideSportsbook2 = true;
+                            bool isHideCockFighting = true;
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {                               
                                 if (row["productID"] != null) 
@@ -299,18 +300,16 @@ namespace Sunplus.Accounting.Business.Customer
                                     switch(productId)
                                     {
                                         case "16":
-                                            sportsBook2DataRow = row;
+                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
                                             break;
                                         case "19":
-                                            cockFightingDataRow = row;
+                                            isHideCockFighting = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowCockFighting) && (roleId < 4);
                                             break;
                                     }
                                 }                              
                             }
 
-                            bool isHideSportsbook2 = (CastAide.AsBoolean(sportsBook2DataRow["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
-                            bool isHideCockFighting = (CastAide.AsBoolean(cockFightingDataRow["IsHidden"]) || !WebSettings.IsShowCockFighting) && (roleId < 4);
-
+                           
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
                             arrcontent.Add("isba", isBA);
@@ -1623,7 +1622,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (!isHideCockFighting && !isDeposit)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cock Fighting</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cockfighting</a>";
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
@@ -1670,7 +1669,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (!isHideCockFighting && !isDeposit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cock Fighting</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cockfighting</a>";
                     }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
