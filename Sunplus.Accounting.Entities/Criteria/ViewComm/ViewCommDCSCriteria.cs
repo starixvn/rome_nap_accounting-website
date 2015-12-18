@@ -5,6 +5,14 @@
 
     public class ViewCommDCSCriteria : CriteriaBase
     {
+        public int SettingType
+        {
+            get
+            {
+                return 3;
+            }
+        }
+        
         public string LanguageKey
         {
             get
