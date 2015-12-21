@@ -7,7 +7,7 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using Fanex.Tarus.Infrastructure.Constants;
+using Fanex.Tarus.Statements.Models;
 using IBCUtils;
 using Microsoft.Security.Application;
 using Sunplus.Accounting.Business.BootStrappers;
@@ -55,7 +55,10 @@ namespace Sunplus.Accounting.Business.Statement
             string tpl = WebUtils.LoadTemplate("Statement/AuditContent.htm");
             string excelTpl = tpl;
             var htmlReport = new StringBuilder();
-            var excelRows = new StringBuilder();
+
+            // For new export excel function.
+            IList<AuditStatement> auditStatements = new List<AuditStatement>();
+
             try
             {
                 string rowTpl = TemplateHandler.CopyBlock(tpl, "ReportContent");
@@ -102,36 +105,40 @@ namespace Sunplus.Accounting.Business.Statement
 
                             htmlReport.Append(rowHtml);
                             TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
-                            excelRows.Append(rowHtml);
+
+                            // For new export excel function.
+                            auditStatements.Add(new AuditStatement 
+                            {
+                                Date = strAccDate.Replace("<!--nobr--><br><!--/nobr-->", string.Empty),
+                                Remark = remark,
+                                Type = type,
+                                Total = total,
+                                AccumulatedTotal = total2
+                            });
                         }
 
                         TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
-                        //Excel
-                        TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", excelRows.ToString());
                     }
                     else
                     {
                         TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("5"));
-                        //Excel
-                        TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", AccCommon.GenNoInformation("5"));
                     }
                 }
                 else
                 {
                     TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("5"));
-                    //Excel
-                    TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", AccCommon.GenNoInformation("5"));
                 }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("5"));
-                //Excel
-                TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", AccCommon.GenNoInformation("5"));
             }
 
-            ReportCache.REPORT_STATEMENT_AUDIT = excelTpl;
+            // For new export excel function.
+            string key = "accreportstatementaudit." + AppSession.AccUserName;
+            AppSession.AddSession(HttpContext.Current.Session, key, auditStatements);
+
             return tpl;
         }
 
@@ -258,6 +265,10 @@ namespace Sunplus.Accounting.Business.Statement
             var htmlReport = new StringBuilder();
             DateTime fdt, tdt;
             bool candelete = false;
+
+            // For new export excel function.
+            IList<DetailStatement> detailStatements = new List<DetailStatement>();
+
             try
             {
                 if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
@@ -288,10 +299,12 @@ namespace Sunplus.Accounting.Business.Statement
                             index++;
                             string rowHtml = rowTpl;
                             string transDate = FormatHandler.FormatDateOptionalTime(row["transdate"]);
+                            string refno = CastAide.AsString(row["refno"]);
                             string remark = CastAide.AsString(row["transdesc"]);
-                            string creator = CastAide.AsString(row["creator"]);
-                            decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
                             decimal debitAmt = CastAide.AsDecimal(row["debitamt"]);
+                            decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
+                            decimal totalAmt = CastAide.AsDecimal(row["runningtotal"]);
+                            string creator = CastAide.AsString(row["creator"]);
 
                             if (index % 2 != 0)
                                 TemplateHandler.Assign(ref rowHtml, "odd_even", "evenrow");
@@ -301,17 +314,30 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
                             TemplateHandler.Assign(ref rowHtml, "{Date}", transDate);
                             TemplateHandler.Assign(ref rowHtml, "{Creator}", creator);
-                            TemplateHandler.Assign(ref rowHtml, "{Refno}", CastAide.AsString(row["refno"]));
+                            TemplateHandler.Assign(ref rowHtml, "{Refno}", refno);
                             TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(debitAmt));
                             TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(creditAmt));
-                            TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(row["runningtotal"]));
+                            TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(totalAmt));
 
                             total += creditAmt - debitAmt;
                             if (!CastAide.AsBoolean(row["allowdelete"], true) || !candelete)
                                 TemplateHandler.RemoveBlock(ref rowHtml, "DelLink");
 
                             htmlReport.Append(rowHtml);
+
+                            // For new export excel function.
+                            detailStatements.Add(new DetailStatement 
+                            {
+                                Date = transDate,
+                                RefNo = refno,
+                                Remark = remark,
+                                Debit = debitAmt,
+                                Credit = creditAmt,
+                                Total = totalAmt,
+                                Creator = creator
+                            });
                         }
+
                         TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
                         //total
                         TemplateHandler.Assign(ref tpl, "{total}", FormatHandler.FormatNumber40(total));
@@ -334,7 +360,11 @@ namespace Sunplus.Accounting.Business.Statement
                 TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("8"));
                 TemplateHandler.RemoveBlock(ref tpl, "ReportFooter");
             }
-            ReportCache.REPORT_STATEMENT_DETAIL = tpl;
+
+            // For new export excel function.
+            string key = "accreportstatementdetail." + AppSession.AccUserName;
+            AppSession.AddSession(HttpContext.Current.Session, key, detailStatements);
+
             return tpl;
         }
 
@@ -358,11 +388,13 @@ namespace Sunplus.Accounting.Business.Statement
                                          ? WebUtils.LoadTemplate("Statement/MemberSatement.htm")
                                          : WebUtils.LoadTemplate("Statement/MemberSatementReadOnly.htm");
 
-            string excelTpl = contentTemplate;
             var htmlReport = new StringBuilder();
-            //StringBuilder excelRows = new StringBuilder();
             DateTime fdt, tdt, balanceUpDay;
 
+            // For new export excel function.
+            OldStatement oldStatement = null;
+            IList<OldStatement> oldStatements = new List<OldStatement>();
+            
             try
             {
                 balanceUpDay = ReportUtils.BalanceUp.BalanceUpDay;
@@ -377,7 +409,6 @@ namespace Sunplus.Accounting.Business.Statement
                 }
 
                 string itemTemplate = TemplateHandler.CopyBlock(contentTemplate, "ReportContent");
-                //DbResult ds = null;
                 int idx = 0;
                 double OpenBalance = 0, linetotal = 0;
                 bool isBalance = false;
@@ -404,6 +435,9 @@ namespace Sunplus.Accounting.Business.Statement
 
                     foreach (Entities.Statement entity in entityList)
                     {
+                        // For new export excel function.
+                        oldStatement = new OldStatement();
+
                         idx++;
                         string rowHtml = itemTemplate;
                         //string accDate = FormatHandler.FormatDateOptionalTime(row["accdate"]);
@@ -477,12 +511,19 @@ namespace Sunplus.Accounting.Business.Statement
                                     (linetotal - total);
                                 TemplateHandler.Assign(ref rowHtml, "{Total2}", t);
                                 TemplateHandler.Assign(ref rowHtml, "{OkClass}", "class='f3pink'");
+
+                                // For new export excel function.
+                                oldStatement.AccumulatedTotalText = "NOT EQUAL\r\nRESET Total\r\nDiff: " + (linetotal - total);
+
                                 linetotal = total;
                             }
                             else
                             {
                                 TemplateHandler.Assign(ref rowHtml, "{Total2}", "OK");
                                 TemplateHandler.Assign(ref rowHtml, "{OkClass}", "class='f3green'");
+
+                                // For new export excel function.
+                                oldStatement.AccumulatedTotalText = "OK";
                             }
                         }
                         else
@@ -589,6 +630,17 @@ namespace Sunplus.Accounting.Business.Statement
 
                         htmlReport.Append(rowHtml);
                         TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
+
+                        // For new export excel function.
+                        oldStatement.Date = string.IsNullOrEmpty(strAccDate) ? "--" : strAccDate.Replace("<!--nobr--><br><!--/nobr-->", string.Empty);
+                        oldStatement.Remark = type.ToUpper() + "\r\n-" + remark;
+                        oldStatement.Total = total;
+                        oldStatement.AccumulatedTotal = linetotal;
+                        oldStatement.Creator = string.IsNullOrEmpty(creator) ? "--" : creator;
+                        oldStatement.VerifiedBy = entity.Checker != null ? entity.Checker.Username : string.Empty;
+                        oldStatement.CheckedTime = checkTime;
+
+                        oldStatements.Add(oldStatement);
                     }
 
                     #endregion foreach (Statement entity in entityList)
@@ -611,34 +663,24 @@ namespace Sunplus.Accounting.Business.Statement
                 }
                 else
                 {
-                    RenderNoInoSection(ref contentTemplate, ref excelTpl);
+                    RenderNoInoSection(ref contentTemplate);
                 }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                RenderNoInoSection(ref contentTemplate, ref excelTpl);
+                RenderNoInoSection(ref contentTemplate);
             }
 
-            excelTpl = contentTemplate.Clone().ToString();
-            TemplateHandler.RemoveBlock(ref excelTpl, "verifyheader");
-            TemplateHandler.RemoveBlock(ref excelTpl, "action");
-            TemplateHandler.RemoveComment(ref excelTpl);
-
             string key = "CustomerStatement" + AppSession.AccUserName;
-            AppSession.AddSession(HttpContext.Current.Session, key, excelTpl);
+            AppSession.AddSession(HttpContext.Current.Session, key, oldStatements);
             return contentTemplate;
         }
 
-        private static void RenderNoInoSection(ref string contentTemplate, ref string excelTpl)
+        private static void RenderNoInoSection(ref string contentTemplate)
         {
-            //Generate no informaction section
             TemplateHandler.RemoveBlock(ref contentTemplate, "verifyheader");
             TemplateHandler.ReplaceBlock(ref contentTemplate, "ReportContent", AccCommon.GenNoInformation("8"));
-
-            //for excel
-            TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", AccCommon.GenNoInformation("8"));
-            TemplateHandler.RemoveBlock(ref excelTpl, "verifyheader");
         }
 
         #endregion Methods
