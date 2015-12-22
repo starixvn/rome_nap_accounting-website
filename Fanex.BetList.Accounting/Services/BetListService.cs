@@ -1415,22 +1415,6 @@ namespace Fanex.BetList.Accounting.Services
             return false;
         }
 
-        /// <summary>
-        /// Check where bet type is sport book or not.
-        /// </summary>
-        /// <param name="betType">The type of bet.</param>
-        /// <returns>Bet type is sport book or not.</returns>
-        private bool IsSportBook(int betType)
-        {
-            return betType == BetTypeContants.Handicap ||
-                betType == BetTypeContants.OddEven ||
-                betType == BetTypeContants.OverUnder2 ||
-                betType == BetTypeContants._1stHandicap ||
-                betType == BetTypeContants._1stOverUnder ||
-                betType == BetTypeContants._1stOddEven ||
-                betType == BetTypeContants.MoneyLine;
-        }
-
         private bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay ||
