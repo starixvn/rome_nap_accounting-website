@@ -104,4 +104,7 @@
   <Function Name="Gold deluxe win limit">
     <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
+	<Function Name="Balance checking">
+		<Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet"/>
+	</Function>
 </Functions>
