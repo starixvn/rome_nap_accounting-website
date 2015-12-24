@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Bet List - Result">
-    <Setting Key="Acc_BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old_xpre" DbName="DBARC.bodb_Archive.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old_xtest" DbName="DBARC.bodb_Archive.bodbAdminNet" />
   </Function>
   <Function Name="Report">
     <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.bodbAdminNet" Plain="0" />
