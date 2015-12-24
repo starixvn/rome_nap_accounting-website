@@ -47,6 +47,9 @@ namespace Fanex.BetList.Accounting.Core
                 IsMetricGamingBetType(ticket.BetTypeId) ||
                 IsColossusBetType(ticket.BetTypeId) ||
                 IsCockFightingBetType(ticket.BetTypeId);
+                ticket.SportTypeId == SportContants.RNG_RNGGame ||
+                ticket.SportTypeId == SportContants.RNG_MiniGame ||
+                ticket.SportTypeId == SportContants.RNG_Mobile;
         }
 
         public static bool IsMetricGamingBetType(int betType)
@@ -288,6 +291,19 @@ namespace Fanex.BetList.Accounting.Core
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
+                            break;
+                        case SportContants.RNG_RNGGame:
+                        case SportContants.RNG_MiniGame:
+                        case SportContants.RNG_Mobile:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
+                                string.Empty :
+                                "ViewRNGCasinoResult(" +
+                                    ticketDetail.Ticket.MatchId + "," +
+                                    ticketDetail.Ticket.Race + "," +
+                                    ticketDetail.Ticket.BetTypeId + "," +
+                                    ticketDetail.Ticket.SportTypeId + "," +
+                                    ticketDetail.Ticket.RefNo + "," +
+                                    "\"" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\")";
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
@@ -565,6 +581,19 @@ namespace Fanex.BetList.Accounting.Core
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
+                        case SportContants.RNG_RNGGame:
+                        case SportContants.RNG_MiniGame:
+                        case SportContants.RNG_Mobile:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
+                                string.Empty :
+                                 "ViewRNGCasinoResult(" +
+                                    ticketDetail.Ticket.MatchId + "," +
+                                    ticketDetail.Ticket.Race + "," +
+                                    ticketDetail.Ticket.BetTypeId + "," +
+                                    ticketDetail.Ticket.SportTypeId + "," +
+                                    ticketDetail.Ticket.RefNo + "," +
+                                    "\"" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\")";
+                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -600,6 +629,11 @@ namespace Fanex.BetList.Accounting.Core
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=" + resultLink + ">" + Labels.Result + "</a>" +
                 "<br />";
             return statusHtml + resultLink1;
+        }
+
+        public bool IsShowOddsWithChoice(int betTypeId)
+        {
+            return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
         }
     }
 }

@@ -81,6 +81,10 @@
     <Reference Include="Fanex.BetList.MyanmarOdds">
       <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.4\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.0.1-beta\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -188,14 +192,18 @@
     <Compile Include="Business\Results\ParlayResultService.cs" />
     <Compile Include="Business\Results\IScoreInformationService.cs" />
     <Compile Include="Business\Results\ScoreInformationService.cs" />
+    <Compile Include="Business\RNGCasino\IRNGCasinoService.cs" />
+    <Compile Include="Business\RNGCasino\RNGCasinoService.cs" />
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
+    <Compile Include="Controller\RNGCasinoBetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Criteria\GetMicroGamingBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
+    <Compile Include="Criteria\GetRNGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
@@ -237,6 +245,7 @@
     <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
     <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
+    <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
