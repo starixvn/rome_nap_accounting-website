@@ -10,7 +10,7 @@
             var result = new StringBuilder();
             result.Append("<tr>");
             result.Append("<th><div class=\"width30 height34 table-cell\">" + BetListResources.No + "</div></th>");
-            result.Append("<th><div class=\"width120 height34 table-cell\">" + BetListResources.Date + "</div></th>");
+            result.Append("<th><div class=\"width120 height34 table-cell\">" + BetListResources.Trans_Time + "</div></th>");
             result.Append("<th><div class=\"column-choice height34 table-cell\">" + BetListResources.Choice + "</div></th>");
             result.Append("<th><div class=\"width60 height34 table-cell\">" + BetListResources.Odds + "</div></th>");
             result.Append("<th><div class=\"width50 height34 table-cell\">" + BetListResources.Stake + "</div></th>");
