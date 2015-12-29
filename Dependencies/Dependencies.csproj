@@ -103,6 +103,9 @@
     <Reference Include="Fanex.Module.Logs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Logs.1.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Module.RNGCasino">
+      <HintPath>..\Dependency\RNGCasino\Fanex.Module.RNGCasino.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Module.Statement">
       <HintPath>..\Dependency\Modules\Statement\Fanex.Module.Statement.dll</HintPath>
     </Reference>
