@@ -302,13 +302,10 @@
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
-<<<<<<< HEAD
-  <Function Name="Casino Single Wallet - Member Win Limit">
-    <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-=======
   <Function Name="Casino Single Wallet - Member Win Limit">
     <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
->>>>>>> #48283 - MBC RnG Casino - Integrate single wallet - Member Win Limit
+	<Function Name="Casino Single Wallet - Member Win Limit">
+		<Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet"/>
+	</Function>
 </Functions>
