@@ -19,19 +19,19 @@ public partial class Others_Menu : System.Web.UI.Page
         string tplMenu = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
 
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets;
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting;
         string[] arrCustID = Request.UrlReferrer.Query.Split('&');
         string custID = arrCustID[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
         var HRURL = string.Empty;
         Thread.Sleep(2000);
-        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));        
+        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
         AllowedPoker = true;
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
         allowVirtualSports = true ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
-       
+
 
         int roleid = CastAide.AsInt32(arrCustID[2].Split('=')[1]);
         string bingopath = "../PT/Bingo/";
@@ -39,10 +39,13 @@ public partial class Others_Menu : System.Web.UI.Page
         var virtualSportsPath = string.Empty;
         var kenoPath = string.Empty;
         var uplineId = CastAide.AsInt32(arrCustID[3].Split('=')[1]);
-        int accId=Sunplus.Accounting.Core.Common.AppSession.AccId;
+        int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         var casinoPath = string.Empty;
         var goldDeluxePath = string.Empty;
+
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
+        hideCockfighting = (!CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting) && (roleid < 4);
+
         var colossusBetPath = Page.ResolveUrl("~/customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?");
         var sportsbook2Path = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId=16");
         var cockFightingPath = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId=19");
@@ -51,7 +54,7 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             bingopath += "MemberUpdate.aspx?custId=" + custID.ToString();
             HRURL = string.Format("../../EditMemberPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
-            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId="+custID+"&customerLevel=1");
+            liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=1");
             virtualSportsPath = "../../VirtualSportMemberPT/EditMember?custId=" + custID + "&uplineId=" + uplineId;
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
@@ -100,7 +103,7 @@ public partial class Others_Menu : System.Web.UI.Page
             sportsbook2Path += "&customerLevel=4&customerId=" + custID;
             cockFightingPath += "&customerLevel=4&customerId=" + custID;
         }
-      
+
         if (WebSettings.disabledHR)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "HorceRacing");
@@ -117,9 +120,9 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "Poker");
         }
-        if(!allowEditLiveCs)
+        if (!allowEditLiveCs)
             TemplateHandler.RemoveBlock(ref tplMenu, "LiveCasino");
-        if(!allowVirtualSports)
+        if (!allowVirtualSports)
             TemplateHandler.RemoveBlock(ref tplMenu, "VirtualSports");
 
         if (!KenoSection.Instance.ShowSetting)
@@ -142,7 +145,7 @@ public partial class Others_Menu : System.Web.UI.Page
             TemplateHandler.RemoveBlock(ref tplMenu, "sportsbook2");
         }
 
-        if (!WebSettings.IsShowCockFighting)
+        if (hideCockfighting)
         {
             TemplateHandler.RemoveBlock(ref tplMenu, "cockFighting");
         }
@@ -160,5 +163,9 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref tplMenu, "{cockFightingLinkSetting}", cockFightingPath);
 
         this.sMenu.Text = tplMenu;
+    }
+
+    private void AssignLinkForMember()
+    {
     }
 }
