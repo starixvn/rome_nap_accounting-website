@@ -243,4 +243,13 @@
   <data name="AGCasino" xml:space="preserve">
     <value>AG Casino</value>
   </data>
+  <data name="RNG_MiniGame" xml:space="preserve">
+    <value>RNG - Mini Game</value>
+  </data>
+  <data name="RNG_Mobile" xml:space="preserve">
+    <value>RNG - Mobile</value>
+  </data>
+  <data name="RNG_RNGGames" xml:space="preserve">
+    <value>RNG - RNG Games</value>
+  </data>
 </root>

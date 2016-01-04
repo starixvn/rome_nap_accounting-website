@@ -595,10 +595,11 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
         null);
 }
 
-function showRnGCasinoDetails(transId, statusId) {
+function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
     var params = $.param({
         TransId: transId,
-        StatusId: statusId
+        TransType: transType,
+        CustId: custId
     });
 
     parent.OpenNextPopup(
@@ -638,4 +639,8 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
         0,
         null,
         null);
+}
+
+function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
+
 }

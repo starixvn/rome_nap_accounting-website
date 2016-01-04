@@ -45,11 +45,8 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId) ||
+                IsColossusBetType(ticket.BetTypeId);
                 IsCockFightingBetType(ticket.BetTypeId);
-                ticket.SportTypeId == SportContants.RNG_RNGGame ||
-                ticket.SportTypeId == SportContants.RNG_MiniGame ||
-                ticket.SportTypeId == SportContants.RNG_Mobile;
         }
 
         public static bool IsMetricGamingBetType(int betType)
@@ -123,6 +120,13 @@ namespace Fanex.BetList.Accounting.Core
                 betType == BetTypeContants.BetTradeCommision;
         }
 
+        public bool IsRNGCasino(int sportType)
+        {
+            return sportType == SportContants.RNG_RNGGame ||
+                sportType == SportContants.RNG_MiniGame ||
+                sportType == SportContants.RNG_Mobile;
+        }
+
         public string PercentFormat(decimal input)
         {
             var isInputInterger = (input * 100) % 1 == 0;
@@ -162,6 +166,53 @@ namespace Fanex.BetList.Accounting.Core
             return "<div class=\"bl_status c\">" + result + "</div>";
         }
 
+        public string GetRNGCasinoStatus(TicketDetail ticketDetail)
+        {
+            var statusLabel = string.Empty;
+            var status = ticketDetail.Ticket.Status.ToLower();
+            var isRunningStatus = string.Equals(status, "running", StringComparison.OrdinalIgnoreCase);
+            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
+            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
+            bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
+
+            if (isRunningStatus)
+            {
+                var viewBrokenGame = "ViewRNGCasinoBrokenGame(" +
+                    ticketDetail.Ticket.MatchId + "," +
+                    "'" + ticketDetail.Ticket.Race + "'," +
+                    ticketDetail.Ticket.BetTypeId + "," +
+                    ticketDetail.Ticket.SportTypeId + "," +
+                    ticketDetail.Ticket.TransId + "," +
+                    "'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "')";
+                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
+            }
+            else
+            {
+                statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+            }
+
+            var resultLink = string.Empty;
+            if (isWonStatus || isLoseStatus || isDrawStatus)
+            {
+                resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
+                     string.Empty :
+                     "ViewRNGCasinoResult(" +
+                     ticketDetail.Ticket.MatchId + "," +
+                     "'" + ticketDetail.Ticket.Race + "'," +
+                     ticketDetail.Ticket.BetTypeId + "," +
+                     ticketDetail.Ticket.SportTypeId + "," +
+                     ticketDetail.Ticket.TransId + "," +
+                     "\'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\')";
+            }
+
+            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
+                 string.Empty :
+                 "<br />" +
+                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
+                 "<br />";
+            return statusLabel + resultLink1;
+        }
+
         /// <summary>
         /// Gets the status reference no.
         /// </summary>
@@ -176,6 +227,11 @@ namespace Fanex.BetList.Accounting.Core
             if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
             {
                 return betlistHelper.GetBetTradeStatus(ticketDetail);
+            }
+
+            if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetRNGCasinoStatus(ticketDetail);
             }
 
             string status = ticketDetail.Ticket.Status.ToLower();
@@ -292,19 +348,6 @@ namespace Fanex.BetList.Accounting.Core
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
-                        case SportContants.RNG_RNGGame:
-                        case SportContants.RNG_MiniGame:
-                        case SportContants.RNG_Mobile:
-                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
-                                string.Empty :
-                                "ViewRNGCasinoResult(" +
-                                    ticketDetail.Ticket.MatchId + "," +
-                                    ticketDetail.Ticket.Race + "," +
-                                    ticketDetail.Ticket.BetTypeId + "," +
-                                    ticketDetail.Ticket.SportTypeId + "," +
-                                    ticketDetail.Ticket.RefNo + "," +
-                                    "\"" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\")";
-                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -388,6 +431,11 @@ namespace Fanex.BetList.Accounting.Core
             if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
             {
                 return betlistHelper.GetBetTradeStatus(ticketDetail);
+            }
+
+            if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetRNGCasinoStatus(ticketDetail);
             }
 
             string statusHtml = string.Empty;
@@ -580,19 +628,6 @@ namespace Fanex.BetList.Accounting.Core
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
-                            break;
-                        case SportContants.RNG_RNGGame:
-                        case SportContants.RNG_MiniGame:
-                        case SportContants.RNG_Mobile:
-                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
-                                string.Empty :
-                                 "ViewRNGCasinoResult(" +
-                                    ticketDetail.Ticket.MatchId + "," +
-                                    ticketDetail.Ticket.Race + "," +
-                                    ticketDetail.Ticket.BetTypeId + "," +
-                                    ticketDetail.Ticket.SportTypeId + "," +
-                                    ticketDetail.Ticket.RefNo + "," +
-                                    "\"" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\")";
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)

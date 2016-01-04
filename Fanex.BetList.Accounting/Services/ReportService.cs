@@ -68,10 +68,10 @@ namespace Fanex.BetList.Accounting.Services
                                 while (reader.Read())
                                 {
                                     ipVnList.Add(new IPVNBean
-                                        {
-                                            IPFrom = reader.ToDouble("IPFrom"),
-                                            IPTo = reader.ToDouble("IPTo")
-                                        });
+                                    {
+                                        IPFrom = reader.ToDouble("IPFrom"),
+                                        IPTo = reader.ToDouble("IPTo")
+                                    });
                                 }
                             }
                         }
@@ -155,6 +155,21 @@ namespace Fanex.BetList.Accounting.Services
         public static bool IsAGCasino(int betTypeId)
         {
             return 1801 <= betTypeId && betTypeId <= 1804;
+        }
+
+        public static bool IsRNGGame_RNGCasino(int betTypeId)
+        {
+            return 2101 <= betTypeId && betTypeId <= 2199;
+        }
+
+        public static bool IsMiniGame_RNGCasino(int betTypeId)
+        {
+            return 2201 <= betTypeId && betTypeId <= 2299;
+        }
+
+        public static bool IsMobile_RNGCasino(int betTypeId)
+        {
+            return 2301 <= betTypeId && betTypeId <= 2399;
         }
 
         #endregion StaticMethods
