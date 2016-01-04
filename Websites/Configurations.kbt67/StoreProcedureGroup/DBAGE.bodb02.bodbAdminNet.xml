@@ -9,7 +9,7 @@
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="BetList">
-    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -72,9 +72,9 @@
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -290,6 +290,33 @@
   </Function>
  <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
   </Function>
   <Function Name="MicroGaming">
     <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
