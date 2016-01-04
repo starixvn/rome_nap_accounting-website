@@ -68,13 +68,27 @@
     bool isShowMyanmarOdds = directMaster || isParentMyanmarOdds;
     if(directMaster)
     {
-        colspanCom++;    
+        colspanCom++;
     }
     else if (isParentMyanmarOdds)
     {
         colspanCom = colspanCom - 2;
     }
-   
+
+    var parentIsIMBCCustomers = false;
+    foreach (var agentItem in Model.ListChildren)
+    {
+        if (agentItem.IsIMBCCustomers)
+        {
+            parentIsIMBCCustomers = true;
+            break;
+        }
+    }
+
+    if (parentIsIMBCCustomers)
+    {
+        colspanCom++;
+    }
 
     Hashtable hash = new Hashtable();
     hash.Add("p2pSetting", p2pSetting);
@@ -92,6 +106,7 @@
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
+    hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -359,6 +374,14 @@
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem.Others</div>
         </td>
+        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @masterItem.MatchWinnerComm
+                </div>
+            </td>
+        }
         @if (CastAide.AsBoolean(hash["enableNumberGame"]))
         {
             <td>
@@ -576,6 +599,14 @@
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Others</div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 70px; height: 38px;">
+                                    Match Winner
+                                </div>
+                            </th>
+                        }
                         @if (enableNumberGame)
                         {
                             <th>
@@ -710,6 +741,14 @@
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Others</div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 70px; height: 38px;">
+                                    Match Winner
+                                </div>
+                            </th>
+                        }
                         @if (enableNumberGame)
                         {
                             <th>
@@ -765,4 +804,5 @@
     var _directMaster = "@directMaster";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
+    var parentIsIMBCCustomers=@(parentIsIMBCCustomers?1:0);
 </script>

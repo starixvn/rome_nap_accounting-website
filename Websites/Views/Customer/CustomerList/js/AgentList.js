@@ -322,7 +322,12 @@
         }
         if (_isParentMyanmarOdds == "True") {
             initWidth -= 150;
-        } 
+        }
+
+        if (parentIsIMBCCustomers) {
+            initWidth += 75;
+        }
+
         AgentList.gridOption.gridWidth = initWidth;
     }
 };

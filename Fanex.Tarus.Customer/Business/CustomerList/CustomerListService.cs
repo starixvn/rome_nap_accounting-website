@@ -119,7 +119,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        // superItem.IsLicensee = CastAide.AsBoolean(row["IsLicensee"]);
+                        superItem.IsIMBCCustomers = true;
+                        if (superItem.IsIMBCCustomers)
+                        {
+                            superItem.MatchWinnerComm = 0;
+                        }
+                        
                         superItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         superItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -239,8 +244,13 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         masterItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
+                        masterItem.IsIMBCCustomers = true;
+                        if (masterItem.IsIMBCCustomers)
+                        {
+                            masterItem.MatchWinnerComm = 0;
+                        }
 
+                        masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
                         masterItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(masterItem);
                     }
@@ -321,6 +331,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
+                        agentItem.IsIMBCCustomers = true;
+                        if (agentItem.IsIMBCCustomers)
+                        {
+                            agentItem.AgentMatchWinnerComm = 0;
+                        }
+
                         agentItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
                         agentItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -405,8 +421,14 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        memberItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
 
+                        memberItem.IsIMBCCustomers = true;
+                        if (memberItem.IsIMBCCustomers)
+                        {
+                            memberItem.MatchWinnerComm = 0;
+                        }
+
+                        memberItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
                         memberItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(memberItem);
                     }

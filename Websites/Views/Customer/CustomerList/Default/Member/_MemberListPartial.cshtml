@@ -42,6 +42,7 @@
         colspanCom++;
     }
     bool isParentMyanmarOdds = false;
+
     foreach (var memberItem in Model.ListChildren)
     {
         if (memberItem.IsMyanmarOdds)
@@ -50,10 +51,27 @@
             break;
         }
     }
+
     if (isParentMyanmarOdds)
     {
         colspanCom++;
     }
+
+    var parentIsIMBCCustomers = false;
+    foreach (var memberItem in Model.ListChildren)
+    {
+        if (memberItem.IsIMBCCustomers)
+        {
+            parentIsIMBCCustomers = true;
+            break;
+        }
+    }
+
+    if (parentIsIMBCCustomers)
+    {
+        colspanCom += 2;
+    }
+
     Hashtable hash = new Hashtable();
     hash.Add("p2pSetting", p2pSetting);
     hash.Add("visibleP2PSetting", visibleP2PSetting);
@@ -68,7 +86,8 @@
     hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
-    
+    hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
+
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -103,11 +122,11 @@
 }
 
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
-    {
-        var bg = rowCSS(memberItem);
-        var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
-        string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
-    <tr name="tr_@memberItem.ChildID" class ="@bg" style="height: 20px;">
+{
+var bg = rowCSS(memberItem);
+var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
+string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
+    <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
                 @memberItem.No
@@ -116,19 +135,20 @@
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
                 <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');">@memberItem.Status</a>
-                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');"  class="status-button" >
-                    &nbsp;&nbsp;&nbsp</span>
+                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');" class="status-button">
+                    &nbsp;&nbsp;&nbsp
+                </span>
             </div>
         </td>
         <td>
             <div class="table-cell c" style="width: 30px; height: 18px;">
-                <span title="Edit" onmouseout="CustomerList.HideEditBox()"  onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button" >
+                <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@memberItem.ChildID" style="display:none;">
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')" >Racing</li>
+                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')">Racing</li>
                     }
                     <!--/horseracing-edit-->
                     <!--casino-edit-->
@@ -137,57 +157,66 @@
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"]);
                         var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
-                    <li class="canchange" onclick="@onclickCS" >Casino</li>
-                    <!--/casino-edit-->                  
+                    <li class="canchange" onclick="@onclickCS">Casino</li>
+                    <!--/casino-edit-->
                     <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {
-                        <li class="canchange" onclick="OpenEditBI('@memberItem.ChildID', '@Model.ParentId', '1')" >
-                            Bingo</li>
+                        <li class="canchange" onclick="OpenEditBI('@memberItem.ChildID', '@Model.ParentId', '1')">
+                            Bingo
+                        </li>
                     }
                     <!--/bingo-edit-->
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
-                        Password</li>
+                        Password
+                    </li>
                     <!--edit-p2p-->
                     @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
                     {
                         <li class="canchange" onclick="MemberList.editSetting('@memberItem.ChildID', '1');">
-                            Poker</li>
+                            Poker
+                        </li>
                     }
                     <!--/edit-p2p-->
                     <!--edit-liveCasino-->
                     @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
                     {
                         <li class="canchange" onclick="MemberList.liveCasinoSetting('@memberItem.ChildID', '0', '@Model.ParentId');">
-                            Live Casino</li>
+                            Live Casino
+                        </li>
                     }
                     <!--/edit-liveCasino-->
                     <!--edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
                     {
                         <li class="canchange" onclick="MemberList.virtualSportsSetting('@memberItem.ChildID', '@Model.ParentId', '1');">
-                            Virtual Sports</li>
+                            Virtual Sports
+                        </li>
                     }
                     <!--/edit-virtualSports-->
-                     @if (CastAide.AsBoolean(hash["allowKeno"]))
+                    @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
                         <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">
-                            Keno</li>
+                            Keno
+                        </li>
                     }
-                       @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
+                    @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
                         <li class="canchange" onclick="MemberList.goldDeluxeSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Gold Deluxe</li>
+                            Gold Deluxe
+                        </li>
                     }
-                     @if (!memberItem.IsHideColossusBets)
+                    @if (!memberItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets</li>
+                            Colossus Bets
+                        </li>
                     }
                     @if (!memberItem.IsHideSportsbook2)
                     {
-                     <li class="canchange" onclick="EditSportsbook2('@memberItem.ChildID');">
-                            Sportsbook 2</li>
+                        <li class="canchange" onclick="EditSportsbook2('@memberItem.ChildID');">
+                            Sportsbook 2
+                        </li>
                      }
                     @if (!memberItem.IsHideCockFighting)
                     {
@@ -204,39 +233,41 @@
                     <span class="off-button"></span>
                 </div>
                 <div class="table-cell c" style="width: 10px; height: 18px;">
-                    <input type="checkbox" disabled="disabled" /></div>
+                    <input type="checkbox" disabled="disabled" />
+                </div>
             }
             else
             {
                 if (memberItem.isDoubleComm)
                 {
-                <div class="table-cell" style="width: 45px; height: 18px;">
-                    <span id="allow_@memberItem.ChildID" class="on-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',false);" onmouseout="" onmouseover="">
-                    </span>
-                </div>
+                    <div class="table-cell" style="width: 45px; height: 18px;">
+                        <span id="allow_@memberItem.ChildID" class="on-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',false);" onmouseout="" onmouseover="">
+                        </span>
+                    </div>
                 }
                 else
                 {
-                <div class="table-cell" style="width: 45px; height: 18px;">
-                    <span id="disallow_@memberItem.ChildID" class="off-button"  onclick="MemberList.confirmUpdateSingle(false,'@idAllow',true);" onmouseout="" onmouseover="">
-                    </span>
-                </div>
+                    <div class="table-cell" style="width: 45px; height: 18px;">
+                        <span id="disallow_@memberItem.ChildID" class="off-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',true);" onmouseout="" onmouseover="">
+                        </span>
+                    </div>
                 }
                 <div class="table-cell c" style="width: 10px; height: 18px;">
-                    <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox"/></div>
+                    <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox" />
+                </div>
             }
         </td>
         <td>
-            <div  id="tooltip_@memberItem.UserName" class="table-cell c display" style="width: 120px; height: 18px;text-overflow:ellipsis;">
+            <div id="tooltip_@memberItem.UserName" class="table-cell c display" style="width: 120px; height: 18px;text-overflow:ellipsis;">
                 <span>@memberItem.UserName</span>
             </div>
         </td>
     </tr>
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
-    {
-        var bg = rowCSS(memberItem);
-    <tr name="tr_@memberItem.ChildID" class ="@bg" style="height: 20px;">
+{
+var bg = rowCSS(memberItem);
+    <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
                 &nbsp;
@@ -271,18 +302,20 @@
         {
             <td>
                 <div class="table-cell" style="width: 60px; height: 18px;">
-                   <span title="Edit" onclick="OpenEditVirtualExRate('@memberItem.ChildID','@memberItem.UserName','Member',true,'@Model.ParentId')" class="edit-button edit-virtualrate" >
+                    <span title="Edit" onclick="OpenEditVirtualExRate('@memberItem.ChildID','@memberItem.UserName','Member',true,'@Model.ParentId')" class="edit-button edit-virtualrate">
                     </span>
                 </div>
             </td>
         }
         <td>
             <div id="tooltip_@memberItem.FirstName" class="table-cell c display" style="width: 140px; height: 18px;text-overflow:ellipsis;">
-                 <span>@memberItem.FirstName</span></div>
+                <span>@memberItem.FirstName</span>
+            </div>
         </td>
         <td>
-            <div id="tooltip_@memberItem.LastName"  class="table-cell c display" style="width: 140px; height: 18px;text-overflow:ellipsis;">
-                <span>@memberItem.LastName</span></div>
+            <div id="tooltip_@memberItem.LastName" class="table-cell c display" style="width: 140px; height: 18px;text-overflow:ellipsis;">
+                <span>@memberItem.LastName</span>
+            </div>
         </td>
         <td>
             <div class="table-cell c" style="width: 50px; height: 18px;">
@@ -296,8 +329,17 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
-                @memberItem.GroupB</div>
+                @memberItem.GroupB
+            </div>
         </td>
+        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 80px; height: 18px;">
+                    @memberItem.AgentMatchWinnerComm
+                </div>
+            </td>
+        }
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupC
@@ -305,16 +347,27 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
-                @memberItem.GroupD</div>
+                @memberItem.GroupD
+            </div>
         </td>
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
-                @memberItem._1x2</div>
+                @memberItem._1x2
+            </div>
         </td>
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
-                @memberItem.Others</div>
+                @memberItem.Others
+            </div>
         </td>
+        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 80px; height: 18px;">
+                    @memberItem.MatchWinnerComm
+                </div>
+            </td>
+        }
         @if (CastAide.AsBoolean(hash["enableNumberGame"]))
         {
             <td>
@@ -323,17 +376,18 @@
                 </div>
             </td>
         }
-          @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-          {
-             <td>
+        @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
+        {
+            <td>
                 <div class="table-cell c" style="width: 70px; height: 18px;">
                     @memberItem.DiscountMyanmarOdds
                 </div>
             </td>
-          }
+        }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
-                <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a></div>
+                <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a>
+            </div>
         </td>
     </tr>
 }
@@ -344,28 +398,32 @@
                 <tr class="title">
                     <th colspan="5">
                         <div class="table-cell" style="height: 17px;">
-                            &nbsp;</div>
+                            &nbsp;
+                        </div>
                     </th>
                 </tr>
                 <tr class="title">
                     <th>
                         <div class="table-cell" style="width: 40px; height: 38px;">
-                            No</div>
+                            No
+                        </div>
                     </th>
                     <th>
                         <div class="table-cell" style="width: 65px; height: 38px;">
-                            Status</div>
+                            Status
+                        </div>
                     </th>
                     <th>
                         <div class="table-cell" style="width: 30px; height: 38px;">
-                            Edit</div>
+                            Edit
+                        </div>
                     </th>
                     <th>
                         @if (!Model.ParentDoubleComm && Model.ParentId != 0)
                         {
                             <div class="table-cell" style="width: 75px; height: 38px;">
                                 <input class="verifiedmember" type="button" onclick="MemberList.confirmUpdateDComm(true);"
-                                    value="Double Comm" disabled="disabled" /><br />
+                                       value="Double Comm" disabled="disabled" /><br />
                                 <input type="checkbox" onclick="CustomerList.itemAllClicked()" disabled="disabled" />
                             </div>
                         }
@@ -373,14 +431,15 @@
                         {
                             <div class="table-cell" style="width: 75px; height: 38px;">
                                 <input id="btnMultiple" class="verifiedmember" type="button" onclick="MemberList.confirmUpdateSingle(true);"
-                                    value="Double Comm" />
+                                       value="Double Comm" />
                                 <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
                             </div>
                         }
                     </th>
                     <th>
                         <div class="table-cell" style="width: 120px; height: 38px;">
-                            User Name</div>
+                            User Name
+                        </div>
                     </th>
                 </tr>
             </thead>
@@ -393,29 +452,35 @@
                     <tr class="title">
                         <th colspan="5">
                             <div class="table-cell" style="height: 17px;">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                     </tr>
                     <tr class="title">
                         <th>
                             <div class="table-cell" style="width: 40px; height: 38px;">
-                                No</div>
+                                No
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit</div>
+                                Edit
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 75px; height: 38px;">
-                                Multiple</div>
+                                Multiple
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 120px; height: 38px;">
-                                User Name</div>
+                                User Name
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -432,15 +497,18 @@
                     <tr class="title">
                         <th colspan="5">
                             <div class="table-cell" style="height: 17px;">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                         <th colspan="@colspan">
                             <div class="table-cell" style="height: 17px;">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                         <th colspan="@colspanCom">
                             <div class="table-cell" style="height: 17px; width: 200px;">
-                                Commission</div>
+                                Commission
+                            </div>
                         </th>
                         <th>
                             <div style="height: 17px;">
@@ -451,15 +519,18 @@
                     <tr class="title">
                         <th>
                             <div class="table-cell c" style="width: 40px; height: 38px;">
-                                No</div>
+                                No
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 75px; height: 38px;">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit</div>
+                                Edit
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
@@ -468,11 +539,13 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 120px; height: 38px;">
-                                User Name</div>
+                                User Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 120px; height: 38px;">
-                                Nick Name</div>
+                                Nick Name
+                            </div>
                         </th>
                         @if (IsVisibleVirtualRate)
                         {
@@ -480,20 +553,24 @@
                                 <div class="table-cell c" style="width: 60px; height: 38px;">
                                     Virtual
                                     <br />
-                                    Rate (%)</div>
+                                    Rate (%)
+                                </div>
                             </th>
                         }
                         <th>
                             <div class="table-cell c" style="width: 140px; height: 38px;">
-                                First Name</div>
+                                First Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 140px; height: 38px;">
-                                Last Name</div>
+                                Last Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 50px; height: 38px;">
-                                Group</div>
+                                Group
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
@@ -502,8 +579,17 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                A Comm 2 (%)</div>
+                                A Comm 2 (%)
+                            </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    A MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 1 (%)
@@ -511,16 +597,27 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    P MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         @if (enableNumberGame)
                         {
                             <th>
@@ -531,16 +628,18 @@
                                 </div>
                             </th>
                         }
-                          @if (isParentMyanmarOdds)
-                       {
-                          <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                % Odds</div>
-                        </th>
-                       }
+                        @if (isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    % Odds
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
-                                Last Login IP</div>
+                                Last Login IP
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -554,15 +653,18 @@
                     <tr class="title">
                         <th colspan="5">
                             <div class="table-cell" style="height: 17px;">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                         <th colspan="@colspan">
                             <div class="table-cell" style="height: 17px;">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                         <th colspan="@colspanCom">
                             <div class="table-cell" style="height: 17px; width: 200px;">
-                                Commission</div>
+                                Commission
+                            </div>
                         </th>
                         <th>
                             <div style="height: 17px;">
@@ -573,15 +675,18 @@
                     <tr class="title">
                         <th>
                             <div class="table-cell c" style="width: 40px; height: 38px;">
-                                No</div>
+                                No
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit</div>
+                                Edit
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell" style="width: 75px; height: 38px;">
@@ -590,11 +695,13 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 120px; height: 38px;">
-                                User Name</div>
+                                User Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 120px; height: 38px;">
-                                Nick Name</div>
+                                Nick Name
+                            </div>
                         </th>
                         @if (IsVisibleVirtualRate)
                         {
@@ -602,20 +709,24 @@
                                 <div class="table-cell c" style="width: 60px; height: 38px;">
                                     Virtual
                                     <br />
-                                    Rate (%)</div>
+                                    Rate (%)
+                                </div>
                             </th>
                         }
                         <th>
                             <div class="table-cell c" style="width: 140px; height: 38px;">
-                                First Name</div>
+                                First Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 140px; height: 38px;">
-                                Last Name</div>
+                                Last Name
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 50px; height: 38px;">
-                                Group</div>
+                                Group
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
@@ -624,8 +735,17 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                A Comm 2 (%)</div>
+                                A Comm 2 (%)
+                            </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    A MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 1 (%)
@@ -633,16 +753,27 @@
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
-                                P Comm 2 (%)</div>
+                                P Comm 2 (%)
+                            </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    P MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         @if (enableNumberGame)
                         {
                             <th>
@@ -653,16 +784,18 @@
                                 </div>
                             </th>
                         }
-                          @if (isParentMyanmarOdds)
-                       {
-                          <th>
-                            <div class="table-cell" style="width: 70px; height: 38px;">
-                                % Odds</div>
-                        </th>
-                       }
+                        @if (isParentMyanmarOdds)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    % Odds
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
-                                Last Login IP</div>
+                                Last Login IP
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -674,12 +807,11 @@
     </div>
 </div>
 <div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
-    onmouseout="CustomerList.HideEditBox()">
-    <ul>
-    </ul>
+     onmouseout="CustomerList.HideEditBox()">
+    <ul></ul>
 </div>
 <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
-    <input type="hidden" name="language" id="language" value="en-US" /> 
+    <input type="hidden" name="language" id="language" value="en-US" />
     <input type="hidden" name="customerLevel" id="customerLevel" value="1" />
     <input type="hidden" name="productId" id="productId" value="" />
     <input type="hidden" name="customerId" id="customerId" value="" />
@@ -691,10 +823,11 @@
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
     var _agentId = @Model.ParentId;
-     var _agentDcom = "@Model.ParentDoubleComm";
+    var _agentDcom = "@Model.ParentDoubleComm";
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
+    var parentIsIMBCCustomers=@(parentIsIMBCCustomers?1:0);
 </script>
