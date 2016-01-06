@@ -80,6 +80,19 @@
                                     </tr>
                                 </table>
                             </td>
+                            <td id="products">
+                                <table id="tblProducts" style="display: none;" cellpadding="0px" cellspacing="0px" border="0px">
+                                    <tr>
+                                        <td class="b">
+                                            Products:&nbsp;
+                                        </td>
+                                        <td>
+                                            <select id="ddlProduct" style="width: 120px;">
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                             <td class="b">
                                 Username:
                             </td>

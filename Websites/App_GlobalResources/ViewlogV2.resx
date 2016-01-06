@@ -1292,5 +1292,8 @@
   </data>
   <data name="V44apt_3" xml:space="preserve">
     <value>Over/Under</value>
-  </data>  
+  </data>
+  <data name="disable206_1003" xml:space="preserve">
+    <value>Disabled Cockfighting</value>
+  </data>
 </root>

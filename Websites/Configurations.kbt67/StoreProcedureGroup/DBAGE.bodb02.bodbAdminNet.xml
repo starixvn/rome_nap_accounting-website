@@ -9,7 +9,7 @@
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="BetList">
-    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -72,11 +72,11 @@
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -129,7 +129,6 @@
     <Setting Key="Acc_BettransSelDelSpecial_MixParlay" SpName="Acc_BettransSelDelSpecial_MixParlay" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_BettransSelSpecialDel_MixParlay" SpName="Acc_BettransSelSpecialDel_MixParlay" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
- 
   <Function Name="Bet List - Score Information">
     <Setting Key="SportingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -154,12 +153,12 @@
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -194,7 +193,7 @@
   </Function>
   <Function Name="Helper">
     <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
@@ -244,15 +243,13 @@
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Gold Deluxe - GET PT Setting">
-    <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
-  
   <Function Name="Live Casino - Move Account">
     <Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -274,7 +271,7 @@
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT" DbName="DBCust.CustDB.bodbAdminNet"  />    
+    <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -285,26 +282,29 @@
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
+	<Function Name="MicroGaming">
+		<Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+	</Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="MicroGaming">
-	<Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  <Function Name="DCS-ViewComm">
+    <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="Bet List - Result">
-    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
-      <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
-      <Mapping ObjectProperty="MatchId" DataField="MatchID" />
-      <Mapping ObjectProperty="GameId" DataField="GameID" />
-      <Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
-      <Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
-      <Mapping ObjectProperty="GameResult" DataField="GameResult" />
-      <Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
-      <Mapping ObjectProperty="HomeId" DataField="homeid" />
-      <Mapping ObjectProperty="AwayId" DataField="awayid" />
-    </Setting>
-    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
-  </Function>
+	<Function Name="Bet List - Result">
+		<Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
+			<Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
+			<Mapping ObjectProperty="MatchId" DataField="MatchID" />
+			<Mapping ObjectProperty="GameId" DataField="GameID" />
+			<Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
+			<Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
+			<Mapping ObjectProperty="GameResult" DataField="GameResult" />
+			<Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
+			<Mapping ObjectProperty="HomeId" DataField="homeid" />
+			<Mapping ObjectProperty="AwayId" DataField="awayid" />
+		</Setting>
+		<Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+	</Function>
 </Functions>

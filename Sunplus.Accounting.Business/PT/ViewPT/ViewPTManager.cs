@@ -3103,5 +3103,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         }
 
         #endregion private methods
+
+
+        public IList<DCSProduct> GetProducts()
+        {
+            var repository = new ViewCommDCSRepository();
+            return repository.GetProducts();
+        }
     }
 }

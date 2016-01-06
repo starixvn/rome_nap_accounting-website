@@ -109,5 +109,7 @@ namespace Fanex.BetList.Accounting.Constants
         public const int ColossusBetsConsolationPrize = 18004;
         public const int ColossusBetsJackpotPrize = 18005;
         public const int ColossusBetsBonusPrize = 18006;
+
+        public const int CockFighting = 1003;
     }
 }

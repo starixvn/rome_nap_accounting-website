@@ -249,6 +249,15 @@
                     <td class="l" colspan="2" >                         
                     </td>
                 </tr> 
+                 <!--EnableCockFighting-->    
+                 <tr>     
+                    <td class="l" colspan="2">        
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusCockFighting}, true, 'Update Cockfighting Status','CockFighting', {CockFightingId}, {settingType})">Enable Cockfighting</span>
+                    </td>               
+                    <td class="l" colspan="2" >                         
+                    </td>
+                </tr>
+                <!--/EnableCockFighting-->     
                 <tr>
                     <td style="width: 100px;" class="l">
                         Special
@@ -359,8 +368,12 @@
                             <!--/edit-ColossusBet-->  
                              <!--edit-sportsbook2-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sportsbook2LinkSetting}');">
-                               Edit Sportsbook 2</a>
+                               Edit Sportsbook 2</a><br />
                             <!--/edit-sportsbook2-->         
+                             <!--edit-CockFighting-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{cockFightingSettingLink}');">
+                              Edit Cockfighting</a>
+                            <!--/edit-CockFighting-->         
                             <!-- Detail menu -->
                         </div>
                     </div>
