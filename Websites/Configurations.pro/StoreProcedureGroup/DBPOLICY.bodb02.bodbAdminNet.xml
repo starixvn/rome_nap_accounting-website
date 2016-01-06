@@ -24,7 +24,7 @@
     <Setting Key="AdminPolicySel" SpName="Acc_Con_Batch_AdminPolicySel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Con_CheckPermission" SpName="Acc_Con_CheckPermission" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOLICY.bodb02.bodbAdminNet" />
   </Function>
