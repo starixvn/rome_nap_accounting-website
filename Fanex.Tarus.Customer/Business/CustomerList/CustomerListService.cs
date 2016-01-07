@@ -114,7 +114,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
-                        superItem.IsHideCockFighting = !WebSettings.IsShowCockFighting;
+                        superItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
