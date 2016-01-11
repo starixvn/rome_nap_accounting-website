@@ -332,6 +332,14 @@ var bg = rowCSS(memberItem);
                 @memberItem._1x2
             </div>
         </td>
+        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 80px; height: 18px;">
+                    @memberItem.AgentMatchWinnerComm
+                </div>
+            </td>
+        }
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupB
@@ -360,6 +368,13 @@ var bg = rowCSS(memberItem);
                 @memberItem.GroupD
             </div>
         </td>
+        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 80px; height: 18px;">
+                    @memberItem.MatchWinnerComm
+                </div>
+            </td>
         @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
         {
             <td>
@@ -582,6 +597,14 @@ var bg = rowCSS(memberItem);
                                 A Comm 2 (%)
                             </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    A MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 A Comm 3 (%)
@@ -611,6 +634,13 @@ var bg = rowCSS(memberItem);
                             </div>
                         </th>
                         @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    P MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         {
                             <th>
                                 <div class="table-cell c" style="width: 80px; height: 38px;">
@@ -738,6 +768,14 @@ var bg = rowCSS(memberItem);
                                 A Comm 2 (%)
                             </div>
                         </th>
+                        @if (parentIsIMBCCustomers)
+                        {
+                            <th>
+                                <div class="table-cell c" style="width: 80px; height: 38px;">
+                                    A MW Comm (%)
+                                </div>
+                            </th>
+                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 A Comm 3 (%)
@@ -773,7 +811,7 @@ var bg = rowCSS(memberItem);
                                     P MW Comm (%)
                                 </div>
                             </th>
-                        }
+                        }                        
                         @if (enableNumberGame)
                         {
                             <th>
