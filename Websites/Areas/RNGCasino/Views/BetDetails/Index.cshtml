@@ -127,8 +127,8 @@ var isShowWinLoss = statusTemp != "running";
 
                 @if (isShowWinLoss)
                 {
-                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
-                        @winlost.Format(2)
+                    <div class="@betlistHelper.IsNegative(superWinlost) margin-top-5">
+                        @superWinlost.Format(2)
                     </div>
                 }
                 <div class="margin-top-5">
@@ -150,8 +150,8 @@ var isShowWinLoss = statusTemp != "running";
 
                 @if (isShowWinLoss)
                 {
-                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
-                        @winlost.Format(2)
+                    <div class="@betlistHelper.IsNegative(masterWinlost) margin-top-5">
+                        @masterWinlost.Format(2)
                     </div>
                 }
                 <div class="margin-top-5">
@@ -173,7 +173,7 @@ var isShowWinLoss = statusTemp != "running";
 
                 @if (isShowWinLoss)
                 {
-                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
+                    <div class="@betlistHelper.IsNegative(agentWinlost) margin-top-5">
                         @agentWinlost.Format(2)
                     </div>
                 }
