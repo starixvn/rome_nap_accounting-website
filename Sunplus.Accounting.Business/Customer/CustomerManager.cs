@@ -920,7 +920,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2, isHideCockFighting);
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2, isHideCockFighting, isHideCricket);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -937,9 +937,6 @@ namespace Sunplus.Accounting.Business.Customer
                                 var casinoLinkSetting = string.Empty;
                                 var goldDeluxeLinkSetting = string.Empty;
                                 var colossusBetsLinkSetting = string.Empty;
-                                var sportsbook2LinkSetting = string.Empty;
-                                var cockFightingSettingLink = string.Empty;
-
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
                                 switch (roleId)
@@ -985,8 +982,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
-                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=2&customerId={0}", custId);
-                                        cockFightingSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=2&customerId={0}", custId);
+                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=2&customerId=" + custId + "&productId=";
                                         break;
 
                                     case 3: // master
@@ -1008,8 +1004,8 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
-                                        sportsbook2LinkSetting = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=3&customerId={0}", custId);
-                                        cockFightingSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=3&customerId={0}", custId);
+                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=3&customerId=" + custId + "&productId=";
+                     
                                         break;
 
                                     case 4: // super
@@ -1558,7 +1554,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket)
         {
             int parentId;
             string submenu1 = "";
@@ -1630,6 +1626,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cockfighting</a>";
                     }
 
+                    if (!isHideCricket)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
+                    }
+
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
                     if (!WebSettings.disabledHR)
@@ -1676,6 +1677,12 @@ namespace Sunplus.Accounting.Business.Customer
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cockfighting</a>";
                     }
+
+                    if (!isHideCricket)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
+                    }
+
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 

@@ -6,7 +6,6 @@
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
-
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
@@ -120,12 +119,11 @@
         return bg;
     }
 }
-
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
-{
-var bg = rowCSS(memberItem);
-var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
-string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
+    {
+    var bg = rowCSS(memberItem);
+    var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
+    string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
     <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -136,8 +134,7 @@ string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
             <div class="table-cell c" style="width: 65px; height: 18px;">
                 <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');">@memberItem.Status</a>
                 <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');" class="status-button">
-                    &nbsp;&nbsp;&nbsp
-                </span>
+                    &nbsp;&nbsp;&nbsp </span>
             </div>
         </td>
         <td>
@@ -145,83 +142,68 @@ string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@memberItem.ChildID" style="display:none;">
-                    <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')">Racing</li>
+                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')">
+                            Racing</li>
                     }
-                    <!--/horseracing-edit-->
-                    <!--casino-edit-->
                     @{
                         var IsOnclickCS = !string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"]);
                         var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS">Casino</li>
-                    <!--/casino-edit-->
-                    <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {
                         <li class="canchange" onclick="OpenEditBI('@memberItem.ChildID', '@Model.ParentId', '1')">
-                            Bingo
-                        </li>
+                            Bingo </li>
                     }
-                    <!--/bingo-edit-->
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
-                        Password
-                    </li>
-                    <!--edit-p2p-->
+                        Password </li>
                     @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
                     {
                         <li class="canchange" onclick="MemberList.editSetting('@memberItem.ChildID', '1');">
-                            Poker
-                        </li>
+                            Poker </li>
                     }
-                    <!--/edit-p2p-->
-                    <!--edit-liveCasino-->
                     @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
                     {
                         <li class="canchange" onclick="MemberList.liveCasinoSetting('@memberItem.ChildID', '0', '@Model.ParentId');">
-                            Live Casino
-                        </li>
+                            Live Casino </li>
                     }
-                    <!--/edit-liveCasino-->
-                    <!--edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
                     {
                         <li class="canchange" onclick="MemberList.virtualSportsSetting('@memberItem.ChildID', '@Model.ParentId', '1');">
-                            Virtual Sports
-                        </li>
+                            Virtual Sports </li>
                     }
-                    <!--/edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
-                        <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">
-                            Keno
+                        <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">Keno
                         </li>
                     }
                     @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
                         <li class="canchange" onclick="MemberList.goldDeluxeSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Gold Deluxe
-                        </li>
+                            Gold Deluxe </li>
                     }
                     @if (!memberItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets
-                        </li>
+                            Colossus Bets </li>
                     }
                     @if (!memberItem.IsHideSportsbook2)
                     {
-                        <li class="canchange" onclick="EditSportsbook2('@memberItem.ChildID');">
-                            Sportsbook 2
-                        </li>
-                     }
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">
+                            Sportsbook 2 </li>
+                    }
                     @if (!memberItem.IsHideCockFighting)
                     {
-                     <li class="canchange" onclick="EditCockFighting('@memberItem.ChildID');">
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 19, 'Cockfighting');">
                             Cockfighting</li>
+                    }
+                    @if (!memberItem.IsHideCricket)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 20, 'Cricket');">
+                            Cricket</li>
                     }
                 </ul>
             </div>
@@ -240,17 +222,17 @@ string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
             {
                 if (memberItem.isDoubleComm)
                 {
-                    <div class="table-cell" style="width: 45px; height: 18px;">
-                        <span id="allow_@memberItem.ChildID" class="on-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',false);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
+                <div class="table-cell" style="width: 45px; height: 18px;">
+                    <span id="allow_@memberItem.ChildID" class="on-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',false);" onmouseout="" onmouseover="">
+                    </span>
+                </div>
                 }
                 else
                 {
-                    <div class="table-cell" style="width: 45px; height: 18px;">
-                        <span id="disallow_@memberItem.ChildID" class="off-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',true);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
+                <div class="table-cell" style="width: 45px; height: 18px;">
+                    <span id="disallow_@memberItem.ChildID" class="off-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',true);" onmouseout="" onmouseover="">
+                    </span>
+                </div>
                 }
                 <div class="table-cell c" style="width: 10px; height: 18px;">
                     <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox" />
@@ -265,8 +247,8 @@ string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
     </tr>
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
-{
-var bg = rowCSS(memberItem);
+    {
+        var bg = rowCSS(memberItem);
     <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -375,6 +357,7 @@ var bg = rowCSS(memberItem);
                     @memberItem.MatchWinnerComm
                 </div>
             </td>
+        }
         @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
         {
             <td>
@@ -438,7 +421,7 @@ var bg = rowCSS(memberItem);
                         {
                             <div class="table-cell" style="width: 75px; height: 38px;">
                                 <input class="verifiedmember" type="button" onclick="MemberList.confirmUpdateDComm(true);"
-                                       value="Double Comm" disabled="disabled" /><br />
+                                    value="Double Comm" disabled="disabled" /><br />
                                 <input type="checkbox" onclick="CustomerList.itemAllClicked()" disabled="disabled" />
                             </div>
                         }
@@ -446,7 +429,7 @@ var bg = rowCSS(memberItem);
                         {
                             <div class="table-cell" style="width: 75px; height: 38px;">
                                 <input id="btnMultiple" class="verifiedmember" type="button" onclick="MemberList.confirmUpdateSingle(true);"
-                                       value="Double Comm" />
+                                    value="Double Comm" />
                                 <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
                             </div>
                         }
@@ -642,11 +625,11 @@ var bg = rowCSS(memberItem);
                             </th>
                         }
                         {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    P MW Comm (%)
-                                </div>
-                            </th>
+                        <th>
+                            <div class="table-cell c" style="width: 80px; height: 38px;">
+                                P MW Comm (%)
+                            </div>
+                        </th>
                         }
                         @if (enableNumberGame)
                         {
@@ -811,7 +794,7 @@ var bg = rowCSS(memberItem);
                                     P MW Comm (%)
                                 </div>
                             </th>
-                        }                        
+                        }
                         @if (enableNumberGame)
                         {
                             <th>
@@ -845,15 +828,16 @@ var bg = rowCSS(memberItem);
     </div>
 </div>
 <div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
-     onmouseout="CustomerList.HideEditBox()">
-    <ul></ul>
+    onmouseout="CustomerList.HideEditBox()">
+    <ul>
+    </ul>
 </div>
 <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
-    <input type="hidden" name="language" id="language" value="en-US" />
-    <input type="hidden" name="customerLevel" id="customerLevel" value="1" />
-    <input type="hidden" name="productId" id="productId" value="" />
-    <input type="hidden" name="customerId" id="customerId" value="" />
-    <input type="hidden" id="uplineLevel" name="uplineLevel" value="2" />
+<input type="hidden" name="language" id="language" value="en-US" />
+<input type="hidden" name="customerLevel" id="customerLevel" value="1" />
+<input type="hidden" name="productId" id="productId" value="" />
+<input type="hidden" name="customerId" id="customerId" value="" />
+<input type="hidden" id="uplineLevel" name="uplineLevel" value="2" />
 </form>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
@@ -867,5 +851,5 @@ var bg = rowCSS(memberItem);
     var _enableNumberGame = "@enableNumberGame";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
-    var parentIsIMBCCustomers=@(parentIsIMBCCustomers?1:0);
+    var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

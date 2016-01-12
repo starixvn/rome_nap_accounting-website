@@ -66,7 +66,7 @@
         }
     }
     bool isShowMyanmarOdds = directMaster || isParentMyanmarOdds;
-    if(directMaster)
+    if (directMaster)
     {
         colspanCom++;
     }
@@ -167,19 +167,14 @@
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()"  onclick="CustomerList.ShowMenuEdit('div_@masterItem.ChildID')" class="edit-button" >
                 </span>
                 <ul id="div_@masterItem.ChildID" style="display:none;">
-                    <!--minmaxPT-->
                     <li class="canchange" onclick="EditMinMaxPT(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName');"  >
                         Min Max PT</li>
-                    <!--/minmaxPT-->
                     <li class="canchange" onclick="OpenEditCustInfo('@masterItem.ChildID','Master');" >Info</li>
-                    <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
                         <li class="canchange" onclick="EditHorseracingSetting(3, '@masterItem.ChildID', '@parentMasterID');" >
                             Racing</li>
                     }
-                    <!--/horseracing-edit-->
-                    <!--casino-edit-->
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : masterItem.IsSynCasinoUpline;
@@ -187,41 +182,30 @@
                         var onclickCS = (IsOnclickCS == true ? "masterList.casino('" + masterItem.ChildID + "','" + parentCustIdTmp + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS" >Casino</li>
-                    <!--/casino-edit-->
-                    <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {
                         <li class="canchange" onclick="OpenEditBI('@masterItem.ChildID', '@Model.ParentId', '3')" >
                             Bingo</li>
                     }
-                    <!--/bingo-edit-->
-                    <!--noneSuper-->
                     <li class="canchange" onclick="OpenEditTransferTime('@masterItem.ChildID',0);">Transfer
                         Condition</li>
-                    <!--/noneSuper-->
                     <li class="canchange" onclick="OpenChangePwd('@masterItem.ChildID','@masterItem.UserName');">
                         Password</li>
-                    <!--edit-p2p-->
                     @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
                     {
                         <li class="canchange" onclick="masterList.editSetting('@masterItem.ChildID', '3');">
                             Poker</li>
                     }
-                    <!--/edit-p2p-->
-                    <!--edit-liveCasino-->
                     @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
                     {
                         <li class="canchange" onclick="masterList.liveCasinoSetting('@masterItem.ChildID', '0', '@Model.ParentId');">
                             Live Casino</li>
                     }
-                    <!--/edit-liveCasino-->
-                    <!--edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
                     {
                         <li class="canchange" onclick="masterList.virtualSportsSetting('@masterItem.ChildID', '@Model.ParentId', '3');">
                             Virtual Sports</li>
                     }
-                    <!--/edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
                         <li class="canchange" onclick="masterList.kenoSetting('@masterItem.ChildID');">Keno</li>
@@ -231,20 +215,25 @@
                         <li class="canchange" onclick="masterList.goldDeluxeSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Gold Deluxe</li>
                     }
-                     @if (!masterItem.IsHideColossusBets)
+                    @if (!masterItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="masterList.colossusBetSetting('@masterItem.ChildID', '@Model.ParentId');">
                             Colossus Bets</li>
                     }
-                      @if (!masterItem.IsHideSportsbook2)
+                    @if (!masterItem.IsHideSportsbook2)
                     {
-                      <li class="canchange" onclick="EditSportsbook2('@masterItem.ChildID');">
-                            Sportsbook 2</li>
-                     }
-                     @if (!masterItem.IsHideCockFighting)
+                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 16, 'Sportsbook 2');">
+                            Sportsbook 2 </li>
+                    }
+                    @if (!masterItem.IsHideCockFighting)
                     {
-                     <li class="canchange" onclick="EditCockFighting('@masterItem.ChildID');">
+                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 19, 'Cockfighting');">
                             Cockfighting</li>
+                    }
+                    @if (!masterItem.IsHideCricket)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 20, 'Cricket');">
+                            Cricket</li>
                     }
                 </ul>
             </div>
@@ -617,7 +606,7 @@
                                 </div>
                             </th>
                         }
-                          @if (directMaster || isParentMyanmarOdds)
+                        @if (directMaster || isParentMyanmarOdds)
                         {
                             <th>
                                 <div class="table-cell" style="width: 70px; height: 38px;">
@@ -759,7 +748,7 @@
                                 </div>
                             </th>
                         }
-                          @if (directMaster || isParentMyanmarOdds)
+                        @if (directMaster || isParentMyanmarOdds)
                         {
                             <th>
                                 <div class="table-cell" style="width: 70px; height: 38px;">
@@ -784,11 +773,11 @@
     <ul>
     </ul>
 </div>
- <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
-    <input type="hidden" name="language" id="language" value="en-US" /> 
-    <input type="hidden" name="customerLevel" id="customerLevel" value="3" />
-    <input type="hidden" name="productId" id="productId" value="" />
-    <input type="hidden" name="customerId" id="customerId" value="" />
+<form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
+<input type="hidden" name="language" id="language" value="en-US" />
+<input type="hidden" name="customerLevel" id="customerLevel" value="3" />
+<input type="hidden" name="productId" id="productId" value="" />
+<input type="hidden" name="customerId" id="customerId" value="" />
 </form>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
@@ -804,5 +793,5 @@
     var _directMaster = "@directMaster";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
-    var parentIsIMBCCustomers=@(parentIsIMBCCustomers?1:0);
+    var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

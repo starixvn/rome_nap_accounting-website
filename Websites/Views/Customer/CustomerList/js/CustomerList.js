@@ -161,17 +161,9 @@ function EditHorseracingSetting(roleid, custid, uplineid) {
         showPopup("Edit Min/Max PT", url, "", "", 800, 700, false, 2000, null);
     }
 
-
-    function EditSportsbook2 (custId) {
-        showPopup("sportsbook 2", "", 0, 0, 880, 550, false, 2000, null);
-        document.getElementById('productId').value = 16;
-        document.getElementById('customerId').value = custId;
-        document.getElementById("target").submit();
-    }
-
-    function EditCockFighting(custId) {
-        showPopup("Cockfighting", "", 0, 0, 880, 550, false, 2000, null);
-        document.getElementById('productId').value = 19;
+    function EditDCSByProduct(custId, productId, productName) {
+        showPopup(productName, "", 0, 0, 880, 550, false, 2000, null);
+        document.getElementById('productId').value = productId;
         document.getElementById('customerId').value = custId;
         document.getElementById("target").submit();
     }

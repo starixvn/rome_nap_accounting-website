@@ -7,19 +7,16 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
-    using DNAide.Utils;
-    using Fanex.Tarus.Customer.Entities.CustomerList;
-    using Fanex.Tarus.Customer.DataAccess.CustomerList;
-    using Sunplus.Accounting.Core.Common;
-    using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.Accounting.Business;
-    using Sunplus.Accounting.Core.Helper;
-    using Fanex.Tarus.Customer.Entities.SettingCustomer;
-    using Fanex.Tarus.Customer.DataAccess;
-    using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.DataAccess.SettingCustomer;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
+    using Fanex.Tarus.Customer.DataAccess;
+    using Fanex.Tarus.Customer.DataAccess.CustomerList;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.CustomerList;
+    using Sunplus.Accounting.Business;
+    using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.Core.Helper;
 
     public class CustomerListService : BaseDataAccess, ICustomerListService
     {
@@ -115,6 +112,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
                         superItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
+                        superItem.IsHideCricket = !WebSettings.IsShowCricket; // || CastAide.AsBoolean(row["HideCricket"]);
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -239,6 +237,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         masterItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         masterItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
+                        masterItem.IsHideCricket = !WebSettings.IsShowCricket; // || CastAide.AsBoolean(row["HideCricket"]);
 
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
@@ -327,6 +326,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         agentItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         agentItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
+                        agentItem.IsHideCricket = !WebSettings.IsShowCricket; // || CastAide.AsBoolean(row["HideCricket"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -417,6 +417,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         memberItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         memberItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
+                        memberItem.IsHideCricket = !WebSettings.IsShowCricket;// || CastAide.AsBoolean(row["HideCricket"]);
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);

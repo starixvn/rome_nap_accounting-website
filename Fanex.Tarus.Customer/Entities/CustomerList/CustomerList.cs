@@ -51,6 +51,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public bool IsHideColossusBets { get; set; }
         public bool IsHideSportsbook2 { get; set; }
         public bool IsHideCockFighting { get; set; }
+        public bool IsHideCricket { get; set; }
         public int ParentMasterDirect { get; set; } // just for Direct Master
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }

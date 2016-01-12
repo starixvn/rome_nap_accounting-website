@@ -113,10 +113,10 @@
     }
 }
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
-{
-var bg = rowCSS(superItem);
-var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
-string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
+    {
+        var bg = rowCSS(superItem);
+        var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
+        string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
 
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
@@ -128,8 +128,7 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
             <div class="table-cell c" style="width: 65px; height: 18px;">
                 <a onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', '@siteName');">@superItem.Status</a>
                 <span onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName', '@siteName');" class="status-button">
-                    &nbsp;&nbsp;&nbsp
-                </span>
+                    &nbsp;&nbsp;&nbsp </span>
             </div>
         </td>
         <td>
@@ -137,98 +136,73 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@superItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@superItem.ChildID" style="display:none;">
-                    <!--minmaxPT-->
                     <li class="canchange" onclick="EditMinMaxPT(4, '@superItem.ChildID', 0 , '@superItem.UserName');">
-                        Max PT
-                    </li>
-                    <!--/minmaxPT-->
+                        Max PT </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');">
-                        Info
-                    </li>
-                    <!--horseracing-edit-->
+                        Info </li>
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
                         <li class="canchange" onclick="EditHorseracingSetting(4,'@superItem.ChildID')">Racing</li>
                     }
-                    <!--/horseracing-edit-->
-                    <!--casino-edit-->
                     @if (!CastAide.AsBoolean(hash["disableCasino"]))
                     {
                         <li class="canchange" onclick="SuperList.casino('@superItem.ChildID');">Casino</li>
                     }
-                    <!--/casino-edit-->
-                    <!--bingo-edit-->
                     @if (CastAide.AsBoolean(hash["enableBingo"]))
                     {
                         <li class="canchange" onclick="OpenEditBI('@superItem.ChildID', '@Model.ParentId', '4')">
-                            Bingo
-                        </li>
+                            Bingo </li>
                     }
-                    <!--/bingo-edit-->
-                    <!--noneSuper-->
-                    <li class="canchange" onclick="OpenEditTransferTime('@superItem.ChildID',0);">
-                        Transfer
-                        Condition
-                    </li>
-                    <!--/noneSuper-->
+                    <li class="canchange" onclick="OpenEditTransferTime('@superItem.ChildID',0);">Transfer
+                        Condition </li>
                     <li class="canchange" onclick="OpenChangePwd('@superItem.ChildID','@superItem.UserName');">
-                        Password
-                    </li>
-                    <!--edit-p2p-->
+                        Password </li>
                     @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
                     {
                         <li class="canchange" onclick="SuperList.editSetting('@superItem.ChildID', '4');">Poker</li>
                     }
-                    <!--/edit-p2p-->
-                    <!--edit-liveCasino-->
                     @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
                     {
                         <li class="canchange" onclick="SuperList.liveCasinoSetting('@superItem.ChildID', '0', '@Model.ParentId');">
-                            Live Casino
-                        </li>
+                            Live Casino </li>
                     }
-                    <!--/edit-liveCasino-->
-                    <!--edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
                     {
                         <li class="canchange" onclick="SuperList.virtualSportsSetting('@superItem.ChildID', '@Model.ParentId', '4');">
-                            Virtual Sports
-                        </li>
+                            Virtual Sports </li>
                     }
-                    <!--/edit-virtualSports-->
                     @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
                         <li class="canchange" onclick="SuperList.kenoSetting('@superItem.ChildID');">Keno</li>
                     }
                     @if (superItem.IsLicensee)
                     {
-                        <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">
-                            AG
-                            Casino
-                        </li>
+                        <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">AG
+                            Casino </li>
                     }
                     @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
-                        <li class="canchange" onclick="SuperList.goldDeluxeSetting('@superItem.ChildID');">
-                            Gold Deluxe
-                        </li>
+                        <li class="canchange" onclick="SuperList.goldDeluxeSetting('@superItem.ChildID');">Gold
+                            Deluxe </li>
                     }
                     @if (!superItem.IsHideColossusBets)
                     {
                         <li class="canchange" onclick="SuperList.colossusBetSetting('@superItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets
-                        </li>
+                            Colossus Bets </li>
                     }
                     @if (!superItem.IsHideSportsbook2)
                     {
-                        <li class="canchange" onclick="EditSportsbook2('@superItem.ChildID');">
-                            Sportsbook 2
-                        </li>
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 16, 'Sportsbook 2');">
+                            Sportsbook 2 </li>
                     }
-                     @if (!superItem.IsHideCockFighting)
+                    @if (!superItem.IsHideCockFighting)
                     {
-                     <li class="canchange" onclick="EditCockFighting('@superItem.ChildID');">
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 19, 'Cockfighting');">
                             Cockfighting</li>
+                    }
+                    @if (!superItem.IsHideCricket)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 20, 'Cricket');">Cricket</li>
                     }
                 </ul>
             </div>
@@ -260,9 +234,9 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
     </tr>
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
-{
-var bg = rowCSS(superItem);
-string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
+    {
+        var bg = rowCSS(superItem);
+        string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -324,8 +298,7 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
         <td>
             <div class="table-cell" style="width: 50px; height: 18px;">
                 <a class="viewdownline-button " href="MasterAgentList?superId=@superItem.ChildID&doubleCommSuper=@superItem.isDoubleComm.ToString().ToLower()&isSynccasino=@superItem.IsSynCasinoUpline.ToString().ToLower()">
-                    View
-                </a>
+                    View </a>
             </div>
         </td>
         <td>
@@ -416,7 +389,7 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
                     <th>
                         <div class="table-cell" style="width: 90px; height: 38px;">
                             <input id="btnMultiple" class="verified" type="button" onclick="SuperList.confirmUpdateDComm(true);"
-                                   value="Double Comm" /><br />
+                                value="Double Comm" /><br />
                             <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
                         </div>
                     </th>
@@ -789,14 +762,15 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
     </div>
 </div>
 <div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
-     onmouseout="CustomerList.HideEditBox()">
-    <ul></ul>
+    onmouseout="CustomerList.HideEditBox()">
+    <ul>
+    </ul>
 </div>
 <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
-    <input type="hidden" name="language" id="language" value="en-US" />
-    <input type="hidden" name="customerLevel" id="customerLevel" value="4" />
-    <input type="hidden" name="productId" id="productId" value="" />
-    <input type="hidden" name="customerId" id="customerId" value="" />
+<input type="hidden" name="language" id="language" value="en-US" />
+<input type="hidden" name="customerLevel" id="customerLevel" value="4" />
+<input type="hidden" name="productId" id="productId" value="" />
+<input type="hidden" name="customerId" id="customerId" value="" />
 </form>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
@@ -808,5 +782,5 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _enableNumberGame = "@enableNumberGame";
     var _userId = @AppSession.AccId;
-    var enableRNGCasino=@(enableRNGCasino?1:0);
+    var enableRNGCasino=@(enableRNGCasino ? 1 : 0);
 </script>
