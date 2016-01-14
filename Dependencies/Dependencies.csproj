@@ -106,7 +106,6 @@
     </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.5\lib\Fanex.Module.RNGCasino.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement">
       <HintPath>..\Dependency\Modules\Statement\Fanex.Module.Statement.dll</HintPath>
