@@ -617,22 +617,22 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
 }
 
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
-    var width = 750;
     var params = $.param({
+        Refno: refNo,
+        RoleId: 0,
         MatchId: matchId,
         Race: race,
         BetType: betType,
         SportType: sportType,
-        Refno: refNo,
         WinLostDate: winlostDate
     });
 
     parent.OpenNextPopup(
         "RNGCasinoResult",
-        'Report/ViewRNGCasinoResult.aspx?' + params,
+        'RNGCasinoBetList/GetHandHistory?' + params,
         "RNG Casino Result",
-        width,
-        500,
+        800,
+        600,
         true,
         false,
         window,
@@ -642,5 +642,26 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
 }
 
 function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
+    var params = $.param({
+        Refno: refNo,
+        RoleId: 0,
+        MatchId: matchId,
+        Race: race,
+        BetType: betType,
+        SportType: sportType,
+        WinLostDate: winlostDate
+    });
 
+    parent.OpenNextPopup(
+        "RNGCasinoResult",
+        'RNGCasinoBetList/GetHandHistory?' + params,
+        "RNG Casino Result",
+        800,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
 }

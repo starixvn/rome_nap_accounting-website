@@ -475,3 +475,7 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     color: #0066cc;
     cursor: pointer;
 }
+
+.viewbrokengame-link:hover{
+    color: #d66d35;
+}

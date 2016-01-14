@@ -45,7 +45,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId);
+                IsColossusBetType(ticket.BetTypeId) ||
                 IsCockFightingBetType(ticket.BetTypeId);
         }
 
@@ -175,7 +175,7 @@ namespace Fanex.BetList.Accounting.Core
             bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
 
-            if (isRunningStatus)
+            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck))
             {
                 var viewBrokenGame = "ViewRNGCasinoBrokenGame(" +
                     ticketDetail.Ticket.MatchId + "," +
