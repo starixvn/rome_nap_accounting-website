@@ -73,8 +73,12 @@
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">     
      <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.4-AddBonusPrize\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.8.0.2\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe">
       <HintPath>..\packages\Fanex.BetList.Core.2.10.0.3\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.4\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
