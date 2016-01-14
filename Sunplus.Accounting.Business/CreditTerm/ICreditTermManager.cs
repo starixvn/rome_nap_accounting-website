@@ -16,5 +16,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
         List<GroupEditing> GetMemberByGroupId(int groupId);
 
         void ExportExcelMemberByGroupId(int groupId);
+
+        int GetGroupIdByUsername(string username);
     }
 }

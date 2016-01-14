@@ -437,5 +437,10 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             #endregion Response file
         }
+        
+        public int GetGroupIdByUsername(string username)
+        {
+            return _creditTermDAO.GetGroupIdByUsername(username);
+        }
     }
 }

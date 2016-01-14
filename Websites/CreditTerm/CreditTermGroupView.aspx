@@ -14,7 +14,7 @@
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../js/Common/Functions.js" type="text/javascript"></script>
-    <script src="js/CreditTerm_V2.js?vs=134" type="text/javascript"></script>
+    <script src="js/CreditTerm_V2.js?vs=135" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             CreditTerm.Group.getAllView();
@@ -42,6 +42,7 @@
                             <input id="txt_search" type="text" class="text" value="" /><input id="btn_search"
                                 type="button" class="btn_search" value="&nbsp;" title="Search" /><input id="btn_clear"
                                     type="button" class="btn_clear" value="&nbsp;" title="Clear search" />
+                                    <label>&nbsp;<input id="chkSearchSMA" type="checkbox" />Search for account belonging to a group</label>
                         </span>
 						<div class="btngroup">
                             <input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel();" />

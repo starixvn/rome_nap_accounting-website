@@ -187,6 +187,7 @@
     <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
+	  <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Betlist Casino">
     <Setting Key="CasinoSynchronise" SpName="Acc_Rpt_CasinoSynchronise" DbName="DBCust.CustDB.bodbAdminNet" />
