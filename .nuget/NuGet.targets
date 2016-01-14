@@ -1,144 +1,234 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="Microsoft.NuGet.Build.Tasks.ResolveNuGetPackageAssets" AssemblyFile="Microsoft.NuGet.Build.Tasks.dll" />
 
-        <!-- Enable the restore command to run before builds -->
-        <RestorePackages Condition="  '$(RestorePackages)' == '' ">true</RestorePackages>
+  <PropertyGroup Condition="'$(ProjectLockFile)' == ''">
+    <_ProjectSpecificProjectJsonFile>$(MSBuildProjectName).project.json</_ProjectSpecificProjectJsonFile>
+    <ProjectLockFile Condition="Exists('$(_ProjectSpecificProjectJsonFile)')">$(MSBuildProjectName).project.lock.json</ProjectLockFile>
+    <ProjectLockFile Condition="!Exists('$(_ProjectSpecificProjectJsonFile)')">project.lock.json</ProjectLockFile>
+  </PropertyGroup>
 
-        <!-- Property that enables building a package from a project -->
-        <BuildPackage Condition=" '$(BuildPackage)' == '' ">true</BuildPackage>
+  <PropertyGroup>
+    <ResolveNuGetPackages Condition="'$(ResolveNuGetPackages)' == '' and '$(MSBuildProjectExtension)' != '.xproj'">true</ResolveNuGetPackages>
 
-        <!-- Determines if package restore consent is required to restore packages -->
-        <RequireRestoreConsent Condition=" '$(RequireRestoreConsent)' != 'false' ">true</RequireRestoreConsent>
+    <BaseNuGetRuntimeIdentifier Condition="'$(BaseNuGetRuntimeIdentifier)' == '' and '$(TargetPlatformIdentifier)' == 'UAP'">win10</BaseNuGetRuntimeIdentifier>
+    <BaseNuGetRuntimeIdentifier Condition="'$(BaseNuGetRuntimeIdentifier)' == ''">win</BaseNuGetRuntimeIdentifier>
 
-        <!-- Download NuGet.exe if it does not already exist -->
-        <DownloadNuGetExe Condition=" '$(DownloadNuGetExe)' == '' ">true</DownloadNuGetExe>
-    </PropertyGroup>
+    <UseTargetPlatformAsNuGetTargetMoniker Condition="'$(UseTargetPlatformAsNuGetTargetMoniker)' == '' AND '$(TargetFrameworkMoniker)' == '.NETCore,Version=v5.0'">true</UseTargetPlatformAsNuGetTargetMoniker>
+    <NuGetTargetMoniker Condition="'$(NuGetTargetMoniker)' == '' AND '$(UseTargetPlatformAsNuGetTargetMoniker)' == 'true'">$(TargetPlatformIdentifier),Version=v$([System.Version]::Parse('$(TargetPlatformMinVersion)').ToString(3))</NuGetTargetMoniker>
+    <NuGetTargetMoniker Condition="'$(NuGetTargetMoniker)' == '' AND '$(UseTargetPlatformAsNuGetTargetMoniker)' != 'true'">$(TargetFrameworkMoniker)</NuGetTargetMoniker>
 
-    <ItemGroup Condition=" '$(PackageSources)' == '' ">
-        <!-- Package sources used to restore packages. By default, registered sources under %APPDATA%\NuGet\NuGet.Config will be used -->
-        <!-- The official NuGet package source (https://www.nuget.org/api/v2/) will be excluded if package sources are specified and it does not appear in the list -->
-        <!--
-            <PackageSource Include="https://www.nuget.org/api/v2/" />-->
-            <PackageSource Include="http://nuget.nexcel.vn/api/v2" />
-        
+    <CopyNuGetImplementations Condition="'$(CopyNuGetImplementations)' == '' and (('$(OutputType)' != 'library' and ('$(OutputType)' != 'winmdobj' or '$(AppxPackage)' == 'true')) or '$(TargetFrameworkIdentifier)' == '.NETFramework')">true</CopyNuGetImplementations>
+    <IncludeFrameworkReferencesFromNuGet Condition="'$(IncludeFrameworkReferencesFromNuGet)' == ''">true</IncludeFrameworkReferencesFromNuGet>
+
+    <_NuGetRuntimeIdentifierPlatformTargetSuffix Condition="'$(PlatformTarget)' != '' and '$(PlatformTarget)' != 'AnyCPU'">-$(PlatformTarget.ToLower())</_NuGetRuntimeIdentifierPlatformTargetSuffix>
+    <_NuGetRuntimeIdentifierWithoutAot>$(BaseNuGetRuntimeIdentifier)$(_NuGetRuntimeIdentifierPlatformTargetSuffix)</_NuGetRuntimeIdentifierWithoutAot>
+  </PropertyGroup>
+
+  <!-- If a NuGetRuntimeIdentifier wasn't already specified, let's go generate it -->
+  <PropertyGroup Condition="'$(NuGetRuntimeIdentifier)' == '' and '$(CopyNuGetImplementations)' == 'true'">
+    <NuGetRuntimeIdentifier>$(_NuGetRuntimeIdentifierWithoutAot)</NuGetRuntimeIdentifier>
+    <NuGetRuntimeIdentifier Condition="'$(UseDotNetNativeToolchain)' == 'true'">$(_NuGetRuntimeIdentifierWithoutAot)-aot</NuGetRuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- If we are resolving from project.lock.json, we need to consider any edit to it as something that forces a rebuild -->
+    <CustomAdditionalCompileInputs Include="$(ProjectLockFile)" Condition="'$(ResolveNuGetPackages)' == 'true' and Exists('$(ProjectLockFile)')" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
+    <_NuGetTargetFallbackMoniker>UAP,Version=v10.0</_NuGetTargetFallbackMoniker>
+    <ImplicitlyExpandTargetFramework>false</ImplicitlyExpandTargetFramework>
+    <EnableAppLocalFXWorkaround>false</EnableAppLocalFXWorkaround>
+    <UseNetNativeCustomFramework>true</UseNetNativeCustomFramework>
+  </PropertyGroup>
+
+  <!--
+    ============================================================
+                                        GetProjectsReferencingProjectJsonFiles
+    ============================================================
+  -->
+  <Target Name="GetProjectsReferencingProjectJson" DependsOnTargets="_SplitProjectReferencesByFileExistence" Returns="@(_ProjectReferencingProjectJsonFile)">
+    <ItemGroup Condition="'$(ResolveNuGetPackages)' == 'true'">
+      <_ProjectReferencingProjectJsonFile Include="$(MSBuildProjectFullPath)">
+        <ProjectReferences>@(ProjectReference)</ProjectReferences>
+        <ProjectJson>$(MSBuildProjectDirectory)\project.json</ProjectJson>
+      </_ProjectReferencingProjectJsonFile>
     </ItemGroup>
 
-    <PropertyGroup Condition=" '$(OS)' == 'Windows_NT'">
-        <!-- Windows specific commands -->
-        <NuGetToolsPath>$([System.IO.Path]::Combine($(SolutionDir), ".nuget"))</NuGetToolsPath>
-    </PropertyGroup>
+      <MSBuild
+        Projects="@(_MSBuildProjectReferenceExistent)"
+        Targets="GetProjectsReferencingProjectJson"
+        BuildInParallel="$(BuildInParallel)"
+        Properties="%(_MSBuildProjectReferenceExistent.SetConfiguration); %(_MSBuildProjectReferenceExistent.SetPlatform)"
+        RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
 
-    <PropertyGroup Condition=" '$(OS)' != 'Windows_NT'">
-        <!-- We need to launch nuget.exe with the mono command if we're not on windows -->
-        <NuGetToolsPath>$(SolutionDir).nuget</NuGetToolsPath>
+      <Output TaskParameter="TargetOutputs" ItemName="_ProjectReferencingProjectJsonFile" />
+    </MSBuild>
+  </Target>
+
+  <ItemGroup>
+    <NuGetPreprocessorValue Include="rootnamespace">
+      <Value>$(RootNamespace)</Value>
+    </NuGetPreprocessorValue>
+    <NuGetPreprocessorValue Include="assemblyname">
+      <Value>$(AssemblyName)</Value>
+    </NuGetPreprocessorValue>
+    <NuGetPreprocessorValue Include="fullpath">
+      <Value>$(MSBuildProjectDirectory)</Value>
+    </NuGetPreprocessorValue>
+    <NuGetPreprocessorValue Include="outputfilename">
+      <Value>$(TargetFileName)</Value>
+    </NuGetPreprocessorValue>
+    <NuGetPreprocessorValue Include="filename">
+      <Value>$(MSBuildProjectFile)</Value>
+    </NuGetPreprocessorValue>
+  </ItemGroup>
+  
+  <!--
+    ============================================================
+                                        ResolveNuGetPackageAssets
+
+    Resolve assets from consumed NuGet packages listed in the project.lock.json
+
+        [OUT]
+        @(Analyzer) - Paths to build-time diagnostic analyzers
+        @(Reference) - Paths to build-time NuGet dependencies
+        @(ReferenceCopyLocalPaths) - Paths to run-time dependencies to copy
+    ============================================================
+  -->
+  <PropertyGroup>
+    <ResolveAssemblyReferencesDependsOn>$(ResolveAssemblyReferencesDependsOn);ResolveNuGetPackageAssets</ResolveAssemblyReferencesDependsOn>
+    <PrepareResourcesDependsOn>ResolveNuGetPackageAssets;$(PrepareResourcesDependsOn)</PrepareResourcesDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ResolveNuGetPackageAssetsDependsOn Condition="'$(ImplicitlyExpandTargetFramework)' == 'true'">$(ResolveNuGetPackageAssetsDependsOn);ImplicitlyExpandTargetFramework</ResolveNuGetPackageAssetsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ResolveNuGetPackageAssets" DependsOnTargets="$(ResolveNuGetPackageAssetsDependsOn)" Condition="'$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')">
+    <ResolveNuGetPackageAssets AllowFallbackOnTargetSelection="$(DesignTimeBuild)"
+                               ContinueOnError="$(ContinueOnError)"
+                               IncludeFrameworkReferences="$(IncludeFrameworkReferencesFromNuGet)"
+                               NuGetPackagesDirectory="$(NuGetPackagesDirectory)"
+                               RuntimeIdentifier="$(NuGetRuntimeIdentifier)"
+                               ProjectLanguage="$(Language)"
+                               ProjectLockFile="$(ProjectLockFile)"
+                               ContentPreprocessorValues="@(NuGetPreprocessorValue)"
+                               ContentPreprocessorOutputDirectory="$(IntermediateOutputPath)\NuGet"
+                               TargetMonikers="$(NuGetTargetMoniker);$(_NuGetTargetFallbackMoniker)">
+
+      <Output TaskParameter="ResolvedAnalyzers" ItemName="Analyzer" />
+      <Output TaskParameter="ResolvedCopyLocalItems" ItemName="ReferenceCopyLocalPaths" />
+      <Output TaskParameter="ResolvedReferences" ItemName="_ReferencesFromNuGetPackages" />
+      <Output TaskParameter="ReferencedPackages" ItemName="ReferencedNuGetPackages" />
+      <Output TaskParameter="ContentItems" ItemName="_NuGetContentItems" />
+      <Output TaskParameter="FileWrites" ItemName="FileWrites" />
+    </ResolveNuGetPackageAssets>
+
+    <ItemGroup>
+      <!-- Remove exact references, such as if a package had a framework reference to 'System' that we already have -->
+      <Reference Remove="@(_ReferencesFromNuGetPackages)" />
+      
+      <!-- Remove simple name references if we're directly providing a reference assembly to the compiler. For example,
+           consider a project with an Reference Include="System", and some NuGet package is providing System.dll -->
+      <Reference Remove="%(_ReferencesFromNuGetPackages.FileName)" /> 
+
+      <!-- Remove simple name references that are already implicitly added -->
+      <_ReferencesFromNuGetPackages Remove="%(ReferencePath.FileName)" Condition="'%(ReferencePath.ResolvedFrom)' == 'ImplicitlyExpandTargetFramework'" />
+      
+      <Reference Include="@(_ReferencesFromNuGetPackages)" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(AutoUnifyAssemblyReferences)' == 'true' ">
+      <!-- Normally Design Time Assembly Resolution (DTAR) won't consider these references.
+           Put DTAR in a mode where it will prefer the output of RAR and unify. -->
+      <DTARUseReferencesFromProject>true</DTARUseReferencesFromProject>
+    </PropertyGroup>
+  
+    <!-- The items in _NuGetContentItems need to go into the appropriately-named item group, but the names depend upon the items
+         themselves. Split it apart. -->
+    <CreateItem Include="@(_NuGetContentItems)" Condition="'@(_NuGetContentItems)' != ''">
+      <Output TaskParameter="Include" ItemName="%(_NuGetContentItems.NuGetItemType)" />
+    </CreateItem>
+  </Target>
+
+  <Target Name="RuntimeImplementationProjectOutputGroup" Returns="@(RuntimeImplementationProjectOutputGroupOutput)" Condition="'$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')">
+    <!-- This output group must contain the implementation assemblies for the host (i.e. design time) environment, not the
+         target environment. Thus, we explicitly pass the RuntimeIdentifier that doesn't have the -aot suffix -->
+    <ResolveNuGetPackageAssets AllowFallbackOnTargetSelection="$(DesignTimeBuild)"
+                               NuGetPackagesDirectory="$(NuGetPackagesDirectory)"
+                               RuntimeIdentifier="$(_NuGetRuntimeIdentifierWithoutAot)"
+                               ProjectLanguage="$(Language)"
+                               ProjectLockFile="$(ProjectLockFile)"
+                               TargetMonikers="$(NuGetTargetMoniker);$(_NuGetTargetFallbackMoniker)">
+
+      <Output TaskParameter="ResolvedCopyLocalItems" ItemName="NonAheadOfTimeRuntimeImplementations" />
+    </ResolveNuGetPackageAssets>
+
+    <ItemGroup>
+      <RuntimeImplementationProjectOutputGroupOutput Include="%(NonAheadOfTimeRuntimeImplementations.Identity)">
+        <FinalOutputPath>%(NonAheadOfTimeRuntimeImplementations.FullPath)</FinalOutputPath>
+        <TargetPath>%(NonAheadOfTimeRuntimeImplementations.FullPath)</TargetPath>
+      </RuntimeImplementationProjectOutputGroupOutput>
+    </ItemGroup>
+  </Target>
+
+  <!--
+    ============================================================
+            Framework injection into mixed-target applications
+    ============================================================
+  -->
+  <PropertyGroup>
+    <NuGetTargetFrameworkMonikerToInject Condition="'$(NuGetTargetFrameworkMonikerToInject)' == ''">.NETCore,Version=v5.0</NuGetTargetFrameworkMonikerToInject>
+    <NuGetTargetMonikerToInject Condition="'$(NuGetTargetMonikerToInject)' == ''">.NETCore,Version=v5.0</NuGetTargetMonikerToInject>
+  </PropertyGroup>
+
+  <Target Name="ComputeNetCoreFrameworkInjectionParameters" BeforeTargets="BeforeGenerateProjectPriFile" DependsOnTargets="_AddUnionWinmd" Condition="'$(AppxPackage)' == 'true' and '$(TargetPlatformIdentifier)' == 'UAP'">
+    <PropertyGroup>
+      <_PackagingOutputsIncludesFramework Condition="'%(PackagingOutputs.FileName)%(PackagingOutputs.Extension)' == 'System.Runtime.dll'">true</_PackagingOutputsIncludesFramework>
+      <_AppContainsManagedCodeForInjection Condition="'%(PackagingOutputs.Identity)' == '$(_TargetPlatformSdkDir)UnionMetadata\Windows.winmd'">true</_AppContainsManagedCodeForInjection>
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackagesProjectConfig Condition=" '$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName.Replace(' ', '_')).config</PackagesProjectConfig>
-        <PackagesProjectConfig Condition=" '$(OS)' != 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName).config</PackagesProjectConfig>
+      <_NetCoreFrameworkInjectionNeeded Condition="'$(_PackagingOutputsIncludesFramework)' != 'true' and '$(_AppContainsManagedCodeForInjection)' == 'true'">true</_NetCoreFrameworkInjectionNeeded>
     </PropertyGroup>
+  </Target>
+
+  <Target Name="InjectNetCoreFrameworkBlockIfLockFileExists" AfterTargets="ComputeNetCoreFrameworkInjectionParameters" Condition="'$(_NetCoreFrameworkInjectionNeeded)' == 'true' and '$(ResolveNuGetPackages)' == 'true' and Exists('$(ProjectLockFile)')">
+    <Error Text="One of your dependencies requires the .NET Framework, but the .NET Framework could not be found in the NuGet packages installed in this project.  Please install the appropriate .NET Framework packages required by your dependency." />
+  </Target>
+
+  <Target Name="InjectNetCoreFramework" AfterTargets="ComputeNetCoreFrameworkInjectionParameters" Condition="'$(_NetCoreFrameworkInjectionNeeded)' == 'true' and ('$(ResolveNuGetPackages)' != 'true' or !Exists('$(ProjectLockFile)'))">
+    <GetReferenceAssemblyPaths TargetFrameworkMoniker="$(NuGetTargetFrameworkMonikerToInject)" Condition="'$(FrameworkInjectionLockFile)' == ''">
+      <Output TaskParameter="ReferenceAssemblyPaths" ItemName="_NuGetInjectionSourceDirectories" />
+    </GetReferenceAssemblyPaths>
 
     <PropertyGroup>
-      <PackagesConfig Condition="Exists('$(MSBuildProjectDirectory)\packages.config')">$(MSBuildProjectDirectory)\packages.config</PackagesConfig>
-      <PackagesConfig Condition="Exists('$(PackagesProjectConfig)')">$(PackagesProjectConfig)</PackagesConfig>
+      <FrameworkInjectionLockFile Condition="'$(FrameworkInjectionLockFile)' == ''">@(_NuGetInjectionSourceDirectories->'%(Identity)\project.lock.json')</FrameworkInjectionLockFile>
+      <FrameworkInjectionPackagesDirectory Condition="'$(FrameworkInjectionPackagesDirectory)' == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\NuGet\Repository', 'NETCoreSDK', null, RegistryView.Registry32, RegistryView.Default))</FrameworkInjectionPackagesDirectory> 
     </PropertyGroup>
-    
+
+    <ResolveNuGetPackageAssets Condition="Exists('$(FrameworkInjectionLockFile)')"
+                               NuGetPackagesDirectory="$(FrameworkInjectionPackagesDirectory)"
+                               RuntimeIdentifier="$(NuGetRuntimeIdentifier)"
+                               TargetMonikers="$(NuGetTargetMonikerToInject)"
+                               ProjectLockFile="$(FrameworkInjectionLockFile)">
+
+      <Output TaskParameter="ResolvedCopyLocalItems" ItemName="_InjectNetCoreFrameworkPayload" />
+    </ResolveNuGetPackageAssets>
+
     <PropertyGroup>
-        <!-- NuGet command -->
-        <NuGetExePath Condition=" '$(NuGetExePath)' == '' ">$(NuGetToolsPath)\NuGet.exe</NuGetExePath>
-        <PackageSources Condition=" $(PackageSources) == '' ">@(PackageSource)</PackageSources>
-
-        <NuGetCommand Condition=" '$(OS)' == 'Windows_NT'">"$(NuGetExePath)"</NuGetCommand>
-        <NuGetCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(NuGetExePath)"</NuGetCommand>
-
-        <PackageOutputDir Condition="$(PackageOutputDir) == ''">$(TargetDir.Trim('\\'))</PackageOutputDir>
-
-        <RequireConsentSwitch Condition=" $(RequireRestoreConsent) == 'true' ">-RequireConsent</RequireConsentSwitch>
-        <NonInteractiveSwitch Condition=" '$(VisualStudioVersion)' != '' AND '$(OS)' == 'Windows_NT' ">-NonInteractive</NonInteractiveSwitch>
-
-        <PaddedSolutionDir Condition=" '$(OS)' == 'Windows_NT'">"$(SolutionDir) "</PaddedSolutionDir>
-        <PaddedSolutionDir Condition=" '$(OS)' != 'Windows_NT' ">"$(SolutionDir)"</PaddedSolutionDir>
-
-        <!-- Commands -->
-        <RestoreCommand>$(NuGetCommand) install "$(PackagesConfig)" -source "$(PackageSources)"  $(NonInteractiveSwitch) $(RequireConsentSwitch) -solutionDir $(PaddedSolutionDir)</RestoreCommand>
-        <BuildCommand>$(NuGetCommand) pack "$(ProjectPath)" -Properties "Configuration=$(Configuration);Platform=$(Platform)" $(NonInteractiveSwitch) -OutputDirectory "$(PackageOutputDir)" -symbols</BuildCommand>
-
-        <!-- We need to ensure packages are restored prior to assembly resolve -->
-        <BuildDependsOn Condition="$(RestorePackages) == 'true'">
-            RestorePackages;
-            $(BuildDependsOn);
-        </BuildDependsOn>
-
-        <!-- Make the build depend on restore packages -->
-        <BuildDependsOn Condition="$(BuildPackage) == 'true'">
-            $(BuildDependsOn);
-            BuildPackage;
-        </BuildDependsOn>
+      <_CoreRuntimePackageId Condition="'%(_InjectNetCoreFrameworkPayload.FileName)%(_InjectNetCoreFrameworkPayload.Extension)' == 'mscorlib.dll' OR '%(_InjectNetCoreFrameworkPayload.FileName)%(_InjectNetCoreFrameworkPayload.Extension)' == 'mscorlib.ni.dll'">%(_InjectNetCoreFrameworkPayload.NuGetPackageId)</_CoreRuntimePackageId>
     </PropertyGroup>
 
-    <Target Name="CheckPrerequisites">
-        <!-- Raise an error if we're unable to locate nuget.exe  -->
-        <Error Condition="'$(DownloadNuGetExe)' != 'true' AND !Exists('$(NuGetExePath)')" Text="Unable to locate '$(NuGetExePath)'" />
-        <!--
-        Take advantage of MsBuild's build dependency tracking to make sure that we only ever download nuget.exe once.
-        This effectively acts as a lock that makes sure that the download operation will only happen once and all
-        parallel builds will have to wait for it to complete.
-        -->
-        <MsBuild Targets="_DownloadNuGet" Projects="$(MSBuildThisFileFullPath)" Properties="Configuration=NOT_IMPORTANT;DownloadNuGetExe=$(DownloadNuGetExe)" />
-    </Target>
+    <ItemGroup>
+      <PackagingOutputs Include="@(_InjectNetCoreFrameworkPayload)" Condition="'%(_InjectNetCoreFrameworkPayload.NuGetPackageId)' != '$(_CoreRuntimePackageId)' or '$(UseDotNetNativeToolchain)' == 'true'">
+        <TargetPath>%(Filename)%(Extension)</TargetPath>
+        <ProjectName>$(ProjectName)</ProjectName>
+        <OutputGroup>CopyLocalFilesOutputGroup</OutputGroup>
+      </PackagingOutputs>
+    </ItemGroup>
+  </Target>
 
-    <Target Name="_DownloadNuGet">
-        <DownloadNuGet OutputFilename="$(NuGetExePath)" Condition=" '$(DownloadNuGetExe)' == 'true' AND !Exists('$(NuGetExePath)')" />
-    </Target>
-
-    <Target Name="RestorePackages" DependsOnTargets="CheckPrerequisites">        
-        <Exec Command="$(RestoreCommand)"
-              Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfig)')" />
-
-        <Exec Command="$(RestoreCommand)"
-              LogStandardErrorAsError="true"
-              Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfig)')" />
-    </Target>
-
-    <Target Name="BuildPackage" DependsOnTargets="CheckPrerequisites">
-        <Exec Command="$(BuildCommand)"
-              Condition=" '$(OS)' != 'Windows_NT' " />
-
-        <Exec Command="$(BuildCommand)"
-              LogStandardErrorAsError="true"
-              Condition=" '$(OS)' == 'Windows_NT' " />
-    </Target>
-
-    <UsingTask TaskName="DownloadNuGet" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-        <ParameterGroup>
-            <OutputFilename ParameterType="System.String" Required="true" />
-        </ParameterGroup>
-        <Task>
-            <Reference Include="System.Core" />
-            <Using Namespace="System" />
-            <Using Namespace="System.IO" />
-            <Using Namespace="System.Net" />
-            <Using Namespace="Microsoft.Build.Framework" />
-            <Using Namespace="Microsoft.Build.Utilities" />
-            <Code Type="Fragment" Language="cs">
-                <![CDATA[
-                try {
-                    OutputFilename = Path.GetFullPath(OutputFilename);
-
-                    Log.LogMessage("Downloading latest version of NuGet.exe...");
-                    WebClient webClient = new WebClient();
-                    webClient.DownloadFile("https://www.nuget.org/nuget.exe", OutputFilename);
-
-                    return true;
-                }
-                catch (Exception ex) {
-                    Log.LogErrorFromException(ex);
-                    return false;
-                }
-            ]]>
-            </Code>
-        </Task>
-    </UsingTask>
+  <Import Project="$(MSBuildProjectDirectory)\$(MSBuildProjectName).nuget.targets" Condition="Exists('$(MSBuildProjectDirectory)\$(MSBuildProjectName).nuget.targets') AND '$(IncludeNuGetImports)' != 'false'" />
 </Project>
