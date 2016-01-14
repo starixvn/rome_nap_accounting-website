@@ -4,6 +4,7 @@ using DNAide.Core;
 using Fanex.Data;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.Entities;
+using System;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
 {
@@ -38,6 +39,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
             }
 
             return result;
+        }
+
+        public int GetGroupIdByUsername(string username)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_CreditTermSelGroupByUsername", 600))
+            {
+                objDB.AddInParameter("username", DbType.String, username);
+                using (var reader = objDB.ExecuteReader())
+                {
+                    if (reader != null && reader.Read())
+                    {
+                        return reader["groupid"] != null && reader["groupid"] != DBNull.Value ? CastAide.AsInt32(reader["groupid"]) : 0;
+                    }
+                }
+
+                return 0;
+            }
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Sunplus.Accounting.DataAccess.ICreditTermDAO
     {
         DataTable GetAllGroup();
 
+        int GetGroupIdByUsername(string username);
+
         Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport, int userID);
     }
 }

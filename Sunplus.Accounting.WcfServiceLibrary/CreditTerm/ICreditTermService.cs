@@ -27,6 +27,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
         List<GroupEditing> GetMemberByGroupId(int groupId);
 
         [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        int GetGroupIdByUsername(string username);
+
+        [OperationContract]
         void ExportExcelMemberByGroupId(int groupId);
     }
 }
