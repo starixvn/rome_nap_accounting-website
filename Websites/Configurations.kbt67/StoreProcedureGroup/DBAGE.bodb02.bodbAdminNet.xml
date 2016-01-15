@@ -154,7 +154,7 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -285,14 +285,14 @@
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-	<Function Name="MicroGaming">
-		<Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
-	</Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="DCS-ViewComm">
+ <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="MicroGaming">
+    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -321,18 +321,22 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
   </Function>
-	<Function Name="Bet List - Result">
-		<Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
-			<Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
-			<Mapping ObjectProperty="MatchId" DataField="MatchID" />
-			<Mapping ObjectProperty="GameId" DataField="GameID" />
-			<Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
-			<Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
-			<Mapping ObjectProperty="GameResult" DataField="GameResult" />
-			<Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
-			<Mapping ObjectProperty="HomeId" DataField="homeid" />
-			<Mapping ObjectProperty="AwayId" DataField="awayid" />
-		</Setting>
-		<Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
-	</Function>
+  <Function Name="AG Casino">
+    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Bet List - Result">
+    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
+      <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
+      <Mapping ObjectProperty="MatchId" DataField="MatchID" />
+      <Mapping ObjectProperty="GameId" DataField="GameID" />
+      <Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
+      <Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
+      <Mapping ObjectProperty="GameResult" DataField="GameResult" />
+      <Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
+      <Mapping ObjectProperty="HomeId" DataField="homeid" />
+      <Mapping ObjectProperty="AwayId" DataField="awayid" />
+    </Setting>
+    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet">
+    </Setting>
+  </Function>
 </Functions>

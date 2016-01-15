@@ -57,10 +57,10 @@
   </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -87,7 +87,7 @@
     <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer Status">
     <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
@@ -254,7 +254,7 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -299,10 +299,10 @@
       <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
-	  <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet"/>
+      <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
-	<Function Name="Casino Single Wallet - Member Win Limit">
-		<Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet"/>
-	</Function>
+  <Function Name="Casino Single Wallet - Member Win Limit">
+    <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
