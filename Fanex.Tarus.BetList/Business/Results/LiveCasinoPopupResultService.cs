@@ -52,7 +52,7 @@ namespace Fanex.Tarus.BetList.Business.Results
             return new ResultSetting
             {
                 SportType = SportType.LiveCasino,
-                IsOutRight = false,
+                IsOutright = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,
                 VisiblePopUpTitle = true,

@@ -65,7 +65,6 @@
     </Reference>
     <Reference Include="Fanex.Module.Logs, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Logs.1.0.2.3\lib\net40\Fanex.Module.Logs.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>

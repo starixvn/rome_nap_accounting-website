@@ -91,7 +91,7 @@ namespace Fanex.Tarus.BetList.Business.Results
             return new ResultSetting
             {
                 SportType = (SportType)criteria.SportType,
-                IsOutRight = false,
+                IsOutright = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,
                 LanguageCode = "en-US",
