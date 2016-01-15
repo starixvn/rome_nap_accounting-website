@@ -4,13 +4,13 @@
 <html>
 <head>
     <link type="text/css" rel="Stylesheet"
-          href="@Url.Content("~/Areas/RNGCasino/Views/HandHistory/Styles/HandHistory.less")" />
+          href="@Url.Content("~/Areas/RNGCasino/Views/HandHistory_API/Styles/HandHistory.less")" />
     <title>RNG Casino</title>
 </head>
 <body>
-    <div id="handhistory-result" class="column-memberchoice"></div>
+    <div id="handhistory-result"></div>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
-    <script type="text/javascript" src="~/Areas/RNGCasino/Views/HandHistory/Scripts/HandHistory.js"></script>
+    <script type="text/javascript" src="~/Areas/RNGCasino/Views/HandHistory_API/Scripts/HandHistory.js"></script>
     <script type="text/javascript">
         var handHistoryInfo = @Html.Raw(JsonConvert.SerializeObject(Model));
     </script>
