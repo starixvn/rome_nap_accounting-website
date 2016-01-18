@@ -64,16 +64,16 @@
     </Setting>
     <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance_xpre" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers_xpre" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines_xpre" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
     <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer_xpre" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
@@ -102,7 +102,7 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gold deluxe win limit">
-    <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel_xpre" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Balance checking">
     <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
