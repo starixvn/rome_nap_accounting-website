@@ -304,7 +304,7 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RNG - RNG Games.
+        ///   Looks up a localized string similar to OW RNG - RNG Game.
         /// </summary>
         public static string RNG_RNGGames {
             get {
