@@ -10,6 +10,11 @@
     decimal PT2 = betdetail.SuperPositionTaking2;
     decimal discount = betdetail.Ticket.SuperDiscount;
     decimal comm = betdetail.Ticket.SuperComm;
+    if (betdetail.Ticket.BetTypeId == 500 || betdetail.Ticket.BetTypeId == 501)
+    {
+        discount = -(betdetail.Ticket.SuperDiscount - betdetail.Ticket.MasterDiscount);
+        comm = -(betdetail.Ticket.SuperComm - betdetail.Ticket.AgentComm);
+    }
     decimal winlost = betdetail.Ticket.SuperWinlost;
     string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
    
@@ -43,20 +48,25 @@ else
         @winlost.Format(2)
     </div>
 }
-<div class="margin-top-5">
-    @*casino, bingo*@
-    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
-    {
 
-    }
-    else
-    {
-        <span>@doubleCom @betlistHelper.PercentFormat(discount)</span>
-    }
-</div>
-@if (statusTemp != "running")
+@if (betdetail.Ticket.BetTypeId != 501)
 {
     <div class="margin-top-5">
-        @comm.Format(2)
+        @*casino, bingo*@
+        @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
+        {
+
+        }
+        else
+        {
+            <span>@doubleCom @betlistHelper.PercentFormat(discount)</span>
+        }
     </div>
+    
+    if (statusTemp != "running")
+    {
+        <div class="margin-top-5">
+            @comm.Format(2)
+        </div>
+    }
 }

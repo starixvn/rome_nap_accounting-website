@@ -832,6 +832,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
                                 }
 
+                                if (!isHideCricket)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
+
+                                }
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                {
                                    IsShowKeno = isShowKenoStatus,
@@ -863,8 +868,12 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
                                 TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
+
                                 TemplateHandler.Assign(ref htmlcontent, "{CockFightingId}", "19");
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCockFighting}", "1");
+
+                                TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
