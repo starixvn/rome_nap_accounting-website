@@ -102,8 +102,10 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
-        CustomerModel.isAutoReset = isAutoReset;
-        CustomerModel.maxTransferCredit = maxTransferCredit;
+        if (CustomerModel.casinoSync) {
+            CustomerModel.isAutoReset = isAutoReset;
+            CustomerModel.maxTransferCredit = maxTransferCredit;
+        }
         var data = {
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
