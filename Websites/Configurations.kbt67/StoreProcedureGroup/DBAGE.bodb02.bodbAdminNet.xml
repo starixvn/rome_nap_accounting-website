@@ -285,27 +285,58 @@
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-	<Function Name="MicroGaming">
-		<Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
-	</Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="DCS-ViewComm">
+ <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-	<Function Name="Bet List - Result">
-		<Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
-			<Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
-			<Mapping ObjectProperty="MatchId" DataField="MatchID" />
-			<Mapping ObjectProperty="GameId" DataField="GameID" />
-			<Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
-			<Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
-			<Mapping ObjectProperty="GameResult" DataField="GameResult" />
-			<Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
-			<Mapping ObjectProperty="HomeId" DataField="homeid" />
-			<Mapping ObjectProperty="AwayId" DataField="awayid" />
-		</Setting>
-		<Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
-	</Function>
+  <Function Name="MicroGaming">
+    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
+  </Function>
+  <Function Name="AG Casino">
+    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Bet List - Result">
+    <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
+      <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
+      <Mapping ObjectProperty="MatchId" DataField="MatchID" />
+      <Mapping ObjectProperty="GameId" DataField="GameID" />
+      <Mapping ObjectProperty="BetTypeTime" DataField="Custom1" />
+      <Mapping ObjectProperty="SettlementStatusId" DataField="SettlementStatusID" />
+      <Mapping ObjectProperty="GameResult" DataField="GameResult" />
+      <Mapping ObjectProperty="OtherInfo" DataField="OtherInfo" />
+      <Mapping ObjectProperty="HomeId" DataField="homeid" />
+      <Mapping ObjectProperty="AwayId" DataField="awayid" />
+    </Setting>
+    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet">
+    </Setting>
+  </Function>
 </Functions>

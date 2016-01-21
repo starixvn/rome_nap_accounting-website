@@ -1445,6 +1445,18 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += Labels.Number_Game;
             }
+            else if (ReportService.IsRNGGame_RNGCasino(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.RNG_RNGGame);
+            }
+            else if (ReportService.IsMiniGame_RNGCasino(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.RNG_MiniGame);
+            }
+            else if (ReportService.IsMobile_RNGCasino(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.RNG_Mobile);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

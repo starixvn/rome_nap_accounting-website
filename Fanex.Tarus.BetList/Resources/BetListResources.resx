@@ -171,4 +171,40 @@
   <data name="ColossusBets_Notes" xml:space="preserve">
     <value>Cash-in Margin={0}</value>
   </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="Choice" xml:space="preserve">
+    <value>Choice</value>
+  </data>
+  <data name="Comm" xml:space="preserve">
+    <value>Comm</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Odds" xml:space="preserve">
+    <value>Odds</value>
+  </data>
+  <data name="PT" xml:space="preserve">
+    <value>PT</value>
+  </data>
+  <data name="Stake" xml:space="preserve">
+    <value>Stake</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>Super</value>
+  </data>
+  <data name="Trans_Time" xml:space="preserve">
+    <value>Trans.Time</value>
+  </data>
+  <data name="Product_6" xml:space="preserve">
+    <value>RNG Casino</value>
+  </data>
+  <data name="ThereIsNoData" xml:space="preserve">
+    <value>There is no data</value>
+  </data>
 </root>

@@ -56,7 +56,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.1.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.1.7\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,11 +65,20 @@
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino">
-      <HintPath>..\Dependency\Casino\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.1.4.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.1.1.4.5\lib\net40\bin\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.CloneSetting">
       <HintPath>..\Dependency\Fanex\Fanex.CustomerSetting.Module.CloneSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.4-Beta\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.4-Beta\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -101,7 +110,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Logs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.1.0.1\lib\net40\Fanex.Module.Logs.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.Logs.1.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Module.RNGCasino, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.7-rngcasino1\lib\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement">
@@ -112,6 +124,10 @@
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap">
       <HintPath>..\Dependency\FanexOneyed.RobotTrap.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>

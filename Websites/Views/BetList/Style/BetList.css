@@ -470,3 +470,12 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     color: #484848;
     font-weight: bold;
 }
+
+.viewbrokengame-link{
+    color: #0066cc;
+    cursor: pointer;
+}
+
+.viewbrokengame-link:hover{
+    color: #d66d35;
+}

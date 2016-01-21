@@ -594,3 +594,74 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
         null,
         null);
 }
+
+function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
+    var params = $.param({
+        TransId: transId,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "RNGCasinoDetails",
+        'RNGCasinoBetList/BetDetails?' + params,
+        "RNG Casino Details",
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
+    var params = $.param({
+        Refno: refNo,
+        RoleId: 0,
+        MatchId: matchId,
+        Race: race,
+        BetType: betType,
+        SportType: sportType,
+        WinLostDate: winlostDate
+    });
+
+    parent.OpenNextPopup(
+        "RNGCasinoResult",
+        'RNGCasinoBetList/GetHandHistory?' + params,
+        "RNG Casino Result",
+        835,
+        675,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
+    var params = $.param({
+        Refno: refNo,
+        RoleId: 0,
+        MatchId: matchId,
+        Race: race,
+        BetType: betType,
+        SportType: sportType,
+        WinLostDate: winlostDate
+    });
+
+    parent.OpenNextPopup(
+        "RNGCasinoResult",
+        'RNGCasinoBetList/GetHandHistory?' + params,
+        "RNG Casino Result",
+        835,
+        675,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}

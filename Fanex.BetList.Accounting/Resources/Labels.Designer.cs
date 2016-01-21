@@ -286,6 +286,33 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RNG - Mini Game.
+        /// </summary>
+        public static string RNG_MiniGame {
+            get {
+                return ResourceManager.GetString("RNG_MiniGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RNG - Mobile.
+        /// </summary>
+        public static string RNG_Mobile {
+            get {
+                return ResourceManager.GetString("RNG_Mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OW RNG - RNG Game.
+        /// </summary>
+        public static string RNG_RNGGames {
+            get {
+                return ResourceManager.GetString("RNG_RNGGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stake.
         /// </summary>
         public static string Stake {
