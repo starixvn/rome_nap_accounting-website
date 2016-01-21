@@ -1,4 +1,6 @@
 ﻿function CasinoController(userId, username, isMultiple, custIds, usernames) {
+    var maxTransferCredit = customerModel.maxTransferCredit;
+    var isAutoReset = customerModel.isAutoReset;
     var CustomerModel = customerModel;
     var SettingModel = customerSetting;
     var CustomerInfo = { id: custId, uplineId: uplineId, userId: userId, username: username };
@@ -100,6 +102,10 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
+        if (CustomerModel.casinoSync) {
+            CustomerModel.isAutoReset = isAutoReset;
+            CustomerModel.maxTransferCredit = maxTransferCredit;
+        }
         var data = {
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
