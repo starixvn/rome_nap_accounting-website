@@ -154,7 +154,7 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_uat4" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -292,7 +292,7 @@
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="MicroGaming">
-    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
+    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />

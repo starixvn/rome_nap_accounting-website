@@ -9,7 +9,7 @@
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="BetList">
-    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -72,9 +72,9 @@
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -154,7 +154,7 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
