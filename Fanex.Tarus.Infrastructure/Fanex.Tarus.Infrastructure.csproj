@@ -21,6 +21,7 @@
     <SccProvider>
     </SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,8 +63,9 @@
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.Logs">
-      <HintPath>..\packages\Fanex.Module.Logs.1.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
+    <Reference Include="Fanex.Module.Logs, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.Logs.1.0.2.3\lib\net40\Fanex.Module.Logs.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
@@ -113,7 +115,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
+      <HintPath>..\packages\UMControllerLibrary.1.0.0.1\lib\net40\UMControllerLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
