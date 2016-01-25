@@ -22,6 +22,10 @@ a {
     color: #003399;
     font-size: 8pt;
 }
+.excluding-choices {
+    color: #484848;
+    font-weight: normal;
+}
 div.match {
 	white-space:nowrap;
 }

@@ -47,8 +47,9 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="IBCFile">
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
@@ -63,11 +64,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RemotingRef">
-      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.4\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SPSRemoting">
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -132,6 +135,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
