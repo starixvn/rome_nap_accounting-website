@@ -9,7 +9,7 @@
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="BetList">
-    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -70,11 +70,11 @@
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -131,7 +131,7 @@
   </Function>
   <Function Name="Bet List - Score Information">
     <Setting Key="SportingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Finance - Cross Transfer">
     <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet" />
