@@ -305,7 +305,4 @@
   <Function Name="Casino Single Wallet - Member Win Limit">
     <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-	<Function Name="Casino Single Wallet - Member Win Limit">
-		<Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet"/>
-	</Function>
 </Functions>
