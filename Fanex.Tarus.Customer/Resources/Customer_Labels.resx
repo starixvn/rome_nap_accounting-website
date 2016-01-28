@@ -516,46 +516,7 @@
   <data name="Upline_Disabled" xml:space="preserve">
     <value>Upline's disabled</value>
   </data>
-  <data name="Basketball" xml:space="preserve">
-    <value>Basketball</value>
-  </data>
-  <data name="Football" xml:space="preserve">
-    <value>Football</value>
-  </data>
-  <data name="Golf" xml:space="preserve">
-    <value>Golf</value>
-  </data>
-  <data name="MotoSports" xml:space="preserve">
-    <value>MotoSports</value>
-  </data>
-  <data name="Other_Sports" xml:space="preserve">
-    <value>Other Sports</value>
-  </data>
-  <data name="Soccer" xml:space="preserve">
-    <value>Soccer</value>
-  </data>
-  <data name="Tennis" xml:space="preserve">
-    <value>Tennis</value>
-  </data>
-  <data name="Volleyball" xml:space="preserve">
-    <value>Volleyball</value>
-  </data>
-  <data name="VirtualRate_ViewSetting_Title" xml:space="preserve">
-    <value>Click to view Virtual Rate Setting Information page</value>
-  </data>
-  <data name="Sport_BetType_Referrences" xml:space="preserve">
-    <value>Sport Bet Type Referrences</value>
-  </data>
-  <data name="BetType" xml:space="preserve">
-    <value>Bet Type</value>
-  </data>
-  <data name="Followed_By" xml:space="preserve">
-    <value>Followed By</value>
-  </data>
-  <data name="VirtualRate_CopyFromHDP" xml:space="preserve">
-    <value>Copy Virtual Rate value from Handicap bet type to others</value>
-  </data>
-  <data name="Upline_Disabled" xml:space="preserve">
-    <value>Upline's disabled</value>
+  <data name="VirtualRate_CopyToAllSportTypeBettypeFromHDP" xml:space="preserve">
+    <value>Copy Virtual Rate value from Soccer HDP Live to other sports/bettypes.</value>
   </data>
 </root>

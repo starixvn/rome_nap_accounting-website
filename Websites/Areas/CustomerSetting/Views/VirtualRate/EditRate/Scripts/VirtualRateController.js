@@ -46,7 +46,7 @@ var VirtualRateController = function () {
         self.bindingEvent();
         self.enableEditSetting(customerVirtualRateModel.EnableVirtualRate);
 
-        $("#btnSubmit").click(function () {
+        $("#btnSubmit, #btnSubmit1").click(function () {
             self.updateSettings();
         });
         $(".infoIcon").click(function () {
@@ -58,7 +58,7 @@ var VirtualRateController = function () {
         var settingHtml = '';
         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
         var iconCopySport = '<input id="button-copy-sport-settings" class="icon-copy-setting" type="button" title="' +
-                            viewResources.Copy + '"/>';
+                            viewResources.VirtualRate_CopyToAllSportTypeBettypeFromHDP + '"/>';
 
         var startBetTypeIndex = 0;
         for (var i = 0; i < sportLength; i++) {
@@ -78,6 +78,7 @@ var VirtualRateController = function () {
                     <td colspan="' + tableColumnCount + '">' +
                         sport.Name +
                         (sport.Notes && sport.Notes != '' ? ' (' + sport.Notes + ')' : '') +
+                        (i == 0 ? iconCopySport : '') +
                     '</td>\
                  </tr>';
             }
@@ -143,7 +144,7 @@ var VirtualRateController = function () {
         var liveHtml = '<tr>';
         liveHtml += '<td class="first-column l" colspan="2">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
-        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
+        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
             var value = (liveRate.PercentRate + 1) * customerVirtualRateModel.ActualExchangeRate;
             liveHtml +=
@@ -178,7 +179,7 @@ var VirtualRateController = function () {
 
         liveHtml += '<td class="subsport-livetype-column l">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
-        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; ) {
+        for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
             var value = (liveRate.PercentRate + 1) * customerVirtualRateModel.ActualExchangeRate;
             liveHtml +=
@@ -290,13 +291,16 @@ var VirtualRateController = function () {
             liveType = self.Constants.LiveType.Live;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
                 '[liveType="' + liveType + '"]' +
-                '[copy-direction="target"]');
+                '[copy-direction="target"]'
+                );
             targetDropdown.attr("disabled", "disabled");
 
             liveType = self.Constants.LiveType.NonLive;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
-                '[liveType="' + liveType + '"]' +
-                '[copy-direction="target"]');
+                '[liveType="' + liveType + '"]'
+                // + '[copy-direction="target"]'
+                );
+
             targetDropdown.attr("disabled", "disabled");
         }
         else if (!buttonCopyBetType.hasClass("icon-copy-setting-checked")) {
@@ -308,8 +312,10 @@ var VirtualRateController = function () {
 
             liveType = self.Constants.LiveType.NonLive;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
-                '[liveType="' + liveType + '"]' +
-                '[copy-direction="target"]');
+                '[liveType="' + liveType + '"]'
+                //+ '[copy-direction="target"]'
+                );
+
             targetDropdown.attr("disabled", null);
         }
 
@@ -499,7 +505,7 @@ var VirtualRateController = function () {
                 customerVirtualRateModel.SportVirtualRateList[i].LiveVirtualRate[j].PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
             }
 
-            var nonliveRate = $('select[sport-id="' +
+            var nonliveRate = isCopyFromSport ? liveRate : $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sport.Id) + '"]' +
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
                     '[bettype-id="' + betTypeId + '"]').val();
@@ -530,7 +536,8 @@ var VirtualRateController = function () {
                     .PercentRate = (parseInt(liveRate) / 100 + 1).toFixed(2);
             }
 
-            var nonliveRate = $('select[sport-id="' +
+            // If copy for all Sport, we just get live rate and copy to all. Note: Change bussiness.
+            var nonliveRate = isCopyFromSport ? liveRate : $('select[sport-id="' +
                         (isCopyFromSport ? self.cachedData.copyFromSportId : sportId) + '"]' +
                     '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
                     '[bettype-id="' + betTypeId + '"]').val();

@@ -1015,6 +1015,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Virtual Rate value from Soccer HDP Live to other sports/bettypes..
+        /// </summary>
+        public static string VirtualRate_CopyToAllSportTypeBettypeFromHDP {
+            get {
+                return ResourceManager.GetString("VirtualRate_CopyToAllSportTypeBettypeFromHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?.
         /// </summary>
         public static string VirtualRate_UpdateConfirm {
@@ -1024,7 +1033,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Virtual Exchange Rate Successfully.
+        ///   Looks up a localized string similar to Virtual rate setting updated successfully.
         /// </summary>
         public static string VirtualRate_UpdateSuccess {
             get {
@@ -1157,7 +1166,17 @@ namespace Fanex.Tarus.Customer.Resources {
                 return ResourceManager.GetString("VirtualRate_UploadFile_NotNumberRate", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set x Winner, Set x Winner (3rd), Moneyline and Match Winner aren&apos;t supported by Soccer sport type..
+        /// </summary>
+        public static string VirtualRate_UploadFile_NotSupportBetType {
+            get {
+                return ResourceManager.GetString("VirtualRate_UploadFile_NotSupportBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This username (with Sport Type, Live/Non-Live and Bettype) is repeated {0} times..
         /// </summary>
         public static string VirtualRate_UploadFile_RepeatBetType {
