@@ -1,4 +1,5 @@
 Thumbs.db
+*.webinfo
 *.obj
 *.exe
 *.pdb
@@ -44,3 +45,4 @@ CasinoLibrary.txt
 */LogCS/*
 */RobotDetection/*
 */TrapLogs/*
+.vs/config/applicationhost.config
