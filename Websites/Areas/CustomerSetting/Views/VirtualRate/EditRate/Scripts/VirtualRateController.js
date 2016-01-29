@@ -246,15 +246,27 @@ var VirtualRateController = function () {
         var iconCopySetting = $(".icon-copy-setting");
         var betTypeColumn = $(".bettypevalue-column");
         if (isEnable) {
-            iconCopySetting.attr("disabled", null);
+            var iconCopySettingAvailable = iconCopySetting.find('[disable-level="1"]');
+            iconCopySettingAvailable.attr("disabled", null);
+            iconCopySettingAvailable.removeAttr("disable-level");
+
             betTypeColumn.attr("disabled", null);
-            betTypeColumn.find("select").attr("disabled", null);
+
+            var bettypeSelect = betTypeColumn.find('select[disable-level="1"]');
+            bettypeSelect.attr("disabled", null);
+            bettypeSelect.removeAttr("disable-level");
             self.bindingEvent();
         }
         else {
-            iconCopySetting.attr("disabled", "disabled");
+            var iconCopySettingAvailable = iconCopySetting.find(":not([disabled])");
+            iconCopySettingAvailable.attr('disable-level', '1');
+            iconCopySettingAvailable.attr("disabled", "disabled");
+
             betTypeColumn.attr("disabled", "disabled");
-            betTypeColumn.find("select").attr("disabled", "disabled");
+
+            var bettypeSelect = betTypeColumn.find("select:not([disabled])");
+            bettypeSelect.attr("disable-level", "1");
+            bettypeSelect.attr("disabled", "disabled");
             iconCopySetting.unbind("click");
             $("#button-copy-sport-settings").unbind("click");
             $(".icon-copy-setting.bettype-setting").unbind("click");
@@ -286,8 +298,13 @@ var VirtualRateController = function () {
         });
 
         var buttonCopyBetType = $("#button-copy-bettype-settings-" + sportId);
+        var isCopyBetType = buttonCopyBetType.hasClass("icon-copy-setting-checked");
+        var sourceDropdownNonLive = $('select[sport-id="' + sportId + '"]' +
+                '[liveType="' + self.Constants.LiveType.NonLive + '"]' +
+                '[copy-direction="source"]'
+                );
+        sourceDropdownNonLive.attr("disabled", isCopy ? "disabled" : null);
         if (isCopy) {
-            var isCopyBetType = buttonCopyBetType.hasClass("icon-copy-setting-checked");
             liveType = self.Constants.LiveType.Live;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
                 '[liveType="' + liveType + '"]' +
@@ -297,26 +314,26 @@ var VirtualRateController = function () {
 
             liveType = self.Constants.LiveType.NonLive;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
-                '[liveType="' + liveType + '"]'
-                // + '[copy-direction="target"]'
+                '[liveType="' + liveType + '"]' +
+                '[copy-direction="target"]'
                 );
 
             targetDropdown.attr("disabled", "disabled");
         }
-        else if (!buttonCopyBetType.hasClass("icon-copy-setting-checked")) {
+        else {
             liveType = self.Constants.LiveType.Live;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
                 '[liveType="' + liveType + '"]' +
                 '[copy-direction="target"]');
-            targetDropdown.attr("disabled", null);
+            targetDropdown.attr("disabled", isCopyBetType ? "disabled" : null);
 
             liveType = self.Constants.LiveType.NonLive;
             targetDropdown = $('select[sport-id="' + sportId + '"]' +
-                '[liveType="' + liveType + '"]'
-                //+ '[copy-direction="target"]'
+                '[liveType="' + liveType + '"]' +
+                '[copy-direction="target"]'
                 );
 
-            targetDropdown.attr("disabled", null);
+            targetDropdown.attr("disabled", isCopyBetType ? "disabled" : null);
         }
 
         buttonCopyBetType.attr("disabled", isCopy ? "disabled" : null);
