@@ -56,6 +56,11 @@
                             &nbsp;
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan = "@tableColumnCount">
+                            <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn"/>
+                        </td>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -72,7 +77,7 @@
     <script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
     <script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
     <script src="~/js/Popup/confirmbox.js" type="text/javascript"></script>
-    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Scripts/VirtualRateController.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Scripts/VirtualRateController.js?v=3"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var customerVirtualRateModel= @Html.Raw(customerVirtualRateModel); 
@@ -85,6 +90,7 @@
             Non_Live: '@Customer_Labels.Non_Live',
             Copy: '@Customer_Labels.Copy',
             VirtualRate_CopyFromHDP:'@Customer_Labels.VirtualRate_CopyFromHDP',
+            VirtualRate_CopyToAllSportTypeBettypeFromHDP: '@Customer_Labels.VirtualRate_CopyToAllSportTypeBettypeFromHDP',
             System_Error: '@Customer_Labels.System_Error',
             VirtualRate_UpdateConfirm:'@Customer_Labels.VirtualRate_UpdateConfirm',
             Symbol_Percent: '@Customer_Labels.Symbol_Percent',
