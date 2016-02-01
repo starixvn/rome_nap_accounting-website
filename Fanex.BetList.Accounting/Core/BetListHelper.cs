@@ -298,6 +298,10 @@ namespace Fanex.BetList.Accounting.Core
                      ticketDetail.Ticket.Race + ")";
                 }
             }
+            else if (ticketDetail.Ticket.BetTypeId.Equals(500))
+            {
+                resultLink = string.Empty;
+            }
             else
             {
                 if ((isWonStatus || isLoseStatus || isDrawStatus) &&
