@@ -41,9 +41,8 @@ public partial class Others_Menu : System.Web.UI.Page
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
-        hideCockfighting = (!CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting) && (roleid < 4);
-        //hideCricket = (!CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket) && (roleid < 4);
-        hideCricket = false;
+        hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
+        hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket ;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;

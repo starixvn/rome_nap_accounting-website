@@ -8,7 +8,7 @@
     BetListHelper betlistHelper = new BetListHelper();
     decimal winlost = betdetail.Ticket.Winlost;
     decimal playerComm = betdetail.Ticket.PlayerComm;
-    string netWin = betdetail.Ticket.BetTypeId.Equals(500) || betdetail.Ticket.BetTypeId.Equals(501) ? "(NW) " : string.Empty;
+    string netWin = betdetail.Ticket.BetTypeId.Equals(500) ? "(NW) " : string.Empty;
 }
 @if (statusTemp == "running" || statusTemp == "waiting")
 {
