@@ -246,6 +246,7 @@ namespace Sunplus.Accounting.Business.Customer
                             var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];                        
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
                             var isLicensee = isDeposit;
+                            bool isIMBC = siteName.ToString().ToUpper().Equals("IMBC");
 
                             Hashtable jsparam = new Hashtable();
                             jsparam.Add("custid", custId);
@@ -291,7 +292,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                             bool isHideSportsbook2 = true;
                             bool isHideCockFighting = true;
-                            bool isHideCricket = true;
+                            bool isHideCricketSettingLink = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {                               
@@ -301,13 +302,13 @@ namespace Sunplus.Accounting.Business.Customer
                                     switch(productId)
                                     {
                                         case "16":
-                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
+                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2 || isDeposit) && (roleId < 4);
                                             break;
                                         case "19":
-                                            isHideCockFighting = CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowCockFighting;
+                                            isHideCockFighting = CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowCockFighting || isDeposit;
                                             break;
                                         case "20":
-                                            isHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !CastAide.AsBoolean(row["IsIMBC"]) || isDeposit;
+                                            isHideCricketSettingLink = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["IsHidden"]) || !isIMBC || isDeposit;
                                             break;
                                     }
                                 }                              
@@ -345,7 +346,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     parentId = Convert.ToInt32(row2["agentId"]);
                                     accOutstanding = Convert.IsDBNull(row3["outstanding"]) ? 0 : Convert.ToDecimal(row3["outstanding"]);
                                     cash = Convert.IsDBNull(row3["cash"]) ? 0 : Convert.ToDecimal(row3["cash"]);
-                                    betCredit = credit + cash - accOutstanding;
+                                    decimal netPosition = Convert.ToDecimal(row1["netPosition"]);
+                                    betCredit = credit + cash - accOutstanding + netPosition;
                                     yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
                                     downlinename = "";
                                     break;
@@ -836,7 +838,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
                                 }
 
-                                if (!isHideCricket)
+                                if (!isHideCricketSettingLink)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
 
@@ -852,6 +854,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
                                    IsShowSportsbook2 = isShowSportsbook2,     
                                    IsShowCockFighting =  isShowCockFighting,
+                                    IsHideCricket = isHideCricketSettingLink,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -933,7 +936,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2, isHideCockFighting, isHideCricket);
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2, isHideCockFighting, isHideCricketSettingLink);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1196,17 +1199,17 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
 
-                                if (isHideSportsbook2 || isDeposit)
+                                if (isHideSportsbook2)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
                                 }
 
-                                if (isHideCockFighting || isDeposit)
+                                if (isHideCockFighting)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
                                 }
 
-                                if (isHideCricket || isDeposit)
+                                if (isHideCricketSettingLink)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }

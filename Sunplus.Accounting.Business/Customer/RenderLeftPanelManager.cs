@@ -30,7 +30,7 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (!renderLeftPanelParameter.IsShowCricket)
+            if (renderLeftPanelParameter.IsHideCricket)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
