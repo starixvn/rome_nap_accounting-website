@@ -37,6 +37,30 @@ namespace Fanex.BetList.Accounting.Core
             return IsNumericRegex.IsMatch(value);
         }
 
+        public bool IsShowCommission(TicketDetail ticketDetail)
+        {
+            bool isShowCommision = true;
+            switch (ticketDetail.Ticket.BetTypeId)
+            {
+                case 500:
+                    isShowCommision = true;
+                    break;
+                case 501:
+                    isShowCommision = !IsIMBCMatch(ticketDetail);
+                    break;
+                default:
+                    isShowCommision = true;
+                    break;
+            }
+
+            return isShowCommision;
+        }
+
+        public bool IsIMBCMatch(TicketDetail ticketDetail)
+        {
+            return ticketDetail.Ticket.SuperDiscount < 0 || ticketDetail.Ticket.MasterDiscount < 0 || ticketDetail.Ticket.AgentDiscount < 0;
+        }
+
         public static bool IsUseRefNoInsteadOfTransId(ITicket ticket)
         {
             return ticket.BetTypeId == 73 ||
