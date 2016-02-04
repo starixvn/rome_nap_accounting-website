@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</ProjectGuid>
+    <ProjectGuid>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.BetList.Accounting</RootNamespace>
@@ -71,8 +71,7 @@
     <Reference Include="Fanex.BetList.Core, Version=2.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.11.0.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
-</Reference>
-
+    </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.11.0.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
