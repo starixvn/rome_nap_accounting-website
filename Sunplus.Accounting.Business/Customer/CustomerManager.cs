@@ -306,10 +306,10 @@ namespace Sunplus.Accounting.Business.Customer
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
-
                             bool isHideSportsbook2 = true;
                             bool isHideCockFighting = true;
                             bool isHideCricketSettingLink = true;
+                            bool isHideAllbet = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {                               
@@ -326,6 +326,9 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
                                         case "20":
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
+                                            break;
+                                        case "21":
+                                            isHideAllbet = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowAllbet) && (roleId < 4);
                                             break;
                                     }
                                 }                              
@@ -853,6 +856,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
                                 var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
                                 var isShowCockFighting = !isHideCockFighting && !isDeposit;
+                                var isShowAllbetForCredit = !isHideAllbet && !isDeposit;
 
                                 if (!isShowSportsbook2)
                                 {
@@ -878,6 +882,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
+                                   IsShowAllbetForCredit = isShowAllbetForCredit,
                                    IsShowSportsbook2 = isShowSportsbook2,     
                                    IsShowCockFighting =  isShowCockFighting,
                                    IsHideCricket = isHideCricketSettingLink,
@@ -980,6 +985,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var goldDeluxeLinkSetting = string.Empty;
                                 var colossusBetsLinkSetting = string.Empty;
                                 var creditDCSLink = string.Empty;
+                                var allbetSettingLink = string.Empty;
                                 string RacingUpdateURL = "";
                                 var VirtualSportsSetting = "";
                                 switch (roleId)
@@ -1002,6 +1008,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
                                         creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId + "&productId=";
+                                        allbetSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId={0}&uplinelevel=2", custId);
                                         break;
 
                                     case 2: // agent
@@ -1025,6 +1032,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
                                         creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=2&customerId=" + custId + "&productId=";
+                                        allbetSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=2&customerId={0}", custId);
                                         break;
 
                                     case 3: // master
@@ -1048,6 +1056,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
                                         creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=3&customerId=" + custId + "&productId=";
                      
+                                        allbetSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=3&customerId={0}", custId);
                                         break;
 
                                     case 4: // super
@@ -1071,6 +1080,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
                                         creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=4&customerId=" + custId + "&productId=";
+                                        allbetSettingLink = string.Format("DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=4&customerId={0}", custId);
                                         break;
 
                                     default:
@@ -1129,6 +1139,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", creditDCSLink + 16);
                                 TemplateHandler.Assign(ref htmlcontent, "{cockFightingSettingLink}", creditDCSLink + 19);
                                 TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", creditDCSLink + 20);
+                                TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", allbetSettingLink);
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1582,6 +1593,18 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
+
+            RenderLeftPanelManager.RenderEnableProductBox(
+               row1,
+               sg,
+               ref htmlcontent,
+               isManageCustomerAccess,
+               CustParent.IsDisableAllbet,
+               hasDownline,
+               "Allbet",
+               renderLeftPanelParameter.IsShowAllbetForCredit,
+               renderLeftPanelParameter,
+               "Update Allbet Status");
 
 
             foreach (DataRow productRow in dcsTable.Rows)

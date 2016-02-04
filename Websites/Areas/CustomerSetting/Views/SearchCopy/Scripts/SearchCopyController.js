@@ -23,7 +23,24 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.newUser = {};
     $scope.siteName = '';
 
-    $scope.sports = [];
+    var sports = [
+            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
+            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
+            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
+            { sportname: 'Racing', sportvalue: 'tabRacing' },
+            { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
+            { sportname: 'Casino', sportvalue: 'tabCasino' },
+            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
+            { sportname: 'Bingo', sportvalue: 'tabBingo' },
+            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
+            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
+            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
+            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
+            { sportname: 'Cockfighting', sportvalue: 'tabCockFighting' },
+            { sportname: 'Albet', sportvalue: 'tabAllbet' }
+    ];
+
+    $scope.sports = angular.copy(sports);
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -172,6 +189,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmSportsbook2").attr('src', "");
         $("#frmCockFighting").attr('src', "");
         $("#frmCricket").attr('src', "");
+        $("#frmAllbet").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -241,6 +259,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabCockFighting': url += "DCS/ViewCustomerSetting?productId=19&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCockFighting", url);
                 $scope.resize("#frmCockFighting");
+                break;
+            case 'tabAllbet': url += "DCS/ViewCustomerSetting?productId=21&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmAllbet", url);
+                $scope.resize("#frmAllbet");
                 break;
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCricket", url);

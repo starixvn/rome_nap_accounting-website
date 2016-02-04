@@ -55,8 +55,8 @@
       <HintPath>..\packages\Fanex.BetList.Core.2.11.0.2-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.0.2.7\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.0-beta\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

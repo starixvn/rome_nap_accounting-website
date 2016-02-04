@@ -95,10 +95,26 @@ namespace Sunplus.Accounting.Business.Customer
             if (isSupport)
             {
                 var columnName = "Disable" + productName;
-                bool isDisabled = Converter.ToBool(custInfoRow[columnName], false);
+                bool isDisabled;
+                try
+                {
+                    isDisabled = Converter.ToBool(custInfoRow[columnName], false);
+                }
+                catch
+                {
+                    isDisabled = false;
+                }
 
                 columnName = "DisableDownlines" + productName;
-                bool disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
+                bool disableDownlines;
+                try
+                {
+                    disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
+                }
+                catch
+                {
+                    disableDownlines = false;
+                }
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(

@@ -550,6 +550,14 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowCricket"] == "1");
             }
         }
+        
+        public static bool IsShowAllbet
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowAllbet"] == "1");
+            }
+        }
 
         public static bool EnableRNGCasino
         {
