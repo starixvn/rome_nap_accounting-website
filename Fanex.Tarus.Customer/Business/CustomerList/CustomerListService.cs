@@ -112,15 +112,16 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
                         superItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
-                        superItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !CastAide.AsBoolean(row["IsIMBC"]);
+                        superItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
+                        superItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !superItem.IsIMBCCustomers;
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        superItem.IsIMBCCustomers = true;
+
                         if (superItem.IsIMBCCustomers)
                         {
-                            superItem.MatchWinnerComm = 0;
+                            superItem.MatchWinnerComm = CastAide.AsDouble(row["discountCricket"]);
                         }
                         
                         superItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
@@ -237,16 +238,16 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         masterItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         masterItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
-                        masterItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !CastAide.AsBoolean(row["IsIMBC"]);
+                        masterItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
+                        masterItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !masterItem.IsIMBCCustomers;
 
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         masterItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        masterItem.IsIMBCCustomers = true;
                         if (masterItem.IsIMBCCustomers)
                         {
-                            masterItem.MatchWinnerComm = 0;
+                            masterItem.MatchWinnerComm = CastAide.AsDouble(row["discountCricket"]);
                         }
 
                         masterItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
@@ -326,15 +327,16 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         agentItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         agentItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
-                        agentItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !CastAide.AsBoolean(row["IsIMBC"]);
+                        agentItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
+                        agentItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !agentItem.IsIMBCCustomers;
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        agentItem.IsIMBCCustomers = true;
+
                         if (agentItem.IsIMBCCustomers)
                         {
-                            agentItem.AgentMatchWinnerComm = 0;
+                            agentItem.MatchWinnerComm = CastAide.AsDouble(row["discountCricket"]);
                         }
 
                         agentItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();
@@ -372,7 +374,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 var dtMemberList = _customerListAccess.GetCustomerList("Acc_CustomerSelByAg", hash, ref totalPages, ref totalChildren);
-
 
                 CustomerListModel model = new CustomerListModel();
                 if (dtMemberList.Tables.Count > 0)
@@ -417,16 +418,17 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
                         memberItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         memberItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
-                        memberItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !CastAide.AsBoolean(row["IsIMBC"]);
+                        memberItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
+                        memberItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !memberItem.IsIMBCCustomers;
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                         memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
 
-                        memberItem.IsIMBCCustomers = true;
                         if (memberItem.IsIMBCCustomers)
                         {
-                            memberItem.MatchWinnerComm = 0;
+                            memberItem.MatchWinnerComm = CastAide.AsDouble(row["playerdiscountCricket"]);
+                            memberItem.UplineMatchWinnerComm = CastAide.AsDouble(row["discountCricket"]);
                         }
 
                         memberItem.LastLoginIP = string.IsNullOrEmpty(IpManagement.ReplaceVNIP(row["lastloginip"].ToString())) ? string.Empty : row["lastloginip"].ToString();

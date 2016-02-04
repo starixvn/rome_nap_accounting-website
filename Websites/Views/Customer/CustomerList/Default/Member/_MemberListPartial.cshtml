@@ -314,14 +314,6 @@
                 @memberItem._1x2
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 80px; height: 18px;">
-                    @memberItem.AgentMatchWinnerComm
-                </div>
-            </td>
-        }
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupB
@@ -331,7 +323,7 @@
         {
             <td>
                 <div class="table-cell c" style="width: 80px; height: 18px;">
-                    @memberItem.AgentMatchWinnerComm
+                    @memberItem.UplineMatchWinnerComm
                 </div>
             </td>
         }
@@ -350,14 +342,6 @@
                 @memberItem.GroupD
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 80px; height: 18px;">
-                    @memberItem.MatchWinnerComm
-                </div>
-            </td>
-        }
         @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
         {
             <td>
@@ -580,14 +564,6 @@
                                 A Comm 2 (%)
                             </div>
                         </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    A MW Comm (%)
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 A Comm 3 (%)
@@ -744,14 +720,6 @@
                                 A Comm 2 (%)
                             </div>
                         </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    A MW Comm (%)
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 A Comm 3 (%)

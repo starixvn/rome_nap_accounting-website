@@ -43,7 +43,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double Others { get; set; }
         public double NumberGame { get; set; }
         public double MatchWinnerComm { get; set; }
-        public double AgentMatchWinnerComm { get; set; }
+        public double UplineMatchWinnerComm { get; set; }
 
         public string LastLoginIP { get; set; }
         public bool IsMyanmarOdds { get; set; }

@@ -302,7 +302,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     switch(productId)
                                     {
                                         case "16":
-                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2 || isDeposit) && (roleId < 4);
+                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
                                             break;
                                         case "19":
                                             isHideCockFighting = CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowCockFighting || isDeposit;
@@ -1199,7 +1199,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
 
-                                if (isHideSportsbook2)
+                                if (isHideSportsbook2 || isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
                                 }
