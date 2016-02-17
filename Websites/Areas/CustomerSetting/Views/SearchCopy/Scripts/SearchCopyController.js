@@ -243,8 +243,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.resize("#frmCockFighting");
                 break;
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmCockFighting", url);
-                $scope.resize("#frmCockFighting");
+                $scope.loadData("#frmCricket", url);
+                $scope.resize("#frmCricket");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
