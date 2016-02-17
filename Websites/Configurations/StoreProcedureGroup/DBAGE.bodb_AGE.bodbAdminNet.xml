@@ -12,6 +12,6 @@
     <Setting Key="SelectGroupName" SpName="Acc_CustGroupSelGroup" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
-    <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_xtest" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
   </Function>
 </Functions>
