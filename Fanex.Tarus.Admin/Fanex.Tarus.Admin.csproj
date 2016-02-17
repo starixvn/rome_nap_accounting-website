@@ -101,6 +101,7 @@
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
+    <Compile Include="Business\IMBCRestriction\IMBCAdminService.cs" />
     <Compile Include="Business\LimitNewMember\ILimitNewMemberService.cs" />
     <Compile Include="Business\LimitNewMember\LimitNewMemberService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
     <Compile Include="Business\SMAManagement\SMAManagementService.cs" />
+    <Compile Include="Controller\IMBCAdminController.cs" />
     <Compile Include="Controller\LimitNewMemberController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\AutoFollowBetController.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="DataAccess\AutoFollowBet\IAutoFollowBetAccess.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
+    <Compile Include="DataAccess\IMBCRestriction\IMBCDAO.cs" />
     <Compile Include="DataAccess\LimitNewMember\ILimitNewMemberAccess.cs" />
     <Compile Include="DataAccess\LimitNewMember\LimitNewMemberAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />

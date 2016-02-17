@@ -308,4 +308,8 @@
 	<Function Name="Casino Single Wallet - Member Win Limit">
 		<Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet"/>
 	</Function>
+	<Function Name="Cricket - IMBC restriction">
+		<Setting Key="Acc_CustSetting_SettingRestrictionUpdate" SpName="Acc_CustSetting_SettingRestrictionUpdate_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+		<Setting Key="Acc_CustSetting_SettingRestrictionSelect" SpName="Acc_CustSetting_SettingRestrictionSelect_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+	</Function>
 </Functions>
