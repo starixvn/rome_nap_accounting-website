@@ -23,24 +23,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.newUser = {};
     $scope.siteName = '';
 
-    var sports = [
-            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
-            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
-            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
-            { sportname: 'Racing', sportvalue: 'tabRacing' },
-            { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
-            { sportname: 'Casino', sportvalue: 'tabCasino' },
-            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
-            { sportname: 'Bingo', sportvalue: 'tabBingo' },
-            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
-            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
-            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
-            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
-            { sportname: 'Cockfighting', sportvalue: 'tabCockFighting' },
-            { sportname: 'Cricket', sportvalue: 'tabCricket' }
-    ];
-
-    $scope.sports = angular.copy(sports);
+    $scope.sports = [];
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -277,23 +260,45 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $(frameId).show();
     };
 
-    $scope.disableSports = function (statusSports) {
-        if (statusSports.HideLiveCasino == true) {
-            $scope.sports.splice(8, 1);
+    $scope.addSportsToDropdownlist = function (statusSports) {
+        $scope.sports = [{sportname: '-- choose sport --', sportvalue: 'choosesport' }];
+        if (!statusSports.HideSportsbook) {
+            $scope.sports.push({ sportname: 'Sportsbook', sportvalue: 'tabSportsbook' });
+            $scope.sports.push({ sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' });
         }
-        if (statusSports.HideBingo == true) {
-            $scope.sports.splice(7, 1);
+        if (!statusSports.HideRacing) {
+            $scope.sports.push({ sportname: 'Racing', sportvalue: 'tabRacing' });
+            $scope.sports.push({ sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' });
         }
-        if (statusSports.HideVirtualSports == true) {
-            $scope.sports.splice(6, 1);
+        if (!statusSports.HideCasino) {
+            $scope.sports.push({ sportname: 'Casino', sportvalue: 'tabCasino' });
         }
-        if (statusSports.HideCasino == true) {
-            $scope.sports.splice(5, 1);
+        if (!statusSports.HideVirtualSports) {
+            $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
         }
-        if (statusSports.HideRacing == true) {
-            $scope.sports.splice(4, 1);
-            $scope.sports.splice(3, 1);
+        if (!statusSports.HideBingo) {
+            $scope.sports.push({ sportname: 'Bingo', sportvalue: 'tabBingo' });
         }
+        if (!statusSports.HideLiveCasino) {
+            $scope.sports.push({ sportname: 'Live Casino', sportvalue: 'tabLiveCasino' });
+        }
+        if (!statusSports.HideGoldDeluxe) {
+            $scope.sports.push({ sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' });
+        }
+        if (!statusSports.HideColossusBets) {
+            $scope.sports.push({ sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' });
+        }
+        if (!statusSports.HideSportsbook2) {
+            $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
+        }
+        if (!statusSports.HideCockFighting) {
+            $scope.sports.push({ sportname: 'Cockfighting', sportvalue: 'tabCockFighting' });
+        }
+        if (!statusSports.HideCricket) {
+            $scope.sports.push({ sportname: 'Cricket', sportvalue: 'tabCricket' });
+        }
+
+        $scope.selectedSport = $scope.sports[0];
     };
 
     $scope.searchExistingUser = function (username, callback) {
@@ -321,10 +326,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             dataType: "json",
             data: JSON.stringify(param),
             success: function (customerSettingView) {
-
                 var custid = customerSettingView.UserId;
-                //var statusSports = customerSettingView.StatusSports;
-
+                $scope.addSportsToDropdownlist(customerSettingView.StatusSports);
                 $scope.existedUser.userid = custid;
                 if (custid != "-1") {
                     //step1
@@ -382,21 +385,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 $scope.getAllSites();
 
-                var statusSports = {
-                    HideSportsbook: false,
-                    HideSportsbookMinPT: false,
-                    HideRacing: false,
-                    HideRacingMinPT: false,
-                    HideCasino: $scope.existedUser.syncCasino == "1" ? false : true,
-                    HideVirtualSports: false,
-                    HideBingo: $scope.existedUser.syncBingo == "1" ? false : true,
-                    HideLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? false : true
-                };
-
                 $scope.$apply(function () {
                     $scope.sports = angular.copy(sports);
                     $scope.selectedSport = $scope.sports[0];
-                    $scope.disableSports(statusSports);
                 });
 
             }
