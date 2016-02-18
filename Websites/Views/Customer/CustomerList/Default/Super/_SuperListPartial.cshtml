@@ -235,8 +235,8 @@
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
     {
-        var bg = rowCSS(superItem);
-        string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
+var bg = rowCSS(superItem);
+string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -331,14 +331,12 @@
                 @superItem.Others
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["enableRNGCasino"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @superItem.MatchWinnerComm
-                </div>
-            </td>
-        }
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @{ var tmp = !superItem.IsIMBCCustomers ? "--" : superItem.MatchWinnerComm.ToString();}
+                @tmp
+            </div>
+        </td>
         @if (CastAide.AsBoolean(hash["enableNumberGame"]))
         {
             <td>

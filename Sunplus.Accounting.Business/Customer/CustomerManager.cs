@@ -302,13 +302,13 @@ namespace Sunplus.Accounting.Business.Customer
                                     switch(productId)
                                     {
                                         case "16":
-                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowSportsbook2) && (roleId < 4);
+                                            isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowSportsbook2 || isDeposit;
                                             break;
                                         case "19":
-                                            isHideCockFighting = CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowCockFighting || isDeposit;
+                                            isHideCockFighting = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCockFighting || isDeposit;
                                             break;
                                         case "20":
-                                            isHideCricketSettingLink = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["IsHidden"]) || !isIMBC || isDeposit;
+                                            isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
                                     }
                                 }                              
