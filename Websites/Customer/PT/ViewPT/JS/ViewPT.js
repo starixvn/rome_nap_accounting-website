@@ -1083,7 +1083,7 @@ var ViewPT = {
     },
     getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive) {
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?isLive=" + (isLive == 1 ? "true" : "false") + "&showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
