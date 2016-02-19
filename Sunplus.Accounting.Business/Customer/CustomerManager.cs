@@ -838,9 +838,9 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
                                 }
 
-                                if (!isHideCricketSettingLink)
+                                if (isHideCricketSettingLink)
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
 
                                 }
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter

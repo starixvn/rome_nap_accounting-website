@@ -1052,7 +1052,8 @@ var ViewPT = {
                 $("#frmSportsbook2").hide();
                 break;
             case 44: //Sportsbook 2 
-            case 206:
+            case 206: //Cockfighting
+            case 50: //Cricket
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:
