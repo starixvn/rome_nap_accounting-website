@@ -7,10 +7,8 @@
     {
         public int SettingType
         {
-            get
-            {
-                return 3;
-            }
+            get;
+            set;
         }
         
         public string LanguageKey

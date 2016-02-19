@@ -1177,7 +1177,7 @@ var ViewPT = {
     },
     viewCommFromDynamicSettingFormat: function () {
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=3&productId=" + $("#ddlProduct").val() + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=" + ($("#ddlProduct").val() == "20" ? "5" : "3") + "&productId=" + $("#ddlProduct").val() + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
