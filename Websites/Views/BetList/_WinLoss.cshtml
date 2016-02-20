@@ -5,7 +5,12 @@
 @{
     TicketDetail betdetail = Model;
     BetListHelper betlistHelper = new BetListHelper();
-    string netWin = betdetail.Ticket.BetTypeId.Equals(500) ? "(NW) " : string.Empty;
+    string netWin = string.Empty;
+    if (betdetail.Ticket.BetTypeId.Equals(500))
+    {
+        netWin = "(NW) ";
+        betdetail.Ticket.Winlost = betdetail.Ticket.ActualStake;
+    }
 }
 <div class="margin-top-5">
     @switch (betdetail.Ticket.Status.ToLower())
