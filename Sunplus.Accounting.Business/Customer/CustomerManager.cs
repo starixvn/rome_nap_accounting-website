@@ -75,6 +75,23 @@ namespace Sunplus.Accounting.Business.Customer
             return custDetail;
         }
 
+        public CustDetail GetCustomerInfoMoveSite(string username)
+        {
+            var dtCustomer = _customerDAO.GetCustomerInfoMoveSite(username);
+            CustDetail custDetail = new CustDetail();
+            if (dtCustomer != null && dtCustomer.Rows.Count > 0)
+            {
+                var rowData = dtCustomer.Rows[0];
+                custDetail = new CustDetail
+                {
+                    CustId = CastAide.AsInt32(rowData["custid"]),
+                    RoleId = CastAide.AsInt32(rowData["roleid"]),
+                    Site = rowData["site"].ToString()
+                };
+            }
+            return custDetail;
+        }
+
         public Hashtable GenDownlineList(int custId, int roleId, int pageIndex)
         {
             Hashtable returndata = new Hashtable();
@@ -338,7 +355,7 @@ namespace Sunplus.Accounting.Business.Customer
                             decimal outStanding = 0, accOutstanding = 0;
                             decimal cash = 0, totalBal = 0;
                             decimal yesterdayCash = 0, yesterdayBal = 0;
-                            decimal betCredit = 0, usedCredit = 0;
+                            decimal betCredit = 0, usedCredit = 0, netPosition = 0;
 
                             switch (roleId)
                             {
@@ -346,7 +363,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     parentId = Convert.ToInt32(row2["agentId"]);
                                     accOutstanding = Convert.IsDBNull(row3["outstanding"]) ? 0 : Convert.ToDecimal(row3["outstanding"]);
                                     cash = Convert.IsDBNull(row3["cash"]) ? 0 : Convert.ToDecimal(row3["cash"]);
-                                    decimal netPosition = Convert.ToDecimal(row1["netPosition"]);
+                                    netPosition = Convert.ToDecimal(row1["netPosition"]);
                                     betCredit = credit + cash - accOutstanding + netPosition;
                                     yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
                                     downlinename = "";
@@ -581,6 +598,15 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayCashBalCur}", currency + " ");
 
                                 TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(accOutstanding)));
+                                if (roleId == 1)
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{NetPosition}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(netPosition));
+                                }
+                                else
+                                {
+                                    TemplateHandler.RemoveBlock(ref balanceinfo, "NetPosition");
+                                }
+
                                 //Check Given Credit Permission
                                 bool isallowupdategivencredit = Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
                                 if (isallowupdategivencredit == true)
