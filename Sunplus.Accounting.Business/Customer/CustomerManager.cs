@@ -880,7 +880,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
                                    IsShowSportsbook2 = isShowSportsbook2,     
                                    IsShowCockFighting =  isShowCockFighting,
-                                    IsHideCricket = isHideCricketSettingLink,
+                                   IsHideCricket = isHideCricketSettingLink,
                                    ParentId = parentId,
                                    RoleId = roleId,
                                    CustId = custId,
@@ -1582,6 +1582,35 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
+
+
+            foreach (DataRow productRow in dcsTable.Rows)
+            {
+                if (productRow["productID"] != null)
+                {
+                    var productId = productRow["productID"].ToString();
+                    switch (productId)
+                    {
+                        case "20":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               CustParent.IsDisableCricket,
+                                               hasDownline,
+                                               "Cricket",
+                                               !renderLeftPanelParameter.IsHideCricket,
+                                               renderLeftPanelParameter,
+                                               "Update Cricket Status",
+                                               20,
+                                               4);
+                            break;
+                    }
+                }
+            }
+           
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
