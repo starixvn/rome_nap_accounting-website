@@ -61,6 +61,10 @@
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.0-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.0-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.11.0.2-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
@@ -125,6 +129,8 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.0.0-beta\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base">
@@ -317,6 +323,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Allbet.css" />
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F.jpg" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F_Y.jpg" />
