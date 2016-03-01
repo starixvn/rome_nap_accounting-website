@@ -53,7 +53,10 @@
                                 SuperWinlost = Converter.ToDecimal(reader["swinlost"]),
                                 SuperPositionTaking = Converter.ToDecimal(reader["spositiontaking"]),
                                 SuperComm = Converter.ToDecimal(reader["scomm"]),
-                                SuperDiscount = Converter.ToDecimal(reader["sdiscount"])
+                                SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
+
+                                MatchCode = Converter.ToString2(reader["matchcode"]),
+                                BetCheck = Converter.ToString2(reader["betcheck"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
