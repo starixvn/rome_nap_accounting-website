@@ -10,6 +10,8 @@ namespace Sunplus.Accounting.DataAccess
     {
         DataTable GetCustomerInfo(string username);
 
+        DataTable GetCustomerInfoMoveSite(string username);
+
         Result UpdateCustomerSite(int custId, string newSite, int userId, string ip);
 
         Result UpdateLevelDangerous(int custId, int updateDownline, int dangerType, int dangerLevel, int userId,

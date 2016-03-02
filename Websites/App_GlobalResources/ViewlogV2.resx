@@ -1296,4 +1296,7 @@
   <data name="disable206_1003" xml:space="preserve">
     <value>Disabled Cockfighting</value>
   </data>
+  <data name="Disable50_501" xml:space="preserve">
+    <value>Disabled Cricket</value>
+  </data>
 </root>

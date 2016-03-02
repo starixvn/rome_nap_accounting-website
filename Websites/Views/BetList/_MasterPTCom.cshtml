@@ -2,61 +2,82 @@
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
 @{
-    var betdetail = Model;
-    string statusTemp = betdetail.Ticket.Status.ToLower();
+    TicketDetail betdetail = Model;
+    string ticketStatus = betdetail.Ticket.Status.ToLower();
     BetListHelper betlistHelper = new BetListHelper();
 
     decimal PT = betdetail.Ticket.MasterPositionTaking;
     decimal PT2 = betdetail.MasterPositionTaking2;
     decimal discount = betdetail.Ticket.MasterDiscount;
     decimal comm = betdetail.Ticket.AgentComm;
+
+    if (betlistHelper.IsIMBCMatch(betdetail))
+    {
+        discount = -(betdetail.Ticket.MasterDiscount - betdetail.Ticket.AgentDiscount);
+    }
+
     decimal winlost = betdetail.Ticket.MasterWinlost;
     string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
-   
+
 }
+
 @if (betlistHelper.IsHRWinPlaceBettype(betdetail.Ticket.BetTypeId))
 {
     <div class="blue">
-        <span>Win: </span><span class="b">@betlistHelper.PercentFormat(PT)
-        </span>
-    </div>
+        <span>Win: </span><span class="b">
+            @betlistHelper.PercentFormat(PT)
+    </span>
+</div>
     <div class="margin-top-5">
-        <span>Place: </span><span class="b">@betlistHelper.PercentFormat(PT2)</span></div>
+        <span>Place: </span><span class="b">@betlistHelper.PercentFormat(PT2)</span>
+    </div>
 }
 else
 {
     <div class="@betlistHelper.IsNegative(PT)">
-    @*casino, bingo*@
-      @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
-      {
-
-      }
-      else
-      {
-            <span>@betlistHelper.PercentFormat(PT)</span>
-      }
+        @switch (betdetail.Ticket.BetTypeId)
+        {
+            //casino, bingo
+            case 71:
+            case 73:
+                break;
+            default:
+                {
+                    <span>@betlistHelper.PercentFormat(PT)</span>
+                }
+                break;
+        }
     </div>
 }
-@if (statusTemp != "running")
+
+@if (!ticketStatus.Equals("running"))
 {
     <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
         @winlost.Format(2)
     </div>
 }
-<div class="margin-top-5">
-    @*casino, bingo*@
-    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
-    {
 
-    }
-    else
-    {
-        <span>@doubleCom @betlistHelper.PercentFormat(discount)</span>
-    }
-</div>
-@if (statusTemp != "running")
+@if (betlistHelper.IsShowCommission(betdetail))
 {
     <div class="margin-top-5">
-        @comm.Format(2)
+        @switch (betdetail.Ticket.BetTypeId)
+        {
+            //casino, bingo
+            case 71:
+            case 73:
+                break;
+            default:
+                {
+                    <span>@doubleCom @betlistHelper.PercentFormat(discount)</span>
+                }
+                break;
+        } 
     </div>
+
+    if (!ticketStatus.Equals("running"))
+    {
+        <div class="margin-top-5">
+            @comm.Format(2)
+        </div>
+    }
 }

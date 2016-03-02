@@ -42,6 +42,22 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             return customer;
         }
 
+        public CustDetail GetCustomerInfoMoveSite(string username)
+        {
+            var customer = new CustDetail();
+            try
+            {
+                var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
+                customer = customerManager.GetCustomerInfoMoveSite(username);
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return customer;
+        }
+
         public Result UpdateCustomerSite(int custId, string newSite)
         {
             var result = new Result();

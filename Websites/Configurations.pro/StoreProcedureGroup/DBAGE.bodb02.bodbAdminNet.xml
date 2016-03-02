@@ -55,7 +55,7 @@
     <Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Left Panel - Credit term">
-    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.bodb02.bodbAdminNet" />	  
+    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Move Customer - Move Agent">
     <Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -187,7 +187,7 @@
     <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
-	  <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Betlist Casino">
     <Setting Key="CasinoSynchronise" SpName="Acc_Rpt_CasinoSynchronise" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -288,11 +288,44 @@
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
- <Function Name="DCS-ViewComm">
+  <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="MicroGaming">
-    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" >
+    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0">
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
+  </Function>
+  <Function Name="AG Casino">
+    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="MicroGaming">
+    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />

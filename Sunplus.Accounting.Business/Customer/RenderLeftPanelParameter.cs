@@ -43,5 +43,7 @@ namespace Sunplus.Accounting.Business.Customer
         public bool IsShowSportsbook2 { get; set; }
 
         public bool IsShowCockFighting { get; set; }
+
+        public bool IsHideCricket { get; set; }
     }
 }

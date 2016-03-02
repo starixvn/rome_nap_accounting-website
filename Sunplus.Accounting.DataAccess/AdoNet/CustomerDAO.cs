@@ -49,6 +49,32 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return dt;
         }
 
+        public DataTable GetCustomerInfoMoveSite(string username)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                var param = new System.Collections.Hashtable();
+                param.Add("username", username);
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelSiteByUserNameMoveSite", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
+        }
+
         public Result UpdateCustomerSite(int custId, string newSite, int userId, string ip)
         {
             var result = new Result();

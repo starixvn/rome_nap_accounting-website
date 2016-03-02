@@ -170,7 +170,7 @@
             $.ajax(
                  {
                      type: "POST",
-                     url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/GetCustomerInfo",
+                     url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/GetCustomerInfoMoveSite",
                      data: $.toJSON(param),
                      dataType: 'json',
                      contentType: "application/json; charset=utf-8",

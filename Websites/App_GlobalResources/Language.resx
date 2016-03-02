@@ -2482,4 +2482,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblDisabledSportsbook2Upline" xml:space="preserve">
     <value>Sportsbook2 status has been disabled at upline</value>
   </data>
+  <data name="enableCricket" xml:space="preserve">
+    <value>Enable Cricket</value>
+  </data>
 </root>

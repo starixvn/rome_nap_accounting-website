@@ -62,7 +62,7 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     Ticket = new Ticket
                     {
-                        ActualStake = Converter.To<int>(r["actual_stake"]),
+                        ActualStake = Converter.To<decimal>(r["actual_stake"]),
                         AgentWinlost = Converter.ToDecimal(r["LicenseeWL"]),
                         Comm = Converter.ToDecimal(r["comm"]),
                         AwayId = Converter.To<long>(r["awayid"]),
@@ -266,7 +266,7 @@ namespace Fanex.BetList.Accounting.Services
             {
                 Ticket = new Ticket
                 {
-                    ActualStake = Converter.To<int>(r["actual_stake"]),
+                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
 
                     AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                     AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
@@ -453,7 +453,7 @@ namespace Fanex.BetList.Accounting.Services
             {
                 Ticket = new Ticket
                 {
-                    ActualStake = Converter.To<int>(r["actual_stake"]),
+                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
                     AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                     AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
                     Comm = Converter.ToDecimal(r["comm"]),
@@ -660,7 +660,7 @@ namespace Fanex.BetList.Accounting.Services
             {
                 Ticket = new Ticket
                 {
-                    ActualStake = Converter.To<int>(r["actual_stake"]),
+                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
                     AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                     AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
                     Comm = Converter.ToDecimal(r["comm"]),
@@ -1038,7 +1038,7 @@ namespace Fanex.BetList.Accounting.Services
                         {
                             Ticket = new Ticket
                             {
-                                ActualStake = Converter.To<int>(r["actual_stake"]),
+                                ActualStake = Converter.To<decimal>(r["actual_stake"]),
                                 AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                                 AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
                                 Comm = Converter.ToDecimal(r["comm"]),
@@ -1233,7 +1233,7 @@ namespace Fanex.BetList.Accounting.Services
                         {
                             Ticket = new Ticket
                             {
-                                ActualStake = Converter.To<int>(r["actual_stake"]),
+                                ActualStake = Converter.To<decimal>(r["actual_stake"]),
                                 AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                                 AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
                                 Comm = Converter.ToDecimal(r["comm"]),

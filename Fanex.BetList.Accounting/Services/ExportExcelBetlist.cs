@@ -92,7 +92,7 @@ namespace Fanex.BetList.Accounting.Services
                             {
                                 Ticket = new Ticket
                                 {
-                                    ActualStake = Converter.To<int>(r["actual_stake"]),
+                                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
                                     AgentWinlost = Converter.ToDecimal(r["awinlost"]),
                                     AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
                                     Comm = Converter.ToDecimal(r["comm"]),

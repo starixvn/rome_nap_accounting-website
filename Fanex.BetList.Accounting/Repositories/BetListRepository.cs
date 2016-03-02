@@ -322,7 +322,7 @@ namespace Fanex.BetList.Accounting.Repositories
                                 Odds = Converter.ToDecimal(r["odds"]),
                                 MasterOdds = Converter.ToDecimal(r["modds"]),
                                 Stake = Converter.To<decimal>(r["stake"]),
-                                ActualStake = Converter.To<int>(r["actual_stake"]),
+                                ActualStake = Converter.To<decimal>(r["actual_stake"]),
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 PlayerComm = Converter.ToDecimal(r["playercomm"]),
                                 Status = Converter.ToString2(r["status"]),

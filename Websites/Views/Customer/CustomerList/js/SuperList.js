@@ -363,6 +363,11 @@
         if (_enableNumberGame == "True") {
             initWidth += 75;
         }
+
+        if (enableRNGCasino) {
+            initWidth += 75;
+        }
+
         SuperList.gridOption.gridWidth = initWidth;
     }
 };

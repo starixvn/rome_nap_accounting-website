@@ -97,7 +97,7 @@
                 @{
                     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }
-                @if (ip != "-")
+                @if (ip != "-" && !betdetail.Ticket.BetTypeId.Equals(500))
                 {
                     <br />
                     <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>

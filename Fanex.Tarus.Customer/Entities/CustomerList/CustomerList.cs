@@ -20,7 +20,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
             this.ListChildren = new List<CustomerList>();
         }
     }
-    
+
     public class CustomerList
     {
         public int No { get; set; }
@@ -34,7 +34,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Group { get; set; }
-        public double GroupA{ get; set; }
+        public double GroupA { get; set; }
         public double GroupB { get; set; }
         public double GroupC { get; set; }
         public double GroupD { get; set; }
@@ -42,15 +42,20 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double _1x2 { get; set; }
         public double Others { get; set; }
         public double NumberGame { get; set; }
+        public double MatchWinnerComm { get; set; }
+        public double UplineMatchWinnerComm { get; set; }
+
         public string LastLoginIP { get; set; }
         public bool IsMyanmarOdds { get; set; }
         public bool IsSynCasinoUpline { get; set; }
         public bool IsHideColossusBets { get; set; }
         public bool IsHideSportsbook2 { get; set; }
         public bool IsHideCockFighting { get; set; }
+        public bool IsHideCricket { get; set; }
         public int ParentMasterDirect { get; set; } // just for Direct Master
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
-        public bool IsLicensee { get; set; } 
+        public bool IsLicensee { get; set; }
+        public bool IsIMBCCustomers { get; set; }
     }
 
     public class Currency

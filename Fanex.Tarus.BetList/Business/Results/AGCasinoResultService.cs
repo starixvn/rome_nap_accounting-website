@@ -35,7 +35,7 @@
             return new ResultSetting
             {
                 SportType = SportType.AGCasino,
-                IsOutRight = false,
+                IsOutright = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,
                 LanguageCode = "en-US",

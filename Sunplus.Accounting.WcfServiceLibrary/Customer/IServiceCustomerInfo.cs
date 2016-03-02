@@ -30,6 +30,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        CustDetail GetCustomerInfoMoveSite(string username);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result UpdateCustomerSite(int custId, string newSite);
 
         [OperationContract]

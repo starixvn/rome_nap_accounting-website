@@ -37,6 +37,30 @@ namespace Fanex.BetList.Accounting.Core
             return IsNumericRegex.IsMatch(value);
         }
 
+        public bool IsShowCommission(TicketDetail ticketDetail)
+        {
+            bool isShowCommision = true;
+            switch (ticketDetail.Ticket.BetTypeId)
+            {
+                case 500:
+                    isShowCommision = true;
+                    break;
+                case 501:
+                    isShowCommision = !IsIMBCMatch(ticketDetail);
+                    break;
+                default:
+                    isShowCommision = true;
+                    break;
+            }
+
+            return isShowCommision;
+        }
+
+        public bool IsIMBCMatch(TicketDetail ticketDetail)
+        {
+            return ticketDetail.Ticket.SuperDiscount < 0 || ticketDetail.Ticket.MasterDiscount < 0 || ticketDetail.Ticket.AgentDiscount < 0;
+        }
+
         public static bool IsUseRefNoInsteadOfTransId(ITicket ticket)
         {
             return ticket.BetTypeId == 73 ||
@@ -45,7 +69,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId) ||
+                IsColossusBetType(ticket.BetTypeId);
                 IsCockFightingBetType(ticket.BetTypeId);
         }
 
@@ -298,6 +322,10 @@ namespace Fanex.BetList.Accounting.Core
                      ticketDetail.Ticket.Race + ")";
                 }
             }
+            else if (ticketDetail.Ticket.BetTypeId.Equals(500))
+            {
+                resultLink = string.Empty;
+            }
             else
             {
                 if ((isWonStatus || isLoseStatus || isDrawStatus) &&
@@ -431,6 +459,11 @@ namespace Fanex.BetList.Accounting.Core
             if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
             {
                 return betlistHelper.GetBetTradeStatus(ticketDetail);
+            }
+
+            if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetRNGCasinoStatus(ticketDetail);
             }
 
             if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))

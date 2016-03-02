@@ -29,6 +29,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
+
+            if (renderLeftPanelParameter.IsHideCricket)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
+            }
         }
 
         public static void AssignCustomerInfo(ref string htmlcontent, CustomerDetail customerDetail)
