@@ -70,7 +70,7 @@
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.11.0.0-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
-   </Reference>
+    </Reference>
     <Reference Include="Fanex.BetList.MyanmarOdds">
       <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.4\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
@@ -91,19 +91,20 @@
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.2.6\lib\net40\Fanex.Result.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.AGCasino">
-      <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.0.3\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.0.7\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.2.6\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.0.6\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.1.0\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.4\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.0.8\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
@@ -114,8 +115,12 @@
       <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.0.5\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.1.0\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.Racing, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Racing.1.0.0.9\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook">

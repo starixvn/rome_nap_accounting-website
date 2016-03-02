@@ -6,10 +6,12 @@
     TicketDetail betdetail = Model;
     BetListHelper betlistHelper = new BetListHelper();
     string netWin = string.Empty;
+    string chargeCommFormat = string.Empty;
     if (betdetail.Ticket.BetTypeId.Equals(500))
     {
         netWin = "(NW) ";
         betdetail.Ticket.Winlost = betdetail.Ticket.ActualStake;
+        chargeCommFormat = betdetail.Ticket.PlayerComm < 0 ? betlistHelper.IsNegative(betdetail.Ticket.PlayerComm) : string.Empty;
     }
 }
 <div class="margin-top-5">
@@ -46,7 +48,7 @@
                 </div>
                 if (betlistHelper.IsShowCommission(betdetail))
                 {
-                    <div class="margin-top-5">
+                    <div class="@chargeCommFormat margin-top-5">
                         @betdetail.Ticket.PlayerComm.Format(2)
                     </div>
                 }
