@@ -18,7 +18,8 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         sportsbook2 = 16,
         cockfighting = 19,
-        cricket = 20
+        cricket = 20,
+        allbet = 21
     };
 
     protected void Page_Load(object sender, EventArgs e)
@@ -43,7 +44,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
         hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket ;
-        hideAllbet = (!CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowCockFighting) && (roleid < 4);
+        hideAllbet = (!CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllbet) && (roleid < 4);
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -65,7 +66,6 @@ public partial class Others_Menu : System.Web.UI.Page
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?customerLevel=1&uplinelevel=2&customerId=" + custID + "&productId=");
-            allbetPath += "&customerLevel=1&uplinelevel=2&customerId=" + custID;
         }
         else if (roleid == 2)
         {
@@ -78,7 +78,6 @@ public partial class Others_Menu : System.Web.UI.Page
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
             colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=2&customerId=" + custID + "&productId=");
-            allbetPath += "&customerLevel=2&customerId=" + custID;
         }
         else if (roleid == 3)
         {
@@ -91,7 +90,6 @@ public partial class Others_Menu : System.Web.UI.Page
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
             colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=3&customerId=" + custID + "&productId=");
-            allbetPath += "&customerLevel=3&customerId=" + custID;
         }
         else
         {
@@ -105,7 +103,6 @@ public partial class Others_Menu : System.Web.UI.Page
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
             colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=4&customerId=" + custID + "&productId=");
-            allbetPath += "&customerLevel=4&customerId=" + custID;
         }
 
         if (WebSettings.disabledHR)
@@ -128,6 +125,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", creditDCSLink + (int)products.sportsbook2, !WebSettings.IsShowSportsbook2);
         this.RenderSettingTab("cockFighting", "{cockFightingLinkSetting}", creditDCSLink + (int)products.cockfighting, hideCockfighting);
         this.RenderSettingTab("cricket", "{cricketLinkSetting}", creditDCSLink + (int)products.cricket, hideCricket);
+        this.RenderSettingTab("allbet", "{allbetLinkSetting}", creditDCSLink + (int)products.allbet, hideAllbet);
 
         this.sMenu.Text = this.tplMenu;
     }
@@ -138,12 +136,6 @@ public partial class Others_Menu : System.Web.UI.Page
         {
             TemplateHandler.RemoveBlock(ref this.tplMenu, blockName);
             return;
-        if (hideAllbet)
-        {
-            TemplateHandler.RemoveBlock(ref tplMenu, "allbet");
-        }
-
-        TemplateHandler.Assign(ref tplMenu, "{allbetLinkSetting}", allbetPath);
         }
 
         TemplateHandler.Assign(ref  this.tplMenu, nodeToAssign, settingLink);       
