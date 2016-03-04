@@ -55,7 +55,7 @@
     </Reference>
     <Reference Include="Fanex.BetList.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\__BK\accounting-website\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
+      <HintPath>..\Dependency\Fanex.BetList.Age.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.0-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
@@ -125,8 +125,6 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.0.0-beta\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base">
@@ -319,7 +317,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Allbet.css" />
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F.jpg" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F_Y.jpg" />
