@@ -8,6 +8,7 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" type ="text/css" href ="../App_Themes/BetList/Betlist.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result.3rdLiveCasino/css/table_w.css"/>
 </head>
 <body>
     <div style="margin-bottom:5px;"></div>
