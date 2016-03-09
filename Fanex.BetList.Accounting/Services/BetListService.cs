@@ -1458,6 +1458,10 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(SportContants.RNG_Mobile);
             }
+            else if (ReportService.IsAllBet(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.AllBet);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

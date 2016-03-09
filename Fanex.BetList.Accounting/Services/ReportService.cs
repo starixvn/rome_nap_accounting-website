@@ -172,6 +172,11 @@ namespace Fanex.BetList.Accounting.Services
             return 2301 <= betTypeId && betTypeId <= 2399;
         }
 
+        public static bool IsAllBet(int betTypeId)
+        {
+            return 2401 <= betTypeId && betTypeId <= 2499;
+        }
+
         #endregion StaticMethods
     }
 }
