@@ -540,7 +540,7 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         'ColossusBets/BetDetails?' + params,
         'Ticket details of ' + refno,
         width,
-        800,
+        600,
         true,
         true,
         window,
