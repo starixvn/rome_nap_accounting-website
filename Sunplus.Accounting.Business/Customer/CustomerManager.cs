@@ -328,13 +328,12 @@ namespace Sunplus.Accounting.Business.Customer
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
                                         case "21":
-                                            isHideAllbet = (CastAide.AsBoolean(row["IsHidden"]) || !WebSettings.IsShowAllbet) && (roleId < 4);
+                                            isHideAllbet = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllbet || isDeposit;
                                             break;
                                     }
-                                }                              
+                                }
                             }
-
-                           
+                            
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
                             arrcontent.Add("isba", isBA);
