@@ -3744,4 +3744,7 @@
   <data name="Hidecolossusbet" xml:space="preserve">
     <value>Hide Colossus Bets</value>
   </data>
+  <data name="Disable211_2401" xml:space="preserve">
+    <value>Disabled Allbet</value>
+  </data>
 </root>
