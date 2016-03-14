@@ -325,10 +325,10 @@
             "@Url.Content("~/js/BlockUI.js")", 
             "@Url.Content("~/js/jQuery/Pager/jpager.js")",
             "@Url.Content("~/js/common.js")", 
-            "@Url.Content("~/js/BetList.js?v=2")",
+            "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
             "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js")",
             "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js")",
-            "@Url.Content("~/Views/BetList/BetListStatement/Scripts/BetListStatement.js?ver=34")",
+            "@Url.Content("~/Views/BetList/BetListStatement/Scripts/BetListStatement.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
             "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js")");
     var _custid = @betdetail.Ticket.CustId;
     var _arrayTransID = @serializer.Serialize(arrTransID);

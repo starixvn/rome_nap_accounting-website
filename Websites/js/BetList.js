@@ -665,7 +665,3 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
         null,
         null);
 }
-
-function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
-
-}
