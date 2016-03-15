@@ -254,6 +254,7 @@
     <Compile Include="DataAccess\Results\ScoreInformationDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\ISportingSolutionsDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
+    <Compile Include="Entities\BetList\BetDetail.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
     <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
@@ -309,7 +310,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Allbet.css" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\btn_UI04.png" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\icon_UI02.png" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\oddsTable_th.png" />
