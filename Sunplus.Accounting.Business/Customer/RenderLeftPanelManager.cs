@@ -1,13 +1,13 @@
 namespace Sunplus.Accounting.Business.Customer
 {
-    using System.Data;
     using DNAide.Web;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities;
-
+    using System.Data;
     /// <summary>
     /// Render Left Panel Manager.
     /// </summary>
@@ -155,11 +155,8 @@ namespace Sunplus.Accounting.Business.Customer
         {
             if (isSupport)
             {
-                var columnName = "IsDisabled";
-                bool isDisabled = Converter.ToBool(productInfo[columnName], false);
-
-                columnName = "IsDisabledDownline";
-                bool disableDownlines = Converter.ToBool(productInfo[columnName], false);
+                bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
+                bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(

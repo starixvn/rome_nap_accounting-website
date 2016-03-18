@@ -1606,19 +1606,6 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
 
-            RenderLeftPanelManager.RenderEnableProductBox(
-               row1,
-               sg,
-               ref htmlcontent,
-               isManageCustomerAccess,
-               CustParent.IsDisableAllBet,
-               hasDownline,
-               "AllBet",
-               renderLeftPanelParameter.IsShowAllBetForCredit,
-               renderLeftPanelParameter,
-               "Update AllBet Status");
-
-
             foreach (DataRow productRow in dcsTable.Rows)
             {
                 if (productRow["productID"] != null)
@@ -1640,6 +1627,22 @@ namespace Sunplus.Accounting.Business.Customer
                                                renderLeftPanelParameter,
                                                "Update Cricket Status",
                                                20,
+                                               4);
+                            break;
+                        case "21":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               CustParent.IsDisableAllBet,
+                                               hasDownline,
+                                               "AllBet",
+                                               renderLeftPanelParameter.IsShowAllBetForCredit,
+                                               renderLeftPanelParameter,
+                                               "Update AllBet Status",
+                                               21,
                                                4);
                             break;
                     }
