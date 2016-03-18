@@ -309,7 +309,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideSportsbook2 = true;
                             bool isHideCockFighting = true;
                             bool isHideCricketSettingLink = true;
-                            bool isHideAllbet = true;
+                            bool isHideAllBet = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {                               
@@ -328,7 +328,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
                                         case "21":
-                                            isHideAllbet = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllbet || isDeposit;
+                                            isHideAllBet = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;
                                             break;
                                     }
                                 }
@@ -855,7 +855,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
                                 var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
                                 var isShowCockFighting = !isHideCockFighting && !isDeposit;
-                                var isShowAllbetForCredit = !isHideAllbet && !isDeposit;
+                                var isShowAllbetForCredit = !isHideAllBet && !isDeposit;
 
                                 if (!isShowSportsbook2)
                                 {
@@ -881,7 +881,7 @@ namespace Sunplus.Accounting.Business.Customer
                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                   IsShowAllbetForCredit = isShowAllbetForCredit,
+                                   IsShowAllBetForCredit = isShowAllbetForCredit,
                                    IsShowSportsbook2 = isShowSportsbook2,     
                                    IsShowCockFighting =  isShowCockFighting,
                                    IsHideCricket = isHideCricketSettingLink,
@@ -979,7 +979,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     isHideSportsbook2, 
                                     isHideCockFighting,
                                     isHideCricketSettingLink,
-                                    isHideAllbet);
+                                    isHideAllBet);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1611,12 +1611,12 @@ namespace Sunplus.Accounting.Business.Customer
                sg,
                ref htmlcontent,
                isManageCustomerAccess,
-               CustParent.IsDisableAllbet,
+               CustParent.IsDisableAllBet,
                hasDownline,
-               "Allbet",
-               renderLeftPanelParameter.IsShowAllbetForCredit,
+               "AllBet",
+               renderLeftPanelParameter.IsShowAllBetForCredit,
                renderLeftPanelParameter,
-               "Update Allbet Status");
+               "Update AllBet Status");
 
 
             foreach (DataRow productRow in dcsTable.Rows)
@@ -1650,7 +1650,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isHideAllbet)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isHideAllBet)
         {
             int parentId;
             string submenu1 = "";
@@ -1727,7 +1727,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
                     }
 
-                    if (!isHideAllbet && !isDeposit)
+                    if (!isHideAllBet && !isDeposit)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Allbet</a>";
                     }
@@ -1784,9 +1784,9 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
                     }
 
-                    if (!isHideAllbet && !isDeposit)
+                    if (!isHideAllBet && !isDeposit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Allbet</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>AllBet</a>";
                     }
 
 

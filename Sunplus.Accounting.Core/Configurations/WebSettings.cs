@@ -551,11 +551,11 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
         
-        public static bool IsShowAllbet
+        public static bool IsShowAllBet
         {
             get
             {
-                return (ConfigurationManager.AppSettings["IsShowAllbet"] == "1");
+                return (ConfigurationManager.AppSettings["IsShowAllBet"] == "1");
             }
         }
 
