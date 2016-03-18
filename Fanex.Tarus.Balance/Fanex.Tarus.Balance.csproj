@@ -83,16 +83,20 @@
   <ItemGroup>
     <Compile Include="Business\IResetWinningService.cs" />
     <Compile Include="Business\Mailing.cs" />
+    <Compile Include="Business\ResetWinningExtraService.cs" />
     <Compile Include="Business\ResetWinningService.cs" />
     <Compile Include="Configurations\ResetWinning\ResetWinningMailCollection.cs" />
     <Compile Include="Configurations\ResetWinning\ResetWinningMailElement.cs" />
     <Compile Include="Configurations\ResetWinning\ResetWinningMailSection.cs" />
     <Compile Include="Constants\EmailTemplateConstants.cs" />
     <Compile Include="Controller\BalanceController.cs" />
+    <Compile Include="Controller\ResetWinningExtraController.cs" />
     <Compile Include="Controller\ResetWinningController.cs" />
     <Compile Include="Criteria\GetResetWinningBeforeMoveBetDayCriteria.cs" />
+    <Compile Include="Criteria\GetResetWinningExtraCriteria.cs" />
     <Compile Include="Criteria\GetResetWinningCriteria.cs" />
     <Compile Include="DataAccess\IResetWinningAccess.cs" />
+    <Compile Include="DataAccess\ResetWinningExtraAccess.cs" />
     <Compile Include="DataAccess\ResetWinningAccess.cs" />
     <Compile Include="Entities\ResetStatus.cs" />
     <Compile Include="Entities\ResetWinning.cs" />

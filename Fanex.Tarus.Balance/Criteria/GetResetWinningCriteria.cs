@@ -22,7 +22,9 @@ namespace Fanex.Tarus.Balance.Criteria
 
         public string IP { get; set; }
 
-        public string GetSettingKeys()
+        public bool IsExtraPT { get; set; }
+
+        public virtual string GetSettingKeys()
         {
             return "Balance_ResetWinning";
         }

@@ -25,7 +25,7 @@ namespace Fanex.Tarus.Balance.Business
         /// <returns>
         /// Email will be send success or not.
         /// </returns>
-        public static bool ResetWinningEmailNotification(GetResetWinningCriteria criteria, ResetStatus status)
+        public static bool ResetWinningEmailNotification(GetResetWinningCriteria criteria, ResetStatus status, bool isExtraPT = false)
         {
             bool isSuccess = true;
             ResetWinningMailCollection mailCollection = ResetWinningMailSection.Instance.ErrorInformEmail;
@@ -46,10 +46,10 @@ namespace Fanex.Tarus.Balance.Business
             try
             {
                 var root = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = root + EmailTemplateConstants.ResetWinningNotificationTemplate;
+                string filePath = root + (isExtraPT ? EmailTemplateConstants.ResetWinningExtraNotificationTemplate : EmailTemplateConstants.ResetWinningNotificationTemplate);
                 string template = File.ReadAllText(filePath);
                 var emailContent = Razor.Parse(template, status);
-                string subject = string.Format(string.Join(",", emailSubject), criteria.FromDate);
+                string subject = string.Format(string.Join(",", emailSubject), criteria.FromDate, isExtraPT ? " (Extra PT)" : string.Empty);
 
                 var mailItem = new Fanex.MailDeliver.Model.MailRecord
                 {
@@ -81,7 +81,7 @@ namespace Fanex.Tarus.Balance.Business
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Send email when reset success.</returns>
-        public static bool ResetWinningSuccess(ResetWinning_New resetWinning)
+        public static bool ResetWinningSuccess(ResetWinning_New resetWinning, bool isExtraPT = false)
         {
             bool isSuccess = true;
             try
@@ -103,10 +103,10 @@ namespace Fanex.Tarus.Balance.Business
                 }
 
                 var root = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = root + EmailTemplateConstants.ResetWinningTemplate;
+                string filePath = root + (isExtraPT ? EmailTemplateConstants.ResetWinningExtraTemplate : EmailTemplateConstants.ResetWinningTemplate);
                 string template = File.ReadAllText(filePath);
                 var emailContent = Razor.Parse(template, resetWinning);
-                string subject = string.Format(string.Join(",", emailSubject), resetWinning.WinLossDate);
+                string subject = string.Format(string.Join(",", emailSubject), resetWinning.WinLossDate, isExtraPT ? " (Extra PT)" : string.Empty);
                 var mailItem = new Fanex.MailDeliver.Model.MailRecord
                 {
                     MailTo = string.Join(",", emailTo),

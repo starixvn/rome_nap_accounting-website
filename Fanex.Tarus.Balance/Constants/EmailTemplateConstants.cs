@@ -9,5 +9,9 @@ namespace Fanex.Tarus.Balance.Constants
         public const string ResetWinningNotificationTemplate = @"Views\\Balance\\ResetWinning\\Templates\\NotificationEmailTemplate.cshtml";
 
         public const string ResetWinningTemplate = @"Views\\Balance\\ResetWinning\\Templates\\EmailTemplate.cshtml";
+
+        public const string ResetWinningExtraNotificationTemplate = @"Views\\Balance\\ResetWinningExtraPT\\Templates\\NotificationEmailTemplate.cshtml";
+
+        public const string ResetWinningExtraTemplate = @"Views\\Balance\\ResetWinningExtraPT\\Templates\\EmailTemplate.cshtml";
     }
 }

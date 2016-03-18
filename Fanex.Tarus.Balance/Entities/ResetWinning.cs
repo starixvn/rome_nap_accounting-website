@@ -21,6 +21,8 @@ namespace Fanex.Tarus.Balance.Entities
 
         public decimal WinLoss { get; set; }
 
+        public decimal WinLossExtra { get; set; }
+
         public decimal Reset { get; set; }
 
         public decimal LatestReset { get; set; }
@@ -35,7 +37,15 @@ namespace Fanex.Tarus.Balance.Entities
             }
         }
 
-        public string Reset_Str { get; set; }
+        public string WinLossExtra_Str
+        {
+            get;set;
+        }
+
+        public string Reset_Str
+        {
+            get; set;
+        }
 
         public string LatestReset_Str { get; set; }
 

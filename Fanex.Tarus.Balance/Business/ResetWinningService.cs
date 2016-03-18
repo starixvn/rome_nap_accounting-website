@@ -109,7 +109,9 @@ namespace Fanex.Tarus.Balance.Business
                 if (resetWinningByDay.ResetStatus.ErrorCode == 0)
                 {
                     Thread.Sleep(10000);
-                    bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning);
+                    resetWinningByDay.ResetWinning.WinLossDate = criteria.FromDate;
+                    resetWinningByDay.ResetWinning.UserReset = AppSession.Username;
+                    bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning, criteria.IsExtraPT);
 
                     if (!isSendSuccess)
                     {
@@ -118,7 +120,7 @@ namespace Fanex.Tarus.Balance.Business
                 }
                 else
                 {
-                    Mailing.ResetWinningEmailNotification(criteria, resetWinningByDay.ResetStatus);
+                    Mailing.ResetWinningEmailNotification(criteria, resetWinningByDay.ResetStatus, criteria.IsExtraPT);
                 }
             }
             catch (Exception ex)
@@ -182,21 +184,27 @@ namespace Fanex.Tarus.Balance.Business
         {
             var result = new ResetWinning_New();
 
-            decimal winlossTotal = 0, varianceTotal = 0;
+            decimal winlossTotal = 0, varianceTotal = 0, winlossExtraTotal = 0, resetTotal = 0, resetLatestTotal = 0, varianceRow = 0;
             int numberResetWinningRow = resetWinningData.ReportRows.Count;
+            string resetDate = resetWinningData.ReportRows[0].WinLossDate;
             for (int i = 0; i < numberResetWinningRow - 1; i++)
             {
                 ResetWinning_New currentResetWinning = resetWinningData.ReportRows[i];
-                winlossTotal += currentResetWinning.WinLoss;
-                varianceTotal += currentResetWinning.Variance;
+                winlossTotal += currentResetWinning.WinLoss;                
+                varianceTotal += varianceRow = currentResetWinning.WinLossExtra + currentResetWinning.Reset;
+                winlossExtraTotal += currentResetWinning.WinLossExtra;
+                resetTotal += currentResetWinning.Reset;
+                resetLatestTotal += currentResetWinning.LatestReset;
 
                 result.ReportRows.Add(new ResetWinning_New
                 {
                     Product = currentResetWinning.Product,
                     WinLoss = Math.Round(currentResetWinning.WinLoss, 2),
-                    Variance = Math.Round(currentResetWinning.Variance, 2),
+                    Variance = Math.Round(varianceRow, 2),
                     Reset_Str = currentResetWinning.Reset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinning.Reset, 2),
-                    LatestReset_Str = currentResetWinning.LatestReset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinning.LatestReset, 2)
+                    LatestReset_Str = currentResetWinning.LatestReset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinning.LatestReset, 2),
+                    WinLossExtra = Math.Round(currentResetWinning.WinLossExtra, 2),
+                    WinLossExtra_Str = NumberFormat.DecFormat(currentResetWinning.WinLossExtra, 2)
                 });
             }
 
@@ -209,13 +217,19 @@ namespace Fanex.Tarus.Balance.Business
                 WinLoss = Math.Round(variance, 2),
                 Reset_Str = "N/A",
                 LatestReset_Str = "N/A",
-                Variance = Math.Round(variance, 2)
+                Variance = Math.Round(variance, 2),
+                WinLossExtra_Str = "N/A"
             };
 
+            winlossTotal += othersProduct.WinLoss;
             result.ReportRows.Add(othersProduct);
-            result.WinLossDate = totalBalanceRow.WinLossDate;
+            result.WinLossDate = resetDate;
             result.UserReset = AppSession.AccUserName;
-            result.Variance = Math.Round(varianceTotal + variance, 2);
+            result.Variance = Math.Round(varianceTotal + othersProduct.Variance, 2);
+            result.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
+            result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+            result.LatestReset_Str = NumberFormat.DecFormat(resetLatestTotal, 2);
+            result.WinLoss = winlossTotal;
 
             return result;
         }

@@ -11,6 +11,7 @@
             <tr style="height: 25px;background-color:#CDDEF3; color: #000000; font-weight: bold;">
                 <th style="width:200px;"></th>
                 <th style="width:150px;">Win/Loss</th>
+                <th style="width:200px;">Win/Loss (After Extra PT)</th>
                 <th style="width:150px;">Total Reset</th>
                 <th style="width:150px;">Latest Reset</th>
                 <th style="width:150px;">Variance</th>
@@ -42,6 +43,7 @@
                 <tr style="height: 25px; color: #000000; @bgClass">
                     <td style="text-align:left; font-weight: bold">@item.Product</td>
                     <td style="text-align:right;">@item.WinLoss_Str</td>
+                    <td style="text-align:right;">@item.WinLossExtra_Str</td>
                     <td style="text-align:right;">@item.Reset_Str</td>
                     <td style="text-align:right;">@item.LatestReset_Str</td>
                     <td style="text-align:right;">@item.Variance_Str</td>
@@ -50,7 +52,11 @@
             @if (Model != null)
             {
                 <tr style="height: 25px; background-color:#C3D79B; font-weight:bold; color: #000000;">
-                    <td colspan="4" style="text-align:left;">Total</td>
+                    <td style="text-align:left;">Total</td>
+                    <td style="text-align:right;">@Model.WinLoss_Str</td>
+                    <td style="text-align:right;">@Model.WinLossExtra_Str</td>
+                    <td style="text-align:right;">@Model.Reset_Str</td>
+                    <td style="text-align:right;">@Model.LatestReset_Str</td>
                     <td style="text-align:right;">@Model.Variance_Str</td>
                 </tr>
             }
