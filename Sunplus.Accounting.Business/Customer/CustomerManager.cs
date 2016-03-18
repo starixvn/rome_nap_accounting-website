@@ -1263,6 +1263,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
+                                if (isHideAllBet)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
