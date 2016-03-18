@@ -119,6 +119,7 @@ namespace Fanex.Tarus.Balance.DataAccess
             var result = new ResetWinning_New();
             Hashtable outParams = new Hashtable();
             DataTable resetWinningTable = new DataTable();
+            decimal winlossTotal = 0, winlossExtra = 0, winlossExtraTotal = 0, resetTotal = 0, winLoss = 0, reset = 0, variance = 0, varianceTotal = 0;
 
             Hashtable  _params = new Hashtable();
             _params.Add("fromdate", criteria.FromDate);
@@ -135,22 +136,37 @@ namespace Fanex.Tarus.Balance.DataAccess
 
             foreach (DataRow row in resetWinningTable.Rows)
             {
-                decimal winLoss = CastAide.AsDecimal(row["winlost"]);
-                decimal reset = CastAide.AsDecimal(row["reset"]);
-                decimal variance = winLoss + reset;
+                var product = CastAide.AsString(row["product"]);
+                winLoss = CastAide.AsDecimal(row["winlost"]);
+                if (!product.Equals("openning balance", StringComparison.OrdinalIgnoreCase))
+                {
+                    winlossTotal += winLoss;
+                }
+
+                resetTotal += reset = CastAide.AsDecimal(row["reset"]);
+                winlossExtraTotal += winlossExtra = CastAide.AsDecimal(row["winlostafterextrapt"]);
+                varianceTotal += variance = winlossExtra + reset;
 
                 var resetWinning = new ResetWinning_New
                 {
                     WinLossDate = Convert.ToDateTime(row["winlostdate"]).ToShortDateString(),
-                    Product = CastAide.AsString(row["product"]),
+                    Product = product,
                     WinLoss = winLoss,
                     Reset = reset,
-                    Variance = variance
+                    Variance = variance,
+                    WinLossExtra = winlossExtra
                 };
 
                 result.ReportRows.Add(resetWinning);
             }
-
+            
+            result.Reset = resetTotal;
+            result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+            result.WinLoss = winlossTotal;
+            result.WinLossExtra = winlossExtraTotal;
+            result.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
+            result.Variance = varianceTotal;            
+            
             return result;
         }
 
@@ -159,26 +175,34 @@ namespace Fanex.Tarus.Balance.DataAccess
             var result = new ResetWinning_New();
 
             var resetWinningByDayGroup = resetWinning.ReportRows.GroupBy(x => x.WinLossDate).ToList();
-
+            
             foreach (var group in resetWinningByDayGroup)
             {
                 var resetWinningByDay = new ResetWinning_New();
                 var numberReset = group.Count();
                 var listResetWinningByDayItems = group.ToList();
-                decimal winlossTotal = 0, varianceTotal = 0;
+                decimal winlossTotal = 0, winlossExtraTotal = 0, resetTotal = 0, varianceTotal = 0;
 
                 for (int i = 0; i < numberReset - 1; i++)
                 {
                     var currentResetWinningDay = listResetWinningByDayItems[i];
-                    winlossTotal += currentResetWinningDay.WinLoss;
-                    varianceTotal += currentResetWinningDay.WinLoss + currentResetWinningDay.Reset;
+                    if (!currentResetWinningDay.Product.Equals("openning balance", StringComparison.OrdinalIgnoreCase))
+                    {
+                        winlossTotal += currentResetWinningDay.WinLoss;
+                    }
+
+                    varianceTotal += currentResetWinningDay.WinLossExtra + currentResetWinningDay.Reset;
+                    resetTotal += currentResetWinningDay.Reset;
+                    winlossExtraTotal += currentResetWinningDay.WinLossExtra;
+
                     var resetWinningByProduct = new ResetWinning_New
                     {
                         Product = currentResetWinningDay.Product,
                         WinLoss = currentResetWinningDay.WinLoss,
                         Reset = currentResetWinningDay.Reset,
                         Reset_Str = currentResetWinningDay.Reset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinningDay.Reset, 2),
-                        Variance = currentResetWinningDay.Variance
+                        Variance = currentResetWinningDay.Variance,
+                        WinLossExtra_Str = NumberFormat.DecFormat(currentResetWinningDay.WinLossExtra, 2)
                     };
 
                     resetWinningByDay.ReportRows.Add(resetWinningByProduct);
@@ -191,14 +215,20 @@ namespace Fanex.Tarus.Balance.DataAccess
                     Product = "OTHERS",
                     WinLoss = otherWinLoss,
                     Reset_Str = "N/A",
-                    Variance = otherWinLoss
+                    Variance = otherWinLoss,
+                    WinLossExtra_Str = "N/A"
                 };
 
                 varianceTotal += otherWinLoss;
                 resetWinningByDay.Variance = varianceTotal;
                 resetWinningByDay.WinLossDate =Convert.ToDateTime(group.Key).ToShortDateString();
                 resetWinningByDay.ReportRows.Add(otherResetWinning);
-                result.ReportRows.Add(resetWinningByDay);
+                resetWinningByDay.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+                resetWinningByDay.WinLoss = winlossTotal + otherWinLoss;
+                resetWinningByDay.WinLossExtra = winlossExtraTotal;
+                resetWinningByDay.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
+
+                result.ReportRows.Add(resetWinningByDay);                
             }
 
             return result;
@@ -209,7 +239,7 @@ namespace Fanex.Tarus.Balance.DataAccess
             var result = new ResetWinningBeforeMoveBetDay();
             DataTable resetWinningTable = new DataTable();
             Hashtable outParams = new Hashtable();
-            decimal winloss = 0, reset = 0, variance = 0;
+            decimal winloss = 0, winlossTotal = 0, winlossExtra = 0, winlossExtraTotal = 0, reset = 0, resetTotal = 0, variance = 0, varianceTotal = 0;
 
             Hashtable _params = new Hashtable();
             _params.Add("winlostdate", criteria.WinLossDate);
@@ -225,32 +255,44 @@ namespace Fanex.Tarus.Balance.DataAccess
             {
                 string product = CastAide.AsString(row["product"]);
                 winloss = CastAide.AsDecimal(row["winlost"]);
-                reset = CastAide.AsDecimal(row["reset"]);
-                variance = winloss + reset;
+                if (!product.Equals("openning balance", StringComparison.OrdinalIgnoreCase))
+                {
+                    winlossTotal += winloss;
+                }
+                
+                resetTotal += reset = CastAide.AsDecimal(row["reset"]);                
+                winlossExtraTotal += winlossExtra = CastAide.AsDecimal(row["winlostafterextrapt"]);
+                varianceTotal += variance = winlossExtra + reset;
 
-               var resetWinning = new ResetWinningBeforeMoveBetDay
+                var resetWinning = new ResetWinningBeforeMoveBetDay
                 {
                     Product = product,
                     WinLoss = NumberFormat.DecFormat(winloss, 2),
                     Reset = product.ToLower() == "openning balance" ? "N/A" : reset == 0 ? "-" : NumberFormat.DecFormat(reset, 2),
-                    Variance = product.ToLower() == "openning balance" ? "N/A" : NumberFormat.DecFormat(variance, 2)
+                    Variance = product.ToLower() == "openning balance" ? "N/A" : NumberFormat.DecFormat(variance, 2),
+                    WinLossExtra = product.ToLower() == "openning balance" ? "N/A" : NumberFormat.DecFormat(winlossExtra, 2)
                 };
 
                 result.ReportRows.Add(resetWinning);
             }
 
             decimal totalBalance = CastAide.AsDecimal(outParams["totalbalance"]);
-            decimal otherWinLoss = (totalBalance - winloss);
+            decimal otherWinLoss = (totalBalance - winlossTotal);
             var otherReset = new ResetWinningBeforeMoveBetDay
             {
                 Product = "OTHERS",
                 WinLoss = NumberFormat.DecFormat(otherWinLoss, 2),
                 Reset = "N/A",
-                Variance = NumberFormat.DecFormat(otherWinLoss, 2)
+                Variance = NumberFormat.DecFormat(otherWinLoss, 2),
+                WinLossExtra = "N/A"
             };
 
+            winlossTotal += otherWinLoss;
             result.ReportRows.Add(otherReset);
-            result.Variance = NumberFormat.DecFormat(variance + otherWinLoss, 2);
+            result.Variance = NumberFormat.DecFormat(varianceTotal + otherWinLoss, 2);
+            result.WinLoss = NumberFormat.DecFormat(winlossTotal, 2);
+            result.WinLossExtra = NumberFormat.DecFormat(winlossExtraTotal, 2);
+            result.Reset = NumberFormat.DecFormat(resetTotal, 2);
             return result;
         }
 
@@ -290,26 +332,42 @@ namespace Fanex.Tarus.Balance.DataAccess
         private ResetWinning_New GetResetWiningDataAfterReset(DataTable resetWinningTable)
         {
             var result = new ResetWinning_New();
+            decimal resetTotal = 0, winLoss = 0, latestReset = 0, variance = 0, varianceTotal = 0, winlossTotal = 0, resetLatestTotal = 0,
+                winlossExtra = 0, winlossExtraTotal = 0, reset = 0;
 
             foreach (DataRow row in resetWinningTable.Rows)
             {
-                decimal winLoss = CastAide.AsDecimal(row["winlost"]);
-                decimal reset = CastAide.AsDecimal(row["totalreset"]);
-                decimal latestReset = CastAide.AsDecimal(row["latestreset"]);
-                decimal variance = winLoss + reset;
+                var product = CastAide.AsString(row["product"]);
+                winLoss = CastAide.AsDecimal(row["winlost"]);
+                winlossExtraTotal += winlossExtra = CastAide.AsDecimal(row["winlostafterextrapt"]);
+                if (!product.Equals("openning balance", StringComparison.OrdinalIgnoreCase))
+                {
+                    winlossTotal += winLoss;
+                }
+            
+                resetTotal += reset = CastAide.AsDecimal(row["totalreset"]);
+                resetLatestTotal += latestReset = CastAide.AsDecimal(row["latestreset"]);
+                varianceTotal += variance = winLoss + reset;
 
                 var resetWinning = new ResetWinning_New
                 {
                     WinLossDate = Convert.ToDateTime(row["winlostdate"]).ToShortDateString(),
-                    Product = CastAide.AsString(row["product"]),
+                    Product = product,
                     WinLoss = winLoss,
                     Reset = reset,
                     LatestReset = latestReset,
-                    Variance = variance
+                    Variance = variance,
+                    WinLossExtra = winlossExtra
                 };
 
                 result.ReportRows.Add(resetWinning);
             }
+
+            result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+            result.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
+            result.WinLoss = winlossTotal;
+            result.LatestReset_Str = NumberFormat.DecFormat(resetLatestTotal, 2);
+            result.Variance = varianceTotal;
 
             return result;
         }

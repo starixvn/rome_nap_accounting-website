@@ -77,7 +77,7 @@
         });
 
         $("#btnResetWinning").click(function () {
-            self.resetWinningForSpecificDayAfterMoveBetDay(cachedData.resetWinningDate);
+            resetWinningByDay(cachedData.resetWinningDate);
         });
 
         $("#chkTimePeriod").change(function () {
@@ -144,16 +144,21 @@
                 bodyHtml.push(htmlRow);
             }
 
-            var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td><td colspan="3"><div class="align-right">' + rs.Variance + '</div></td></tr>'
+            var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td>\
+                    <td><div class="col120 align-right">' + rs.WinLoss + '</div></td>\
+                    <td><div class="col140 align-right">' + rs.WinLossExtra + '</div></td>\
+                    <td><div class="col120 align-right">' + rs.Reset + '</div></td>\
+                    <td><div class="col120 align-right">' + rs.Variance + '</div></td>\
+                </tr>'
             bodyHtml.push(totalHtmlRow);
 
             $("#tblResetWinningForSpecificDay").html(bodyHtml.join(''));
-            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(512, 350, true);
+            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(660, 'auto', true);
         } else {
-            var emptyDataHtml = '<tr><td colspan="4"><div class="align-left">There is no data.</div></td></tr>'
-            $("#tblResetWinningForSpecificDay").addClass("col530");
+            var emptyDataHtml = '<tr><td colspan="5"><div class="align-left">There is no data.</div></td></tr>'
+            $("#tblResetWinningForSpecificDay").addClass("col660");
             $("#tblResetWinningForSpecificDay").html(emptyDataHtml);
-            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(512, 350, true);
+            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(660, 'auto', true);
         }
     };
 
@@ -173,9 +178,18 @@
             }
         }
 
+        if (currentRow.Product == "Racing (Due to Partners)" || currentRow.Product == "Poker (Due to Partners)") {
+            cssClass = 'dueToPartnerRow';
+
+            if (currentRow.Variance != 0) {
+                cssClass += ' dueToPartnerVariance';
+            }
+        }
+
         htmlRow += '<tr class="' + cssClass + '">\
             <td class="align-left col140 productTitle bold">' + currentRow.Product + '</td>\
             <td class="align-right col120">' + currentRow.WinLoss + '</td>\
+            <td class="align-right col140">' + currentRow.WinLossExtra + '</td>\
             <td class="align-right col120">' + currentRow.Reset + '</td>\
             <td class="align-right col120 colVariance">' + currentRow.Variance + '</td>\
             </tr>';
@@ -258,19 +272,24 @@
                     bodyHtml.push(htmlRow);
                 }
 
-                var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td><td colspan="3"><div class="align-right">' + currentRow.Variance_Str + '</div></td></tr>'
+                var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td>\
+                        <td><div class="col120 align-right">' + currentRow.WinLoss_Str + '</div></td>\
+                        <td><div class="col140 align-right">' + currentRow.WinLossExtra_Str + '</div></td>\
+                        <td><div class="col120 align-right">' + currentRow.Reset_Str + '</div></td>\
+                        <td><div class="col120 align-right">' + currentRow.Variance_Str + '</div></td>\
+                    </tr>'
             }
 
             bodyHtml.push(totalHtmlRow);
 
             var resetDate = cachedData.resetWinningDate.replace(/\//g, "");
             $("#tblResetWinningForSpecificDayAfterMoveBetDay").html(bodyHtml.join(''));
-            $("#resetWinningForSpecificDayAfterMoveBetDay").removeClass("hidden").reRenderScroller(512, 350, true);
+            $("#resetWinningForSpecificDayAfterMoveBetDay").removeClass("hidden").reRenderScroller(660, 'auto', true);
         } else {
-            var emptyDataHtml = '<tr><td colspan="4"><div class="align-left">There is no data.</div></td></tr>'
-            $("#tblResetWinningForSpecificDay").addClass("col530");
+            var emptyDataHtml = '<tr><td colspan="5"><div class="align-left">There is no data.</div></td></tr>'
+            $("#tblResetWinningForSpecificDay").addClass("col660");
             $("#tblResetWinningForSpecificDay").html(emptyDataHtml);
-            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(512, 350, true);
+            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(660, 'auto', true);
         }
     };
 
@@ -280,6 +299,7 @@
         htmlRow += '<tr class="' + cssClass + '">\
             <td class="align-left col140 productTitle bold">' + currentRow.Product + '</td>\
             <td class="align-right col120">' + currentRow.WinLoss_Str + '</td>\
+            <td class="align-right col140">' + currentRow.WinLossExtra_Str + '</td>\
             <td class="align-right col120">' + currentRow.Reset_Str + '</td>\
             <td class="align-right col120 colVariance">' + currentRow.Variance_Str + '</td>\
             </tr>';
@@ -353,12 +373,12 @@
             resetWinningHtml.push(self.renderResetWinningByDay(lastDayResetWinning, 'lastDayResetWinning'));
 
             $("#tblresetWinningSinceLastMoveBetDay tbody").empty().append(resetWinningHtml.join(''));
-            $("#resetWinningSinceLastMoveBetDay").removeClass("hidden").reRenderScroller(512, 800, true);
+            $("#resetWinningSinceLastMoveBetDay").removeClass("hidden").reRenderScroller(660, 800, true);
         } else {
-            var emptyDataHtml = '<tr><td colspan="4"><div class="align-left">There is no data.</div></td></tr>'
-            $("#tblResetWinningForSpecificDay").addClass("col530");
+            var emptyDataHtml = '<tr><td colspan="5"><div class="align-left">There is no data.</div></td></tr>'
+            $("#tblResetWinningForSpecificDay").addClass("col660");
             $("#tblResetWinningForSpecificDay").html(emptyDataHtml);
-            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(512, 350, true);
+            $("#resetWinningForSpecificDay").removeClass("hidden").reRenderScroller(660, 'auto', true);
         }
     };
 
@@ -398,7 +418,12 @@
         }
 
         var resetTableClass = resetWinningByDay.WinLossDate.replace(/\//g, "");
-        var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td><td colspan="3"><div class="align-right">' + resetWinningByDay.Variance_Str + '</div></td></tr>'
+        var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td>\
+                <td><div class="col120 align-right">' + resetWinningByDay.WinLoss_Str + '</div></td>\
+                <td><div class="col140 align-right">' + resetWinningByDay.WinLossExtra_Str + '</div></td>\
+                <td><div class="col120 align-right">' + resetWinningByDay.Reset_Str + '</div></td>\
+                <td><div class="col120 align-right">' + resetWinningByDay.Variance_Str + '</div></td>\
+            </tr>'
         contentHtml.push(totalHtmlRow);
         var resetWinningByDayContentHtml = contentHtml.join('');
 
@@ -429,6 +454,10 @@
                         Win/Loss</div>\
                 </th>\
                 <th style="border-bottom: none 0px;">\
+                    <div class="col140 c">\
+                        Win/Loss (After Extra PT)</div>\
+                </th>\
+                <th style="border-bottom: none 0px;">\
                     <div class="col120 c">' +
                             resetHtml +
                 '</th>\
@@ -448,6 +477,7 @@
         htmlRow += '<tr class="' + cssClass + '">\
             <td class="align-left col140 productTitle bold">' + resetWinningByDayRow.Product + '</td>\
             <td class="align-right col120">' + resetWinningByDayRow.WinLoss_Str + '</td>\
+            <td class="align-right col140">' + resetWinningByDayRow.WinLossExtra_Str + '</td>\
             <td class="align-right col120">' + resetWinningByDayRow.Reset_Str + '</td>\
             <td class="align-right col120 colVariance">' + resetWinningByDayRow.Variance_Str + '</td>\
             </tr>';
@@ -478,7 +508,7 @@
         $("#tblResetWinningForSpecificDayAfterMoveBetDay tbody").empty();
         $("#resetWinningForSpecificDayAfterMoveBetDay").addClass("hidden");
         $("#resetWinningSinceLastMoveBetDay").addClass("hidden");
-        $("#tblResetWinningForSpecificDay").removeClass("col530");
+        $("#tblResetWinningForSpecificDay").removeClass("col660");
     };
 
     resetWinningByDay = function (resetWinningDate) {
@@ -498,10 +528,10 @@
                 }
                 else if (rs.ErrorCode == enums.statusResetWinningEnums.resetSuccessful) {
                     showAlertMessage("errMsg", "The process has been successful!", 0);
-                    self.getResetWinningByDay(resetWinningDate);
+
+                    setTimeout(self.getResetWinningReport(), 2000);
                 }
-                else if (rs.ErrorCode == enums.statusResetWinningEnums.notReset) {
-                    //self.getResetWinningByDay(resetWinningDate);
+                else if (rs.ErrorCode == enums.statusResetWinningEnums.notReset) {                    
                     showAlertMessage("errMsg", "No products need to reset winning!", 2);
                 }
                 else {
@@ -571,7 +601,12 @@
             bodyTableHtml.push(self.renderResetWinningForSpecificDayAfterMovebetDayRow(currentRow, cssClass));
         }
 
-        var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td><td colspan="3"><div class="align-right">' + rs.Variance_Str + '</div></td></tr>'
+        var totalHtmlRow = '<tr class="totalRow bold"><td><div class="col140 align-left">Total</div></td>\
+                <td><div class="col120 align-right">' + rs.WinLoss_Str + '</div></td>\
+                <td><div class="col140 align-right">' + rs.WinLossExtra_Str + '</div></td>\
+                <td><div class="col120 align-right">' + rs.Reset_Str + '</div></td>\
+                <td><div class="col120 align-right">' + rs.Variance_Str + '</div></td>\
+            </tr>'
         bodyTableHtml.push(totalHtmlRow);
         return bodyTableHtml.join('');
     };
