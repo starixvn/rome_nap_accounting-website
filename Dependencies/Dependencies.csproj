@@ -44,7 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.0-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.1-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -221,9 +221,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Allbet.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
