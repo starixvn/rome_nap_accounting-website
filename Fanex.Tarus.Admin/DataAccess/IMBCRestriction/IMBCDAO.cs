@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Tarus.Admin.DataAccess.IMBCRestriction
 {
-    using System.Collections;
     using Fanex.Data;
+    using Sunplus.Accounting.Core.Common;
+    using System.Collections;
+    using System.Web;
 
     public class IMBCDAO
     {
@@ -27,6 +29,8 @@
             {
                 var param = new Hashtable();
                 param.Add("isallowed", isAllowed);
+                param.Add("userid", AppSession.AccId);
+                param.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 db.AssignParamValues(param);
 
                 db.ExecuteNonQuery();
