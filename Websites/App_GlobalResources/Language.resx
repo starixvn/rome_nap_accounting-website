@@ -2486,7 +2486,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Enable Cricket</value>
   </data>
   <data name="enableAllBet" xml:space="preserve">
-    <value>Enable AllBet</value>
+    <value>Enable Allbet</value>
   </data>
   <data name="lblDisabledAllBetUpline" xml:space="preserve">
     <value>AllBet status has been disabled at upline</value>

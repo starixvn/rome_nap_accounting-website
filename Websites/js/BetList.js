@@ -666,7 +666,7 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
 function ViewAllBetResult(transId) {
 	var width = 945;
 	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
-	parent.OpenNextPopup("ViewAllBetResult", url, 'AllBet Result', width, 500, true, false, window, 0, null, null);
+	parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
