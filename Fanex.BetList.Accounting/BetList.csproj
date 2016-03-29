@@ -55,7 +55,7 @@
     </Reference>
     <Reference Include="Fanex.BetList.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex.BetList.Age.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.1-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
