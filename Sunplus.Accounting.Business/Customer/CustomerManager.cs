@@ -857,7 +857,6 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
                                 var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
                                 var isShowCockFighting = !isHideCockFighting && !isDeposit;
-                                var isShowAllbetForCredit = !isHideAllBet && !isDeposit;
 
                                 if (!isShowSportsbook2)
                                 {
@@ -883,7 +882,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                    IsShowAllBetForCredit = isShowAllbetForCredit,
+                                    IsShowAllBetForCredit = !isHideAllBet && isSyncAllbet,
                                     IsShowSportsbook2 = isShowSportsbook2,
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
@@ -1259,7 +1258,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (isHideAllBet && isSyncAllbet)
+                                if (isHideAllBet)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }

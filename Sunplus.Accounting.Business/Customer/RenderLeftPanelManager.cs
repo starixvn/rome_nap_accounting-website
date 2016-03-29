@@ -158,7 +158,6 @@ namespace Sunplus.Accounting.Business.Customer
                 bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
                 bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
                 bool disableUplines = Utils.ToBoolean(productInfo["IsDisabledUpline"]);
-
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(
                     renderLeftPanelParameter,
