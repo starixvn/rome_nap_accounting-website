@@ -4,6 +4,8 @@
 
     public interface ICrossCurrencyTransferExcel
     {
-        DataTable ExcelToDataTable(string filePath);
+        bool ValidateTemplateFile();
+
+        DataTable ExcelToDataTable();
     }
 }

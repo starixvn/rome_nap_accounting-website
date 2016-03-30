@@ -24,7 +24,6 @@ public class UploadVirtualRate : IHttpHandler, IRequiresSessionState
         bool IsForceLogout = !UserController.OnlineUserUpdate(AppSession.OnAccId);
       
         {
-
             string htmlData = "", strLocation = "";
             string FileSize = "<input type='hidden' id='FileSize' value='" + context.Request.ContentLength + "'/>";
             bool isvalid = true;

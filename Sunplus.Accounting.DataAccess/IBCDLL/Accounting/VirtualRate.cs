@@ -2,10 +2,10 @@
 using System;
 using System.Collections;
 using System.Data;
-using System.Data.OleDb;
 using System.Web;
 using DNAide.Data;
 using Fanex.Data;
+using Fanex.Tarus.Excels.VirtualRate;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
@@ -24,39 +24,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
         public static DataTable GetDataFromExcel(string ExcelPath)
         {
-            var dtb = new DataTable();
-            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelPath +
-                             ";Extended Properties=Excel 8.0;";
-            var excelCon = new OleDbConnection(strConn);
-            try
-            {
-                excelCon.Open();
-                var myCommand = new OleDbCommand("SELECT * FROM [Sheet1$]", excelCon);
-                var objAdap = new OleDbDataAdapter();
-                objAdap.SelectCommand = myCommand;
-                objAdap.Fill(dtb);
-                excelCon.Close();
-                excelCon.Dispose();
-                return dtb;
-            }
-            catch (Exception ex)
-            {
-                excelCon.Close();
-                excelCon.Dispose();
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            return null;
+            IVirtualRateExcel virtualRateExcel = new VirtualRateExcel(ExcelPath);
+            return virtualRateExcel.ExcelToDataTable();
         }
 
         public static DbResult InsDataTmpExcel(string arrUsernames, string arrVirtualRates)
         {
             DbResult rs = null;
+
             try
             {
-
-
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("arrusernames", arrUsernames);
@@ -74,9 +51,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
+
             return rs;
         }
 

@@ -39,14 +39,15 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
         try
         {
-            if (context.Request.Files[0].ContentLength > 1024000)
+            var uploadFile = context.Request.Files[0];
+            if (uploadFile.ContentLength > 1024000)
             {
                 context.Response.Write(BuildResult("Your uploaded file's size can't be larger than 1 MB", string.Empty));
                 return;
             }
 
             string ext = string.Empty;
-            if (!AccCommon.IsValidExtension(context.Request.Files[0].FileName, ref ext))
+            if (!AccCommon.IsValidExtension(uploadFile.FileName, ref ext))
             {
                 context.Response.Write(BuildResult("Sorry, You choose invalid file extension. Please choose an Excel file (.xls)", string.Empty));
                 return;
@@ -56,12 +57,11 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             FileInfo file = new FileInfo(strLocation);
             if (file.Exists) file.Delete();
 
-            context.Request.Files[0].SaveAs(strLocation);
+            uploadFile.SaveAs(strLocation);
 
-            ICrossCurrencyTransferExcel crossCurrencyTransferExcel = new CrossCurrencyTransferExcel();
-            DataTable dataTable = crossCurrencyTransferExcel.ExcelToDataTable(strLocation);
+            ICrossCurrencyTransferExcel crossCurrencyTransferExcel = new CrossCurrencyTransferExcel(strLocation);
 
-            if (dataTable == null)
+            if (!crossCurrencyTransferExcel.ValidateTemplateFile())
             {
                 context.Response.Write(BuildResult("You're using wrong template file. Please double check and try again. Thanks", string.Empty));
                 return;
@@ -70,15 +70,17 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             file = new FileInfo(strLocation);
             if (file.Exists) file.Delete();
 
+            DataTable dataTable = crossCurrencyTransferExcel.ExcelToDataTable();
             DeleteEmptyRow(dataTable);
+
             if (dataTable.Rows.Count == 0)
             {
                 context.Response.Write(BuildResult("Data is emtpy", string.Empty));
                 return;
             }
 
-            string hdFileInfo = @"<input type='hidden' id='hdFCTFileInfo' filename='" + context.Request.Files[0].FileName
-                + "' filesize='" + context.Request.Files[0].ContentLength.ToString() + "' />";
+            string hdFileInfo = @"<input type='hidden' id='hdFCTFileInfo' filename='" + uploadFile.FileName
+                + "' filesize='" + uploadFile.ContentLength.ToString() + "' />";
             context.Response.Write(BuildResult(string.Empty, RenderContent(dataTable) + hdFileInfo
                 + "|" + GetAllForexAccount()));
         }

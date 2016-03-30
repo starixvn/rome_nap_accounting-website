@@ -529,6 +529,10 @@
       <Project>{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}</Project>
       <Name>Fanex.Tarus.DataAccess.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Excels\Fanex.Tarus.Excels.csproj">
+      <Project>{4d443bd2-6287-4427-8afd-cabff55e2d6f}</Project>
+      <Name>Fanex.Tarus.Excels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
