@@ -311,6 +311,8 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideCricketSettingLink = true;
                             bool isHideAllBet = true;
                             bool isSyncAllbet = true;
+                            bool isSyncAllbetUpline = true;
+                            bool isSyncAllbetDownline = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
@@ -331,6 +333,8 @@ namespace Sunplus.Accounting.Business.Customer
                                         case "21":
                                             isHideAllBet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowAllBet || isDeposit;
                                             isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                                            isSyncAllbetDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
                                             break;
                                     }
                                 }
@@ -882,7 +886,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                    IsShowAllBetForCredit = !isHideAllBet && isSyncAllbet,
+                                    IsShowAllBetForCredit = this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
                                     IsShowSportsbook2 = isShowSportsbook2,
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
@@ -1258,7 +1262,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (isHideAllBet)
+                                if (!isSyncAllbetUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
@@ -1303,6 +1307,16 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
+        }
+
+        private bool IsShowAllbetStatusBox(bool isSync, bool isSyncedUpline, bool isSyncDownline)
+        {
+            if (isSyncedUpline == false || isSync == false || (isSync == true && isSyncDownline == false))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
