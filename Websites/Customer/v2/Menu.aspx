@@ -3,11 +3,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
-<head id="Head1" runat="server">
+<head id="Head1">
     <title></title>
     <link href="../../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
-    <link href="../../App_Themes/Log/Tab.css" rel="stylesheet" type="text/css" />
+    <link href="../../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
    <style>
          body
         {

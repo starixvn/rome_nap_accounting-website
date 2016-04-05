@@ -7,7 +7,7 @@
 
     <title>View log</title>
     <link href="../../App_Themes/Log/ViewLog.css" rel="stylesheet" type="text/css" />
-    <link href="../../App_Themes/Log/Tab.css" rel="stylesheet" type="text/css" />
+    <link href="../../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
