@@ -12,7 +12,7 @@ function EnableStatusController($scope) {
 
     var length = $scope.entities.length;
     for (var i = 0; i < length; i++) {
-        if (!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) {
+        if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) || ($scope.entities[i].synced && $scope.context.product == 21)) {
             $scope.isDisabledAll = false;
             break;
         }        
@@ -46,6 +46,7 @@ function EnableStatusController($scope) {
         var allChecked = true;
 
         scope.item.isDirty = preVal != scope.item.enable;
+        scope.item.hide = false;
 
         if ($scope.context.newMode) {
             var dirty = false;
