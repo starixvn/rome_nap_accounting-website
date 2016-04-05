@@ -984,7 +984,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     isHideSportsbook2,
                                     isHideCockFighting,
                                     isHideCricketSettingLink,
-                                    isHideAllBet);
+                                    renderLeftPanelParameter.IsShowAllBetForCredit);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1667,7 +1667,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isHideAllBet)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet)
         {
             int parentId;
             string submenu1 = "";
@@ -1744,7 +1744,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
                     }
 
-                    if (!isHideAllBet && !isDeposit)
+                    if (isShowAllBet)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Allbet</a>";
                     }
@@ -1801,7 +1801,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
                     }
 
-                    if (!isHideAllBet && !isDeposit)
+                    if (isShowAllBet)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Allbet</a>";
                     }

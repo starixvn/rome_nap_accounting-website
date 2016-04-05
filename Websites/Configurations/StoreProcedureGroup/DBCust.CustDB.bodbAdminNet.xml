@@ -311,6 +311,6 @@
   <Function Name="Cricket - IMBC restriction">
     <Setting Key="Acc_CustSetting_SettingRestrictionUpdate" SpName="Acc_CustSetting_SettingRestrictionUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SettingRestrictionSelect" SpName="Acc_CustSetting_SettingRestrictionSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />		
+    <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
