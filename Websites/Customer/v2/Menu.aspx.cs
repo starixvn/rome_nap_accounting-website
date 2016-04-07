@@ -13,7 +13,7 @@ using Sunplus.Bingo.Core;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
-    private string tplMenu = string.Empty;   
+    private string tplMenu = string.Empty;
     private enum products
     {
         sportsbook2 = 16,
@@ -23,7 +23,7 @@ public partial class Others_Menu : System.Web.UI.Page
     };
 
     protected void Page_Load(object sender, EventArgs e)
-    {      
+    {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet;
@@ -37,14 +37,14 @@ public partial class Others_Menu : System.Web.UI.Page
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
         allowVirtualSports = true ? CastAide.AsBoolean(db.Outputs["allowedvs"]) : false;
-        
+
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
         hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
-        hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket ;
-        hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
+        hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
+        hideAllbet = (!CastAide.AsBoolean(db.Outputs["allowedallbet"]) && roleid < 4) || !WebSettings.IsShowAllBet;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -113,7 +113,7 @@ public partial class Others_Menu : System.Web.UI.Page
         }
 
         TemplateHandler.Assign(ref this.tplMenu, "{strURL}", HRURL); // Link Default       
-        TemplateHandler.Assign(ref  this.tplMenu, "{urlHorse}", HRURL);
+        TemplateHandler.Assign(ref this.tplMenu, "{urlHorse}", HRURL);
 
         this.RenderSettingTab("Bingo", "{urlBingo}", bingopath, !BingoSettings.BingoGame.Enabled || !AllowedBI);
         this.RenderSettingTab("Casino", "{urlCasino}", casinoPath, WebSettings.disableCS || !AllowedCS);
@@ -138,7 +138,7 @@ public partial class Others_Menu : System.Web.UI.Page
             return;
         }
 
-        TemplateHandler.Assign(ref  this.tplMenu, nodeToAssign, settingLink);       
+        TemplateHandler.Assign(ref this.tplMenu, nodeToAssign, settingLink);
     }
 }
 
