@@ -309,7 +309,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideSportsbook2 = true;
                             bool isHideCockFighting = true;
                             bool isHideCricketSettingLink = true;
-                            bool isHideAllBet = true;
+                            bool isHideAllBet = roleId < 4;
                             bool isSyncAllbet = true;
                             bool isSyncAllbetUpline = true;
                             bool isSyncAllbetDownline = true;
