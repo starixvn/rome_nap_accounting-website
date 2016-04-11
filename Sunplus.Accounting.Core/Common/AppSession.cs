@@ -307,11 +307,17 @@ namespace Sunplus.Accounting.Core.Common
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsFinishUMTime"]); }
             set { HttpContext.Current.Session["IsFinishUMTime"] = value; }
         }
-
-        public static bool HideAllbetUpline
+        
+        public static bool HideAllbetMaster
         {
-            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbet"]); }
-            set { HttpContext.Current.Session["IsHideAllbet"] = value; }
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetMaster"]); }
+            set { HttpContext.Current.Session["IsHideAllbetMaster"] = value; }
+        }
+
+        public static bool HideAllbetAgent
+        {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetAgent"]); }
+            set { HttpContext.Current.Session["IsHideAllbetAgent"] = value; }
         }
 
         public static void AddSession(HttpSessionState sessionState, string key, object value)

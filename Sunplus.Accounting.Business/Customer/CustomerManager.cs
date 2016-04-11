@@ -387,6 +387,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
                                     downlinename = "Member";
+                                    AppSession.HideAllbetAgent = isHideAllBet;
                                     break;
 
                                 case 3: // master
@@ -401,6 +402,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         (Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
                                     downlinename = "Agent";
+                                    AppSession.HideAllbetMaster = isHideAllBet;
                                     break;
 
                                 case 4: // super
@@ -877,6 +879,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
 
                                 }
+
+                                var hideCheckBoxAllbet = roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : false;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
@@ -886,7 +890,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                    IsShowAllBetForCredit = AppSession.HideAllbetUpline ? false : this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
+                                    IsShowAllBetForCredit = hideCheckBoxAllbet ? false : this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
                                     IsShowSportsbook2 = isShowSportsbook2,
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
@@ -1262,13 +1266,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (AppSession.HideAllbetUpline && isHideAllBet)
+                                if (hideCheckBoxAllbet && isHideAllBet)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
-
-                                AppSession.HideAllbetUpline = isHideAllBet;
-
+                                                                
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -2853,7 +2855,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", custName);
                 TemplateHandler.Assign(ref tplTransLink, "{custid}", custId.ToString());
-                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + AppSession.HideAllbetUpline.ToString().ToLower());
+                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + (roleid == 3 ? AppSession.HideAllbetMaster.ToString().ToLower() : AppSession.HideAllbetAgent.ToString().ToLower()));
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
                 TemplateHandler.Assign(ref htmlCustInfo, "{TransLinksBox}", tplTransLink);

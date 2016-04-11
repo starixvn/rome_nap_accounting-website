@@ -32,8 +32,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
         {
             try
             {
-                AppSession.HideAllbetUpline = !WebSettings.IsShowAllBet;
-
                 int totalPages = 0;
                 int totalChildren = 0;
                 var dtSuperList = new DataSet();
