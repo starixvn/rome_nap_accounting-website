@@ -886,7 +886,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                    IsShowAllBetForCredit = isHideAllBet ? false : this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
+                                    IsShowAllBetForCredit = AppSession.HideAllbetUpline ? false : this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
                                     IsShowSportsbook2 = isShowSportsbook2,
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
@@ -1262,10 +1262,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (isHideAllBet || !isSyncAllbetUpline)
+                                if (AppSession.HideAllbetUpline && isHideAllBet)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
+
+                                AppSession.HideAllbetUpline = isHideAllBet;
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
@@ -2851,7 +2853,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", custName);
                 TemplateHandler.Assign(ref tplTransLink, "{custid}", custId.ToString());
-                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL);
+                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + AppSession.HideAllbetUpline.ToString().ToLower());
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
                 TemplateHandler.Assign(ref htmlCustInfo, "{TransLinksBox}", tplTransLink);

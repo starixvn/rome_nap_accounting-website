@@ -308,6 +308,12 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["IsFinishUMTime"] = value; }
         }
 
+        public static bool HideAllbetUpline
+        {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbet"]); }
+            set { HttpContext.Current.Session["IsHideAllbet"] = value; }
+        }
+
         public static void AddSession(HttpSessionState sessionState, string key, object value)
         {
             sessionState[key] = value;
