@@ -880,7 +880,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 }
 
-                                var hideCheckBoxAllbet = roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : false;
+                                var hideCheckBoxAllbet = roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : true;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,

@@ -310,13 +310,13 @@ namespace Sunplus.Accounting.Core.Common
         
         public static bool HideAllbetMaster
         {
-            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetMaster"]); }
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetMaster"], true); }
             set { HttpContext.Current.Session["IsHideAllbetMaster"] = value; }
         }
 
         public static bool HideAllbetAgent
         {
-            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetAgent"]); }
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetAgent"], true); }
             set { HttpContext.Current.Session["IsHideAllbetAgent"] = value; }
         }
 
