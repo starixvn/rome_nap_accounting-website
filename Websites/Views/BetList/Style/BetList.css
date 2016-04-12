@@ -483,3 +483,7 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 .viewbrokengame-link:hover{
     color: #d66d35;
 }
+
+.allbet-bet-id { color: #bbb; }
+.allbet-bet-type-name { color: #696969; }
+.allbet-game-id { color: #01122b; }

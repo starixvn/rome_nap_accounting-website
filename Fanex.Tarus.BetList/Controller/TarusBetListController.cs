@@ -9,18 +9,12 @@ namespace Fanex.Tarus.BetList.Controller
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using System.Reflection;
-    using System.Web;
     using System.Web.Mvc;
-    using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
-
-    using Sunplus.Accounting.Core.Common;
-
     using DNAide.Core;
     using Fanex.BetList.Accounting.Services;
+    using Sunplus.Accounting.Core.Common;
+    using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>

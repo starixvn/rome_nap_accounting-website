@@ -376,6 +376,11 @@ namespace Fanex.BetList.Accounting.Core
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
+                        case SportContants.AllBet:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty : 
+                                "ViewAllBetResult('" + ticketDetail.Ticket.BetTypeId + "')";
+                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {

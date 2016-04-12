@@ -37,7 +37,7 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-
+using Fanex.CustomerSetting.Module.Core;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -91,7 +91,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
             return custDetail;
         }
-        
+
         public Hashtable GenDownlineList(int custId, int roleId, int pageIndex)
         {
             Hashtable returndata = new Hashtable();
@@ -260,7 +260,7 @@ namespace Sunplus.Accounting.Business.Customer
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
                             int roleId = Convert.ToInt32(row1["roleid"]);
-                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];                        
+                            var siteName = row1["site"] == null || string.IsNullOrWhiteSpace(row1["site"].ToString()) ? row1["membersite"] : row1["site"];
                             bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
                             var isLicensee = isDeposit;
                             bool isIMBC = siteName.ToString().ToUpper().Equals("IMBC");
@@ -306,17 +306,20 @@ namespace Sunplus.Accounting.Business.Customer
                             bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
 
                             bool isHideColossusBets = (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (roleId < 4);
-
                             bool isHideSportsbook2 = true;
                             bool isHideCockFighting = true;
                             bool isHideCricketSettingLink = true;
+                            bool isHideAllBet = roleId < 4;
+                            bool isSyncAllbet = true;
+                            bool isSyncAllbetUpline = true;
+                            bool isSyncAllbetDownline = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
-                            {                               
-                                if (row["productID"] != null) 
+                            {
+                                if (row["productID"] != null)
                                 {
                                     var productId = row["productID"].ToString();
-                                    switch(productId)
+                                    switch (productId)
                                     {
                                         case "16":
                                             isHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowSportsbook2 || isDeposit;
@@ -327,11 +330,16 @@ namespace Sunplus.Accounting.Business.Customer
                                         case "20":
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
+                                        case "21":
+                                            isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;
+                                            isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                                            isSyncAllbetDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
+                                            break;
                                     }
-                                }                              
+                                }
                             }
 
-                           
                             bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
                             bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
                             arrcontent.Add("isba", isBA);
@@ -379,6 +387,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
                                     downlinename = "Member";
+                                    AppSession.HideAllbetAgent = isHideAllBet;
                                     break;
 
                                 case 3: // master
@@ -393,6 +402,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         (Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
                                     downlinename = "Agent";
+                                    AppSession.HideAllbetMaster = isHideAllBet;
                                     break;
 
                                 case 4: // super
@@ -415,7 +425,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     break;
                             }
 
-                        #endregion assign data
+                            #endregion assign data
 
                             if (parentId > 0)
                             {
@@ -840,12 +850,12 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #endregion Progressive Bonus
                                 var customerDetail = new CustomerDetail
-                               {
-                                   CustID = custId,
-                                   RoleId = roleId,
-                                   AccId = AppSession.AccId,
-                                   HasDownline = Converter.ToBool(row1["HasDownline"])
-                               };
+                                {
+                                    CustID = custId,
+                                    RoleId = roleId,
+                                    AccId = AppSession.AccId,
+                                    HasDownline = Converter.ToBool(row1["HasDownline"])
+                                };
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
@@ -869,25 +879,28 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
 
                                 }
+
+                                var hideCheckBoxAllbet = roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : true;
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
-                               {
-                                   IsShowKeno = isShowKenoStatus,
-                                   IsShowGoldDeluxe = isShowGoldDeluxe,
-                                   IsShowMacau = isShowMacau,
-                                   IsShowEnableBetTrade = isShowEnableBetTrade,
-                                   IsShowEnableMicrogaming = isShowEnableMicrogaming,
-                                   IsShowAutoSuspend = hasReadPermission_AutoSuspend,
-                                   IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
-                                   IsShowSportsbook2 = isShowSportsbook2,     
-                                   IsShowCockFighting =  isShowCockFighting,
-                                   IsHideCricket = isHideCricketSettingLink,
-                                   ParentId = parentId,
-                                   RoleId = roleId,
-                                   CustId = custId,
-                                   IsDeposit = isDeposit,
-                                   Username = userName,
-                                   AccId = AppSession.AccId
-                               };
+                                {
+                                    IsShowKeno = isShowKenoStatus,
+                                    IsShowGoldDeluxe = isShowGoldDeluxe,
+                                    IsShowMacau = isShowMacau,
+                                    IsShowEnableBetTrade = isShowEnableBetTrade,
+                                    IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                                    IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                                    IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
+                                    IsShowAllBetForCredit = hideCheckBoxAllbet && isHideAllBet ? false : this.IsShowAllbetStatusBox(isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline),
+                                    IsShowSportsbook2 = isShowSportsbook2,
+                                    IsShowCockFighting = isShowCockFighting,
+                                    IsHideCricket = isHideCricketSettingLink,
+                                    ParentId = parentId,
+                                    RoleId = roleId,
+                                    CustId = custId,
+                                    IsDeposit = isDeposit,
+                                    Username = userName,
+                                    AccId = AppSession.AccId
+                                };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
@@ -962,7 +975,20 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region MenuDetail
 
-                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit, customerSite, isHideSportsbook2, isHideCockFighting, isHideCricketSettingLink);
+                                GenMenuMinMaxPT(
+                                    ref htmlcontent,
+                                    row2,
+                                    custId,
+                                    roleId,
+                                    currency,
+                                    userName,
+                                    (isAllowEditBI && AppSession.IsSyncBingoCurrentCust),
+                                    isDeposit,
+                                    customerSite,
+                                    isHideSportsbook2,
+                                    isHideCockFighting,
+                                    isHideCricketSettingLink,
+                                    renderLeftPanelParameter.IsShowAllBetForCredit);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1047,7 +1073,6 @@ namespace Sunplus.Accounting.Business.Customer
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
                                         creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=3&customerId=" + custId + "&productId=";
-                     
                                         break;
 
                                     case 4: // super
@@ -1129,6 +1154,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", creditDCSLink + 16);
                                 TemplateHandler.Assign(ref htmlcontent, "{cockFightingSettingLink}", creditDCSLink + 19);
                                 TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", creditDCSLink + 20);
+                                TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", creditDCSLink + 21);
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1240,6 +1266,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
+                                if (hideCheckBoxAllbet && isHideAllBet)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
+                                }
+                                                                
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1280,6 +1311,16 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
+        }
+
+        private bool IsShowAllbetStatusBox(bool isSync, bool isSyncedUpline, bool isSyncDownline)
+        {
+            if (isSyncedUpline == false || isSync == false || (isSync == true && isSyncDownline == false))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
@@ -1583,7 +1624,6 @@ namespace Sunplus.Accounting.Business.Customer
                renderLeftPanelParameter,
                "Update Colossus Bets Status");
 
-
             foreach (DataRow productRow in dcsTable.Rows)
             {
                 if (productRow["productID"] != null)
@@ -1607,15 +1647,31 @@ namespace Sunplus.Accounting.Business.Customer
                                                20,
                                                4);
                             break;
+                        case "21":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               CustParent.IsDisableAllBet,
+                                               hasDownline,
+                                               "Allbet",
+                                               renderLeftPanelParameter.IsShowAllBetForCredit,
+                                               renderLeftPanelParameter,
+                                               "Update Allbet Status",
+                                               21,
+                                               4);
+                            break;
                     }
                 }
             }
-           
+
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet)
         {
             int parentId;
             string submenu1 = "";
@@ -1692,6 +1748,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
                     }
 
+                    if (isShowAllBet)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Allbet</a>";
+                    }
+
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
                     if (!WebSettings.disabledHR)
@@ -1743,6 +1804,12 @@ namespace Sunplus.Accounting.Business.Customer
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
                     }
+
+                    if (isShowAllBet)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Allbet</a>";
+                    }
+
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
@@ -2788,7 +2855,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", custName);
                 TemplateHandler.Assign(ref tplTransLink, "{custid}", custId.ToString());
-                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL);
+                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + (roleid == 3 ? AppSession.HideAllbetMaster.ToString().ToLower() : AppSession.HideAllbetAgent.ToString().ToLower()));
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
                 TemplateHandler.Assign(ref htmlCustInfo, "{TransLinksBox}", tplTransLink);
@@ -3040,7 +3107,7 @@ namespace Sunplus.Accounting.Business.Customer
             });
 
             return !progressiveStatus.DisableUplinesCasinoBonus;
-        }        
+        }
 
         private void RenderEnableGoldDeluxeBox(
             DataRow custInfoRow,
@@ -3145,6 +3212,23 @@ namespace Sunplus.Accounting.Business.Customer
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, productName);
             }
+        }
+
+        private bool IsHideAllBet(DataRow dataRow)
+        {
+            if (WebSettings.IsShowAllBet == false)
+            {
+                return true;
+            }
+
+            var isDBHidden = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(dataRow["IsHidden"]);
+            var isSync = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(dataRow["IsSync"]);
+            if (isDBHidden)
+            {
+                return true;
+            }
+
+            return true;
         }
     }
 }

@@ -1054,6 +1054,7 @@ var ViewPT = {
             case 44: //Sportsbook 2 
             case 206: //Cockfighting
             case 50: //Cricket
+            case 211: // Allbet
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:

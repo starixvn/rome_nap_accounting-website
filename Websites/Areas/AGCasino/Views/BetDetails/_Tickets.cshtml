@@ -1,0 +1,114 @@
+﻿@using Fanex.BetList.Accounting.Models;
+@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Services;
+@using DNAide.Core;
+@using Fanex.BetList.Core.Factories;
+@using Fanex.BetList.Core.Builder;
+
+@{
+    TicketDetail betdetail = new TicketDetail();
+    int numberBeginning = (Model.PageIndex - 1) * Model.PageSize;
+    string[] renderResult = Render(ref numberBeginning);
+}
+
+@functions {
+    public string[] Render(ref int numberBeginning)
+    {
+        string[] result = new string[2];
+        foreach (var ticket in Model.TicketDetails)
+        {
+            result[1] += renderContent(ticket, numberBeginning);
+            numberBeginning++;
+        }
+
+        return result;
+    }
+}
+
+@helper renderContent(TicketDetail betdetail, int numberBeginning) {
+    <tr class="c">
+        <td>
+            <div class="c width30 table-cell">
+                @(numberBeginning + 1)
+            </div>
+        </td>
+        <td class="c column-transdate">
+            <div class="width120 table-cell">
+                @Html.Raw(betdetail.TransDateHtml)
+            </div>
+        </td>
+        <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
+            <div id="choice_right_@betdetail.Ticket.TransId" class="column-choice table-cell">
+                @Html.Raw(betdetail.ChoiceHtml)
+                @if (betdetail.Ticket.BetTypeId == 9 ||
+                    betdetail.Ticket.BetTypeId == 29)
+                {
+                    <div class="parlay_@betdetail.Ticket.TransId ">
+                    </div>
+                }
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_Odds.cshtml", betdetail)
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width50 table-cell">
+                @Html.Raw(betdetail.StakeHtml)
+            </div>
+        </td>
+        <td class="r">
+            <div class="column-winloss table-cell">
+                @Html.Partial("~/Views/BetList/_WinLoss.cshtml", betdetail)
+            </div>
+        </td>
+        <td class="c">
+            <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
+                @Html.Raw(betdetail.StatusHtml)
+                @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                }
+                @if (ip != "-")
+                {
+                    <br />
+                    <a onclick="viewBetListByIP('@betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betdetail.Ticket.IP');"
+                       href="javascript:;">@ip</a>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div id="comm_@betdetail.Ticket.TransId" class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_SuperPTCom.cshtml", betdetail)
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_MasterPTCom.cshtml", betdetail)
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
+            </div>
+        </td>
+    </tr>
+}
+
+@if (Model.TotalRows > 0)
+{
+    @MvcHtmlString.Create(renderResult[1])
+}
+else
+{ 
+    <tr class="c">
+        <td colspan="10" class="r column-no-data">
+            <div class="c b">
+                There is no data
+            </div>
+        </td>
+    </tr>
+}
+              

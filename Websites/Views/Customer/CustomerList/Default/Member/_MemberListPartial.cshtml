@@ -205,6 +205,12 @@
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 20, 'Cricket');">
                             Cricket</li>
                     }
+                    @if (!memberItem.IsHideAllBet)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 21, 'Allbet');">
+                            Allbet
+                        </li>
+                    }
                 </ul>
             </div>
         </td>

@@ -121,7 +121,6 @@ function ViewMixParlayResult(refno, matchid, bettype, betid) {
     //    window.top.frames["content"].frames["innerFrameViewCombinationMixParlayResult"];
 }
 
-
 function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
     var width = 945;
     //OpenPopup('../Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'System Parlay', width, 500, true, false, window, 0, null, null);
@@ -448,7 +447,6 @@ function GotoPage(num) {
     ViewMainReport2(num);
 }
 
-
 function BL_ChangeOption() {
     var rdTransID = obj('rdTransID').checked;
     var rdBettype = obj('rdBetType').checked;
@@ -503,7 +501,6 @@ function GetBetListFromCheckBet(transId, custId) {
     ViewMainReportByTransIDFromCheckBet(transId, custId);
 
 }
-
 
 function ExportBetListToExcel() {
     //try { parent.BlockUI(); } catch (e) { }
@@ -658,6 +655,34 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
         "RNG Casino Result",
         835,
         675,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function ViewAllBetResult(transId) {
+	var width = 945;
+	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
+	parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
+}
+
+function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
+	var params = $.param({
+		Refno: refno,
+		WinLossDate: winlossDate,
+		CustId: custId,
+		TransType: transType
+	});
+
+	parent.OpenNextPopup(
+        'AllBetDetails',
+        'AGCasinoBetList/BetDetails?' + params,
+        'AllBet - Detailed Bet list - ' + winlossDate.split(' ')[0],
+        1030,
+        600,
         true,
         false,
         window,

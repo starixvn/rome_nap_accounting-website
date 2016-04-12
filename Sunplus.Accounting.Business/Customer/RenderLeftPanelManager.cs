@@ -1,13 +1,13 @@
 namespace Sunplus.Accounting.Business.Customer
 {
-    using System.Data;
     using DNAide.Web;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities;
-
+    using System.Data;
     /// <summary>
     /// Render Left Panel Manager.
     /// </summary>
@@ -95,10 +95,26 @@ namespace Sunplus.Accounting.Business.Customer
             if (isSupport)
             {
                 var columnName = "Disable" + productName;
-                bool isDisabled = Converter.ToBool(custInfoRow[columnName], false);
+                bool isDisabled;
+                try
+                {
+                    isDisabled = Converter.ToBool(custInfoRow[columnName], false);
+                }
+                catch
+                {
+                    isDisabled = false;
+                }
 
                 columnName = "DisableDownlines" + productName;
-                bool disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
+                bool disableDownlines;
+                try
+                {
+                    disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
+                }
+                catch
+                {
+                    disableDownlines = false;
+                }
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(
@@ -139,12 +155,9 @@ namespace Sunplus.Accounting.Business.Customer
         {
             if (isSupport)
             {
-                var columnName = "IsDisabled";
-                bool isDisabled = Converter.ToBool(productInfo[columnName], false);
-
-                columnName = "IsDisabledDownline";
-                bool disableDownlines = Converter.ToBool(productInfo[columnName], false);
-
+                bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
+                bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
+                bool disableUplines = Utils.ToBoolean(productInfo["IsDisabledUpline"]);
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(
                     renderLeftPanelParameter,
@@ -154,7 +167,7 @@ namespace Sunplus.Accounting.Business.Customer
                     hasDownline,
                     true,
                     Converter.ToBool(isCustomerEnabled),
-                    disabledProductParent,
+                    disableUplines,
                     disableDownlines,
                     productName,
                     title,

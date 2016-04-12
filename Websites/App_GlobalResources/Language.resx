@@ -2485,4 +2485,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableCricket" xml:space="preserve">
     <value>Enable Cricket</value>
   </data>
+  <data name="enableAllBet" xml:space="preserve">
+    <value>Enable Allbet</value>
+  </data>
+  <data name="lblDisabledAllBetUpline" xml:space="preserve">
+    <value>AllBet status has been disabled at upline</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>AllBet has been disabled at upline</value>
+  </data>
 </root>
