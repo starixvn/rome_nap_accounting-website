@@ -320,6 +320,15 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["IsHideAllbetAgent"] = value; }
         }
 
+        public static bool HideVoidbridgeMaster {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideVoidbridgeMaster"], true); }
+            set { HttpContext.Current.Session["IsHideVoidbridgeMaster"] = value; }
+        }
+        public static bool HideVoidbridgeAgent {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideVoidbridgeAgent"], true); }
+            set { HttpContext.Current.Session["IsHideVoidbridgeAgent"] = value; }
+        }
+
         public static void AddSession(HttpSessionState sessionState, string key, object value)
         {
             sessionState[key] = value;

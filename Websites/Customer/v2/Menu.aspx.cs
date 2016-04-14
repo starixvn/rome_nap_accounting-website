@@ -19,14 +19,15 @@ public partial class Others_Menu : System.Web.UI.Page
         sportsbook2 = 16,
         cockfighting = 19,
         cricket = 20,
-        allbet = 21
+        allbet = 21,
+        voidbridge = 22
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet;
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -45,6 +46,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
         hideAllbet = (!CastAide.AsBoolean(db.Outputs["allowedallbet"]) && roleid < 4) || !WebSettings.IsShowAllBet;
+        hideVoidbridge = (!CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) && roleid < 4) || !WebSettings.IsShowAllBet;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -126,6 +128,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("cockFighting", "{cockFightingLinkSetting}", creditDCSLink + (int)products.cockfighting, hideCockfighting);
         this.RenderSettingTab("cricket", "{cricketLinkSetting}", creditDCSLink + (int)products.cricket, hideCricket);
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", creditDCSLink + (int)products.allbet, hideAllbet);
+        this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", creditDCSLink + (int)products.voidbridge, hideVoidbridge);
 
         this.sMenu.Text = this.tplMenu;
     }

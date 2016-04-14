@@ -211,6 +211,12 @@
                             Allbet
                         </li>
                     }
+                    @if (!memberItem.IsHideVoidbridge)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 22, 'Voidbridge');">
+                            Voidbridge
+                        </li>
+                    }
                 </ul>
             </div>
         </td>

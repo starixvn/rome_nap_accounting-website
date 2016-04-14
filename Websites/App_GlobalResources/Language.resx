@@ -2491,7 +2491,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblDisabledAllBetUpline" xml:space="preserve">
     <value>AllBet status has been disabled at upline</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>AllBet has been disabled at upline</value>
+  <data name="lblDisabledVoidbridgeUpline" xml:space="preserve">
+    <value>Voidbridge has been disabled at upline</value>
+  </data>
+  <data name="enableVoidbridge" xml:space="preserve">
+    <value>Enable Voidbridge</value>
   </data>
 </root>

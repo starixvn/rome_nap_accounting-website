@@ -28,6 +28,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowAllBetForCredit { get; set; }
 
+        public bool IsShowVoidbridge { get; set; }
+
         public bool IsShowAutoSuspend { get; set; }
 
         public int ParentId { get; set; }

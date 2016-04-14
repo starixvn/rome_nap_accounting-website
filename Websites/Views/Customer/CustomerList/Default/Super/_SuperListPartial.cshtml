@@ -208,6 +208,10 @@
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'AllBet');">Allbet</li>
                     }
+                    @if (!superItem.IsHideVoidbridge)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'Voidbridge');">Voidbridge</li>
+                    }
                 </ul>
             </div>
         </td>
