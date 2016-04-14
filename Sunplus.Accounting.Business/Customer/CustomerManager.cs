@@ -400,8 +400,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
                                     downlinename = "Member";
-                                    AppSession.HideAllbetAgent = isHideAllBet;
-                                    AppSession.HideVoidbridgeAgent = isHideVoidbridge;
+                                    AppSession.HideAllbetAgent = isHideAllBet || !isSyncAllbetUpline;
+                                    AppSession.HideVoidbridgeAgent = isHideVoidbridge || !isSyncVoidbridgeUpline;
                                     break;
 
                                 case 3: // master
@@ -416,8 +416,8 @@ namespace Sunplus.Accounting.Business.Customer
                                         (Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
                                     downlinename = "Agent";
-                                    AppSession.HideAllbetMaster = isHideAllBet;
-                                    AppSession.HideVoidbridgeMaster = isHideVoidbridge;
+                                    AppSession.HideAllbetMaster = isHideAllBet || !isSyncAllbetUpline;
+                                    AppSession.HideVoidbridgeMaster = isHideVoidbridge || !isSyncVoidbridgeUpline;
                                     break;
 
                                 case 4: // super
@@ -1288,12 +1288,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (hideCheckBoxAllbet && isHideAllBet)
+                                if ((hideCheckBoxAllbet && isHideAllBet) || !isSyncAllbetUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
 
-                                if (hideCheckBoxVoidbridge && isHideVoidbridge)
+                                if ((hideCheckBoxVoidbridge && isHideVoidbridge) || !isSyncVoidbridgeUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
                                 }
