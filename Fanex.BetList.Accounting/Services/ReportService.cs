@@ -177,6 +177,10 @@ namespace Fanex.BetList.Accounting.Services
             return 2401 <= betTypeId && betTypeId <= 2499;
         }
 
+        public static bool IsVoidbridge(int betTypeId)
+        {
+            return 4001 <= betTypeId && betTypeId <= 7999;
+        }
         #endregion StaticMethods
     }
 }

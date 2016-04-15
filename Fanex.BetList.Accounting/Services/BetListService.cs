@@ -1462,6 +1462,10 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(SportContants.AllBet);
             }
+            else if (ReportService.IsVoidbridge(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.Voidbridge);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

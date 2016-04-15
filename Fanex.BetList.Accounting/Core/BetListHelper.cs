@@ -381,6 +381,11 @@ namespace Fanex.BetList.Accounting.Core
                                 string.Empty : 
                                 "ViewAllBetResult('" + ticketDetail.Ticket.BetTypeId + "')";
                             break;
+                        case SportContants.Voidbridge:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewVoidbridgeResult('" + ticketDetail.Ticket.BetTypeId + "')";
+                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {

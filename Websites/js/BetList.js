@@ -613,6 +613,27 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
         null);
 }
 
+function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
+    var params = $.param({
+        TransId: transId,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "VoidbridgeDetails",
+        'VoidbridgeBetList/BetDetails?' + params,
+        "Voidbridge Details",
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
     var params = $.param({
         Refno: refNo,
@@ -667,6 +688,12 @@ function ViewAllBetResult(transId) {
 	var width = 945;
 	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
 	parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
+}
+
+function ViewVoidbridgeResult(transId) {
+    var width = 945;
+    var url = 'Report/ViewVoidbridgeResult.aspx?transId=' + transId;
+    parent.OpenNextPopup("ViewVoidbridgeResult", url, 'Voidbridge Result', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {

@@ -43,8 +43,8 @@
       <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.4\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.1-beta\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
+    <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.2\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -140,6 +140,10 @@
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference">
       <HintPath>..\Dependency\Fanex\PTSettingInfo\Fanex.PTSetting.BettypeReference.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.0-beta-2\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap">
       <HintPath>..\Dependency\FanexOneyed.RobotTrap.dll</HintPath>

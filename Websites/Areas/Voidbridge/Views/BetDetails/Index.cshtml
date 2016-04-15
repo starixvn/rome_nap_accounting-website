@@ -1,0 +1,259 @@
+﻿@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Services;
+@using DNAide.Core;
+@using Fanex.BetList.Core.Factories;
+@using Fanex.BetList.Core.Builder;
+@using Fanex.Tarus.BetList.Helper;
+@using Fanex.Tarus.BetList.Resources;
+@using Fanex.Voidbridge.BetDetail.Models;
+@{
+    TicketDetail betdetail = new TicketDetail();
+    int numberBeginning = 1;
+
+    string[] renderResult = Render(ref numberBeginning);
+}
+@functions {
+    public string[] Render(ref int numberBeginning)
+    {
+        BetListHelper betlistHelper = new BetListHelper();
+        string[] result = new string[2];
+        foreach (var ticket in Model)
+        {
+            result[1] += renderContent(ticket, numberBeginning, betlistHelper);
+            numberBeginning++;
+        }
+
+        return result;
+    }
+}
+@helper renderContent(TicketDetail betdetail, int numberBeginning, BetListHelper betlistHelper)
+{
+string statusTemp = betdetail.Ticket.Status.ToLower();
+decimal winlost = betdetail.Ticket.Winlost;
+decimal playerComm = betdetail.Ticket.PlayerComm;
+var ip = Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+
+decimal superPT = betdetail.Ticket.SuperPositionTaking;
+decimal superPT2 = betdetail.SuperPositionTaking2;
+decimal superDiscount = betdetail.Ticket.SuperDiscount;
+decimal superComm = betdetail.Ticket.SuperComm;
+decimal superWinlost = betdetail.Ticket.SuperWinlost;
+string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
+
+decimal masterPT = betdetail.Ticket.MasterPositionTaking;
+decimal masterPT2 = betdetail.MasterPositionTaking2;
+decimal masterDiscount = betdetail.Ticket.MasterDiscount;
+decimal masterComm = betdetail.Ticket.AgentComm;
+decimal masterWinlost = betdetail.Ticket.MasterWinlost;
+
+decimal agentPT = betdetail.Ticket.AgentPositionTaking;
+decimal agentPT2 = betdetail.AgentPositionTaking2;
+decimal agentDiscount = betdetail.Ticket.AgentDiscount;
+decimal agentComm = betdetail.Ticket.Comm;
+decimal agentWinlost = betdetail.Ticket.AgentWinlost;
+
+var isShowWinLoss = statusTemp != "running";
+    <tr class="c">
+        <td>
+            <div class="c width30 table-cell">
+                @numberBeginning
+            </div>
+        </td>
+        <td class="c column-transdate">
+            <div class="width120 table-cell">
+                @Html.Raw(betdetail.TransDateHtml)
+            </div>
+        </td>
+        <td id="td_right_@betdetail.Ticket.TransId" class='r bl_evt'>
+            <div id="choice_right_@betdetail.Ticket.TransId" class="column-choice table-cell">
+                @Html.Raw(betdetail.ChoiceHtml)
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width60 table-cell">
+                @Html.Raw(betdetail.OddHtml)
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width50 table-cell">
+                @Html.Raw(betdetail.StakeHtml)
+            </div>
+        </td>
+        <td class="r">
+            <div class="column-winloss table-cell">
+                @if (statusTemp == "running" || statusTemp == "waiting")
+                {
+                    <div class="margin-top-5">
+                        -
+                    </div>
+                }
+                else if (statusTemp == "void" || statusTemp == "reject")
+                {
+                    <div class="margin-top-5">
+                        0.00
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
+                            @winlost.Format(2)
+                        </div>
+                        <div class="margin-top-5">
+                            @playerComm.Format(2)
+                        </div>
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="c">
+            <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
+                @Html.Raw(betdetail.StatusHtml)
+                @if (ip != "-")
+                {
+                    <br />
+                    <a onclick="viewBetListByIP('@betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betdetail.Ticket.IP');"
+                       href="">@ip</a>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div id="comm_@betdetail.Ticket.TransId" class="width60 table-cell">
+                <div class="@betlistHelper.IsNegative(superPT)">
+                    <span>@betlistHelper.PercentFormat(superPT)</span>
+                </div>
+
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
+                        @winlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    <span>@doubleCom @betlistHelper.PercentFormat(superDiscount)</span>
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @superComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                <div class="@betlistHelper.IsNegative(masterPT)">
+                    <span>@betlistHelper.PercentFormat(masterPT)</span>
+                </div>
+
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
+                        @winlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    <span>@doubleCom @betlistHelper.PercentFormat(masterDiscount)</span>
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @masterComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                <div class="@betlistHelper.IsNegative(agentPT)">
+                    <span>@betlistHelper.PercentFormat(agentPT)</span>
+                </div>
+
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
+                        @agentWinlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    <span>@doubleCom @betlistHelper.PercentFormat(agentDiscount)</span>
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @agentComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+    </tr>
+}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Areas/Voidbridge/Views/BetDetails/Styles/BetDetails.less")" />
+    <title>@BetListResources.Product_6</title>
+</head>
+<body>
+    <div id="betlist-details" class="freegrid display-none">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="tblContent" class="grid-fixed-table col_header_content ">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                    <tbody>
+                        @if (Model.Count > 0)
+                        {
+                            betdetail = Model[0];
+                            @MvcHtmlString.Create(renderResult[1])
+                        }
+                        else
+                        {
+                            <tr class="c">
+                                <td colspan="10" class="r column-no-data">
+                                    <div class="c b">
+                                        @BetListResources.ThereIsNoData
+                                    </div>
+                                </td>
+                            </tr>
+                            betdetail.Ticket = new Ticket { CustId = 0 };
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/gridscroller.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="~/js/BetList.js"></script>
+    <script type="text/javascript" src="~/Areas/Voidbridge/Views/BetDetails/Scripts/BetDetails.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        $(document).ready(function () {
+            betDetailsManager.initPage();
+        });
+    </script>
+</body>
+</html>

@@ -73,5 +73,6 @@ namespace Fanex.BetList.Accounting.Constants
         public const int RNG_Mobile = 210;
 
         public const int AllBet = 211;
+        public const int Voidbridge = 212;
     }
 }
