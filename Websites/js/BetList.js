@@ -684,6 +684,31 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
         null);
 }
 
+function ViewVoidbridgeBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
+    var params = $.param({
+        Refno: refNo,
+        RoleId: 0,
+        MatchId: matchId,
+        Race: race,
+        BetType: betType,
+        SportType: sportType,
+        WinLostDate: winlostDate
+    });
+
+    parent.OpenNextPopup(
+        "VoidbridgeResult",
+        'VoidbridgeBetList/GetHandHistory?' + params,
+        "Voidbridge Result",
+        835,
+        675,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewAllBetResult(transId) {
 	var width = 945;
 	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
