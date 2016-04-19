@@ -10,9 +10,11 @@ function EnableStatusController($scope) {
     $scope.entities = model.entities;
     $scope.isDisabledAll = true;
 
+    $scope.checkSyncProducts = [21, 22];
+
     var length = $scope.entities.length;
     for (var i = 0; i < length; i++) {
-        if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) || ($scope.entities[i].synced && $scope.context.product == 21)) {
+        if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) || ($scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1)) {
             $scope.isDisabledAll = false;
             break;
         }        
