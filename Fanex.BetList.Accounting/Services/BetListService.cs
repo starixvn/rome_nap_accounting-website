@@ -10,7 +10,6 @@
 namespace Fanex.BetList.Accounting.Services
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
@@ -194,6 +193,8 @@ namespace Fanex.BetList.Accounting.Services
                     SportTypeId = Converter.ToInt(r["Sporttype"]),
                     TransId = Converter.To<long>(r["TransID"]),
                     BetTypeId = Converter.ToInt(r["Bettype"]),
+                    Stake = Converter.ToDecimal(r["Stake"]),
+                    Currency = Converter.ToString2(r["Currency"]),
                     Handicap1 = Converter.ToDecimal(r["hdp1"]),
                     Handicap2 = Converter.ToDecimal(r["hdp2"]),
                     Odds = Converter.ToDecimal(r["Odds"]),
@@ -790,7 +791,7 @@ namespace Fanex.BetList.Accounting.Services
                 ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 SystemParlayModel systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
-                StringBuilder content = new StringBuilder();
+
                 BetListHelper betListHelper = new BetListHelper();
                 if (systempParlayModel.TicketsDetailList != null &&
                     systempParlayModel.TicketsDetailList.Count > 0)
@@ -798,6 +799,7 @@ namespace Fanex.BetList.Accounting.Services
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+
                     foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -809,6 +811,24 @@ namespace Fanex.BetList.Accounting.Services
 
                     if (systempParlayModel.SystemParlayChoice != null)
                     {
+                        // Combo Parlay.
+                        var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
+                        ITicket firstTicket = firstTicketDetail.Ticket;
+                        if (!string.IsNullOrEmpty(firstTicket.BetCheck))
+                        {
+                            var combinationTypeComboNames = GetCombinationTypeComboNames(
+                                firstTicket.BetTeam,
+                                firstTicket.BetCheck,
+                                firstTicket.Handicap1,
+                                firstTicket.Handicap2,
+                                systempParlayModel.SystemParlayChoice);
+
+                            firstTicketDetail.ChoiceHtml += string.Format(
+                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div>",
+                                string.Join(string.Empty, combinationTypeComboNames)
+                            );
+                        }
+
                         BetListHTMLFactory factoryParlayDetaily = new BetListHTMLFactory();
                         BetListHTMLBuilder builderParlayDetail = factoryParlayDetaily.CreateBuilder();
                         int totalItem = systempParlayModel.SystemParlayChoice.Count;
@@ -821,7 +841,8 @@ namespace Fanex.BetList.Accounting.Services
                                 (totalItem > 0 ?
                                 "</div><div class=\"line\"></div>" :
                                 "</div>");
-                            systempParlayModel.TicketsDetailList[0].ChoiceHtml += betDetail.ChoiceHtml;
+
+                            firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
                         }
                     }
 
@@ -1414,6 +1435,41 @@ namespace Fanex.BetList.Accounting.Services
             }
 
             return false;
+        }
+
+        public string[] GetCombinationTypeComboNames(
+            string betTeam, 
+            string betCheck, 
+            decimal hdp1, 
+            decimal hdp2,
+            IList<TicketDetail> ticketDetails)
+        {
+            var combinationTypeCombo = Fanex.Tarus.Infrastructure.Caching.CacheRef.GetCombinationTypeCombo(
+                betTeam, betCheck, (int)hdp1, (int)hdp2);
+
+            if (combinationTypeCombo == null)
+            {
+                return new string[0];
+            }
+
+            var combinationTypeComboTickets = ticketDetails
+                .Where(t => t.Ticket.Stake > 0)
+                .OrderBy(t => t.Ticket.MatchId)
+                .ToList();
+
+            TicketDetail ticketDetail;
+            for (int i = 0, max = combinationTypeCombo.Length; i < max; i++)
+            {
+                ticketDetail = hdp1 == 0 ? combinationTypeComboTickets[0] : combinationTypeComboTickets[i];
+
+                combinationTypeCombo[i] = string.Format(
+                    "<div>{0} x {1} <span class=\"unit-stake\">{2}</span></div>",
+                    combinationTypeCombo[i],
+                    ticketDetail.Ticket.Currency,
+                    ticketDetail.Ticket.Stake.ToString("N0"));
+            }
+
+            return combinationTypeCombo;
         }
 
         private bool IsShowOddsWithChoice(int betTypeId)

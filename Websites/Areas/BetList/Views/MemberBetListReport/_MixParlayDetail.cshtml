@@ -1,8 +1,17 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @model IList<TicketDetail>
+@{
+  var combinationTypeComboNames = (string[])ViewBag.CombinationTypeComboNames;
+}
+
 <div>
-    @foreach (TicketDetail ticketdetail in Model)
-    {
-        @Html.Raw(ticketdetail.ChoiceHtml)
-    }
+  @foreach (string name in combinationTypeComboNames)
+  {
+    @Html.Raw(name)
+  }
+  
+  @foreach (TicketDetail ticketdetail in Model)
+  {
+    @Html.Raw(ticketdetail.ChoiceHtml)
+  }
 </div>

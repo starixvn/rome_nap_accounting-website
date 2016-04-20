@@ -342,7 +342,10 @@ namespace Fanex.BetList.Accounting.Repositories
                                 SuperComm = Converter.ToDecimal(r["scomm"]),
                                 AgentComm = Converter.ToDecimal(r["acomm"]),
                                 Comm = Converter.ToDecimal(r["comm"]),
-                                BetTypeId = 29
+                                BetTypeId = 29,
+                                Handicap1 = Converter.ToDecimal(r["hdp1"]),
+                                Handicap2 = Converter.ToDecimal(r["hdp2"]),
+                                BetCheck = Converter.ToString2(r["BetCheck"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -376,7 +379,9 @@ namespace Fanex.BetList.Accounting.Repositories
                                 MatchCode = Converter.ToString2(r["matchcode"]),
                                 MatchId = Converter.To<int>(r["matchid"]),
                                 BetCheck = Converter.ToString2(r["BetCheck"]),
-                                TransDesc = Converter.ToString2(r["transdesc"])
+                                TransDesc = Converter.ToString2(r["transdesc"]),
+                                Stake = Converter.ToDecimal(r["Stake"]),
+                                Currency = Converter.ToString2(r["Currency"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

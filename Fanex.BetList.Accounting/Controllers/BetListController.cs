@@ -23,18 +23,18 @@
             this._resultService = new ResultService();
         }
 
-        /// <summary>
-        /// Gets the mix parlay detail.
-        /// </summary>
-        /// <param name="refno">The ref no.</param>
-        /// <returns>The mix parlay detail.</returns>
-        /// **********
-        public ActionResult GetMixParlayDetail(string refno)
+        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam)
         {
-            var result = _betListService.GetMixParlayTickets(new MixParlayDetailCriteria
-            {
-                RefNo = refno
-            });
+            var result = _betListService.GetMixParlayTickets(
+                new MixParlayDetailCriteria
+                {
+                    TransId = transId,
+                    RefNo = refNo
+                });
+
+            ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
+                new string[0] :
+                _betListService.GetCombinationTypeComboNames(betTeam, betCheck, hdp1.Value, hdp2.Value, result);
 
             return PartialView("~/Areas/BetList/Views/MemberBetListReport/_MixParlayDetail.cshtml", result);
         }
@@ -51,9 +51,9 @@
             if (BetListHelper.IsNumeric(refno.Trim()))
             {
                 result = _betListService.GetBetListByRefNoTickets(new BetListByRefNoCriteria
-               {
-                   TransId = Converter.To<long>(refno)
-               });
+                {
+                    TransId = Converter.To<long>(refno)
+                });
             }
 
             Hashtable paramHastable = new Hashtable();

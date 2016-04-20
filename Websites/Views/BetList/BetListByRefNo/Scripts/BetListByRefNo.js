@@ -24,6 +24,7 @@
                 if ($('div.combinationLink')) {
                     var divReplace = '<span style="color: #0066CC;">' + $('div.combinationLink a:first').html() + '</span>';
                     $('div.combinationLink a:first').replaceWith(divReplace);
+                    $('div.combinationLink div.offer-name-list').addClass("hidden");
                 }
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     var divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';

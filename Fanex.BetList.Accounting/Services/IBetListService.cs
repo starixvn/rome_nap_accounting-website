@@ -11,10 +11,8 @@ namespace Fanex.BetList.Accounting.Services
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -75,5 +73,7 @@ namespace Fanex.BetList.Accounting.Services
         int GetCustIDByUsername(string username);
 
         bool IsU3SpecialCustomers(int custId);
+
+        string[] GetCombinationTypeComboNames(string betTeam, string betCheck, decimal hdp1, decimal hdp2, IList<TicketDetail> ticketDetails);
     }
 }
