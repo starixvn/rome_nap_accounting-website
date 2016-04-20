@@ -17,10 +17,27 @@ function EnableStatusController($scope) {
         if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) || ($scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1)) {
             $scope.isDisabledAll = false;
             break;
-        }        
+        }
     }
 
     $scope.Init = function () {
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+                if (antiXSRFToken.length > 0) {
+                    xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+                }
+            }
+        });
+
+        // Check hidden status of product
+        var length = $scope.entities.length;
+        for (var i = 0; i < length; i++) {
+            $scope.entities[i].hide =
+                ($scope.entities[i].hide && $($scope.checkSyncProducts).index($scope.context.product) == -1) ||
+                (!$scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1);
+        }
+        
         if ($scope.context.newMode) {
             $('#submit').addClass('disabledButton');
             $('#submit').attr('disabled', true);
