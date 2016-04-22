@@ -226,7 +226,7 @@ function showCombMPDetail(tranid, date, refno, betid, matchid) {
 		title += combinationOfferNameContainer.html();
 	}
 
-	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid)
+	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
 }
 
 function showMP(transid, refno) {
@@ -278,6 +278,41 @@ function showMP(transid, refno) {
 
 function showCombMP(transid, custid, refno) {
     showMP(transid, refno);
+}
+
+function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
+	var divChoiceRight = $("#choice_right_" + transId);
+	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
+	var divParlay = divChoiceRight.find(".parlay_" + transId);
+
+	if ($.trim(divParlay.html()) === "") {
+		try { parent.BlockUI(); } catch (e) { }
+		var params = [
+			"transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+		];
+
+		$.ajax({
+			type: "POST",
+			url: window.rootUrl + "BetList/GetMixParlayDetail",
+			data: params.join(""),
+			success: function (result) {
+				divParlay.html(result);
+				divCombinationOfferName.addClass("hide");
+				$("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+			},
+			error: function () {
+				try { parent.jQuery.unblockUI(); } catch (e) { }
+			},
+			complete: function () {
+				try { parent.jQuery.unblockUI(); } catch (e) { }
+			}
+		});
+	}
+	else {
+		divParlay.toggleClass("hide");
+		divCombinationOfferName.toggleClass("hide");
+		$("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+	}
 }
 
 head.ready(function (event) {
