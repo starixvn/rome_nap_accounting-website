@@ -69,7 +69,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId);
+                IsColossusBetType(ticket.BetTypeId) ||
                 IsCockFightingBetType(ticket.BetTypeId);
         }
 
@@ -254,13 +254,7 @@ namespace Fanex.BetList.Accounting.Core
 
             if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck))
             {
-                var viewBrokenGame = "ViewVoidbridgeBrokenGame(" +
-                    ticketDetail.Ticket.MatchId + "," +
-                    (string.IsNullOrEmpty(ticketDetail.Ticket.Race) ? "0" : ticketDetail.Ticket.Race) + "," +
-                    ticketDetail.Ticket.BetTypeId + "," +
-                    ticketDetail.Ticket.SportTypeId + "," +
-                    "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
-                    "'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "')";
+                var viewBrokenGame = "ViewVoidbridgeBrokenGame(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                 statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
             }
             else
@@ -442,7 +436,7 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.Voidbridge:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
-                                "ViewVoidbridgeResult('" + ticketDetail.Ticket.BetTypeId + "')";
+                                "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)

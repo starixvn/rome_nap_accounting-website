@@ -684,41 +684,29 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
         null);
 }
 
-function ViewVoidbridgeBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
+function ViewVoidbridgeBrokenGame(custId, betCheck) {
     var params = $.param({
-        Refno: refNo,
-        RoleId: 0,
-        MatchId: matchId,
-        Race: race,
-        BetType: betType,
-        SportType: sportType,
-        WinLostDate: winlostDate
+        custId: custId,
+        betCheck: betCheck
     });
 
-    parent.OpenNextPopup(
-        "VoidbridgeResult",
-        'VoidbridgeBetList/GetHandHistory?' + params,
-        "Voidbridge Result",
-        835,
-        675,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
+    var url = '../Report/ViewVoidbridgeResult.aspx?';
+    $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Voidbridge Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+    });
+}
+
+function ViewVoidbridgeResult(custId, betCheck) {
+    var url = '../Report/ViewVoidbridgeResult.aspx?custId=' + custId + '&betCheck=' + betCheck;
+    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Voidbridge Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+    });
 }
 
 function ViewAllBetResult(transId) {
-	var width = 945;
-	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
-	parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
-}
-
-function ViewVoidbridgeResult(transId) {
     var width = 945;
-    var url = 'Report/ViewVoidbridgeResult.aspx?transId=' + transId;
-    parent.OpenNextPopup("ViewVoidbridgeResult", url, 'Voidbridge Result', width, 500, true, false, window, 0, null, null);
+    var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
+    parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {

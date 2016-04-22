@@ -307,7 +307,13 @@ namespace Sunplus.Accounting.Core.Common
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsFinishUMTime"]); }
             set { HttpContext.Current.Session["IsFinishUMTime"] = value; }
         }
-        
+
+        public static bool HideAllbetSuper
+        {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetSuper"], true); }
+            set { HttpContext.Current.Session["IsHideAllbetSuper"] = value; }
+        }
+
         public static bool HideAllbetMaster
         {
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideAllbetMaster"], true); }
@@ -320,10 +326,17 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["IsHideAllbetAgent"] = value; }
         }
 
+        public static bool HideVoidbridgeSuper
+        {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideVoidbridgeSuper"], true); }
+            set { HttpContext.Current.Session["IsHideVoidbridgeSuper"] = value; }
+        }
+
         public static bool HideVoidbridgeMaster {
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideVoidbridgeMaster"], true); }
             set { HttpContext.Current.Session["IsHideVoidbridgeMaster"] = value; }
         }
+
         public static bool HideVoidbridgeAgent {
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsHideVoidbridgeAgent"], true); }
             set { HttpContext.Current.Session["IsHideVoidbridgeAgent"] = value; }

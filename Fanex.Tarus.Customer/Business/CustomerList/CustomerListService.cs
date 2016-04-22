@@ -144,7 +144,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper)
+        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper, bool hideAllbetUpline = false, bool hideVoidbridgeUpline = false)
         {
             try
             {
@@ -242,8 +242,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
                         masterItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         masterItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !masterItem.IsIMBCCustomers;
-                        masterItem.IsHideAllBet = !WebSettings.IsShowAllBet || !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || CastAide.AsBoolean(row["HideAllbet"]);
-                        masterItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge || !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || CastAide.AsBoolean(row["HideVoidbridge"]);
+                        masterItem.IsHideAllBet = hideAllbetUpline ? true : !WebSettings.IsShowAllBet || !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || CastAide.AsBoolean(row["HideAllbet"]);
+                        masterItem.IsHideVoidbridge = hideVoidbridgeUpline ? true : !WebSettings.IsShowVoidbridge || !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || CastAide.AsBoolean(row["HideVoidbridge"]);
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);

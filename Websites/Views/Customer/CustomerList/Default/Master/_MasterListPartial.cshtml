@@ -235,13 +235,13 @@
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 20, 'Cricket');">
                             Cricket</li>
                     }
-                    @if (!masterItem.IsHideAllBet)
+                    @if (Request.QueryString["hideAllbetUpline"] == "false" || !masterItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 21, 'Allbet');">
                             Allbet
                         </li>
                     }
-                    @if (!masterItem.IsHideVoidbridge)
+                    @if (Request.QueryString["hideVoidbridgeUpline"] == "false" || !masterItem.IsHideVoidbridge)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 22, 'Voidbridge');">
                             Voidbridge

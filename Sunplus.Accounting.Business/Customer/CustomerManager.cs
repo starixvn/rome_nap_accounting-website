@@ -311,11 +311,13 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideCricketSettingLink = true;
 
                             bool isHideAllBet = roleId < 4;
+                            bool isHideAllbetSuper = false;
                             bool isSyncAllbet = true;
                             bool isSyncAllbetUpline = true;
                             bool isSyncAllbetDownline = true;
 
                             bool isHideVoidbridge = roleId < 4;
+                            bool isHideVoidbridgeSuper = false;
                             bool isSyncVoidbridge = true;
                             bool isSyncVoidbridgeUpline = true;
                             bool isSyncVoidbridgeDownline = true;
@@ -338,6 +340,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
                                         case "21":
                                             isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;
+                                            isHideAllbetSuper = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId == 4) || !WebSettings.IsShowAllBet || isDeposit;
                                             isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             isSyncAllbetDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
@@ -345,6 +348,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                         case "22":
                                             isHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowVoidbridge;
+                                            isHideVoidbridgeSuper = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId == 4) || !WebSettings.IsShowVoidbridge;
                                             isSyncVoidbridge = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             isSyncVoidbridgeDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
@@ -434,6 +438,8 @@ namespace Sunplus.Accounting.Business.Customer
                                         + (Convert.IsDBNull(row3["yesterday_masterCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_masterCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["superUsedCredit"]);
                                     downlinename = "Master";
+                                    AppSession.HideAllbetSuper = isHideAllbetSuper;
+                                    AppSession.HideVoidbridgeSuper = isHideVoidbridgeSuper;
                                     break;
 
                                 default:
@@ -895,8 +901,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 }
 
-                                var hideCheckBoxAllbet = roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : true;
-                                var hideCheckBoxVoidbridge = roleId == 2 ? AppSession.HideVoidbridgeMaster : roleId == 1 ? AppSession.HideVoidbridgeAgent : true;
+                                var hideCheckBoxAllbet = roleId == 3 ? AppSession.HideAllbetSuper : roleId == 2 ? AppSession.HideAllbetMaster : roleId == 1 ? AppSession.HideAllbetAgent : true;
+                                var hideCheckBoxVoidbridge = roleId == 3 ? AppSession.HideVoidbridgeSuper : roleId == 2 ? AppSession.HideVoidbridgeMaster : roleId == 1 ? AppSession.HideVoidbridgeAgent : true;
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
@@ -2907,7 +2913,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", custName);
                 TemplateHandler.Assign(ref tplTransLink, "{custid}", custId.ToString());
-                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + (roleid == 3 ? AppSession.HideAllbetMaster.ToString().ToLower() : AppSession.HideAllbetAgent.ToString().ToLower()) + "&hideVoidbridgeUpline=" + (roleid == 3 ? AppSession.HideVoidbridgeMaster.ToString().ToLower() : AppSession.HideVoidbridgeAgent.ToString().ToLower()));
+                TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL + "&hideAllbetUpline=" + (roleid == 4 ? AppSession.HideAllbetSuper.ToString().ToLower() : roleid == 3 ? AppSession.HideAllbetMaster.ToString().ToLower() : AppSession.HideAllbetAgent.ToString().ToLower()) + "&hideVoidbridgeUpline=" + (roleid == 4 ? AppSession.HideVoidbridgeSuper.ToString().ToLower() : roleid == 3 ? AppSession.HideVoidbridgeMaster.ToString().ToLower() : AppSession.HideVoidbridgeAgent.ToString().ToLower()));
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
                 TemplateHandler.Assign(ref htmlCustInfo, "{TransLinksBox}", tplTransLink);
