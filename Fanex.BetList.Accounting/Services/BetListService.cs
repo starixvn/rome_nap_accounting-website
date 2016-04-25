@@ -825,7 +825,7 @@ namespace Fanex.BetList.Accounting.Services
 
                             firstTicketDetail.ChoiceHtml += string.Format(
                                 "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div>",
-                                string.Join(string.Empty, combinationTypeComboNames)
+                                combinationTypeComboNames
                             );
                         }
 
@@ -1437,7 +1437,7 @@ namespace Fanex.BetList.Accounting.Services
             return false;
         }
 
-        public string[] GetCombinationTypeComboNames(
+        public string GetCombinationTypeComboNames(
             string betTeam, 
             string betCheck, 
             decimal hdp1, 
@@ -1447,9 +1447,9 @@ namespace Fanex.BetList.Accounting.Services
             var combinationTypeCombo = Fanex.Tarus.Infrastructure.Caching.CacheRef.GetCombinationTypeCombo(
                 betTeam, betCheck, (int)hdp1, (int)hdp2);
 
-            if (combinationTypeCombo == null)
+            if (combinationTypeCombo == null || combinationTypeCombo.Length == 0)
             {
-                return new string[0];
+                return string.Empty;
             }
 
             var combinationTypeComboTickets = ticketDetails
@@ -1463,13 +1463,13 @@ namespace Fanex.BetList.Accounting.Services
                 ticketDetail = hdp1 == 0 ? combinationTypeComboTickets[0] : combinationTypeComboTickets[i];
 
                 combinationTypeCombo[i] = string.Format(
-                    "<div>{0} x {1} <span class=\"unit-stake\">{2}</span></div>",
+                    "<div>{0} x <span class=\"unit-stake\">{1} {2}</span></div>",
                     combinationTypeCombo[i],
                     ticketDetail.Ticket.Currency,
                     ticketDetail.Ticket.Stake.ToString("N0"));
             }
 
-            return combinationTypeCombo;
+            return "<div class=\"offer-name-list\">" + string.Join(string.Empty, combinationTypeCombo) + "</div>";
         }
 
         private bool IsShowOddsWithChoice(int betTypeId)

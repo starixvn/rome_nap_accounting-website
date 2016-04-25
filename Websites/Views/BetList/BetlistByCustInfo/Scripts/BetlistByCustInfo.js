@@ -321,7 +321,7 @@ function showCombMPDetail(tranid, date, refno, betid, matchid) {
 		title += combinationOfferNameContainer.html();
 	}
 
-	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
+	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid)
 }
 
 function showDetail(id) {
