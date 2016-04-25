@@ -267,13 +267,7 @@ namespace Fanex.BetList.Accounting.Core
             {
                 resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
                      string.Empty :
-                     "ViewVoidbridgeResult(" +
-                     ticketDetail.Ticket.MatchId + "," +
-                     (string.IsNullOrEmpty(ticketDetail.Ticket.Race) ? "0" : ticketDetail.Ticket.Race) + "," +
-                     ticketDetail.Ticket.BetTypeId + "," +
-                     ticketDetail.Ticket.SportTypeId + "," +
-                     "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
-                     "\'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\')";
+                     "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", ' " + ticketDetail.Ticket.BetCheck + "')";
             }
 
             var resultLink1 = string.IsNullOrEmpty(resultLink) ?
