@@ -149,7 +149,7 @@
   </Function>
   <Function Name="Virtual Rate">
     <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_GetSportBetTypeReferences" SpName="Acc_CustomerSelReferenceVirtualRateSetting" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer Credit">

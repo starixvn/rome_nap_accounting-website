@@ -274,7 +274,7 @@
     <value>Username</value>
   </data>
   <data name="VirtualRate_UpdateConfirm" xml:space="preserve">
-    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?</value>
+    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines except Auto Adjusted Members?</value>
   </data>
   <data name="VirtualRate_UpdateSuccess" xml:space="preserve">
     <value>Virtual rate setting updated successfully</value>
