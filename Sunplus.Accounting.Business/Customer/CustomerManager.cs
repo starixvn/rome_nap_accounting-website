@@ -339,17 +339,17 @@ namespace Sunplus.Accounting.Business.Customer
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
                                         case "21":
-                                            isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;
-                                            isHideAllbetSuper = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId == 4) || !WebSettings.IsShowAllBet || isDeposit;
+                                            isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;                                            
                                             isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isHideAllbetSuper = ((Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !isSyncAllbet) && roleId == 4) || !WebSettings.IsShowAllBet || isDeposit;
                                             isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             isSyncAllbetDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
                                             break;
 
                                         case "22":
-                                            isHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowVoidbridge;
-                                            isHideVoidbridgeSuper = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId == 4) || !WebSettings.IsShowVoidbridge;
+                                            isHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowVoidbridge;                                            
                                             isSyncVoidbridge = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isHideVoidbridgeSuper = ((Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !isSyncVoidbridge) && roleId == 4) || !WebSettings.IsShowVoidbridge;
                                             isSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             isSyncVoidbridgeDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
                                             break;
@@ -392,6 +392,9 @@ namespace Sunplus.Accounting.Business.Customer
                                     betCredit = credit + cash - accOutstanding + netPosition;
                                     yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
                                     downlinename = "";
+                                    isHideAllBet = isHideAllBet || AppSession.HideAllbetAgent;
+                                    isHideVoidbridge = isHideVoidbridge || AppSession.HideVoidbridgeAgent;
+
                                     break;
 
                                 case 2: // agent
@@ -404,8 +407,9 @@ namespace Sunplus.Accounting.Business.Customer
                                     yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
                                     downlinename = "Member";
-                                    AppSession.HideAllbetAgent = isHideAllBet || !isSyncAllbetUpline;
-                                    AppSession.HideVoidbridgeAgent = isHideVoidbridge || !isSyncVoidbridgeUpline;
+                                    AppSession.HideAllbetAgent = isHideAllBet || !isSyncAllbetUpline || !isSyncAllbet || AppSession.HideAllbetMaster;
+                                    AppSession.HideVoidbridgeAgent = isHideVoidbridge || !isSyncVoidbridgeUpline || !isSyncVoidbridge || AppSession.HideVoidbridgeMaster;
+
                                     break;
 
                                 case 3: // master
@@ -420,8 +424,9 @@ namespace Sunplus.Accounting.Business.Customer
                                         (Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
                                     usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
                                     downlinename = "Agent";
-                                    AppSession.HideAllbetMaster = isHideAllBet || !isSyncAllbetUpline;
-                                    AppSession.HideVoidbridgeMaster = isHideVoidbridge || !isSyncVoidbridgeUpline;
+                                    AppSession.HideAllbetMaster = isHideAllBet || !isSyncAllbetUpline || !isSyncAllbet || AppSession.HideAllbetSuper;
+                                    AppSession.HideVoidbridgeMaster = isHideVoidbridge || !isSyncVoidbridgeUpline || !isSyncVoidbridge || AppSession.HideVoidbridgeSuper;
+
                                     break;
 
                                 case 4: // super
@@ -440,6 +445,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     downlinename = "Master";
                                     AppSession.HideAllbetSuper = isHideAllbetSuper;
                                     AppSession.HideVoidbridgeSuper = isHideVoidbridgeSuper;
+
                                     break;
 
                                 default:
