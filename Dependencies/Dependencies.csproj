@@ -146,7 +146,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.0-beta-4\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.0-beta-6\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap">
