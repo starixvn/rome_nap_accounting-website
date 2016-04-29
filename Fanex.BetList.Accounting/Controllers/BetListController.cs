@@ -33,7 +33,7 @@
                 });
 
             ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
-                string.Empty :
+                new string[0] :
                 _betListService.GetCombinationTypeComboNames(betTeam, betCheck, hdp1.Value, hdp2.Value, result);
 
             return PartialView("~/Areas/BetList/Views/MemberBetListReport/_MixParlayDetail.cshtml", result);
