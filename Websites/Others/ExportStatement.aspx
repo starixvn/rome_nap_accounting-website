@@ -20,7 +20,7 @@
     
     <script src="../js/jQuery/ajaxfileupload.js" type="text/javascript"></script>     
     
-    <script src="../js/Others/ExportStatement.js" type="text/javascript"></script>
+    <script src="../js/Others/ExportStatement.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" type="text/javascript"></script>
 </head>
 <body>
     <div class="maincontent">

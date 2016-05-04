@@ -62,7 +62,7 @@ function GetInfoJSON(s) {
 
     $('#btnViewReport').attr('disabled', false);
     $('#btnExport').attr('disabled', false);
-    if (success == '1') {
+    if (success.indexOf('1') != -1) {
         dvCalendar.style.display = '';
         $('#tdToDate').attr('width', 50);
         InitFixedHeaderAccList(250);

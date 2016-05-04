@@ -12,16 +12,17 @@ using DNAide.Data;
 using DNAide.Core;
 using System.Text;
 using Sunplus.Accounting.DataAccess.IBCDLL;
+using Sunplus.Accounting.Core.Extensions;
 
 public class UploadVirtualRate : BaseHandler
 {
-    
+
     public override void ProcessRequest (HttpContext context) {
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         context.Response.ContentType = "text/html";
 
         IServiceExportStatement serviceExportStatement = new ServiceExportStatement();
-        
+
         string mode = context.Request["mode"];
         mode = mode ?? "0";
         try
@@ -40,19 +41,19 @@ public class UploadVirtualRate : BaseHandler
                     break;
             }
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-
+            LogExtensions.ExceptionHandler(ex);
             GotoErroPage(context);
         }
-        
+
     }
 
-    
 
-    
-    
-    
+
+
+
+
     public bool IsReusable {
         get {
             return false;
