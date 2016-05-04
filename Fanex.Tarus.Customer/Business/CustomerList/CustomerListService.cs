@@ -144,7 +144,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper, bool hideAllbetUpline = false, bool hideVoidbridgeUpline = false)
+        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper)
         {
             try
             {
@@ -242,8 +242,14 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
                         masterItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         masterItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !masterItem.IsIMBCCustomers;
-                        masterItem.IsHideAllBet = hideAllbetUpline ? true : !WebSettings.IsShowAllBet || !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || CastAide.AsBoolean(row["HideAllbet"]);
-                        masterItem.IsHideVoidbridge = hideVoidbridgeUpline ? true : !WebSettings.IsShowVoidbridge || !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || CastAide.AsBoolean(row["HideVoidbridge"]);
+
+                        masterItem.IsHideAllBet = !WebSettings.IsShowAllBet || 
+                            !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || 
+                            CastAide.AsBoolean(row["HideAllbetUpline"]);
+                        masterItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge || 
+                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || 
+                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
+
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -272,7 +278,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, bool hideAllbetUpline = false, bool hideVoidbridgeUpline = false)
+        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster)
         {
             try
             {
@@ -332,9 +338,13 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
                         agentItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         agentItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !agentItem.IsIMBCCustomers;
-                        agentItem.IsHideAllBet= hideAllbetUpline ? true : !WebSettings.IsShowAllBet || !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || CastAide.AsBoolean(row["HideAllbet"]);
 
-                        agentItem.IsHideVoidbridge = hideVoidbridgeUpline ? true : !WebSettings.IsShowVoidbridge || !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || CastAide.AsBoolean(row["HideVoidbridge"]);
+                        agentItem.IsHideAllBet= !WebSettings.IsShowAllBet || 
+                            !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || 
+                            CastAide.AsBoolean(row["HideAllbetUpline"]);
+                        agentItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge || 
+                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || 
+                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -365,7 +375,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent, bool hideAllbetUpline = false, bool hideVoidbridgeUpline = false)
+        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent)
         {
             try
             {
@@ -426,9 +436,13 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsHideCockFighting = !WebSettings.IsShowCockFighting || CastAide.AsBoolean(row["HideCockFighting"]);
                         memberItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         memberItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !memberItem.IsIMBCCustomers;
-                        memberItem.IsHideAllBet = hideAllbetUpline ? true : !WebSettings.IsShowAllBet || !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || CastAide.AsBoolean(row["HideAllbet"]);
 
-                        memberItem.IsHideVoidbridge = hideVoidbridgeUpline ? true : !WebSettings.IsShowVoidbridge || !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || CastAide.AsBoolean(row["HideVoidbridge"]);
+                        memberItem.IsHideAllBet = !WebSettings.IsShowAllBet || 
+                            !CastAide.AsBoolean(row["SyncedAllBetUpline"]) || 
+                            CastAide.AsBoolean(row["HideAllbetUpline"]);
+                        memberItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge || 
+                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) || 
+                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
