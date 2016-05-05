@@ -519,4 +519,7 @@
   <data name="VirtualRate_CopyToAllSportTypeBettypeFromHDP" xml:space="preserve">
     <value>Copy Virtual Rate value from Soccer HDP Live to other sports/bettypes.</value>
   </data>
+  <data name="VirtualRate_UpdateConfirmMember" xml:space="preserve">
+    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account?</value>
+  </data>
 </root>

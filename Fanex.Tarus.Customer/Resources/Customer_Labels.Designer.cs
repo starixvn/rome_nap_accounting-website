@@ -1033,6 +1033,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to update this Virtual Exchange Rate value for this account?.
+        /// </summary>
+        public static string VirtualRate_UpdateConfirmMember {
+            get {
+                return ResourceManager.GetString("VirtualRate_UpdateConfirmMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Virtual rate setting updated successfully.
         /// </summary>
         public static string VirtualRate_UpdateSuccess {
