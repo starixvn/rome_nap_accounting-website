@@ -311,13 +311,13 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideCricketSettingLink = true;
 
                             bool isHideAllBet = roleId < 4;
-                            bool isHideAllbetUpline = false;
+                            bool isHideAllbetUpline = true;
                             bool isSyncAllbet = true;
                             bool isSyncAllbetUpline = true;
                             bool isSyncAllbetDownline = true;
 
                             bool isHideVoidbridge = roleId < 4;
-                            bool isHideVoidbridgeUpline = false;
+                            bool isHideVoidbridgeUpline = true;
                             bool isSyncVoidbridge = true;
                             bool isSyncVoidbridgeUpline = true;
                             bool isSyncVoidbridgeDownline = true;
