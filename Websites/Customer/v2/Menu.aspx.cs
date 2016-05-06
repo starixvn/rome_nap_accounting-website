@@ -46,7 +46,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
         hideAllbet = (!CastAide.AsBoolean(db.Outputs["allowedallbet"]) && roleid < 4) || !WebSettings.IsShowAllBet;
-        hideVoidbridge = (!CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) && roleid < 4) || !WebSettings.IsShowAllBet;
+        hideVoidbridge = (!CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) && roleid < 4) || !WebSettings.IsShowVoidbridge;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
