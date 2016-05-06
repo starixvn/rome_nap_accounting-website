@@ -623,7 +623,7 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
     parent.OpenNextPopup(
         "VoidbridgeDetails",
         'VoidbridgeBetList/BetDetails?' + params,
-        "Voidbridge Details",
+        "Macau Games Details",
         1030,
         600,
         true,
@@ -691,14 +691,14 @@ function ViewVoidbridgeBrokenGame(custId, betCheck) {
     });
 
     var url = '../Report/ViewVoidbridgeResult.aspx?';
-    $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Voidbridge Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+    $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
         parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
     });
 }
 
 function ViewVoidbridgeResult(custId, betCheck) {
     var url = '../Report/ViewVoidbridgeResult.aspx?custId=' + custId + '&betCheck=' + betCheck;
-    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Voidbridge Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
         parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
     });
 }

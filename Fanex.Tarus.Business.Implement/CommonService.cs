@@ -30,21 +30,30 @@ namespace Fanex.Tarus.Business.Implement
         public Downtime GetDowntimeInfo()
         {
             bool isDowntime = false;
-            var umservice = new ONEbook.UM.Services.Impl.MaintenanceService();
             var downTime = new Downtime
             {
-                From = "00:00 AM",
-                To = "23:59 PM",
+                From = "0:00",
+                To = "0:00",
                 IsDowntime = false
             };
+
+            if (!WebSettings.IsUMTime || HttpContext.Current.Request.IsLocal)
+            {
+                return downTime;
+            }
+
+            string timeFrom = string.Empty;
+            string timeTo = string.Empty;
+            var underMaintainenceBusiness = new UMBusiness();
+
             try
             {
-                if (HttpContext.Current.Request.IsLocal || !umservice.IsUnderMaintenance() || (umservice.IsUnderMaintenance() && umservice.IsPassUnderMaintenance()))
-                {
-                    return downTime;
-                }
-
-                isDowntime = umservice.IsUnderMaintenance();
+                // Get Agent Site UM Status.
+                isDowntime = underMaintainenceBusiness.isUnderMaintainence(
+                    Sites.AccountSite,
+                    WebSettings.LbServiceUrl,
+                    ref timeFrom,
+                    ref timeTo);
             }
             catch (Exception ex)
             {
@@ -53,9 +62,8 @@ namespace Fanex.Tarus.Business.Implement
 
             if (isDowntime)
             {
-                var timeInfo = umservice.GetUnderMaintenanceTime();
-                downTime.From = timeInfo.From;
-                downTime.To = timeInfo.To;
+                downTime.From = timeFrom;
+                downTime.To = timeTo;
                 downTime.IsDowntime = true;
             }
 

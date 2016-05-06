@@ -2492,9 +2492,9 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>AllBet status has been disabled at upline</value>
   </data>
   <data name="lblDisabledVoidbridgeUpline" xml:space="preserve">
-    <value>Voidbridge has been disabled at upline</value>
+    <value>Macau Games has been disabled at upline</value>
   </data>
   <data name="enableVoidbridge" xml:space="preserve">
-    <value>Enable Voidbridge</value>
+    <value>Macau Games</value>
   </data>
 </root>

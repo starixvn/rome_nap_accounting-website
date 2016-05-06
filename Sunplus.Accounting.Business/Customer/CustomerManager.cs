@@ -1706,7 +1706,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                "Voidbridge",
                                                renderLeftPanelParameter.IsShowVoidbridge,
                                                renderLeftPanelParameter,
-                                               "Update Voidbridge Status",
+                                               "Update Macau Games Status",
                                                22,
                                                4);
                             break;
@@ -1802,7 +1802,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (isShowVoidbridge)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Voidbridge</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Macau Games</a>";
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
@@ -1864,7 +1864,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (isShowVoidbridge)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Voidbridge</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Macau Games</a>";
                     }
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
