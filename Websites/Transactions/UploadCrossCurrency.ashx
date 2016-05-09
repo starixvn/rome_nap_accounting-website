@@ -3,7 +3,6 @@
 using System;
 using System.Web;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
 using DNAide.Web;
 using System.Collections.Generic;
@@ -12,12 +11,12 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business;
 using System.Text;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Accounting.Business.Customer;
+using Fanex.Tarus.Excels.CrossCurrencyTransfer;
 
 public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
@@ -40,14 +39,15 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
         try
         {
-            if (context.Request.Files[0].ContentLength > 1024000)
+            var uploadFile = context.Request.Files[0];
+            if (uploadFile.ContentLength > 1024000)
             {
                 context.Response.Write(BuildResult("Your uploaded file's size can't be larger than 1 MB", string.Empty));
                 return;
             }
 
             string ext = string.Empty;
-            if (!AccCommon.IsValidExtension(context.Request.Files[0].FileName, ref ext))
+            if (!AccCommon.IsValidExtension(uploadFile.FileName, ref ext))
             {
                 context.Response.Write(BuildResult("Sorry, You choose invalid file extension. Please choose an Excel file (.xls)", string.Empty));
                 return;
@@ -57,29 +57,30 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             FileInfo file = new FileInfo(strLocation);
             if (file.Exists) file.Delete();
 
-            context.Request.Files[0].SaveAs(strLocation);
-            DataTable dataTable = GetDataFromExcel(strLocation);
-            if (dataTable.Columns[3].ColumnName.ToLower() != "to amount")
+            uploadFile.SaveAs(strLocation);
+
+            ICrossCurrencyTransferExcel crossCurrencyTransferExcel = new CrossCurrencyTransferExcel(strLocation);
+
+            if (!crossCurrencyTransferExcel.ValidateTemplateFile())
             {
                 context.Response.Write(BuildResult("You're using wrong template file. Please double check and try again. Thanks", string.Empty));
                 return;
-            }
+            };
+
             file = new FileInfo(strLocation);
             if (file.Exists) file.Delete();
 
-            if (dataTable.Columns.Count != 5)
-            {
-                context.Response.Write(BuildResult("Format excel file is not correct", string.Empty));
-                return;
-            }
+            DataTable dataTable = crossCurrencyTransferExcel.ExcelToDataTable();
             DeleteEmptyRow(dataTable);
-            if (dataTable.Rows.Count <= 0)
+
+            if (dataTable.Rows.Count == 0)
             {
                 context.Response.Write(BuildResult("Data is emtpy", string.Empty));
                 return;
             }
-            string hdFileInfo = @"<input type='hidden' id='hdFCTFileInfo' filename='" + context.Request.Files[0].FileName
-                + "' filesize='" + context.Request.Files[0].ContentLength.ToString() + "' />";
+
+            string hdFileInfo = @"<input type='hidden' id='hdFCTFileInfo' filename='" + uploadFile.FileName
+                + "' filesize='" + uploadFile.ContentLength.ToString() + "' />";
             context.Response.Write(BuildResult(string.Empty, RenderContent(dataTable) + hdFileInfo
                 + "|" + GetAllForexAccount()));
         }
@@ -118,13 +119,13 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             col.ColumnName = "Remark";
             col.DataType = typeof(string);
             dtb.Columns.Add(col);
-            
+
             ExcelUtil.Spreadsheet.ExcelFile excelFile = new ExcelUtil.Spreadsheet.ExcelFile();
             excelFile.LoadXls(ExcelPath);
             var workSheet = excelFile.Worksheets[0];
 
             if (workSheet.Rows.Count <= 0) return dtb;
-            
+
             for (int i = 1; i < workSheet.Rows.Count; ++i)
             {
                 var row = dtb.NewRow();
@@ -165,7 +166,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             if (index >= dataTable.Rows.Count) continue;
             if (
                 (dataTable.Rows[index].IsNull(0) && dataTable.Rows[index].IsNull(1))
-                || 
+                ||
                 (string.IsNullOrEmpty(dataTable.Rows[index][0].ToString().Trim()) && string.IsNullOrEmpty(dataTable.Rows[index][1].ToString().Trim()))
                 )
             {
@@ -374,7 +375,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
     private bool isReachMax()
     {
-        if (arrFromCust.Count <= 0 && arrToCust.Count <= 0 && arrFromAmt.Count <= 0 && arrToAmt.Count <= 0 && arrDescription.Count <= 0) 
+        if (arrFromCust.Count <= 0 && arrToCust.Count <= 0 && arrFromAmt.Count <= 0 && arrToAmt.Count <= 0 && arrDescription.Count <= 0)
             return false;
         int currentIndex = arrFromCust.Count - 1;
         int currentMaxLength = arrFromCust[currentIndex].Length;
@@ -473,44 +474,6 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             lstForexAccName.Add(forexAcc.username);
         }
         return string.Join(",", lstForexAccName.ToArray());
-    }
-
-    DataTable GetDataFromExcel(string ExcelPath)
-    {
-        DataTable dtb = new DataTable();
-        string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelPath + ";Extended Properties=Excel 8.0;";
-        OleDbConnection excelCon = new OleDbConnection(strConn);
-        try
-        {
-            excelCon.Open();
-            DataTable dtb1 = excelCon.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-            if (dtb1 == null)
-                return null;
-            String[] excelSheets = new String[dtb1.Rows.Count];
-            int i = 0;
-            foreach (DataRow row in dtb1.Rows)
-            {
-                excelSheets[i] = row["TABLE_NAME"].ToString();
-                i++;
-            }
-            string sheetName = excelSheets[0];
-            OleDbCommand myCommand = new OleDbCommand(String.Format("SELECT * FROM [{0}]", sheetName), excelCon);
-            OleDbDataAdapter objAdap = new OleDbDataAdapter();
-            objAdap.SelectCommand = myCommand;
-            objAdap.Fill(dtb);
-            excelCon.Close();
-            excelCon.Dispose();
-            // dtb.Rows.RemoveAt(0);//Remove the first (title) row 
-            return dtb;
-        }
-        catch (Exception ex)
-        {
-            excelCon.Close();
-            excelCon.Dispose();
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            //throw ex;
-        }
-        return null;
     }
 }
 

@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,6 +13,7 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Excels.ExchangeRate;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
@@ -221,39 +221,17 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         private DataTable GetDataFromExcel(string ExcelPath)
         {
-            DataTable dtb = new DataTable();
-            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelPath + ";Extended Properties=Excel 8.0;";
-            OleDbConnection excelCon = new OleDbConnection(strConn);
-            try
-            {
-                excelCon.Open();
-                OleDbCommand myCommand = new OleDbCommand("SELECT * FROM [ExRate$]", excelCon);
-                OleDbDataAdapter objAdap = new OleDbDataAdapter();
-                objAdap.SelectCommand = myCommand;
-                objAdap.Fill(dtb);
-                excelCon.Close();
-                excelCon.Dispose();
-                dtb.Rows.RemoveAt(0);//Remove the first (title) row
-                return dtb;
-            }
-            catch (Exception ex)
-            {
-                excelCon.Close();
-                excelCon.Dispose();
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                //throw ex;
-            }
-            return null;
+            IExchangeRateExcel exchangeRateExcel = new ExchangeRateExcel(ExcelPath);
+            return exchangeRateExcel.ExcelToDataTable();
         }
 
         public ResultBO ReadExRateFromExcel()
         {
-            //ExchangeRateResult result = new ExchangeRateResult();
             ResultBO result = new ResultBO();
-            int rows = 0;
+
             string strLocation = "";
             bool IsUploadFileSuccess = true;
+
             try
             {
                 if (HttpContext.Current.Request.ContentLength < 1024000)
@@ -262,10 +240,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     {
                         result.ErrorCode = 1;
                         result.ErrorMessage = "Your upload file don't successfull, Please try again";
+
                         return result;
                     }
+
                     string newfilename = HttpContext.Current.Request.Files[0].FileName;
                     string ext = string.Empty;
+
                     if (!string.IsNullOrEmpty(newfilename))
                     {
                         if (IsValidExtension(newfilename, ref ext))
@@ -283,6 +264,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 {
                                     DataTable dtb = GetDataFromExcel(strLocation);
                                     HttpContext.Current.Session["ExRateOpenTote"] = dtb;
+
                                     FileInfo file = new FileInfo(strLocation);
                                     if (file.Exists) file.Delete();
 
@@ -293,6 +275,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 {
                                     result.ErrorCode = 1;
                                     result.ErrorMessage = ex.ToString();
+
                                     return result;
                                 }
                             }
@@ -337,12 +320,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 else
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    //throw;
                     result.ErrorCode = 1;
                     result.ErrorMessage = ex.ToString();
-                    //return result;
                 }
             }
+
             return result;
         }
 

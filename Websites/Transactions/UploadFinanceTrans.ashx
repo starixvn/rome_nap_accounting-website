@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
 using System.Web;
 using System.IO;
 using System.Data;
@@ -14,7 +13,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Web;
-using DNAide.Data;
 using DNAide.Core;
 using DNAide.Utils;
 using System.Text;

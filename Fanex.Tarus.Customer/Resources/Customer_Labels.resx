@@ -274,7 +274,7 @@
     <value>Username</value>
   </data>
   <data name="VirtualRate_UpdateConfirm" xml:space="preserve">
-    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines?</value>
+    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account and all of its downlines except Auto Adjusted Members?</value>
   </data>
   <data name="VirtualRate_UpdateSuccess" xml:space="preserve">
     <value>Virtual rate setting updated successfully</value>
@@ -518,5 +518,8 @@
   </data>
   <data name="VirtualRate_CopyToAllSportTypeBettypeFromHDP" xml:space="preserve">
     <value>Copy Virtual Rate value from Soccer HDP Live to other sports/bettypes.</value>
+  </data>
+  <data name="VirtualRate_UpdateConfirmMember" xml:space="preserve">
+    <value>Are you sure that you want to update this Virtual Exchange Rate value for this account?</value>
   </data>
 </root>
