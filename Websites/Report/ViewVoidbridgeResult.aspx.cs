@@ -21,7 +21,7 @@ public partial class Report_ViewVoidbridgeResult : System.Web.UI.Page
         catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
-            voidbridgeResult = ex.Message;
+            voidbridgeResult = "<table class=\"fn-rs casino popup\"><tbody><tr><td class=\"row-noinfo\">" + ex.Message + "</td></tr></tbody></table>";
         }
 
         this.lResult.Text = voidbridgeResult;
