@@ -123,8 +123,8 @@
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.0\lib\net40\Fanex.Module.Logs.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.7-rngcasino1\lib\Fanex.Module.RNGCasino.dll</HintPath>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.8-beta1\lib\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement">
