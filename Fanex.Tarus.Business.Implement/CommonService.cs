@@ -39,7 +39,8 @@ namespace Fanex.Tarus.Business.Implement
             };
             try
             {
-                if (HttpContext.Current.Request.IsLocal || !umservice.IsUnderMaintenance() || (umservice.IsUnderMaintenance() && umservice.IsPassUnderMaintenance()))
+                if (HttpContext.Current.Request.IsLocal
+                    || umservice.IsPassUnderMaintenance())
                 {
                     return downTime;
                 }
