@@ -490,8 +490,8 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 .allbet-bet-id { color: #bbb; }
 .allbet-bet-type-name { color: #696969; }
 .allbet-game-id { color: #01122b; }
-.unit-stake { color: #003399; }
-.voidbridge-sporttypename {
+.offer-name-list { font-weight: bold; }
+.unit-stake { color: #003399; }.voidbridge-sporttypename {
     color: #0000FF;
 }
 .gamegroupname { color: #008000; }

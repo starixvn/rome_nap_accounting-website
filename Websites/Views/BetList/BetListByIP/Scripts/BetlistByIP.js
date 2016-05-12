@@ -254,7 +254,7 @@ function showMP(transid, refno) {
         $.ajax({
             type: "POST",
             url: window.rootUrl + "BetList/GetMixParlayDetail",
-            data: "refno=" + refno,
+            data: "transid=" + transid + "&refno=" + refno,
             success: function (result) {
                 $(".parlay_" + transid).each(function () {
                     $(this).html(result);
