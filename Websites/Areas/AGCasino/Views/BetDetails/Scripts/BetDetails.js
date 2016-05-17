@@ -32,7 +32,7 @@
 	}
 
 	function betDetailsPaging() {
-		$.ajax({
+	    $.ajax({
 			type: "GET",
 			url: window.rootUrl + "AGCasinoBetList/BetDetailsPaging?" + $.param(formData),
 			beforeSend: function () {

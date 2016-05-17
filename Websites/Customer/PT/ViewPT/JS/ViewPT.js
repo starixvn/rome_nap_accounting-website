@@ -1055,6 +1055,7 @@ var ViewPT = {
             case 206: //Cockfighting
             case 50: //Cricket
             case 211: // Allbet
+            case 212: // Voidbridge
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             default:

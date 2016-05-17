@@ -235,10 +235,16 @@
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 20, 'Cricket');">
                             Cricket</li>
                     }
-                    @if (Request.QueryString["hideAllbetUpline"] != "true")
+                    @if (!masterItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 21, 'Allbet');">
                             Allbet
+                        </li>
+                    }
+                    @if (!masterItem.IsHideVoidbridge)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 22, 'Macau Games');">
+                            Macau Games
                         </li>
                     }
                 </ul>
@@ -336,7 +342,7 @@
         </td>
         <td>
             <div class="table-cell" style="width: 50px; height: 18px;">
-                <a class="viewdownline-button "   href="AgentList?masterId=@masterItem.ChildID&doubleCommMaster=@masterItem.isDoubleComm.ToString().ToLower()&isSynccasino=@masterItem.IsSynCasinoUpline.ToString().ToLower()&hideAllbetUpline=@masterItem.IsHideAllBet.ToString().ToLower()">
+                <a class="viewdownline-button "   href="AgentList?masterId=@masterItem.ChildID&doubleCommMaster=@masterItem.isDoubleComm.ToString().ToLower()&isSynccasino=@masterItem.IsSynCasinoUpline.ToString().ToLower()&hideAllbetUpline=@masterItem.IsHideAllBet.ToString().ToLower()&hideVoidbridgeUpline=@masterItem.IsHideVoidbridge.ToString().ToLower()">
                     View</a>
             </div>
         </td>

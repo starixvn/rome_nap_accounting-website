@@ -1,0 +1,68 @@
+﻿@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Services;
+@using DNAide.Core;
+@using Fanex.BetList.Core.Factories;
+@using Fanex.BetList.Core.Builder;
+@using Fanex.Tarus.BetList.Helper;
+@using Fanex.Tarus.BetList.Resources;
+@using Fanex.Voidbridge.BetDetail.Models;
+@model IEnumerable<TicketDetail>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Areas/Voidbridge/Views/BetDetails/Styles/BetDetails.less")" />
+    <title>@BetListResources.Product_6</title>
+</head>
+<body>
+    <div id="betlist-details" class="freegrid display-none">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="tblContent" class="grid-fixed-table col_header_content ">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                    <tbody>
+                        @{ Html.RenderPartial("~/Areas/Voidbridge/Views/BetDetails/_Tickets.cshtml", Model); }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/gridscroller.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
+    <script type="text/javascript" src="~/js/BetList.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="~/Areas/Voidbridge/Views/BetDetails/Scripts/BetDetails.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+		var totalRows = @Model.Count();
+        var transId = @Request.QueryString["TransId"];
+        var custId = @Request.QueryString["CustId"];
+        var transType = @Request.QueryString["TransType"];
+        $(document).ready(function () {
+            betDetailsManager.initPage();
+        });
+    </script>
+</body>
+</html>

@@ -613,6 +613,27 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
         null);
 }
 
+function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
+    var params = $.param({
+        TransId: transId,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "VoidbridgeDetails",
+        'VoidbridgeBetList/BetDetails?' + params,
+        "Macau Games Details",
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
     var params = $.param({
         Refno: refNo,
@@ -663,10 +684,29 @@ function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlo
         null);
 }
 
+function ViewVoidbridgeBrokenGame(custId, betCheck) {
+    var params = $.param({
+        custId: custId,
+        betCheck: betCheck
+    });
+
+    var url = '../Report/ViewVoidbridgeResult.aspx?';
+    $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+    });
+}
+
+function ViewVoidbridgeResult(custId, betCheck) {
+    var url = '../Report/ViewVoidbridgeResult.aspx?custId=' + custId + '&betCheck=' + betCheck;
+    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+    });
+}
+
 function ViewAllBetResult(transId) {
-	var width = 945;
-	var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
-	parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
+    var width = 945;
+    var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
+    parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {

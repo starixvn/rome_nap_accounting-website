@@ -13,8 +13,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     {
         CustomerListModel GetSuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam);
         CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper);
-        CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, bool hideAllbetUpline = false);
-        CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent, bool hideAllbetUpline = false);
+        CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster);
+        CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent);
         List<Currency> GetCurrencyList();
         List<ResultCustomerlist> UpdateDoubleComm(int userId, string custDetail, bool isDoubleComm);
     }

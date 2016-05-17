@@ -69,7 +69,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticket.SportTypeId == 255 ||
                 ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
                 IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId);
+                IsColossusBetType(ticket.BetTypeId) ||
                 IsCockFightingBetType(ticket.BetTypeId);
         }
 
@@ -98,7 +98,8 @@ namespace Fanex.BetList.Accounting.Core
         public static bool IsHideResultLink(int sportType)
         {
             return sportType == SportContants.Keno ||
-                sportType == SportContants.CockFighting;
+                sportType == SportContants.CockFighting ||
+                sportType == SportContants.Voidbridge;
         }
 
         public string IsNegative(decimal input)
@@ -149,6 +150,11 @@ namespace Fanex.BetList.Accounting.Core
             return sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile;
+        }
+
+        public bool IsVoidbridge(int sportType)
+        {
+            return sportType == SportContants.Voidbridge;
         }
 
         public string PercentFormat(decimal input)
@@ -237,6 +243,41 @@ namespace Fanex.BetList.Accounting.Core
             return statusLabel + resultLink1;
         }
 
+        public string GetVoidbridgeStatus(TicketDetail ticketDetail)
+        {
+            var statusLabel = string.Empty;
+            var status = ticketDetail.Ticket.Status.ToLower();
+            var isRunningStatus = string.Equals(status, "running", StringComparison.OrdinalIgnoreCase);
+            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
+            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
+            bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
+
+            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck))
+            {
+                var viewBrokenGame = "ViewVoidbridgeBrokenGame(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
+                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
+            }
+            else
+            {
+                statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+            }
+
+            var resultLink = string.Empty;
+            if (isWonStatus || isLoseStatus || isDrawStatus)
+            {
+                resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
+                     string.Empty :
+                     "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", ' " + ticketDetail.Ticket.BetCheck + "')";
+            }
+
+            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
+                 string.Empty :
+                 "<br />" +
+                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
+                 "<br />";
+            return statusLabel + resultLink1;
+        }
+
         /// <summary>
         /// Gets the status reference no.
         /// </summary>
@@ -256,6 +297,11 @@ namespace Fanex.BetList.Accounting.Core
             if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))
             {
                 return betlistHelper.GetRNGCasinoStatus(ticketDetail);
+            }
+
+            if (IsVoidbridge(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetVoidbridgeStatus(ticketDetail);
             }
 
             string status = ticketDetail.Ticket.Status.ToLower();
@@ -380,6 +426,11 @@ namespace Fanex.BetList.Accounting.Core
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty : 
                                 "ViewAllBetResult('" + ticketDetail.Ticket.BetTypeId + "')";
+                            break;
+                        case SportContants.Voidbridge:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                                string.Empty :
+                                "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                             break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)

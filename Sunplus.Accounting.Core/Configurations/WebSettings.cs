@@ -566,5 +566,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["EnableRNGCasino"] == "1");
             }
         }
+
+        public static bool IsShowVoidbridge
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowVoidbridge"] == "1");
+            }
+        }
     }
 }

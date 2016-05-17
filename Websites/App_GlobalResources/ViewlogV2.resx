@@ -1299,4 +1299,7 @@
   <data name="Disable50_501" xml:space="preserve">
     <value>Disabled Cricket</value>
   </data>
+	<data name="Disable212_4001" xml:space="preserve">
+    <value>Disabled Macau Games</value>
+  </data>
 </root>
