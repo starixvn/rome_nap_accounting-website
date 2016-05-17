@@ -71,7 +71,7 @@
                     fullWidth: true,
                     fullHeight: false,
                     gridWidth: 970,
-                    gridHeight: 500,
+                    gridHeight: 700,
                     freezeWidth: 0,
                     numberFreezeCol: 0
                 });
@@ -93,6 +93,14 @@
                     BetListByCustInfo.eventGridOpts.gridHeight = divSystemParlayContent.height() + 55;
                     $("#EventDetail").initGrid(BetListByCustInfo.eventGridOpts);
                     $('#EventDetail').removeClass("display-none").gridScroller(BetListByCustInfo.eventGridOpts);
+
+                    var downloadLink = $("#download-combinationdetails");
+                    downloadLink
+						.unbind("click")
+						.bind("click", function () {
+							var url = window.rootUrl + "BetList/ExportBetListByCustInfo_SystemParLayTab?" + $.param(BetListByCustInfo.paramGetBetlistSystemParlay);
+							window.location.href = url
+						});
                 }
             },
             error: function () {

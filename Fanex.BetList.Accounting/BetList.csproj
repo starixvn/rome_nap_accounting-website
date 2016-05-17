@@ -268,6 +268,7 @@
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
+    <Compile Include="Criteria\BetListSystemParlayDetailsCriteria.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -292,10 +293,14 @@
     <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventExcel.cs" />
+    <Compile Include="Models\Excel\ExcelCell.cs" />
+    <Compile Include="Models\Excel\ExcelCellRange.cs" />
     <Compile Include="Models\GroupParlayEvent.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
     <Compile Include="Models\SystemParlayDetail.cs" />
+    <Compile Include="Models\SystemParlayDetailExcel.cs" />
     <Compile Include="Models\TennisResult\TennisLeagueResult.cs" />
     <Compile Include="Models\TennisResult\TennisGameResult.cs" />
     <Compile Include="Models\TennisResult\TennisMatchResult.cs" />
@@ -309,6 +314,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
+    <Compile Include="Repositories\SystemParlayRepository.cs" />
+    <Compile Include="Repositories\ISystemParlayRepository.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,6 +331,9 @@
     <Compile Include="Services\IBetListService.cs" />
     <Compile Include="Services\IpService.cs" />
     <Compile Include="Services\IResultService.cs" />
+    <Compile Include="Core\NpoiExcelUtils.cs" />
+    <Compile Include="Services\SystemParlayExcel.cs" />
+    <Compile Include="Services\ISystemParlayExcel.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ResultService.cs" />
   </ItemGroup>

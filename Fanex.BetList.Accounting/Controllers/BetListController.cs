@@ -108,7 +108,7 @@
         /// <param name="transactionId">Transaction ID.</param>
         /// <param name="customerId">Customer ID.</param>
         /// <returns>Partial for SystemParlay Tab - Customer Info.</returns>
-         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_SystemParLayTab(string transactionId, int customerId)
         {
             SystemParlayModel result = new SystemParlayModel();
@@ -124,6 +124,34 @@
             ViewBag.Quantity = 1;
             ViewBag.NumberBegining = 1;
             return PartialView("~/Views/BetList/BetlistByCustInfo/SystemParlay/_SystemParlay.cshtml", result);
+        }
+
+        public ActionResult ExportBetListByCustInfo_SystemParLayTab(BetListSystemParlayByRefnoCriteria criteria)
+        {
+            ISystemParlayExcel systemParlayExcel = new SystemParlayExcel();
+
+            var response = System.Web.HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", "attachment; filename=Combination_Details.xls");
+
+            systemParlayExcel.ExportCombinationDetails(criteria, response.OutputStream);
+
+            return new EmptyResult();
+        }
+
+        public ActionResult ExportBetList_SystemParlayDetails(BetListSystemParlayDetailsCriteria criteria)
+        {
+            ISystemParlayExcel systemParlayExcel = new SystemParlayExcel();
+
+            var response = System.Web.HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", "attachment; filename=SystemParlay_Details.xls");
+
+            systemParlayExcel.ExportSystemParlayDetails(criteria, response.OutputStream);
+
+            return new EmptyResult();
         }
 
         public ActionResult GetBetListByIP_Username(

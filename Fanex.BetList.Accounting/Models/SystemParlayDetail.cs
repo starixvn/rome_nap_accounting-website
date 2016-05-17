@@ -16,6 +16,8 @@ namespace Fanex.BetList.Accounting.Models
     /// </summary>
     public class SystemParlayDetail
     {
+        public const int MaxMatchRowsToShow = 5000;
+
         public SystemParlayDetail()
         {
             EventList = new List<Event>();
@@ -24,5 +26,7 @@ namespace Fanex.BetList.Accounting.Models
         public List<Event> EventList { get; set; }
 
         public decimal SubTotal { get; set; }
+
+        public bool ShowAlternateLink { get; set; }
     }
 }

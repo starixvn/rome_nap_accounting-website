@@ -1015,6 +1015,12 @@ namespace Sunplus.Accounting.Business.BetList
                 return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
             }
 
+            var tblMaster = ds.Tables[0];
+            if (tblMaster != null && tblMaster.Rows.Count > 5000)
+            {
+                return WebUtils.LoadTemplate("BetList\\CombinationMP\\downloadExcel.htm");
+            }
+
             string container = WebUtils.LoadTemplate("BetList\\CombinationMP\\container.htm");
             string header = WebUtils.LoadTemplate("BetList\\CombinationMP\\header.htm");
             string body = WebUtils.LoadTemplate("BetList\\CombinationMP\\body.htm");
@@ -1024,7 +1030,6 @@ namespace Sunplus.Accounting.Business.BetList
             string rowTemp = string.Empty;
             var subtotalTemp = string.Empty;
 
-            var tblMaster = ds.Tables[0];
             var tblDetail = ds.Tables[1];
             var dateRange =
                 (from q in tblMaster.AsEnumerable().Cast<DataRow>() select q["winlostdate"]).Distinct().ToList();
