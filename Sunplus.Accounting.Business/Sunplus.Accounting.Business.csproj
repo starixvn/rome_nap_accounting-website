@@ -60,8 +60,13 @@
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\Dependency\AntiXSSLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CasinoLibrary">
-      <HintPath>..\Dependency\Casino\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=1.0.2.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CasinoTempLibrary, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoTempLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase">
       <HintPath>..\Dependency\Cache\Memcached\Couchbase.dll</HintPath>
