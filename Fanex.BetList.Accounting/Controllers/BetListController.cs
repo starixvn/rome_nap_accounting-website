@@ -140,9 +140,16 @@
             return new EmptyResult();
         }
 
-        public ActionResult ExportBetList_SystemParlayDetails(BetListSystemParlayDetailsCriteria criteria)
+        public ActionResult ExportBetList_SystemParlayDetails(long refno, long transid, long betid, int custid)
         {
             ISystemParlayExcel systemParlayExcel = new SystemParlayExcel();
+            var criteria = new BetListSystemParlayDetailsCriteria
+            {
+                RefNo = refno,
+                TransId = transid,
+                BetId = betid,
+                CustId = custid
+            };
 
             var response = System.Web.HttpContext.Current.Response;
             response.Clear();

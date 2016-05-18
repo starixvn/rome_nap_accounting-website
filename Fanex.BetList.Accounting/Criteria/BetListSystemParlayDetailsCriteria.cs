@@ -3,7 +3,7 @@
     using System;
     using Fanex.NAP.Framework.Data;
 
-    public class BetListSystemParlayDetailsCriteria :  CriteriaBase
+    public class BetListSystemParlayDetailsCriteria :  CriteriaBase, ICriteria
     {
         public long RefNo { get; set; }
 
