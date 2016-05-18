@@ -140,7 +140,28 @@
             return new EmptyResult();
         }
 
-        public ActionResult ExportBetList_SystemParlayDetails(long refno, long transid, long betid, int custid)
+        public ActionResult ExportBetList_SystemParlayDetails123(long refno, long transid, long betid, int custid)
+        {
+            ISystemParlayExcel systemParlayExcel = new SystemParlayExcel();
+            var criteria = new BetListSystemParlayDetailsCriteria
+            {
+                RefNo = refno,
+                TransId = transid,
+                BetId = betid,
+                CustId = custid
+            };
+
+            var response = System.Web.HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", "attachment; filename=SystemParlay_Details.xls");
+
+            systemParlayExcel.ExportSystemParlayDetails(criteria, response.OutputStream);
+
+            return new EmptyResult();
+        }
+
+        public ActionResult ExportBetListByCustInfo_SystemParLayTab2(long refno, long transid, long betid, int custid)
         {
             ISystemParlayExcel systemParlayExcel = new SystemParlayExcel();
             var criteria = new BetListSystemParlayDetailsCriteria
