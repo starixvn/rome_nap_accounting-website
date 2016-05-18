@@ -150,14 +150,11 @@
                 BetId = betid,
                 CustId = custid
             };
-
             var response = System.Web.HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", "attachment; filename=SystemParlay_Details.xls");
-
             systemParlayExcel.ExportSystemParlayDetails(criteria, response.OutputStream);
-
             return new EmptyResult();
         }
 
