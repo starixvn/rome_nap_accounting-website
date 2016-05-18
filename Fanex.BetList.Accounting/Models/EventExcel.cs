@@ -10,7 +10,7 @@
             Matches = new List<Match>();
         }
 
-        public DateTime WinLossDate { get; set; }
+        public string WinLossDate { get; set; }
 
         public string Status { get; set; }
 

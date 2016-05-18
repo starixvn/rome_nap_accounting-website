@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
@@ -1018,7 +1019,13 @@ namespace Sunplus.Accounting.Business.BetList
             var tblMaster = ds.Tables[0];
             if (tblMaster != null && tblMaster.Rows.Count > 5000)
             {
-                return WebUtils.LoadTemplate("BetList\\CombinationMP\\downloadExcel.htm");
+                var request = HttpContext.Current.Request;
+                string url = request.ApplicationPath + "BetList/ExportBetList_SystemParlayDetails?" + request.QueryString.ToString();
+
+                string downloadExcelTpl = WebUtils.LoadTemplate("BetList\\CombinationMP\\downloadExcel.htm");
+                TemplateHandler.Assign(ref downloadExcelTpl, "{DownloadLink}", url);
+
+                return downloadExcelTpl;
             }
 
             string container = WebUtils.LoadTemplate("BetList\\CombinationMP\\container.htm");

@@ -73,7 +73,10 @@
         public SystemParlayDetailExcel GetSystemParlayDetailExcel(ICriteria criteria)
         {
             var model = new SystemParlayDetailExcel();
+            model.Total = 0;
+
             var serialHash = new Dictionary<string, EventExcel>(1024 * 5);
+            var loseEvents = new List<EventExcel>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -86,17 +89,18 @@
                     while (reader.Read())
                     {
                         serial = Converter.ToString2(reader["serial"]);
+                        eventExcel = ParseEventExcel(reader);
 
                         if (serial == "0")
                         {
-
+                            loseEvents.Add(eventExcel);
                         }
                         else if (!serialHash.ContainsKey(serial))
                         {
-                            eventExcel = ParseEventExcel(reader);
-
                             serialHash.Add(serial, eventExcel);
                         }
+
+                        model.Total += eventExcel.WinLoss + eventExcel.PlayerComm;
                     }
 
                     // Match result.
@@ -118,7 +122,9 @@
                 }
             }
 
-            model.Events = serialHash.Values.ToList();
+            loseEvents.AddRange(serialHash.Values);
+            model.Events = loseEvents;
+
             return model;
         }
 
@@ -138,7 +144,7 @@
         {
             return new EventExcel
             {
-                WinLossDate = Converter.ToDateTime(reader["winlostdate"]),
+                WinLossDate = Converter.ToDateTime(reader["winlostdate"]).ToShortDateString(),
                 Odds = Converter.ToDecimal(reader["modds"]),
                 Stake = Converter.ToDecimal(reader["stake"]),
                 WinLoss = Converter.ToDecimal(reader["winlost"]),
