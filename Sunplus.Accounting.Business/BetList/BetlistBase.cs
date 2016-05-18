@@ -1020,7 +1020,7 @@ namespace Sunplus.Accounting.Business.BetList
             if (tblMaster != null && tblMaster.Rows.Count > 5000)
             {
                 var request = HttpContext.Current.Request;
-                string url = request.ApplicationPath + "BetList/ExportBetList_SystemParlayDetails?" + request.QueryString.ToString();
+                string url = request.ApplicationPath + "/BetList/ExportBetList_SystemParlayDetails?" + request.QueryString.ToString();
 
                 string downloadExcelTpl = WebUtils.LoadTemplate("BetList\\CombinationMP\\downloadExcel.htm");
                 TemplateHandler.Assign(ref downloadExcelTpl, "{DownloadLink}", url);
