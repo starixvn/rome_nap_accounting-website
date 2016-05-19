@@ -24,6 +24,8 @@
         private int _startColumnIndex = 0;
         private int _currentRowIndex = 0;
 
+        private ICellStyle _textCenter, _textLeft, _textRight, _number, _negativeNumber;
+
         public SystemParlayExcel(ISystemParlayRepository systemParlayRepository = null)
         {
             _systemParlayRepository = systemParlayRepository ?? new SystemParlayRepository();
@@ -39,6 +41,7 @@
 
             _workbook = new HSSFWorkbook();
             _sheet = _workbook.CreateSheet("Combination details");
+            InitCellStyle(_workbook);
 
             int[] columnsWidth = new int[] { 200, 300, 120, 120, 120, 150 };
             string[] columnsName = new string[] { "Date", "Event", "Odds", "Stake", "Win Loss", "Status" };
@@ -61,16 +64,17 @@
 
             _workbook = new HSSFWorkbook();
             _sheet = _workbook.CreateSheet("System Parlay Details");
+            InitCellStyle(_workbook);
 
             int[] columnsWidth = new int[] { 150, 300, 120, 120, 120, 150 };
             string[] columnsName = new string[] { "Date", "Event", "Odds", "Stake", "Win Loss", "Status" };
 
             RenderTitle("System Parlay Details", columnsWidth);
             RenderHeader(columnsName);
-            //RenderSystemParlayDetails(model.Events);
+            RenderSystemParlayDetails(model.Events);
 
-            //RenderCombinationDetailsSubTotal(model.Outstanding, "Outstanding");
-            //_currentRowIndex++;
+            RenderCombinationDetailsSubTotal(model.Outstanding, "Outstanding");
+            _currentRowIndex++;
 
             RenderCombinationDetailsSubTotal(model.Total, "Total");
 
@@ -91,11 +95,6 @@
             int columnIndex, eventLength;
             StringBuilder matchBuilder;
 
-            ICellStyle textCenter = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Center);
-            ICellStyle textLeft = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Left);
-            ICellStyle number = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, false);
-            ICellStyle negativeNumber = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, true, true);
-
             eventLength = events.Count;
             for (int i = 0; i < eventLength; i++)
             {
@@ -111,7 +110,7 @@
                         columnIndex,
                         columnIndex,
                         eventObject.WinLossDate.ToString(),
-                        textCenter);
+                        _textCenter);
 
                     dateCellRange.RenderCellRange(_sheet);
                 }
@@ -133,19 +132,19 @@
                     }
                 }
 
-                cell = new ExcelCell(columnIndex++, matchBuilder.ToString(), textLeft);
+                cell = new ExcelCell(columnIndex++, matchBuilder.ToString(), _textLeft);
                 cell.RenderCell(row);
 
-                cell = new ExcelCell(columnIndex++, eventObject.Odds, number);
+                cell = new ExcelCell(columnIndex++, eventObject.Odds, _number);
                 cell.RenderCell(row);
 
-                cell = new ExcelCell(columnIndex++, eventObject.Stake, number);
+                cell = new ExcelCell(columnIndex++, eventObject.Stake, _number);
                 cell.RenderCell(row);
 
-                cell = new ExcelCell(columnIndex++, eventObject.WinLoss, negativeNumber);
+                cell = new ExcelCell(columnIndex++, eventObject.WinLoss, _negativeNumber);
                 cell.RenderCell(row);
 
-                cell = new ExcelCell(columnIndex++, eventObject.Status, textCenter);
+                cell = new ExcelCell(columnIndex++, eventObject.Status, _textCenter);
                 cell.RenderCell(row);
 
                 _currentRowIndex++;
@@ -156,19 +155,16 @@
         {
             int columnIndex = _startColumnIndex;
 
-            ICellStyle textRight = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.HeaderTitleColorIndex, true, HorizontalAlignment.Right);
-            ICellStyle negativeNumber = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.HeaderTitleColorIndex, true, true);
-
-            ExcelCellRange textSubTotal = new ExcelCellRange(_currentRowIndex, _currentRowIndex, columnIndex, columnIndex + 3, columnTitle, textRight);
+            ExcelCellRange textSubTotal = new ExcelCellRange(_currentRowIndex, _currentRowIndex, columnIndex, columnIndex + 3, columnTitle, _textRight);
             int lastColumn = textSubTotal.RenderCellRange(_sheet);
             columnIndex += lastColumn;
 
             IRow row = _sheet.GetRow(_currentRowIndex);
 
-            ExcelCell valueSubTotal = new ExcelCell(columnIndex++, subTotal, negativeNumber);
+            ExcelCell valueSubTotal = new ExcelCell(columnIndex++, subTotal, _negativeNumber);
             valueSubTotal.RenderCell(row);
 
-            ExcelCell emptyCell = new ExcelCell(columnIndex++, string.Empty, textRight);
+            ExcelCell emptyCell = new ExcelCell(columnIndex++, string.Empty, _textRight);
             emptyCell.RenderCell(row);
         }
 
@@ -184,8 +180,6 @@
             decimal subTotal;
 
             EventExcel loseEvent = null;
-            ICellStyle textCenter = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Center);
-
             var groupEvents = events.GroupBy(e => e.WinLossDate);
 
             foreach (var grp in groupEvents)
@@ -200,7 +194,7 @@
                     columnIndex,
                     columnIndex,
                     grp.Key,
-                    textCenter);
+                    _textCenter);
 
                 columnIndex = dateCellRange.RenderCellRange(_sheet);
 
@@ -241,11 +235,6 @@
             Match matchObject;
             StringBuilder matchBuilder = new StringBuilder(128);
 
-            ICellStyle textCenter = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Center);
-            ICellStyle textLeft = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Left);
-            ICellStyle number = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, false, false);
-            ICellStyle negativeNumber = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.BackgroundColorIndex, true, true);
-
             if (isLoseEvent)
             {
                 matchBuilder.Append("Total of losing tickets");
@@ -267,31 +256,31 @@
                 }
             }
 
-            cell = new ExcelCell(columnIndex++, matchBuilder.ToString(), textLeft);
+            cell = new ExcelCell(columnIndex++, matchBuilder.ToString(), _textLeft);
             cell.RenderCell(row);
 
             if (isLoseEvent)
             {
-                cell = new ExcelCell(columnIndex++, "-", number);
+                cell = new ExcelCell(columnIndex++, "-", _number);
             }
             else
             {
-                cell = new ExcelCell(columnIndex++, eventObject.Odds, number);
+                cell = new ExcelCell(columnIndex++, eventObject.Odds, _number);
             }
 
             cell.RenderCell(row);
 
-            cell = new ExcelCell(columnIndex++, eventObject.Stake, number);
+            cell = new ExcelCell(columnIndex++, eventObject.Stake, _number);
             cell.RenderCell(row);
 
             string winLossPlayerComm = string.Format(
                 "{0}\n{1}", 
                 eventObject.WinLoss.ToString("N2"), 
                 eventObject.PlayerComm.ToString("N2"));
-            cell = new ExcelCell(columnIndex++, winLossPlayerComm, negativeNumber);
+            cell = new ExcelCell(columnIndex++, winLossPlayerComm, _negativeNumber);
             cell.RenderCell(row);
 
-            cell = new ExcelCell(columnIndex++, eventObject.Status, textCenter);
+            cell = new ExcelCell(columnIndex++, eventObject.Status, _textCenter);
             cell.RenderCell(row);
         }
 
@@ -325,6 +314,15 @@
             }
 
             _currentRowIndex++;
+        }
+
+        private void InitCellStyle(HSSFWorkbook workbook)
+        {
+            _textCenter = NpoiExcelUtils.TextStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Center);
+            _textLeft = NpoiExcelUtils.TextStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Left);
+            _textRight = NpoiExcelUtils.TextStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Right);
+            _number = NpoiExcelUtils.DecimalStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, false);
+            _negativeNumber = NpoiExcelUtils.DecimalStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, true, true);
         }
     }
 }
