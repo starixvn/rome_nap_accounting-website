@@ -67,10 +67,10 @@
 
             RenderTitle("System Parlay Details", columnsWidth);
             RenderHeader(columnsName);
-            RenderSystemParlayDetails(model.Events);
+            //RenderSystemParlayDetails(model.Events);
 
-            RenderCombinationDetailsSubTotal(model.Outstanding, "Outstanding");
-            _currentRowIndex++;
+            //RenderCombinationDetailsSubTotal(model.Outstanding, "Outstanding");
+            //_currentRowIndex++;
 
             RenderCombinationDetailsSubTotal(model.Total, "Total");
 
