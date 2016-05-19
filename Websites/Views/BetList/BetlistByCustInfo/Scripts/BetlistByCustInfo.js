@@ -71,7 +71,7 @@
                     fullWidth: true,
                     fullHeight: false,
                     gridWidth: 970,
-                    gridHeight: 700,
+                    gridHeight: 500,
                     freezeWidth: 0,
                     numberFreezeCol: 0
                 });
