@@ -155,16 +155,19 @@
         {
             int columnIndex = _startColumnIndex;
 
-            ExcelCellRange textSubTotal = new ExcelCellRange(_currentRowIndex, _currentRowIndex, columnIndex, columnIndex + 3, columnTitle, _textRight);
+            ICellStyle textRight = NpoiExcelUtils.TextStyle(_workbook, NpoiExcelUtils.HeaderTitleColorIndex, true, HorizontalAlignment.Right);
+            ICellStyle negativeNumber = NpoiExcelUtils.DecimalStyle(_workbook, NpoiExcelUtils.HeaderTitleColorIndex, true, true);
+
+            ExcelCellRange textSubTotal = new ExcelCellRange(_currentRowIndex, _currentRowIndex, columnIndex, columnIndex + 3, columnTitle, textRight);
             int lastColumn = textSubTotal.RenderCellRange(_sheet);
             columnIndex += lastColumn;
 
             IRow row = _sheet.GetRow(_currentRowIndex);
 
-            ExcelCell valueSubTotal = new ExcelCell(columnIndex++, subTotal, _negativeNumber);
+            ExcelCell valueSubTotal = new ExcelCell(columnIndex++, subTotal, negativeNumber);
             valueSubTotal.RenderCell(row);
 
-            ExcelCell emptyCell = new ExcelCell(columnIndex++, string.Empty, _textRight);
+            ExcelCell emptyCell = new ExcelCell(columnIndex++, string.Empty, textRight);
             emptyCell.RenderCell(row);
         }
 
