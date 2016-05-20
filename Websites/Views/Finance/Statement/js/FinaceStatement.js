@@ -200,11 +200,12 @@
         }
         html += ReverseHTML;
 
-        for (var i = 1; i < rowspanCreator; i++) {
+        for (var i = 1; i < rowspanCreator && i < rowspanWinLoss ; i++) {
+           
             html += '<tr id="' + row.RefNo + '"  name="' + row.RefNo + '_Main" class="' + cssClass + '"><td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[i].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + row.ListTrans[i].Remark + '</div></td><td><div class="r" style="width:110px; ">' + Helper.formatCSS(row.ListTrans[i].Total) + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(row.ListTrans[i].AccumTotal) + '</div></td><td><div class="c" style="width:70px;">' + row.ListTrans[i].TransDate + '</div></td></tr>';
         }
 
-        if (rowspanWinLoss > rowspanCreator) {
+        if (rowspanWinLoss > rowspanCreator ) {
             for (var i = rowspanCreator; i < rowspanWinLoss; i++) {
                 html += '<tr id="' + row.RefNo + '"  name="' + row.RefNo + '_Main" class="' + cssClass + '"><td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[i].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + row.ListTrans[i].Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(row.ListTrans[i].Total) + '</div></td><td><div class="r" style="width:110px;">' + row.ListTrans[i].AccumTotal + '</div></td><td><div class="c" style="width:70px;">' + row.ListTrans[i].TransDate + '</div></td>';
                 if (i == rowspanCreator) {
