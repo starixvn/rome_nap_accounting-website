@@ -96,7 +96,7 @@ public class UpdateCustomerStatus : BaseHandler
                     break;
                 case "autompt":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
-                    
+
                     custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
                     if (custcs.CasinoSync)
                     {
@@ -199,7 +199,7 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid isupddonwline parameters");
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledHROpenTote(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;               
+                    break;
                 case "disabledCS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -276,11 +276,19 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "disabledEsports":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    new CustomerUpdateStatus().CustomerUpdateDisabledEsport(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
+                    if (Permissions.GetHostPermission(Enumerations.Functions.Customer.EnableEsports))
+                    {
+                        isUpdDownline = false;
+                        if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
+                            throw new AccException("Invalid isupddonwline parameters");
+                        new CustomerUpdateStatus().CustomerUpdateDisabledEsport(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
+                        s = "parent.changeDisplayStatus();";
+                    }
+                    else
+                    {
+                        context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert("You are not authorized on this function.") +
+                                   "</script>");
+                    }
                     break;
 
                 case "enableHorseRacingFixedOdds":
