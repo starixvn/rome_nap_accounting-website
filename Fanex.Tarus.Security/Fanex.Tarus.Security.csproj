@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
@@ -55,11 +59,13 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.GoldDeluxe.CoreSetting">
-      <HintPath>..\Dependency\GoldDeluxe\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting">
-      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
@@ -84,6 +90,10 @@
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

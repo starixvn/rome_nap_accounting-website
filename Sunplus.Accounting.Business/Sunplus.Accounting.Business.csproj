@@ -61,11 +61,11 @@
       <HintPath>..\Dependency\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoLibrary, Version=1.0.2.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoTempLibrary, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoTempLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11\lib\net40\CasinoTempLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase">
@@ -96,8 +96,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting">
-      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
@@ -164,6 +165,10 @@
     </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Utilities">
+      <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Bingo.Core">
       <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Core.dll</HintPath>
