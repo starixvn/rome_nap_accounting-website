@@ -339,7 +339,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             isHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowCricket || !isIMBC || isDeposit;
                                             break;
                                         case "21":
-                                            isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;                                            
+                                            isHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowAllBet || isDeposit;
                                             isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
@@ -347,7 +347,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
 
                                         case "22":
-                                            isHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowVoidbridge;                                            
+                                            isHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowVoidbridge;
                                             isSyncVoidbridge = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
@@ -901,8 +901,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 var hideCheckBoxAllbet = !WebSettings.IsShowAllBet ||
                                     !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
-                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge ||
-                                    !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
+                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
+                                // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
