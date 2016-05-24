@@ -70,12 +70,13 @@
                 <div>
                     @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
                     {
+                        var betcheck = betdetail.Ticket.BetTypeId == 29 ? betdetail.Ticket.BetCheck : null;
                         var html = Html.Action("GetMixParlayDetail", "BetList", new { 
                           transId = betdetail.Ticket.TransId,
                           refNo = betdetail.Ticket.RefNo,
                           hdp1 = betdetail.Ticket.Handicap1,
                           hdp2 = betdetail.Ticket.Handicap2,
-                          betCheck = betdetail.Ticket.BetCheck,
+                          betCheck = betcheck,
                           betTeam = betdetail.Ticket.BetTeam
                         });
                         @html;

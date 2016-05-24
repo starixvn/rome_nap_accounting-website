@@ -3,7 +3,9 @@
 }
 
 function showMP(refno, listType) {
-    var spEvent = obj('spEvent_' + refno);
+	var spEvent = obj('spEvent_' + refno);
+	if (!spEvent) return;
+
     if (spEvent.className == 'hide') {
         if (spEvent.innerHTML == "") {
             BlockUI();
