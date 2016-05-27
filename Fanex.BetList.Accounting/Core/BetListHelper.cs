@@ -522,9 +522,9 @@ namespace Fanex.BetList.Accounting.Core
                 return betlistHelper.GetRNGCasinoStatus(ticketDetail);
             }
 
-            if (IsRNGCasino(ticketDetail.Ticket.SportTypeId))
+            if (IsVoidbridge(ticketDetail.Ticket.SportTypeId))
             {
-                return betlistHelper.GetRNGCasinoStatus(ticketDetail);
+                return betlistHelper.GetVoidbridgeStatus(ticketDetail);
             }
 
             string statusHtml = string.Empty;

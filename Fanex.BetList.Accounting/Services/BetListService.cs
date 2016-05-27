@@ -31,7 +31,7 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
-
+    using Sunplus.Agent.Model.Entities;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>

@@ -62,7 +62,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.3-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -73,12 +73,12 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.4\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.12.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.3-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.12.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.3-beta\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
@@ -92,12 +92,12 @@
     <Reference Include="Fanex.BetList.MyanmarOdds">
       <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.4\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.0.8-beta\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
+    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.0.9\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Voidbridge, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.11-beta\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.14\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common">
@@ -322,6 +322,83 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\btn_UI04.png" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\icon_UI02.png" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\oddsTable_th.png" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\popup.png" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\table_w.css" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_F_Y.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_10_H.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_2_F.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_2_H.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_3_F.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_3_H.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_5_F.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_5_F_over.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_5_F_S.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_5_H.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_5_H_N.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_7_F.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_7_H.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_Held.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\blank_Held_S.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C1.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C2.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C3.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C4.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C5.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C6.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C7.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C8.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\C9.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\CA.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\CJ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\CK.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\CQ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D1.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D2.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D3.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D4.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D5.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D6.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D7.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D8.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\D9.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\DA.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\DJ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\DK.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\DQ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\front.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\GR.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H1.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H2.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H3.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H4.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H5.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H6.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H7.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H8.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\H9.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\HA.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\HJ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\HK.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\HQ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\paigow_broken.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S1.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S2.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S3.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S4.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S5.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S6.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S7.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S8.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\S9.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\SA.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\SJ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\SK.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\SQ.jpg" />
+    <Content Include="Content\Fanex.Result.3rdLiveCasino\template\public\Poker\threecard_broken.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
