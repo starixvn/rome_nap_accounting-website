@@ -1597,7 +1597,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             #region Esports
 
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]))
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]) && (Permissions.HasPermission(Enumerations.Functions.Customer.EnableEsports)))
             {
                 bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
                 bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
