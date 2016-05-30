@@ -221,6 +221,7 @@
     <Compile Include="Cache\Report.cs" />
     <Compile Include="Helper\Check.cs" />
     <Compile Include="Helper\DataUtils.cs" />
+    <Compile Include="Helper\EncodingUtil.cs" />
     <Compile Include="Helper\ExcelAutomationUtils.cs" />
     <Compile Include="Helper\ExcelGemboxUtils.cs" />
     <Compile Include="Helper\IP\AccountingIP.cs" />

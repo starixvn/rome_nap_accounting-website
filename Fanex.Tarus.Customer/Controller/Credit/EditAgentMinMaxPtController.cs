@@ -102,6 +102,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
 
+                customer = EncodingUtil.HtmlEncode(customer);
+
                 // Do edit agent
                 currentContext.CustId = AppSession.AccId;
                 currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;

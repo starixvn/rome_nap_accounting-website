@@ -9,7 +9,6 @@ using DNAide.Data;
 using DNAide.Web;
 using Fanex.Tarus.Statements.Models;
 using IBCUtils;
-using Microsoft.Security.Application;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
@@ -445,7 +444,7 @@ namespace Sunplus.Accounting.Business.Statement
                         string strAccDate = string.Empty;
                         //what is it .Replace("<", "&lt;"); what do you mean?
                         //string remark =  entity.TransDescription.Replace("<", "&lt;");// CastAide.AsString(row["transdesc"]).Replace("<", "&lt;");
-                        string remark = AntiXss.HtmlEncode(entity.TransDescription);
+                        string remark = HttpUtility.HtmlEncode(entity.TransDescription);
                         string type = entity.TransType; // CastAide.AsString(row["transtype"]);
 
                         string creator = entity.Creator.Username; // CastAide.AsString(row["creator"]);
