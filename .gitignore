@@ -19,8 +19,7 @@ Thumbs.db
 *.log
 *.orig
 *Settings.StyleCop
-*/Bin/*
-*/bin/*
+**/[Bb]in
 */obj/*
 */Sunplus.Data.DataAbstract/DLL/*
 *.lib
