@@ -37,13 +37,13 @@
         RegisterRouteMiscController(RouteTable.Routes);
 
         AreaRegistration.RegisterAllAreas();
-        
+
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
         RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
-        
+
         AutoMapperConfiguration.Configure();
     }
 
@@ -53,7 +53,6 @@
 
         //filters.Add(new LogExceptionFilter());
         filters.Add(new HandleErrorAttribute());
-
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)
@@ -99,7 +98,6 @@
 
     }
 
-
     void Application_End(object sender, EventArgs e)
     {
         //  Code that runs on application shutdown
@@ -127,12 +125,6 @@
 
             }
         }
-
-
-        #region MyRegion
-
-        #endregion
-
     }
 
     void Session_Start(object sender, EventArgs e)
@@ -162,13 +154,14 @@
 
     void Application_AcquireRequestState(object sender, EventArgs e)
     {
-
         string url = Request.RawUrl.ToLower();
-
+        int pos = Request.RawUrl.LastIndexOf("/") + 1;
+        string pageFileName = Request.RawUrl.Substring(pos, Request.RawUrl.Length - pos).ToLower();
         var isDowntime = ConfigurationManager.AppSettings["UM"] == "1";
+        var notCheckUMPages = ConfigurationManager.AppSettings["NotCheckUMPages"].ToString().ToLower().Split(';');
         try
         {
-            if (isDowntime && url.Contains(".aspx"))
+            if (isDowntime && url.Contains(".aspx") && !notCheckUMPages.Contains(pageFileName))
             {
                 var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
                 if (downTimeInfo.IsDowntime)
@@ -182,7 +175,6 @@
                     if (!url.Contains(Constants.Page.SignIn.ToLower().Replace("~", "")) && !Request.IsAuthenticated)
                     {
                         Response.Redirect(Constants.Page.SignIn);
-
                     }
                 }
             }
@@ -191,18 +183,12 @@
         {
             //Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
     }
-
-
 
     private void OnRemoveRolePermissionCache(String k, Object v, CacheItemRemovedReason r)
     {
         //InitRolePermission();
     }
-
-
-
 
     #region Kill session and write log
     public void InsertSessionCacheItem(string onUserId, string username, string roleId, string serverId)
@@ -217,6 +203,7 @@
         CacheItemRemovedCallback oRemove = new CacheItemRemovedCallback(this.KickOut);
         System.Web.HttpContext.Current.Cache.Insert(msSessionCacheName, serverId, null, DateTime.MaxValue, TimeSpan.FromSeconds(mnSessionSeconds), CacheItemPriority.High, oRemove);
     }
+
     public void RemoveSessionCacheItem(string onUserId, string username, string roleId)
     {
         string msSessionCacheName = onUserId + "_" + username + "_" + roleId;
@@ -225,6 +212,7 @@
             System.Web.HttpContext.Current.Cache.Remove(msSessionCacheName);
         }
     }
+
     public string GetSessionCacheItem(string onUserId, string username, string roleId)
     {
         string msSessionCacheName = onUserId + "_" + username + "_" + roleId;
@@ -238,6 +226,7 @@
 
         return sRet;
     }
+
     public void KickOut(string key, object val, CacheItemRemovedReason r)
     {
         if (CacheItemRemovedReason.Expired == r)
@@ -249,6 +238,7 @@
             Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLogOut(onUserId, username);
         }
     }
+
     #endregion
     //Temporarily deny U3 account from access un-limited pages
     bool U3Limit(string url)
