@@ -20,7 +20,6 @@ namespace Fanex.Tarus.Business.Implement
     using Fanex.Tarus.Entities;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.UMControllerLibrary;
 
     /// <summary>
     /// Common Service.
