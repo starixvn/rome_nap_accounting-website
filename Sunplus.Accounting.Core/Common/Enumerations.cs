@@ -151,7 +151,8 @@ namespace Sunplus.Accounting.Core.Common
                 AutoSuspend,
                 AGCasino,
                 ConfigureDirectAccount,
-                UploadVR
+                UploadVR,
+                EnableEsports
             }
 
             public enum Transfer
