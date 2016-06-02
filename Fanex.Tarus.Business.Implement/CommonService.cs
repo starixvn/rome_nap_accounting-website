@@ -8,6 +8,10 @@
 //   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
 // </history>
 
+using ONEbook.UM.Models;
+using ONEbook.UM.Services;
+using ONEbook.UM.Services.Impl;
+
 namespace Fanex.Tarus.Business.Implement
 {
     using System;
@@ -16,51 +20,45 @@ namespace Fanex.Tarus.Business.Implement
     using Fanex.Tarus.Entities;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.UMControllerLibrary;
 
     /// <summary>
     /// Common Service.
     /// </summary>
     public class CommonService : BaseService, ICommonService
     {
-        /// <summary>
-        /// Gets the downtime information.
-        /// </summary>
-        /// <returns>The downtime information.</returns>
         public Downtime GetDowntimeInfo()
         {
-            bool isDowntime = false;
-            var umservice = new ONEbook.UM.Services.Impl.MaintenanceService();
-            var downTime = new Downtime
+            IMaintenanceService umservice = new MaintenanceService();
+
+            Downtime noDowntime = new Downtime
             {
                 From = "00:00 AM",
                 To = "23:59 PM",
                 IsDowntime = false
             };
+
             try
             {
-                if (HttpContext.Current.Request.IsLocal
-                    || umservice.IsPassUnderMaintenance())
+                if (!umservice.IsUnderMaintenance())
                 {
-                    return downTime;
+                    return noDowntime;
                 }
 
-                isDowntime = umservice.IsUnderMaintenance();
+                UnderMaintenanceTime underMaintenanceTime = umservice.GetUnderMaintenanceTime();
+
+                return new Downtime
+                {
+                    From = underMaintenanceTime.From,
+                    To = underMaintenanceTime.To,
+                    IsDowntime = true
+                };
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            if (isDowntime)
-            {
-                var timeInfo = umservice.GetUnderMaintenanceTime();
-                downTime.From = timeInfo.From;
-                downTime.To = timeInfo.To;
-                downTime.IsDowntime = true;
-            }
-
-            return downTime;
+            return noDowntime;
         }
     }
 }
