@@ -12,7 +12,7 @@ using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using IBCUtils;
 using DNAide.Core;
-
+using Sunplus.Accounting.Entities.Customer;
 
 
 public class UpdateCustInfo : BaseHandler
@@ -51,8 +51,9 @@ public class UpdateCustInfo : BaseHandler
                 {
                     if (context.Request["custId"] == null) return;
 
-                    var custDetail = Sunplus.Accounting.Business.Customer.CustomerService.GetCustInfo(context.Request);
-                    var custId = CastAide.AsInt32(context.Request["custId"]);
+                    CustDetail custDetail = Sunplus.Accounting.Business.Customer.CustomerService.GetCustInfo(context.Request);
+                    custDetail = EncodingUtil.HtmlEncode(custDetail);
+                    int custId = CastAide.AsInt32(context.Request["custId"]);
 
                     Hashtable ht = new Hashtable();
                     ht.Add("custid", custId);
