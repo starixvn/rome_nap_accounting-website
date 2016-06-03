@@ -692,14 +692,24 @@ function ViewVoidbridgeBrokenGame(custId, betCheck) {
 
     var url = '../Report/ViewVoidbridgeResult.aspx?';
     $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
-        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+        if (result.responseText.indexOf("<table") < 0) {
+            parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+        }
+        else {
+            parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
+        }
     });
 }
 
 function ViewVoidbridgeResult(custId, betCheck) {
     var url = '../Report/ViewVoidbridgeResult.aspx?custId=' + custId + '&betCheck=' + betCheck;
     $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
-        parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+        if (result.responseText.indexOf("<table") < 0) {
+            parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
+        }
+        else {
+            parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
+        }
     });
 }
 
