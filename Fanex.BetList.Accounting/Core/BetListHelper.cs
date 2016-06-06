@@ -493,12 +493,12 @@ namespace Fanex.BetList.Accounting.Core
                 }
             }
 
-            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
+            resultLink = (string.IsNullOrEmpty(resultLink) || BetTypeContants.Outright == ticketDetail.Ticket.BetTypeId) ?
                 string.Empty :
                 "<br />" +
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
                 "<br />";
-            return statusLabel + resultLink1;
+            return statusLabel + resultLink;
         }
 
         /// <summary>
