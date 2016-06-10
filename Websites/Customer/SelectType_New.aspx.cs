@@ -36,8 +36,17 @@ public partial class NewCustomer_SelectType_New : PageBase
             if (isFirstLoad)
             {
                 TemplateHandler.Assign(ref content, "{fSuper}", "none");
-                TemplateHandler.Assign(ref content, "{fInput}", "");
-                TemplateHandler.Assign(ref content, "{accUsername}", "Agent's username");
+                if(strSelect == "member" || strSelect == string.Empty)
+                {
+                    TemplateHandler.Assign(ref content, "{fInput}", "none");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref content, "{fInput}", string.Empty);
+                }
+
+                TemplateHandler.Assign(ref content, "{accUsername}", string.Empty);
+                TemplateHandler.Assign(ref content, "{fInput}", "none");                                
                 TemplateHandler.Assign(ref content, "{next}", "Next");
             }
             else
@@ -46,6 +55,7 @@ public partial class NewCustomer_SelectType_New : PageBase
                 {
                     case "member":
                         strMember = "member\" selected=\"true";
+                        TemplateHandler.Assign(ref content, "{fInput}", "none");
                         break;
 
                     case "agent":

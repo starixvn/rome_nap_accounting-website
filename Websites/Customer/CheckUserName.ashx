@@ -43,7 +43,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                     }
                     else
                     {
-                        context.Response.Write("parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ",'" + siteName + "');");
+                        context.Response.Write("parent.document.getElementById('frmSearchCopyAddNewSuper').style.display='block';parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ",'" + siteName + "');");
                     }
                 }
                 else

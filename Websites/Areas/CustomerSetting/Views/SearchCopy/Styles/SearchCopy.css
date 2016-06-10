@@ -42,7 +42,6 @@ body.wait *, body.wait
 .newdoubleline
 {
     clear: both;
-    height: 20px;
 }
 
 .btnNextL
@@ -88,6 +87,7 @@ body.wait *, body.wait
     height: 6px;
     width: 183px;
     background-image: url("Styles/Images/bgSteps.png");
+    text-transform: capitalize;
 }
 
 #divSearchCopy .step1-active

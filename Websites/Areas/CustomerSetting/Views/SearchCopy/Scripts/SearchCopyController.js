@@ -23,25 +23,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.newUser = {};
     $scope.siteName = '';
 
-    var sports = [
-            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
-            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
-            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
-            { sportname: 'Racing', sportvalue: 'tabRacing' },
-            { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
-            { sportname: 'Casino', sportvalue: 'tabCasino' },
-            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
-            { sportname: 'Bingo', sportvalue: 'tabBingo' },
-            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
-            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
-            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
-            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
-            { sportname: 'Cockfighting', sportvalue: 'tabCockFighting' },
-            { sportname: 'Albet', sportvalue: 'tabAllbet' },
-            { sportname: 'Macau Games', sportvalue: 'tabVoidbridge' }
-    ];
-
-    $scope.sports = angular.copy(sports);
+    $scope.sports = angular.copy(parent.sports);
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -214,7 +196,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         var url = $("#currentURL").val();
         switch (tabId) {
             case 'tabSportsbook':
-                url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.siteName;
+                if (parent.level == 'super') {
+                    url += "EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.siteName;
+                }
+                else {
+                    url += "EditMember/EditMemberPage?custId=" + $scope.existedUser.userid + "&agentId=" + $scope.parentId + "&uname=" + $scope.existedUser.username + "&siteName=" + $scope.siteName;
+                }
                 $scope.loadData("#frmSportbook", url);
                 $scope.resize("#frmSportbook");
                 break;
@@ -339,7 +326,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $scope.existedUser.userid = -1;
 
         var param = {
-            username: username
+            username: username,
+            level: parent.level
         };
 
         try { parent.BlockUI(); } catch (e) { }
@@ -355,8 +343,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             data: JSON.stringify(param),
             success: function (customerSettingView) {
                 var custid = customerSettingView.UserId;
-                $scope.addSportsToDropdownlist(customerSettingView.StatusSports);
+                //$scope.addSportsToDropdownlist(customerSettingView.StatusSports);
                 $scope.existedUser.userid = custid;
+                $scope.parentId = customerSettingView.ParentId;
+                $scope.newUser.BreadCrumbs = customerSettingView.BreadCrumbs;
                 if (custid != "-1") {
                     //step1
                     message.hideAlertMessage("errorMsg");
@@ -372,7 +362,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 else {
                     $("#checkExisted").removeClass('success');
                     $("#checkExisted").addClass('not_success');
-                    message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
+                    message.showAlertMessage("errorMsg", "The " + parent.level + " doesn’t exist !", 1);
                     $("#errorMsg").width("550");
                 }
 
@@ -390,7 +380,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.getCustomerInfoByUserId = function (custid) {
         var param = {
-            custid: custid
+            custid: custid,
+            level: parent.level
         };
 
         $.ajax({
@@ -402,19 +393,29 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             success: function (custInfo) {
                 message.hideAlertMessage("errorMsg");
 
-                $scope.existedUser.selectedSite.SiteName = custInfo.Site;
-                $scope.siteName = custInfo.Site;
-                $scope.existedUser.maxCredit = formatNumber('maxCredit', custInfo.Credit, true);
+                if ($scope.existedUser.selectedSite) {
+                    $scope.existedUser.selectedSite.SiteName = custInfo.Site || "";
+                }
+                else {
+                    $scope.existedUser.selectedSite = {};
+                    $scope.existedUser.selectedSite.SiteName = custInfo.Site || "";
+                }
+                $scope.siteName = custInfo.Site || "";
+                $scope.existedUser.credit = formatNumber('maxCredit', custInfo.Credit, true);
+                $scope.existedUser.maxCredit = (parent.level == "super" ? formatNumber('maxCredit', custInfo.Credit, true) : formatNumber('maxCredit2', custInfo.CreditMax, true));
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
                 $scope.existedUser.syncBingo = custInfo.IsSyncBingo;
                 $scope.existedUser.syncLiveCasino = custInfo.IsSyncLiveCasino;
+                $scope.existedUser.disableBingo = custInfo.DisableBingo;
+                $scope.existedUser.disableCasino = custInfo.DisableCasino;
+                $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
 
                 $scope.getAllSites();
 
                 $scope.$apply(function () {
-                    $scope.sports = angular.copy(sports);
+                    $scope.sports = angular.copy(parent.sports);
                     $scope.selectedSport = $scope.sports[0];
                 });
 
@@ -462,16 +463,22 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             LastName: $scope.newUser.lastname,
             Phone: $scope.newUser.phone,
             MobilePhone: $scope.newUser.mobilephone,
-            Site: $scope.existedUser.selectedSite.SiteName,
+            Site: $scope.existedUser.selectedSite ? ($scope.existedUser.selectedSite.SiteName || "") : "",
             Fax: $scope.newUser.fax,
-            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
+            Credit: (parent.level == 'member' ? $scope.existedUser.credit.replace(/,/g, '') : $scope.existedUser.maxCredit.replace(/,/g, '')),
             IsInternal: $scope.newUser.internaluser,
             CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,
             Creator: $("#currentUserId").val(),
+            CreatorName: adminUsername,
             IsSyncCasino: $scope.existedUser.syncCasino == "1" ? true : false,
             IsSyncBingo: $scope.existedUser.syncBingo == "1" ? true : false,
-            IsSyncLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? true : false
+            IsSyncLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? true : false,
+            DisableBingo: $scope.existedUser.disableBingo,
+            DisableCasino: $scope.existedUser.disableCasino,
+            DisableLiveCasino: $scope.existedUser.disableLiveCasino,
+            CustLevel: (parent.level == 'member' ? 1 : 4),
+            UplineId: $scope.parentId
         };
 
         message.hideAlertMessage("errorMsg");

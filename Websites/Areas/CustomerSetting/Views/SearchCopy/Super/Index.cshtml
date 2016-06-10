@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Search and Copy Super";
     Layout = "~/Areas/CustomerSetting/Views/SearchCopy/Shared/_Layout.cshtml";
+    var query = Request.UrlReferrer.Query == null ? "level=Member" : Request.UrlReferrer.Query;
+    var level = query.Split('=').ElementAt(1);
 }
 @section Styles
 {
@@ -9,9 +11,9 @@
 }
 @section Scripts
 {
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=20140107_1")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=20140109_1")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=20140107_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=20140109_1")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=20140107_1")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 }
 
 <script type="text/javascript">
@@ -38,7 +40,7 @@
     <div class="formPanel">
         <div id="panelStep1" ng-click="step2Back();">
             <span id="spanstep1" class="step step1-active">Step 1: <span style="font-weight: bold">
-                Search Existing Super</span> </span>
+                Search Existing @level</span> </span>
         </div>
         <div id="panelStep2" ng-click="step1Next();">
             <span id="spanstep2" class="step step2-inactive">Step 2: <span style="font-weight: bold">

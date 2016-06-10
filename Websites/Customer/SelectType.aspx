@@ -61,11 +61,11 @@
                 f.location.href = url;
             }
         }
-        function OpenInputParent() {
+        /*function OpenInputParent() {
             document.getElementById("errMsg").innerHTML = "";
             var selectType = obj("listType").options[obj("listType").selectedIndex].value;
             var f = parent.frames["mainCust"];
-            if (selectType == "member" || selectType == "agent") {
+            if (selectType == "agent") {
                 parent.document.body.rows = "30,*";
                 f.location.href = "Empty.html";
             }
@@ -73,13 +73,12 @@
                 parent.document.body.rows = "130,*";
                 f.location.href = "Empty.html";
             }
-            else if (selectType == "super") {
+            else if (selectType == "super" || selectType == "member") {
                 parent.document.body.rows = "30,*";
                 //f.location.href="AddNewSuper.aspx"; 
                 f.location.href = "V2/AddNewSuper.aspx"; //<-- Khoa.Tran add new v2
             }
-            document.getElementById('fSelectType').submit();
-        }
+        }*/
         function CheckUserName() {
             document.getElementById("errMsg").innerHTML = "";
             if (isEmpty("txtUsername")) {

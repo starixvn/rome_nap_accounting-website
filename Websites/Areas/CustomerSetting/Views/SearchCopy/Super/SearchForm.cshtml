@@ -1,4 +1,8 @@
-﻿<div class="form550">
+﻿@{ 
+    var query = Request.UrlReferrer.Query ?? "level=super";
+    var level = query.Split('=').ElementAt(1);
+}
+<div class="form550">
     <div style="height: 30px; background-color: #B6C4D1">
     </div>
     <div class="row username">
@@ -17,7 +21,7 @@
             <span class="start" style="font-weight: bold">All settings will be copied from entered username.</span>
             <br />
             <span class="start" style="font-weight: bold">Special, AutoSuspend and Internal status
-                will not be copied from the existing super.</span>
+                will not be copied from the existing @level.</span>
         </div>
     </div>
     <div class="newdoubleline">

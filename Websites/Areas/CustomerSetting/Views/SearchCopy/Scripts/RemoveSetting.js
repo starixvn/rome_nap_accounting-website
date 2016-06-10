@@ -24,6 +24,7 @@ PTSetting.SportType = new function () {
             $content.find('.selectcomm').attr('disabled', true);
             $content.find('.PTSelect').attr('disabled', true);
             $content.find('input:button').attr('disabled', true);
+            $content.find('tr[id=suspended-row]').css('display', 'none');
         }, 1.5 * delayTime);
     };
 
