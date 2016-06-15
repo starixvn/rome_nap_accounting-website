@@ -55,9 +55,40 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             return currencies;
         }
 
-        public DataTable GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
+        public IEnumerable<SMAGroupHeadline> GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
         {
-            return ExecuteDataTable(criteria.GetSettingKey(), criteria.GetSPParams());
+            IDictionary<int, SMAGroupHeadline> groupHeadlinesHash = new Dictionary<int, SMAGroupHeadline>(128);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSPParams()))
+                {
+                    SMAEntity entity;
+                    SMAGroupHeadline groupHeadline;
+
+                    while (reader.Read())
+                    {
+                        entity = ParseSMAEntity(reader);
+
+                        if (!groupHeadlinesHash.TryGetValue(entity.GroupId, out groupHeadline))
+                        {
+                            groupHeadline = new SMAGroupHeadline
+                            {
+                                GroupId = entity.GroupId,
+                                GroupName = entity.GroupName,
+                                Owner = entity.Owner,
+                                SMAEntities = new List<SMAEntity>(64)
+                            };
+
+                            groupHeadlinesHash.Add(entity.GroupId, groupHeadline);
+                        }
+
+                        groupHeadline.SMAEntities.Add(entity);
+                    }
+                }
+            }
+
+            return groupHeadlinesHash.Values;
         }
 
         public Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria)
@@ -68,21 +99,6 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
         public Result UpdateOwner(UpdateOwnerCriteria criteria)
         {
             return ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSPParams());
-        }
-
-        private DataTable ExecuteDataTable(string settingKey, Hashtable inputParams = null)
-        {
-            using (var db = new ObjectDb(settingKey))
-            {
-                var ds = db.ExecuteDataSet(inputParams ?? new Hashtable());
-
-                if (ds != null && ds.Tables.Count > 0)
-                {
-                    return ds.Tables[0];
-                }
-            }
-
-            return null;
         }
 
         private Result ExecuteNonQuery(string settingKey, Hashtable inputParams)
@@ -99,6 +115,37 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             }
 
             return null;
+        }
+
+        private SMAEntity ParseSMAEntity(IDataReader reader)
+        {
+            var entity = new SMAEntity
+            {
+                GroupId = Convert.ToInt32(reader["custheadlineid"]),
+                GroupName = reader["groupname"].ToString(),
+                CustId = Convert.ToInt32(reader["custid"]),
+                Username = reader["username"].ToString(),
+                IsSuspend = Convert.ToBoolean(reader["issuspend"]),
+                IsClosed = Convert.ToBoolean(reader["isclosed"]),
+                IsEnable = Convert.ToBoolean(reader["isenable"]),
+                Site = reader["site"].ToString(),
+                Currency = reader["currencyname"].ToString(),
+                RoleId = Convert.ToInt32(reader["roleid"]),
+                Owner = reader["ownername"].ToString()
+            };
+
+            object headlineType = reader["headlinetype"];
+
+            if (headlineType == null || headlineType is DBNull)
+            {
+                entity.HeadlineTypeId = null;
+            }
+            else
+            {
+                entity.HeadlineTypeId = Convert.ToInt32(headlineType);
+            }
+
+            return entity;
         }
     }
 }

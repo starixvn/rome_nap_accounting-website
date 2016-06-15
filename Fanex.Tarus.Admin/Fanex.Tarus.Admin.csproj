@@ -140,7 +140,9 @@
     <Compile Include="Business\SecurityCode\AdminSecurityCodeService.cs" />
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
-    <Compile Include="Business\SMAManagement\SMAManagementService.cs" />
+    <Compile Include="Business\SMAManagement\SMAManagementService.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controller\IMBCAdminController.cs" />
     <Compile Include="Controller\LimitNewMemberController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
@@ -193,7 +195,9 @@
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
     <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
     <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
-    <Compile Include="Entities\SMAManagement\SMAList.cs" />
+    <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
+    <Compile Include="Entities\SMAManagement\SMAGroupHeadline.cs" />
+    <Compile Include="Entities\SMAManagement\SMAManagerModel.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Models\AutoFollowBet\FollowTypeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

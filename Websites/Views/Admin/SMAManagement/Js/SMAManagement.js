@@ -1,134 +1,97 @@
-﻿$(document).ready(function () {
-	smaManagement.init();
-});
+﻿(function ($) {
+	"use strict";
 
-var smaManagement = {
-	errorElement: $("#err"),
-	currencyElement: $("#ddlCurrency"),
-	headlineTypeElement: $("#ddlHeadlineType"),
-	usernameElement: $("#txtUsername"),
-	groupHeadlineElement: $("#txtGroupHeadline"),
-	ownerElement: $("#txtOwner"),
-	positionElement: $("#ddlPosition"),
-	exportExcelElement: $("#btnExportExcel"),
-	smaMangementGridElement: $("#SMAMangementGrid"),
-	tblContentHeaderElement: $("#tblContentHeader"),
-	tblContentElement: $("#tblContent"),
+	var errorElement = $("#err"),
+		currencyElement = $("#ddlCurrency"),
+		headlineTypeElement = $("#ddlHeadlineType"),
+		usernameElement = $("#txtUsername"),
+		groupHeadlineElement = $("#txtGroupHeadline"),
+		ownerElement = $("#txtOwner"),
+		positionElement = $("#ddlPosition"),
+		exportExcelElement = $("#btnExportExcel"),
+		smaMangementGridElement = $("#SMAMangementGrid"),
+		tblContentHeaderElement = $("#tblContentHeader"),
+		tblContentElement = $("#tblContent");
 
-	colNoWidth: 30,
-	colGroupHeadlineWidth: 150,
-	colHeadlineTypeWidth: 150,
-	colOwnerWidth: 150,
-	colUsernameWidth: 120,
-	colStatusWidth: 120,
-	colSiteWidth: 100,
-	colCurrencyWidth: 60,
-	colPositionWidth: 80,
+	var colNoWidth = 30,
+		colGroupHeadlineWidth = 150,
+		colHeadlineTypeWidth = 150,
+		colOwnerWidth = 150,
+		colUsernameWidth = 120,
+		colStatusWidth = 120,
+		colSiteWidth = 100,
+		colCurrencyWidth = 60,
+		colPositionWidth = 80;
 
-	pageIndex: 1,
-	pageSize: 100,
-	totalItems: 0,
-	currentSMAList: [],
+	var pageIndex = 1,
+		pageSize = 100,
+		totalGroups = 0,
+		currentSMAGroupHeadlines = [];
 
-	sortType: '',
-	sortClass: '',
-	sortCol: '',
+	var sortType = "",
+		sortClass = "",
+		sortCol = "";
 
-	gridOptions: {},
+	var gridOptions = {};
 
-	init: function () {
-		smaManagement.assignSites();
-		smaManagement.assignStatus();
+	function assignNoInfo() {
+		showAlertMessage("err", "No information is available.", 1);
+		exportExcelElement.addClass("hidden");
+		smaMangementGridElement.addClass("hidden");
+	}
 
-		smaManagement.gridOptions = smaManagement.initGridOptions();
-		smaManagement.smaMangementGridElement.initGrid(smaManagement.gridOptions);
+	function assignSites() {
+		var site;
+		var multiselectData = [];
 
-		$('#btnSubmit').click(function () {
-			smaManagement.pageIndex = 1;
-			smaManagement.getSMAListByGroupHeadline();
-		});
-
-		$('#divSortingByGroupHeadline').click(function () {
-			smaManagement.sorting(this, 'GroupName');
-		});
-
-		$('#divSortingByOwner').click(function () {
-			smaManagement.sorting(this, 'Owner');
-		});
-
-		$('#divSortingByUsername').click(function () {
-			smaManagement.sorting(this, 'Username');
-		});
-
-		smaManagement.exportExcelElement.click(function () {
-			smaManagement.exportExcel();
-		});
-	},
-	assignSites: function () {
 		var totalSites = jsonSites ? jsonSites.length : 0;
 
-		if (totalSites > 0) {
-			var detail;
-			var tempData = [];
+		for (var i = 0; i < totalSites; i++) {
+			site = jsonSites[i];
 
-			for (var i = 0; i < totalSites; i++) {
-				detail = jsonSites[i];
-
-				tempData.push({
-					Id: 'selectSite' + detail.Value,
-					Value: detail.Value,
-					Text: detail.Text,
-					Checked: true,
-					Enable: true,
-					CssClass: '',
-					Items: []
-				});
-			}
-
-			$("#ddlSites").multiSelect({
-				minWidth: 110,
-				maxHeight: 450,
-				shadow: true,
-				showHeader: true,
-				isCheckAll: true,
-				showFooter: false,
-				checkAllText: 'All',
-				listData: tempData,
-				onCheck: function () {
-					if ($('#ddlSites').multiSelect('getCheckedItems').length <= 0) {
-						showAlertMessage("err", "Please choose Site!", 1);
-					}
-					else {
-						smaManagement.errorElement.empty();
-					}
-				},
-				noItemText: 'No site found.'
+			multiselectData.push({
+				Id: "selectSite" + site.Value,
+				Value: site.Value,
+				Text: site.Text,
+				Checked: true,
+				Enable: true,
+				CssClass: "",
+				Items: []
 			});
 		}
-		else {
-			$("#ddlSites").multiSelect({
-				minWidth: 110,
-				maxHeight: 450,
-				shadow: true,
-				showHeader: true,
-				isCheckAll: true,
-				showFooter: false,
-				listData: [],
-				noItemText: 'No site found.'
-			});
-		}
-	},
-	assignStatus: function () {
-		var detail;
-		var tempData = [];
+
+		$("#ddlSites").multiSelect({
+			minWidth: 110,
+			maxHeight: 450,
+			shadow: true,
+			showHeader: true,
+			isCheckAll: true,
+			showFooter: false,
+			checkAllText: "All",
+			listData: multiselectData,
+			onCheck: function () {
+				if ($("#ddlSites").multiSelect("getCheckedItems").length === 0) {
+					showAlertMessage("err", "Please choose Site!", 1);
+				}
+				else {
+					errorElement.empty();
+				}
+			},
+			noItemText: "No site found."
+		});
+	}
+
+	function assignStatus() {
+		var status;
+		var multiselectData = [];
 
 		for (var i = 0, totalStatus = jsonStatuses.length; i < totalStatus; i++) {
-			detail = jsonStatuses[i];
+			status = jsonStatuses[i];
 
-			tempData.push({
-				Id: 'ddlStatus' + detail.Value,
-				Value: detail.Value,
-				Text: detail.Text,
+			multiselectData.push({
+				Id: "ddlStatus" + status.Value,
+				Value: status.Value,
+				Text: status.Text,
 				Checked: true,
 				Enable: true,
 				CssClass: "",
@@ -143,21 +106,22 @@ var smaManagement = {
 			showHeader: true,
 			isCheckAll: true,
 			showFooter: false,
-			checkAllText: 'All',
-			listData: tempData,
+			checkAllText: "All",
+			listData: multiselectData,
 			onCheck: function () {
-				if ($('#ddlStatus').multiSelect('getCheckedItems').length <= 0) {
+				if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
 					showAlertMessage("err", "Please choose Status!", 1);
 				}
 				else {
-					smaManagement.errorElement.empty();
+					errorElement.empty();
 				}
 			},
-			noItemText: 'No status found.'
+			noItemText: "No status found."
 		});
-	},
-	initGridOptions: function () {
-		var frozenWidth = ((smaManagement.colNoWidth + smaManagement.colGroupHeadlineWidth + smaManagement.colHeadlineTypeWidth + smaManagement.colOwnerWidth + smaManagement.colUsernameWidth) + (5 * 4));
+	}
+
+	function initGridOptions() {
+		var frozenWidth = (colNoWidth + colGroupHeadlineWidth + colHeadlineTypeWidth + colOwnerWidth + colUsernameWidth) + (5 * 4);
 
 		return {
 			tblContentId: "tblContent",
@@ -167,9 +131,9 @@ var smaManagement = {
 			fullHeight: true,
 			gridHeight: 110,
 			freezeWidth: frozenWidth,
-			numberFreezeCol: 3,
+			numberFreezeCol: 5,
 			pagerOpts: {
-				callback: smaManagement.pageSelectCallback,
+				callback: pageSelectCallback,
 				start_per_page: 100,
 				step_per_page: 100,
 				max_items_per_page: 1000,
@@ -177,56 +141,82 @@ var smaManagement = {
 				current_page: 0
 			}
 		};
-	},
-	getParams: function () {
-		var username = smaManagement.usernameElement.val().toLowerCase();
-		if (username === 'all') {
-			username = '';
+	}
+
+	function getSelectedSites() {
+		if ($("#ddlSitesHeaderCheckBox").attr("checked")) {
+			return "";
 		}
 
-		var groupHeadline = smaManagement.groupHeadlineElement.val().toLowerCase();
-		if (groupHeadline === 'all') {
-			groupHeadline = '';
+		return $("#ddlSites").multiSelect("getCheckedItems").join(",");
+	}
+
+	function getParams() {
+		var username = usernameElement.val().toLowerCase();
+		if (username === "all") {
+			username = "";
 		}
 
-		var owner = smaManagement.ownerElement.val().toLowerCase();
-		if (owner === 'all') {
-			owner = '';
+		var groupHeadline = groupHeadlineElement.val().toLowerCase();
+		if (groupHeadline === "all") {
+			groupHeadline = "";
+		}
+
+		var owner = ownerElement.val().toLowerCase();
+		if (owner === "all") {
+			owner = "";
 		}
 
 		return {
-			siteId: smaManagement.getSelectedSites(),
-			currency: smaManagement.currencyElement.val(),
-			isOpen: $('#ddlStatusisOpen').prop('checked'),
-			isSusupended: $('#ddlStatusisSusupended').prop('checked'),
-			isClosed: $('#ddlStatusisClosed').prop('checked'),
-			isDisabled: $('#ddlStatusisDisabled').prop('checked'),
-			roleId: smaManagement.positionElement.val(),
+			siteId: getSelectedSites(),
+			currency: currencyElement.val(),
+			isOpen: $("#ddlStatusisOpen").prop("checked"),
+			isSusupended: $("#ddlStatusisSusupended").prop("checked"),
+			isClosed: $("#ddlStatusisClosed").prop("checked"),
+			isDisabled: $("#ddlStatusisDisabled").prop("checked"),
+			roleId: positionElement.val(),
 			username: username,
 			groupHeadline: groupHeadline,
-			headlineType: smaManagement.headlineTypeElement.val(),
+			headlineType: headlineTypeElement.val(),
 			owner: owner,
-			pageIndex: smaManagement.pageIndex,
-			pageSize: smaManagement.pageSize
+			pageIndex: pageIndex,
+			pageSize: pageSize
 		};
-	},
-	getSMAListByGroupHeadline: function () {
-		if (smaManagement.pageIndex === 1) {
-			if ($('#ddlSites').multiSelect('getCheckedItems').length === 0) {
+	}
+
+	function resetSorting() {
+		$(".sorter").removeClass("asc desc");
+		sortType = "";
+	}
+
+	function addSortingIconAfterRender(obj) {
+		resetSorting();
+
+		if (sortClass === "asc") {
+			$(obj).addClass("asc");
+		}
+		else {
+			$(obj).addClass("desc");
+		}
+	}
+
+	function getSMAGroupHeadlines() {
+		if (pageIndex === 1) {
+			if ($("#ddlSites").multiSelect("getCheckedItems").length === 0) {
 				showAlertMessage("err", "Please choose Site!", 1);
 				return false;
 			}
 
-			if ($('#ddlStatus').multiSelect('getCheckedItems').length === 0) {
+			if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
 				showAlertMessage("err", "Please choose Status!", 1);
 				return false;
 			}
 
-			smaManagement.errorElement.empty();
+			errorElement.empty();
 		}
 
-		var formData = smaManagement.getParams();
-		smaManagement.resetSorting();
+		var formData = getParams();
+		resetSorting();
 
 		$.ajax({
 			type: "POST",
@@ -236,251 +226,169 @@ var smaManagement = {
 			dataType: "json",
 			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
 			success: function (rs) {
-				if (!rs || !rs.SMAGroupsInfo || rs.SMAGroupsInfo.length === 0) {
-					smaManagement.assignNoInfo();
+				if (!rs || !rs.SMAGroupHeadlines || rs.SMAGroupHeadlines.length === 0) {
+					assignNoInfo();
 					return;
 				}
 
-				smaManagement.currentSMAList = rs.SMAGroupsInfo;
-				smaManagement.totalItems = rs.TotalGroups;
-				var membersNotAssignedToGroup = [];
+				currentSMAGroupHeadlines = rs.SMAGroupHeadlines;
+				totalGroups = rs.TotalGroups;
 
-				var arr = [];
-				var arrFrozen = [];
-				var memberNotAssignedToGroupHtml = '';
-				var frozenMemberNotAssignedToGroupHtml = '';
-				var index = (smaManagement.pageSize * (smaManagement.pageIndex - 1) + 1);
-				var notAssignedGroupIndex = index;
-				var totalSMAInCurrentPage = rs.SMAGroupsInfo.length;
-				for (var i = 0; i < totalSMAInCurrentPage; i++) {
-					var groupInfo = rs.SMAGroupsInfo[i];
+				renderSMAGroupHeadlines(rs.SMAGroupHeadlines);
+				initPager(rs.TotalGroups, pageSize, pageIndex - 1);
 
-					if (groupInfo.GroupId === 0) {
-						membersNotAssignedToGroup.push(groupInfo);
-					}
-					else {
-						arr.push(smaManagement.renderScrollRows(groupInfo));
-						arrFrozen.push(smaManagement.renderFrozenRows(groupInfo, index));
-					}
-
-					index++
-				}
-
-				memberNotAssignedToGroupHtml = smaManagement.renderScrollRowsForMemberNotAssignedToGroup(membersNotAssignedToGroup);
-				frozenMemberNotAssignedToGroupHtml = smaManagement.renderFrozenForMemberNotAssignedToGroup(membersNotAssignedToGroup, (notAssignedGroupIndex));
-
-				smaManagement.assignGridContent(frozenMemberNotAssignedToGroupHtml, memberNotAssignedToGroupHtml, arrFrozen, arr);
-				smaManagement.initPager(smaManagement.totalItems, smaManagement.pageSize, smaManagement.pageIndex - 1);
-
-				smaManagement.exportExcelElement.removeClass('hidden');
+				exportExcelElement.removeClass("hidden");
 			},
 			error: function () {
-				smaManagement.assignNoInfo();
+				assignNoInfo();
 			},
 			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
 		});
-	},
-	updateHeadlineType: function (headlineId, headlineType) {
-		$.ajax({
-			type: "POST",
-			url: window.rootUrl + "SMAManagement/UpdateHeadlineType",
-			contentType: "application/json; charset=utf-8",
-			data: JSON.stringify({ headlineId: headlineId, headlineType: headlineType }),
-			dataType: "json",
-			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
-			success: function (rs) {
-				if (rs) {
-					if (rs.ErrorCode === 0) {
-						showAlertMessage("err", "Update Successfully!", 0);
-						setTimeout(function () {
-							smaManagement.errorElement.empty();
+	}
 
-							smaManagement.pageIndex = 1;
-							smaManagement.getSMAListByGroupHeadline();
-						}, 1000 * 3);
-					}
-					else {
-						showAlertMessage("err", rs.ErrorMessage, 1);
-					}
-				}
-			},
-			error: function () {
-				showAlertMessage("err", "Internal Server Error.", 1);
-			},
-			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
-		});
-	},
-	updateOwner: function (headlineId, owner) {
-		$.ajax({
-			type: "POST",
-			url: window.rootUrl + "SMAManagement/UpdateOwner",
-			contentType: "application/json; charset=utf-8",
-			data: JSON.stringify({ headlineId: headlineId, ownerName: owner }),
-			dataType: "json",
-			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
-			success: function (rs) {
-				if (rs) {
-					if (rs.ErrorCode === 0) {
-						showAlertMessage("err", "Update Successfully!", 0);
-						setTimeout(function () {
-							smaManagement.errorElement.empty();
+	function renderSMAGroupHeadlines(groupHeadlines) {
+		var arr = [];
+		var arrFrozen = [];
+		var membersNotAssignedToGroup = [];
 
-							smaManagement.pageIndex = 1;
-							smaManagement.getSMAListByGroupHeadline();
-						}, 1000 * 3);
-					}
-					else {
-						showAlertMessage("err", rs.ErrorMessage, 1);
-					}
-				}
-			},
-			error: function () {
-				showAlertMessage("err", "Internal Server Error.", 1);
-			},
-			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
-		});
-	},
-	initPager: function (total_items, items_per_page, current_page) {
-		var pagerOpts = smaManagement.gridOptions.pagerOpts;
-		pagerOpts.items_per_page = items_per_page;
-		pagerOpts.current_page = current_page;
+		var index = (pageSize * (pageIndex - 1) + 1);
+		var notAssignedGroupIndex = index;
 
-		$("#pagination").pagination(total_items, pagerOpts);
-	},
-	pageSelectCallback: function (page_index, _items_per_page, jq) {
-		var max_page = Math.ceil(smaManagement.totalItems / _items_per_page);
-		page_index = page_index < max_page ? page_index : max_page - 1;
+		var group;
+		for (var i = 0, max = groupHeadlines.length; i < max; i++) {
+			group = groupHeadlines[i];
 
-		smaManagement.pageIndex = page_index + 1;
-		smaManagement.pageSize = _items_per_page;
-		smaManagement.getSMAListByGroupHeadline();
+			if (group.GroupId === 0) {
+				membersNotAssignedToGroup.push(group);
+			}
+			else {
+				arr.push(renderScrollRows(group));
+				arrFrozen.push(renderFrozenRows(group, index));
+			}
 
-		return false;
-	},
-	getSelectedSites: function () {
-		if ($('#ddlSitesHeaderCheckBox').attr('checked')) {
-			return '';
+			index++;
 		}
 
-		return $('#ddlSites').multiSelect('getCheckedItems').join(',');
-	},
-	assignNoInfo: function () {
-		showAlertMessage("err", "No information is available.", 1);
-		smaManagement.exportExcelElement.addClass('hidden');
-		smaManagement.smaMangementGridElement.addClass('hidden');
-	},
-	renderFrozenRows: function (smaGroup, groupIndex) {
+		var memberNotAssignedToGroupHtml = renderScrollRowsForMemberNotAssignedToGroup(membersNotAssignedToGroup);
+		var frozenMemberNotAssignedToGroupHtml = renderFrozenForMemberNotAssignedToGroup(membersNotAssignedToGroup, notAssignedGroupIndex);
+
+		assignGridContent(frozenMemberNotAssignedToGroupHtml, memberNotAssignedToGroupHtml, arrFrozen, arr);
+	}
+
+	function renderFrozenRows(smaGroup, groupIndex) {
 		var html = [];
-		var totalItems = smaGroup ? smaGroup.SMAList.length : 0;
+		var totalItems = smaGroup ? smaGroup.SMAEntities.length : 0;
 
 		var row, css, rowsSpan, rowHtml;
 
 		for (var i = 0; i < totalItems; i++) {
-			row = smaGroup.SMAList[i];
+			row = smaGroup.SMAEntities[i];
 
-			rowsSpan = '';
-			css = smaManagement.getCssFormatForEachRow(row.Status);
+			rowsSpan = "";
+			css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
 
 			if (i === 0) {
 				rowsSpan = '<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colNoWidth + 'px; height: 20px">' + groupIndex + '</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px">' + groupIndex + '</div>\
                                 </td>\
                                 <td rowspan="' + totalItems + '" class="group">\
-                                    <div class="c " style="width: ' + smaManagement.colGroupHeadlineWidth + 'px; height: 20px" des="Group Headline: ' + smaGroup.GroupName + '">' + smaGroup.GroupName + '</div>\
+                                    <div class="c " style="width: ' + colGroupHeadlineWidth + 'px; height: 20px" des="Group Headline: ' + smaGroup.GroupName + '">' + smaGroup.GroupName + '</div>\
                                 </td>\
-								<td rowspan="' + totalItems + '">' + smaManagement.renderHeadlineTypeRow(smaGroup.GroupId, row.HeadlineType) + '</td>\
-								<td rowspan="' + totalItems + '">' + smaManagement.renderOwnerRow(smaGroup.GroupId, row.Owner) + '</td>';
+								<td rowspan="' + totalItems + '">' + renderHeadlineTypeRow(smaGroup.GroupId, row.HeadlineType) + '</td>\
+								<td rowspan="' + totalItems + '">' + renderOwnerRow(smaGroup.GroupId, row.Owner) + '</td>';
 			}
 
 			rowHtml = '<tr>' + rowsSpan + '\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colUsernameWidth + 'px; height: 20px">' + row.Username + '</div>\
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
                             </tr>';
 
 			html.push(rowHtml);
 		}
 
-		return html.join('');
-	},
-	renderScrollRows: function (smaGroup) {
+		return html.join("");
+	}
+
+	function renderScrollRows(smaGroup) {
 		var html = [];
-		var totalItems = smaGroup ? smaGroup.SMAList.length : 0;
+		var totalItems = smaGroup ? smaGroup.SMAEntities.length : 0;
 
 		var row, css, rowsSpan, rowHtml;
 
 		for (var i = 0; i < totalItems; i++) {
-			row = smaGroup.SMAList[i];
+			row = smaGroup.SMAEntities[i];
 
-			rowsSpan = '';
-			css = smaManagement.getCssFormatForEachRow(row.Status);
+			rowsSpan = "";
+			css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
 
 			if (i === 0) {
 				var height = totalItems * 17;
 				rowsSpan = '<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colNoWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px">&nbsp;</div>\
                                 </td>\
                                 <td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colGroupHeadlineWidth + 'px; height: ' + height + 'px">' + smaGroup.GroupName + '</div>\
+                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: ' + height + 'px">' + smaGroup.GroupName + '</div>\
                                 </td>\
 								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colHeadlineTypeWidth + 'px; height: ' + height + 'px">' + "NORMAL" + '</div>\
+                                    <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; height: ' + height + 'px">' + "NORMAL" + '</div>\
                                 </td>\
 								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colOwnerWidth + 'px; height: ' + height + 'px">' + "XXX" + '</div>\
+                                    <div class="c" style="width: ' + colOwnerWidth + 'px; height: ' + height + 'px">' + "XXX" + '</div>\
                                 </td>';
 			}
 
 			var rowHtml = '<tr>' + rowsSpan + '\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colUsernameWidth + 'px; height: 20px">' + row.Username + '</div>\
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colStatusWidth + 'px; height: 20px">' + row.Status + '</div>\
+                                    <div class="c" style="width: ' + colStatusWidth + 'px; height: 20px; line-height: 20px">' + row.Status + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colSiteWidth + 'px; height: 20px">' + row.Site + '</div>\
+                                    <div class="c" style="width: ' + colSiteWidth + 'px; height: 20px; line-height: 20px">' + row.Site + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colCurrencyWidth + 'px; height: 20px">' + row.Currency + '</div>\
+                                    <div class="c" style="width: ' + colCurrencyWidth + 'px; height: 20px; line-height: 20px">' + row.Currency + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colPositionWidth + 'px; height: 20px">' + row.Position + '</div>\
+                                    <div class="c" style="width: ' + colPositionWidth + 'px; height: 20px; line-height: 20px">' + row.Position + '</div>\
                                 </td>\
                             </tr>';
 
 			html.push(rowHtml);
 		}
 
-		return html.join('');
-	},
-	renderFrozenForMemberNotAssignedToGroup: function (smaGroup, groupIndex) {
+		return html.join("");
+	}
+
+	function renderFrozenForMemberNotAssignedToGroup(smaGroup, groupIndex) {
 		var html = [];
 		var totalItems = smaGroup ? smaGroup.length : 0;
 
 		if (totalItems > 0) {
 			var i = 0;
 			$.each(smaGroup, function () {
-				if (this.SMAList != null && this.SMAList.length > 0) {
-					var row = this.SMAList[0];
+				if (this.SMAEntities != null && this.SMAEntities.length > 0) {
+					var row = this.SMAEntities[0];
 
 					var rowsSpan = '';
-					var css = smaManagement.getCssFormatForEachRow(row.Status);
+					var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
 
 					if (i === 0) {
 						rowsSpan = '<td class="group" rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colGroupHeadlineWidth + 'px; height: 20px" des="Not assigned to group">Not assigned to group</div>\
+                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px" des="Not assigned to group">Not assigned to group</div>\
                                 </td>\
 								<td rowspan="' + totalItems + '">&nbsp;</td>';
 					}
 
 					var rowHtml = '<tr>\
                                 <td>\
-                                    <div class="c" style="width: ' + smaManagement.colNoWidth + 'px; height: 20px">' + groupIndex + '</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px; line-height: 20px">' + groupIndex + '</div>\
                                 </td>' + rowsSpan + '\
-								<td>' + smaManagement.renderOwnerRow(row.CustId, row.Owner) + '</td>\
+								<td>' + renderOwnerRow(row.CustId, row.Owner) + '</td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colUsernameWidth + 'px; height: 20px">' + row.Username + '</div>\
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
                             </tr>';
 
@@ -491,51 +399,52 @@ var smaManagement = {
 			});
 		}
 
-		return html.join('');
-	},
-	renderScrollRowsForMemberNotAssignedToGroup: function (smaGroup) {
+		return html.join("");
+	}
+
+	function renderScrollRowsForMemberNotAssignedToGroup(smaGroup) {
 		var html = [];
 		var totalItems = smaGroup ? smaGroup.length : 0;
 
 		if (totalItems > 0) {
 			var i = 0;
 			$.each(smaGroup, function () {
-				if (this.SMAList != null && this.SMAList.length > 0) {
-					var row = this.SMAList[0];
+				if (this.SMAEntities != null && this.SMAEntities.length > 0) {
+					var row = this.SMAEntities[0];
 
-					var rowsSpan = '';
-					var css = smaManagement.getCssFormatForEachRow(row.Status);
+					var rowsSpan = "";
+					var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
 
 					if (i === 0) {
 						rowsSpan = '<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colGroupHeadlineWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px">&nbsp;</div>\
                                 </td>\
 								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colHeadlineTypeWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; height: 20px">&nbsp;</div>\
                                 </td>\
 								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + smaManagement.colOwnerWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colOwnerWidth + 'px; height: 20px">&nbsp;</div>\
                                 </td>';
 					}
 
 					var rowHtml = '<tr>\
                                 <td>\
-                                    <div class="c" style="width: ' + smaManagement.colNoWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px; line-height: 20px">&nbsp;</div>\
                                 </td>' + rowsSpan + '\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colUsernameWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">&nbsp;</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colStatusWidth + 'px; height: 20px">' + row.Status + '</div>\
+                                    <div class="c" style="width: ' + colStatusWidth + 'px; height: 20px; line-height: 20px">' + row.Status + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colSiteWidth + 'px; height: 20px">' + row.Site + '</div>\
+                                    <div class="c" style="width: ' + colSiteWidth + 'px; height: 20px; line-height: 20px">' + row.Site + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colCurrencyWidth + 'px; height: 20px">' + row.Currency + '</div>\
+                                    <div class="c" style="width: ' + colCurrencyWidth + 'px; height: 20px; line-height: 20px">' + row.Currency + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + smaManagement.colPositionWidth + 'px; height: 20px">' + row.Position + '</div>\
+                                    <div class="c" style="width: ' + colPositionWidth + 'px; height: 20px; line-height: 20px">' + row.Position + '</div>\
                                 </td>\
                             </tr>';
 
@@ -545,218 +454,17 @@ var smaManagement = {
 			});
 		}
 
-		return html.join('');
-	},
-	getCssFormatForEachRow: function (status) {
-		// The top priority will be Disabled - Closed - Suspended - Open.
-		var css = 'open';
-		status = status.toLowerCase();
+		return html.join("");
+	}
 
-		if (status.indexOf('disabled') != -1) {
-			css = 'disabled';
-		}
-		else if (status.indexOf('closed') != -1) {
-			css = 'closed';
-		}
-		else if (status.indexOf('suspended') != -1) {
-			css = 'suspended';
-		}
-
-		return css;
-	},
-	sorting: function (obj, sortCol) {
-		if (smaManagement.sortClass === '' || smaManagement.sortClass === 'desc') {
-			smaManagement.sortClass = 'asc';
-			smaManagement.sortType = '';
-		}
-		else {
-			smaManagement.sortClass = 'desc';
-			smaManagement.sortType = '-';
-		}
-
-		smaManagement.sortCol = sortCol;
-
-		var smaListSorted = [];
-		if (sortCol === 'GroupName') {
-			var allMembersNotAssignedToGroup = jlinq.from(smaManagement.currentSMAList).equals('GroupId', 0).select();
-			var allMembersHasAssigned = jlinq.from(smaManagement.currentSMAList)
-				.greater('GroupId', 0)
-				.sort(smaManagement.sortType + "GroupName")
-				.select();
-
-			if (allMembersNotAssignedToGroup && allMembersNotAssignedToGroup.length > 0) {
-				smaListSorted = smaListSorted.concat(allMembersNotAssignedToGroup);
-			}
-
-			if (allMembersHasAssigned && allMembersHasAssigned.length > 0) {
-				smaListSorted = smaListSorted.concat(allMembersHasAssigned);
-			}
-		}
-		else if (sortCol === 'Username') {
-			var newGroup = [];
-			var memberNotAssignedToGroup = [];
-
-			$.each(smaManagement.currentSMAList, function () {
-				if (this.GroupId == 0 && this.SMAList && this.SMAList.length > 0) {
-					memberNotAssignedToGroup.push(this.SMAList[0]);
-				}
-				else {
-					var smaList = jlinq.from(this.SMAList).sort(smaManagement.sortType + 'Username').select();
-					newGroup.push({
-						GroupId: this.GroupId,
-						GroupName: this.GroupName,
-						SMAList: smaList
-					});
-				}
-			});
-
-			if (memberNotAssignedToGroup && memberNotAssignedToGroup.length > 0) {
-				var sortingMembers = jlinq.from(memberNotAssignedToGroup).sort(smaManagement.sortType + 'Username').select();
-				$.each(sortingMembers, function () {
-					smaListSorted = smaListSorted.concat({
-						GroupId: 0,
-						GroupName: 'Not assigned to group',
-						SMAList: [this]
-					});
-				});
-			}
-
-			if (newGroup && newGroup.length > 0) {
-				smaListSorted = smaListSorted.concat(newGroup);
-			}
-		}
-		else if (sortCol === 'Owner') {
-			smaManagement.sortByOwner(obj, sortCol);
-			return;
-		}
-
-		smaManagement.currentSMAList = smaListSorted;
-		var membersNotAssignedToGroup = [];
-		var arr = [];
-		var arrFrozen = [];
-		var memberNotAssignedToGroupHtml = '';
-		var frozenMemberNotAssignedToGroupHtml = '';
-		var index = (smaManagement.pageSize * (smaManagement.pageIndex - 1) + 1);
-		var notAssignedGroupIndex = index;
-		var totalSMAInCurrentPage = smaListSorted.length;
-		for (var i = 0; i < totalSMAInCurrentPage; i++) {
-			var groupInfo = smaListSorted[i];
-			if (groupInfo.GroupId == 0) {
-				membersNotAssignedToGroup.push(groupInfo);
-			}
-			else {
-				arr.push(smaManagement.renderScrollRows(groupInfo));
-				arrFrozen.push(smaManagement.renderFrozenRows(groupInfo, index));
-			}
-			index++;
-		}
-
-		memberNotAssignedToGroupHtml = smaManagement.renderScrollRowsForMemberNotAssignedToGroup(membersNotAssignedToGroup);
-		frozenMemberNotAssignedToGroupHtml = smaManagement.renderFrozenForMemberNotAssignedToGroup(membersNotAssignedToGroup, (notAssignedGroupIndex));
-
-		smaManagement.assignGridContent(frozenMemberNotAssignedToGroupHtml, memberNotAssignedToGroupHtml, arrFrozen, arr);
-		smaManagement.addSortingIconAfterRender(obj);
-	},
-	sortByOwner: function (obj) {
-		var sortedOwners = jlinq.from(smaManagement.currentSMAList)
-			.sort(smaManagement.sortType + "Owner")
-			.select();
-
-		var totalItems = sortedOwners ? sortedOwners.length : 0;
-		if (totalItems === 0) {
-			return;
-		}
-
-		smaManagement.currentSMAList = sortedOwners;
-
-		var arr = [];
-		var arrFrozen = [];
-		var index = (smaManagement.pageSize * (smaManagement.pageIndex - 1) + 1);
-
-		var groupInfo;
-
-		for (var i = 0; i < totalItems; i++) {
-			groupInfo = sortedOwners[i];
-
-			arr.push(smaManagement.renderScrollRows(groupInfo));
-			arrFrozen.push(smaManagement.renderFrozenRows(groupInfo, index++));
-		}
-
-		smaManagement.assignGridContent('', '', arrFrozen, arr);
-		smaManagement.addSortingIconAfterRender(obj);
-	},
-	addSortingIconAfterRender: function (obj) {
-		smaManagement.resetSorting();
-
-		if (smaManagement.sortClass === 'asc') {
-			$(obj).addClass("asc");
-		}
-		else {
-			$(obj).addClass("desc");
-		}
-	},
-	exportExcel: function () {
-		var formData = smaManagement.getParams();
-		var url = linkExportExcel + '?' + $.param(formData);
-
-		$('#frameExportExcel').attr('src', url);
-	},
-	resetSorting: function () {
-		$('.sorter').removeClass('asc desc');
-		smaManagement.sortType = '';
-	},
-	replaceSpecialCharactersOnIE9: function (text) {
-		var expr = new RegExp('>[ \t\r\n\v\f]*<', 'g');
-		var html = text.replace(expr, '><');
-
-		return html;
-	},
-	showDescription: function (obj, content) {
-		obj.tipsy({ fade: false, gravity: "sw", html: false, title: function () { return content; }, opacity: 1 });
-	},
-	assignGridContent: function (memberNotAssgnedToGroupFrozenHtml, memberNotAssgnedToGroupScrollHtml, arrFrozen, arr) {
-		var htmlScrollRows = arr.join('');
-		var htmlFrozenlRows = arrFrozen.join('');
-		if ($.browser.msie && parseInt($.browser.version) == 9) {
-			memberNotAssgnedToGroupFrozenHtml = smaManagement.replaceSpecialCharactersOnIE9(memberNotAssgnedToGroupFrozenHtml);
-			memberNotAssgnedToGroupScrollHtml = smaManagement.replaceSpecialCharactersOnIE9(memberNotAssgnedToGroupScrollHtml);
-			htmlScrollRows = smaManagement.replaceSpecialCharactersOnIE9(htmlScrollRows);
-			htmlFrozenlRows = smaManagement.replaceSpecialCharactersOnIE9(htmlFrozenlRows);
-		}
-
-		smaManagement.tblContentHeaderElement.find('tbody').empty().append(memberNotAssgnedToGroupFrozenHtml).append(htmlFrozenlRows);
-		smaManagement.tblContentElement.find('tbody').empty().append(memberNotAssgnedToGroupScrollHtml).append(htmlScrollRows);
-
-		smaManagement.smaMangementGridElement.removeClass("hidden").gridScroller(smaManagement.gridOptions);
-
-		// Tooltip.
-		$(".tipsy").remove();
-		smaManagement.tblContentHeaderElement.find("tbody td.group").each(function () {
-			var $this = $(this);
-
-			var des = $this.find("div").attr("des");
-			$this.tipsy({ fade: false, gravity: "sw", html: false, title: function () { return des; }, opacity: 1 });
-
-			$this.hover(function (e) {
-				if (parseInt($("div.tipsy-sw").css("top")) < 90) {
-					$("div.tipsy-sw").css({ top: 100 });
-				}
-			});
-		});
-
-		if (hostPermission) {
-			smaManagement.bindHeadlineTypeRowEvents();
-			smaManagement.bindOwnerRowEvents();
-		}
-	},
-	renderHeadlineTypeRow: function (headlineId, headlineType) {
+	function renderHeadlineTypeRow(headlineId, headlineType) {
 		if (!hostPermission) {
-			return '<div class="c " style="width:' + smaManagement.colHeadlineTypeWidth + 'px;height:20px">' + headlineType + '</div>';
+			return '<div class="c " style="width:' + colHeadlineTypeWidth + 'px;height:20px">' + headlineType + '</div>';
 		}
 
-		return '<div class="c " style="width:' + smaManagement.colHeadlineTypeWidth + 'px;height:20px">\
+		return '<div class="c " style="width:' + colHeadlineTypeWidth + 'px;height:20px">\
 					<span id="spanHeadlineType' + headlineId + '">' + headlineType + '</span>' +
-					smaManagement.renderHeadlineTypeSelect(headlineId, headlineType) +
+					renderHeadlineTypeSelect(headlineId, headlineType) +
 					'<div style="float:right">\
 						<img style="cursor:pointer" src="../App_Themes/Images/icn_edit.png" title="Edit" alt="Edit" class="edit-headlinetype" data-headlineid="' + headlineId + '">\
 						<div style="float:right" class="hidden">\
@@ -765,8 +473,9 @@ var smaManagement = {
 						</div>\
 					</div>\
 				</div>';
-	},
-	renderHeadlineTypeSelect: function (headlineId, headlineType) {
+	}
+
+	function renderHeadlineTypeSelect(headlineId, headlineType) {
 		var html = ['<select class="hidden" style="width:100px" id="select' + headlineId + '">'];
 		var type;
 
@@ -788,8 +497,9 @@ var smaManagement = {
 
 		html.push('</select>');
 		return html.join("");
-	},
-	bindHeadlineTypeRowEvents: function () {
+	}
+
+	function bindHeadlineTypeRowEvents() {
 		$(".edit-headlinetype")
 			.unbind("click")
 			.bind("click", function () {
@@ -807,19 +517,19 @@ var smaManagement = {
 		$(".save-headlinetype")
 			.unbind("click")
 			.bind("click", function () {
-				smaManagement.errorElement.empty();
+				errorElement.empty();
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
 				var $select = $("#select" + headlineId);
-				
-				smaManagement.updateHeadlineType(headlineId, $select.val());
+
+				updateHeadlineType(headlineId, $select.val());
 			});
 
 		$(".cancel-headlinetype")
 			.unbind("click")
 			.bind("click", function () {
-				smaManagement.errorElement.empty();
+				errorElement.empty();
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
@@ -833,13 +543,14 @@ var smaManagement = {
 					.val($span.html());
 				parent.addClass("hidden");
 			});
-	},
-	renderOwnerRow: function (headlineId, owner) {
+	}
+
+	function renderOwnerRow(headlineId, owner) {
 		if (!hostPermission) {
-			return '<div class="c " style="width:' + smaManagement.colOwnerWidth + 'px;height:20px">' + owner + '</div>';
+			return '<div class="c " style="width:' + colOwnerWidth + 'px;height:20px">' + owner + '</div>';
 		}
 
-		return '<div class="c " style="width:' + smaManagement.colOwnerWidth + 'px;height:20px">\
+		return '<div class="c " style="width:' + colOwnerWidth + 'px;height:20px">\
 					<span id="spanOwner' + headlineId + '">' + owner + '</span>\
 					<input type="text" class="hidden" style="width:100px" value="' + owner + '" id="input' + headlineId + '"/>\
 					<div style="float:right">\
@@ -850,8 +561,9 @@ var smaManagement = {
 						</div>\
 					</div>\
 				</div>';
-	},
-	bindOwnerRowEvents: function () {
+	}
+
+	function bindOwnerRowEvents() {
 		$(".edit-owner")
 			.unbind("click")
 			.bind("click", function () {
@@ -871,19 +583,19 @@ var smaManagement = {
 		$(".save-owner")
 			.unbind("click")
 			.bind("click", function () {
-				smaManagement.errorElement.empty();
+				errorElement.empty();
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
 				var $input = $("#input" + headlineId);
 
-				smaManagement.updateOwner(headlineId, $.trim($input.val()));
+				updateOwner(headlineId, $.trim($input.val()));
 			});
 
 		$(".cancel-owner")
 			.unbind("click")
 			.bind("click", function () {
-				smaManagement.errorElement.empty();
+				errorElement.empty();
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
@@ -898,4 +610,265 @@ var smaManagement = {
 				parent.addClass("hidden");
 			});
 	}
-};
+
+	function getCssFormatForEachRow(isClosed, isSuspended, isEnable) {
+		// The top priority will be Disabled - Closed - Suspended - Open.
+		var css = 'open';
+
+		if (!isEnable) {
+			css = 'disabled';
+		}
+		else if (isClosed) {
+			css = 'closed';
+		}
+		else if (isSuspended) {
+			css = 'suspended';
+		}
+
+		return css;
+	}
+
+	function sorting(obj, sortCol) {
+		if (sortClass === "" || sortClass === "desc") {
+			sortClass = "asc";
+			sortType = "";
+		}
+		else {
+			sortClass = "desc";
+			sortType = "-";
+		}
+
+		sortCol = sortCol;
+		var sortedSMAGroupHeadlines = [];
+
+		if (sortCol === "GroupName") {
+			var allMembersNotAssignedToGroup = jlinq.from(currentSMAGroupHeadlines).equals('GroupId', 0).select();
+			var allMembersHasAssigned = jlinq.from(currentSMAGroupHeadlines)
+				.greater("GroupId", 0)
+				.sort(sortType + "GroupName")
+				.select();
+
+			if (allMembersNotAssignedToGroup && allMembersNotAssignedToGroup.length > 0) {
+				sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat(allMembersNotAssignedToGroup);
+			}
+
+			if (allMembersHasAssigned && allMembersHasAssigned.length > 0) {
+				sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat(allMembersHasAssigned);
+			}
+		}
+		else if (sortCol === "Username") {
+			var newGroup = [];
+			var memberNotAssignedToGroup = [];
+
+			$.each(currentSMAGroupHeadlines, function () {
+				if (this.GroupId === 0 && this.SMAEntities && this.SMAEntities.length > 0) {
+					memberNotAssignedToGroup.push(this.SMAEntities[0]);
+				}
+				else {
+					var smaList = jlinq.from(this.SMAEntities).sort(sortType + "Username").select();
+					newGroup.push({
+						GroupId: this.GroupId,
+						GroupName: this.GroupName,
+						Owner: this.Owner,
+						SMAEntities: smaList
+					});
+				}
+			});
+
+			if (memberNotAssignedToGroup && memberNotAssignedToGroup.length > 0) {
+				var sortingMembers = jlinq.from(memberNotAssignedToGroup).sort(sortType + "Username").select();
+				$.each(sortingMembers, function () {
+					sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat({
+						GroupId: this.GroupId,
+						GroupName: this.GroupName,
+						Owner: this.Owner,
+						SMAEntities: [this]
+					});
+				});
+			}
+
+			if (newGroup && newGroup.length > 0) {
+				sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat(newGroup);
+			}
+		}
+		else if (sortCol === "Owner") {
+			sortByOwner(obj, sortCol);
+			return;
+		}
+
+		currentSMAGroupHeadlines = sortedSMAGroupHeadlines;
+
+		renderSMAGroupHeadlines(sortedSMAGroupHeadlines);
+		addSortingIconAfterRender(obj);
+	}
+
+	function sortByOwner(obj) {
+		var sortedOwners = jlinq.from(currentSMAGroupHeadlines)
+			.sort(sortType + "Owner")
+			.select();
+
+		currentSMAGroupHeadlines = sortedOwners;
+
+		var arr = [];
+		var arrFrozen = [];
+		var index = (pageSize * (pageIndex - 1) + 1);
+
+		var group;
+		for (var i = 0, max = sortedOwners.length; i < max; i++) {
+			group = sortedOwners[i];
+
+			arr.push(renderScrollRows(group));
+			arrFrozen.push(renderFrozenRows(group, index++));
+		}
+
+		assignGridContent("", "", arrFrozen, arr);
+		addSortingIconAfterRender(obj);
+	}
+
+	function replaceSpecialCharactersOnIE9(text) {
+		var expr = new RegExp(">[ \t\r\n\v\f]*<", "g");
+		var html = text.replace(expr, "><");
+
+		return html;
+	}
+
+	function showDescription(obj, content) {
+		obj.tipsy({ fade: false, gravity: "sw", html: false, title: function () { return content; }, opacity: 1 });
+	}
+
+	function assignGridContent(memberNotAssgnedToGroupFrozenHtml, memberNotAssgnedToGroupScrollHtml, arrFrozen, arr) {
+		var htmlScrollRows = arr.join("");
+		var htmlFrozenlRows = arrFrozen.join("");
+
+		if ($.browser.msie && parseInt($.browser.version) == 9) {
+			memberNotAssgnedToGroupFrozenHtml = replaceSpecialCharactersOnIE9(memberNotAssgnedToGroupFrozenHtml);
+			memberNotAssgnedToGroupScrollHtml = replaceSpecialCharactersOnIE9(memberNotAssgnedToGroupScrollHtml);
+			htmlScrollRows = replaceSpecialCharactersOnIE9(htmlScrollRows);
+			htmlFrozenlRows = replaceSpecialCharactersOnIE9(htmlFrozenlRows);
+		}
+
+		tblContentHeaderElement.find("tbody").empty().append(memberNotAssgnedToGroupFrozenHtml).append(htmlFrozenlRows);
+		tblContentElement.find("tbody").empty().append(memberNotAssgnedToGroupScrollHtml).append(htmlScrollRows);
+
+		smaMangementGridElement.removeClass("hidden").gridScroller(gridOptions);
+
+		// Tooltip.
+		$(".tipsy").remove();
+		tblContentHeaderElement.find("tbody td.group").each(function () {
+			var $this = $(this);
+
+			var des = $this.find("div").attr("des");
+			$this.tipsy({ fade: false, gravity: "sw", html: false, title: function () { return des; }, opacity: 1 });
+
+			$this.hover(function (e) {
+				if (parseInt($("div.tipsy-sw").css("top")) < 90) {
+					$("div.tipsy-sw").css({ top: 100 });
+				}
+			});
+		});
+
+		if (hostPermission) {
+			bindHeadlineTypeRowEvents();
+			bindOwnerRowEvents();
+		}
+	}
+
+	function initPager(total_items, items_per_page, current_page) {
+		var pagerOpts = gridOptions.pagerOpts;
+		pagerOpts.items_per_page = items_per_page;
+		pagerOpts.current_page = current_page;
+
+		$("#pagination").pagination(total_items, pagerOpts);
+	}
+
+	function pageSelectCallback(page_index, _items_per_page, jq) {
+		var max_page = Math.ceil(totalGroups / _items_per_page);
+		page_index = page_index < max_page ? page_index : max_page - 1;
+
+		pageIndex = page_index + 1;
+		pageSize = _items_per_page;
+		getSMAGroupHeadlines();
+
+		return false;
+	}
+
+	function updateHeadlineType(headlineId, headlineType) {
+		var url = "SMAManagement/UpdateHeadlineType";
+		var postParams = { headlineId: headlineId, headlineType: headlineType };
+
+		postUpdate(url, postParams);
+	}
+
+	function updateOwner(headlineId, owner) {
+		var url = "SMAManagement/UpdateOwner";
+		var postParams = { headlineId: headlineId, ownerName: owner };
+
+		postUpdate(url, postParams);
+	}
+
+	function postUpdate(url, postParams) {
+		$.ajax({
+			type: "POST",
+			url: window.rootUrl + url,
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(postParams),
+			dataType: "json",
+			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
+			success: function (rs) {
+				if (rs) {
+					if (rs.ErrorCode === 0) {
+						showAlertMessage("err", "Update Successfully!", 0);
+
+						setTimeout(function () {
+							errorElement.empty();
+
+							pageIndex = 1;
+							getSMAGroupHeadlines();
+						}, 1000 * 3);
+					}
+					else {
+						showAlertMessage("err", rs.ErrorMessage, 1);
+					}
+				}
+			},
+			error: function () {
+				showAlertMessage("err", "Internal Server Error.", 1);
+			},
+			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
+		});
+	}
+
+	function initialize() {
+		assignSites();
+		assignStatus();
+
+		gridOptions = initGridOptions();
+		smaMangementGridElement.initGrid(gridOptions);
+
+		$("#btnSubmit").click(function () {
+			pageIndex = 1;
+			getSMAGroupHeadlines();
+		});
+
+		$("#divSortingByGroupHeadline").click(function () {
+			sorting(this, "GroupName");
+		});
+
+		$("#divSortingByOwner").click(function () {
+			sorting(this, "Owner");
+		});
+
+		$("#divSortingByUsername").click(function () {
+			sorting(this, "Username");
+		});
+
+		exportExcelElement.click(function () {
+			var formData = getParams();
+			var url = linkExportExcel + "?" + $.param(formData);
+
+			$("#frameExportExcel").attr("src", url);
+		});
+	}
+
+	initialize();
+})(jQuery);

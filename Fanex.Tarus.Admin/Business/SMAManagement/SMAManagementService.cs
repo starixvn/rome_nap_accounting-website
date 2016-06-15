@@ -21,7 +21,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
     {
         private const string SitesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.Sites";
         private const string CurrenciesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.Currencies";
-        private const string SMAListSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.SMAListByGroupHeadline";
+        private const string SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.SMAListByGroupHeadline";
 
         private readonly ISMAManagementAccess _smaManagementAccess;
 
@@ -53,39 +53,39 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                 });
         }
 
-        public SMAGroups GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
+        public SMAManagerModel GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
         {
-            SMAGroups result = null;
+            SMAManagerModel result = null;
             bool fromSession = criteria.PageIndex != 1;
 
             try
             {
                 if (fromSession)
                 {
-                    result = (SMAGroups)SessionExtension.GetSession(HttpContext.Current.Session, SMAListSessionKey);
+                    result = (SMAManagerModel)SessionExtension.GetSession(HttpContext.Current.Session, SMAGroupHeadlinesSessionKey);
                 }
 
                 if (result == null)
                 {
-                    HttpContext.Current.Session.Remove(SMAListSessionKey);
+                    HttpContext.Current.Session.Remove(SMAGroupHeadlinesSessionKey);
 
                     result = GetSMAGroupHeadlinesFromDatabase(criteria);
 
-                    SessionExtension.AddSession(HttpContext.Current.Session, SMAListSessionKey, result);
+                    SessionExtension.AddSession(HttpContext.Current.Session, SMAGroupHeadlinesSessionKey, result);
                 }
 
-                if (result != null && result.SMAGroupsInfo != null && result.SMAGroupsInfo.Count > 0)
+                if (result != null && result.TotalGroups > 0)
                 {
-                    var pagingResult = new SMAGroups
+                    var pagingResult = new SMAManagerModel
                     {
                         TotalGroups = result.TotalGroups,
-                        SMAGroupsInfo = result.SMAGroupsInfo
+                        SMAGroupHeadlines = result.SMAGroupHeadlines
                             .Skip(criteria.PageSize * (criteria.PageIndex - 1))
                             .Take(criteria.PageSize)
                             .ToList()
                     };
 
-                    pagingResult.TotalMemberNotAssignedToGroup = pagingResult.SMAGroupsInfo.Count(q => q.GroupId == 0);
+                    pagingResult.TotalMemberNotAssignedToGroup = pagingResult.SMAGroupHeadlines.Count(q => q.GroupId == 0);
 
                     return pagingResult;
                 }
@@ -100,16 +100,19 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
         public ExcelFile ExportSMAGroupHeadlinesToExcel(string sheetName, GetSMAGroupHeadlineCriteria criteria)
         {
-            var startRow = 1;
+            int startRow = 1;
             ExcelFile excelFile = new ExcelFile();
 
             try
             {
-                var getSession = (SMAGroups)SessionExtension.GetSession(HttpContext.Current.Session, SMAListSessionKey);
-                getSession = getSession ?? GetSMAGroupHeadlinesFromDatabase(criteria);
+                var getSession = GetFromSession(
+                    SMAGroupHeadlinesSessionKey,
+                    () =>
+                    {
+                        return GetSMAGroupHeadlinesFromDatabase(criteria);
+                    });
 
                 var worksheet = excelFile.Worksheets.Add(sheetName);
-
                 ExportSMAListToExcelFileAssignHeader(ref worksheet, startRow++);
 
                 if (getSession != null && getSession.TotalGroups > 0)
@@ -135,9 +138,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
                     for (int i = 0; i < getSession.TotalGroups; i++)
                     {
-                        var group = getSession.SMAGroupsInfo[i];
-
-                        ExportSMAListToExcelFileAssignBody(ref worksheet, startRow, ref nextRow, group, i + 1);
+                        ExportSMAListToExcelFileAssignBody(ref worksheet, startRow, ref nextRow, getSession.SMAGroupHeadlines[i], i + 1);
                     }
                 }
             }
@@ -159,64 +160,50 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             return _smaManagementAccess.UpdateOwner(criteria);
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private SMAGroups GetSMAGroupHeadlinesFromDatabase(GetSMAGroupHeadlineCriteria criteria)
+        private SMAManagerModel GetSMAGroupHeadlinesFromDatabase(GetSMAGroupHeadlineCriteria criteria)
         {
-            var result = new SMAGroups();
+            int totalGroups = 0,
+                totalMemberNotAssignedToGroup = 0;
 
-            var smaDataTable = _smaManagementAccess.GetSMAGroupHeadlines(criteria);
-            int totalItems = smaDataTable != null ? smaDataTable.Rows.Count : 0;
+            IList<SMAGroupHeadline> smaGroupHeadlines = new List<SMAGroupHeadline>(512);
 
-            if (totalItems > 0)
+            var groupHeadlines = _smaManagementAccess.GetSMAGroupHeadlines(criteria);
+
+            foreach (var group in groupHeadlines)
             {
-                IList<SMAGroupHeadline> smaNotAssignedGroupHeadlines = new List<SMAGroupHeadline>(totalItems);
-
-                SMAGroupHeadline groupHeadline;
-                IDictionary<int, SMAGroupHeadline> smaGroupHeadlinesHash = new Dictionary<int, SMAGroupHeadline>(totalItems);
-
-                DataRow drow;
-                int groupId;
-                SMADetail entity;
-
-                for (int i = 0; i < totalItems; i++)
+                if (group.GroupId != 0)
                 {
-                    drow = smaDataTable.Rows[i];
-                    groupId = Convert.ToInt32(drow["custheadlineid"]);
-                    entity = ParseSMADetail(drow);
-
-                    if (smaGroupHeadlinesHash.TryGetValue(groupId, out groupHeadline))
-                    {
-                        groupHeadline.SMAList.Add(entity);
-                    }
-                    else
-                    {
-                        groupHeadline = new SMAGroupHeadline
-                        {
-                            GroupId = groupId,
-                            GroupName = ConvertToString(drow["groupname"]),
-                            Owner = entity.Owner,
-                            SMAList = new List<SMADetail> { entity }
-                        };
-
-                        if (groupId == 0)
-                        {
-                            smaNotAssignedGroupHeadlines.Add(groupHeadline);
-                        }
-                        else
-                        {
-                            smaGroupHeadlinesHash.Add(groupId, groupHeadline);
-                        }
-                    }
+                    totalGroups++;
+                    smaGroupHeadlines.Add(group);
                 }
 
-                var smaGroupHeadlines = smaGroupHeadlinesHash.Values;
+                foreach (var entity in group.SMAEntities)
+                {
+                    entity.HeadlineType = MapHeadlineType(entity.HeadlineTypeId);
+                    entity.Status = MapStatus(entity.IsClosed, entity.IsSuspend, entity.IsEnable);
+                    entity.Position = MapRole(entity.RoleId);
 
-                result.TotalMemberNotAssignedToGroup = smaNotAssignedGroupHeadlines.Count;
-                result.TotalGroups = result.TotalMemberNotAssignedToGroup + smaGroupHeadlines.Count;
-                result.SMAGroupsInfo = smaNotAssignedGroupHeadlines.Concat(smaGroupHeadlines).ToList();
+                    if (group.GroupId == 0)
+                    {
+                        totalMemberNotAssignedToGroup++;
+
+                        smaGroupHeadlines.Add(new SMAGroupHeadline
+                        {
+                            GroupId = group.GroupId,
+                            GroupName = group.GroupName,
+                            Owner = entity.Owner,
+                            SMAEntities = new List<SMAEntity> { entity }
+                        });
+                    }
+                }
             }
 
-            return result;
+            return new SMAManagerModel
+            {
+                TotalGroups = totalGroups + totalMemberNotAssignedToGroup,
+                TotalMemberNotAssignedToGroup = totalMemberNotAssignedToGroup,
+                SMAGroupHeadlines = smaGroupHeadlines
+            };
         }
 
         private void ExportSMAListToExcelFileAssignHeader(ref ExcelWorksheet worksheet, int startRow)
@@ -276,120 +263,110 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             ref ExcelWorksheet worksheet,
             int startRow,
             ref int nextRow,
-            SMAGroupHeadline smaListByGroup,
+            SMAGroupHeadline groupHeadline,
             int groupIndex)
         {
-            var cellStyle = new ExcelGemboxUtils().GetStyleTextCenter(false);
+            CellStyle cellStyle = new ExcelGemboxUtils().GetStyleTextCenter(false);
 
-            if (smaListByGroup != null && smaListByGroup.SMAList.Count > 0)
+            int startCol;
+            SMAEntity smaEntity;
+            Color backgroundColor;
+
+            CellRange cellRange;
+            ExcelCell excelCell;
+
+            int totalItems = groupHeadline != null ? groupHeadline.SMAEntities.Count : 0;
+
+            for (int i = 0; i < totalItems; i++)
             {
-                var totalItems = smaListByGroup.SMAList.Count;
+                startCol = 0;
+                smaEntity = groupHeadline.SMAEntities[i];
+                backgroundColor = GetBackgroudColorByStatus(smaEntity.IsClosed, smaEntity.IsSuspend, smaEntity.IsEnable);
 
-                for (int i = 0; i < totalItems; i++)
+                if (i == 0)
                 {
-                    var startCol = 0;
-                    var smaDetail = smaListByGroup.SMAList[i];
-                    var status = smaDetail.Status.ToLower();
-                    var backgroundColor = GetBackgroudColorByStatus(status);
-                    CellRange cellRange;
-                    ExcelCell excelCell;
+                    cellRange = worksheet.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1), startCol);
 
-                    if (i == 0)
+                    cellRange.Merged = true;
+                    cellRange.Style = cellStyle;
+                    cellRange.Value = groupIndex;
+
+                    if (groupHeadline.GroupId != 0)
                     {
-                        cellRange = worksheet.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1), startCol);
+                        cellRange = worksheet.Cells.GetSubrangeAbsolute(
+                            startRow + nextRow,
+                            startCol + 1,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 1);
 
                         cellRange.Merged = true;
                         cellRange.Style = cellStyle;
-                        cellRange.Value = groupIndex;
-
-                        if (smaListByGroup.GroupId != 0)
-                        {
-                            cellRange = worksheet.Cells.GetSubrangeAbsolute(
-                                startRow + nextRow,
-                                startCol + 1,
-                                startRow + nextRow + (totalItems - 1),
-                                startCol + 1);
-
-                            cellRange.Merged = true;
-                            cellRange.Style = cellStyle;
-                            cellRange.Value = smaListByGroup.GroupName;
-
-                            cellRange = worksheet.Cells.GetSubrangeAbsolute(
-                                startRow + nextRow,
-                                startCol + 2,
-                                startRow + nextRow + (totalItems - 1),
-                                startCol + 2);
-
-                            cellRange.Merged = true;
-                            cellRange.Style = cellStyle;
-                            cellRange.Value = smaDetail.HeadlineType;
-                        }
+                        cellRange.Value = groupHeadline.GroupName;
 
                         cellRange = worksheet.Cells.GetSubrangeAbsolute(
-                                startRow + nextRow,
-                                startCol + 3,
-                                startRow + nextRow + (totalItems - 1),
-                                startCol + 3);
+                            startRow + nextRow,
+                            startCol + 2,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 2);
 
                         cellRange.Merged = true;
                         cellRange.Style = cellStyle;
-                        cellRange.Value = smaDetail.Owner;
+                        cellRange.Value = smaEntity.HeadlineType;
                     }
 
-                    startCol += 3;
+                    cellRange = worksheet.Cells.GetSubrangeAbsolute(
+                            startRow + nextRow,
+                            startCol + 3,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 3);
 
-                    excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                    excelCell.Style = cellStyle;
-                    excelCell.Style.FillPattern.SetSolid(backgroundColor);
-                    excelCell.Value = smaDetail.Username;
-
-                    excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                    excelCell.Style = cellStyle;
-                    excelCell.Style.FillPattern.SetSolid(backgroundColor);
-                    excelCell.Value = smaDetail.Status;
-
-                    excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                    excelCell.Style = cellStyle;
-                    excelCell.Style.FillPattern.SetSolid(backgroundColor);
-                    excelCell.Value = smaDetail.Site;
-
-                    excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                    excelCell.Style = cellStyle;
-                    excelCell.Style.FillPattern.SetSolid(backgroundColor);
-                    excelCell.Value = smaDetail.Currency;
-
-                    excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                    excelCell.Style = cellStyle;
-                    excelCell.Style.FillPattern.SetSolid(backgroundColor);
-                    excelCell.Value = smaDetail.Position;
-
-                    nextRow++;
+                    cellRange.Merged = true;
+                    cellRange.Style = cellStyle;
+                    cellRange.Value = smaEntity.Owner;
                 }
+
+                startCol += 3;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;
+                excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Username;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;
+                excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Status;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;
+                excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Site;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;
+                excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Currency;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;
+                excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Position;
+
+                nextRow++;
             }
         }
 
-        private string GetRoleName(int roleId)
+        private string MapHeadlineType(int? headlineTypeId)
         {
-            switch (roleId)
+            if (!headlineTypeId.HasValue)
             {
-                case 1:
-                    return Language.Member;
-
-                case 2:
-                    return Language.Agent;
-
-                case 3:
-                    return Language.Master;
-
-                case 4:
-                    return Language.Super;
-
-                default:
-                    return string.Empty;
+                return string.Empty;
             }
+
+            return ((HeadlineType)headlineTypeId.Value).ToString();
         }
 
-        private string GetStatusName(bool isClosed, bool isSuspended, bool isEnable)
+        private string MapStatus(bool isClosed, bool isSuspended, bool isEnable)
         {
             // The priority will be Disabled - Closed - Suspended - Open.
             var status = Language.Open;
@@ -410,42 +387,41 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             return status;
         }
 
-        private string GetHeadlineType(object headlineType)
+        private string MapRole(int roleId)
         {
-            if (headlineType == null || headlineType is DBNull)
+            switch (roleId)
             {
-                return string.Empty;
-            }
+                case 1:
+                    return Language.Member;
 
-            HeadlineType type = (HeadlineType)Convert.ToInt32(headlineType);
+                case 2:
+                    return Language.Agent;
 
-            switch (type)
-            {
-                case HeadlineType.Normal:
-                    return Language.Normal;
+                case 3:
+                    return Language.Master;
 
-                case HeadlineType.VIP:
-                    return Language.VIP;
+                case 4:
+                    return Language.Super;
 
                 default:
                     return string.Empty;
             }
         }
 
-        private Color GetBackgroudColorByStatus(string status)
+        private Color GetBackgroudColorByStatus(bool isClosed, bool isSuspended, bool isEnable)
         {
             // The top priority will be Disabled - Closed - Suspended - Open.
-            if (status.IndexOf("disabled") != -1)
+            if (!isEnable)
             {
                 return Color.FromArgb(160, 169, 122);
             }
 
-            if (status.IndexOf("closed") != -1)
+            if (isClosed)
             {
                 return Color.FromArgb(204, 199, 186);
             }
 
-            if (status.IndexOf("suspended") != -1)
+            if (isSuspended)
             {
                 return Color.FromArgb(248, 222, 215);
             }
@@ -470,31 +446,6 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             }
 
             return result;
-        }
-
-        private SMADetail ParseSMADetail(DataRow drow)
-        {
-            return new SMADetail
-            {
-                HeadlineType = GetHeadlineType(drow["headlinetype"]),
-                Owner = ConvertToString(drow["ownername"]),
-                CustId = Convert.ToInt32(drow["custid"]),
-                Username = ConvertToString(drow["username"]),
-                Status = GetStatusName(Convert.ToBoolean(drow["isclosed"]), Convert.ToBoolean(drow["issuspend"]), Convert.ToBoolean(drow["isenable"])),
-                Site = ConvertToString(drow["site"]),
-                Currency = ConvertToString(drow["currencyname"]),
-                Position = GetRoleName(Convert.ToInt32(drow["roleid"]))
-            };
-        }
-
-        private string ConvertToString(object value)
-        {
-            if (value == null || value is DBNull)
-            {
-                return string.Empty;
-            }
-
-            return value.ToString();
         }
     }
 }

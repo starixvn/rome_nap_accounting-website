@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
         IEnumerable<IdNameEntity> GetCurrencies();
 
-        SMAGroups GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria);
+        SMAManagerModel GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria);
 
         ExcelFile ExportSMAGroupHeadlinesToExcel(string sheetName, GetSMAGroupHeadlineCriteria criteria);
 
