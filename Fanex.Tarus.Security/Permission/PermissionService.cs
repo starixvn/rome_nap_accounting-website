@@ -1,15 +1,17 @@
 namespace Fanex.Tarus.Security.Permission
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
+    using Criteria;
+    using CustomerSetting.Module.Core.Models;
+    using Data;
     using DNAide.Core;
     using DNAide.Data;
     using Fanex.Tarus.Security.Web;
-
-    /// <summary>
-    /// Class PermissionService.
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+/// <summary>
+               /// Class PermissionService.
+               /// </summary>
     public class PermissionService : Security.Permission.IPermissionService
     {
         /// <summary>
@@ -213,6 +215,32 @@ namespace Fanex.Tarus.Security.Permission
             }
 
             return roleAccess;
+        }
+
+        public Result CheckSpecialSitePermission(CheckSpecialSitePermissionCriteria criteria)
+        {
+            Result result = new Result();
+            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+                var outputs = db.GetOuputParams();
+                result.ErrorCode = Convert.IsDBNull(outputs["errcode"]) ? 0 : Convert.ToInt32(outputs["errcode"]);
+                result.ErrorMessage = Convert.IsDBNull(outputs["errmsg"]) ? string.Empty : outputs["errmsg"].ToString();
+            }
+
+            return result;
+        }
+
+        public bool CheckDummyAccount(CheckDummyAccountCriteria criteria)
+        {
+            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+                var outputs = db.GetOuputParams();
+                return Convert.ToBoolean(outputs["isdummyaccount"]);
+            }
         }
     }
 }

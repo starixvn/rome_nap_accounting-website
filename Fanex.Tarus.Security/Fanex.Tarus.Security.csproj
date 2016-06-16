@@ -141,6 +141,8 @@
     <Compile Include="Authenticate\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
+    <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
+    <Compile Include="Criteria\CheckSpecialSitePermissionCriteria.cs" />
     <Compile Include="Permission\IPermissionService.cs" />
     <Compile Include="Permission\ISmartPunterPermissionService.cs" />
     <Compile Include="Permission\PermissionService.cs" />

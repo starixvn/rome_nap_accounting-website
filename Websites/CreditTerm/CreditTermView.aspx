@@ -31,8 +31,10 @@
             <div class="maincontent_box ">
                 <div id="errMsg" class="errMsg">
                     <%=msg%></div>
+                <%if (string.IsNullOrEmpty(msg)) {%>
                 <div class="pad_tb_4">
                     <a href="CreditTermGroupView.aspx">[ View all group ]</a></div>
+                    <%} %>
             </div>
             <div class="bg_table">
                 <asp:Literal ID="content" runat="server"></asp:Literal>

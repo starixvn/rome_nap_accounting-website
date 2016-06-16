@@ -13,6 +13,8 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.WcfServiceLibrary.CreditTerm;
+using Sunplus.Accounting.Business.Security;
+using Fanex.Tarus.Security.Criteria;
 
 namespace Sunplus.Accounting.Presentation
 {
@@ -69,8 +71,21 @@ namespace Sunplus.Accounting.Presentation
                 // 3 - Remove Selected Users from This Group
                 string username_selected = "", custid_selected = "", msg = "";
                 int count_normal_user_selected = 0;
+                var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
+                 new CheckSpecialSitePermissionCriteria()
+                 {
+                     UserID = Convert.ToInt32(userid),
+                     CustName = username
+                 });
 
-                if (type == 1) // 1 - Add this user to group >>
+
+                if (checkSpecialSitePermission.ErrorCode > 0)
+                {
+                    TemplateHandler.Assign(ref from, "{msg}",
+                                               "<script>showAlertMessage('errMsg','" +
+                                               checkSpecialSitePermission.ErrorMessage + "',1);</script>");
+                }
+                else if (type == 1) // 1 - Add this user to group >>
                 {
                     var rs = AccountCredit.Acc_CreditTermUpdAddToGroup(username, groupid, userid);
                     if (rs.ErrorCode != 0)
@@ -84,7 +99,7 @@ namespace Sunplus.Accounting.Presentation
                 }
                 else if (type == 3) // 3 - Remove Selected Users from This Group
                 {
-                    var stringseparator = new[] {","};
+                    var stringseparator = new[] { "," };
                     foreach (string item in listname.Split(stringseparator, StringSplitOptions.RemoveEmptyEntries))
                     {
                         if (item != "")
@@ -128,7 +143,7 @@ namespace Sunplus.Accounting.Presentation
                         {
                             TemplateHandler.Assign(ref from, "{msg}",
                                                    "<script>showAlertMessage('errMsg','" +
-                                                   rs.ErrorMessage+ "',1);</script>");
+                                                   rs.ErrorMessage + "',1);</script>");
                         }
                         else
                         {
@@ -147,8 +162,8 @@ namespace Sunplus.Accounting.Presentation
                 }
 
                 //DataTable dt = AccountCredit.Acc_CreditTermSelByGroupID(groupid).ResultSet.Tables[0];
-				var creditTermService = new CreditTermService();
-				var memberList = creditTermService.GetMemberByGroupId(groupid);
+                var creditTermService = new CreditTermService();
+                var memberList = creditTermService.GetMemberByGroupId(groupid);
                 string headline = "";
                 var userrows = new StringBuilder();
                 string userrow = TemplateHandler.CopyBlock(from, "UserRow");
@@ -161,10 +176,10 @@ namespace Sunplus.Accounting.Presentation
                 string title = "";
                 TemplateHandler.RemoveBlock(ref from, "UserRow");
                 string roweven = "evenrow";
-				foreach (var member in memberList)
+                foreach (var member in memberList)
                 {
-                    _userrow = (string) userrow.Clone();
-					if (member.IsGroupHeadline)
+                    _userrow = (string)userrow.Clone();
+                    if (member.IsGroupHeadline)
                     {
                         jsheadline = "";
                         headline = "(HEAD LINE)";
@@ -179,7 +194,7 @@ namespace Sunplus.Accounting.Presentation
                         headlineclass = "../App_Themes/Images/headline.gif";
                         headlineclasstext = "";
                         headline = "";
-						removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
+                        removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
                                      "' name='chkuser' id='chkuser' />";
                         jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
                     }

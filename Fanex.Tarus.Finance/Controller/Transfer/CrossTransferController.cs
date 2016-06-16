@@ -9,7 +9,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
     using Fanex.Tarus.Web.Controllers;
 
     using Sunplus.Accounting.Core.Common;
-
+    using Infrastructure.Helper;
+    using Sunplus.Accounting.Business.Security;
     public class CrossTransferController : BaseController
     {
         private readonly ICrossTransferService _crossTransferService;
@@ -37,7 +38,14 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             {
                 return View("~/Views/Common/AccessDenied.cshtml");
             }
-            var s = Request.QueryString["fromCustName"];
+
+            var custName = Request.QueryString["fromCustName"];
+            crossTransferModel.SpecialSitePermission = Permissions.CheckSpecialSitePermission(new Security.Criteria.CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
             return View("~/Views/Finance/Transfer/Index.cshtml", crossTransferModel);
         }
 

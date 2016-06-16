@@ -15,6 +15,9 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Bingo.Core;
+using Fanex.CustomerSetting.Module.Core.Models;
+using Sunplus.Accounting.Business.Criteria;
+using Fanex.Tarus.Security.Criteria;
 
 namespace Sunplus.Accounting.Business.Security
 {
@@ -84,7 +87,7 @@ namespace Sunplus.Accounting.Business.Security
                         if (!pages.ContainsKey(strListFiles[i].Trim()))
                         {
                             pages.Add(strListFiles[i].Trim(), strFuncName.Trim() + "-1");
-                        }                   
+                        }
                     }
                 }
             }
@@ -238,7 +241,7 @@ namespace Sunplus.Accounting.Business.Security
         public static bool IsDenyView2HOther
         {
             get { return false; }
-        }      
+        }
 
         /// <summary>
         /// T: Enumeration.Functions enum (Customer, Setting...)
@@ -491,6 +494,18 @@ namespace Sunplus.Accounting.Business.Security
         public static bool IsAllowEditAutoSuspend()
         {
             return Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend);
+        }
+
+        public static Result CheckSpecialSitePermission(CheckSpecialSitePermissionCriteria criteria)
+        {
+            var tarusSecurityPermissionService = new Fanex.Tarus.Security.Permission.PermissionService();
+            return tarusSecurityPermissionService.CheckSpecialSitePermission(criteria);
+        }
+
+        public static bool CheckDummyAccount(CheckDummyAccountCriteria criteria)
+        {
+            var tarusSecurityPermissionService = new Fanex.Tarus.Security.Permission.PermissionService();
+            return tarusSecurityPermissionService.CheckDummyAccount(criteria);
         }
     }
 }
