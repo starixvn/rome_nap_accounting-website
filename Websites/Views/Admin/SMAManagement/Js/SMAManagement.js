@@ -521,9 +521,24 @@
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
+				var $span = $("#spanHeadlineType" + headlineId);
 				var $select = $("#select" + headlineId);
 
-				updateHeadlineType(headlineId, $select.val());
+				var oldHeadlineType = $span.html();
+				var newHeadlineType = $select.val();
+
+				if (oldHeadlineType === newHeadlineType) {
+					var parent = $this.parent();
+
+					$span.removeClass("hidden");
+					parent.prev().removeClass("hidden");
+
+					$select.addClass("hidden");
+					parent.addClass("hidden");
+				}
+				else {
+					updateHeadlineType(headlineId, newHeadlineType);
+				}
 			});
 
 		$(".cancel-headlinetype")
@@ -587,9 +602,24 @@
 
 				var $this = $(this);
 				var headlineId = $this.attr("data-headlineid");
+				var $span = $("#spanOwner" + headlineId);
 				var $input = $("#input" + headlineId);
 
-				updateOwner(headlineId, $.trim($input.val()));
+				var oldOwner = $.trim($span.html());
+				var newOwner = $.trim($input.val());
+
+				if (oldOwner === newOwner) {
+					var parent = $this.parent();
+
+					$span.removeClass("hidden");
+					parent.prev().removeClass("hidden");
+
+					$input.addClass("hidden").val(oldOwner);
+					parent.addClass("hidden");
+				}
+				else {
+					updateOwner(headlineId, newOwner);
+				}
 			});
 
 		$(".cancel-owner")
