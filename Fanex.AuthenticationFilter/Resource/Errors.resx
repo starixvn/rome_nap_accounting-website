@@ -120,4 +120,7 @@
   <data name="errorNotAuthorized" xml:space="preserve">
     <value>You are not authorized on this function</value>
   </data>
+  <data name="errorNotHavePermission" xml:space="preserve">
+    <value>You don't have permission to access</value>
+  </data>
 </root>

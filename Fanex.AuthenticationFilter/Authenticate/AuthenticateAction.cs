@@ -10,7 +10,7 @@ namespace Fanex.AuthenticationFilter
     using System.Collections;
     using System.Web.Mvc;
     using Fanex.AuthenticationFilter.Configurations;
-
+    using Resource;
     /// <summary>
     /// Smart punter authentication.
     /// </summary>
@@ -55,7 +55,7 @@ namespace Fanex.AuthenticationFilter
             switch (_authenticationType)
             {
                 case AuthenticationType.Read:
-                    if (!authenticateFactory.AllowRead())
+                    if (!authenticateFactory.AllowRead(filterContext))
                     {
                         ActionDenied(filterContext);
                         return;
@@ -63,7 +63,7 @@ namespace Fanex.AuthenticationFilter
 
                     break;
                 case AuthenticationType.Host:
-                    if (!authenticateFactory.AllowUpdate())
+                    if (!authenticateFactory.AllowUpdate(filterContext))
                     {
                         ActionDenied(filterContext);
                         return;
@@ -80,11 +80,16 @@ namespace Fanex.AuthenticationFilter
         /// </summary>
         /// <param name="filterContext">Action executed context.</param>
         private static void ActionDenied(ActionExecutedContext filterContext)
-        {
+        {   
             filterContext.Result = new PartialViewResult
             {
-                ViewName = AuthenticationFilterSection.Instance.DeniedView 
+                ViewName = AuthenticationFilterSection.Instance.DeniedView
             };
+
+            if (filterContext.Controller.ViewBag.ErrorCode > 0)
+            {
+                (filterContext.Result as PartialViewResult).ViewBag.ErrorMessage = Errors.errorNotHavePermission;
+            }
         }
     }
 }

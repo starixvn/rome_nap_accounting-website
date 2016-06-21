@@ -6,6 +6,8 @@
 // -----------------------------------------------------------------------
 
 using System.Collections;
+using System.Web.Mvc;
+
 namespace Fanex.AuthenticationFilter
 {
     /// <summary>
@@ -13,12 +15,12 @@ namespace Fanex.AuthenticationFilter
     /// </summary>
     public class DefaultAuthenticate: IAuthenticate
     {
-        public bool AllowRead()
+        public bool AllowRead(ActionExecutedContext filterContext)
         {
             return true;
         }
 
-        public bool AllowUpdate()
+        public bool AllowUpdate(ActionExecutedContext filterContext)
         {
             return true;
         }
