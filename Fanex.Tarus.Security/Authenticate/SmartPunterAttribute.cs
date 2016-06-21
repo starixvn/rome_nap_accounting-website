@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Security.Authenticate
         /// The _permission service.
         /// </summary>
         private readonly ISmartPunterPermissionService _permissionService = new SmartPunterPermissionService();
-
+        private string _betlistFunctionName = "BetList";
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerSettingAttribute"/> class.
         /// </summary>
@@ -59,19 +59,30 @@ namespace Fanex.Tarus.Security.Authenticate
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool AllowRead()
         {
-            if(this.ParamHastable.ContainsKey("custId"))
+            if (PermissionService.HasPermission(_betlistFunctionName))
             {
-                int custId = Converter.To<int>(this.ParamHastable["custId"]);
-                return !_permissionService.IsDeniedViewSmartPunter(custId, string.Empty);
-            }
-            else if (this.ParamHastable.ContainsKey("username"))
-            {
-                var username = Converter.ToString2(this.ParamHastable["username"]);
-                return !_permissionService.IsDeniedViewSmartPunter(null, username);
+                if (ParamHastable == null)
+                {
+                    return true;
+                }
+
+                if (ParamHastable.ContainsKey("custId"))
+                {
+                    int custId = Converter.To<int>(ParamHastable["custId"]);
+                    return !_permissionService.IsDeniedViewSmartPunter(custId, string.Empty);
+                }
+
+                if (ParamHastable.ContainsKey("username"))
+                {
+                    var username = Converter.ToString2(ParamHastable["username"]);
+                    return !_permissionService.IsDeniedViewSmartPunter(null, username);
+                }
+
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 

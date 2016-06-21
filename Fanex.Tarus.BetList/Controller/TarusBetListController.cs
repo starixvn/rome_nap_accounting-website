@@ -34,6 +34,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <returns></returns>
 
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
             BalanceUp balanceUp = ReportService.BalanceUp;
@@ -47,7 +48,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <param name="CustID"></param>
         /// <returns></returns>
-
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByCustInfo(int CustID)
         {
             ViewBag.CustID = CustID;
@@ -89,6 +90,7 @@ namespace Fanex.Tarus.BetList.Controller
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
             ViewBag.FromDate = FromDate;

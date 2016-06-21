@@ -26,6 +26,7 @@ namespace Fanex.BetList.Accounting.Controllers
         }
 
         public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam)
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         {
             var result = _betListService.GetMixParlayTickets(
                 new MixParlayDetailCriteria
@@ -185,6 +186,7 @@ namespace Fanex.BetList.Accounting.Controllers
             return new EmptyResult();
         }
 
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByIP_Username(
             string ip,
             DateTime fromDate,
