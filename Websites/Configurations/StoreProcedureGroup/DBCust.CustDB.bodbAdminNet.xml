@@ -236,7 +236,7 @@
   <Function Name="Exchange Daily">
     <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>

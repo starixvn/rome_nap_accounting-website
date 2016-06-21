@@ -33,13 +33,18 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             return sites;
         }
 
-        public IEnumerable<IdNameEntity> GetCurrencies()
+        public IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies)
         {
             IList<IdNameEntity> currencies = new List<IdNameEntity>(64);
 
             using (var db = new ObjectDb("Acc_ExchangeSel"))
             {
-                using (var reader = db.ExecuteReader())
+                var inputParams = new Hashtable
+                {
+                    {  "istest", !excludeTestCurrencies }
+                };
+
+                using (var reader = db.ExecuteReader(inputParams))
                 {
                     while (reader.Read())
                     {

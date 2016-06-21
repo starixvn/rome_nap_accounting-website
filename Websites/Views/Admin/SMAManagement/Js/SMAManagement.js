@@ -4,6 +4,7 @@
 	var errorElement = $("#err"),
 		currencyElement = $("#ddlCurrency"),
 		headlineTypeElement = $("#ddlHeadlineType"),
+		excludeTestAccountsElement = $("#chkExcludeTestAccounts"),
 		usernameElement = $("#txtUsername"),
 		groupHeadlineElement = $("#txtGroupHeadline"),
 		ownerElement = $("#txtOwner"),
@@ -179,6 +180,7 @@
 			groupHeadline: groupHeadline,
 			headlineType: headlineTypeElement.val(),
 			owner: owner,
+			excludeTestAccounts: excludeTestAccountsElement.prop("checked"),
 			pageIndex: pageIndex,
 			pageSize: pageSize
 		};
@@ -198,6 +200,37 @@
 		else {
 			$(obj).addClass("desc");
 		}
+	}
+
+	function getCurrencies(excludeTestCurrencies) {
+		$.ajax({
+			type: "GET",
+			url: window.rootUrl + "SMAManagement/GetCurrencies?excludeTestCurrencies=" + excludeTestCurrencies,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
+			success: function (currencies) {
+				var currenciesLength = currencies ? currencies.length : 0
+				var htmlOptions = [];
+
+				for (var i = 0; i < currenciesLength; i++) {
+					htmlOptions.push('<option value="');
+					htmlOptions.push(currencies[i].Id);
+					htmlOptions.push('"');
+
+					if (i === 0) {
+						htmlOptions.push(' selected="selected"');
+					}
+
+					htmlOptions.push(">");
+					htmlOptions.push(currencies[i].Name);
+					htmlOptions.push("</option>");
+				}
+
+				currencyElement.html(htmlOptions.join(""));
+			},
+			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
+		});
 	}
 
 	function getSMAGroupHeadlines() {
@@ -874,6 +907,10 @@
 
 		gridOptions = initGridOptions();
 		smaMangementGridElement.initGrid(gridOptions);
+
+		excludeTestAccountsElement.click(function (e) {
+			getCurrencies(e.target.checked);
+		});
 
 		$("#btnSubmit").click(function () {
 			pageIndex = 1;

@@ -10,7 +10,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
     {
         IEnumerable<IdNameEntity> GetSites();
 
-        IEnumerable<IdNameEntity> GetCurrencies();
+        IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies);
 
         SMAManagerModel GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria);
 

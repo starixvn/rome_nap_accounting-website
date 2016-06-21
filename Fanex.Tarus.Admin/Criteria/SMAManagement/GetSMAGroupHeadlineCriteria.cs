@@ -28,6 +28,8 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
 
         public string Owner { get; set; }
 
+        public bool ExcludeTestAccounts { get; set; }
+
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }
@@ -56,7 +58,8 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
                 { "username", Username },
                 { "groupheadline", GroupHeadline },
                 { "headlinetype", HeadlineType },
-                { "owner", Owner }
+                { "owner", Owner },
+                { "istest", !ExcludeTestAccounts }
             };
         }
 

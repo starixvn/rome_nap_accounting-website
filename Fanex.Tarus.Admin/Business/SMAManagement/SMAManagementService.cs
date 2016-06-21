@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
@@ -19,8 +18,6 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 {
     public class SMAManagementService : ISMAManagementService
     {
-        private const string SitesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.Sites";
-        private const string CurrenciesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.Currencies";
         private const string SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.SMAListByGroupHeadline";
 
         private readonly ISMAManagementAccess _smaManagementAccess;
@@ -32,25 +29,12 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
         public IEnumerable<IdNameEntity> GetSites()
         {
-            return GetFromSession(
-                SitesSessionKey,
-                () =>
-                {
-                    return _smaManagementAccess.GetSites();
-                });
+            return _smaManagementAccess.GetSites();
         }
 
-        public IEnumerable<IdNameEntity> GetCurrencies()
+        public IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies)
         {
-            return GetFromSession(
-                CurrenciesSessionKey,
-                () =>
-                {
-                    // Eliminate test currencies: 20 - uus; 27 - h; 28 - c.
-                    return _smaManagementAccess.GetCurrencies()
-                        .Where(c => c.Id != 20 && c.Id != 27 && c.Id != 28)
-                        .ToList();
-                });
+            return _smaManagementAccess.GetCurrencies(excludeTestCurrencies);
         }
 
         public SMAManagerModel GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)

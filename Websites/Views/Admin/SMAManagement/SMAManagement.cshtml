@@ -52,6 +52,10 @@
                             <td style="width: 100px">
                                 @Html.DropDownList("ddlHeadlineType", Model.HeadlineTypes, new { style = "width:100px" })
                             </td>
+                            <td>
+                                <input type="checkbox" id="chkExcludeTestAccounts" checked="checked"/>
+                                <label for="chkExcludeTestAccounts">Exclude Test Accounts</label>
+                            </td>
                         </tr>
                         <tr>
                             <td>

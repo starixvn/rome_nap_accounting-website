@@ -36,6 +36,15 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml", GetFilterInfo());
         }
 
+        [HttpGet]
+        public ActionResult GetCurrencies(bool excludeTestCurrencies)
+        {
+            var currencies = _smaManagementService.GetCurrencies(excludeTestCurrencies).ToList();
+            currencies.Insert(0, new IdNameEntity { Name = Language.All, Id = 0 });
+
+            return Json(currencies, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
         {
@@ -44,6 +53,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
+        [HttpGet]
         public ActionResult ExportSMAGroupHeadlinesToExcel(GetSMAGroupHeadlineCriteria criteria)
         {
             string reportName = "SMAListByGroupHeadline";
@@ -107,7 +117,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
                 Value = s.Id.ToString()
             });
 
-            var currencies = _smaManagementService.GetCurrencies().Select(c => new SelectListItem
+            var currencies = _smaManagementService.GetCurrencies(true).Select(c => new SelectListItem
             {
                 Text = c.Name,
                 Value = c.Id.ToString()
