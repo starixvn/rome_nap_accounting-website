@@ -36,34 +36,9 @@ public partial class CreditTerm_CreditTermView : PageBase
             string form = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTermViewForm.htm");
             int custid = Convert.ToInt32(Session["CustId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
-            //var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
-            //      new CheckSpecialSitePermissionCriteria()
-            //      {
-            //          UserID = userid,
-            //          CustID = custid
-            //      });
-
-            //if (checkSpecialSitePermission.ErrorCode > 0)
-            //{
-            //    msg = checkSpecialSitePermission.ErrorMessage;
-            //    return string.Empty;
-            //}
-
             if (!string.IsNullOrEmpty(Request["btnsubmit"]))
             {
-                var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
-                   new CheckSpecialSitePermissionCriteria()
-                   {
-                       UserID = Convert.ToInt32(userid),
-                       CustID = custid
-                   });
-
-
-                if (checkSpecialSitePermission.ErrorCode > 0)
-                {
-                    msg = AlertMessage.GetMsg(checkSpecialSitePermission.ErrorMessage, AlertMessage.MsgType.Error);
-                }
-                else if (custid != 0 && userid != 0)
+                if (custid != 0 && userid != 0)
                 {
                     string creditgrade = Request["cbograde"];
                     double preagreeamount = 0, installmentamount = 0;

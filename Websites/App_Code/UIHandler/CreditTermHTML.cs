@@ -155,44 +155,35 @@ namespace Sunplus.Accounting.Presentation
 
         private static void RemoveSelectedUsersFromGroup(ref string from, int groupid, int userid, string listname, ref string username_selected, ref string custid_selected, ref string msg, ref int count_normal_user_selected)
         {
-            var invalidUsers = CheckAccessSpecialSiteForMultipleCustomers(listname);
-            if (invalidUsers.Length > 0)
+            var stringseparator = new[] { "," };
+            foreach (string item in listname.Split(stringseparator, StringSplitOptions.RemoveEmptyEntries))
             {
-                msg = "<script>showAlertMessage('errMsg','"  + WebUtility.HtmlEncode("You don't have permission to access to the customer: ") + invalidUsers +
-                                      "',1);</script>";
-            }
-            else
-            {
-                var stringseparator = new[] { "," };
-                foreach (string item in listname.Split(stringseparator, StringSplitOptions.RemoveEmptyEntries))
+                if (item != "")
                 {
-                    if (item != "")
+                    username_selected = item.Split('|')[1];
+                    custid_selected = item.Split('|')[0];
+                    var rs = AccountCredit.Acc_CreditTermUpdRemoveFromGroup(custid_selected, groupid, userid);
+                    if (rs != null)
                     {
-                        username_selected = item.Split('|')[1];
-                        custid_selected = item.Split('|')[0];
-                        var rs = AccountCredit.Acc_CreditTermUpdRemoveFromGroup(custid_selected, groupid, userid);
-                        if (rs != null)
+                        if (rs.ErrorCode != 0)
                         {
-                            if (rs.ErrorCode != 0)
-                            {
-                                msg = "<script>showAlertMessage('errMsg','" + rs.ErrorMessage +
-                                      "',1);</script>";
-                            }
-                            else
-                            {
-                                msg += username_selected + ", ";
-                                count_normal_user_selected++;
-                            }
+                            msg = "<script>showAlertMessage('errMsg','" + rs.ErrorMessage +
+                                  "',1);</script>";
+                        }
+                        else
+                        {
+                            msg += username_selected + ", ";
+                            count_normal_user_selected++;
                         }
                     }
                 }
-                if (msg.LastIndexOf(",") > 0)
-                    msg = msg.Substring(0, msg.Length - 2);
-                if (count_normal_user_selected > 0)
-                {
-                    msg += " has been removed.";
-                    msg = "<script>showAlertMessage('errMsg','" + msg + "',0);</script>";
-                }
+            }
+            if (msg.LastIndexOf(",") > 0)
+                msg = msg.Substring(0, msg.Length - 2);
+            if (count_normal_user_selected > 0)
+            {
+                msg += " has been removed.";
+                msg = "<script>showAlertMessage('errMsg','" + msg + "',0);</script>";
             }
 
             TemplateHandler.Assign(ref from, "{msg}", msg);
@@ -200,67 +191,35 @@ namespace Sunplus.Accounting.Presentation
 
         private static void SetSelectedUserToBeGroupHeadline(ref string from, int groupid, int userid, string listname)
         {
-            var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
-            new CheckSpecialSitePermissionCriteria()
+            var rs = AccountCredit.Acc_CreditTermUpdSetGroupHeadline(Convert.ToInt32(listname), groupid,
+                                       userid);
+            if (rs != null)
             {
-                UserID = Convert.ToInt32(userid),
-                CustID = Convert.ToInt32(listname)
-            });
-
-            if (checkSpecialSitePermission.ErrorCode > 0)
-            {
-                TemplateHandler.Assign(ref from, "{msg}",
-                                           "<script>showAlertMessage('errMsg','" +
-                                           WebUtility.HtmlEncode(checkSpecialSitePermission.ErrorMessage) + "',1);</script>");
-            }
-            else
-            {
-                var rs = AccountCredit.Acc_CreditTermUpdSetGroupHeadline(Convert.ToInt32(listname), groupid,
-                                           userid);
-                if (rs != null)
+                if (rs.ErrorCode != 0)
                 {
-                    if (rs.ErrorCode != 0)
-                    {
-                        TemplateHandler.Assign(ref from, "{msg}",
-                                               "<script>showAlertMessage('errMsg','" +
-                                               rs.ErrorMessage + "',1);</script>");
-                    }
-                    else
-                    {
-                        TemplateHandler.Assign(ref from, "{msg}",
-                                               "<script>showAlertMessage('errMsg','Group Headline has been changed.',0);</script>");
-                    }
+                    TemplateHandler.Assign(ref from, "{msg}",
+                                           "<script>showAlertMessage('errMsg','" +
+                                           rs.ErrorMessage + "',1);</script>");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref from, "{msg}",
+                                           "<script>showAlertMessage('errMsg','Group Headline has been changed.',0);</script>");
                 }
             }
         }
 
         private static void AddUserToGroup(ref string from, int groupid, string username, int userid)
         {
-            var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
-            new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = Convert.ToInt32(userid),
-                CustName = username
-            });
-
-            if (checkSpecialSitePermission.ErrorCode > 0)
-            {
+            var rs = AccountCredit.Acc_CreditTermUpdAddToGroup(username, groupid, userid);
+            if (rs.ErrorCode != 0)
                 TemplateHandler.Assign(ref from, "{msg}",
-                                           "<script>showAlertMessage('errMsg','" +
-                                           checkSpecialSitePermission.ErrorMessage + "',1);</script>");
-            }
+                                       "<script>showAlertMessage('errMsg','" +
+                                       rs.ErrorMessage + "',1);</script>");
             else
-            {
-                var rs = AccountCredit.Acc_CreditTermUpdAddToGroup(username, groupid, userid);
-                if (rs.ErrorCode != 0)
-                    TemplateHandler.Assign(ref from, "{msg}",
-                                           "<script>showAlertMessage('errMsg','" +
-                                           rs.ErrorMessage + "',1);</script>");
-                else
-                    TemplateHandler.Assign(ref from, "{msg}",
-                                           "<script>showAlertMessage('errMsg','Add " + username +
-                                           " to group successfully.',0);</script>");
-            }
+                TemplateHandler.Assign(ref from, "{msg}",
+                                       "<script>showAlertMessage('errMsg','Add " + username +
+                                       " to group successfully.',0);</script>");
         }
 
         #endregion
@@ -268,38 +227,6 @@ namespace Sunplus.Accounting.Presentation
         private static void ThreadMethod()
         {
             Thread.Sleep(10);
-        }
-
-        /// <summary>
-        /// Check Access Special Site Permission For Multiple Customers.
-        /// </summary>
-        /// <param name="listUsername"></param>
-        /// <returns>List invalid customers or empty string if all customers is valid.</returns>
-        private static string CheckAccessSpecialSiteForMultipleCustomers(string listUsername)
-        {
-            string result = string.Empty;
-            var stringseparator = new[] { "," };
-            foreach (string item in listUsername.Split(stringseparator, StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (item != "")
-                {
-                    var custid = item.Split('|')[0];
-                    var username = item.Split('|')[1];
-                    var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
-                        new CheckSpecialSitePermissionCriteria()
-                        {
-                            UserID = AppSession.AccId,
-                            CustID = Convert.ToInt32(custid)
-                        });
-
-                    if (checkSpecialSitePermission.ErrorCode > 0)
-                    {
-                        result += username + ", ";
-                    }
-                }
-            }
-
-            return string.IsNullOrEmpty(result) ? string.Empty : result.Substring(0, result.Length - 2);
         }
     }
 }
