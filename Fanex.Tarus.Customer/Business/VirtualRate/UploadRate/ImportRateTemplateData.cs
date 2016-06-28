@@ -23,7 +23,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         /// Get this excel template.
         /// </summary>
         /// <returns>Excel Template.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public static List<ImportVirtualRateResultGroup> Template()

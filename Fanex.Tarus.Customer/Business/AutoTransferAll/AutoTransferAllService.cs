@@ -170,7 +170,7 @@ namespace Fanex.Tarus.Customer.Business.AutoTransferAll
         /// </summary>
         /// <param name="fileUploaded">File upload.</param>
         /// <returns>User name list.</returns>
-         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         private string ReadUsernameFromFile(HttpPostedFileBase fileUploaded)

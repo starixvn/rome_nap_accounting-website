@@ -55,7 +55,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         /// <returns>
         /// Import Direct Account Result.
         /// </returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public UploadResult CheckImportVirtualRate(HttpPostedFileBase fileUploaded, int userId)
@@ -146,7 +146,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Update result.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public UploadResult UpdateImportRate(UpdateImportRateCriteria criteria)
@@ -245,7 +245,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         /// Import rate list.
         /// </returns>
         /// <exception cref="System.Exception">Invalid Format Exception.</exception>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         private List<ImportVirtualRateInfo> ReadImportVirtualRateFile(HttpPostedFileBase fileUploaded, CheckImportResult uploadResult)
@@ -567,7 +567,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
         /// </summary>
         /// <param name="importList">The import list.</param>
         /// <returns>The customer virtual rate list.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         private List<CustomerVirtualRateModel> CustomerVirtualRateList(List<ImportVirtualRateInfo> importList)

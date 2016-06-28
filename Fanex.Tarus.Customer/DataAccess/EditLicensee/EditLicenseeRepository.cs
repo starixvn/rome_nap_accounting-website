@@ -96,7 +96,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
         /// <param name="criteria">The criteria.</param>
         /// <param name="outputParams">The output parameters.</param>
         /// <param name="settingInfo">The setting information.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public void GetLicenseeInfo_Sportsbook(
@@ -200,7 +200,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
         /// <param name="criteria">The criteria.</param>
         /// <param name="outputParams">The output parameters.</param>
         /// <param name="settingInfo">The setting information.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public void GetLicenseeInfo_NumberGame(
@@ -287,7 +287,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
         /// <param name="criteria">The criteria.</param>
         /// <param name="outputParams">The output parameters.</param>
         /// <param name="settingInfo">The setting information.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public void GetLicenseeInfo_Racing(
@@ -395,7 +395,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
         /// <param name="outputParams">The output parameters.</param>
         /// <param name="settingInfo">The setting information.</param>
         /// <returns> List VirtualSportsSettingInfo.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public List<VirtualSportsSettingInfo> GetLicenseeInfo_VirtualSports(

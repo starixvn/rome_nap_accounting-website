@@ -56,7 +56,7 @@
         /// </summary>
         /// <param name="data">The data information.</param>
         /// <returns>The customer relation.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public CustomerRelation GetCustomerRelation(DbResult data)
@@ -183,7 +183,7 @@
         /// <param name="positionTakingDTO">The position taking DTO.</param>
         /// <param name="dr">The data row.</param>
         /// <param name="roleId">The role identifier.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         private void AssignPtDetail(

@@ -50,7 +50,7 @@ namespace Fanex.BetList.Accounting.Services
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The win loss member bet list.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public BetListDetail GetWinLossMemberBetList(WinLossMemberBetListCriteria criteria)
@@ -182,7 +182,7 @@ namespace Fanex.BetList.Accounting.Services
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Detail Mix Parlay ticket.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria criteria)
@@ -257,7 +257,7 @@ namespace Fanex.BetList.Accounting.Services
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Bet List by ref no.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListByRefNoTickets(BetListByRefNoCriteria criteria)
@@ -370,7 +370,7 @@ namespace Fanex.BetList.Accounting.Services
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Bet types by date after change date range.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
@@ -435,7 +435,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <returns>
         /// The bet list by customer info_ date range.
         /// </returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListByCustInfo_DateRange(
@@ -639,7 +639,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <returns>
         /// Bet list data for Customer info bet list by ref no - bet list tab.
         /// </returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListByCustInfo_Refno(string transactionId, int customerId)
@@ -772,7 +772,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="transId">The transaction ID.</param>
         /// <param name="custId">The customer ID.</param>
         /// <returns>Bet list data for Customer info bet list by ref no - system parlay tab.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public SystemParlayModel GetBetListByCustInfo_SystemParLayTab(string transId, int custId)
@@ -846,7 +846,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="isCache">If set to <c>true</c> [is cache].</param>
         /// <param name="quality">The quality.</param>
         /// <returns>The list by IP address username.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<BetListByIP_Username> GetListByIP_Username(
@@ -961,7 +961,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="totalComm">The total commission.</param>
         /// <param name="totalWinLoss">The total win loss.</param>
         /// <returns>The bet list by IP address soccer.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListByIP_Soccer(
@@ -1176,7 +1176,7 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="totalComm">The total commission.</param>
         /// <param name="totalWinLoss">The total win loss.</param>
         /// <returns>The bet list statement.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListStatement(

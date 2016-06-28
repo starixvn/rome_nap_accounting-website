@@ -86,7 +86,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AGCasino
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Import Direct Account Result.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public ImportDirectAccountResult CheckImportDirectAccount(CheckImportDirectAccountFileCriteria criteria)

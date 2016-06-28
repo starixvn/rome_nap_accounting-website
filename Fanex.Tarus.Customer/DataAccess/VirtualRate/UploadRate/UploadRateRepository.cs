@@ -80,7 +80,7 @@ namespace Fanex.Tarus.Customer.DataAccess.VirtualRate.UploadRate
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Check result.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public CheckImportResult CheckImport(CheckImportCriteria criteria)
