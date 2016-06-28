@@ -9,7 +9,9 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Sunplus.Accounting.Core.Common;
+    using Security.Attributes;
 
+    [SpecialSiteFilter]
     public class CustomerListController : BaseController
     {
         ICustomerListService _customerList = null;

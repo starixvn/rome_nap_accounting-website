@@ -12,7 +12,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Sunplus.Accounting.Core.Helper;
     using System.Collections.Generic;
     using Sunplus.Accounting.Core.Extensions;
+    using Security.Attributes;
 
+    [SpecialSiteFilter]
     public class EditSuperMinPtController : CustomerSettingBaseController
     {
         /// <summary>

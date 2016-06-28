@@ -16,10 +16,9 @@ namespace Fanex.Tarus.BetList.Controller
     using Fanex.BetList.Accounting.Services;
     using Sunplus.Accounting.Core.Common;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
+    using Security.Attributes;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SpecialSiteFilter]
     public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;

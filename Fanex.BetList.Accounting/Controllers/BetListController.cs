@@ -2,18 +2,20 @@
 
 namespace Fanex.BetList.Accounting.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     using Fanex.Common;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Tarus.Security.Attributes;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
+    [SpecialSiteFilter]
     public class BetListController : Controller
     {
         private readonly IBetListService _betListService;
@@ -227,7 +229,6 @@ namespace Fanex.BetList.Accounting.Controllers
         {
             Hashtable paramHastable = new Hashtable();
             paramHastable.Add("custId", customerId);
-
             TempData["paramHastable"] = paramHastable;
 
             decimal totalComm = 0;

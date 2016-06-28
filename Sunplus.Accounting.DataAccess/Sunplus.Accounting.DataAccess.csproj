@@ -177,7 +177,6 @@
     <Compile Include="IReportDAO\IReportRacingDAO.cs" />
     <Compile Include="IReportWinLossDAO.cs" />
     <Compile Include="IUserDAO.cs" />
-    <Compile Include="NoSql\BetListDAO.cs" />
     <Compile Include="OtherProvider.cs" />
     <Compile Include="PositionTakingProvider.cs" />
     <Compile Include="PositionTaking\IPokerDAO.cs" />
@@ -363,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdoNet\SqlServer\PositionTaking\" />
+    <Folder Include="NoSql\" />
     <Folder Include="Report\Poker\" />
   </ItemGroup>
   <ItemGroup>

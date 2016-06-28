@@ -15,10 +15,9 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Security.Attributes;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SpecialSiteFilter]
     public class EditLicenseeController : BaseController
     {
         private readonly IEditLicenseeService _editLicenseeService;

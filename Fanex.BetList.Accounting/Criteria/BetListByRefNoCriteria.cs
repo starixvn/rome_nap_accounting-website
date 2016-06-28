@@ -8,6 +8,7 @@
 // </history>
 
 using System;
+    using CustomerSetting.Module.Core.Web;
 using Fanex.NAP.Framework.Data;
 
 namespace Fanex.BetList.Accounting.Criteria
@@ -21,6 +22,7 @@ namespace Fanex.BetList.Accounting.Criteria
         public DateTime MoveBetsDay { get; set; }
 
         public DateTime BalanceUpDay { get; set; }
+        }
 
         public override string GetSettingKey()
         {

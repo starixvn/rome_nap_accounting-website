@@ -128,9 +128,6 @@
     <Compile Include="Entity\Outright.cs" />
     <Compile Include="Entity\Sport.cs" />
     <Compile Include="Entity\Team.cs" />
-    <Compile Include="Entity\TicketsListing.cs" />
-    <Compile Include="Entity\TicketsListingBetlist.cs" />
-    <Compile Include="Entity\TicketsListingSportEvent.cs" />
     <Compile Include="Log\Error.cs" />
     <Compile Include="Log\Info.cs" />
     <Compile Include="Queue\Item.cs" />
@@ -174,12 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Storage\NoSQL\Cassandra\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
-      <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
-      <Name>Fanex.Tarus.BetList</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

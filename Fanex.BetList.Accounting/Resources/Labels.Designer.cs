@@ -115,6 +115,15 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You don&apos;t have permission to access.
+        /// </summary>
+        public static string DeniedAccessSpecialSite {
+            get {
+                return ResourceManager.GetString("DeniedAccessSpecialSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EUR.
         /// </summary>
         public static string EUR {

@@ -14,7 +14,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Newtonsoft.Json.Serialization;
     using Sunplus.Accounting.Core.Extensions;
     using System.Collections.Generic;
+    using Security.Attributes;
 
+    [SpecialSiteFilter]
     public class CustomerSettingBaseController : BaseController
     {
         protected static ICustomerSettingService _customerSettingService;

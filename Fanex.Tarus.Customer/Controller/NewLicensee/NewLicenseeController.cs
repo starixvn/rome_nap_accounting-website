@@ -16,10 +16,9 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
     using Fanex.Tarus.Customer.Entities.NewLicensee;
     using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Web.Controllers;
+    using Security.Attributes;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SpecialSiteFilter]
     public class NewLicenseeController : BaseController
     {
         private readonly INewLicenseeService _newLicenseeService;

@@ -10,7 +10,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
+    using Security.Attributes;
 
+    [SpecialSiteFilter]
     public class EditMemberController : CustomerSettingBaseController
     {
         public EditMemberController(ICustomerSettingService customerSettingService)
