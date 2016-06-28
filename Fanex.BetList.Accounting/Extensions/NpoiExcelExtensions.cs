@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="NpoiExcelExtensions.cs" company="Nexcel Solutions Vietnam.">
+// <copyright file="NpoiExcelExtensions.cs" company=".">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

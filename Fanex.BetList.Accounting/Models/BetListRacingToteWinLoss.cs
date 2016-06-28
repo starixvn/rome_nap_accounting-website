@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="BetListRacingToteWinLoss.cs" company="Nexcel Solution Vietnam">
+// <copyright file="BetListRacingToteWinLoss.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

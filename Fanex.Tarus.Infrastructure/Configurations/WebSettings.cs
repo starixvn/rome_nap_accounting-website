@@ -71,8 +71,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         /// As agreement between IBC and 3rd party, IBC will not take any position taking on racing tickets. But in fact we already get something.
         /// When 3rd party come to us, our Racing Department doesn't want them to see IBC PT, so we need to hide all IBC PT info on Accounting Racing reports when guess visit
         /// Requirement Specification
-        /// Define a key that allow a quick show/hide IBC PT column on Racing reports and also for export excel in a specific range date
-        /// http://redmine.nexcel.vn/issues/973 
+        /// Define a key that allow a quick show/hide IBC PT column on Racing reports and also for export excel in a specific range date       
         /// </summary>
         public static bool IsHideIBCPTRacing
         {

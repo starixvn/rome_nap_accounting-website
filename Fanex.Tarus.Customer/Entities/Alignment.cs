@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Alignment.cs" company="Nexcel Solutions Vietnam.">
+// <copyright file="Alignment.cs" company=".">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

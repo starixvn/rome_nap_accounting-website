@@ -6,7 +6,7 @@
 
 // ***********************************************************************
 // <copyright file="AssemblyInfo.cs" company="Microsoft">
-//     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+//     Copyright (c) . All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************

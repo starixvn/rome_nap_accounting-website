@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------
-// <copyright file="LiveCasinoPopupResultService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="LiveCasinoPopupResultService.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
