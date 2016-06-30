@@ -94,6 +94,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             settings.NullValueHandling = NullValueHandling.Ignore;
             Customer customer = JsonConvert.DeserializeObject<Customer>(customerString, settings);
             customer.UserName = customer.UserName.Trim();
+
+            customer = EncodingUtil.HtmlEncode(customer);
             return customer;
         }
 

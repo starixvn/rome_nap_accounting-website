@@ -97,8 +97,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
 
-                customer = EncodingUtil.HtmlEncode(customer);
-
                 //do insert new agent
                 currentContext.CustId = AppSession.AccId;
                 currentContext.AdminId = AppSession.AccId;
