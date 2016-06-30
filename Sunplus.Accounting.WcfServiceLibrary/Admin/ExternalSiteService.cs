@@ -6,10 +6,12 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
 using Sunplus.Accounting.Entities.Customer;
+using Fanex.Tarus.Security.Attributes;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [SpecialSiteFilter]
     public class ExternalSiteService : IExternalSiteService
     {
         public List<string> GetGroupName()

@@ -87,7 +87,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.resetFrameSource();
             };
 
-            if ($scope.existedUser.userid == "-1") {
+            if ($scope.existedUser.userid < 0) {
                 $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
             }
             else {
@@ -334,7 +334,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         try { parent.parent.BlockUI(); } catch (e) { }
         try { parent.parent.parent.BlockUI(); } catch (e) { }
         //$("body").addClass("wait");
-
         $.ajax({
             type: "POST",
             url: toUrl("Super/SearchExistingSuper"),
@@ -347,7 +346,22 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.userid = custid;
                 $scope.parentId = customerSettingView.ParentId;
                 $scope.newUser.BreadCrumbs = customerSettingView.BreadCrumbs;
-                if (custid != "-1") {
+                if (custid == "-1") {
+                    $("#checkExisted").removeClass('success');
+                    $("#checkExisted").addClass('not_success');
+                    message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
+                    $("#errorMsg").width("550");
+                    $('#step1>.btnNextR').hide()
+                }
+                else if (custid == "-2")
+                {
+                    $("#checkExisted").removeClass('success');
+                    $("#checkExisted").addClass('not_success');
+                    message.showAlertMessage("errorMsg", "You don't have permission", 1);
+                    $("#errorMsg").width("550");
+                    $('#step1>.btnNextR').hide()
+                }
+                else {
                     //step1
                     message.hideAlertMessage("errorMsg");
                     $("#checkExisted").removeClass('not_success');
@@ -358,12 +372,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     if (callback) {
                         callback();
                     }
-                }
-                else {
-                    $("#checkExisted").removeClass('success');
-                    $("#checkExisted").addClass('not_success');
-                    message.showAlertMessage("errorMsg", "The " + parent.level + " doesn’t exist !", 1);
-                    $("#errorMsg").width("550");
+
+                    $('#step1>.btnNextR').show()
                 }
 
                 try { parent.jQuery.unblockUI() } catch (e) { }
@@ -374,6 +384,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for searching existing user !", 1);
                 $("#errorMsg").width("550");
+                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+                $('#step1>.btnNextR').hide()
             }
         });
     };

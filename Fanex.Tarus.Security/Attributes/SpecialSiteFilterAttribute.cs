@@ -13,7 +13,7 @@
         {
             var param = filterContext.ActionParameters;
             int custid = param.ContainsKey("custid") ? (int)param["custid"] : (param.ContainsKey("customerid") ? (int)param["customerid"] : 0);
-            var username = param.ContainsKey("username") ? param["username"].ToString() : string.Empty;
+            var username = param.ContainsKey("username") ? (param["username"] ?? string.Empty).ToString() : string.Empty;
             if (!(custid == 0 && string.IsNullOrEmpty(username)))
             {
                 var permissionService = new PermissionService();
