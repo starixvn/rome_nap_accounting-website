@@ -51,7 +51,7 @@
                 </BetType>
                 <BetType id="9" name="Mix Parlay" minWidth="90">
                 </BetType>
-                <BetType id="10" name="Outright" minWidth="90" showRightBorder="true">
+                <BetType id="10" name="Outright" minWidth="90">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -95,6 +95,8 @@
                 </BetType>
                 <BetType id="20" name="Money Line">
                 </BetType>
+                <BetType id="10" name="Outright">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -115,6 +117,8 @@
                 <BetType id="2" name="Odd/Even">
                 </BetType>
                 <BetType id="20" name="Money Line">
+                </BetType>
+                <BetType id="10" name="Outright">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -155,6 +159,8 @@
                   <RepresentativeForBetType id="16" name="Half time/Full time" />
                   <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
                 </BetType>
+                <BetType id="10" name="Outright">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -173,6 +179,8 @@
                 <BetType id="3" name="Over/Under">
                 </BetType>
                 <BetType id="20" name="Money Line">
+                </BetType>
+                <BetType id="10" name="Outright">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -195,6 +203,8 @@
                 </BetType>
                 <BetType id="20" name="Money Line">
                 </BetType>
+                <BetType id="10" name="Outright">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -211,6 +221,8 @@
                 <BetType id="1" name="Handicap">
                 </BetType>
                 <BetType id="20" name="Money Line">
+                </BetType>
+                <BetType id="10" name="Outright" >
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -232,6 +244,8 @@
                 <BetType id="2" name="Odd/Even">
                 </BetType>
                 <BetType id="20" name="Money Line">
+                </BetType>
+                <BetType id="10" name="Outright">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
