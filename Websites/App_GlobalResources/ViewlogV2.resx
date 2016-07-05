@@ -1299,7 +1299,220 @@
   <data name="Disable50_501" xml:space="preserve">
     <value>Disabled Cricket</value>
   </data>
-	<data name="Disable212_4001" xml:space="preserve">
+  <data name="Disable212_4001" xml:space="preserve">
     <value>Disabled Macau Games</value>
+  </data>
+  <data name="a_v10mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v10spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v11mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v11spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v2mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v2spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v3mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v3spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v5mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v5spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v8mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v8spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v99mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v99spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v10mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v10spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v11mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v11spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v2mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v2spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v3mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v3spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v5mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v5spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v8mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v8spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v99mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v99spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="maxv10pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv11pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv2pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv3pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv5pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv8pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="maxv99pt_10" xml:space="preserve">
+    <value>Max Outright</value>
+  </data>
+  <data name="minv10pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv11pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv2pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv3pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv5pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv8pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="minv99pt_10" xml:space="preserve">
+    <value>Min Outright</value>
+  </data>
+  <data name="v10apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v10a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v10mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v10spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v11apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v11a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v11mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v11spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v2apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v2a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v2mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v2spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v3apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v3a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v3mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v3spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v5apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v5a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v5mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v5spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v8apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v8a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v8mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v8spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v99apt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v99a_mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v99a_spt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v99mpt_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="v99spt_10" xml:space="preserve">
+    <value>Outright</value>
   </data>
 </root>
