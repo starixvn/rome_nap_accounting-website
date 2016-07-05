@@ -12,7 +12,7 @@
     <link href="../../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../../js/jQuery/autocomplete/styles.css" rel="stylesheet" type="text/css"/>
-
+    <link href="../../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="../../js/jQuery/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
     <script src="../../js/jQuery/jquery.ui.core.min.js" type="text/javascript"></script>

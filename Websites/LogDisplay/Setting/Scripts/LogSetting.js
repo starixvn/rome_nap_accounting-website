@@ -25,9 +25,9 @@
             this.custName = "";
             return;
         }
-        if (this.custName != null && this.custName != _custName) {
-            document.frmLog.submit();
-        }
+        //if (this.custName != null && this.custName != _custName) {
+        //    document.frmLog.submit();
+        //}
         $('#RequiredUserName').hide();
         this.custId = _custId;
         this.custName = _custName;
@@ -69,13 +69,17 @@
                 $('#log_content').empty();
 
                 if (typeof (resp) != 'undefined') {
-                    LogPT.mapTemplate(resp);
+                    if (resp.ErrorMessage != null) {
+                        $('#log_content').html('<div id="log_scroll" class="alertboxerr" style="border: 1px solid red;"><div>' + resp.ErrorMessage + '</div></div>').show();
+                    }
+                    else {
+                        LogPT.mapTemplate(resp);
+                    }
                 }
             },
             error: function (err, msg) {
                 $('#log_content').html('<div id="log_scroll"><p align="center">There is no information available.</p></div>').show();
-            },
-            isRefresh: true
+            }
         });
     },
     mapTemplate: function (resp) {

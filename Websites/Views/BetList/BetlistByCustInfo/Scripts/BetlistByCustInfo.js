@@ -169,8 +169,8 @@
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
-
-
+            // Remove cache data on feature #48948-HideSpecialSite
+            BetListByCustInfo.paramGetBetBetlist.isCache = false;
             BetListByCustInfo.URL = "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
@@ -249,7 +249,7 @@
 
         BetListByCustInfo.paramGetBetBetlist.pageIndex = page_index + 1;
         BetListByCustInfo.paramGetBetBetlist.pageSize = _items_per_page;
-        BetListByCustInfo.getBetListByCustInfo(true);
+        BetListByCustInfo.getBetListByCustInfo(false);
         return false;
     },
     viewSystemParlayTab: function () {

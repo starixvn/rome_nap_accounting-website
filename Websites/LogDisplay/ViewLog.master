@@ -8,7 +8,7 @@
     <link href="../App_Themes/Log/ViewLog.css?v=2" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Log/Table.css" rel="stylesheet" type="text/css" />
-    
+    <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Pagination.css" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="Stylesheet" href="../js/jQuery/autocomplete/styles.css?v=2" />

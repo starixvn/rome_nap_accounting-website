@@ -73,6 +73,15 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var result = new Result();
             try
             {
+                var permissionService = new PermissionService();
+                var checkSpecialSitePermission = permissionService.CheckSpecialSitePermission(new Fanex.Tarus.Security.Criteria.CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustID = custId });
+                if (checkSpecialSitePermission.ErrorCode > 0)
+                {
+                    result.ErrorCode = checkSpecialSitePermission.ErrorCode;
+                    result.ErrorMessage = checkSpecialSitePermission.ErrorMessage;
+                    return result;
+                }
+
                 var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
                 result = customerManager.UpdateCustomerSite(custId, newSite);
             }

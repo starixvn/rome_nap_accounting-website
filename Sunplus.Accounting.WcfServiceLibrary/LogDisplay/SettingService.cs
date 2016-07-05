@@ -4,6 +4,9 @@ using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.LogDisplay;
 using Sunplus.Accounting.Entities.LogDisplay;
+using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Criteria;
+using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
 {
@@ -13,6 +16,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogSetting(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize)
         {
             var result = new ResultLog();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+            
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
             var logParam = new LogParam()
             {
@@ -32,6 +48,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogStatus(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             var result = new ResultLog();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
             var logParam = new LogParam()
             {
@@ -50,6 +79,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             var result = new ResultLog();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
             var logParam = new LogParam()
             {
@@ -68,6 +110,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             var result = new ResultLog();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
             var logParam = new LogParam()
             {
