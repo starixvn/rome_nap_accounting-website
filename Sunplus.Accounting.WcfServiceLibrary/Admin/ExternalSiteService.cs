@@ -7,11 +7,13 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
 using Sunplus.Accounting.Entities.Customer;
 using Fanex.Tarus.Security.Attributes;
+using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Criteria;
+using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    [SpecialSiteFilter]
     public class ExternalSiteService : IExternalSiteService
     {
         public List<string> GetGroupName()
@@ -40,15 +42,45 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result DeleteCustomer(int custId)
         {
+            Result result = new Result();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustID = custId
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorCode = checkSpecialSite.ErrorCode;
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-            Result result = external.DeleteCustGroupName(custId);
+            result = external.DeleteCustGroupName(custId);
             return result;
         }
 
         public Result AddCustomer(string username, string groupName)
         {
+            Result result = new Result();
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = username
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorCode = checkSpecialSite.ErrorCode;
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-            Result result = external.AddCustGroupName(username, groupName);
+            result = external.AddCustGroupName(username, groupName);
             return result;
         }
 

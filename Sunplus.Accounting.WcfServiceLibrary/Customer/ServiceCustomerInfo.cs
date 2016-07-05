@@ -7,6 +7,7 @@ using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer;
+using Fanex.Tarus.Security.Permission;
 
 // NOTE: If you change the class name "ServiceCustomerInfo" here, you must also update the reference to "ServiceCustomerInfo" in Web.config.
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
@@ -47,6 +48,15 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var customer = new CustDetail();
             try
             {
+                var permissionService = new PermissionService();
+                var checkSpecialSitePermission = permissionService.CheckSpecialSitePermission(new Fanex.Tarus.Security.Criteria.CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustName = username });
+                if (checkSpecialSitePermission.ErrorCode > 0)
+                {
+                    customer.ErrorCode = checkSpecialSitePermission.ErrorCode;
+                    customer.ErrorMessage = checkSpecialSitePermission.ErrorMessage;
+                    return customer;
+                }
+
                 var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
                 customer = customerManager.GetCustomerInfoMoveSite(username);
             }
