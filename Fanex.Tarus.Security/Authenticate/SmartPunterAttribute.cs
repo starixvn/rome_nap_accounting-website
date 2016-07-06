@@ -61,48 +61,41 @@ namespace Fanex.Tarus.Security.Authenticate
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool AllowRead(ActionExecutedContext filterContext)
         {
-            if (PermissionService.HasPermission(_betlistFunctionName))
+            if (ParamHastable == null)
             {
-                if (ParamHastable == null)
-                {
-                    return true;
-                }
+                return true;
+            }
 
-                if (ParamHastable.ContainsKey("custId"))
-                {
-                    
-                    int custId = Converter.To<int>(ParamHastable["custId"]);
-                    var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
-                                    new Criteria.CheckSpecialSitePermissionCriteria()
-                                    {
-                                        UserID = AppSession.AccId,
-                                        CustID = custId
-                                    }
-                                );
-                    filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
-                    return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty) && allowAccessSpecialSite.ErrorCode == 0;
-                }
+            if (ParamHastable.ContainsKey("custId"))
+            {
 
-                if (ParamHastable.ContainsKey("username"))
-                {
-                    var username = Converter.ToString2(ParamHastable["username"]);
-                    var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
+                int custId = Converter.To<int>(ParamHastable["custId"]);
+                var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
                                 new Criteria.CheckSpecialSitePermissionCriteria()
                                 {
                                     UserID = AppSession.AccId,
-                                    CustName = username
+                                    CustID = custId
                                 }
                             );
-                    filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
-                    return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username) && allowAccessSpecialSite.ErrorCode == 0;
-                }
+                filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty) && allowAccessSpecialSite.ErrorCode == 0;
+            }
 
-                return true;
-            }
-            else
+            if (ParamHastable.ContainsKey("username"))
             {
-                return false;
+                var username = Converter.ToString2(ParamHastable["username"]);
+                var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
+                            new Criteria.CheckSpecialSitePermissionCriteria()
+                            {
+                                UserID = AppSession.AccId,
+                                CustName = username
+                            }
+                        );
+                filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username) && allowAccessSpecialSite.ErrorCode == 0;
             }
+
+            return true;
         }
 
         /// <summary>
