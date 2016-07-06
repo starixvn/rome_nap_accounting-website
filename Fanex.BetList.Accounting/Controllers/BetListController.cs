@@ -193,11 +193,10 @@ namespace Fanex.BetList.Accounting.Controllers
             string ip,
             DateTime fromDate,
             int pageSize,
-            int pageIndex,
-            bool isCache)
+            int pageIndex)
         {
             var quantity = 0;
-            var result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, isCache, ref quantity);
+            var result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, ref quantity);
             var dateTmp = fromDate.ToShortDateString();
             ViewBag.NumberBegining = (pageSize * (pageIndex - 1)) + 1;
             ViewBag.Quantity = quantity;
@@ -213,7 +212,6 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="ip">The IP address.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="isSoccer">If set to <c>true</c> [is soccer].</param>
-        /// <param name="isCache">If set to <c>true</c> [is cache].</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <returns>The bet list by IP soccer.</returns>
@@ -223,7 +221,6 @@ namespace Fanex.BetList.Accounting.Controllers
             string ip,
             DateTime fromDate,
             bool isSoccer,
-            bool isCache,
             int pageSize,
             int pageIndex)
         {
@@ -239,7 +236,6 @@ namespace Fanex.BetList.Accounting.Controllers
                 ip,
                 fromDate,
                 isSoccer,
-                isCache,
                 pageSize,
                 pageIndex,
                 ref quantity,

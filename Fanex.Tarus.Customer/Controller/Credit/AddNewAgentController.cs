@@ -99,6 +99,12 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             try
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                result = CheckSpecialSitePermission(AppSession.AccId, null, customer.MRecommend);
+                if (result.ErrorCode != "0")
+                {
+                    return Json(result);
+                }
+
                 // Do insert new agent
                 int agentId = 0;
                 currentContext.AdminId = AppSession.AccId;

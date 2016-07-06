@@ -68,14 +68,13 @@ namespace Fanex.Tarus.BetList.Controller
         /// <param name="Bettype"></param>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
-        /// <param name="IsCache"></param>
         /// <returns></returns>
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, bool IsCache)
+        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex)
         {
             int quantity = 0;
             PageIndex = PageIndex <= 0 ? 1 : PageIndex;
-            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity, IsCache);
+            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
 

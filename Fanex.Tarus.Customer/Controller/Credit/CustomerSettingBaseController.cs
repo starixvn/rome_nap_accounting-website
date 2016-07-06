@@ -15,7 +15,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Sunplus.Accounting.Core.Extensions;
     using System.Collections.Generic;
     using Security.Attributes;
-
+    using Security.Permission;
+    using Security.Criteria;
     [SpecialSiteFilter]
     public class CustomerSettingBaseController : BaseController
     {
@@ -145,6 +146,19 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 });
             }
             return errorResults;
+        }
+
+        protected Result CheckSpecialSitePermission(int UserId, string CustName, int? CustId)
+        {
+            var permissionService = new PermissionService();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = UserId,
+                CustID = CustId,
+                CustName = CustName
+            });
+
+            return new Result() { ErrorCode = checkSpecialSite.ErrorCode.ToString(), ErrorMessage = checkSpecialSite.ErrorMessage };
         }
     }
 }

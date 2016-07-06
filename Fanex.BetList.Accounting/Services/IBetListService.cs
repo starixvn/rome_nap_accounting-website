@@ -34,7 +34,6 @@ namespace Fanex.BetList.Accounting.Services
             int pageSize,
             int pageIndex,
             ref int quantity,
-            bool isCache,
             bool isLimitForU3 = false);
 
         IList<TicketDetail> GetBetListByCustInfo_Refno(string transactionId, int customerId);
@@ -46,7 +45,6 @@ namespace Fanex.BetList.Accounting.Services
             DateTime fromdate,
             int pageSize,
             int pageIndex,
-            bool isCache,
             ref int quanlity);
 
         IList<TicketDetail> GetBetListByIP_Soccer(
@@ -54,7 +52,6 @@ namespace Fanex.BetList.Accounting.Services
             string ip,
             DateTime fromDate,
             bool isSoccer,
-            bool isCache,
             int pageSize,
             int pageIndex,
             ref int quanlity,

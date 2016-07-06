@@ -16,6 +16,10 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Business.Security;
+using Fanex.Tarus.Security.Criteria;
 
 public partial class Statement_CustomerStatement : PageBase
 {
@@ -56,7 +60,7 @@ public partial class Statement_CustomerStatement : PageBase
             //CastAide.AsString(Request.QueryString["fdate"]);
             string tdate = WebUtils.GetQueryStringValue<string>("tdate", DateTime.Now.ToString("MM/dd/yyyy"));
             //  CastAide.AsString(Request.QueryString["tdate"]);
-
+            string custname = WebUtils.GetQueryStringValue<string>("custname", string.Empty);
             DateTime fdt, tdt;
 
             if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
@@ -67,7 +71,24 @@ public partial class Statement_CustomerStatement : PageBase
 
             //render banner search - filter
             reportHeader.Text = "Statement";
-            RenderFilterBanner(tabId, reportNo, fdt, tdt);
+            if (!string.IsNullOrEmpty(custname))
+            {
+                var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
+                       new CheckSpecialSitePermissionCriteria()
+                       {
+                           UserID = AppSession.AccId,
+                           CustName = custname
+                       });
+
+                if (checkSpecialSitePermission.ErrorCode > 0)
+                {
+                    RedirectSpecialSiteDeny();
+                }
+            }
+            else
+            {
+                RenderFilterBanner(tabId, reportNo, fdt, tdt);
+            }
 
             //for export to excel
             if (CastAide.AsInt32(Request.QueryString["IsExport"], 0) == 1)
@@ -141,7 +162,7 @@ public partial class Statement_CustomerStatement : PageBase
         {
             string sheetname = filenameSuffix;
             string title = string.Format("Statement ({0}): {1} --> {2}", AppSession.CustUName, fromDate, toDate);
-            
+
             var excelExpoter = new OldStatementExcel(report, sheetname);
             excelExpoter.ResponseStreamExcel(HttpContext.Current.Response, filenameSuffix, title);
         }

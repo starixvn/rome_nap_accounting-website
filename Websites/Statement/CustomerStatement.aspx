@@ -47,6 +47,7 @@
             </div>
         </div>
     </div>
+    
     <div id="betListContent" style="margin-top: 10px;">
     </div>
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>

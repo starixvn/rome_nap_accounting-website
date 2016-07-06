@@ -17,12 +17,7 @@
         {
             var param = filterContext.ActionParameters;
             int custid = this.GetCustIdParam(param);
-            var username = param.ContainsKey("username") ? (param["username"] ?? string.Empty).ToString() : string.Empty;
-            if (param.ContainsKey("superid"))
-            {
-
-            }
-
+            var username = GetUserNameParam(param);
             if (!(custid == 0 && string.IsNullOrEmpty(username)))
             {
                 var permissionService = new PermissionService();
@@ -57,6 +52,12 @@
 
             var index = list.FindIndex(m => m > 0);
             return index >= 0 ? list[index] : 0;
+        }
+
+        private string GetUserNameParam (IDictionary<string, object> param)
+        {
+            string username = param.ContainsKey("username") ? (param["username"] ?? string.Empty).ToString() : string.Empty;
+            return username;
         }
     }
 }

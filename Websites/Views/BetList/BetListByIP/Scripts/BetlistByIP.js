@@ -22,8 +22,7 @@
         ip: '',
         fromDate: null,
         pageIndex: 1,
-        pageSize: 100,
-        isCache: false
+        pageSize: 100
     },
     getBetListByIP_Username: function (isLink, ip, fromdate) {
         if (fromdate == 'nodate') { return false; }
@@ -31,13 +30,10 @@
         var ipTmp = isLink == "True" ? ip : $("#txtIP").val();
         var fromDateTmp = isLink == "True" ? fromdate : $("#txtfromdate").val();
 
-        if (BetListByIP.params_UsernameBetlist.ip == ipTmp && BetListByIP.params_UsernameBetlist.fromDate == fromDateTmp) {
-            BetListByIP.params_UsernameBetlist.isCache = true;
-        }
-        else {
+        if (BetListByIP.params_UsernameBetlist.ip != ipTmp || BetListByIP.params_UsernameBetlist.fromDate != fromDateTmp)
+        {
             BetListByIP.params_UsernameBetlist.ip = ipTmp;
             BetListByIP.params_UsernameBetlist.fromDate = fromDateTmp;
-            BetListByIP.params_UsernameBetlist.isCache = false;
             BetListByIP.params_UsernameBetlist.pageIndex = 1;
             BetListByIP.params_UsernameBetlist.pageSize = 100;
         }
@@ -114,23 +110,19 @@ var BetListByIP_SportType = {
         fromDate: null,
         isSoccer: null,
         pageIndex: 1,
-        pageSize: 50,
-        isCache: false
+        pageSize: 50
     },
 
     getBetListByIP_Soccer: function (custID, fromdate, ip, isSoccer) {
-        if (BetListByIP_SportType.params_SportType.ip == ip &&
-            BetListByIP_SportType.params_SportType.fromDate == fromdate &&
-            BetListByIP_SportType.params_SportType.customerId == custID &&
-            BetListByIP_SportType.params_SportType.isSoccer == isSoccer) {
-            BetListByIP_SportType.params_SportType.isCache = true;
-        }
-        else {
+        if (BetListByIP_SportType.params_SportType.ip != ip ||
+            BetListByIP_SportType.params_SportType.fromDate != fromdate ||
+            BetListByIP_SportType.params_SportType.customerId != custID ||
+            BetListByIP_SportType.params_SportType.isSoccer != isSoccer)
+        {
             BetListByIP_SportType.params_SportType.customerId = custID;
             BetListByIP_SportType.params_SportType.ip = ip;
             BetListByIP_SportType.params_SportType.fromDate = fromdate
             BetListByIP_SportType.params_SportType.isSoccer = isSoccer;
-            BetListByIP_SportType.params_SportType.isCache = false;
             BetListByIP_SportType.params_SportType.pageIndex = 1;
             BetListByIP_SportType.params_SportType.pageSize = 50;
         }

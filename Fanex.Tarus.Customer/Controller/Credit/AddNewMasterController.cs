@@ -106,6 +106,11 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             try
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                result = CheckSpecialSitePermission(AppSession.AccId, null, customer.SRecommend);
+                if (result.ErrorCode != "0")
+                {
+                    return Json(result);
+                }
 
                 // Get site if company direct insert master
                 if (currentContext.CustId < 100)

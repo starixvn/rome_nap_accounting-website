@@ -114,6 +114,12 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             try
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                //result = CheckSpecialSitePermission(AppSession.AccId, customer.UserName, null);
+                //if (result.ErrorCode != "0")
+                //{
+                //    return Json(result);
+                //}
+
                 // Check Permission for finace
                 result = CheckPermissionInsert(customer.IsInternal);
                 if (result.ErrorCode != "0")

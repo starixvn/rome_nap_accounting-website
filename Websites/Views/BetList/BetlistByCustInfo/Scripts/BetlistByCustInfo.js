@@ -5,8 +5,7 @@
         custId: null,
         betType: 0,
         pageIndex: 1,
-        pageSize: 100,
-        isCache: false
+        pageSize: 100
     },
     paramGetBetBetlistbyRefno: {
         customerId: null,
@@ -113,10 +112,9 @@
     },
 
 
-    getBetListByCustInfo: function (isCache) {
+    getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
         var isByDateRange = $('input[name=type]:checked').val() == "-2";
-        BetListByCustInfo.paramGetBetBetlist.isCache = isCache;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -155,22 +153,18 @@
             var toDateTmp = $('#txttodate').val();
             var bettypeTmp = $('#ddlBettype').val() == null ? 0 : $('#ddlBettype').val();
 
-            if (BetListByCustInfo.paramGetBetBetlist.fromDate == fromDateTmp &&
-                BetListByCustInfo.paramGetBetBetlist.toDate == toDateTmp &&
-                BetListByCustInfo.paramGetBetBetlist.betType == bettypeTmp) {
-                BetListByCustInfo.paramGetBetBetlist.isCache = true;
-            }
-            else {
-                BetListByCustInfo.paramGetBetBetlist.isCache = false;
+            if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp)
+            {
                 BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
                 BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
             }
+
             BetListByCustInfo.paramGetBetBetlist.fromDate = fromDateTmp;
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
-            // Remove cache data on feature #48948-HideSpecialSite
-            BetListByCustInfo.paramGetBetBetlist.isCache = false;
             BetListByCustInfo.URL = "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
