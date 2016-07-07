@@ -103,7 +103,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             try
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
-                result = CheckSpecialSitePermission(AppSession.AccId, null, customer.ARecommend);
+                result = CheckSpecialSitePermission(AppSession.AccId, null, currentContext.CustId);
                 if (result.ErrorCode != "0")
                 {
                     return Json(result);
