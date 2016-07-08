@@ -51,7 +51,7 @@
                 </BetType>
                 <BetType id="9" name="Mix Parlay" minWidth="90">
                 </BetType>
-                <BetType id="10" name="Outright" minWidth="90">
+                <BetType id="10" name="Outright" minWidth="90"  showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
