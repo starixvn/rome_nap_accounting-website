@@ -107,7 +107,5 @@ namespace Fanex.Tarus.Security.Authenticate
         {
             return true;
         }
-
-
     }
 }

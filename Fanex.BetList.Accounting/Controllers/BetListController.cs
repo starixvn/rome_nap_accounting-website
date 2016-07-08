@@ -1,4 +1,5 @@
-﻿using Sunplus.Accounting.Core.Common;
+﻿using Fanex.Tarus.Security.Authenticate;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.BetList.Accounting.Controllers
 {
@@ -28,7 +29,7 @@ namespace Fanex.BetList.Accounting.Controllers
         }
 
         public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam)
-        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+
         {
             var result = _betListService.GetMixParlayTickets(
                 new MixParlayDetailCriteria
@@ -49,6 +50,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// </summary>
         /// <param name="refno">The ref no.</param>
         /// <returns>The bet list by reference no.</returns>
+        [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByRefNo(string refno)
         {
@@ -117,6 +119,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="transactionId">The transaction identifier.</param>
         /// <param name="customerId">The customer identifier.</param>
         /// <returns>The bet list by customer info ref no.</returns>
+        [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_Refno(string transactionId, int customerId)
         {
@@ -142,6 +145,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="transactionId">Transaction ID.</param>
         /// <param name="customerId">Customer ID.</param>
         /// <returns>Partial for SystemParlay Tab - Customer Info.</returns>
+        [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_SystemParLayTab(string transactionId, int customerId)
         {
@@ -188,6 +192,7 @@ namespace Fanex.BetList.Accounting.Controllers
             return new EmptyResult();
         }
 
+        [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByIP_Username(
             string ip,
@@ -215,6 +220,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <returns>The bet list by IP soccer.</returns>
+        [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByIP_Soccer(
             int customerId,

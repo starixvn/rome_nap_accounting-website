@@ -6,6 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Fanex.BetList.Accounting.Models;
+using Fanex.Tarus.Security.Authenticate;
 
 namespace Fanex.Tarus.BetList.Controller
 {
@@ -32,7 +33,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// Betlist by refno
         /// </summary>
         /// <returns></returns>
-
+        [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
@@ -47,6 +48,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <param name="CustID"></param>
         /// <returns></returns>
+        [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByCustInfo(int CustID)
         {
@@ -69,6 +71,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
         /// <returns></returns>
+        [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex)
         {
@@ -88,6 +91,7 @@ namespace Fanex.Tarus.BetList.Controller
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
+        [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
