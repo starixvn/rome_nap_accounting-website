@@ -3,6 +3,7 @@ using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.BetList.Accounting.Controllers
 {
+    using CustomerSetting.Module.Core.Attributes;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Extensions;
@@ -13,7 +14,6 @@ namespace Fanex.BetList.Accounting.Controllers
     using System.Collections;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Tarus.Security.Attributes;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     [SpecialSiteFilter]

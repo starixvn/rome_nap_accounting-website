@@ -10,13 +10,12 @@
 
 namespace Fanex.Tarus.Customer.Controller.NewLicensee
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Module.Core.Attributes;
     using Fanex.Tarus.Customer.Business.NewLicensee;
     using Fanex.Tarus.Customer.Criteria.NewLicensee;
     using Fanex.Tarus.Customer.Entities.NewLicensee;
-    using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Web.Controllers;
-    using Security.Attributes;
+    using System.Collections.Generic;
 
     [SpecialSiteFilter]
     public class NewLicenseeController : BaseController

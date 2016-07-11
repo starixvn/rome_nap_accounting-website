@@ -8,6 +8,8 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
 using Fanex.Tarus.Security.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.CustomerSetting.Module.Core.Criteria;
 
 public class UpdateMoveCust : BaseHandler {
 
@@ -32,7 +34,8 @@ public class UpdateMoveCust : BaseHandler {
                 var moveCustomer = new MoveCustomer();
                 recommendId = context.Request["upline"] as string ?? string.Empty;
                 custUname = context.Request["downline"] as string ?? string.Empty;
-                var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
+                var serviceBase = new ServiceBase();
+                var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
                     new CheckSpecialSitePermissionCriteria()
                     {
                         UserID = AppSession.AccId,

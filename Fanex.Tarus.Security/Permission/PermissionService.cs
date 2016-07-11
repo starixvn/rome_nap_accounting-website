@@ -217,21 +217,6 @@ namespace Fanex.Tarus.Security.Permission
             return roleAccess;
         }
 
-        public Result CheckSpecialSitePermission(CheckSpecialSitePermissionCriteria criteria)
-        {
-            Result result = new Result();
-            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputs = db.GetOuputParams();
-                result.ErrorCode = Convert.IsDBNull(outputs["errcode"]) ? 0 : Convert.ToInt32(outputs["errcode"]);
-                result.ErrorMessage = Convert.IsDBNull(outputs["errmsg"]) ? string.Empty : outputs["errmsg"].ToString();
-            }
-
-            return result;
-        }
-
         public bool CheckDummyAccount(CheckDummyAccountCriteria criteria)
         {
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))

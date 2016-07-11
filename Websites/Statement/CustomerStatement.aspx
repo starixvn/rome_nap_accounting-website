@@ -42,6 +42,7 @@
             </div>
             <div id="GridContainer" class="freegrid" style="margin-top: 10px;">
             </div>
+            <div id="errBox" class="alertboxerr"><div></div></div>
             <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
             <div id="popup" style="display: none;">
             </div>

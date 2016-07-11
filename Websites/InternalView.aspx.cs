@@ -6,6 +6,8 @@ using Sunplus.Accounting.Core.Common;
 using System;
 using System.Configuration;
 using Sunplus.Accounting.Core.Configurations;
+using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
 
 public partial class InternalView : System.Web.UI.Page
 {
@@ -13,7 +15,8 @@ public partial class InternalView : System.Web.UI.Page
     {
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
-        var checkSpecialSitePermission = Permissions.CheckSpecialSitePermission(
+        var serviceBase = new ServiceBase();
+        var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
                    new CheckSpecialSitePermissionCriteria()
                    {
                        UserID = Convert.ToInt32(Request["accId"]),

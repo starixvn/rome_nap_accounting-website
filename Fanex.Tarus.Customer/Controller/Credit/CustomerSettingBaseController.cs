@@ -4,19 +4,21 @@ using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
-    using System;
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Attributes;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Web.Controllers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Sunplus.Accounting.Core.Extensions;
-    using System.Collections.Generic;
-    using Security.Attributes;
     using Security.Permission;
-    using Security.Criteria;
+    using Sunplus.Accounting.Core.Extensions;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
     [SpecialSiteFilter]
     public class CustomerSettingBaseController : BaseController
     {
@@ -150,7 +152,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
 
         protected Result CheckSpecialSitePermission(int UserId, string CustName, int? CustId)
         {
-            var permissionService = new PermissionService();
+            var permissionService = new ServiceBase();
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
                 UserID = UserId,

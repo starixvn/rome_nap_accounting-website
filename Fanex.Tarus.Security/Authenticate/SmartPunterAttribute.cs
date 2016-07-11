@@ -70,29 +70,14 @@ namespace Fanex.Tarus.Security.Authenticate
             {
 
                 int custId = Converter.To<int>(ParamHastable["custId"]);
-                var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
-                                new Criteria.CheckSpecialSitePermissionCriteria()
-                                {
-                                    UserID = AppSession.AccId,
-                                    CustID = custId
-                                }
-                            );
-                filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
-                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty) && allowAccessSpecialSite.ErrorCode == 0;
+              
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty);
             }
 
             if (ParamHastable.ContainsKey("username"))
             {
                 var username = Converter.ToString2(ParamHastable["username"]);
-                var allowAccessSpecialSite = _permissionService.CheckSpecialSitePermission(
-                            new Criteria.CheckSpecialSitePermissionCriteria()
-                            {
-                                UserID = AppSession.AccId,
-                                CustName = username
-                            }
-                        );
-                filterContext.Controller.ViewBag.ErrorCode = allowAccessSpecialSite.ErrorCode;
-                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username) && allowAccessSpecialSite.ErrorCode == 0;
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username);
             }
 
             return true;

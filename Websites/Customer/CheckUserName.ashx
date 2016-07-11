@@ -6,10 +6,8 @@ using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using IBCUtils.DAL;
-using DNAide.Data;
-using Fanex.Tarus.Security.Permission;
-using Fanex.Tarus.Security.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.CustomerSetting.Module.Core.Criteria;
 
 public class CheckUserName : IHttpHandler, IRequiresSessionState
 {
@@ -23,7 +21,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
         context.Response.Write("<script type=\"text/javascript\">");
         try
         {
-            var permissionService = new PermissionService();
+            var permissionService = new ServiceBase();
             var checkSpecialSiteAccess = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustName = username });
             if (checkSpecialSiteAccess.ErrorCode > 0)
             {

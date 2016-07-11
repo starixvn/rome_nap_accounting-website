@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.Security.Criteria;
 using Sunplus.Accounting.Core.Common;
+using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 {
@@ -27,7 +29,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 
         public ViewPtDTO ViewPositionTaking(string userName, int sportId, int bettypeId, bool isLive)
         {
-            var permissionService = new PermissionService();
+            var permissionService = new ServiceBase();
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
                 UserID = AppSession.AccId,
@@ -47,7 +49,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 
         public ViewCommissionDTO ViewCommission(string userName)
         {
-            var permissionService = new PermissionService();
+            var permissionService = new ServiceBase();
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
                 UserID = AppSession.AccId,

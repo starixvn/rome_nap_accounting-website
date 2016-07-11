@@ -496,12 +496,6 @@ namespace Sunplus.Accounting.Business.Security
             return Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend);
         }
 
-        public static Result CheckSpecialSitePermission(CheckSpecialSitePermissionCriteria criteria)
-        {
-            var tarusSecurityPermissionService = new Fanex.Tarus.Security.Permission.PermissionService();
-            return tarusSecurityPermissionService.CheckSpecialSitePermission(criteria);
-        }
-
         public static bool CheckDummyAccount(CheckDummyAccountCriteria criteria)
         {
             var tarusSecurityPermissionService = new Fanex.Tarus.Security.Permission.PermissionService();

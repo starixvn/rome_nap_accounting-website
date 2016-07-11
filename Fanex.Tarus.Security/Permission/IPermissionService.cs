@@ -45,8 +45,6 @@ namespace Fanex.Tarus.Security.Permission
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess);
 
-        Result CheckSpecialSitePermission(CheckSpecialSitePermissionCriteria criteria);
-
         bool CheckDummyAccount(CheckDummyAccountCriteria criteria);
     }
 }

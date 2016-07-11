@@ -10,14 +10,14 @@ using Fanex.Tarus.Security.Authenticate;
 
 namespace Fanex.Tarus.BetList.Controller
 {
-    using System;
-    using System.Collections;
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Attributes;
     using DNAide.Core;
     using Fanex.BetList.Accounting.Services;
     using Sunplus.Accounting.Core.Common;
+    using System;
+    using System.Collections;
+    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
-    using Security.Attributes;
 
     [SpecialSiteFilter]
     public class TarusBetListController : Controller
