@@ -5,6 +5,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.BetList.Accounting.Models;
+
 namespace Fanex.Tarus.BetList.Controller
 {
     using System;
@@ -34,6 +36,8 @@ namespace Fanex.Tarus.BetList.Controller
 
         public ActionResult BetListByRefNo_Main()
         {
+            BalanceUp balanceUp = ReportService.BalanceUp;
+            ViewBag.BalanceUpDay = balanceUp.BalanceUpDay;
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
         }
 
