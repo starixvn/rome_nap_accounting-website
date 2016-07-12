@@ -1,57 +1,58 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="PTGrid.xslt"?>
 <PTGrid name="ptGrid1">
   <NumerousSportType>13</NumerousSportType>
   <SportTypes>
-    <SportType id="1" name="Soccer" collapsed="false">
+
+    <SportType id="1" name="Soccer" collapsed="false" resourcekey="Soccer">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false" showGroupSetLabel="true">
           <BetTypeGroups>
             <BetTypeGroup id="1">
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" title="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under" minWidth="90">
+                <BetType id="3" name="Over/Under" title="Over/Under" minWidth="90" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="7" name="1st Hdp" minWidth="90">
+                <BetType id="7" name="1st Hdp" title="1st Hdp" minWidth="97" resourcekey="lbl1stHdp">
                 </BetType>
-                <BetType id="8" name="1st O/U" minWidth="90">
+                <BetType id="8" name="1st OU" title="1st OU" minWidth="90" resourcekey="lbl1stOU">
                 </BetType>
-                <BetType id="2" name="Odd/Even" minWidth="90">
+                <BetType id="2" name="Odd/Even" title="Odd/Even" minWidth="90" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="false" showBottomBorder="true">
-                  <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
-                  <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
-                  <RepresentativeForBetType id="16" name="Half time/Full time" />
-                  <RepresentativeForBetType id="24" name="Double Chance" />
-                  <RepresentativeForBetType id="151" name="1st Half Double Chance" />
-                  <RepresentativeForBetType id="26" name="Both/One/Neither Team To Score" />
-                  <RepresentativeForBetType id="145" name="Both Teams To Score" />
-                  <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" />
-                  <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
-                  <RepresentativeForBetType id="134" name="Away to Win both Halves" />
-                  <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />
-                  <RepresentativeForBetType id="140" name="Highest Scoring Half" />
-                  <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
-                  <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
-                  <RepresentativeForBetType id="147" name="Home To Score In Both Halves" />
-                  <RepresentativeForBetType id="148" name="Away To Score In Both Halves" />
-                  <RepresentativeForBetType id="149" name="Home To Win Either Half" />
-                  <RepresentativeForBetType id="150" name="Away To Win Either Half" />
+                <BetType id="9999" name="Others"  resourcekey="OtherSport2" minWidth="90" showDetailIcon="false" showBottomBorder="true">
+                    <RepresentativeForBetType id="14" name="First Goal/Last Goal" resourcekey="bettype14"/>
+                    <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" resourcekey="bettype127"/>
+                    <RepresentativeForBetType id="16" name="Half Time/Full Time" resourcekey="bettype16"/>
+                    <RepresentativeForBetType id="24" name="Double Chance" resourcekey="bettype24"/>
+                    <RepresentativeForBetType id="151" name="1st Half Double Chance" resourcekey="bettype151"/>
+                    <RepresentativeForBetType id="26" name="Both/One/Neither Team To Score" resourcekey="bettype26"/>
+                    <RepresentativeForBetType id="145" name="Both Teams To Score" resourcekey="bettype145"/>
+                    <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" resourcekey="bettype146"/>
+                    <RepresentativeForBetType id="133" name="Home To Win Both Halves" resourcekey="bettype133" />
+                    <RepresentativeForBetType id="134" name="Away To Win Both Halves" resourcekey="bettype134"/>
+                    <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" resourcekey="bettype135"/>
+                    <RepresentativeForBetType id="140" name="Highest Scoring Half" resourcekey="bettype140"/>
+                    <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" resourcekey="bettype141"/>
+                    <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" resourcekey="bettype142"/>
+                    <RepresentativeForBetType id="147" name="Home To Score In Both Halves" resourcekey="bettype147"/>
+                    <RepresentativeForBetType id="148" name="Away To Score In Both Halves" resourcekey="bettype148"/>
+                    <RepresentativeForBetType id="149" name="Home To Win Either Half" resourcekey="bettype149"/>
+                    <RepresentativeForBetType id="150" name="Away To Win Either Half" resourcekey="bettype150"/>
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
             <BetTypeGroup id="2">
               <BetTypes>
-                <BetType id="5" name="1X2">
+                <BetType id="5" name="1X2" resourcekey="lbl1x2">
                 </BetType>
-                <BetType id="4" name="Correct Score" minWidth="90">
+                <BetType id="4" name="Correct Score" title="Correct Score" minWidth="90" resourcekey="correctscore">
                 </BetType>
-                <BetType id="6" name="Total Goal" minWidth="90">
+                <BetType id="6" name="Total Goal" title="Total Goal" minWidth="97" resourcekey="totalgoal">
                 </BetType>
-                <BetType id="9" name="Mix Parlay" minWidth="90">
+                <BetType id="9" name="Mix Parlay" title="Mix Parlay" minWidth="90" resourcekey="lblMixParlay">
                 </BetType>
-                <BetType id="10" name="Outright" minWidth="90"  showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -62,13 +63,13 @@
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under" minWidth="122">
+                <BetType id="3" name="Over/Under" minWidth="124" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="7" name="1st Hdp" minWidth="122">
+                <BetType id="7" name="1st Hdp" minWidth="124" resourcekey="lbl1stHdp">
                 </BetType>
-                <BetType id="8" name="1st O/U" minWidth="121" showRightBorder="true">
+                <BetType id="8" name="1st OU" minWidth="124" resourcekey="lbl1stOU" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -77,23 +78,23 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="2" name="Basketball">
+    <SportType id="2" name="Basketball" resourcekey="Basketball">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="7" name="1st Hdp" copyFromBetType="1" copyFromSportType="2" visible="false">
+                <BetType id="7" name="1st Hdp" copyFromBetType="1" copyFromSportType="2" visible="false" resourcekey="lbl1stHdp">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" minWidth="90" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="8" name="1st OU" copyFromBetType="3" copyFromSportType="2" visible="false">
+                <BetType id="8" name="1st OU" copyFromBetType="3" copyFromSportType="2" visible="false" resourcekey="lbl1stOU">
                 </BetType>
-                <BetType id="2" name="Odd/Even">
+                <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -104,19 +105,19 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="3" name="Football">
+    <SportType id="3" name="Football" resourcekey="Football">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="2" name="Odd/Even">
+                <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -127,37 +128,37 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="5" name="Tennis">
+    <SportType id="5" name="Tennis" resourcekey="Tennis">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="2" name="Odd/Even">
+                <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="false" visible="true">
-                  <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
-                  <RepresentativeForBetType id="134" name="Away to Win both Halves" />
-                  <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />
-                  <RepresentativeForBetType id="145" name="Both Teams To Score" />
-                  <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" />
-                  <RepresentativeForBetType id="147" name="Home To Score In Both Halves" />
-                  <RepresentativeForBetType id="148" name="Away To Score In Both Halves" />
-                  <RepresentativeForBetType id="149" name="Home To Win Either Half" />
-                  <RepresentativeForBetType id="150" name="Away To Win Either Half" />
-                  <RepresentativeForBetType id="151" name="1st Half Double Chance" />
-                  <RepresentativeForBetType id="140" name="Highest Scoring Half" />
-                  <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
-                  <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
-                  <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
-                  <RepresentativeForBetType id="16" name="Half time/Full time" />
-                  <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
+                <BetType id="9999" name="Others"  resourcekey="OtherSport2" minWidth="90" showDetailIcon="false" showBottomBorder="true">
+                  <RepresentativeForBetType id="133" name="Home To Win Both Halves" resourcekey="bettype133" />
+                  <RepresentativeForBetType id="134" name="Away To Win Both Halves" resourcekey="bettype134"/>
+                  <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" resourcekey="bettype135"/>
+                  <RepresentativeForBetType id="145" name="Both Teams To Score" resourcekey="bettype145"/>
+                  <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" resourcekey="bettype146"/>
+                  <RepresentativeForBetType id="147" name="Home To Score In Both Halves" resourcekey="bettype147"/>
+                  <RepresentativeForBetType id="148" name="Away To Score In Both Halves" resourcekey="bettype148"/>
+                  <RepresentativeForBetType id="149" name="Home To Win Either Half" resourcekey="bettype149"/>
+                  <RepresentativeForBetType id="150" name="Away To Win Either Half" resourcekey="bettype150"/>
+                  <RepresentativeForBetType id="151" name="1st Half Double Chances" resourcekey="bettype151"/>
+                  <RepresentativeForBetType id="140" name="Highest Scoring Half" resourcekey="bettype140"/>
+                  <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" resourcekey="bettype141"/>
+                  <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" resourcekey="bettype142"/>
+                  <RepresentativeForBetType id="14" name="First Goal/Last Goal" resourcekey="bettype14"/>
+                  <RepresentativeForBetType id="16" name="Half Time/Full Time" resourcekey="bettype16"/>
+                  <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" resourcekey="bettype127"/>
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -168,17 +169,17 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="8" name="Baseball">
+    <SportType id="8" name="Baseball" resourcekey="Baseball">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -189,19 +190,19 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="10" name="Golf">
+    <SportType id="10" name="Golf" resourcekey="Golf">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="2" name="Odd/Even">
+                <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -212,15 +213,15 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="11" name="Moto Sports">
+    <SportType id="11" name="Moto Sports" resourcekey="MotorSports">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright" >
                 </BetType>
@@ -231,19 +232,19 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="99" name="Other Sports">
+    <SportType id="99" name="Other Sports" key ="Other Sports" resourcekey="OtherSports">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="1" name="Handicap">
+                <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
-                <BetType id="3" name="Over/Under">
+                <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="2" name="Odd/Even">
+                <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="20" name="Money Line">
+                <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
                 <BetType id="10" name="Outright">
                 </BetType>
@@ -254,28 +255,13 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="99" name="Mix Sports Parlay">
+    <SportType id="99" name="Mix Sports Parlay" key ="Mix Sports Parlay" resourcekey="mixsports">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="9" name="Mix Parlay">
-                </BetType>
-              </BetTypes>
-            </BetTypeGroup>
-          </BetTypeGroups>
-        </BetTypeGroupSet>
-      </BetTypeGroupSets>
-    </SportType>
-
-    <SportType id="154" name="HR Fixed Odds">
-      <BetTypeGroupSets>
-        <BetTypeGroupSet isLive="false">
-          <BetTypeGroups>
-            <BetTypeGroup>
-              <BetTypes>
-                <BetType id="20" name="Money Line">
+                <BetType id="9" name="Mix Parlay" resourcekey="lblMixParlay">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -299,19 +285,19 @@
       </BetTypeGroupSets>
     </SportType>
 
-    <SportType id="161" name="Number Game">
+    <SportType id="161" name="Number Game" resourcekey="numbergame">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false" showGroupSetLabel="true">
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="81" name="1st Last O/U">
+                <BetType id="81" name="1st/Last O/U" resourcekey="firstlastoverunder">
                 </BetType>
-                <BetType id="83" name="1st Last O/E" minWidth="160">
+                <BetType id="83" name="1st/Last O/E" minWidth="160" resourcekey="firstlastoddeven">
                 </BetType>
-                <BetType id="88" name="Warrior" minWidth="149">
+                <BetType id="88" name="Warrior" minWidth="139" resourcekey="warrior">
                 </BetType>
-                <BetType id="86" name="Odd/Even" minWidth="140">
+                <BetType id="86" name="Odd/Even" minWidth="130" resourcekey="lblOddEven">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -322,15 +308,15 @@
           <BetTypeGroups>
             <BetTypeGroup>
               <BetTypes>
-                <BetType id="85" name="Over/Under">
+                <BetType id="85" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="86" name="Odd/Even" minWidth="149">
+                <BetType id="86" name="Odd/Even" minWidth="129" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="87" name="High/Low" minWidth="80">
+                <BetType id="87" name="High/Low" minWidth="80" resourcekey="highlow">
                 </BetType>
-                <BetType id="89" name="Next Combo" minWidth="125">
+                <BetType id="89" name="Next Combo" minWidth="115" resourcekey="nextcombo">
                 </BetType>
-                <BetType id="90" name="Number Wheel" minWidth="90">
+                <BetType id="90" name="Number Wheel" minWidth="100" resourcekey="numberGroup">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
