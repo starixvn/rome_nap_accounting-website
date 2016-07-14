@@ -1515,4 +1515,37 @@
   <data name="v99spt_10" xml:space="preserve">
     <value>Outright</value>
   </data>
+  <data name="updatemultiple" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv10" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv11" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv154" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv161" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv2" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv3" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv5" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv8" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv99" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
+  <data name="updatepositiontakingv99mp" xml:space="preserve">
+    <value>Update Multiple</value>
+  </data>
 </root>
