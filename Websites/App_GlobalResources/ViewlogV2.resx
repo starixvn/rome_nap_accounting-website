@@ -1548,4 +1548,58 @@
   <data name="updatepositiontakingv99mp" xml:space="preserve">
     <value>Update Multiple</value>
   </data>
+  <data name="a_v10mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v11mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v154mpt_mem_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="a_v2mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v3mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v5mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v8mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v99mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="a_v99mpt_mem_9" xml:space="preserve">
+    <value>Mix Parlay</value>
+  </data>
+  <data name="isa_v10mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v11mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v154mpt_mem_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="isa_v2mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v3mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v5mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v8mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v99mpt_mem_10" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="isa_v99mpt_mem_9" xml:space="preserve">
+    <value>Outright</value>
+  </data>
 </root>
