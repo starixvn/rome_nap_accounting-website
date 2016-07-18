@@ -1,4 +1,185 @@
-﻿var _pageIndex = 1;
+﻿(function ($) {
+    "use strict";
+
+    var $groupName = $("#groupName"),
+        $username = $("#txt_search"),
+        $errMsg = $("#errMsg"),
+        $nodata = $("#nodata"),
+        $trMsg = $("#trMsg");
+
+    var fromcahe = false,
+        isResfresh = false;
+
+    var superList = [];
+    var formData = {
+        groupName: 0,
+        username: "",
+        fromcache: false,
+        pageIndex: 1,
+        pageSize: 50
+    };
+
+    function showDialog() {
+        $errMsg.hide();
+        $("#txtUserName").val("");
+        $("#addNewSuper").removeClass("hidden").dialog("open");
+    }
+
+    function hideDialog() {
+        $("#addNewSuper").removeClass("hidden").dialog("close");
+    }
+
+    function renderGroup() {
+        $.ajax({
+            type: "POST",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetGroupName",
+            contentType: "application/json; charset=utf-8",
+            success: function (groups) {
+                var groupLength = groups ? groups.length : 0;
+
+                if (groupLength > 0) {
+                    var html = [];
+
+                    for (var i = 0; i < groupLength; i++) {
+                        html.push('<option value="');
+                        html.push(groups[i]);
+                        html.push('">');
+                        html.push(groups[i]);
+                        html.push("</option>");
+                    }
+
+                    $groupName
+                        .html(html.join(""))
+                        .change(function () { fromcahe = false; });
+
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            }
+        });
+    }
+
+    function addSuper() {
+        $errMsg.hide();
+        $nodata.hide();
+        $trMsg.hide();
+
+        var params = {
+            groupName: $groupName.val(),
+            username: $.trim($("#txtUserName").val())
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddCustomer",
+            data: $.toJSON(params),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                $errMsg.show();
+
+                if (result.ErrorCode === 0) {
+                    fromcahe = false;
+                    showAlertMessage("errMsg", "Added Successfully!", 0);
+
+                    setTimeout(hideDialog, 2000);
+                    setTimeout(getCustInfo, 3000);
+                }
+                else {
+                    showAlertMessage("errMsg", result.ErrorMessage, 1);
+                }
+            }
+        });
+    }
+
+    function getCustInfo() {
+        try { parent.BlockUI(); } catch (e) { }
+
+        if (!isResfresh) {
+            formData.groupName = $groupName.val();
+            formData.username = $.trim($username.val());
+        }
+
+        if (flag) {
+            formData.pageIndex = 1;
+        }
+
+        $("#search_user").show();
+        $trMsg.hide();
+        $nodata.hide();
+        $("#pagination").show();
+        $("#err_nodata").hide();
+
+        $.ajax({
+            type: "POST",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/PagerCust",
+            data: $.toJSON(param),
+            contentType: "application/json; charset=utf-8",
+            success: function (rs) {
+                superList = rs;
+
+                var gridExAccControl = $("#gridExAccControl");
+                total_item = rs.total;
+                ExterSite.arr = [];
+                var total = rs.rows.length;
+                if (total > 0) {
+                    var tbl = $("#tblexternalsite");
+
+                    var cssClassEven = "";
+
+                    $.each(rs.rows, function (i, row) {
+                        cssClassEven = i % 2 == 0 ? "" : "evenrow";
+                        ExterSite.arr.push(RenderRow(i, row, cssClassEven));
+                    });
+                    tbl.empty().html(ExterSite.arr.join(''));
+                    if (flag == true)
+                        initPager(total_item, _pageSize, 0);
+                    else {
+                        initPager(total_item, _pageSize, _pageIndex - 1);
+                        flag = true;
+                    }
+                    gridExAccControl.show();
+                    gridExAccControl.removeClass("hidden").reRenderScroller(783, 460, true);
+
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+
+                }
+                else {
+                    $('#nodata').show();
+                    if (username != '') {
+                        $('#err_nodata').show();
+                    }
+                    showAlertMessage("err_nodata", "Username does not belong to " + groupname + " group.", 1);
+                    gridExAccControl.hide();
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            }
+        });
+    }
+
+    function bindEvents() {
+        $username.keyup(function () {
+            var code = e.keyCode || e.which;
+            if (code === 13) {
+                isResfresh = false;
+                getCustInfo();
+            }
+        });
+
+        btnSearch.click(function () {
+            isResfresh = false;
+            getCustInfo();
+        });
+    }
+})(jQuery);
+
+
+
+
+
+
+
+
+
+var _pageIndex = 1;
 var _pageSize = 50;
 var total_item = 0;
 var noject = 0;
@@ -7,7 +188,6 @@ var objCust = [];
 var groupname;
 var username;
 var isResfresh = false;
-
 
 $(function () {
     $('#addNewSuper').dialog({
@@ -19,10 +199,12 @@ $(function () {
     });
 
 });
+
 function changeGroup() {
     fromcahe = false;
    
 }
+
 function trim(s) {
     var l = 0; var r = s.length - 1;
     while (l < s.length && s[l] == ' ')
@@ -31,6 +213,7 @@ function trim(s) {
     { r -= 1; }
     return s.substring(l, r + 1);
 }
+
 function onKeyEnter(e) {
     if (e.keyCode == 13) {
         isResfresh = false;
@@ -43,9 +226,11 @@ function showPopup() {
     $('#txtUserName').val('');
     $('#addNewSuper').removeClass("hidden").dialog("open");
 }
+
 function hidePopup() {
     $('#addNewSuper').removeClass("hidden").dialog("close");
 }
+
 function renderGroup() {
     $.ajax({
         type: "POST",
@@ -105,7 +290,6 @@ function initPager(total_item, items_per_page, current_page) {
     $("#pagination").pagination(total_item, opt);
 }
 
-
 function pageselectCallback(page_index, _items_per_page, jq) {
 
     var max_page = Math.ceil(total_item / _items_per_page);
@@ -120,6 +304,33 @@ function pageselectCallback(page_index, _items_per_page, jq) {
     return false;
 }
 
+function RenderRow(index, row, cssClassEven) {
+    no = _pageSize * (_pageIndex - 1) + index + 1;
+    var strrow = "";
+    strrow = "<tr class="+cssClassEven+">";
+    strrow += "<td><div class='w50 c'>";
+    strrow += no;
+    strrow += "</div></td>";
+    strrow += "<td><div class='w180 c'>";
+    strrow += row.UserName;
+    strrow += "</div></td>";
+    strrow += "<td><div class='w180 c'>";
+    strrow += row.FirstName;
+    strrow += "</div></td>";
+    strrow += "<td><div class='w180 c'>";
+    strrow += row.LastName;
+    strrow += "</div></td>";
+    strrow += "<td><div class='w120 c'>";
+    strrow += row.LastLoginIp;
+    strrow += "</div></td>";
+    strrow += "<td><div class='w55 c'>";
+    strrow += "<img class='hand' src='../../App_Themes/Images/icn_del.png' title='Remove Super' onclick='ExterSite.deleteCustomer(" + row.CustId + ")' />";
+    strrow += "</div></td>";
+    strrow += "</tr>";
+   
+    return strrow;
+}
+
 var ExterSite = {
     arr: [],
     getCustInfo: function () {
@@ -128,10 +339,11 @@ var ExterSite = {
         if (isResfresh == false) {
             groupname = $('#groupName').val();
             username = trim($('#txt_search').val());
-
         }
-        if (flag == true)
+
+        if (flag == true) {
             _pageIndex = 1;
+        }
 
         var param = { "groupName": groupname, "pageIndex": _pageIndex, "pageSize": _pageSize, "fromcache": fromcahe, "username": username };
 
@@ -147,7 +359,6 @@ var ExterSite = {
             data: $.toJSON(param),
             contentType: "application/json; charset=utf-8",
             success: function (rs) {
-
                 objCust = rs;
 
                 var gridExAccControl = $("#gridExAccControl");
@@ -324,31 +535,3 @@ var ExterSite = {
     }
 }
 
-function RenderRow(index, row, cssClassEven) {
-    no = _pageSize * (_pageIndex - 1) + index + 1;
-    var strrow = "";
-    strrow = "<tr class="+cssClassEven+">";
-    strrow += "<td><div class='w50 c'>";
-    strrow += no;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.UserName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.FirstName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.LastName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w120 c'>";
-    strrow += row.LastLoginIp;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w55 c'>";
-    strrow += "<img class='hand' src='../../App_Themes/Images/icn_del.png' title='Remove Super' onclick='ExterSite.deleteCustomer(" + row.CustId + ")' />";
-    strrow += "</div></td>";
-    strrow += "</tr>";
-   
-    return strrow;
-}
-
-    
