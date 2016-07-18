@@ -64,11 +64,9 @@
             </div>
             <div id="gridExAccControl" class="content-warper hidden">
                 <div class="content-toolbox bgtitle">
-
                     <div class="btngroup">
                         <input type="button" title="Add Existing Super" class="btnAdd" id="btnAdd" name="btnAdd" value="  " onclick="showPopup();" />
                         <input type="button" title="Refresh" class="btnRefresh" id="btnRefresh" name="btnRefresh" value="  " onclick="ExterSite.refreshPage();" />
-
                     </div>
                 </div>
                 <div id="nodata_search" style="display: none"></div>

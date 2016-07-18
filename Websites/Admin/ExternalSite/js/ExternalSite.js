@@ -3,6 +3,7 @@
 
     var $groupName = $("#groupName"),
         $username = $("#txt_search"),
+        $grid = $("#gridExAccControl"),
         $errMsg = $("#errMsg"),
         $nodata = $("#nodata"),
         $trMsg = $("#trMsg");
@@ -18,6 +19,7 @@
         pageIndex: 1,
         pageSize: 50
     };
+    
 
     function showDialog() {
         $errMsg.hide();
@@ -101,6 +103,12 @@
         if (flag) {
             formData.pageIndex = 1;
         }
+
+        /*formData = {
+            groupName: $groupName.val(),
+            username: $.trim($username.val()),
+            fromcache: fromcahe
+        };*/
 
         $("#search_user").show();
         $trMsg.hide();
