@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="Live Casino - Special Delete - Recover Bet">
+    <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1" />
+    <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1" />
+  </Function>
+</Functions>
