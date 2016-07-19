@@ -17,6 +17,7 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _themePath;
         private static readonly string _theme;
         private static readonly string _internalAgentUrl;
+        private static readonly string _internalAgentUMToken;
         private static readonly string _directBAUrl;
         private static readonly string _directABSUrl;
 
@@ -84,6 +85,7 @@ namespace Sunplus.Accounting.Core.Configurations
 
                 _virtualDir = ConfigurationManager.AppSettings["VirtualDir"];
                 _internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
+                _internalAgentUMToken = ConfigurationManager.AppSettings["int_agent_UMToken"];
                 _directBAUrl = ConfigurationManager.AppSettings["link_BA_url"];
                 _getCountry = ConfigurationManager.AppSettings["link_Country_url"];
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
@@ -179,6 +181,11 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string InternalAgentUrl
         {
             get { return _internalAgentUrl; }
+        }
+
+        public static string InternalAgentUMToken
+        {
+            get { return _internalAgentUMToken; }
         }
 
         public static string DirectBAUrl
