@@ -100,6 +100,9 @@ div.match + div.league {
     padding: 0 1px 0 65px;
     width: 14px;
 }
+.detail .detail-link {
+	color: #755200;
+}
 .combinationLink {
     line-height: 20px;
 }
@@ -487,5 +490,16 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 .allbet-bet-id { color: #bbb; }
 .allbet-bet-type-name { color: #696969; }
 .allbet-game-id { color: #01122b; }
-
+.offer-name-list { font-weight: bold; }
+.unit-stake { color: #003399; }.voidbridge-sporttypename {
+    color: #0000FF;
+}
 .gamegroupname { color: #008000; }
+    color: #0000FF;
+}
+.gamegroupname{
+    color: #008000;
+}
+.gametypename{
+    color: #696969;
+}

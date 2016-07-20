@@ -75,7 +75,7 @@ function showMP(transid, refno) {
         $.ajax({
             type: "POST",
             url: window.rootUrl + "BetList/GetMixParlayDetail",
-            data: "refno=" + refno,
+            data: "transid=" + transid + "&refno=" + refno,
             success: function (result) {
                 $(".parlay_" + transid).each(function () {
                     $(this).html(result);
@@ -97,11 +97,64 @@ function showMP(transid, refno) {
     }
 }
 
-function showCombMP(transid, custid, refno) {
+function showCombMP(transid, transIndex, refno) {
     showMP(transid, refno);
 }
 
+function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
+	var gridOpts = {
+		tblContentId: 'tblContent',
+		manualCopyHeader: true,
+		isShowPager: true,
+		fullWidth: true,
+		fullHeight: true,
+		gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
+		gridHeight: 10,
+		freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+		numberFreezeCol: 3
+	};
+
+	var divChoiceRight = $("#choice_right_" + transId);
+	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
+	var divParlay = divChoiceRight.find(".parlay_" + transId);
+
+	if ($.trim(divParlay.html()) === "") {
+		try { parent.BlockUI(); } catch (e) { }
+		var params = [
+			"transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+		];
+
+		$.ajax({
+			type: "POST",
+			url: window.rootUrl + "BetList/GetMixParlayDetail",
+			data: params.join(""),
+			success: function (result) {
+				divParlay.html(result);
+				divCombinationOfferName.addClass("hide");
+				$("#BetlistStatement").gridScroller(gridOpts);
+			},
+			error: function () {
+				try { parent.jQuery.unblockUI(); } catch (e) { }
+			},
+			complete: function () {
+				try { parent.jQuery.unblockUI(); } catch (e) { }
+			}
+		});
+	}
+	else {
+		divParlay.toggleClass("hide");
+		divCombinationOfferName.toggleClass("hide");
+		$("#BetlistStatement").gridScroller(gridOpts);
+	}
+}
+
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
-    var username = $(".combinationLink span:last").html();
-    showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)
+	var title = "System Parlay";
+	var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
+
+	if (combinationOfferNameContainer.is("span")) {
+		title += combinationOfferNameContainer.html();
+	}
+
+	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
 }

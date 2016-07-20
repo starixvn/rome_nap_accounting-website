@@ -24,6 +24,7 @@
                 if ($('div.combinationLink')) {
                     var divReplace = '<span style="color: #0066CC;">' + $('div.combinationLink a:first').html() + '</span>';
                     $('div.combinationLink a:first').replaceWith(divReplace);
+                    $('div.combinationLink div.offer-name-list').addClass("hidden");
                 }
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     var divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';
@@ -50,8 +51,14 @@
 };
 
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
-    var username = $(".combinationLink span:last").html();
-    showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)
+	var title = "System Parlay";
+	var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
+
+	if (combinationOfferNameContainer.is("span")) {
+		title += combinationOfferNameContainer.html();
+	}
+
+	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid)
 }
 
 function showDetail(id) {

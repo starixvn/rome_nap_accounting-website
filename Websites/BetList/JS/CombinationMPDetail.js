@@ -5,7 +5,12 @@
     };
 
     CombinationMPDetail.init = function() {
-        this.ui.init();
+    	this.ui.init();
+
+    	$("#download-combinationdetails").click(function (e) {
+    		e.preventDefault();
+    		window.location.href = $(this).attr("href");
+    	});
     };
 
     CombinationMPDetail.ui.init = function() {

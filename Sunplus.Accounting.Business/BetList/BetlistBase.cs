@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
@@ -1015,6 +1016,18 @@ namespace Sunplus.Accounting.Business.BetList
                 return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
             }
 
+            var tblMaster = ds.Tables[0];
+            if (tblMaster != null && tblMaster.Rows.Count > 5000)
+            {
+                var request = HttpContext.Current.Request;
+                string url = request.ApplicationPath + "/BetList/ExportBetList_SystemParlayDetails?" + request.QueryString.ToString();
+
+                string downloadExcelTpl = WebUtils.LoadTemplate("BetList\\CombinationMP\\downloadExcel.htm");
+                TemplateHandler.Assign(ref downloadExcelTpl, "{DownloadLink}", url);
+
+                return downloadExcelTpl;
+            }
+
             string container = WebUtils.LoadTemplate("BetList\\CombinationMP\\container.htm");
             string header = WebUtils.LoadTemplate("BetList\\CombinationMP\\header.htm");
             string body = WebUtils.LoadTemplate("BetList\\CombinationMP\\body.htm");
@@ -1024,7 +1037,6 @@ namespace Sunplus.Accounting.Business.BetList
             string rowTemp = string.Empty;
             var subtotalTemp = string.Empty;
 
-            var tblMaster = ds.Tables[0];
             var tblDetail = ds.Tables[1];
             var dateRange =
                 (from q in tblMaster.AsEnumerable().Cast<DataRow>() select q["winlostdate"]).Distinct().ToList();

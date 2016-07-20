@@ -7,8 +7,8 @@
 
 namespace Fanex.Tarus.Infrastructure.Caching
 {
-    using RemotingRef;
     using DNAide.Core;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -100,6 +100,11 @@ namespace Fanex.Tarus.Infrastructure.Caching
         {
 
             return RemotingRef.RefData.GetRouletteBetItem(resultId.ToString(), TWLang("en-US"));
+        }
+
+        public static string[] GetCombinationTypeCombo(string betTeam, string betCheck, decimal hdp1, decimal hdp2)
+        {
+            return RefData.GetCombinationTypeCombo(betTeam, betCheck, (int)hdp1, (int)hdp2, TWLang("en-US"));
         }
     }
 }

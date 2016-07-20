@@ -61,8 +61,8 @@
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.2\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.BetTrade, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+    <Reference Include="Fanex.BetList.BetTrade, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.13.0.21\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -73,12 +73,12 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.4\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.12.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.13.0.21, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.13.0.21\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.12.0.6\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.13.0.21\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
@@ -205,7 +205,7 @@
       <HintPath>..\packages\RazorEngine.3.7.0\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.7\lib\net40\RemotingRef.dll</HintPath>
+      <HintPath>..\packages\RemotingRef.1.0.0.9\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SPSRemoting">
@@ -268,6 +268,7 @@
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
+    <Compile Include="Criteria\BetListSystemParlayDetailsCriteria.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -292,10 +293,14 @@
     <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventExcel.cs" />
+    <Compile Include="Models\Excel\ExcelCell.cs" />
+    <Compile Include="Models\Excel\ExcelCellRange.cs" />
     <Compile Include="Models\GroupParlayEvent.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
     <Compile Include="Models\SystemParlayDetail.cs" />
+    <Compile Include="Models\SystemParlayDetailExcel.cs" />
     <Compile Include="Models\TennisResult\TennisLeagueResult.cs" />
     <Compile Include="Models\TennisResult\TennisGameResult.cs" />
     <Compile Include="Models\TennisResult\TennisMatchResult.cs" />
@@ -309,6 +314,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
+    <Compile Include="Repositories\SystemParlayRepository.cs" />
+    <Compile Include="Repositories\ISystemParlayRepository.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,6 +331,9 @@
     <Compile Include="Services\IBetListService.cs" />
     <Compile Include="Services\IpService.cs" />
     <Compile Include="Services\IResultService.cs" />
+    <Compile Include="Core\NpoiExcelUtils.cs" />
+    <Compile Include="Services\SystemParlayExcel.cs" />
+    <Compile Include="Services\ISystemParlayExcel.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ResultService.cs" />
   </ItemGroup>
