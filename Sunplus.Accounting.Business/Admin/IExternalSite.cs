@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
-using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.Business.Admin
 {
@@ -11,7 +10,7 @@ namespace Sunplus.Accounting.Business.Admin
 
         ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize);
 
-        IEnumerable<CustDetail> GetSuperList(string groupName, string username);
+        IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username);
 
         Result AddSuperToGroup(string username, string groupName);
 

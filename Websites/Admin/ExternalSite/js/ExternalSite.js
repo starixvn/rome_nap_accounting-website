@@ -199,6 +199,35 @@ var addSuperDialog = (function ($, ajaxService) {
         };
     }
 
+    function renderExtraPTGroup(extraPTGroup) {
+        if (!extraPTGroup || extraPTGroup.length === 0) {
+            return "";
+        }
+
+        var html = [];
+        var date;
+        var groupArray;
+        var extraPTGroupArray = extraPTGroup.split(";");
+
+        $.each(extraPTGroupArray, function (index, group) {
+            // string pattern: groupName,date,isActive.
+            groupArray = group.split(",");
+            date = groupArray[1];
+
+            if (date.length !== 0) {
+                date = " (" + date + ")";
+
+                if (groupArray[2] === "1") {
+                    date = '<span class="b">' + date + '</span>';
+                }
+            }
+
+            html.push(groupArray[0] + date);
+        });
+
+        return html.join(", ") + '<img class="editGroup" style="cursor: pointer; float: right" src="../../App_Themes/Images/icn_edit.png" title="Change Primary Group" />';
+    }
+
     function renderBodyRows(index, row, cssClassEven) {
         var rowHtml = [
             "<tr class=",
@@ -216,14 +245,14 @@ var addSuperDialog = (function ($, ajaxService) {
             '<td><div class="w160 c">',
             row.LastName,
             "</div></td>",
-            '<td><div class="w160 c">',
-            row.NormalGroup,
+            '<td><div class="w160">',
+            row.NormalGroup.replace(";", ", "),
             "</div></td>",
-            '<td><div class="w160 c">',
-            row.ExtraPTGroup,
+            '<td><div class="w160">',
+            renderExtraPTGroup(row.ExtraPTGroup),
             "</div></td>",
             '<td><div class="w120 c">',
-            row.LastLoginIp,
+            row.IPLogin,
             "</div></td>",
             '<td><div class="w40 c">',
             '<img class="hand removeSuper" src="../../App_Themes/Images/icn_del.png" title="Remove Super" data-custid="',
@@ -267,14 +296,14 @@ var addSuperDialog = (function ($, ajaxService) {
         formData = params || getFormData();
 
         var getSupers = function (rs) {
-            totalItems = rs.total;
-            gridOnlyOneRow = rs.rows.length === 1;
+            totalItems = rs.Total;
+            gridOnlyOneRow = rs.Rows.length === 1;
 
             if (totalItems > 0) {
                 var html = [];
                 var cssClassEven = "";
 
-                $.each(rs.rows, function (i, row) {
+                $.each(rs.Rows, function (i, row) {
                     cssClassEven = i % 2 === 0 ? "" : "evenrow";
                     html.push(renderBodyRows(i, row, cssClassEven));
                 });

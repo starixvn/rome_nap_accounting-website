@@ -8,13 +8,12 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
-using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.Business.Admin
 {
     public class ExternalSite : IExternalSite
     {
-        private const string ListCustDetailSessionKey = "ExternalSite_SessionKey";
+        private const string SuperListSessionKey = "ExternalSite_SessionKey";
 
         private readonly IExternalSiteDAO _custGroupDAO;
 
@@ -39,11 +38,11 @@ namespace Sunplus.Accounting.Business.Admin
 
         public ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize)
         {
-            IEnumerable<CustDetail> superList = null;
+            IEnumerable<ExternalSiteSuper> superList = null;
 
             if (fromcache)
             {
-                superList = (IEnumerable<CustDetail>)SessionExtension.GetSession(HttpContext.Current.Session, ListCustDetailSessionKey);
+                superList = (IEnumerable<ExternalSiteSuper>)SessionExtension.GetSession(HttpContext.Current.Session, SuperListSessionKey);
             }
 
             if (superList == null)
@@ -58,21 +57,16 @@ namespace Sunplus.Accounting.Business.Admin
                 superList = superList.Where(s => s.UserName.ToLower().Contains(username));
             }
 
-            // Paging.
-            int totalItems = superList.Count();
-
-            superList = superList
-                .Skip(pageSize * (pageIndex - 1))
-                .Take(pageSize);
-
             return new ExternalSiteGridBO
             {
-                total = totalItems,
-                rows = superList.ToList()
+                Total = superList.Count(),
+                Rows = superList
+                    .Skip(pageSize * (pageIndex - 1))
+                    .Take(pageSize)
             };
         }
 
-        public IEnumerable<CustDetail> GetSuperList(string groupName, string username)
+        public IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username)
         {
             try
             {
@@ -80,7 +74,7 @@ namespace Sunplus.Accounting.Business.Admin
 
                 if (superList.Any())
                 {
-                    SessionExtension.AddSession(HttpContext.Current.Session, ListCustDetailSessionKey, superList);
+                    SessionExtension.AddSession(HttpContext.Current.Session, SuperListSessionKey, superList);
                 }
 
                 return superList;
@@ -88,7 +82,7 @@ namespace Sunplus.Accounting.Business.Admin
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                return new List<CustDetail>();
+                return new List<ExternalSiteSuper>();
             }
         }
 

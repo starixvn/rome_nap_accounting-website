@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.Admin;
 
 namespace Sunplus.Accounting.DataAccess.IAdmin
 {
@@ -8,7 +8,7 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
     {
         IEnumerable<string> GetGroupNames();
 
-        IEnumerable<CustDetail> GetSuperList(string groupName);
+        IEnumerable<ExternalSiteSuper> GetSuperList(string groupName);
 
         Result AddSuperToGroup(string username, string groupName, int userId);
 

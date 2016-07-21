@@ -4,7 +4,7 @@ using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.Admin;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {
@@ -28,10 +28,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             return groups;
         }
 
-        public IEnumerable<CustDetail> GetSuperList(string groupName)
+        public IEnumerable<ExternalSiteSuper> GetSuperList(string groupName)
         {
-            IList<CustDetail> superList = new List<CustDetail>(128);
-
             var param = new Hashtable
             {
                 { "groupname", groupName }
@@ -39,18 +37,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
                 param.Add("userid", AppSession.AccId);
             using (ObjectDb db = new ObjectDb("SelectInfoCust", 600))
             {
-                db.AssignParamValues(param);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        superList.Add(GetCustDetail(reader));
-                    }
-                }
+                return db.Query<ExternalSiteSuper>(param);
             }
-
-            return superList;
         }
 
         public Result AddSuperToGroup(string username, string groupName, int userId)
@@ -86,18 +74,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 
                 return GetResultFromOutputHash(db.GetOuputParams());
             }
-        }
-
-        private CustDetail GetCustDetail(IDataReader reader)
-        {
-            return new CustDetail
-            {
-                UserName = reader["username"].ToString(),
-                FirstName = reader["firstname"].ToString(),
-                LastName = reader["lastname"].ToString(),
-                LastLoginIp = reader["iplogin"].ToString(),
-                CustId = CastAide.AsInt32(reader["custid"])
-            };
         }
 
         private Result GetResultFromOutputHash(Hashtable outputParams)
