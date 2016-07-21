@@ -9,6 +9,7 @@
 
 namespace Fanex.BetList.Accounting.Criteria
 {
+    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -21,6 +22,12 @@ namespace Fanex.BetList.Accounting.Criteria
 
         [SpParam(SqlParamName = "TransID")]
         public string TransId { get; set; }
+
+        [SpParam(SqlParamName = "MoveBetsDay")]
+        public DateTime MoveBetsDay { get; set; }
+
+        [SpParam(SqlParamName = "BalanceUpDay")]
+        public DateTime BalanceUpDay { get; set; }
 
         public override string GetSettingKey()
         {

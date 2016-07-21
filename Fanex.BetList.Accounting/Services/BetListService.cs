@@ -30,7 +30,6 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
-    using Sunplus.Agent.Model.Entities;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -654,7 +653,9 @@ namespace Fanex.BetList.Accounting.Services
             var criteria = new BetListByCustInfoByRefnoCriteria()
             {
                 TransId = transactionId,
-                CustId = customerId
+                CustId = customerId,
+                MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
             };
 
             var criteriaForU3 = new BetListByCustInfoByRefnoU3Criteria()
