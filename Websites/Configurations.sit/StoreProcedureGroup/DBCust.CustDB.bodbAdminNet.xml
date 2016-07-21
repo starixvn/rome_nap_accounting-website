@@ -313,4 +313,8 @@
     <Setting Key="Acc_CustSetting_SettingRestrictionSelect" SpName="Acc_CustSetting_SettingRestrictionSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="SMA Management">
+    <Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

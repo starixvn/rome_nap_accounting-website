@@ -214,8 +214,8 @@
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -313,8 +313,8 @@
     <Setting Key="Acc_CustSetting_SettingRestrictionSelect" SpName="Acc_CustSetting_SettingRestrictionSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-	<Function Name="SMA Management">
-		<Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-	</Function>
+  <Function Name="SMA Management">
+    <Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
