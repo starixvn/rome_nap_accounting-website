@@ -1,16 +1,17 @@
-using System.Data;
+using System.Collections.Generic;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.DataAccess.IAdmin
 {
     public interface IExternalSiteDAO
     {
-        DataTable SelGroupName();
+        IEnumerable<string> GetGroupNames();
 
-        DataTable SelInfoCust(string groupName);
+        IEnumerable<CustDetail> GetSuperList(string groupName);
 
-        Result DelCust(int custId, int userId);
+        Result AddSuperToGroup(string username, string groupName, int userId);
 
-        Result AddExistCust(string username, string groupName, int userId);
+        Result RemoveSuperFromGroup(int custId, int userId);
     }
 }

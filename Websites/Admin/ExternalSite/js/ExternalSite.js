@@ -1,545 +1,333 @@
-﻿(function ($) {
+﻿var ajaxService = (function ($) {
     "use strict";
+    var self = {};
 
-    var $groupName = $("#groupName"),
-        $username = $("#txt_search"),
-        $grid = $("#gridExAccControl"),
-        $errMsg = $("#errMsg"),
-        $nodata = $("#nodata"),
-        $trMsg = $("#trMsg");
-
-    var fromcahe = false,
-        isResfresh = false;
-
-    var superList = [];
-    var formData = {
-        groupName: 0,
-        username: "",
-        fromcache: false,
-        pageIndex: 1,
-        pageSize: 50
-    };
-    
-
-    function showDialog() {
-        $errMsg.hide();
-        $("#txtUserName").val("");
-        $("#addNewSuper").removeClass("hidden").dialog("open");
-    }
-
-    function hideDialog() {
-        $("#addNewSuper").removeClass("hidden").dialog("close");
-    }
-
-    function renderGroup() {
+    self.getGroups = function (successCallback) {
         $.ajax({
             type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetGroupName",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetGroupNames",
             contentType: "application/json; charset=utf-8",
-            success: function (groups) {
-                var groupLength = groups ? groups.length : 0;
-
-                if (groupLength > 0) {
-                    var html = [];
-
-                    for (var i = 0; i < groupLength; i++) {
-                        html.push('<option value="');
-                        html.push(groups[i]);
-                        html.push('">');
-                        html.push(groups[i]);
-                        html.push("</option>");
-                    }
-
-                    $groupName
-                        .html(html.join(""))
-                        .change(function () { fromcahe = false; });
-
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
-            }
-        });
-    }
-
-    function addSuper() {
-        $errMsg.hide();
-        $nodata.hide();
-        $trMsg.hide();
-
-        var params = {
-            groupName: $groupName.val(),
-            username: $.trim($("#txtUserName").val())
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddCustomer",
-            data: $.toJSON(params),
-            contentType: "application/json; charset=utf-8",
-            success: function (result) {
-                $errMsg.show();
-
-                if (result.ErrorCode === 0) {
-                    fromcahe = false;
-                    showAlertMessage("errMsg", "Added Successfully!", 0);
-
-                    setTimeout(hideDialog, 2000);
-                    setTimeout(getCustInfo, 3000);
-                }
-                else {
-                    showAlertMessage("errMsg", result.ErrorMessage, 1);
-                }
-            }
-        });
-    }
-
-    function getCustInfo() {
-        try { parent.BlockUI(); } catch (e) { }
-
-        if (!isResfresh) {
-            formData.groupName = $groupName.val();
-            formData.username = $.trim($username.val());
-        }
-
-        if (flag) {
-            formData.pageIndex = 1;
-        }
-
-        /*formData = {
-            groupName: $groupName.val(),
-            username: $.trim($username.val()),
-            fromcache: fromcahe
-        };*/
-
-        $("#search_user").show();
-        $trMsg.hide();
-        $nodata.hide();
-        $("#pagination").show();
-        $("#err_nodata").hide();
-
-        $.ajax({
-            type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/PagerCust",
-            data: $.toJSON(param),
-            contentType: "application/json; charset=utf-8",
-            success: function (rs) {
-                superList = rs;
-
-                var gridExAccControl = $("#gridExAccControl");
-                total_item = rs.total;
-                ExterSite.arr = [];
-                var total = rs.rows.length;
-                if (total > 0) {
-                    var tbl = $("#tblexternalsite");
-
-                    var cssClassEven = "";
-
-                    $.each(rs.rows, function (i, row) {
-                        cssClassEven = i % 2 == 0 ? "" : "evenrow";
-                        ExterSite.arr.push(RenderRow(i, row, cssClassEven));
-                    });
-                    tbl.empty().html(ExterSite.arr.join(''));
-                    if (flag == true)
-                        initPager(total_item, _pageSize, 0);
-                    else {
-                        initPager(total_item, _pageSize, _pageIndex - 1);
-                        flag = true;
-                    }
-                    gridExAccControl.show();
-                    gridExAccControl.removeClass("hidden").reRenderScroller(783, 460, true);
-
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-
-                }
-                else {
-                    $('#nodata').show();
-                    if (username != '') {
-                        $('#err_nodata').show();
-                    }
-                    showAlertMessage("err_nodata", "Username does not belong to " + groupname + " group.", 1);
-                    gridExAccControl.hide();
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
-            }
-        });
-    }
-
-    function bindEvents() {
-        $username.keyup(function () {
-            var code = e.keyCode || e.which;
-            if (code === 13) {
-                isResfresh = false;
-                getCustInfo();
-            }
-        });
-
-        btnSearch.click(function () {
-            isResfresh = false;
-            getCustInfo();
-        });
-    }
-})(jQuery);
-
-
-
-
-
-
-
-
-
-var _pageIndex = 1;
-var _pageSize = 50;
-var total_item = 0;
-var noject = 0;
-var fromcahe = false;
-var objCust = [];
-var groupname;
-var username;
-var isResfresh = false;
-
-$(function () {
-    $('#addNewSuper').dialog({
-        title:"Add Existing Super",
-        autoOpen: false,
-        height: 100,
-        width: 350,
-        modal: true
-    });
-
-});
-
-function changeGroup() {
-    fromcahe = false;
-   
-}
-
-function trim(s) {
-    var l = 0; var r = s.length - 1;
-    while (l < s.length && s[l] == ' ')
-    { l++; }
-    while (r > l && s[r] == ' ')
-    { r -= 1; }
-    return s.substring(l, r + 1);
-}
-
-function onKeyEnter(e) {
-    if (e.keyCode == 13) {
-        isResfresh = false;
-        ExterSite.getCustInfo();
-    }
-}
-
-function showPopup() {
-    $('#errMsg').hide();
-    $('#txtUserName').val('');
-    $('#addNewSuper').removeClass("hidden").dialog("open");
-}
-
-function hidePopup() {
-    $('#addNewSuper').removeClass("hidden").dialog("close");
-}
-
-function renderGroup() {
-    $.ajax({
-        type: "POST",
-        url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetGroupName",
-        data: "",
-        contentType: "application/json; charset=utf-8",
-        success: function (rs) {
-            var objSelect = $('#groupName');
-            for (var i = 0; i < rs.length; i++) {
-                objSelect.append("<option value='" + rs[i] + "'>" + rs[i] + "</option>");
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-
-        }
-    });
-}
-
-function GetReportPager() {
-    fromcahe = true;
-    try { parent.BlockUI(); } catch (e) { }
-    var arr = [];
-    var Path = "";
-    
-    var param = { "groupName": groupname, "pageIndex": _pageIndex, "pageSize": _pageSize, "fromcache": fromcahe, "username": username }
-    $.ajax({
-        type: "POST",
-        url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/PagerCust",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: $.toJSON(param),
-        success: function (rs) {
-            objCust = rs;
-            if (rs.rows.length > 0) {
-                var tbl = $("#tblexternalsite");
-                tbl.empty();
-                var cssClassEven = "";
-                $.each(rs.rows, function (i, row) {
-                    cssClassEven = i % 2 == 0 ? "" : "evenrow";
-                    arr.push(RenderRow(i, row, cssClassEven));
-                });
-
-                tbl.html(arr.join(''));
-                $("#gridExAccControl").reRenderScroller(783, 460, true);
+            success: function (data) {
+                successCallback(data);
+            },
+            complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
-        }
-    });
-}
+        });
+    }
 
-function initPager(total_item, items_per_page, current_page) {
-    var opt = { callback: pageselectCallback };
-    // Collect options from the text fields - the fields are named like their option counterparts
-    opt["items_per_page"] = items_per_page;
-    opt["current_page"] = current_page;
-    
-    
-    $("#pagination").pagination(total_item, opt);
-}
-
-function pageselectCallback(page_index, _items_per_page, jq) {
-
-    var max_page = Math.ceil(total_item / _items_per_page);
-    page_index = page_index < max_page ? page_index : max_page - 1;
-
-    _pageIndex = page_index + 1;
-    _pageSize = _items_per_page;
-
-    GetReportPager();
-    initPager(total_item, _items_per_page, page_index);
-
-    return false;
-}
-
-function RenderRow(index, row, cssClassEven) {
-    no = _pageSize * (_pageIndex - 1) + index + 1;
-    var strrow = "";
-    strrow = "<tr class="+cssClassEven+">";
-    strrow += "<td><div class='w50 c'>";
-    strrow += no;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.UserName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.FirstName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w180 c'>";
-    strrow += row.LastName;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w120 c'>";
-    strrow += row.LastLoginIp;
-    strrow += "</div></td>";
-    strrow += "<td><div class='w55 c'>";
-    strrow += "<img class='hand' src='../../App_Themes/Images/icn_del.png' title='Remove Super' onclick='ExterSite.deleteCustomer(" + row.CustId + ")' />";
-    strrow += "</div></td>";
-    strrow += "</tr>";
-   
-    return strrow;
-}
-
-var ExterSite = {
-    arr: [],
-    getCustInfo: function () {
-        try { parent.BlockUI(); } catch (e) { }
-
-        if (isResfresh == false) {
-            groupname = $('#groupName').val();
-            username = trim($('#txt_search').val());
-        }
-
-        if (flag == true) {
-            _pageIndex = 1;
-        }
-
-        var param = { "groupName": groupname, "pageIndex": _pageIndex, "pageSize": _pageSize, "fromcache": fromcahe, "username": username };
-
-        $('#search_user').show();
-        $('#trMsg').hide();
-        $('#nodata').hide();
-        $('#pagination').show();
-        $('#err_nodata').hide();
-
+    self.getSuperList = function (params, successCallback) {
         $.ajax({
             type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/PagerCust",
-            data: $.toJSON(param),
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetSuperList",
             contentType: "application/json; charset=utf-8",
-            success: function (rs) {
-                objCust = rs;
-
-                var gridExAccControl = $("#gridExAccControl");
-                total_item = rs.total;
-                ExterSite.arr = [];
-                var total = rs.rows.length;
-                if (total > 0) {
-                    var tbl = $("#tblexternalsite");
-
-                    var cssClassEven = "";
-
-                    $.each(rs.rows, function (i, row) {
-                        cssClassEven = i % 2 == 0 ? "" : "evenrow";
-                        ExterSite.arr.push(RenderRow(i, row, cssClassEven));
-                    });
-                    tbl.empty().html(ExterSite.arr.join(''));
-                    if (flag == true)
-                        initPager(total_item, _pageSize, 0);
-                    else {
-                        initPager(total_item, _pageSize, _pageIndex - 1);
-                        flag = true;
-                    }
-                    gridExAccControl.show();
-                    gridExAccControl.removeClass("hidden").reRenderScroller(783, 460, true);
-
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-
-                }
-                else {
-                    $('#nodata').show();
-                    if (username != '') {
-                        $('#err_nodata').show();
-                    }
-                    showAlertMessage("err_nodata", "Username does not belong to " + groupname + " group.", 1);
-                    gridExAccControl.hide();
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
+            data: $.toJSON(params),
+            beforeSend: function () {
+                try { parent.BlockUI(); } catch (e) { }
+            },
+            success: function (data) {
+                successCallback(data);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
-    },
-    addCustomer: function () {
-        var username = $('#txtUserName').val();
-        var groupName = $('#groupName').val();
-        var param = { "username": username, "groupName": groupName };
-        $('#errMsg').hide();
-        $('#nodata').hide();
-        $('#trMsg').hide();
+    }
 
+    self.addSuperToGroup = function (groupName, superName, successCallback) {
         $.ajax({
             type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddCustomer",
-            data: $.toJSON(param),
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddSuperToGroup",
             contentType: "application/json; charset=utf-8",
-            success: function (rs) {
-                if (rs.ErrorCode == 0) {
-                    $('#errMsg').show();
-                    fromcahe = false;
-                    showAlertMessage('errMsg', 'Added Successfully!', 0);
-                    setTimeout('hidePopup();', 2000);
-                    setTimeout('ExterSite.getCustInfo();', 3000);
-
-                }
-                else {
-                    $('#errMsg').show();
-                    showAlertMessage('errMsg', rs.ErrorMessage, 1);
-                }
+            data: $.toJSON({ groupName: groupName, username: superName }),
+            success: function (data) {
+                successCallback(data);
             }
         });
+    }
 
-    },
-    deleteCustomer: function (custId) {
-        flag = false;
-        var param = { "custId": custId };
-        $('#nodata').hide();
-        $('#trMsg').hide();
-        if (!confirm('Are you sure you want to remove this super?'))
+    self.removeSuperFromGroup = function (custId, successCallback) {
+        $.ajax({
+            type: "POST",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/RemoveSuperFromGroup",
+            contentType: "application/json; charset=utf-8",
+            data: $.toJSON({ custId: custId }),
+            success: function (data) {
+                successCallback(data);
+            }
+        });
+    }
+
+    return self;
+}(jQuery));
+
+var addSuperDialog = (function ($, ajaxService) {
+    "use strict";
+    var self = {};
+
+    var $addSuperToGroupDialog = $("#addSuperToGroupDialog").dialog({
+            title: "Add Existing Super",
+            autoOpen: false,
+            height: 100,
+            width: 350,
+            modal: true
+        }),
+        $errMsg = $("#errMsg"),
+        $superName = $("#txtSuper");
+
+    function showDialogAddSuperToGroup() {
+        $errMsg.addClass("hidden");
+        $superName.val("");
+        $addSuperToGroupDialog.removeClass("hidden").dialog("open");
+    }
+
+    function hideDialogAddSuperToGroup() {
+        $addSuperToGroupDialog.dialog("close");
+    }
+
+    function addSuperToGroup() {
+        var superName = $.trim($superName.val());
+
+        if (superName.length === 0) {
+            $errMsg.removeClass("hidden");
+            showAlertMessage("errMsg", "Please input username!", 1);
             return;
-        $.ajax({
-            type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/DeleteCustomer",
-            data: $.toJSON(param),
-            contentType: "application/json; charset=utf-8",
-            success: function (rs) {
-                if (rs.ErrorCode == 0) {
-                    $('#trMsg').show();
+        }
+
+        var addSuper = function (result) {
+            if (result.ErrorCode === 0) {
+                showAlertMessage("errMsg", "Added Successfully!", 0);
+
+                setTimeout(hideDialogAddSuperToGroup, 2000);
+                setTimeout(function () {
+                    formData.fromcache = false;
+                    formData.pageIndex = 1;
+                    getSuperList(formData);
+                }, 3000);
+            }
+            else {
+                showAlertMessage("errMsg", result.ErrorMessage, 1);
+            }
+
+            $errMsg.removeClass("hidden");
+        };
+
+        ajaxService.addSuperToGroup(formData.groupName, superName, addSuper);
+    }
+
+    self.initialize = function () {
+        $(".btnAdd").click(showDialogAddSuperToGroup);
+
+        $("#addSuperToGroup").click(addSuperToGroup);
+    };
+
+    return self;
+})(jQuery, ajaxService);
+
+(function ($, addSuperDialog, ajaxService) {
+    "use strict";
+
+    var $trMsg = $("#trMsg"),
+        $groupName = $("#groupName"),
+        $username = $("#txt_search"),
+        $grid = $("#gridExAccControl"),
+        $tblExternalSite = $("#tblexternalsite"),
+        $pagination = $("#pagination"),
+        $nodata = $("#nodata"),
+        $errNoData = $("#err_nodata");
+
+    var formData = null,
+        totalItems = 0,
+        gridOnlyOneRow = false;
+
+    var _pageSize = 50;
+
+    function removeSuperFromGroup(custId) {
+        $trMsg.addClass("hidden");
+
+        var sayYes = confirm("Are you sure you want to remove this super?");
+        if (sayYes) {
+            var removeSuper = function (rs) {
+                if (rs.ErrorCode === 0) {
                     showAlertMessage("dvMsg", "Removed Successfully", 0);
-                    var param = { "groupname": groupname, "username": username };
-                    $.ajax({
-                        type: "POST",
-                        url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetInfoCusts",
-                        data: $.toJSON(param),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (rs) {
-                            if (rs.length <= _pageSize)
-                                _pageIndex = 1;
+
+                    setTimeout(function () {
+                        if (gridOnlyOneRow) {
+                            formData.pageIndex = 1;
                         }
-                    });
-                    setTimeout('ExterSite.getCustInfo();', 2000);
+
+                        formData.fromcache = false;
+                        getSuperList(formData);
+                    }, 2000);
                 }
                 else {
-                    $('#trMsg').show();
                     showAlertMessage("dvMsg", rs.ErrorMessage, 1);
                 }
 
+                $trMsg.removeClass("hidden");
+            };
+
+            ajaxService.removeSuperFromGroup(custId, removeSuper);
+        }
+    }
+
+    function renderGroups(groups) {
+        var groupLength = groups ? groups.length : 0;
+
+        if (groupLength > 0) {
+            var html = [];
+
+            for (var i = 0; i < groupLength; i++) {
+                html.push('<option value="');
+                html.push(groups[i]);
+                html.push('">');
+                html.push(groups[i]);
+                html.push("</option>");
+            }
+
+            $groupName.html(html.join(""));
+        }
+    }
+
+    function getFormData() {
+        return {
+            groupName: $groupName.val(),
+            username: $.trim($username.val()),
+            fromcache: false,
+            pageIndex: 1,
+            pageSize: _pageSize
+        };
+    }
+
+    function renderBodyRows(index, row, cssClassEven) {
+        var rowHtml = [
+            "<tr class=",
+            cssClassEven,
+            ">",
+            '<td><div class="w40 c">',
+            formData.pageSize * (formData.pageIndex - 1) + index + 1,
+            "</div></td>",
+            '<td><div class="w180 c">',
+            row.UserName,
+            "</div></td>",
+            '<td><div class="w160 c">',
+            row.FirstName,
+            "</div></td>",
+            '<td><div class="w160 c">',
+            row.LastName,
+            "</div></td>",
+            '<td><div class="w160 c">',
+            row.NormalGroup,
+            "</div></td>",
+            '<td><div class="w160 c">',
+            row.ExtraPTGroup,
+            "</div></td>",
+            '<td><div class="w120 c">',
+            row.LastLoginIp,
+            "</div></td>",
+            '<td><div class="w40 c">',
+            '<img class="hand removeSuper" src="../../App_Themes/Images/icn_del.png" title="Remove Super" data-custid="',
+            row.CustId,
+            '" />',
+            "</div></td>",
+            "</tr>"
+        ];
+
+        return rowHtml.join("");
+    }
+
+    function initPager(items_per_page, current_page) {
+        var opt = {
+            callback: pageselectCallback,
+            items_per_page: items_per_page,
+            current_page: current_page
+        };
+
+        $pagination.pagination(totalItems, opt);
+    }
+
+    function pageselectCallback(page_index, _items_per_page, jq) {
+        var max_page = Math.ceil(totalItems / _items_per_page);
+        page_index = page_index < max_page ? page_index : max_page - 1;
+
+        formData.fromcache = true;
+        formData.pageIndex = page_index + 1;
+        formData.pageSize = _items_per_page;
+        _pageSize = _items_per_page;
+
+        getSuperList(formData);
+        return false;
+    }
+
+    function getSuperList(params) {
+        $trMsg.addClass("hidden");
+        $nodata.addClass("hidden");
+        $errNoData.addClass("hidden");
+
+        formData = params || getFormData();
+
+        var getSupers = function (rs) {
+            totalItems = rs.total;
+            gridOnlyOneRow = rs.rows.length === 1;
+
+            if (totalItems > 0) {
+                var html = [];
+                var cssClassEven = "";
+
+                $.each(rs.rows, function (i, row) {
+                    cssClassEven = i % 2 === 0 ? "" : "evenrow";
+                    html.push(renderBodyRows(i, row, cssClassEven));
+                });
+
+                $tblExternalSite.html(html.join(""));
+
+                initPager(formData.pageSize, formData.pageIndex - 1);
+
+                $(".removeSuper")
+                    .unbind("click")
+                    .bind("click", function () {
+                        removeSuperFromGroup($(this).attr("data-custid"));
+                    })
+
+                $grid.removeClass("hidden")
+                    .reRenderScroller(1044, 760, true);
+            }
+            else {
+                if (formData.username.length !== 0) {
+                    showAlertMessage("err_nodata", "Username does not belong to " + formData.groupName + " group.", 1);
+                    $errNoData.removeClass("hidden");
+                }
+
+                $nodata.removeClass("hidden");
+                $grid.addClass("hidden");
+            }
+        };
+
+        ajaxService.getSuperList(formData, getSupers);
+    }
+
+    function initialize() {
+        ajaxService.getGroups(renderGroups);
+
+        $username.keyup(function (e) {
+            var code = e.keyCode || e.which;
+            if (code === 13) {
+                getSuperList();
             }
         });
 
-    },
-    SubmitData: function () {
-        isResfresh = false;
-        ExterSite.getCustInfo();
-    },
-    refreshPage: function () {
-        isResfresh = true;
-        ExterSite.getCustInfo();
-    },
-    searchCustomer: function () {
-        var sear_result;
-        _pageIndex = 1;
-        $('#nodata').hide();
-        $('#trMsg').hide();
-        var groupname = $('#groupName').val();
-        var username = $('#txt_search').val();
-        var param = { "username": username, "groupname": groupname, "pageIndex": _pageIndex, "pageSize": _pageSize };
-        try { parent.BlockUI(); } catch (e) { }
-        if (username == null || username == "") {
-            $('#trMsg').show();
-            showAlertMessage("dvMsg", "Please input username!", 1);
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-        }
-        else {
-            $.ajax({
-                type: "POST",
-                url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/SearchCust",
-                data: $.toJSON(param),
-                contentType: "application/json; charset=utf-8",
-                success: function (rs) {
-                    objCust = rs;
+        $("#btnSearch").click(function () {
+            getSuperList();
+        });
 
-                    var gridExAccControl = $("#gridExAccControl");
-                    total_item = rs.total;
-                    ExterSite.arr = [];
-                    var total = rs.rows.length;
-                    if (total_item > 0) {
-                        var tbl = $("#tblexternalsite");
-                        $('#pagination').show();
-                        var cssClassEven = "";
+        $(".btnRefresh").click(function () {
+            formData.fromcache = false;
+            formData.pageIndex = 1;
+            getSuperList(formData);
+        });
 
-                        $.each(rs.rows, function (i, row) {
-                            cssClassEven = i % 2 == 0 ? "" : "evenrow";
-                            ExterSite.arr.push(RenderRow(i, row, cssClassEven));
-                        });
-                        tbl.empty().html(ExterSite.arr.join(''));
-
-                        initPager(total_item, _pageSize, _pageIndex - 1);
-                        gridExAccControl.show();
-                        gridExAccControl.removeClass("hidden").reRenderScroller(783, 460, true);
-
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                    }
-                    else {
-                        $('#nodata').show();
-                        showAlertMessage("nodata", "No customer has this username.", 1);
-                        gridExAccControl.hide();
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-
-                    }
-                }
-
-            });
-        }
-
-
+        addSuperDialog.initialize();
     }
-}
 
+    initialize();
+})(jQuery, addSuperDialog, ajaxService);

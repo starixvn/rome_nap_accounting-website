@@ -20,78 +20,78 @@
                 <tbody>
                     <tr>
                         <td class="maincontent_headerL"></td>
-                        <td class="maincontent_headerC">Manage External Accounts
-                        </td>
+                        <td class="maincontent_headerC">Manage External Accounts</td>
                         <td class="maincontent_headerR"></td>
                     </tr>
                 </tbody>
             </table>
-            <div class="maincontent_box" style="width: 796px">
-                <div style="display: none;" id="trMsg">
-                    <div id="dvMsg">
-                    </div>
+            <div class="maincontent_box" style="width: 1057px">
+                <div class="hidden" id="trMsg">
+                    <div id="dvMsg"></div>
                 </div>
                 <table>
                     <tr>
-                        <td>Username
-                        </td>
+                        <td>Username</td>
                         <td colspan="2">
-                            <input id="txt_search" type="text" onkeyup="javascript:onKeyEnter(event);" class="text" value="" style="width: 97%" />
+                            <input type="text" class="text" id="txt_search" style="width: 97%" />
                         </td>
                     </tr>
                     <tr>
-                        <td>System
+                        <td>System</td>
+                        <td>
+                            <select id="groupName" style="width: 102px; border: 1px solid Black"></select>
                         </td>
                         <td>
-                            <select id="groupName" onchange="changeGroup()" style="width: 102px; border: 1px solid Black">
-                            </select>
-                        </td>
-                        <td>
-                            <input type="button" id="btnSearch" value="Submit" class="btn" onclick="ExterSite.SubmitData()" />
+                            <button type="button" class="btn" id="btnSearch">Submit</button>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div style="display: none; width: 801px" id="nodata">
-                <div id="err_nodata" style="display: none">
-                </div>
+            <div style="width: 1063px" class="hidden" id="nodata">
+                <div id="err_nodata" class="hidden"></div>
                 <div class="content-toolbox bgtitle">
                     <div class="btngroup">
-                        <input type="button" title="Add Existing Super" class="btnAdd" id="btnAdd2" name="btnAdd2" value="  " onclick="showPopup();" />
-                        <input type="button" title="Refresh" class="btnRefresh" id="btnRefresh2" name="btnRefresh2" value="  " onclick="ExterSite.refreshPage();" />
+                        <input type="button" class="btnAdd" title="Add Existing Super" value="  " />
+                        <input type="button" class="btnRefresh" title="Refresh" value="  " />
                     </div>
                 </div>
             </div>
             <div id="gridExAccControl" class="content-warper hidden">
                 <div class="content-toolbox bgtitle">
                     <div class="btngroup">
-                        <input type="button" title="Add Existing Super" class="btnAdd" id="btnAdd" name="btnAdd" value="  " onclick="showPopup();" />
-                        <input type="button" title="Refresh" class="btnRefresh" id="btnRefresh" name="btnRefresh" value="  " onclick="ExterSite.refreshPage();" />
+                        <input type="button" class="btnAdd" title="Add Existing Super" value="  " />
+                        <input type="button" class="btnRefresh" title="Refresh" value="  " />
                     </div>
                 </div>
-                <div id="nodata_search" style="display: none"></div>
+                <div id="nodata_search" class="hidden"></div>
                 <div class="content-header clearfix">
                     <div id="headerscrollbettype" class="header-scroll">
                         <table class="tbl-header-scroll">
                             <tr>
                                 <td style="border-bottom: none 0px;">
-                                    <div class="w50 c b">
-                                        No
-                                    </div>
+                                    <div class="w40 c b">No</div>
                                 </td>
                                 <td style="border-bottom: none 0px;">
-                                    <div class="w180 c">
-                                        Username
-                                    </div>
+                                    <div class="w180 c">Username</div>
                                 </td>
                                 <td style="border-bottom: none 0px;">
-                                    <div class="w180 c">
+                                    <div class="w160 c">
                                         <%=Resources.Language.FirstName %>
                                     </div>
                                 </td>
                                 <td style="border-bottom: none 0px;">
-                                    <div class="w180 c">
+                                    <div class="w160 c">
                                         <%=Resources.Language.LastName %>
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="w160 c">
+                                        <%=Resources.Language.NormalGroup %>
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="w160 c">
+                                        <%=Resources.Language.ExtraPTGroup %>
                                     </div>
                                 </td>
                                 <td style="border-bottom: none 0px;">
@@ -100,8 +100,7 @@
                                     </div>
                                 </td>
                                 <td style="border-bottom: none 0px;">
-                                    <div class="w55 c">
-                                    </div>
+                                    <div class="w40 c"></div>
                                 </td>
                             </tr>
                         </table>
@@ -109,8 +108,7 @@
                 </div>
                 <div class="content-body clearfix">
                     <div class="body-scroll">
-                        <table id="tblexternalsite" class="tbl-body-scroll">
-                        </table>
+                        <table id="tblexternalsite" class="tbl-body-scroll"></table>
                     </div>
                 </div>
                 <div class="content-pagination bgtitle clearfix">
@@ -118,8 +116,7 @@
                         <table style="width: 100%; padding-top: 2px" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td>
-                                    <div id="pagination">
-                                    </div>
+                                    <div id="pagination"></div>
                                 </td>
                             </tr>
                         </table>
@@ -128,22 +125,45 @@
             </div>
         </div>
     </div>
-    <div id="addNewSuper" class="hidden">
+    <div id="addSuperToGroupDialog" class="hidden">
         <span id="errMsg"></span>
         <table>
             <tr>
                 <td>
-                    <div class="w60 c">
-                        Username
-                    </div>
+                    <div class="w60 c">Username</div>
                 </td>
                 <td>
                     <div class="w150">
-                        <input type="text" id="txtUserName" style="width: 140px" />
+                        <input type="text" id="txtSuper" style="width: 140px" />
                     </div>
                 </td>
                 <td>
-                    <input type="button" id="Button2" value="Add" class="btn" onclick="ExterSite.addCustomer()" />
+                    <button type="button" class="btn" id="addSuperToGroup">Add</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="changePrimaryGroup" class="hidden">
+        <%--<span id="errMsg"></span>--%>
+        <table>
+            <tr>
+                <td>
+                    <div class="w60 c">Username:</div>
+                </td>
+                <td>
+                    <div class="w150">
+                        AD
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="w60 c">Effective Date:</div>
+                </td>
+                <td>
+                    <div class="w150">
+                        AD
+                    </div>
                 </td>
             </tr>
         </table>
@@ -157,8 +177,5 @@
     <script src="../../js/showhidepopup.js" type="text/javascript"></script>
     <script src="../../js/Common/ArrayUtils.js" type="text/javascript"></script>
     <script src="js/ExternalSite.js" type="text/javascript"></script>
-    <script type="text/javascript" language="javascript">
-        renderGroup();
-    </script>
 </body>
 </html>

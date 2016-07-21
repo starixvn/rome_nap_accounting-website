@@ -7,14 +7,14 @@ namespace Sunplus.Accounting.Business.Admin
 {
     public interface IExternalSite
     {
-        List<string> GetGroupName();
+        IEnumerable<string> GetGroupNames();
 
-        ExternalSiteGridBO PagerCustomers(string groupName, int pageIndex, int pageSize, bool fromcache, string username);
+        ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize);
 
-        Result DeleteCustGroupName(int custId);
+        IEnumerable<CustDetail> GetSuperList(string groupName, string username);
 
-        Result AddCustGroupName(string username, string groupName);
+        Result AddSuperToGroup(string username, string groupName);
 
-        List<CustDetail> GetInfoCusts(string groupName, string username);
+        Result RemoveSuperFromGroup(int custId);
     }
 }

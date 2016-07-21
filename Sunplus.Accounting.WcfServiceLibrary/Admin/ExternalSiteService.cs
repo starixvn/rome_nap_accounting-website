@@ -15,28 +15,28 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExternalSiteService : IExternalSiteService
     {
-        public List<string> GetGroupName()
+        public IEnumerable<string> GetGroupNames()
         {
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
 
-            return external.GetGroupName();
+            return external.GetGroupNames();
         }
 
-        public List<CustDetail> GetInfoCusts(string groupname, string username)
+        public ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize)
         {
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
 
-            return external.GetInfoCusts(groupname, username);
+            return external.GetSuperList(groupName, username, fromcache, pageIndex, pageSize);
         }
 
-        public ExternalSiteGridBO PagerCust(string groupName, int pageIndex, int pageSize, bool fromcache, string username)
+        public Result AddSuperToGroup(string username, string groupName)
         {
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
 
-            return external.PagerCustomers(groupName, pageIndex, pageSize, fromcache, username);
+            return external.AddSuperToGroup(username, groupName);
         }
 
-        public Result DeleteCustomer(int custId)
+        public Result RemoveSuperFromGroup(int custId)
         {
             Result result = new Result();
             var permissionService = new ServiceBase();
@@ -53,13 +53,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
                 return result;
             }
 
-            var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-
-            return external.DeleteCustGroupName(custId);
-        }
-
-        public Result AddCustomer(string username, string groupName)
-        {
             Result result = new Result();
             var permissionService = new ServiceBase();
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
@@ -77,7 +70,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
 
-            return external.AddCustGroupName(username, groupName);
+            return external.RemoveSuperFromGroup(custId);
         }
     }
 }

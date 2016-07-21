@@ -12,22 +12,18 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
     {
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<string> GetGroupName();
+        IEnumerable<string> GetGroupNames();
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<CustDetail> GetInfoCusts(string groupname, string username);
+        ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize);    
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        ExternalSiteGridBO PagerCust(string groupName, int pageIndex, int pageSize, bool fromcache, string username);
+        Result AddSuperToGroup(string username, string groupName);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result DeleteCustomer(int custId);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result AddCustomer(string username, string groupName);
+        Result RemoveSuperFromGroup(int custId);
     }
 }

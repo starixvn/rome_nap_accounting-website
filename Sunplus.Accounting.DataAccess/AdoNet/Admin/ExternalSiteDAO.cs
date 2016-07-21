@@ -1,130 +1,112 @@
+using System.Collections.Generic;
 using DNAide.Core;
 using Fanex.Data;
-using Fanex.Tarus.Infrastructure.Extensions;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities;
-using System.Data;
+using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {
     public class ExternalSiteDAO : DataAccess, IExternalSiteDAO
     {
-        public DataTable SelGroupName()
+        public IEnumerable<string> GetGroupNames()
         {
-            DataTable rawdata = null;
+            IList<string> groups = new List<string>(16);
 
-            try
+            using (ObjectDb db = new ObjectDb("SelectGroupName", 600))
             {
-                using (ObjectDb db = new ObjectDb("SelectGroupName", 600))
+                using (var reader = db.ExecuteReader())
                 {
-                    var ds = db.ExecuteDataSet();
-
-                    if (ds != null && ds.Tables.Count > 0)
+                    while (reader.Read())
                     {
-                        rawdata = ds.Tables[0];
+                        groups.Add(reader["GroupName"].ToString());
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
 
-            return rawdata;  
+            return groups;
         }
 
-        public DataTable SelInfoCust(string groupName)
+        public IEnumerable<CustDetail> GetSuperList(string groupName)
         {
-            DataTable rawdata = null;
+            IList<CustDetail> superList = new List<CustDetail>(128);
 
-            try
+            var param = new Hashtable
             {
-                var param = new Hashtable();
-                param.Add("groupname", groupName);
+                { "groupname", groupName }
+            };
                 param.Add("userid", AppSession.AccId);
-                using (ObjectDb db = new ObjectDb("SelectInfoCust", 600))
-                {
-                    db.AssignParamValues(param);
-                    var ds = db.ExecuteDataSet();
+            using (ObjectDb db = new ObjectDb("SelectInfoCust", 600))
+            {
+                db.AssignParamValues(param);
 
-                    if (ds != null && ds.Tables.Count > 0)
+                using (var reader = db.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        rawdata = ds.Tables[0];
+                        superList.Add(GetCustDetail(reader));
                     }
                 }
-
-                return rawdata;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
             }
 
-            return rawdata;
+            return superList;
         }
 
-        public Result DelCust(int custId, int userId)
+        public Result AddSuperToGroup(string username, string groupName, int userId)
         {
-            var result = new Result();
-
-            try
+            var inputParams = new Hashtable
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
-                param.Add("userid", userId);
-                
-                Hashtable output = new Hashtable();
+                { "username", username },
+                { "userid", userId },
+                { "groupname", groupName }
+            };
 
-                using (ObjectDb db = new ObjectDb("DeleteCustomer", 600))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    output = db.GetOuputParams();
-                }
-
-                result.ErrorCode = CastAide.AsInt32(output["errcode"]);
-                result.ErrorMessage = CastAide.AsString(output["errmsg"]);
-            }
-            catch (Exception ex)
+            using (ObjectDb db = new ObjectDb("AddExistCustomer", 600))
             {
-                LogExtensions.ExceptionHandler(ex);
-            }
+                db.AssignParamValues(inputParams);
+                db.ExecuteNonQuery();
 
-            return result;
+                return GetResultFromOutputHash(db.GetOuputParams());
+            }
         }
 
-        public Result AddExistCust(string username, string groupName, int userId)
+        public Result RemoveSuperFromGroup(int custId, int userId)
         {
-            var result = new Result();
-
-            try
+            var param = new Hashtable
             {
-                var param = new Hashtable();
-                param.Add("username", username);
-                param.Add("userid", userId);
-                param.Add("groupname", groupName);
+                { "custid", custId },
+                { "userid", userId }
+            };
 
-                Hashtable output = new Hashtable();
-
-                using (ObjectDb db = new ObjectDb("AddExistCustomer", 600))
-                {
-                    db.AssignParamValues(param);
-
-                    db.ExecuteNonQuery();
-                    output = db.GetOuputParams();
-                }
-
-                result.ErrorCode = CastAide.AsInt32(output["errcode"]);
-                result.ErrorMessage = CastAide.AsString(output["errmsg"]);
-            }
-            catch (Exception ex)
+            using (ObjectDb db = new ObjectDb("DeleteCustomer", 600))
             {
-                LogExtensions.ExceptionHandler(ex);
-            }
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
 
-            return result;
+                return GetResultFromOutputHash(db.GetOuputParams());
+            }
+        }
+
+        private CustDetail GetCustDetail(IDataReader reader)
+        {
+            return new CustDetail
+            {
+                UserName = reader["username"].ToString(),
+                FirstName = reader["firstname"].ToString(),
+                LastName = reader["lastname"].ToString(),
+                LastLoginIp = reader["iplogin"].ToString(),
+                CustId = CastAide.AsInt32(reader["custid"])
+            };
+        }
+
+        private Result GetResultFromOutputHash(Hashtable outputParams)
+        {
+            return new Result
+            {
+                ErrorCode = CastAide.AsInt32(outputParams["errcode"]),
+                ErrorMessage = CastAide.AsString(outputParams["errmsg"])
+            };
         }
     }
 }

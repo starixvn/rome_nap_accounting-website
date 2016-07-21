@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IAdmin;
@@ -15,7 +14,6 @@ namespace Sunplus.Accounting.Business.Admin
 {
     public class ExternalSite : IExternalSite
     {
-        private const string GroupNameSessionKey = "sessionGroupName";
         private const string ListCustDetailSessionKey = "ExternalSite_SessionKey";
 
         private readonly IExternalSiteDAO _custGroupDAO;
@@ -25,104 +23,104 @@ namespace Sunplus.Accounting.Business.Admin
             _custGroupDAO = custGroupDAO;
         }
 
-        public List<string> GetGroupName()
+        public IEnumerable<string> GetGroupNames()
         {
-            var listGroupName = new List<string>();
-
             try
             {
-                var rawdata = _custGroupDAO.SelGroupName();
-                listGroupName.AddRange(from DataRow row in rawdata.Rows select row["GroupName"].ToString());
+                return _custGroupDAO.GetGroupNames();
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return listGroupName;
+            return new List<string>();
         }
 
-        public ExternalSiteGridBO PagerCustomers(string groupName, int pageIndex, int pageSize, bool fromcache, string username)
+        public ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize)
         {
-            var externalsitegrid = new ExternalSiteGridBO();
-            var listCust = new List<CustDetail>();
-            var externalsitegridpaging = new ExternalSiteGridBO();
+            IEnumerable<CustDetail> superList = null;
 
+            if (fromcache)
+            {
+                superList = (IEnumerable<CustDetail>)SessionExtension.GetSession(HttpContext.Current.Session, ListCustDetailSessionKey);
+            }
+
+            if (superList == null)
+            {
+                superList = GetSuperList(groupName, username);
+            }
+
+            // Filter by username.
+            if (!string.IsNullOrEmpty(username))
+            {
+                username = username.ToLower();
+                superList = superList.Where(s => s.UserName.ToLower().Contains(username));
+            }
+
+            // Paging.
+            int totalItems = superList.Count();
+
+            superList = superList
+                .Skip(pageSize * (pageIndex - 1))
+                .Take(pageSize);
+
+            return new ExternalSiteGridBO
+            {
+                total = totalItems,
+                rows = superList.ToList()
+            };
+        }
+
+        public IEnumerable<CustDetail> GetSuperList(string groupName, string username)
+        {
             try
             {
-                var externalsitelistSession = SessionExtension.GetSession(HttpContext.Current.Session, ListCustDetailSessionKey);
-                if (externalsitelistSession == null || fromcache == false)
+                var superList = _custGroupDAO.GetSuperList(groupName);
+
+                if (superList.Any())
                 {
-                    listCust = GetInfoCusts(groupName, username);
-                }
-                else
-                {
-                    listCust = (List<CustDetail>)externalsitelistSession;
+                    SessionExtension.AddSession(HttpContext.Current.Session, ListCustDetailSessionKey, superList);
                 }
 
-                if (!string.IsNullOrEmpty(username))
-                {
-                    var filterCust = from t in listCust
-                                     where t.UserName.ToLower().Contains(username.ToLower())
-                                     select t;
-
-                    listCust = filterCust.ToList();
-                }
-
-                externalsitegrid.rows = listCust;
-                externalsitegrid.total = listCust.Count;
-
-                // Paging.
-                externalsitegridpaging.rows = externalsitegrid.rows.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
-                externalsitegridpaging.total = externalsitegrid.total;
+                return superList;
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+                return new List<CustDetail>();
             }
-
-            return externalsitegridpaging;
         }
 
-        public Result DeleteCustGroupName(int custId)
-        {
-            return _custGroupDAO.DelCust(custId, AppSession.AccId);
-        }
-
-        public Result AddCustGroupName(string username, string groupName)
+        public Result AddSuperToGroup(string username, string groupName)
         {
             if (string.IsNullOrEmpty(username))
             {
-                return new Result { ErrorCode = 1, ErrorMessage = "Please input username!" };
+                return new Result(1, "Please input username!");
             }
 
-            return _custGroupDAO.AddExistCust(username, groupName, AppSession.AccId);
+            try
+            {
+                return _custGroupDAO.AddSuperToGroup(username, groupName, AppSession.AccId);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                return new Result(1, "Internal server error!");
+            }
         }
 
-        public List<CustDetail> GetInfoCusts(string groupName, string username)
+        public Result RemoveSuperFromGroup(int custId)
         {
-            var listCust = new List<CustDetail>();
-            var rawdata = _custGroupDAO.SelInfoCust(groupName);
-
-            foreach (DataRow row in rawdata.Rows)
+            try
             {
-                listCust.Add(new CustDetail
-                {
-                    UserName = row["username"].ToString(),
-                    FirstName = row["firstname"].ToString(),
-                    LastName = row["lastname"].ToString(),
-                    LastLoginIp = row["iplogin"].ToString(),
-                    CustId = CastAide.AsInt32(row["custid"])
-                });
+                return _custGroupDAO.RemoveSuperFromGroup(custId, AppSession.AccId);
             }
-
-            // Filter by username if not empty.
-            if (listCust.Count > 0)
+            catch (Exception ex)
             {
-                SessionExtension.AddSession(HttpContext.Current.Session, ListCustDetailSessionKey, listCust);
+                LogExtensions.ExceptionHandler(ex);
+                return new Result(1, "Internal server error!");
             }
-
-            return listCust;
         }
     }
 }
