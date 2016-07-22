@@ -899,8 +899,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 }
 
-                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet ||
-                                    !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
+                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || (roleId < 4 && isHideAllbetUpline) || !isSyncAllbetUpline;
+                                // !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
                                 var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
