@@ -1,8 +1,10 @@
-﻿.w120 { width: 120px; }
-.w180 { width: 180px; }
-.w40 { width: 40px; }
+﻿.w40 { width: 40px; }
+.w60 { width: 60px; }
+.w120 { width: 120px; }
+.w150 { width: 150px; }
 .w160 { width: 160px; }
-/*Racing winloss style*/
+.w180 { width: 180px; }
+
 .blue {
     color: Blue;
     cursor: pointer;
@@ -67,7 +69,6 @@ span#search input.btn_search {
     background-repeat: no-repeat !important;
     background-position: left center !important;
     background-color: #FFF;
-    /*border: 0 none!important;*/
     width: 20px !important;
     height: 20px;
     cursor: pointer;
@@ -86,7 +87,6 @@ span#search input.btn_clear {
 }
 
 span#search input.text {
-    /*border: 0 none!important;*/
     height: 14px;
     padding: 2px 2px;
     width: 118px;
@@ -96,4 +96,9 @@ span#search input.text {
 
 .content-toolbox {
     height: 21px;
+}
+
+.noExtraPT {
+    color: #666;
+    font-style: italic;
 }

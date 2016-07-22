@@ -66,26 +66,6 @@ namespace Sunplus.Accounting.Business.Admin
             };
         }
 
-        public IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username)
-        {
-            try
-            {
-                var superList = _custGroupDAO.GetSuperList(groupName);
-
-                if (superList.Any())
-                {
-                    SessionExtension.AddSession(HttpContext.Current.Session, SuperListSessionKey, superList);
-                }
-
-                return superList;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return new List<ExternalSiteSuper>();
-            }
-        }
-
         public Result AddSuperToGroup(string username, string groupName)
         {
             if (string.IsNullOrEmpty(username))
@@ -114,6 +94,38 @@ namespace Sunplus.Accounting.Business.Admin
             {
                 LogExtensions.ExceptionHandler(ex);
                 return new Result(1, "Internal server error!");
+            }
+        }
+
+        public ExternalSiteSuper GetSuper(string groupName, string username)
+        {
+            var superList = (IEnumerable<ExternalSiteSuper>)SessionExtension.GetSession(HttpContext.Current.Session, SuperListSessionKey);
+
+            if (superList == null)
+            {
+                superList = GetSuperList(groupName, username);
+            }
+
+            return superList.FirstOrDefault(s => s.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username)
+        {
+            try
+            {
+                var superList = _custGroupDAO.GetSuperList(groupName);
+
+                if (superList.Any())
+                {
+                    SessionExtension.AddSession(HttpContext.Current.Session, SuperListSessionKey, superList);
+                }
+
+                return superList;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                return new List<ExternalSiteSuper>();
             }
         }
     }

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>External Site</title>
-    <link href="../../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
-    <link href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
-    <link href="../../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
-    <link href="../../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-    <link href="../../js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
-    <link href="../../App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
-    <link href="style/AddCustomer.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="../../js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="../../App_Themes/Report/reportgrid.css" />
+    <link rel="stylesheet" type="text/css" href="style/AddCustomer.css" />
 </head>
 <body>
     <div class="main">
@@ -143,39 +143,68 @@
             </tr>
         </table>
     </div>
-    <div id="changePrimaryGroup" class="hidden">
-        <%--<span id="errMsg"></span>--%>
+    <div id="changeGroupDialog" class="hidden">
+        <span id="changeGroupErrorMsg"></span>
         <table>
             <tr>
                 <td>
-                    <div class="w60 c">Username:</div>
+                    <div class="w120">Username:</div>
                 </td>
                 <td>
-                    <div class="w150">
-                        AD
-                    </div>
+                    <span id="spanSuperName"></span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div class="w60 c">Effective Date:</div>
+                    <div class="w120">New Effective Date:</div>
                 </td>
                 <td>
-                    <div class="w150">
-                        AD
-                    </div>
+                    <input type="text" class="txtdate" id="txtEffectiveDate" readonly="readonly" />
                 </td>
             </tr>
         </table>
+        <div id="changeGroupGrid" class="content-warper">
+            <div class="content-header clearfix">
+                <div class="header-scroll">
+                    <table class="tbl-header-scroll">
+                        <tr>
+                            <td style="border-bottom: none 0px;">
+                                <div class="w40 c">#</div>
+                            </td>
+                            <td style="border-bottom: none 0px;">
+                                <div class="w180 c">Group</div>
+                            </td>
+                            <td style="border-bottom: none 0px;">
+                                <div class="w120 c">Is Primary</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="content-body clearfix">
+                <div class="body-scroll">
+                    <table id="changeGroupTable" class="tbl-body-scroll"></table>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix" style="margin-top: 10px; width: 341px">
+            <div style="float: right">
+                <button type="button" class="btn" id="changeGroupSubmit">Submit</button>
+            </div>
+        </div>
     </div>
-    <script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
-    <script src="../../js/jQuery/gridscroller.js" type="text/javascript"></script>
-    <script src="../../js/jQuery/jquery.json-2.2.min.js" type="text/javascript"></script>
-    <script src="../../js/common.js" type="text/javascript"></script>
-    <script src="../../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
-    <script src="../../js/showhidepopup.js" type="text/javascript"></script>
-    <script src="../../js/Common/ArrayUtils.js" type="text/javascript"></script>
-    <script src="js/ExternalSite.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var today = "<%=DateTime.Today.ToString("MM/dd/yyyy")%>";
+        var tomorrow = "<%=DateTime.Today.AddDays(1).ToString("MM/dd/yyyy")%>";
+    </script>
+    <script type="text/javascript" src="../../js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/gridscroller.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/jquery.json-2.2.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/Pager/jpager.js"></script>
+    <script type="text/javascript" src="../../js/showhidepopup.js"></script>
+    <script type="text/javascript" src="../../js/Common/ArrayUtils.js"></script>
+    <script type="text/javascript" src="js/ExternalSite.js"></script>
 </body>
 </html>
