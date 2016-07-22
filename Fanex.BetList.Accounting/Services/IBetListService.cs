@@ -7,24 +7,23 @@
 //   <change who="Ricky.Nguyen" date="2012.12.10">Created</change>
 // </history>
 
+using System;
+using System.Collections.Generic;
+using Fanex.BetList.Accounting.Criteria;
+using Fanex.BetList.Accounting.Models;
+
 namespace Fanex.BetList.Accounting.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using Fanex.BetList.Accounting.Criteria;
-    using Fanex.BetList.Accounting.Models;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface IBetListService
     {
         BetListDetail GetWinLossMemberBetList(WinLossMemberBetListCriteria winLossMemberBetListCriteria);
         
         IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
 
-        IList<TicketDetail> GetBetListByRefNoTickets(BetListByRefNoCriteria betListByRefNoCriteria);
+        IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria);
 
+        IList<TicketDetail> GetBetListByProduct(BetListByProductCriteria betListByProductCriteria);
+        
         IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria betTypebyDateCriteria);
 
         IList<TicketDetail> GetBetListByCustInfo_DateRange(

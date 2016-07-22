@@ -7,79 +7,182 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+
+    <style type="text/css">
+        .filterContent table {
+            line-height: 20px;
+        }
+
+            .filterContent table td {
+                text-align: right;
+            }
+
+        .filterContent .label {
+            font-weight: bold;
+        }
+
+        .filterContent .info-msg {
+            font-weight: bold;
+            color: #979797;
+        }
+
+        .filterContent input[type="text"], .filterContent select {
+            box-sizing: border-box;
+            width: 100% !important;
+            height: 18px;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .search-by-ref input[type='text']:disabled, .search-by-product input[type="text"]:disabled, .search-by-product select:disabled {
+            background-color: #D9D9D9;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
-        <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
-            <tr>
-                <td>
-                    <div id="divMainHeader" class="">
-                        <div id="left_tab1">
-                            <ul>
-                                <li class="lefticon"></li>
-                                <li class="current"><span>Bet List</span></li>
-                            </ul>
+        <div id="divMainHeader" class="">
+            <div id="left_tab1">
+                <ul>
+                    <li class="lefticon"></li>
+                    <li class="current"><span>Bet List</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="maincontent">
+            <div class="filterBox">
+                <div id="bet-list-ref-no" class="filterContent">
+                    <table>
+                        <colgroup>
+                            @* Im not able to set min-width!!! https://bugs.chromium.org/p/chromium/issues/detail?id=50169 *@ 
+                            <col style="width: 20px">
+                            <col style="width: 100px;">
+                            <col style="width: 120px">
+                            <col style="width: 90px">
+                            <col style="width: 120px">
+                            <col style="width: 120px">
+                            <col style="width: 120px">
+                            <col style="width: 60px">
+                            <col style="width: 120px">
+                        </colgroup>
+
+                        <tr class="search-by-ref">
+                            <td>
+                                <input type="radio" id="rdByRef" name="search-type" value="1" checked />
+                            </td>
+                            <td class="text-left">
+                                <label class="label" for="rdByRef">By Ref No</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtRefNo" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="text-left" colspan="8">
+                                <div id="ref-no-info-msg" class="info-msg"> Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.</div>
+                            </td>
+                        </tr>
+
+                        <tr class="search-by-product">
+                            <td>
+                                <input type="radio" id="rdByProduct" name="search-type" value="2" />
+                            </td>
+                            <td style="min-width: 100px">
+                                <label class="label" for="rdByProduct">Advance: Product </label>
+                            </td>
+                            <td>
+                                <select id="selProduct">
+                                    <option value="-1"> Please select...</option>
+                                    <option value="12">Gold Deluxe</option>
+                                    <option value="22">Macau Games</option>
+                                </select>
+                            </td>
+                            <td style="min-width: 65px">
+                                <label class="label">PlayerID</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtPlayerId" />
+                            </td>
+                            <td style="min-width: 95px">
+                                <label class="label">Username</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtUsername" />
+                            </td>
+                        </tr>
+                        <tr class="search-by-product">
+                            <td></td>
+                            <td>
+                                <label class="label">GameID (3rd)</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtGameId" />
+                            </td>
+                            <td>
+                                <label class="label">BetID (3rd)</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtBetId" />
+                            </td>
+                            <td>
+                                <label class="label">Event Date From </label>
+                            </td>
+                            <td>
+                                <input id="txtfromdate" class="txtdate" type="text" data-balance-up-day="@ViewBag.BalanceUpDay" />
+                            </td>
+                            <td>
+                                <label class="label">To</label>
+                            </td>
+                            <td>
+                                <input id="txttodate" class="txtdate" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-left">
+                                <input class="btn" type="button" id="btnReport" value="Submit" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div id="errMsg" style="display: none">
+                        <div class="alertboxerr">
+                            <div class="msg"></div>
                         </div>
                     </div>
-                    <div class="maincontent" style="">
-                        <div class="filterBox">
-                            <div class="filterContent">
-                                <div id="filter" style="border: none !important; width: 100%;">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <span style="width: 50px; font-weight: bold; text-align: right;">Ref No</span></div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <input id="txtRefNo" maxlength="19" type="text" style="background-color: #fff; width: 100px;"
-                                                            autocomplete="off" />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin-left: 5px;">
-                                                        <input class="btn" type="button" id="btnReport" value="Submit" onclick="BetList.GetBetListByRefNo()" />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="err" style="display: none">
-                                    </div>
-                                </div>
-                                <div class="b" style="color: #6E6E6E;">
-                                    Note: Casino/Bingo/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Cockfighting/AllBet/Macau Games tickets are not supported to view on this bet list.</div>
-                            </div>
-                        </div>
-                        <div id="betListContent" style="margin-top: 10px;">
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="betListContent" style="margin-top: 10px;">
+        </div>
     </div>
+
     <div id="Popup" style="display: none">
     </div>
     <script type="text/javascript">
-    window.rootUrl = '@Url.Content("~")';
-  var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
- 
-    head.js("@Url.Content("~/js/jQuery/jquery.js")",
-            "@Url.Content("~/js/json2.js")", 
-            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
-            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
-            "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
-            "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
-            "@Url.Content("~/js/BlockUI.js")", 
-            "@Url.Content("~/js/dialogbox.js")",
-            "@Url.Content("~/js/common.js")", 
-            "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",            
-            "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js")",
-            "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js")",
-            "@Url.Content("~/Views/BetList/BetListByRefNo/Scripts/BetListByRefNo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
+        window.rootUrl = '@Url.Content("~")';
+
+        head.js("@Url.Content("~/js/jQuery/jquery.js")",
+                "@Url.Content("~/js/json2.js")",
+                "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+                "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+                "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
+                "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
+                "@Url.Content("~/js/BlockUI.js")",
+                "@Url.Content("~/js/dialogbox.js")",
+                "@Url.Content("~/js/common.js")",
+                "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js")",
+                "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js")",
+                "@Url.Content("~/Views/BetList/BetListByRefNo/Scripts/BetListByRefNo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
     </script>
 </body>
 </html>

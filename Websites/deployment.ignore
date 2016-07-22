@@ -8,4 +8,5 @@
 \\*.txt
 \\LogCS\\*
 \\RobotDetection\\*
-\\TrapLogs\\*\\IbcKeys\\*
+\\TrapLogs\\*
+\\IbcKeys\\*
