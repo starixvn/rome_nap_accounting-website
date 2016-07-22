@@ -1,4 +1,5 @@
-﻿
+﻿@model Fanex.Tarus.Admin.Entities.SMAManagement.FilterGroup
+
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
@@ -20,7 +21,7 @@
     </div>
     
     <div class="maincontent">
-        <div class="filterBox" style="width: 712px;">
+        <div class="filterBox" style="width: 1022px;">
             <div class="filterContent">
                 <div>
                     <table>
@@ -36,9 +37,7 @@
                                 <b>Currency</b>
                             </td>
                             <td style="width: 100px">
-                                <select id="ddlCurrency" style="width: 100px">
-                                    <option value="0">All</option>
-                                </select>
+                                @Html.DropDownList("ddlCurrency", Model.Currencies, new { style = "width:100px" })
                             </td>
                             <td>
                                 <b>Status</b>
@@ -48,7 +47,14 @@
                                 </div>
                             </td>
                             <td>
-                                &nbsp;
+                                <b>Headline Type</b>
+                            </td>
+                            <td style="width: 100px">
+                                @Html.DropDownList("ddlHeadlineType", Model.HeadlineTypes, new { style = "width:100px" })
+                            </td>
+                            <td>
+                                <input type="checkbox" id="chkExcludeTestAccounts" checked="checked"/>
+                                <label for="chkExcludeTestAccounts">Exclude Test Accounts</label>
                             </td>
                         </tr>
                         <tr>
@@ -62,23 +68,23 @@
                                 <b>Group Headline</b>
                             </td>
                             <td>
-                                <input type="text" id="txtGroupHeadline" value="None" style="width: 100px" />
+                                <input type="text" id="txtGroupHeadline" value="All" style="width: 100px" />
+                            </td>
+                            <td>
+                                <b>Owner Username</b>
+                            </td>
+                            <td>
+                                <input type="text" id="txtOwner" value="All" style="width: 100px" />
                             </td>
                             <td>
                                 <b>Position</b>
                             </td>
                             <td style="width: 100px">
-                                <select id="ddlPosition" style="width: 100px">
-                                    <option value="0">All</option>
-                                    <option value="4">Super</option>
-                                    <option value="3">Master</option>
-                                    <option value="2">Agent</option>
-                                    <option value="1">Member</option>
-                                </select>
+                                @Html.DropDownList("ddlPosition", Model.Positions, new { style = "width:100px" })
                             </td>
                             <td>
                                 <input type="button" class="btn" id="btnSubmit" value="Submit" />
-                                <input type="button" class="btnExcel hidden" id="btnExportExcel" value=" " />
+                                <input type="button" class="btnExcel hidden" id="btnExportExcel" value="" />
                             </td>
                         </tr>
                     </table>
@@ -102,6 +108,14 @@
                                         Group Headline</div>
                                 </th>
                                 <th>
+                                    <div class="table-cell" style="width: 150px; height: 35px">
+                                        Headline Type</div>
+                                </th>
+                                <th>
+                                    <div class="table-cell sorter" style="width: 150px; height: 35px" id="divSortingByOwner">
+                                        Owner</div>
+                                </th>
+                                <th>
                                     <div class="table-cell sorter" style="width: 120px; height: 35px" id="divSortingByUsername">
                                         Username</div>
                                 </th>
@@ -116,6 +130,14 @@
                                 <tr>
                                     <th>
                                         <div class="table-cell" style="width: 30px; height: 35px">
+                                            &nbsp;</div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                            &nbsp;</div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
                                             &nbsp;</div>
                                     </th>
                                     <th>
@@ -145,6 +167,14 @@
                                     <th>
                                         <div class="table-cell" style="width: 150px; height: 35px">
                                             Group Headline</div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                            Headline Type</div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                            Owner</div>
                                     </th>
                                     <th>
                                         <div class="table-cell" style="width: 120px; height: 35px">
@@ -185,6 +215,14 @@
                                             &nbsp;</div>
                                     </th>
                                     <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                            &nbsp;</div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                            &nbsp;</div>
+                                    </th>
+                                    <th>
                                         <div class="table-cell" style="width: 120px; height: 35px">
                                             &nbsp;</div>
                                     </th>
@@ -218,7 +256,11 @@
 <iframe id="frameExportExcel" style="display: none"></iframe>
 <script type="text/javascript">
     window.rootUrl = '@Url.Content("~")';
-    var linkExportExcel = '@Url.Action("ExportSMAListToExcelFile", "SMAManagement")';
+    var linkExportExcel = '@Url.Action("ExportSMAGroupHeadlinesToExcel", "SMAManagement")';
+    var hostPermission = @Json.Encode(ViewData["HasHostPermission"]);
+    var jsonSites = @Html.Raw(Json.Encode(Model.Sites));
+    var jsonStatuses = @Html.Raw(Json.Encode(Model.Statuses));
+    var jsonHeadlineTypes = @Html.Raw(Json.Encode(Model.HeadlineTypes));
 </script>
 
 <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
