@@ -97,16 +97,18 @@ namespace Sunplus.Accounting.Business.Admin
             }
         }
 
-        public ExternalSiteSuper GetSuper(string groupName, string username)
+        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
         {
-            var superList = (IEnumerable<ExternalSiteSuper>)SessionExtension.GetSession(HttpContext.Current.Session, SuperListSessionKey);
-
-            if (superList == null)
+            try
             {
-                superList = GetSuperList(groupName, username);
+                return _custGroupDAO.GetExtraPTGroups(custId);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            return superList.FirstOrDefault(s => s.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+            return new List<ExternalSiteExtraPTGroup>();
         }
 
         private IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username)

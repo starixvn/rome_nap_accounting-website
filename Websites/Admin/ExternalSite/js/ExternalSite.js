@@ -40,8 +40,14 @@
             url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddSuperToGroup",
             contentType: "application/json; charset=utf-8",
             data: $.toJSON({ groupName: groupName, username: superName }),
+            beforeSend: function () {
+                try { parent.BlockUI(); } catch (e) { }
+            },
             success: function (data) {
                 successCallback(data);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
     };
@@ -58,20 +64,86 @@
         });
     };
 
-    self.changePrimaryGroup = function (params, successCallback) {
+    self.getExtraPTGroups = function (custId, successCallback) {
         $.ajax({
             type: "POST",
-            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/ChangePrimaryGroup",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetExtraPTGroups",
             contentType: "application/json; charset=utf-8",
-            data: $.toJSON(params),
+            data: $.toJSON({ custId: custId }),
+            beforeSend: function () {
+                try { parent.BlockUI(); } catch (e) { }
+            },
             success: function (data) {
                 successCallback(data);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
     };
 
     return self;
 }(jQuery));
+
+var addSuperService = (function ($, ajaxService) {
+    "use strict";
+    var self = {};
+
+    var $addSuperDialog = $("#addSuperToGroupDialog").dialog({
+            title: "Add Existing Super",
+            autoOpen: false,
+            height: 100,
+            width: 350,
+            modal: true,
+            open: function (event, ui) {
+                $errMsg.empty();
+                $superName.val("");
+            }
+        }),
+        $errMsg = $("#errMsg"),
+        $superName = $("#txtSuper");
+
+    function showDialog() {
+        $addSuperDialog.removeClass("hidden").dialog("open");
+    }
+
+    function hideDialog() {
+        $addSuperDialog.addClass("hidden").dialog("close");
+    }
+
+    function addSuperToGroup(groupName, reloadSuperListHandler) {
+        var superName = $.trim($superName.val());
+
+        if (superName.length === 0) {
+            showAlertMessage("errMsg", "Please input username!", 1);
+            return;
+        }
+
+        var addSuper = function (result) {
+            if (result.ErrorCode === 0) {
+                showAlertMessage("errMsg", "Added Successfully!", 0);
+
+                setTimeout(hideDialog, 2000);
+                setTimeout(reloadSuperListHandler, 3000);
+            }
+            else {
+                showAlertMessage("errMsg", result.ErrorMessage, 1);
+            }
+        };
+
+        ajaxService.addSuperToGroup(groupName, superName, addSuper);
+    }
+
+    self.initialize = function (groupSelect, reloadSuperListHandler) {
+        $(".btnAdd").click(showDialog);
+
+        $("#addSuperToGroup").click(function () {
+            addSuperToGroup(groupSelect.val(), reloadSuperListHandler);
+        });
+    };
+
+    return self;
+}(jQuery, ajaxService));
 
 var changeGroupService = (function ($, ajaxService) {
     "use strict";
@@ -84,13 +156,10 @@ var changeGroupService = (function ($, ajaxService) {
             width: 360,
             modal: true,
             open: function (event, ui) {
-                //$("#txtEffectiveDate").click(function () {
-                //    $(this).datepicker("show");
-                //});
-                //$effectiveDate.datepicker("hide");
+                $effectiveDate.datepicker("enable");
             },
             close: function (event, ui) {
-                //$(ui).find("#txtEffectiveDate").datepicker("destroy");
+                $effectiveDate.datepicker("disable");
             }
         });
 
@@ -101,7 +170,27 @@ var changeGroupService = (function ($, ajaxService) {
     var $grid = $("#changeGroupGrid"),
         $table = $("#changeGroupTable");
 
-    var currentPrimaryGroup;
+    var superId, currentPrimaryGroup, currentEffectiveDate;
+
+    function formatDate(jsonDate) {
+        var jsDate = new Date(parseInt(jsonDate.substr(6)));
+
+        var paddingZero = function (number) {
+            if (number < 9) {
+                return "0" + number;
+            }
+
+            return number;
+        };
+
+        var arrayString = [
+            paddingZero(jsDate.getMonth() + 1),
+            paddingZero(jsDate.getDate()),
+            jsDate.getFullYear()
+        ];
+
+        return arrayString.join("/");
+    }
 
     function assignGridBodyRows(extraPTGroups) {
         var html = [
@@ -112,24 +201,31 @@ var changeGroupService = (function ($, ajaxService) {
             "</tr>"
         ];
 
+        currentPrimaryGroup = "";
+        currentEffectiveDate = "";
+
         $.each(extraPTGroups, function (index, group) {
+            var isPrimary = group.EffectiveDate;
+
             html.push("<tr>");
             html.push('<td><div class="w40 c">');
             html.push(index + 2);
             html.push("</div></td>");
             html.push('<td><div class="w180');
 
-            if (group.IsPrimary) {
-                currentPrimaryGroup = group;
+            if (isPrimary) {
+                currentPrimaryGroup = group.GroupName;
+                currentEffectiveDate = formatDate(group.EffectiveDate);
+
                 html.push(' b');
             }
 
             html.push('">');
             html.push(group.GroupName);
 
-            if (group.EffectiveDate) {
+            if (isPrimary) {
                 html.push(" (");
-                html.push(group.EffectiveDate);
+                html.push(currentEffectiveDate);
                 html.push(")");
             }
 
@@ -139,7 +235,7 @@ var changeGroupService = (function ($, ajaxService) {
             html.push(group.GroupName);
             html.push('"');
 
-            if (group.IsPrimary) {
+            if (isPrimary) {
                 html.push(' checked="checked"');
             }
 
@@ -152,19 +248,21 @@ var changeGroupService = (function ($, ajaxService) {
     }
 
     function changePrimaryGroup() {
+        $changeGroupErrorMsg.empty();
+
         var newPrimaryGroup = $table.find('input[name=isPrimary]:checked').val();
 
-        if (newPrimaryGroup === currentPrimaryGroup.GroupName) {
+        if (newPrimaryGroup === currentPrimaryGroup) {
             showAlertMessage(
                 "changeGroupErrorMsg",
-                "The group " + currentPrimaryGroup.GroupName + " has already been the primary group since " + currentPrimaryGroup.EffectiveDate + ".", 1);
+                "The group " + currentPrimaryGroup + " has already been the primary group since " + currentEffectiveDate + ".", 1);
             return;
         }
 
         var newEffectiveDate = $effectiveDate.val();
 
         if (newEffectiveDate === today) {
-            var sayYes = confirm("Changing the Primary Extra PT group which take effect from today might have impact on the reset amounts in the Reset Winning report.\nAre you sure you want to change?");
+            var sayYes = confirm("Changing the Primary Extra PT group which take effect from today might have impact on the reset amounts\nin the Reset Winning report. Are you sure you want to change?");
 
             if (!sayYes) {
                 return;
@@ -172,7 +270,7 @@ var changeGroupService = (function ($, ajaxService) {
         }
 
         var params = {
-            username: $spanSuperName.html(),
+            custId: superId,
             primaryGroup: newPrimaryGroup,
             effectiveDate: newEffectiveDate
         };
@@ -189,26 +287,32 @@ var changeGroupService = (function ($, ajaxService) {
             minDate: new Date(today)
         };
 
-        $effectiveDate = $("#txtEffectiveDate").datepicker(dateOption);
+        $effectiveDate = $("#txtEffectiveDate")
+            .datepicker(dateOption)
+            .datepicker("disable");
 
         $("#changeGroupSubmit").click(changePrimaryGroup);
     };
 
-    self.showDialog = function (superName, effectiveDate, extraPTGroups) {
+    self.showDialog = function (custId, superName, effectiveDate) {
         $changeGroupErrorMsg.empty();
         $spanSuperName.html(superName);
         $effectiveDate.datepicker("setDate", effectiveDate);
-        assignGridBodyRows(extraPTGroups);
-        
-        $changeGroupDialog.removeClass("hidden").dialog("open");
+        superId = custId;
 
-        $grid.reRenderScroller(320, 184, true);
+        ajaxService.getExtraPTGroups(superId, function (data) {
+            assignGridBodyRows(data);
+
+            $changeGroupDialog.removeClass("hidden").dialog("open");
+
+            $grid.reRenderScroller(320, 184, true);
+        });
     };
 
     return self;
 }(jQuery, ajaxService));
 
-(function ($, ajaxService, changeGroupService) {
+(function ($, ajaxService, addSuperService, changeGroupService) {
     "use strict";
 
     var $trMsg = $("#trMsg"),
@@ -225,56 +329,6 @@ var changeGroupService = (function ($, ajaxService) {
         gridOnlyOneRow = false;
 
     var _pageSize = 50;
-
-    var $addSuperToGroupDialog = $("#addSuperToGroupDialog").dialog({
-            title: "Add Existing Super",
-            autoOpen: false,
-            height: 100,
-            width: 350,
-            modal: true
-        }),
-        $errMsg = $("#errMsg"),
-        $superName = $("#txtSuper");
-
-    function showAddSuperToGroupDialog() {
-        $errMsg.addClass("hidden");
-        $superName.val("");
-        $addSuperToGroupDialog.removeClass("hidden").dialog("open");
-    }
-
-    function hideAddSuperToGroupDialog() {
-        $addSuperToGroupDialog.addClass("hidden").dialog("close");
-    }
-
-    function addSuperToGroup() {
-        var superName = $.trim($superName.val());
-
-        if (superName.length === 0) {
-            $errMsg.removeClass("hidden");
-            showAlertMessage("errMsg", "Please input username!", 1);
-            return;
-        }
-
-        var addSuper = function (result) {
-            if (result.ErrorCode === 0) {
-                showAlertMessage("errMsg", "Added Successfully!", 0);
-
-                setTimeout(hideAddSuperToGroupDialog, 2000);
-                setTimeout(function () {
-                    formData.fromcache = false;
-                    formData.pageIndex = 1;
-                    getSuperList(formData);
-                }, 3000);
-            }
-            else {
-                showAlertMessage("errMsg", result.ErrorMessage, 1);
-            }
-
-            $errMsg.removeClass("hidden");
-        };
-
-        ajaxService.addSuperToGroup(formData.groupName, superName, addSuper);
-    }
 
     function removeSuperFromGroup(custId) {
         $trMsg.addClass("hidden");
@@ -333,7 +387,7 @@ var changeGroupService = (function ($, ajaxService) {
         };
     }
 
-    function renderExtraPTGroup(extraPTGroup) {
+    function renderExtraPTGroupRow(custId, username, extraPTGroup) {
         if (!extraPTGroup || extraPTGroup.length === 0) {
             return "";
         }
@@ -360,7 +414,16 @@ var changeGroupService = (function ($, ajaxService) {
             }
         });
 
-        return html.join(", ") + '<img class="changeGroup" style="cursor: pointer; float: right" src="../../App_Themes/Images/icn_edit.png" title="Change Primary Group" />';
+        var imgHtml = [
+            '<img class="changeGroup" title="Change Primary Group" ',
+            'src="../../App_Themes/Images/icn_edit.png" data-custid="',
+            custId,
+            '" data-username="',
+            username,
+            '" />'
+        ];
+
+        return html.join(", ") + imgHtml.join("");
     }
 
     function renderBodyRows(index, row) {
@@ -378,10 +441,10 @@ var changeGroupService = (function ($, ajaxService) {
             row.LastName,
             "</div></td>",
             '<td><div class="w160">',
-            row.NormalGroup.replace(";", ", "),
+            row.NormalGroup.replace(/;/g, ", "),
             "</div></td>",
             '<td><div class="w160">',
-            renderExtraPTGroup(row.ExtraPTGroup),
+            renderExtraPTGroupRow(row.CustId, row.UserName, row.ExtraPTGroup),
             "</div></td>",
             '<td><div class="w120 c">',
             row.IPLogin,
@@ -444,15 +507,8 @@ var changeGroupService = (function ($, ajaxService) {
                 $(".changeGroup")
                     .unbind("click")
                     .bind("click", function () {
-                        var extraPTGroups = [
-                            { GroupName: "ACCIMBC" },
-                            { GroupName: "ACCINDO" },
-                            { GroupName: "ACCIRR" },
-                            { GroupName: "ACCNTD" },
-                            { GroupName: "ACCTHAI", IsPrimary: true, EffectiveDate: "05/19/2016" }
-                        ];
-
-                        changeGroupService.showDialog("ITVNSuperTestLCS3", tomorrow, extraPTGroups);
+                        var $this = $(this);
+                        changeGroupService.showDialog($this.attr("data-custid"), $this.attr("data-username"), tomorrow);
                     });
 
                 $(".removeSuper")
@@ -498,12 +554,16 @@ var changeGroupService = (function ($, ajaxService) {
             getSuperList(formData);
         });
 
-        $(".btnAdd").click(showAddSuperToGroupDialog);
-
-        $("#addSuperToGroup").click(addSuperToGroup);
+        addSuperService.initialize(
+            $groupName,
+            function () {
+                formData.fromcache = false;
+                formData.pageIndex = 1;
+                getSuperList(formData);
+            });
 
         changeGroupService.initialize(today);
     }
 
     initialize();
-})(jQuery, ajaxService, changeGroupService);
+})(jQuery, ajaxService, addSuperService, changeGroupService);

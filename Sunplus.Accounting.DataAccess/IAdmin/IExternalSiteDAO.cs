@@ -13,5 +13,7 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
         Result AddSuperToGroup(string username, string groupName, int userId);
 
         Result RemoveSuperFromGroup(int custId, int userId);
+
+        IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
     }
 }

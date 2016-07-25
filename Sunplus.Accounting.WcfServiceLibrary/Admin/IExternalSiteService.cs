@@ -3,7 +3,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
-using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 {
@@ -25,5 +24,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result RemoveSuperFromGroup(int custId);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
     }
 }

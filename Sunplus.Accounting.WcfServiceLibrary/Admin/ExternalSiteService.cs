@@ -6,7 +6,6 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
-using Sunplus.Accounting.Entities.Customer;
 using System.Collections.Generic;
 using System.ServiceModel.Activation;
 
@@ -15,25 +14,26 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExternalSiteService : IExternalSiteService
     {
+        private readonly IExternalSite _externalSiteService;
+
+        public ExternalSiteService()
+        {
+            _externalSiteService = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
+        }
+
         public IEnumerable<string> GetGroupNames()
         {
-            var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-
-            return external.GetGroupNames();
+            return _externalSiteService.GetGroupNames();
         }
 
         public ExternalSiteGridBO GetSuperList(string groupName, string username, bool fromcache, int pageIndex, int pageSize)
         {
-            var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-
-            return external.GetSuperList(groupName, username, fromcache, pageIndex, pageSize);
+            return _externalSiteService.GetSuperList(groupName, username, fromcache, pageIndex, pageSize);
         }
 
         public Result AddSuperToGroup(string username, string groupName)
         {
-            var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
-
-            return external.AddSuperToGroup(username, groupName);
+            return _externalSiteService.AddSuperToGroup(username, groupName);
         }
 
         public Result RemoveSuperFromGroup(int custId)
@@ -71,6 +71,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
             var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
 
             return external.RemoveSuperFromGroup(custId);
+        }
+
+        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
+        {
+            return _externalSiteService.GetExtraPTGroups(custId);
         }
     }
 }

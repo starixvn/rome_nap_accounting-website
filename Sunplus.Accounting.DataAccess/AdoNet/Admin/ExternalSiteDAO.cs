@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
         {
             IList<string> groups = new List<string>(16);
 
-            using (ObjectDb db = new ObjectDb("SelectGroupName", 600))
+            using (ObjectDb db = new ObjectDb("SelectGroupName"))
             {
                 using (var reader = db.ExecuteReader())
                 {
@@ -35,7 +35,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
                 { "groupname", groupName }
             };
                 param.Add("userid", AppSession.AccId);
-            using (ObjectDb db = new ObjectDb("SelectInfoCust", 600))
+            using (ObjectDb db = new ObjectDb("SelectInfoCust"))
             {
                 return db.Query<ExternalSiteSuper>(param);
             }
@@ -50,7 +50,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
                 { "groupname", groupName }
             };
 
-            using (ObjectDb db = new ObjectDb("AddExistCustomer", 600))
+            using (ObjectDb db = new ObjectDb("AddExistCustomer"))
             {
                 db.AssignParamValues(inputParams);
                 db.ExecuteNonQuery();
@@ -67,12 +67,25 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
                 { "userid", userId }
             };
 
-            using (ObjectDb db = new ObjectDb("DeleteCustomer", 600))
+            using (ObjectDb db = new ObjectDb("DeleteCustomer"))
             {
                 db.AssignParamValues(param);
                 db.ExecuteNonQuery();
 
                 return GetResultFromOutputHash(db.GetOuputParams());
+            }
+        }
+
+        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
+        {
+            var param = new Hashtable
+            {
+                { "custid", custId }
+            };
+
+            using (ObjectDb db = new ObjectDb("Acc_CustGroupSelExtraPTGroupByCustID"))
+            {
+                return db.Query<ExternalSiteExtraPTGroup>(param);
             }
         }
 

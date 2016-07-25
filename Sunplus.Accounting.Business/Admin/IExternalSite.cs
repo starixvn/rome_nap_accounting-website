@@ -14,6 +14,6 @@ namespace Sunplus.Accounting.Business.Admin
 
         Result RemoveSuperFromGroup(int custId);
 
-        ExternalSiteSuper GetSuper(string groupName, string username);
+        IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
     }
 }

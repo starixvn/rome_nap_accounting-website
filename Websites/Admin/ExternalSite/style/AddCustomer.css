@@ -98,6 +98,11 @@ span#search input.text {
     height: 21px;
 }
 
+.changeGroup {
+    cursor: pointer;
+    float: right;
+}
+
 .noExtraPT {
     color: #666;
     font-style: italic;
