@@ -77,5 +77,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
         {
             return _externalSiteService.GetExtraPTGroups(custId);
         }
+
+        public Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate)
+        {
+            return _externalSiteService.ChangePrimaryGroup(custId, groupName, effectiveDate);
+        }
     }
 }

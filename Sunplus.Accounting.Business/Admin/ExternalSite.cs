@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using Sunplus.Accounting.Core.Common;
@@ -109,6 +110,25 @@ namespace Sunplus.Accounting.Business.Admin
             }
 
             return new List<ExternalSiteExtraPTGroup>();
+        }
+
+        public Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate)
+        {
+            DateTime newEffectiveDate;
+
+            try
+            {
+                if (DateTime.TryParse(effectiveDate, out newEffectiveDate))
+                {
+                    return _custGroupDAO.ChangePrimaryGroup(custId, groupName, newEffectiveDate, AppSession.AccId);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return new Result(1, "Internal server error!");
         }
 
         private IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, string username)

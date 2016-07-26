@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -28,5 +29,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate);
     }
 }

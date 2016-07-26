@@ -98,9 +98,20 @@ span#search input.text {
     height: 21px;
 }
 
-.changeGroup {
+.extra-pt-group {
+    display: table;
+    width: 160px;
+}
+
+.extra-pt-group-text {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.extra-pt-group-img {
     cursor: pointer;
-    float: right;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .noExtraPT {

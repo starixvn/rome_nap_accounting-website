@@ -82,6 +82,24 @@
         });
     };
 
+    self.changePrimaryGroup = function (custId, groupName, effectiveDate, successCallback) {
+        $.ajax({
+            type: "POST",
+            url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/ChangePrimaryGroup",
+            contentType: "application/json; charset=utf-8",
+            data: $.toJSON({ custId: custId, groupName: groupName, effectiveDate: effectiveDate }),
+            beforeSend: function () {
+                try { parent.BlockUI(); } catch (e) { }
+            },
+            success: function (data) {
+                successCallback(data);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    };
+
     return self;
 }(jQuery));
 
@@ -193,25 +211,23 @@ var changeGroupService = (function ($, ajaxService) {
     }
 
     function assignGridBodyRows(extraPTGroups) {
-        var html = [
-            "<tr>",
-            '<td><div class="w40 c">1</div></td>',
-            '<td><div class="w180 noExtraPT">No Extra PT</div></td>',
-            '<td><div class="w120 c"><input type="radio" name="isPrimary" value=""></div></td>',
-            "</tr>"
-        ];
-
         currentPrimaryGroup = "";
         currentEffectiveDate = "";
+        var html = [];
 
         $.each(extraPTGroups, function (index, group) {
+            var isNoExtraPT = group.GroupName === "No Extra PT";
             var isPrimary = group.EffectiveDate;
 
             html.push("<tr>");
             html.push('<td><div class="w40 c">');
-            html.push(index + 2);
+            html.push(index + 1);
             html.push("</div></td>");
             html.push('<td><div class="w180');
+
+            if (isNoExtraPT) {
+                html.push(' noExtraPT');
+            }
 
             if (isPrimary) {
                 currentPrimaryGroup = group.GroupName;
@@ -247,7 +263,7 @@ var changeGroupService = (function ($, ajaxService) {
         $table.html(html.join(""));
     }
 
-    function changePrimaryGroup() {
+    function changePrimaryGroup(reloadSuperListHandler) {
         $changeGroupErrorMsg.empty();
 
         var newPrimaryGroup = $table.find('input[name=isPrimary]:checked').val();
@@ -269,18 +285,13 @@ var changeGroupService = (function ($, ajaxService) {
             }
         }
 
-        var params = {
-            custId: superId,
-            primaryGroup: newPrimaryGroup,
-            effectiveDate: newEffectiveDate
-        };
-
-        ajaxService.changePrimaryGroup(params, function () {
+        ajaxService.changePrimaryGroup(superId, newPrimaryGroup, newEffectiveDate, function () {
+            setTimeout(reloadSuperListHandler, 1000);
             $changeGroupDialog.addClass("hidden").dialog("close");
         });
     }
 
-    self.initialize = function (today) {
+    self.initialize = function (today, reloadSuperListHandler) {
         var dateOption = {
             showOtherMonths: true,
             selectOtherMonths: true,
@@ -291,7 +302,9 @@ var changeGroupService = (function ($, ajaxService) {
             .datepicker(dateOption)
             .datepicker("disable");
 
-        $("#changeGroupSubmit").click(changePrimaryGroup);
+        $("#changeGroupSubmit").click(function () {
+            changePrimaryGroup(reloadSuperListHandler);
+        });
     };
 
     self.showDialog = function (custId, superName, effectiveDate) {
@@ -415,15 +428,14 @@ var changeGroupService = (function ($, ajaxService) {
         });
 
         var imgHtml = [
-            '<img class="changeGroup" title="Change Primary Group" ',
-            'src="../../App_Themes/Images/icn_edit.png" data-custid="',
+            '<div class="extra-pt-group-img" data-custid="',
             custId,
             '" data-username="',
             username,
-            '" />'
+            '"><img title="Change Primary Group" src="../../App_Themes/Images/icn_edit.png" /></div>'
         ];
 
-        return html.join(", ") + imgHtml.join("");
+        return '<div class="extra-pt-group-text">' + html.join(", ") + "</div>" + imgHtml.join("");
     }
 
     function renderBodyRows(index, row) {
@@ -443,7 +455,7 @@ var changeGroupService = (function ($, ajaxService) {
             '<td><div class="w160">',
             row.NormalGroup.replace(/;/g, ", "),
             "</div></td>",
-            '<td><div class="w160">',
+            '<td><div class="extra-pt-group">',
             renderExtraPTGroupRow(row.CustId, row.UserName, row.ExtraPTGroup),
             "</div></td>",
             '<td><div class="w120 c">',
@@ -504,7 +516,7 @@ var changeGroupService = (function ($, ajaxService) {
 
                 initPager(formData.pageSize, formData.pageIndex - 1);
 
-                $(".changeGroup")
+                $(".extra-pt-group-img")
                     .unbind("click")
                     .bind("click", function () {
                         var $this = $(this);
@@ -562,7 +574,12 @@ var changeGroupService = (function ($, ajaxService) {
                 getSuperList(formData);
             });
 
-        changeGroupService.initialize(today);
+        changeGroupService.initialize(
+            today,
+            function () {
+                formData.fromcache = false;
+                getSuperList(formData);
+            });
     }
 
     initialize();

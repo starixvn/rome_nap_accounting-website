@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DNAide.Core;
 using Fanex.Data;
@@ -86,6 +87,25 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             using (ObjectDb db = new ObjectDb("Acc_CustGroupSelExtraPTGroupByCustID"))
             {
                 return db.Query<ExternalSiteExtraPTGroup>(param);
+            }
+        }
+
+        public Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId)
+        {
+            var param = new Hashtable
+            {
+                { "custid", custId },
+                { "groupname", groupName },
+                { "effectivedate", effectiveDate },
+                { "userid", userId }
+            };
+
+            using (ObjectDb db = new ObjectDb("Acc_CustGroupUpdPrimaryExtraPTGroup"))
+            {
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+
+                return GetResultFromOutputHash(db.GetOuputParams());
             }
         }
 

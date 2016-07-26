@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
@@ -15,5 +16,7 @@ namespace Sunplus.Accounting.Business.Admin
         Result RemoveSuperFromGroup(int custId);
 
         IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
+
+        Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate);
     }
 }

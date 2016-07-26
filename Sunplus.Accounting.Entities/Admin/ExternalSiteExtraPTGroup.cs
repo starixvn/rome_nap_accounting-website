@@ -11,6 +11,6 @@ namespace Sunplus.Accounting.Entities.Admin
         public string GroupName { get; set; }
 
         [DataMember]
-        public DateTime EffectiveDate { get; set; }
+        public DateTime? EffectiveDate { get; set; }
     }
 }
