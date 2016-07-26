@@ -234,8 +234,8 @@ $(document).ready(function () {
 });
 
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
-	var title = "System Parlay";
-    showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid);
+    var title = "System Parlay";
+    var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
 
 	if (combinationOfferNameContainer.is("span")) {
 		title += combinationOfferNameContainer.html();

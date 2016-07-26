@@ -51,6 +51,7 @@ namespace Fanex.BetList.Accounting.Controllers
         {
             IList<TicketDetail> result = new List<TicketDetail>();
             BalanceUp balanceUp = ReportService.BalanceUp;
+
             if (BetListHelper.IsNumeric(refno.Trim()))
             {
                 result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
