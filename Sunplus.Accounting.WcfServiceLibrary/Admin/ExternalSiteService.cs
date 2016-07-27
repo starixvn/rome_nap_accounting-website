@@ -36,7 +36,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
             return _externalSiteService.AddSuperToGroup(username, groupName);
         }
 
-        public Result RemoveSuperFromGroup(int custId)
+        public Result RemoveSuperFromGroup(int custId, string groupName)
         {
             Result result = new Result();
             var permissionService = new ServiceBase();

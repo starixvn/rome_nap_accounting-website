@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result RemoveSuperFromGroup(int custId);
+        Result RemoveSuperFromGroup(int custId, string groupName);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

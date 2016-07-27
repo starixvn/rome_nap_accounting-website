@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
@@ -16,18 +16,18 @@ namespace Sunplus.Accounting.Business.Admin
     {
         private const string SuperListSessionKey = "ExternalSite_SessionKey";
 
-        private readonly IExternalSiteDAO _custGroupDAO;
+        private readonly IExternalSiteDAO _externalSiteDAO;
 
-        public ExternalSite(IExternalSiteDAO custGroupDAO)
+        public ExternalSite(IExternalSiteDAO externalSiteDAO)
         {
-            _custGroupDAO = custGroupDAO;
+            _externalSiteDAO = externalSiteDAO;
         }
 
         public IEnumerable<string> GetGroupNames()
         {
             try
             {
-                return _custGroupDAO.GetGroupNames();
+                return _externalSiteDAO.GetGroupNames();
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace Sunplus.Accounting.Business.Admin
 
             try
             {
-                return _custGroupDAO.AddSuperToGroup(username, groupName, AppSession.AccId);
+                return _externalSiteDAO.AddSuperToGroup(username, groupName, AppSession.AccId);
             }
             catch (Exception ex)
             {
@@ -85,11 +85,11 @@ namespace Sunplus.Accounting.Business.Admin
             }
         }
 
-        public Result RemoveSuperFromGroup(int custId)
+        public Result RemoveSuperFromGroup(int custId, string groupName)
         {
             try
             {
-                return _custGroupDAO.RemoveSuperFromGroup(custId, AppSession.AccId);
+                return _externalSiteDAO.RemoveSuperFromGroup(custId, groupName, AppSession.AccId);
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace Sunplus.Accounting.Business.Admin
         {
             try
             {
-                return _custGroupDAO.GetExtraPTGroups(custId);
+                return _externalSiteDAO.GetExtraPTGroups(custId);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace Sunplus.Accounting.Business.Admin
             {
                 if (DateTime.TryParse(effectiveDate, out newEffectiveDate))
                 {
-                    return _custGroupDAO.ChangePrimaryGroup(custId, groupName, newEffectiveDate, AppSession.AccId);
+                    return _externalSiteDAO.ChangePrimaryGroup(custId, groupName, newEffectiveDate, AppSession.AccId, Utils.GetClientIP());
                 }
             }
             catch (Exception ex)
@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.Business.Admin
         {
             try
             {
-                var superList = _custGroupDAO.GetSuperList(groupName);
+                var superList = _externalSiteDAO.GetSuperList(groupName);
 
                 if (superList.Any())
                 {

@@ -13,10 +13,10 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
 
         Result AddSuperToGroup(string username, string groupName, int userId);
 
-        Result RemoveSuperFromGroup(int custId, int userId);
+        Result RemoveSuperFromGroup(int custId, string groupName, int userId);
 
         IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
 
-        Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId);
+        Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId, string ip);
     }
 }

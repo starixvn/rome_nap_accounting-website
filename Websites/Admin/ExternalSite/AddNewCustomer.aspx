@@ -26,9 +26,7 @@
                 </tbody>
             </table>
             <div class="maincontent_box" style="width: 1057px">
-                <div class="hidden" id="trMsg">
-                    <div id="dvMsg"></div>
-                </div>
+                <div id="trMsg"></div>
                 <table>
                     <tr>
                         <td>Username</td>
@@ -48,7 +46,7 @@
                 </table>
             </div>
             <div style="width: 1063px" class="hidden" id="nodata">
-                <div id="err_nodata" class="hidden"></div>
+                <div id="err_nodata"></div>
                 <div class="content-toolbox bgtitle">
                     <div class="btngroup">
                         <input type="button" class="btnAdd" title="Add Existing Super" value="  " />

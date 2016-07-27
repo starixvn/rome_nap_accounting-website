@@ -13,7 +13,7 @@ namespace Sunplus.Accounting.Business.Admin
 
         Result AddSuperToGroup(string username, string groupName);
 
-        Result RemoveSuperFromGroup(int custId);
+        Result RemoveSuperFromGroup(int custId, string groupName);
 
         IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
 

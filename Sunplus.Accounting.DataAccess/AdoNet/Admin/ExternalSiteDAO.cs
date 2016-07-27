@@ -60,7 +60,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             }
         }
 
-        public Result RemoveSuperFromGroup(int custId, int userId)
+        public Result RemoveSuperFromGroup(int custId, string groupName, int userId)
         {
             var param = new Hashtable
             {
@@ -90,14 +90,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             }
         }
 
-        public Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId)
+        public Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId, string ip)
         {
             var param = new Hashtable
             {
                 { "custid", custId },
                 { "groupname", groupName },
                 { "effectivedate", effectiveDate },
-                { "userid", userId }
+                { "userid", userId },
+                { "ip", ip }
             };
 
             using (ObjectDb db = new ObjectDb("Acc_CustGroupUpdPrimaryExtraPTGroup"))

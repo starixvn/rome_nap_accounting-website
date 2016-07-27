@@ -52,12 +52,12 @@
         });
     };
 
-    self.removeSuperFromGroup = function (custId, successCallback) {
+    self.removeSuperFromGroup = function (custId, groupName, successCallback) {
         $.ajax({
             type: "POST",
             url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/RemoveSuperFromGroup",
             contentType: "application/json; charset=utf-8",
-            data: $.toJSON({ custId: custId }),
+            data: $.toJSON({ custId: custId, groupName: groupName }),
             success: function (data) {
                 successCallback(data);
             }
@@ -343,14 +343,14 @@ var changeGroupService = (function ($, ajaxService) {
 
     var _pageSize = 50;
 
-    function removeSuperFromGroup(custId) {
-        $trMsg.addClass("hidden");
+    function removeSuperFromGroup(custId, groupName) {
+        $trMsg.empty();
 
-        var sayYes = confirm("Are you sure you want to remove this super?");
+        var sayYes = confirm("Are you sure you want to remove this super from " + groupName + " group?");
         if (sayYes) {
             var removeSuper = function (rs) {
                 if (rs.ErrorCode === 0) {
-                    showAlertMessage("dvMsg", "Removed Successfully", 0);
+                    showAlertMessage("trMsg", "Removed Successfully", 0);
 
                     setTimeout(function () {
                         if (gridOnlyOneRow) {
@@ -362,13 +362,11 @@ var changeGroupService = (function ($, ajaxService) {
                     }, 2000);
                 }
                 else {
-                    showAlertMessage("dvMsg", rs.ErrorMessage, 1);
+                    showAlertMessage("trMsg", rs.ErrorMessage, 1);
                 }
-
-                $trMsg.removeClass("hidden");
             };
 
-            ajaxService.removeSuperFromGroup(custId, removeSuper);
+            ajaxService.removeSuperFromGroup(custId, groupName, removeSuper);
         }
     }
 
@@ -495,9 +493,9 @@ var changeGroupService = (function ($, ajaxService) {
     }
 
     function getSuperList(params) {
-        $trMsg.addClass("hidden");
+        $trMsg.empty();
         $nodata.addClass("hidden");
-        $errNoData.addClass("hidden");
+        $errNoData.empty();
 
         formData = params || getFormData();
 
@@ -526,7 +524,7 @@ var changeGroupService = (function ($, ajaxService) {
                 $(".removeSuper")
                     .unbind("click")
                     .bind("click", function () {
-                        removeSuperFromGroup($(this).attr("data-custid"));
+                        removeSuperFromGroup($(this).attr("data-custid"), formData.groupName);
                     })
 
                 $grid.removeClass("hidden")
@@ -535,7 +533,6 @@ var changeGroupService = (function ($, ajaxService) {
             else {
                 if (formData.username.length !== 0) {
                     showAlertMessage("err_nodata", "Username does not belong to " + formData.groupName + " group.", 1);
-                    $errNoData.removeClass("hidden");
                 }
 
                 $nodata.removeClass("hidden");
