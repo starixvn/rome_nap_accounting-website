@@ -65,6 +65,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             var param = new Hashtable
             {
                 { "custid", custId },
+                { "groupname", groupName },
                 { "userid", userId }
             };
 

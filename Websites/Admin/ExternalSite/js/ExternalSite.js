@@ -139,7 +139,7 @@ var addSuperService = (function ($, ajaxService) {
 
         var addSuper = function (result) {
             if (result.ErrorCode === 0) {
-                showAlertMessage("errMsg", "Added Successfully!", 0);
+                showAlertMessage("errMsg", "Added Successfully", 0);
 
                 setTimeout(hideDialog, 2000);
                 setTimeout(reloadSuperListHandler, 3000);
@@ -285,10 +285,21 @@ var changeGroupService = (function ($, ajaxService) {
             }
         }
 
-        ajaxService.changePrimaryGroup(superId, newPrimaryGroup, newEffectiveDate, function () {
-            setTimeout(reloadSuperListHandler, 1000);
-            $changeGroupDialog.addClass("hidden").dialog("close");
-        });
+        var changeGroupSuccess = function (result) {
+            if (result.ErrorCode === 0) {
+                showAlertMessage("changeGroupErrorMsg", "Changed Primary Group Successfully", 0);
+
+                setTimeout(function () {
+                    $changeGroupDialog.addClass("hidden").dialog("close");
+                    reloadSuperListHandler();
+                }, 2000);
+            }
+            else {
+                showAlertMessage("changeGroupErrorMsg", result.ErrorMessage, 1);
+            }
+        };
+
+        ajaxService.changePrimaryGroup(superId, newPrimaryGroup, newEffectiveDate, changeGroupSuccess);
     }
 
     self.initialize = function (today, reloadSuperListHandler) {
