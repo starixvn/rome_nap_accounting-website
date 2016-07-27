@@ -117,7 +117,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
                 Value = s.Id.ToString()
             });
 
-            var currencies = _smaManagementService.GetCurrencies(true).Select(c => new SelectListItem
+            var currencies = _smaManagementService.GetCurrencies(false).Select(c => new SelectListItem
             {
                 Text = c.Name,
                 Value = c.Id.ToString()

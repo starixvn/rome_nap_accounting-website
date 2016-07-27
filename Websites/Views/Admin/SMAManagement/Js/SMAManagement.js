@@ -202,39 +202,6 @@
 		}
 	}
 
-	function getCurrencies(excludeTestCurrencies) {
-		$.ajax({
-			type: "GET",
-			url: window.rootUrl + "SMAManagement/GetCurrencies?excludeTestCurrencies=" + excludeTestCurrencies,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
-			success: function (currencies) {
-			    var oldSelectedCurrency = parseInt(currencyElement.val());
-
-				var currenciesLength = currencies ? currencies.length : 0
-				var htmlOptions = [];
-
-				for (var i = 0; i < currenciesLength; i++) {
-					htmlOptions.push('<option value="');
-					htmlOptions.push(currencies[i].Id);
-					htmlOptions.push('"');
-
-					if (oldSelectedCurrency === currencies[i].Id) {
-						htmlOptions.push(' selected="selected"');
-					}
-
-					htmlOptions.push(">");
-					htmlOptions.push(currencies[i].Name);
-					htmlOptions.push("</option>");
-				}
-
-				currencyElement.html(htmlOptions.join(""));
-			},
-			complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
-		});
-	}
-
 	function getSMAGroupHeadlines() {
 		if (pageIndex === 1) {
 			if ($("#ddlSites").multiSelect("getCheckedItems").length === 0) {
@@ -909,10 +876,6 @@
 
 		gridOptions = initGridOptions();
 		smaMangementGridElement.initGrid(gridOptions);
-
-		excludeTestAccountsElement.click(function (e) {
-			getCurrencies(e.target.checked);
-		});
 
 		$("#btnSubmit").click(function () {
 			pageIndex = 1;
