@@ -210,6 +210,8 @@
 			dataType: "json",
 			beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
 			success: function (currencies) {
+			    var oldSelectedCurrency = parseInt(currencyElement.val());
+
 				var currenciesLength = currencies ? currencies.length : 0
 				var htmlOptions = [];
 
@@ -218,7 +220,7 @@
 					htmlOptions.push(currencies[i].Id);
 					htmlOptions.push('"');
 
-					if (i === 0) {
+					if (oldSelectedCurrency === currencies[i].Id) {
 						htmlOptions.push(' selected="selected"');
 					}
 
