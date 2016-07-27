@@ -172,7 +172,7 @@
 			siteId: getSelectedSites(),
 			currency: currencyElement.val(),
 			isOpen: $("#ddlStatusisOpen").prop("checked"),
-			isSusupended: $("#ddlStatusisSusupended").prop("checked"),
+			isSusupended: $("#ddlStatusSuspended").prop("checked"),
 			isClosed: $("#ddlStatusisClosed").prop("checked"),
 			isDisabled: $("#ddlStatusisDisabled").prop("checked"),
 			roleId: positionElement.val(),
