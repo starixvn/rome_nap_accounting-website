@@ -6,7 +6,6 @@
 \\*.dev.config
 \\*.bkkbt67.config
 \\*.txt
-\\*.log
 \\LogCS\\*
 \\RobotDetection\\*
 \\TrapLogs\\*

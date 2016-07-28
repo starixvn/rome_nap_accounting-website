@@ -1,4 +1,6 @@
-﻿namespace Fanex.BetList.Accounting.Controllers
+﻿using Sunplus.Accounting.Core.Common;
+
+namespace Fanex.BetList.Accounting.Controllers
 {
     using System;
     using System.Collections;
@@ -48,13 +50,42 @@
         public ActionResult GetBetListByRefNo(string refno)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
+            BalanceUp balanceUp = ReportService.BalanceUp;
+
             if (BetListHelper.IsNumeric(refno.Trim()))
             {
-                result = _betListService.GetBetListByRefNoTickets(new BetListByRefNoCriteria
+                result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
                 {
-                    TransId = Converter.To<long>(refno)
+                    UserId = AppSession.AccId,
+                    RefNo = Converter.To<long>(refno),
+                    MoveBetsDay = balanceUp.MoveBetsDay,
+                    BalanceUpDay = balanceUp.BalanceUpDay
                 });
             }
+
+            Hashtable paramHastable = new Hashtable();
+            int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
+            paramHastable.Add("custId", custId);
+
+            TempData["paramHastable"] = paramHastable;
+
+            return PartialView("~/Views/BetList/BetListByRefNo/_BetListByRefNo.cshtml", result);
+        }
+
+        /// <summary>
+        /// Gets the bet list by reference no.
+        /// </summary>
+        /// <param name="betListByProductCriteria">The criteria.</param>
+        /// <returns>The bet list by reference no.</returns>
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        public ActionResult GetBetListByProduct(BetListByProductCriteria betListByProductCriteria)
+        {
+            BalanceUp balanceUp = ReportService.BalanceUp;
+            betListByProductCriteria.UserId = AppSession.AccId;
+            betListByProductCriteria.MoveBetsDay = balanceUp.MoveBetsDay;
+            betListByProductCriteria.BalanceUpDay = balanceUp.BalanceUpDay;
+
+            IList<TicketDetail> result = _betListService.GetBetListByProduct(betListByProductCriteria);
 
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
@@ -96,7 +127,7 @@
             paramHastable.Add("custId", customerId);
 
             TempData["paramHastable"] = paramHastable;
-           
+
             ViewBag.Quantity = 1;
             ViewBag.NumberBegining = 1;
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);

@@ -7,21 +7,24 @@
 //   <change who="" date="2012.12.07">Created</change>
 // </history>
 
+using System;
+using Fanex.NAP.Framework.Data;
+
 namespace Fanex.BetList.Accounting.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class BetListByRefNoCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "TransID")]
-        public long TransId { get; set; }
+        public int UserId { get; set; }
+
+        public long RefNo { get; set; }
+
+        public DateTime MoveBetsDay { get; set; }
+
+        public DateTime BalanceUpDay { get; set; }
 
         public override string GetSettingKey()
         {
-            return "BetList_RefNoSel";
+            return "BetList_SelByRefNo";
         }
 
         public override bool IsValid()

@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="ConfigureMaxNewMembers" xml:space="preserve">
     <value>Configure Max New Members</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
   </data>
   <data name="MaxPerDay" xml:space="preserve">
     <value>Max per day</value>
@@ -134,6 +149,15 @@
   </data>
   <data name="MaxPerDayInvalid" xml:space="preserve">
     <value>Invalid Max per day!</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -150,7 +174,13 @@
   <data name="SuperNotFound" xml:space="preserve">
     <value>Invalid Super!</value>
   </data>
+  <data name="Suspended" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
   <data name="Unlimited" xml:space="preserve">
     <value>Unlimited</value>
+  </data>
+  <data name="VIP" xml:space="preserve">
+    <value>VIP</value>
   </data>
 </root>

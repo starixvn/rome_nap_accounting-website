@@ -140,7 +140,9 @@
     <Compile Include="Business\SecurityCode\AdminSecurityCodeService.cs" />
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
-    <Compile Include="Business\SMAManagement\SMAManagementService.cs" />
+    <Compile Include="Business\SMAManagement\SMAManagementService.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controller\IMBCAdminController.cs" />
     <Compile Include="Controller\LimitNewMemberController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
@@ -160,6 +162,9 @@
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\ResetSecurityCodeCriteria.cs" />
+    <Compile Include="Criteria\SMAManagement\GetSMAGroupHeadlineCriteria.cs" />
+    <Compile Include="Criteria\SMAManagement\UpdateHeadlineTypeCriteria.cs" />
+    <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
     <Compile Include="DataAccess\AutoFollowBet\AutoFollowBetAccess.cs" />
     <Compile Include="DataAccess\AutoFollowBet\IAutoFollowBetAccess.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
@@ -188,8 +193,12 @@
     <Compile Include="Entities\RacingDefaultSetting.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
-    <Compile Include="Entities\SMAManagement\FilterInfo.cs" />
-    <Compile Include="Entities\SMAManagement\SMAList.cs" />
+    <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
+    <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
+    <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
+    <Compile Include="Entities\SMAManagement\SMAGroupHeadline.cs" />
+    <Compile Include="Entities\SMAManagement\SMAManagerModel.cs" />
+    <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Models\AutoFollowBet\FollowTypeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Error.Designer.cs">
@@ -225,6 +234,10 @@
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
+      <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
+      <Name>Fanex.Tarus.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
       <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
