@@ -188,7 +188,7 @@ var changeGroupService = (function ($, ajaxService) {
     var $grid = $("#changeGroupGrid"),
         $table = $("#changeGroupTable");
 
-    var superId, currentPrimaryGroup, currentEffectiveDate;
+    var superId, currentEffectiveDate;
 
     function formatDate(jsonDate) {
         var jsDate = new Date(parseInt(jsonDate.substr(6)));
@@ -211,7 +211,6 @@ var changeGroupService = (function ($, ajaxService) {
     }
 
     function assignGridBodyRows(extraPTGroups) {
-        currentPrimaryGroup = "";
         currentEffectiveDate = "";
         var html = [];
 
@@ -230,7 +229,6 @@ var changeGroupService = (function ($, ajaxService) {
             }
 
             if (isPrimary) {
-                currentPrimaryGroup = group.GroupName;
                 currentEffectiveDate = formatDate(group.EffectiveDate);
 
                 html.push(' b');
@@ -265,16 +263,7 @@ var changeGroupService = (function ($, ajaxService) {
 
     function changePrimaryGroup(reloadSuperListHandler) {
         $changeGroupErrorMsg.empty();
-
-        var newPrimaryGroup = $table.find('input[name=isPrimary]:checked').val();
-
-        if (newPrimaryGroup === currentPrimaryGroup) {
-            showAlertMessage(
-                "changeGroupErrorMsg",
-                "The group " + currentPrimaryGroup + " has already been the primary group since " + currentEffectiveDate + ".", 1);
-            return;
-        }
-
+        
         var newEffectiveDate = $effectiveDate.val();
 
         if (newEffectiveDate === today) {
@@ -284,6 +273,8 @@ var changeGroupService = (function ($, ajaxService) {
                 return;
             }
         }
+
+        var newPrimaryGroup = $table.find('input[name=isPrimary]:checked').val();
 
         var changeGroupSuccess = function (result) {
             if (result.ErrorCode === 0) {
