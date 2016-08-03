@@ -453,7 +453,7 @@ var changeGroupService = (function ($, ajaxService) {
             row.LastName,
             "</div></td>",
             '<td><div class="w160">',
-            row.NormalGroup.replace(/;/g, ", "),
+            row.NormalGroup ? row.NormalGroup.replace(/;/g, ", ") : "",
             "</div></td>",
             '<td><div class="extra-pt-group">',
             renderExtraPTGroupRow(row.CustId, row.UserName, row.ExtraPTGroup),
