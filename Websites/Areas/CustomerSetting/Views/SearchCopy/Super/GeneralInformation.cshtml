@@ -1,4 +1,9 @@
-﻿<div id="divGeneralInformation">
+﻿@{
+    var level = string.IsNullOrWhiteSpace(Request.UrlReferrer.Query) ? "member" : Request.UrlReferrer.Query.Split('=').ElementAt(1);
+}
+@if (level == "super")
+{
+<div id="divGeneralInformation">
     <table class="tblcollapse" style="width: 700px; margin-bottom: 10px;">
         <tr class="title">
             <td colspan="4">
@@ -88,3 +93,77 @@
         </tr>
     </table>
 </div>
+}
+else {
+<div id="divGeneralInformation">    
+    <table class="tblcollapse" style="width: 700px; margin-bottom: 10px;">
+        <tr>
+            <td colspan="4" class="l b">
+                <span>{{newUser.BreadCrumbs}}</span>
+            </td>
+        </tr>
+        <tr class="title">
+            <td colspan="4">
+                General Information
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                UserName
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" id="username" ng-model="newUser.username" size="30" required />
+            </td>
+            <td class="l" style="width: 12%">
+                Password
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="password" id="password" ng-model="newUser.password" size="30" required />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                First Name
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.firstname" size="30" />
+            </td>
+            <td class="l" style="width: 12%">
+                Last Name
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.lastname" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Phone
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.phone" size="30" />
+            </td>
+            <td class="l" style="width: 12%">
+                Mobile Phone
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.mobilephone" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l" style="width: 12%">
+                Given Credit
+            </td>
+            <td class="l" style="width: 38%">
+                <input id="maxCredit" type="text" ng-model="existedUser.credit" onkeyup="formatExt(event, this, true)" size="30" maxlength="18" />
+                <span id="maxCredit2" ng-hide="existedUser.maxCredit == ''"><={{existedUser.maxCredit}}</span>
+            </td>
+            <td class="l" style="width: 12%">
+                Fax
+            </td>
+            <td class="l" style="width: 38%">
+                <input type="text" ng-model="newUser.fax" size="30" />
+            </td>
+        </tr>       
+    </table>
+</div>
+}

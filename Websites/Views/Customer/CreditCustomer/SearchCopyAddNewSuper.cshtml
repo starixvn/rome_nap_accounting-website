@@ -1,4 +1,7 @@
-﻿<link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
+﻿@{ 
+    var level = string.IsNullOrWhiteSpace(Request.QueryString["level"]) ? "member" : Request.QueryString["level"];
+}
+<link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
 
 <div class="maincontent">
     <div class="box_header" style="width: 100%;">
@@ -9,12 +12,42 @@
             </ul>
         </div>
     </div>
-
+    <div id="agent-name" style="margin-left: 10px">
+        <div><span id="errMsg" class="error-message"></span></div>
+        <font class="b">Agent's username:&nbsp;</font>
+        <input type="text" class="txt" onkeypress="return On_KeyPress(event);" id="txtUsername" name="txtUsername" />
+        &nbsp;<input class="btn" type="button" id="btnNext" onclick="CheckUserName();" value="Next" name="btnNext" />
+    </div>
     <iframe id="frmSearchCopyAddNewSuper" scrolling="auto" frameborder="0" style="width: 100%;
         height: 770px;" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="../customersetting/searchcopy/super/index"
         name="frmSearchCopyAddNewSuper"></iframe>
 </div>
 <script type="text/javascript">
+    var level = '@level';
+    var sports = [
+            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
+            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
+            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
+            { sportname: 'Racing', sportvalue: 'tabRacing' },
+            { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
+            { sportname: 'Casino', sportvalue: 'tabCasino' },
+            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
+            { sportname: 'Bingo', sportvalue: 'tabBingo' },
+            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
+            { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
+            { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
+            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
+            { sportname: 'Cockfighting', sportvalue: 'tabCockFighting' },
+            { sportname: 'Albet', sportvalue: 'tabAllbet' },
+            { sportname: 'Macau Games', sportvalue: 'tabVoidbridge' }
+    ];
+
+    if ('@level' == 'member') {
+        sports = [
+            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
+            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' }
+        ];
+    }
 
     jQuery(document).ready(function () {
 
@@ -23,7 +56,63 @@
         $(window).resize(function () {
             pre_resize();
         });
+
+        ShowSearchCopy();
     });
+
+    function CheckUserName() {
+        document.getElementById("errMsg").innerHTML = "";
+        if ($("#txtUsername").val().trim() == "") {
+            document.body.rows = "55,*";
+            document.getElementById("errMsg").innerHTML = "Please enter UserName.";
+            document.getElementById("txtUsername").focus();
+        }
+        else {
+            var f = document.getElementById("frmSearchCopyAddNewSuper");
+            if (f) {
+                f.src = "../Customer/CheckUserName.ashx?listType=member&user=" + document.getElementById("txtUsername").value;
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    //f.style.display = "block";
+                }, 2000);
+            }
+        }
+    }
+
+    function OpenFormAdd(parentId, parentRoleId, siteName) {
+        var roleId = '';
+        var tfHeigth = "30";
+        document.getElementById("errMsg").innerHTML = "";
+
+        if (parentRoleId) {
+            roleId = parentRoleId;
+            roleId == '4' ? tfHeigth = "130" : tfHeigth = "30";
+        }
+        else {
+            roleId = document.getElementById("custRoleId").value;
+            parentId = document.getElementById("custId").value;
+        }
+
+        var f = document.getElementById("frmSearchCopyAddNewSuper");
+
+        document.body.rows = tfHeigth + ",*";
+        f.src = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + document.getElementById("txtUsername").value + "&siteName=" + siteName;
+    }
+
+    function showAlertMessage(id, message) {
+        document.getElementById(id).innerHTML = message;
+    }
+
+    function On_KeyPress(e) {
+
+        if (!e) e = window.event;
+        var code = (e.keyCode) ? e.keyCode : e.which;
+        if (code == 13) {
+            CheckUserName();
+            return false;
+        }
+        return true;
+    }
 
     function pre_resize() {
         var windowHeight = $(window).height();
@@ -31,17 +120,26 @@
 
         $("#frmSearchCopyAddNewSuper").height(height + "px");
     }
- 
+
     function ShowSearchCopy() {
         $("#tabSearchCopy").addClass("current");
-        $("#tabFullMode").removeClass("current");
+        $("#tabFullMode").removeClass("current");        
+        $("#frmSearchCopyAddNewSuper").attr('src', "../customersetting/searchcopy/super/index");
 
-        $("#frmSearchCopyAddNewSuper").attr('src', "../customersetting/searchcopy/super/index")
+        $("#agent-name").hide();
+        $("#frmSearchCopyAddNewSuper").show(500);
     }
     function ShowFullMode() {
-        $("#tabFullMode").addClass("current");        
+        $("#tabFullMode").addClass("current");
         $("#tabSearchCopy").removeClass("current");
 
-        $("#frmSearchCopyAddNewSuper").attr('src', "../AddNewSuper/AddNewSuperPage")
+        if ('@level' == 'member') {
+            $("#agent-name").show();
+            $("#frmSearchCopyAddNewSuper").hide();
+        }
+        else {
+            $("#frmSearchCopyAddNewSuper").attr('src', "../AddNewSuper/AddNewSuperPage");
+            $("#frmSearchCopyAddNewSuper").show();
+        }
     }
 </script>

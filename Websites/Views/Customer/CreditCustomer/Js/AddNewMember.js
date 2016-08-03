@@ -167,7 +167,7 @@ anmb.addNewMember = function () {
         else {
             return;
         }
-        try { parent.parent.BlockUI(); } catch (e) { parent.BlockUI(); }
+        try { parent.parent.BlockUI(); } catch (e) { try { parent.BlockUI(); } catch (e) {  } }
         $.ajax({
             type: "POST",
             url: "DoAddNewMember",
@@ -181,6 +181,7 @@ anmb.addNewMember = function () {
                         showAlertMessage("err", result.ErrorMessage, 1);
                     }
                     else {
+                        debugger;
                         showAlertMessage("err", "Inserted Member Successfully!", 0);
                         //redirect to update page and clear timeout
                         var redirectString = result.ErrorMessage;
@@ -189,7 +190,11 @@ anmb.addNewMember = function () {
                                 parent.parent.$("#centerFr").attr("src", redirectString);
                             }
                             catch (e) {
-                                parent.$("#centerFr").attr("src", redirectString);
+                                try {
+                                    parent.parent.parent.$("#centerFr").attr("src", redirectString);
+                                } catch (ex) {
+                                    parent.$("#centerFr").attr("src", redirectString);
+                                }
                             }
                             clearTimeout(timeOutId);
                         }, 2000);
