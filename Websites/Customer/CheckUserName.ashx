@@ -13,8 +13,9 @@ using DNAide.Data;
 public class CheckUserName : IHttpHandler, IRequiresSessionState
 {
     private string siteName = string.Empty;
-    
-    public void ProcessRequest (HttpContext context) {
+
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         string username = context.Request["user"] as string ?? string.Empty;
         context.Response.Write("<html><head></head><body>");
@@ -25,12 +26,12 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
             var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
             if (ds != null)
             {
-                if (ds.Tables.Count> 0 && ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     var row = ds.Tables[0].Rows[0];
                     int roleId = 0;
                     int.TryParse(ds.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
-                    bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ?  IsDeposit(username) : false;
+                    bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ? IsDeposit(username) : false;
                     context.Response.Write("var siteName = '" + siteName + "';");
                     //bool isDeposit = IsDeposit(username);
                     if ((string.Compare(strType, "member", true) == 0 && roleId != 2) || (string.Compare(strType, "member", true) == 0 && isDeposit))
@@ -43,7 +44,15 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                     }
                     else
                     {
-                        context.Response.Write("parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ",'" + siteName + "');");
+                        if ((string.Compare(strType, "member", true) == 0 && roleId == 2))
+                        {
+                            //Fullmode Member
+                            context.Response.Write("parent.document.getElementById('frmSearchCopyAddNewSuper').style.display='block';parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ",'" + siteName + "');");
+                        }
+                        else
+                        {
+                            context.Response.Write("parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ",'" + siteName + "');");
+                        }
                     }
                 }
                 else
@@ -52,16 +61,18 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
         }
         context.Response.Write("</script>");
         context.Response.Write("</body></html>");
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
