@@ -254,9 +254,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.resize("#frmAllbet");
                 break;
             case 'tabVoidbridge': url += "DCS/ViewCustomerSetting?productId=22&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                    $scope.loadData("#frmVoidbridge", url);
-                    $scope.resize("#frmVoidbridge");
-                    break;
+                $scope.loadData("#frmVoidbridge", url);
+                $scope.resize("#frmVoidbridge");
+                break;
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCricket", url);
                 $scope.resize("#frmCricket");
@@ -276,7 +276,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.addSportsToDropdownlist = function (statusSports) {
-        $scope.sports = [{sportname: '-- choose sport --', sportvalue: 'choosesport' }];
+        $scope.sports = [{ sportname: '-- choose sport --', sportvalue: 'choosesport' }];
         if (!statusSports.HideSportsbook) {
             $scope.sports.push({ sportname: 'Sportsbook', sportvalue: 'tabSportsbook' });
             $scope.sports.push({ sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' });
@@ -496,7 +496,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             data: JSON.stringify(param),
             success: function (result) {
                 if (result != null) {
-                    message.showAlertMessage("errorMsg", result.Message, 3);
+                    message.showAlertMessage("errorMsg", result.Message == undefined ? result.errorMessage : result.Message, 3);
                     $("#errorMsg").width("700");
                 }
                 else {
@@ -519,4 +519,4 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     /* start */
     $scope.init();
 
-} ]);
+}]);
