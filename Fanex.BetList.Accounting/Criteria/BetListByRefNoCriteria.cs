@@ -7,9 +7,8 @@
 //   <change who="" date="2012.12.07">Created</change>
 // </history>
 
-using System;
-    using CustomerSetting.Module.Core.Web;
 using Fanex.NAP.Framework.Data;
+using System;
 
 namespace Fanex.BetList.Accounting.Criteria
 {
@@ -22,7 +21,6 @@ namespace Fanex.BetList.Accounting.Criteria
         public DateTime MoveBetsDay { get; set; }
 
         public DateTime BalanceUpDay { get; set; }
-        }
 
         public override string GetSettingKey()
         {
