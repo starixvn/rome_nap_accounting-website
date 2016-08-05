@@ -237,7 +237,7 @@ var changeGroupService = (function ($, ajaxService) {
             html.push('">');
             html.push(group.GroupName);
 
-            if (isPrimary) {
+            if (isPrimary && !isNoExtraPT) {
                 html.push(" (");
                 html.push(currentEffectiveDate);
                 html.push(")");

@@ -112,6 +112,7 @@ span#search input.text {
     cursor: pointer;
     display: table-cell;
     vertical-align: middle;
+    text-align: right;
 }
 
 .noExtraPT {
