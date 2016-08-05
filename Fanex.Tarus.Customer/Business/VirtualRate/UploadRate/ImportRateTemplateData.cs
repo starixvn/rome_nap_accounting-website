@@ -261,6 +261,88 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 }
             });
 
+            result.Add(new ImportVirtualRateResultGroup
+            {
+                GroupName = "SuperTest1",
+                ImportVirtualRateResultList = new List<ImportVirtualRateResult>()
+                {
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.Handicap,
+                        VirtualRateString = "15"
+                    },
+                     new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.OverUnder,
+                        VirtualRateString = "15"
+                    },
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.OddEven,
+                        VirtualRateString = "15"
+                    },
+                    null,
+                    null,
+                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.MoneyLine,
+                        VirtualRateString = "60"
+                    },
+                    null,
+                    null
+                }
+            });
+
+            result.Add(new ImportVirtualRateResultGroup
+            {
+                GroupName = "SuperTest1",
+                ImportVirtualRateResultList = new List<ImportVirtualRateResult>()
+                {
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Live",
+                        BetTypeId = BetType.Handicap,
+                        VirtualRateString = "15"
+                    },
+                     new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Live",
+                        BetTypeId = BetType.OverUnder,
+                        VirtualRateString = "15"
+                    },
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Live",
+                        BetTypeId = BetType.OddEven,
+                        VirtualRateString = "15"
+                    },
+                    null,
+                    null,
+                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "E-Sports",
+                        LiveTypeName = "Live",
+                        BetTypeId = BetType.MoneyLine,
+                        VirtualRateString = "60"
+                    },
+                    null,
+                    null
+                }
+            });
+
             return result;
         }
     }
