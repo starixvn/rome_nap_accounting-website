@@ -12,5 +12,8 @@ namespace Sunplus.Accounting.Entities.Admin
 
         [DataMember]
         public DateTime? EffectiveDate { get; set; }
+
+        [DataMember]
+        public bool IsPrimary { get; set; }
     }
 }

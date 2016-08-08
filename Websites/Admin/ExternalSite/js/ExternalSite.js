@@ -216,7 +216,6 @@ var changeGroupService = (function ($, ajaxService) {
 
         $.each(extraPTGroups, function (index, group) {
             var isNoExtraPT = group.GroupName === "No Extra PT";
-            var isPrimary = group.EffectiveDate;
 
             html.push("<tr>");
             html.push('<td><div class="w40 c">');
@@ -228,8 +227,10 @@ var changeGroupService = (function ($, ajaxService) {
                 html.push(' noExtraPT');
             }
 
-            if (isPrimary) {
-                currentEffectiveDate = formatDate(group.EffectiveDate);
+            if (group.IsPrimary) {
+                if (group.EffectiveDate) {
+                    currentEffectiveDate = formatDate(group.EffectiveDate);
+                }
 
                 html.push(' b');
             }
@@ -237,7 +238,7 @@ var changeGroupService = (function ($, ajaxService) {
             html.push('">');
             html.push(group.GroupName);
 
-            if (isPrimary && !isNoExtraPT) {
+            if (group.IsPrimary && currentEffectiveDate.length !== 0) {
                 html.push(" (");
                 html.push(currentEffectiveDate);
                 html.push(")");
@@ -249,7 +250,7 @@ var changeGroupService = (function ($, ajaxService) {
             html.push(group.GroupName);
             html.push('"');
 
-            if (isPrimary) {
+            if (group.IsPrimary) {
                 html.push(' checked="checked"');
             }
 
