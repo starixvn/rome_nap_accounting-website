@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Fanex.Tarus.Admin.Enums;
+using Sunplus.Accounting.Core.Common;
+using System;
 using System.Collections;
-using Fanex.Tarus.Admin.Enums;
 
 namespace Fanex.Tarus.Admin.Criteria.SMAManagement
 {
@@ -59,7 +60,8 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
                 { "groupheadline", GroupHeadline },
                 { "headlinetype", HeadlineType },
                 { "owner", Owner },
-                { "istest", !ExcludeTestAccounts }
+                { "istest", !ExcludeTestAccounts },
+                { "userid", AppSession.AccId }
             };
         }
 
