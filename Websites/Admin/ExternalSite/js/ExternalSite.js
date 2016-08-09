@@ -194,7 +194,7 @@ var changeGroupService = (function ($, ajaxService) {
         var jsDate = new Date(parseInt(jsonDate.substr(6)));
 
         var paddingZero = function (number) {
-            if (number < 9) {
+            if (number <= 9) {
                 return "0" + number;
             }
 
