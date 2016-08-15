@@ -270,6 +270,7 @@
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
     <Compile Include="Criteria\BetListByRefNoAdvancedCriteria.cs" />
+    <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
     <Compile Include="Criteria\BetListSystemParlayByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />

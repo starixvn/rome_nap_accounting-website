@@ -1,7 +1,7 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Core;
-
+@using Fanex.BetList.Accounting.Constants;
 @model IList<TicketDetail>
 
 @{
@@ -63,11 +63,11 @@
                 <div class="refno ">
                     @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
                     {
-                    <span>Ref No: @betdetail.Ticket.RefNo </span>
+                        <span>Ref No: @betdetail.Ticket.RefNo </span>
                     }
                     else
                     {
-                    <span>Ref No: @betdetail.Ticket.TransId </span>
+                        <span>Ref No: @betdetail.Ticket.TransId </span>
                     }
                 </div>
                 <div class="c">
@@ -84,13 +84,14 @@
                     @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
                     {
                         var betcheck = betdetail.Ticket.BetTypeId == 29 ? betdetail.Ticket.BetCheck : null;
-                        var html = Html.Action("GetMixParlayDetail", "BetList", new { 
-                          transId = betdetail.Ticket.TransId,
-                          refNo = betdetail.Ticket.RefNo,
-                          hdp1 = betdetail.Ticket.Handicap1,
-                          hdp2 = betdetail.Ticket.Handicap2,
-                          betCheck = betcheck,
-                          betTeam = betdetail.Ticket.BetTeam
+                        var html = Html.Action("GetMixParlayDetail", "BetList", new
+                        {
+                            transId = betdetail.Ticket.TransId,
+                            refNo = betdetail.Ticket.RefNo,
+                            hdp1 = betdetail.Ticket.Handicap1,
+                            hdp2 = betdetail.Ticket.Handicap2,
+                            betCheck = betcheck,
+                            betTeam = betdetail.Ticket.BetTeam
                         });
                         @html;
                     }
@@ -115,13 +116,18 @@
         <td class="c">
             <div id="stautus" class="width100 table-cell">
                 @Html.Raw(betdetail.StatusHtml)
+                @if (betdetail.Ticket.BetTypeId == BetTypeContants.BetTradeSold)
+                {
+                    <br />
+                    <a onclick="ViewBettradeDetails(@betdetail.Ticket.TransId, @betdetail.Ticket.RefNo)">@Resources.BetList.details</a>
+                }
                 @{
                     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }
                 @if (ip != "-" && !betdetail.Ticket.BetTypeId.Equals(500))
                 {
-                <br />
-                <a href="@Url.Action("BetListByIP", "TarusBetList", new {IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP})">@ip</a>
+                    <br />
+                    <a href="@Url.Action("BetListByIP", "TarusBetList", new {IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP})">@ip</a>
                 }
             </div>
         </td>
