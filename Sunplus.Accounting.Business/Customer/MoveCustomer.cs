@@ -140,7 +140,7 @@ namespace Sunplus.Accounting.Business.Customer
                 bool isMoveAgent = custType.Equals(MoveType.Agent);
                 bool IsExcutedMoveLiveCasino = false;
                 string errMsgMoveLiveCasino = string.Empty;
-                IResult bingoResult = new Result();
+               // IResult bingoResult = new Result();
 
                 /*if (WebSettings.IsAllowMoveToBingo)
                 {
@@ -205,9 +205,9 @@ namespace Sunplus.Accounting.Business.Customer
                     if (error.IsSuccess())
                     {
                         //Complete move Bingo
-                        bingoResult = MoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
-                        if (bingoResult.ErrorCode > 0)
-                            return bingoResult.ErrorMessage;
+                        //bingoResult = MoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
+                        //if (bingoResult.ErrorCode > 0)
+                        //    return bingoResult.ErrorMessage;
                         return MoveSuccessfully(downlineUser);
                     }
                     else
@@ -299,12 +299,12 @@ namespace Sunplus.Accounting.Business.Customer
                 CompleteMoveCasino(custType, downlineUser, customerRngSiteName);
 
                 //Complete move Bingo
-                if (WebSettings.IsAllowMoveToBingo)
-                {
-                    bingoResult = MoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
-                    if (bingoResult.ErrorCode > 0)
-                        return bingoResult.ErrorMessage;
-                }
+                //if (WebSettings.IsAllowMoveToBingo)
+                //{
+                //    bingoResult = MoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
+                //    if (bingoResult.ErrorCode > 0)
+                //        return bingoResult.ErrorMessage;
+                //}
 
                 return MoveSuccessfully(downlineUser);
             }
