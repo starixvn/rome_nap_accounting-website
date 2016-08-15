@@ -572,6 +572,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
             Justification = "Reviewed. Suppression is OK here.")]
         private List<CustomerVirtualRateModel> CustomerVirtualRateList(List<ImportVirtualRateInfo> importList)
         {
+            var sports = VirtualRateSectionService.SportList();
             List<CustomerVirtualRateModel> customerVirtualRateList = new List<CustomerVirtualRateModel>();
             var userGroups = importList.GroupBy(data => data.Username);
 
@@ -597,9 +598,11 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         NonLiveVirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeIndexList.Count)
                     };
 
+                    var sportConfig = sports.Where(s => s.Id.Equals(sportGroup.Key)).FirstOrDefault();
+
                     foreach (var betType in sportGroup)
                     {
-                        if (!betTypeIndexList.ContainsKey(betType.BetType))
+                        if (!betTypeIndexList.ContainsKey(betType.BetType) || !sportConfig.BetTypeList.Exists(property => property.Id.Equals(betType.BetType)))
                         {
                             continue;
                         }

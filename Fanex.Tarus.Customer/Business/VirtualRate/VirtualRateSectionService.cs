@@ -51,7 +51,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     Name = Sports.SportName(sportId),
                     Notes = sport.Notes,
                     SubSportList = new List<SportVirtualRateModel>(),
-                    BetTypeList = new List<BetTypeModel>(),
+                    BetTypeList = sport.BetTypeOrder.Split(',').Select(bettype => new BetTypeModel()
+                    {
+                        Id = Converter.ToInt(bettype)
+                    }).ToList(),
                     BetTypeOrder = sport.BetTypeOrder
                 };
 
