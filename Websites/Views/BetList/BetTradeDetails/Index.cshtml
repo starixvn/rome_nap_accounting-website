@@ -1,8 +1,10 @@
 ﻿@using Fanex.BetList.Accounting.Models
-@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
-@using Fanex.BetList.Accounting.Constants;
 @model IList<TicketDetail>
+@{
+    BetListHelper betlistHelper = new BetListHelper();
+}
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
@@ -55,148 +57,96 @@
     <title>Details</title>
 </head>
 <body>
-        <div class="col_header row-headers-background freegrid">
-            <div class="header-container">
-                <table class="grid-fixed-table col_header_content">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div class="width120 height34 table-cell">
-                                    Date
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width250 height34 table-cell">
-                                    Choice
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width50 height34 table-cell">
-                                    Odds
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width50 height34 table-cell">
-                                    Stake
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width60 height34 table-cell">
-                                    Win Loss
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width100 height34 table-cell">
-                                    Status
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width60 height34 table-cell">
-                                    Super
-                                    <br />
-                                    PT/Comm
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width60 height34 table-cell">
-                                    Master
-                                    <br />
-                                    PT/Comm
-                                </div>
-                            </th>
-                            <th>
-                                <div class="width60 height34 table-cell">
-                                    Agent
-                                    <br />
-                                    PT/Comm
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Count <= 0)
+    <div class="col_header row-headers-background freegrid">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width250 height34 table-cell">
+                                Choice
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Odds
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                Sold
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count <= 0)
             {
-                            <tr class="c">
-                                <td colspan="9">
-                                    <div class="c b" style="margin-left: 60px;">
-                                        There is no data
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr class="c">
-                                <td class="c">
-                                    <div class="width120 table-cell">
-                                        <div class="refno ">
-                                            @if (BetListHelper.IsUseRefNoInsteadOfTransId(Model[0].Ticket))
-                                            {
-                                                <span>Ref No: @Model[0].Ticket.RefNo </span>
-                                            }
-                                            else
-                                            {
-                                                <span>Ref No: @Model[0].Ticket.TransId </span>
-                                            }
-                                        </div>
-                                        <div class="c">
-                                            @Model[0].Ticket.TransDate
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class='r bl_evt'>
-                                    <div id="choice_right" class="width250  table-cell">
-                                        @Html.Raw(Model[0].ChoiceHtml)
-                                    </div>
-                                </td>
-                                <td class='r bl_underdog'>
-                                    <div id="odd" class="width50 table-cell">
-                                        @Html.Partial("~/Views/BetList/_Odds.cshtml", Model[0])
-                                    </div>
-                                </td>
-                                <td class='r bl_underdog'>
-                                    <div class="width50 table-cell">
-                                        @Html.Raw(Model[0].StakeHtml)
-                                    </div>
-                                </td>
-                                <td class="r">
-                                    <div class="width60 table-cell">
-                                        @Html.Partial("~/Views/BetList/_WinLoss.cshtml", Model[0])
-                                    </div>
-                                </td>
-                                <td class="c">
-                                    <div id="stautus" class="width100 table-cell">
-                                        @Html.Raw(Model[0].StatusHtml)
-                                        @{
-                                            var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(Model[0].Ticket.IP);
-                                        }
-                                        @if (ip != "-" && !Model[0].Ticket.BetTypeId.Equals(500))
+                        <tr class="c">
+                            <td colspan="9">
+                                <div class="c b" style="margin-left: 60px;">
+                                    There is no data
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="c">
+                            <td class="c">
+                                <div class="width120 table-cell">
+                                    <div class="refno ">
+                                        @if (BetListHelper.IsUseRefNoInsteadOfTransId(Model[0].Ticket))
                                         {
-                                            <br />
-                                            <a href="@Url.Action("BetListByIP", "TarusBetList", new {IsLink = true, FromDate = Model[0].Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = Model[0].Ticket.IP})">@ip</a>
+                                            <span>Ref No: @Model[0].Ticket.RefNo </span>
+                                        }
+                                        else
+                                        {
+                                            <span>Ref No: @Model[0].Ticket.TransId </span>
                                         }
                                     </div>
-                                </td>
-                                <td class="r">
-                                    <div id="comm" class="width60 table-cell">
-                                        @Html.Partial("~/Views/BetList/_SuperPTCom.cshtml", Model[0])
+                                    <div class="c">
+                                        @Model[0].Ticket.TransDate
                                     </div>
-                                </td>
-                                <td class="r">
-                                    <div class="width60 table-cell">
-                                        @Html.Partial("~/Views/BetList/_MasterPTCom.cshtml", Model[0])
+                                </div>
+                            </td>
+                            <td class='r bl_evt'>
+                                <div id="choice_right" class="width250  table-cell">
+                                    @Html.Raw(Model[0].ChoiceHtml)
+                                </div>
+                            </td>
+                            <td class='r bl_underdog'>
+                                <div id="odd" class="width50 table-cell">
+                                    @Html.Partial("~/Views/BetList/_Odds.cshtml", Model[0])
+                                </div>
+                            </td>
+                            <td class='r bl_underdog'>
+                                <div class="width50 table-cell">
+                                    @Html.Raw(Model[0].StakeHtml)
+                                </div>
+                            </td>
+                            <td class="r">
+                                <div class="width60 table-cell">
+                                    <div class="@betlistHelper.IsNegative(Model[0].Ticket.Winlost)">
+                                        @Model[0].Ticket.Winlost.Format(2)
                                     </div>
-                                </td>
-                                <td class="r">
-                                    <div class="width60 table-cell">
-                                        @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", Model[0])
-                                    </div>
-                                </td>
-                            </tr>
-                                            }
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+    </div>
 </body>
 </html>

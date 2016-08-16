@@ -85,7 +85,6 @@
                 @Html.Raw(betdetail.StatusHtml)
                 @if (betdetail.Ticket.BetTypeId == BetTypeContants.BetTradeSold)
                 {
-                    <br />
                     <a onclick="ViewBettradeDetails(@betdetail.Ticket.TransId, @betdetail.Ticket.RefNo)">@Resources.BetList.details</a>
                 }
                 @{
