@@ -581,5 +581,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowVoidbridge"] == "1");
             }
         }
+
+        public static bool IsVirtualRateTest
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsVirtualRateTest"].Equals("1"));
+            }
+        }
     }
 }
