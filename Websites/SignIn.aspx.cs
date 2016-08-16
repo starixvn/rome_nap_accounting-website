@@ -18,6 +18,11 @@ public partial class SignIn : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request.QueryString[WebSettings.InternalAgentUMToken] != null)
+        {
+            Session[WebSettings.InternalAgentUMToken] = Request.QueryString[WebSettings.InternalAgentUMToken];
+        }
+
         if (Session["Username"] != null) FormsAuthentication.RedirectFromLoginPage(DNAide.Core.CastAide.AsString(Session["Username"]), false);
         AccCommon.Redirect2SSL();
     }

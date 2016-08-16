@@ -2,21 +2,23 @@
 using System;
 using System.Configuration;
 using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Configurations;
 
 public partial class InternalView : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string _accId = Request["accId"];
-        string _custName = Request["custName"];
-        string _accKey = Request["accKey"];
-        string _chalengeStr = Request["chalengeStr"] + "-" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
-        string strParams = string.Empty, strPath = string.Empty, url = string.Empty;
-        strParams = _custName + "&" + _accId + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
-        strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
+        string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
+        string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-        var internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
-        url = (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl) + "?params=" + strParams + "&isVpn=" + IsLocalOrVpnRequest(Request.Headers["Host"]);
+
+        string internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
+        string url = string.Format("{0}?{1}params={2}&isVpn={3}",
+            (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
+            Session[WebSettings.InternalAgentUMToken] == null? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),
+            strParams, 
+            IsLocalOrVpnRequest(Request.Headers["Host"]));
+
         Response.Redirect(url);
         Response.End();
     }

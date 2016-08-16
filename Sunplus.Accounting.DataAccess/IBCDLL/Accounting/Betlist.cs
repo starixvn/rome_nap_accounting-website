@@ -396,13 +396,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static DataSet BetsSelBetList_ByTransID(int custid, string transID)
         {
             var result = new DataSet();
+
             try
             {
                 using (ObjectDb db = new ObjectDb("Acc_BetsSelBetList_ByTransID", 180))
                 {
-                    var p = new Hashtable();
-                    p.Add("custid", custid);
-                    p.Add("transid", CastAide.AsInt64(transID));
+                    var p = new Hashtable
+                    {
+                        { "custid", custid},
+                        { "transid", CastAide.AsInt64(transID)},
+                        { "movebetsday", ReportUtils.BalanceUp.MoveBetsDay},
+                        { "balanceupday", ReportUtils.BalanceUp.BalanceUpDay}
+                    };
 
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();

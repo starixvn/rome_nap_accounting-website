@@ -19,6 +19,7 @@
 <%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -163,6 +164,11 @@
         {
             if (isDowntime && url.Contains(".aspx") && !notCheckUMPages.Contains(pageFileName))
             {
+                if (Request.QueryString[WebSettings.InternalAgentUMToken] != null)
+                {
+                    Session[WebSettings.InternalAgentUMToken] = Request.QueryString[WebSettings.InternalAgentUMToken];
+                }
+
                 var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
                 if (downTimeInfo.IsDowntime)
                 {
