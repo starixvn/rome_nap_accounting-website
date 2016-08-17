@@ -34,7 +34,7 @@
   <Function Name="Betlist">
     <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_FULL2" SpName="Acc_AllStatement_FULL2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -58,7 +58,7 @@
     <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Update Live Casino Comm">
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
