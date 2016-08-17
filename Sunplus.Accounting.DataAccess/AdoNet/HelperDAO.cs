@@ -71,7 +71,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataTable GetSites(Enumerations.AccountingSystem system)
         {
-            var param = new Hashtable { { "system", system.ToString().ToUpper() } };
+            var param = new Hashtable { { "system", system.ToString().ToUpper() }, { "userid", AppSession.AccId } };
             DataTable result = new DataTable();
 
             try

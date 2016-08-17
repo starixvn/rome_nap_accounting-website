@@ -175,16 +175,20 @@
                      dataType: 'json',
                      contentType: "application/json; charset=utf-8",
                      success: function (custdetail) {
-                         
                          cust = custdetail;
-                         if (cust.CustId == 0) {
+                         if (cust.ErrorCode > 0)
+                         {
+                             $('#trMsg').show();
+                             showAlertMessage('dvMsg', cust.ErrorMessage, 1);
+                             $('#Move').attr('disabled', true);
+                         }
+                         else if (cust.CustId == 0) {
                              $('#trMsg').show();
                              showAlertMessage('dvMsg', "Invalid username. Please try again.", 1);
                              $('#Move').attr('disabled', true);
                          }
                          else {
                              $("#spCurrSite").html(cust.Site);
-
                          }
 
                          try { parent.jQuery.unblockUI(); } catch (e) { }

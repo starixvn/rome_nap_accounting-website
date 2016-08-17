@@ -4,17 +4,22 @@ using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
-    using System;
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Attributes;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Web.Controllers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Security.Permission;
     using Sunplus.Accounting.Core.Extensions;
+    using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
+    [SpecialSiteFilter]
     public class CustomerSettingBaseController : BaseController
     {
         protected static ICustomerSettingService _customerSettingService;
@@ -143,6 +148,19 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 });
             }
             return errorResults;
+        }
+
+        protected Result CheckSpecialSitePermission(int UserId, string CustName, int? CustId)
+        {
+            var permissionService = new ServiceBase();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = UserId,
+                CustID = CustId,
+                CustName = CustName
+            });
+
+            return new Result() { ErrorCode = checkSpecialSite.ErrorCode.ToString(), ErrorMessage = checkSpecialSite.ErrorMessage };
         }
     }
 }

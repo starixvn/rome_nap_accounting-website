@@ -6,15 +6,14 @@ using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using IBCUtils.DAL;
-using DNAide.Data;
-
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.CustomerSetting.Module.Core.Criteria;
 
 public class CheckUserName : IHttpHandler, IRequiresSessionState
 {
     private string siteName = string.Empty;
 
-    public void ProcessRequest(HttpContext context)
+    public void ProcessRequest (HttpContext context)
     {
         context.Response.ContentType = "text/html";
         string username = context.Request["user"] as string ?? string.Empty;
@@ -22,28 +21,36 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
         context.Response.Write("<script type=\"text/javascript\">");
         try
         {
-            string strType = context.Request["listType"] as string ?? string.Empty;
-            var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
-            if (ds != null)
+            var permissionService = new ServiceBase();
+            var checkSpecialSiteAccess = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustName = username });
+            if (checkSpecialSiteAccess.ErrorCode > 0)
             {
-                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                context.Response.Write(" parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','" + System.Net.WebUtility.HtmlEncode(checkSpecialSiteAccess.ErrorMessage) + "',1);");
+            }
+            else
+            {
+                string strType = context.Request["listType"] as string ?? string.Empty;
+                var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
+                if (ds != null)
                 {
-                    var row = ds.Tables[0].Rows[0];
-                    int roleId = 0;
-                    int.TryParse(ds.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
-                    bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ? IsDeposit(username) : false;
-                    context.Response.Write("var siteName = '" + siteName + "';");
-                    //bool isDeposit = IsDeposit(username);
-                    if ((string.Compare(strType, "member", true) == 0 && roleId != 2) || (string.Compare(strType, "member", true) == 0 && isDeposit))
+                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {
-                        context.Response.Write(" parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Agent does not exist.',1);");
-                    }
-                    else if ((string.Compare(strType, "agent", true) == 0 && roleId != 3) || (string.Compare(strType, "agent", true) == 0 && isDeposit))
-                    {
-                        context.Response.Write("parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Master does not exist.',1);");
-                    }
-                    else
-                    {
+                        var row = ds.Tables[0].Rows[0];
+                        int roleId = 0;
+                        int.TryParse(ds.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
+                        bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ? IsDeposit(username) : false;
+                        context.Response.Write("var siteName = '" + siteName + "';");
+                        //bool isDeposit = IsDeposit(username);
+                        if ((string.Compare(strType, "member", true) == 0 && roleId != 2) || (string.Compare(strType, "member", true) == 0 && isDeposit))
+                        {
+                            context.Response.Write(" parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Agent does not exist.',1);");
+                        }
+                        else if ((string.Compare(strType, "agent", true) == 0 && roleId != 3) || (string.Compare(strType, "agent", true) == 0 && isDeposit))
+                        {
+                            context.Response.Write("parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Master does not exist.',1);");
+                        }
+                        else
+                        {
                         if ((string.Compare(strType, "member", true) == 0 && roleId == 2))
                         {
                             //Fullmode Member
@@ -55,9 +62,10 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                         }
                     }
                 }
-                else
-                {
-                    context.Response.Write("parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Username does not exist.',1);");
+                    else
+                    {
+                        context.Response.Write("parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','This Username does not exist.',1);");
+                    }
                 }
             }
         }

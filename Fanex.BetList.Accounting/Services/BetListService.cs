@@ -436,7 +436,6 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="quantity">The quantity.</param>
-        /// <param name="isCache">If set to <c>true</c> [is cache].</param>
         /// <param name="isLimitForU3">If set to <c>true</c> [is u3 account].</param>
         /// <returns>
         /// The bet list by customer info_ date range.
@@ -452,7 +451,6 @@ namespace Fanex.BetList.Accounting.Services
             int pageSize,
             int pageIndex,
             ref int quantity,
-            bool isCache,
             bool isLimitForU3 = false)
         {
             Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
@@ -570,9 +568,6 @@ namespace Fanex.BetList.Accounting.Services
                 IList<TicketDetail> betDetailsOld = new List<TicketDetail>();
                 IList<TicketDetail> betDetailsMerge = new List<TicketDetail>();
 
-                betDetailsMerge = SessionManager.Get<IList<TicketDetail>>(BetListConstants.BetListByCustomerInfoSessionKey);
-                if (!isCache || betDetailsMerge == null || betDetailsMerge.Count == 0)
-                {
                     if (toDate >= ReportService.BalanceUp.BalanceUpDay)
                     {
                         betDetails = isLimitForU3 ?
@@ -592,12 +587,6 @@ namespace Fanex.BetList.Accounting.Services
                     outputLiveCasino_Merge = outputLiveCasino.Concat(outputLiveCasino_Old).ToList();
                     SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByCustomerInfoSessionKey, betDetailsMerge);
                     SessionManager.Set<List<ITicketData>>(BetListConstants.BetListOutputLiveCasinoSessionKey, outputLiveCasino_Merge);
-                }
-                else
-                {
-                    betDetailsMerge = SessionManager.Get<IList<TicketDetail>>(BetListConstants.BetListByCustomerInfoSessionKey);
-                    outputLiveCasino_Merge = SessionManager.Get<List<ITicketData>>(BetListConstants.BetListOutputLiveCasinoSessionKey);
-                }
 
                 quantity = betDetailsMerge.Count;
                 StringBuilder content = new StringBuilder();
@@ -871,7 +860,6 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="fromDate">The from date.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
-        /// <param name="isCache">If set to <c>true</c> [is cache].</param>
         /// <param name="quality">The quality.</param>
         /// <returns>The list by IP address username.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
@@ -882,7 +870,6 @@ namespace Fanex.BetList.Accounting.Services
             DateTime fromDate,
             int pageSize,
             int pageIndex,
-            bool isCache,
             ref int quality)
         {
             BetListByIP_UsernameCriteria criteria = new BetListByIP_UsernameCriteria
@@ -898,8 +885,6 @@ namespace Fanex.BetList.Accounting.Services
                 int soccerBetsTotalTmp = 0;
                 int othersBetsTotalTmp = 0;
                 int totalBetsTmp = 0;
-                if (!isCache)
-                {
                     using (var db = new ObjectDb(criteria.GetSettingKey()))
                     {
                         DataSet dataSet = db.ExecuteDataSet(criteria);
@@ -932,13 +917,6 @@ namespace Fanex.BetList.Accounting.Services
                         OtherBets = othersBetsTotalTmp,
                         TotalBets = totalBetsTmp
                     });
-
-                    SessionManager.Set<IList<BetListByIP_Username>>(BetListConstants.BetListByUsernameSessionKey, usernameList);
-                }
-                else
-                {
-                    usernameList = SessionManager.Get<IList<BetListByIP_Username>>(BetListConstants.BetListByUsernameSessionKey);
-                }
 
                 if (pageIndex > 0)
                 {
@@ -982,7 +960,6 @@ namespace Fanex.BetList.Accounting.Services
         /// <param name="ip">The IP address.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="isSoccer">If set to <c>true</c> [is soccer].</param>
-        /// <param name="isCache">If set to <c>true</c> [is cache].</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="quality">The quality.</param>
@@ -997,7 +974,6 @@ namespace Fanex.BetList.Accounting.Services
             string ip,
             DateTime fromDate,
             bool isSoccer,
-            bool isCache,
             int pageSize,
             int pageIndex,
             ref int quality,

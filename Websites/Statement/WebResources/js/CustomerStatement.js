@@ -23,13 +23,33 @@ var custName = '';
 function GetDataReport() {
     try { parent.BlockUI(); } catch (e) { }
     custName = encodeURIComponent($("#txtCustName").attr("value"));
-
     statementReportManager.callAjax(
+        domain + 'NapStatement/StatementReport/CheckSpecialSiteAccess',
+        {
+            Username: custName
+        },
+        completeCheckSpecialSite);
+}
+
+function completeCheckSpecialSite(rs)
+{
+    if (rs.ErrorCode > 0) {
+        jQuery("#errBox").html("<div>" + rs.ErrorMessage + "</div>");
+        jQuery("#errBox").show();
+        jQuery("#GridContainer").hide();
+        jQuery("#sData").hide();
+        parent.jQuery.unblockUI();
+    }
+    else {
+        jQuery("#errBox").hide();
+        jQuery("#sData").show();
+        statementReportManager.callAjax(
         domain + 'NapStatement/StatementReport/CheckInternalByUsername',
         {
             Username: custName
         },
         completeUpdateIsInternal);
+    }
 }
 
 function completeUpdateIsInternal(rs) {

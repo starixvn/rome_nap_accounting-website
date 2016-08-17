@@ -2497,4 +2497,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableVoidbridge" xml:space="preserve">
     <value>Macau Games</value>
   </data>
+  <data name="DontHavePermission" xml:space="preserve">
+    <value>You don''t have permission to access</value>
+  </data>
 </root>

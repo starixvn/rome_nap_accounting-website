@@ -252,4 +252,7 @@
   <data name="RNG_RNGGames" xml:space="preserve">
     <value>OW RNG - RNG Game</value>
   </data>
+  <data name="DeniedAccessSpecialSite" xml:space="preserve">
+    <value>You don't have permission to access</value>
+  </data>
 </root>

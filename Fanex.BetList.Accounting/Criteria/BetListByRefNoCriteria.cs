@@ -7,8 +7,8 @@
 //   <change who="" date="2012.12.07">Created</change>
 // </history>
 
-using System;
 using Fanex.NAP.Framework.Data;
+using System;
 
 namespace Fanex.BetList.Accounting.Criteria
 {

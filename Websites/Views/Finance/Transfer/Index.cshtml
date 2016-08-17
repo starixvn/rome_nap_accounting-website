@@ -22,8 +22,8 @@
 <script type="text/javascript">
 
 
-    var fromUsername = '@Sunplus.Accounting.Core.Common.AppSession.CustUName';    
-    
+    var fromUsername = '@Sunplus.Accounting.Core.Common.AppSession.CustUName';
+
     function validateValue() {
         $('#errMsg').hide();
         var _toUser = document.getElementById("touser").value;
@@ -53,7 +53,7 @@
             amount: _amount,
             remark: $("#remark").val()
         };
-        
+
         if (isNaN(parseFloat(_amount))) {
             return false;
         }
@@ -65,7 +65,7 @@
                     transfer.utils.showError(data.ErrorMessage);
                 }
                 else {
-                    
+
                     $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
                 }
                 transfer.utils.unBlock();
@@ -79,120 +79,129 @@
     };
 </script>
 <style type="text/css">
-    .tblFinance
-    {
+    .tblFinance {
     }
-    .tblFinance tr
-    {
-        line-height: 12px;
-    }
+
+        .tblFinance tr {
+            line-height: 12px;
+        }
 </style>
 @{
     var IsHadPermissionOnCrossCurrencyTransfer = Model.IsHadPermissionOnCrossCurrencyTransfer;
     var IsHadPermissionOnYesterdayTransfer = Model.IsHadPermissionOnYesterdayTransfer;
 }
 <input id="hiddenForexAccount" type="hidden" value="@Model.ForexAccount" />
-<div id="errMsg" style="display: none">
-</div>
-<div class="main">
-    <div class="maincontent">
-        <div style="border: 1px solid #7C98A4; width: 700px">
-            <div class="box_header" style="width: 100%; margin: 0px">
-                <div id="left_tab1" class="left_tab" style="width: 100%">
-                    <ul>
-                        <li id="left_tab1_1" style='float:left;display: 
-                            @{ 
+
+@if (Model.SpecialSitePermission.ErrorCode > 0)
+{
+    <div id="errMsg" style="display: block">
+        @Model.SpecialSitePermission.ErrorMessage
+    </div>
+}
+else
+{
+    <div id="errMsg" style="display: none">
+    </div>
+    <div class="main">
+        <div class="maincontent">
+            <div style="border: 1px solid #7C98A4; width: 700px">
+                <div class="box_header" style="width: 100%; margin: 0px">
+                    <div id="left_tab1" class="left_tab" style="width: 100%">
+                        <ul>
+                            <li id="left_tab1_1" style='float:left;display:
+                            @{
                                 if (IsHadPermissionOnYesterdayTransfer)
-                                { 
+                                {
                                     @:block
                                 }
                                 else
-                                { 
+                                {
                                     @:none
                                 }
                             }'
-                                @{ 
-                                    if (IsHadPermissionOnYesterdayTransfer)
-                                    {
-                                        @:class='current'
-                                    }
-                                }><a href="javascript:;"><span>Transfer Yesterday's Transactions </span></a>
-                        </li>
-                        <li id="left_tab1_2" style='float:left;display: 
-                            @{ 
+                                @{ if (IsHadPermissionOnYesterdayTransfer) { @: class='current'
+                                                                    } }>
+                                <a href="javascript:;"><span>Transfer Yesterday's Transactions </span></a>
+                            </li>
+                            <li id="left_tab1_2" style='float:left;display:
+                            @{
                                 if (IsHadPermissionOnCrossCurrencyTransfer)
                                 {
                                     @:block
                                 }
                                 else
                                 {
-                                    @:none 
+                                    @:none
                                 }
                             }; position:relative'
-                                @{ 
-                                    if (!IsHadPermissionOnYesterdayTransfer)
-                                    { 
-                                        @:class='current'
-                                    }
-                                }><a href="javascript:;"><span style="padding-right: 22px">Finance Cross-Currency Transfer</span>
+                                @{ if (!IsHadPermissionOnYesterdayTransfer) { @: class='current'
+                                                                    } }>
+                                <a href="javascript:;">
+                                    <span style="padding-right: 22px">Finance Cross-Currency Transfer</span>
                                 </a><span style="background-image: url('../UserGuide/image/icon_help.png'); cursor: pointer;
                                     width: 14px; height: 14px; position: absolute; right: 8px; top: 3px" onclick="javascript:userGuide.show('SingleCrossCurrencyFinanceTransfer', 'Single Cross-Currency Finance Transfer', 700, 600);">
-                                </span></li>
-                        <li id="left_tab1_3" style='float:left;display: 
-                            @{ 
+                                </span>
+                            </li>
+                            <li id="left_tab1_3" style='float:left;display:
+                            @{
                                 if (IsHadPermissionOnCrossCurrencyTransfer)
                                 {
                                     @:block
                                 }
                                 else
                                 {
-                                    @:none 
+                                    @:none
                                 }
-                            }; position:relative'><a href="javascript:;"><span style="padding-right: 22px">Finance Cross-Currency Transfer (New)</span>
-                                </a></li>
-                    </ul>
+                            }; position:relative'>
+                                <a href="javascript:;">
+                                    <span style="padding-right: 22px">Finance Cross-Currency Transfer (New)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div id="content_tab1" style="margin-top: 10px; margin-left: 10px; display: 
-                        @{ 
+                <div>
+                    <div id="content_tab1" style="margin-top: 10px; margin-left: 10px; display:
+                        @{
                             if (IsHadPermissionOnYesterdayTransfer)
-                            { 
+                            {
                                 @:block
                             }
                             else
-                            { 
+                            {
                                 @:none
                             }
                         }">
-                    @Html.Partial("~/Views/Finance/Transfer/TransferYesterdayTransactions.cshtml")
-                </div>
-                <div id="content_tab2" style="margin-top: 10px; margin-left: 10px; margin-bottom: 60px;
-                        position: relative; display: 
-                        @{ 
+                        @Html.Partial("~/Views/Finance/Transfer/TransferYesterdayTransactions.cshtml")
+                    </div>
+                    <div id="content_tab2" style="margin-top: 10px; margin-left: 10px; margin-bottom: 60px;
+                        position: relative; display:
+                        @{
                             if (IsHadPermissionOnYesterdayTransfer)
-                            { 
+                            {
                                 @:none
                             }
                             else
                             {
                                 if (IsHadPermissionOnCrossCurrencyTransfer)
-                                { 
-                                    @:block 
+                                {
+                                    @:block
                                 }
                                 else
-                                { 
+                                {
                                     @:none
                                 }
                             }
                         }">
-                    @Html.Partial("~/Views/Finance/Transfer/CrossCurrencyTransfer.cshtml")
-                </div>
-                <div id="content_tab3" style="margin-top: 10px; margin-left: 10px; margin-bottom: 60px;
+                        @Html.Partial("~/Views/Finance/Transfer/CrossCurrencyTransfer.cshtml")
+                    </div>
+                    <div id="content_tab3" style="margin-top: 10px; margin-left: 10px; margin-bottom: 60px;
                         position: relative; display: none">
-                    @Html.Partial("~/Views/Finance/Transfer/CrossCurrencyTransferNew.cshtml")
+                        @Html.Partial("~/Views/Finance/Transfer/CrossCurrencyTransferNew.cshtml")
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    }

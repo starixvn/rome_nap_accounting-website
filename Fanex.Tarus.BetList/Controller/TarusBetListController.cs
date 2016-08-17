@@ -6,20 +6,20 @@
 // -----------------------------------------------------------------------
 
 using Fanex.BetList.Accounting.Models;
+using Fanex.Tarus.Security.Authenticate;
 
 namespace Fanex.Tarus.BetList.Controller
 {
-    using System;
-    using System.Collections;
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Attributes;
     using DNAide.Core;
     using Fanex.BetList.Accounting.Services;
     using Sunplus.Accounting.Core.Common;
+    using System;
+    using System.Collections;
+    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SpecialSiteFilter]
     public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;
@@ -33,7 +33,8 @@ namespace Fanex.Tarus.BetList.Controller
         /// Betlist by refno
         /// </summary>
         /// <returns></returns>
-
+        [AuthorizeFunctions("BetListByIP")]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
             BalanceUp balanceUp = ReportService.BalanceUp;
@@ -47,7 +48,8 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <param name="CustID"></param>
         /// <returns></returns>
-
+        [AuthorizeFunctions("ViewInfo")]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByCustInfo(int CustID)
         {
             ViewBag.CustID = CustID;
@@ -68,14 +70,14 @@ namespace Fanex.Tarus.BetList.Controller
         /// <param name="Bettype"></param>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
-        /// <param name="IsCache"></param>
         /// <returns></returns>
+        [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, bool IsCache)
+        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex)
         {
             int quantity = 0;
             PageIndex = PageIndex <= 0 ? 1 : PageIndex;
-            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity, IsCache);
+            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
 
@@ -89,6 +91,8 @@ namespace Fanex.Tarus.BetList.Controller
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
+        [AuthorizeFunctions("BetListByIP")]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
             ViewBag.FromDate = FromDate;

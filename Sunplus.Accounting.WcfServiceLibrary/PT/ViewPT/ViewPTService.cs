@@ -4,6 +4,11 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using System.Collections.Generic;
+using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Criteria;
+using Sunplus.Accounting.Core.Common;
+using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 {
@@ -24,12 +29,40 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 
         public ViewPtDTO ViewPositionTaking(string userName, int sportId, int bettypeId, bool isLive)
         {
+            var permissionService = new ServiceBase();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = userName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                var result = new ViewPtDTO();
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.ViewPositionTaking(userName, sportId, bettypeId, isLive);
         }
 
         public ViewCommissionDTO ViewCommission(string userName)
         {
+            var permissionService = new ServiceBase();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = userName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                var result = new ViewCommissionDTO();
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+                return result;
+            }
+
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.ViewCommission(userName);
         }

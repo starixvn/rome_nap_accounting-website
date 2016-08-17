@@ -66,7 +66,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("pagesize", pageSize);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 hash.Add("totalitems", totalChildren);
-
+                hash.Add("userid", AppSession.AccId);
                 dtSuperList = _customerListAccess.GetCustomerList("Acc_CustomerSelSAg", hash, ref totalPages, ref totalChildren);
 
                 CustomerListModel model = new CustomerListModel();
@@ -153,6 +153,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 Hashtable hash = new Hashtable();
 
                 var dtMasterList = new DataSet();
+                hash.Add("userid", AppSession.AccId);
                 hash.Add("srecommend", superID);
                 hash.Add("pagesize", pageSize);
                 hash.Add("pageindex", pageIndex);
@@ -291,6 +292,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
+                hash.Add("userid", AppSession.AccId);
                 var dtAgentList = _customerListAccess.GetCustomerList("Acc_CustomerSelByMAg", hash, ref totalPages, ref totalChildren);
 
                 CustomerListModel model = new CustomerListModel();

@@ -26,6 +26,7 @@ public class UpdateMoveCust : IHttpHandler,IRequiresSessionState {
             case "1"://get site info from username
                 System.Collections.Hashtable param = new System.Collections.Hashtable();
                 param.Add("username", context.Request["CustId"]);
+                param.Add("userid", AppSession.AccId);
                 DNAide.Data.DbResult ds = null;
 
                 using (Fanex.Data.ObjectDb db = new Fanex.Data.ObjectDb("Acc_CustomerSelSiteByUserName", 600))

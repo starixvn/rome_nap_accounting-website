@@ -83,6 +83,9 @@ namespace Sunplus.Accounting.Entities.LogDisplay
 
         [DataMember]
         public List<RecordLogin> Login { get; set; }
+
+        [DataMember]
+        public string ErrorMessage { get; set; }
     }
 
     [Serializable]

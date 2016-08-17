@@ -10,15 +10,14 @@
 
 namespace Fanex.Tarus.Customer.Controller.EditLicensee
 {
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Attributes;
     using Fanex.Tarus.Customer.Business.EditLicensee;
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using System.Web.Mvc;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SpecialSiteFilter]
     public class EditLicenseeController : BaseController
     {
         private readonly IEditLicenseeService _editLicenseeService;

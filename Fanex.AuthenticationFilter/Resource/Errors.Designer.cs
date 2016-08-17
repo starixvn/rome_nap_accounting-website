@@ -70,5 +70,16 @@ namespace Fanex.AuthenticationFilter.Resource
                 return ResourceManager.GetString("errorNotAuthorized", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to You don&apos;t have permission to access.
+        /// </summary>
+        internal static string errorNotHavePermission
+        {
+            get
+            {
+                return ResourceManager.GetString("errorNotHavePermission", resourceCulture);
+            }
+        }
     }
 }

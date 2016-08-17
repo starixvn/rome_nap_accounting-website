@@ -63,8 +63,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
             DbResult result = null;
             try
             {
+                var param = new Hashtable { { "system", AppSession.CurrentSystemName.ToUpper() }, { "userid", AppSession.AccId } };
                 using (ObjectDb db = new ObjectDb("CustomerSetting_SiteSel", 600))
                 {
+                    db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
 

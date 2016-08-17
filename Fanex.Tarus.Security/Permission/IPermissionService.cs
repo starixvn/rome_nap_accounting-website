@@ -11,6 +11,8 @@
 /// </summary>
 namespace Fanex.Tarus.Security.Permission
 {
+    using Criteria;
+    using CustomerSetting.Module.Core.Models;
     using System.Collections.Generic;
 
     /// <summary>
@@ -42,5 +44,7 @@ namespace Fanex.Tarus.Security.Permission
         /// <param name="pageAccess">The page access.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess);
+
+        bool CheckDummyAccount(CheckDummyAccountCriteria criteria);
     }
 }

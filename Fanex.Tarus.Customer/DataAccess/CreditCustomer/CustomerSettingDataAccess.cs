@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using Sunplus.Accounting.Core.Configurations;
     using Fanex.Tarus.Customer.Entities;
     using DNAide.Core;
-
+    using Sunplus.Accounting.Core.Common;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -84,6 +84,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                 using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
                 {
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
+                    objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
                     using (var reader = objDB.ExecuteReader())
                     {
                         if (reader != null)

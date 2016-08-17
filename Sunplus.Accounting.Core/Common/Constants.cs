@@ -77,6 +77,8 @@ namespace Sunplus.Accounting.Core.Common
             /// </summary>
             public const string AccessDenied = "~/AccessDenied.aspx";
 
+            public const string AccessSpecialSiteDenied = "~/AccessSpecialSiteDenied.aspx";
+
             public const string LogOut = "~/LogOut.aspx";
 
             public const string UMPage = "~/UnderMaintenance.aspx";

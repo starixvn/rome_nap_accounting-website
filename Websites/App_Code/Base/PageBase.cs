@@ -7,64 +7,69 @@ using Fanex.Tarus.Security.Permission;
 using Sunplus.Accounting.Core.Common;
 
 
-    /// <summary>
-    /// Summary description for PageBase
-    /// </summary>
-    public class PageBase : Page
+/// <summary>
+/// Summary description for PageBase
+/// </summary>
+public class PageBase : Page
+{
+    private const string NotFoundPageUrl = Constants.Page.NotFound;
+
+    public virtual string RedirectUrl
     {
-        private const string NotFoundPageUrl = Constants.Page.NotFound;
+        get { return NotFoundPageUrl; }
+    }
 
-        public virtual string RedirectUrl
+
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+        var permissionService = new PermissionService();
+
+        var pageAcess = new Dictionary<string, int>();
+        var roleAccess = new Dictionary<string, int>();
+        int groupId = 0;
+        permissionService.GetPageAccessAndRoleAccess(AppSession.AccId, pageAcess, roleAccess, ref groupId);
+        AppSession.GroupID = groupId;
+        AppSession.PageAccess = pageAcess;
+        AppSession.RoleAccess = roleAccess;
+        if (AppSession.AccId == 0 || roleAccess.Count == 0 || pageAcess.Count == 0 ||
+            AppSession.UserMenu == null)
         {
-            get { return NotFoundPageUrl; }
+            LogOut();
         }
 
-
-        protected override void OnInit(EventArgs e)
+        if (!HasPermission())
         {
-            base.OnInit(e);
-            var permissionService = new PermissionService();
-
-            var pageAcess = new Dictionary<string, int>();
-            var roleAccess = new Dictionary<string, int>();
-            int groupId = 0;
-            permissionService.GetPageAccessAndRoleAccess(AppSession.AccId, pageAcess, roleAccess, ref groupId);
-            AppSession.GroupID = groupId;
-            AppSession.PageAccess = pageAcess;
-            AppSession.RoleAccess = roleAccess;
-            if (AppSession.AccId == 0 || roleAccess.Count == 0 || pageAcess.Count == 0 ||
-                AppSession.UserMenu == null)
-            {
-                LogOut();
-            }
-
-            if (!HasPermission())
-            {
-                RedirectDeny();
-            }
-        }
-
-        protected virtual void RedirectDeny()
-        {
-            HttpContext.Current.Server.Transfer(Constants.Page.AccessDenied);
-        }
-
-        private static void LogOut()
-        {
-            HttpContext.Current.Server.Transfer(Constants.Page.LogOut);
-        }
-
-        protected virtual bool HasPermission()
-        {
-            string url = Request.CurrentExecutionFilePath.ToLower();
-            if (Request.ApplicationPath.Equals("/"))
-                url = "/" + url;
-            url = url.Replace(Request.ApplicationPath.ToLower() + "/", "").ToLower();
-            ;
-            // url = WebSettings.VirtualDir ? Request.RawUrl.Substring(Request.RawUrl.IndexOf("/", 1) + 1) : Request.RawUrl.Substring(1);
-            //url = url.Substring(0, url.IndexOf(".aspx") + 5).ToLower();
-            var permissionService = new PermissionService();
-            AppSession.PageAccess = permissionService.GetPageAccess(AppSession.AccId);
-            return AppSession.PageAccess.ContainsKey(url);
+            RedirectDeny();
         }
     }
+
+    protected virtual void RedirectDeny()
+    {
+        HttpContext.Current.Server.Transfer(Constants.Page.AccessDenied);
+    }
+
+    protected virtual void RedirectSpecialSiteDeny()
+    {
+        HttpContext.Current.Server.Transfer(Constants.Page.AccessSpecialSiteDenied);
+    }
+
+    private static void LogOut()
+    {
+        HttpContext.Current.Server.Transfer(Constants.Page.LogOut);
+    }
+
+    protected virtual bool HasPermission()
+    {
+        string url = Request.CurrentExecutionFilePath.ToLower();
+        if (Request.ApplicationPath.Equals("/"))
+            url = "/" + url;
+        url = url.Replace(Request.ApplicationPath.ToLower() + "/", "").ToLower();
+        ;
+        // url = WebSettings.VirtualDir ? Request.RawUrl.Substring(Request.RawUrl.IndexOf("/", 1) + 1) : Request.RawUrl.Substring(1);
+        //url = url.Substring(0, url.IndexOf(".aspx") + 5).ToLower();
+        var permissionService = new PermissionService();
+        AppSession.PageAccess = permissionService.GetPageAccess(AppSession.AccId);
+        return AppSession.PageAccess.ContainsKey(url);
+    }
+}

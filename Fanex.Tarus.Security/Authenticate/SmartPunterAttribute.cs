@@ -19,17 +19,19 @@ namespace Fanex.Tarus.Security.Authenticate
     using System.Web;
     using Fanex.Common;
     using System.Collections;
-
-    /// <summary>
-    /// Class CustomerSettingAttribute.
-    /// </summary>
+    using Sunplus.Accounting.Core.Common;
+    using System.Web.Mvc;    /// <summary>
+                             /// Class CustomerSettingAttribute.
+                             /// </summary>
     public class SmartPunterAttribute : IAuthenticate
     {
         /// <summary>
         /// The _permission service.
         /// </summary>
-        private readonly ISmartPunterPermissionService _permissionService = new SmartPunterPermissionService();
+        private readonly ISmartPunterPermissionService _smartPunterPermissionService = new SmartPunterPermissionService();
+        private readonly IPermissionService _permissionService = new PermissionService();
 
+        private string _betlistFunctionName = "BetList";
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerSettingAttribute"/> class.
         /// </summary>
@@ -57,22 +59,28 @@ namespace Fanex.Tarus.Security.Authenticate
         /// </summary>
         /// <param name="action">The action.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool AllowRead()
+        public bool AllowRead(ActionExecutedContext filterContext)
         {
-            if(this.ParamHastable.ContainsKey("custId"))
-            {
-                int custId = Converter.To<int>(this.ParamHastable["custId"]);
-                return !_permissionService.IsDeniedViewSmartPunter(custId, string.Empty);
-            }
-            else if (this.ParamHastable.ContainsKey("username"))
-            {
-                var username = Converter.ToString2(this.ParamHastable["username"]);
-                return !_permissionService.IsDeniedViewSmartPunter(null, username);
-            }
-            else
+            if (ParamHastable == null)
             {
                 return true;
             }
+
+            if (ParamHastable.ContainsKey("custId"))
+            {
+
+                int custId = Converter.To<int>(ParamHastable["custId"]);
+              
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty);
+            }
+
+            if (ParamHastable.ContainsKey("username"))
+            {
+                var username = Converter.ToString2(ParamHastable["username"]);
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -80,11 +88,9 @@ namespace Fanex.Tarus.Security.Authenticate
         /// </summary>
         /// <param name="action">The action.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool AllowUpdate()
+        public bool AllowUpdate(ActionExecutedContext filterContext)
         {
             return true;
         }
-
-       
     }
 }

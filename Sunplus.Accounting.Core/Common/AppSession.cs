@@ -226,13 +226,16 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["AccUserName"] = value; }
         }
 
-        /// <summary>
-        /// credit term group feed
-        /// </summary>
         public static int GroupID
         {
             get { return CastAide.AsInt32(HttpContext.Current.Session["GroupID"]); }
             set { HttpContext.Current.Session["GroupID"] = value; }
+        }
+
+        public static int CreditTermGroupID
+        {
+            get { return CastAide.AsInt32(HttpContext.Current.Session["CreditTermGroupID"]); }
+            set { HttpContext.Current.Session["CreditTermGroupID"] = value; }
         }
 
         public static bool ViewIPVN

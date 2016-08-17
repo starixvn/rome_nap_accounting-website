@@ -3747,4 +3747,7 @@
   <data name="Disable211_2401" xml:space="preserve">
     <value>Disabled AllBet</value>
   </data>
+  <data name="Mpm99mp" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
 </root>

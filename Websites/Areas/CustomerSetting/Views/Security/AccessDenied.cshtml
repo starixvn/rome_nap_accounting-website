@@ -1,5 +1,6 @@
 ﻿<link href="@Url.Content("~/App_Themes/Public/Message.css")" rel="stylesheet" type="text/css" />
 <div class="alertboxerr" style="border: none;">
-    <div >
-        @Resources.Error.AccessDenied</div>
+    <div>
+        @(ViewBag.ErrorMessage == null ? Resources.Error.AccessDenied : ViewBag.ErrorMessage)
+    </div>
 </div>

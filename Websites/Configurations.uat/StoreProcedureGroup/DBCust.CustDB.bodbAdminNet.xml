@@ -58,9 +58,9 @@
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -186,7 +186,7 @@
     <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Move Site">
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Security Code">
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -277,7 +277,7 @@
     <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName_xpre" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Customer - Finance Super List">
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.bodbAdminNet" />

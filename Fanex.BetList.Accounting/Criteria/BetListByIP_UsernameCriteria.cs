@@ -9,6 +9,7 @@
 
 namespace Fanex.BetList.Accounting.Criteria
 {
+    using Sunplus.Accounting.Core.Common;
     using System;
 
     /// <summary>
@@ -19,6 +20,15 @@ namespace Fanex.BetList.Accounting.Criteria
         public DateTime FromDate { get; set; }
 
         public string IP { get; set; }
+
+
+        public int UserId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
 
         public string GetSettingKey()
         {

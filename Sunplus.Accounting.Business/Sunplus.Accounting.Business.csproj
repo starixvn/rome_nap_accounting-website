@@ -73,11 +73,12 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common">
-      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.2\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
@@ -86,8 +87,9 @@
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data">
-      <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
@@ -101,8 +103,9 @@
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.NAP.Framework">
-      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCCrypt">
       <HintPath>..\Dependency\IBCCrypt.dll</HintPath>
@@ -125,6 +128,10 @@
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -606,7 +613,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
