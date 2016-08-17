@@ -22,8 +22,8 @@ public partial class InternalView : System.Web.UI.Page
                        UserID = Convert.ToInt32(Request["accId"]),
                        CustName = Request["custName"]
                    });
-        bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        if (checkSpecialSitePermission.ErrorCode > 0 || isDummyAcc)
+        // bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
+        if (checkSpecialSitePermission.ErrorCode > 0 ) // || isDummyAcc)
         {
             Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
             return;
