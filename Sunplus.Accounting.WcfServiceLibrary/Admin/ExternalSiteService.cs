@@ -32,20 +32,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result AddSuperToGroup(string username, string groupName)
         {
-            Result result = new Result();
-            var permissionService = new ServiceBase();
+            Result result = CheckSpecialSitePermission(custName: username);
 
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            if (result.ErrorCode > 0)
             {
-                UserID = AppSession.AccId,
-                CustName = username
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorCode = checkSpecialSite.ErrorCode;
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-
                 return result;
             }
 
@@ -54,20 +44,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result RemoveSuperFromGroup(int custId, string groupName)
         {
-            Result result = new Result();
-            var permissionService = new ServiceBase();
+            Result result = CheckSpecialSitePermission(custId: custId);
 
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            if (result.ErrorCode > 0)
             {
-                UserID = AppSession.AccId,
-                CustID = custId
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorCode = checkSpecialSite.ErrorCode;
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-
                 return result;
             }
 
@@ -81,13 +61,27 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate)
         {
+            Result result = CheckSpecialSitePermission(custId: custId);
+
+            if (result.ErrorCode > 0)
+            {
+                return result;
+            }
+
+            return _externalSiteService.ChangePrimaryGroup(custId, groupName, effectiveDate);
+        }
+
+        private Result CheckSpecialSitePermission(int? custId = null, string custName = null)
+        {
             Result result = new Result();
+
             var permissionService = new ServiceBase();
 
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
                 UserID = AppSession.AccId,
-                CustID = custId
+                CustID = custId,
+                CustName = custName
             });
 
             if (checkSpecialSite.ErrorCode > 0)
@@ -98,7 +92,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
                 return result;
             }
 
-            return _externalSiteService.ChangePrimaryGroup(custId, groupName, effectiveDate);
+            return result;
         }
     }
 }
