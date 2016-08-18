@@ -8,7 +8,7 @@
 @using Fanex.Tarus.BetList.Helper;
 @using Fanex.Tarus.BetList.Resources;
 @using Fanex.Voidbridge.BetDetail.Models;
-@model IEnumerable<TicketDetail>
+@model BetDetailReport
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
     <link type="text/css" rel="Stylesheet"
           href="@Url.Content("~/Areas/Voidbridge/Views/BetDetails/Styles/BetDetails.less")" />
-    <title>@BetListResources.Product_6</title>
+    <title>Macau Games Details</title>
 </head>
 <body>
     <div id="betlist-details" class="freegrid display-none">
@@ -56,7 +56,7 @@
     <script type="text/javascript" src="~/Areas/Voidbridge/Views/BetDetails/Scripts/BetDetails.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-		var totalRows = @Model.Count();
+		var totalRows = @Model.TotalRows;
         var transId = @Request.QueryString["TransId"];
         var custId = @Request.QueryString["CustId"];
         var transType = @Request.QueryString["TransType"];
