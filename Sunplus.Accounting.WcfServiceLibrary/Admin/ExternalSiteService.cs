@@ -1,13 +1,12 @@
+using System.Collections.Generic;
+using System.ServiceModel.Activation;
 using Fanex.CustomerSetting.Module.Core.Criteria;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
-using Fanex.Tarus.Security.Permission;
 using Sunplus.Accounting.Business.Admin;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
-using System.Collections.Generic;
-using System.ServiceModel.Activation;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 {
@@ -33,28 +32,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result AddSuperToGroup(string username, string groupName)
         {
-            return _externalSiteService.AddSuperToGroup(username, groupName);
-        }
-
-        public Result RemoveSuperFromGroup(int custId, string groupName)
-        {
             Result result = new Result();
             var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustID = custId
-            });
 
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorCode = checkSpecialSite.ErrorCode;
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
-            Result result = new Result();
-            var permissionService = new ServiceBase();
             var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
                 UserID = AppSession.AccId,
@@ -65,12 +45,33 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
             {
                 result.ErrorCode = checkSpecialSite.ErrorCode;
                 result.ErrorMessage = checkSpecialSite.ErrorMessage;
+
                 return result;
             }
 
-            var external = CommonBootStrapper.Locator.GetInstance<IExternalSite>();
+            return _externalSiteService.AddSuperToGroup(username, groupName);
+        }
 
-            return external.RemoveSuperFromGroup(custId);
+        public Result RemoveSuperFromGroup(int custId, string groupName)
+        {
+            Result result = new Result();
+            var permissionService = new ServiceBase();
+
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustID = custId
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorCode = checkSpecialSite.ErrorCode;
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+
+                return result;
+            }
+
+            return _externalSiteService.RemoveSuperFromGroup(custId, groupName);
         }
 
         public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
@@ -80,6 +81,23 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         public Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate)
         {
+            Result result = new Result();
+            var permissionService = new ServiceBase();
+
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustID = custId
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                result.ErrorCode = checkSpecialSite.ErrorCode;
+                result.ErrorMessage = checkSpecialSite.ErrorMessage;
+
+                return result;
+            }
+
             return _externalSiteService.ChangePrimaryGroup(custId, groupName, effectiveDate);
         }
     }

@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DNAide.Core;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
@@ -35,7 +35,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             {
                 { "groupname", groupName }
             };
-                param.Add("userid", AppSession.AccId);
+
             using (ObjectDb db = new ObjectDb("SelectInfoCust"))
             {
                 return db.Query<ExternalSiteSuper>(param);

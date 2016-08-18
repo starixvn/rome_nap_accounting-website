@@ -144,6 +144,12 @@ var addSuperService = (function ($, ajaxService) {
                 setTimeout(hideDialog, 2000);
                 setTimeout(reloadSuperListHandler, 3000);
             }
+            else if (result.ErrorCode === 106) {
+                showAlertMessage("errMsg", result.ErrorMessage, 0);
+
+                setTimeout(reloadSuperListHandler, 3000);
+                setTimeout(hideDialog, 5000);
+            }
             else {
                 showAlertMessage("errMsg", result.ErrorMessage, 1);
             }
