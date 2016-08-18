@@ -29,11 +29,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             return groups;
         }
 
-        public IEnumerable<ExternalSiteSuper> GetSuperList(string groupName)
+        public IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, int userId)
         {
             var param = new Hashtable
             {
-                { "groupname", groupName }
+                { "groupname", groupName },
+                { "userid", userId }
             };
 
             using (ObjectDb db = new ObjectDb("SelectInfoCust"))

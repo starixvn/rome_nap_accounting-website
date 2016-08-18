@@ -9,7 +9,7 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
     {
         IEnumerable<string> GetGroupNames();
 
-        IEnumerable<ExternalSiteSuper> GetSuperList(string groupName);
+        IEnumerable<ExternalSiteSuper> GetSuperList(string groupName, int userId);
 
         Result AddSuperToGroup(string username, string groupName, int userId);
 

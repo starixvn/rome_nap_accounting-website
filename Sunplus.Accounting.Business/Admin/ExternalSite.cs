@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.Business.Admin
         {
             try
             {
-                var superList = _externalSiteDAO.GetSuperList(groupName);
+                var superList = _externalSiteDAO.GetSuperList(groupName, AppSession.AccId);
 
                 if (superList.Any())
                 {
