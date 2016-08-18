@@ -15,27 +15,37 @@ public partial class InternalView : System.Web.UI.Page
     {
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
-        var serviceBase = new ServiceBase();
-        var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
-                   new CheckSpecialSitePermissionCriteria()
-                   {
-                       UserID = Convert.ToInt32(Request["accId"]),
-                       CustName = Request["custName"]
-                   });
-        // bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        if (checkSpecialSitePermission.ErrorCode > 0 ) // || isDummyAcc)
+        bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
+        if (isDummyAcc)
         {
-            Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
-            return;
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
+                return;
+            }
+        }
+        else
+        {
+            var serviceBase = new ServiceBase();
+            var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
+                       new CheckSpecialSitePermissionCriteria()
+                       {
+                           UserID = Convert.ToInt32(Request["accId"]),
+                           CustName = Request["custName"]
+                       });
+            if (checkSpecialSitePermission.ErrorCode > 0)
+            {
+                Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
+                return;
+            }
         }
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-
         string internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
-            Session[WebSettings.InternalAgentUMToken] == null? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),
-            strParams, 
+            Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),
+            strParams,
             IsLocalOrVpnRequest(Request.Headers["Host"]));
 
         Response.Redirect(url);
