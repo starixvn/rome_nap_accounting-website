@@ -203,6 +203,6 @@
     <script type="text/javascript" src="../../js/jQuery/Pager/jpager.js"></script>
     <script type="text/javascript" src="../../js/showhidepopup.js"></script>
     <script type="text/javascript" src="../../js/Common/ArrayUtils.js"></script>
-    <script type="text/javascript" src="js/ExternalSite.js"></script>
+    <script type="text/javascript" src="js/ExternalSite.js?v=<%=AccCommon.Version() %>"></script>
 </body>
 </html>
