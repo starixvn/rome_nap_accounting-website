@@ -2497,6 +2497,12 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableVoidbridge" xml:space="preserve">
     <value>Macau Games</value>
   </data>
+  <data name="enableNG2" xml:space="preserve">
+    <value>Enable NG2</value>
+  </data>
+  <data name="lblDisabledNG2Upline" xml:space="preserve">
+    <value>NG2 has been disabled at upline</value>
+  </data>
   <data name="DontHavePermission" xml:space="preserve">
     <value>You don't have permission to access</value>
   </data>
