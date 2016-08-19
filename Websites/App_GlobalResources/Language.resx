@@ -2500,4 +2500,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="DontHavePermission" xml:space="preserve">
     <value>You don't have permission to access</value>
   </data>
+  <data name="ExtraPTGroup" xml:space="preserve">
+    <value>Extra PT Group</value>
+  </data>
+  <data name="NormalGroup" xml:space="preserve">
+    <value>Normal Group</value>
+  </data>
 </root>

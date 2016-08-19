@@ -77,7 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\ExternalSiteExtraPTGroup.cs" />
     <Compile Include="Admin\ExternalSiteGridBO.cs" />
+    <Compile Include="Admin\ExternalSiteSuper.cs" />
     <Compile Include="BetAggregator\AmtLimitLicensee.cs" />
     <Compile Include="BetAggregator\BACurrenyGroupDTO.cs" />
     <Compile Include="BetAggregator\BALicWinlossDaily.cs" />
