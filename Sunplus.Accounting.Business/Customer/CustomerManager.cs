@@ -1713,6 +1713,22 @@ namespace Sunplus.Accounting.Business.Customer
                                                22,
                                                4);
                             break;
+                        case "23":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               CustParent.IsDisableNG2,
+                                               hasDownline,
+                                               "NG2",
+                                               renderLeftPanelParameter.IsShowNG2,
+                                               renderLeftPanelParameter,
+                                               "Update NG2 Status",
+                                               23,
+                                               4);
+                            break;
                     }
                 }
             }
