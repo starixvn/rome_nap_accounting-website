@@ -6,9 +6,9 @@ namespace Fanex.Tarus.Customer.Entities.NG2
     {
         public SyncCurrencyModel()
         {
-            this.Model = new List<SyncCurrencyEntity>();
+            this.Currencies = new List<SyncCurrencyEntity>();
         }
 
-        public IList<SyncCurrencyEntity> Model { get; set; }
+        public IList<SyncCurrencyEntity> Currencies { get; set; }
     }
 }
