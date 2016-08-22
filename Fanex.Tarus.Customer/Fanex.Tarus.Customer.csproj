@@ -226,6 +226,8 @@
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
+    <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
+    <Compile Include="Business\NG2\SyncCurrencyService.cs" />
     <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\GoldDeluxeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
+    <Compile Include="Controller\NG2\SyncCurrencyController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Controller\VirtualRateController.cs" />
@@ -301,6 +304,7 @@
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\NG2\SyncCurrencyCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
@@ -332,6 +336,8 @@
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
+    <Compile Include="DataAccess\NG2\ISyncCurrencyRepository.cs" />
+    <Compile Include="DataAccess\NG2\SyncCurrencyRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
@@ -416,6 +422,8 @@
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />
+    <Compile Include="Entities\NG2\SyncCurrencyEntity.cs" />
+    <Compile Include="Entities\NG2\SyncCurrencyModel.cs" />
     <Compile Include="Entities\NpoiExcelExtensions.cs" />
     <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
@@ -507,6 +515,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
