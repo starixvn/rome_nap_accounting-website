@@ -91,7 +91,7 @@
     <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Virtual Rate">
-    <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Report">
     <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
