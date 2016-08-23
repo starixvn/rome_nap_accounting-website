@@ -71,27 +71,27 @@
         </table>
     </div>
     <script type="text/javascript">
-    window.rootUrl = '@Url.Content("~")';
-  var _today = '@DateTime.Today.ToShortDateString()';
-  var _isLink = '@ViewBag.IsLink';
-  var _ip  = '@ViewBag.Ip';
-  var _fromDate  ='@ViewBag.FromDate';
-  var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
+        window.rootUrl = '@Url.Content("~")';
+        var _today = '@DateTime.Today.ToShortDateString()';
+        var _isLink = '@ViewBag.IsLink';
+        var _ip  = '@ViewBag.Ip';
+        var _fromDate  ='@ViewBag.FromDate';
+        var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
 
-  head.js("@Url.Content("~/js/jQuery/jquery.js")",
-            "@Url.Content("~/js/json2.js")", 
-            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
-            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
-            "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
-            "@Url.Content("~/js/dialogbox.js")",
-            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
-            "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
-            "@Url.Content("~/js/BlockUI.js")", 
-            "@Url.Content("~/js/common.js")", 
-            "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js")",
-            "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js")",
-            "@Url.Content("~/Views/BetList/BetListByIP/Scripts/BetlistByIP.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+        head.js("@Url.Content("~/js/jQuery/jquery.js")",
+                  "@Url.Content("~/js/json2.js")",
+                  "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+                  "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+                  "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
+                  "@Url.Content("~/js/dialogbox.js")",
+                  "@Url.Content("~/js/jQuery/Pager/jpager.js")",
+                  "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
+                  "@Url.Content("~/js/BlockUI.js")",
+                  "@Url.Content("~/js/common.js")",
+                  "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                  "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                  "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                  "@Url.Content("~/Views/BetList/BetListByIP/Scripts/BetlistByIP.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
             "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js")");
     </script>
 </body>

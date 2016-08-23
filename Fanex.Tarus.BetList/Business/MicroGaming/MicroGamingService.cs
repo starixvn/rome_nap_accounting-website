@@ -16,12 +16,7 @@
     {
         private readonly IMicroGamingRepository _microGamingRepository;
 
-        public MicroGamingService()
-            : this(null)
-        {
-        }
-
-        public MicroGamingService(IMicroGamingRepository microGamingRepository)
+        public MicroGamingService(IMicroGamingRepository microGamingRepository = null)
         {
             _microGamingRepository = microGamingRepository ?? new MicroGamingRepository();
         }
@@ -38,7 +33,8 @@
                 BetListHelper betListHelper = new BetListHelper();
                 GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
 
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
+                var outputLiveCasino = new List<ITicketData>();
+
                 foreach (TicketDetail betDetail in detailsTickets)
                 {
                     ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);

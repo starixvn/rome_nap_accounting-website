@@ -1,0 +1,330 @@
+﻿@using Fanex.BetList.Accounting.Models;
+@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Services;
+@using DNAide.Core;
+@using Fanex.BetList.Core.Factories;
+@using Fanex.BetList.Core.Builder;
+@{
+    int numberBeginning = 1;
+
+    string[] renderResult = Render(ref numberBeginning);
+}
+@functions {
+    public string[] Render(ref int numberBeginning)
+    {
+        BetListHelper betlistHelper = new BetListHelper();
+        string[] result = new string[2];
+
+        numberBeginning = (Model.PageIndex - 1) * Model.PageSize;
+
+        foreach (var ticket in Model.TicketDetails)
+        {
+            numberBeginning++;
+            result[1] += renderContent(ticket, numberBeginning, betlistHelper);
+        }
+
+        return result;
+    }
+}
+@helper renderContent(TicketDetail betdetail, int numberBeginning, BetListHelper betlistHelper)
+{
+string statusTemp = betdetail.Ticket.Status.ToLower();
+decimal winlost = betdetail.Ticket.Winlost;
+decimal playerComm = betdetail.Ticket.PlayerComm;
+var ip = Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+
+decimal superPT = betdetail.Ticket.SuperPositionTaking;
+decimal superPT2 = betdetail.SuperPositionTaking2;
+decimal superDiscount = betdetail.Ticket.SuperDiscount;
+decimal superComm = betdetail.Ticket.SuperComm;
+decimal superWinlost = betdetail.Ticket.SuperWinlost;
+string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
+
+decimal masterPT = betdetail.Ticket.MasterPositionTaking;
+decimal masterPT2 = betdetail.MasterPositionTaking2;
+decimal masterDiscount = betdetail.Ticket.MasterDiscount;
+decimal masterComm = betdetail.Ticket.AgentComm;
+decimal masterWinlost = betdetail.Ticket.MasterWinlost;
+
+decimal agentPT = betdetail.Ticket.AgentPositionTaking;
+decimal agentPT2 = betdetail.AgentPositionTaking2;
+decimal agentDiscount = betdetail.Ticket.AgentDiscount;
+decimal agentComm = betdetail.Ticket.Comm;
+decimal agentWinlost = betdetail.Ticket.AgentWinlost;
+
+var isShowWinLoss = statusTemp != "running";
+var isHRWinPlaceBettype = betlistHelper.IsHRWinPlaceBettype(betdetail.Ticket.BetTypeId);
+    @*casino, bingo*@
+var isShowPT = betdetail.Ticket.BetTypeId != 71 && betdetail.Ticket.BetTypeId != 73;
+    <tr class="c">
+        <td>
+            <div class="c width30 table-cell">
+                @numberBeginning
+            </div>
+        </td>
+        <td class="c column-transdate">
+            <div class="width120 table-cell">
+                @Html.Raw(betdetail.TransDateHtml)
+            </div>
+        </td>
+        <td id="td_right_@betdetail.Ticket.TransId" class='r bl_evt'>
+            <div id="choice_right_@betdetail.Ticket.TransId" class="column-choice table-cell">
+                @Html.Raw(betdetail.ChoiceHtml)
+                @if (betdetail.Ticket.BetTypeId == 9 ||
+        betdetail.Ticket.BetTypeId == 29)
+                {
+                    <div class="parlay_@betdetail.Ticket.TransId ">
+                    </div>
+                }
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width60 table-cell">
+                @if (betdetail.Ticket.BetTypeId == 33)
+                {
+                    if (statusTemp != "won" && statusTemp != "lose")
+                    {
+                        <div class="margin-top-5">
+                            -
+                        </div>
+                    }
+                    else
+                    {
+                        int _liveHomeScore = betdetail.Ticket.LiveHomeScore;
+                        string windOdds = string.Empty;
+                        switch (_liveHomeScore)
+                        {
+                            case 0:
+                                windOdds = "-";
+                                break;
+                            case 2:
+                                windOdds = IBCUtils.FormatHandler.FormatNumber20(betdetail.Ticket.Handicap1).TrimEnd('0', '.');
+                                break;
+                            case 4:
+                                windOdds = "0";
+                                break;
+                        }
+
+                        int _liveAwayScore = betdetail.Ticket.LiveAwayScore;
+                        string placeOdds = string.Empty;
+                        switch (_liveAwayScore)
+                        {
+                            case 2:
+                                placeOdds = IBCUtils.FormatHandler.FormatNumber20(betdetail.Ticket.Handicap2).TrimEnd('0', '.');
+                                break;
+                            case 0:
+                                placeOdds = "-";
+                                break;
+                            case 4:
+                                placeOdds = "0";
+                                break;
+                        }
+
+                        <div>
+                            <div class="blue ">
+                                <span>Win: </span><span class="b">@windOdds</span>
+                            </div>
+                            <div class="margin-top-5">
+                                <span>Place: </span><span class="b">@placeOdds</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else if (betdetail.Ticket.BetTypeId == 1233)
+                {
+                    string windOdds = betdetail.Ticket.Handicap1 == 0 ? "0" : IBCUtils.FormatHandler.FormatNumber20(betdetail.Ticket.Handicap1).TrimEnd('0', '.');
+                    string placeOdds = betdetail.Ticket.Handicap2 == 0 ? "0" : IBCUtils.FormatHandler.FormatNumber20(betdetail.Ticket.Handicap2).TrimEnd('0', '.');
+                    <div>
+                        <div class="blue ">
+                            <span>Win: </span><span class="b">@windOdds</span>
+                        </div>
+                        <div class="margin-top-5">
+                            <span>Place: </span><span class="b">@placeOdds</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @Html.Raw(betdetail.OddHtml)
+                }
+            </div>
+        </td>
+        <td class='r bl_underdog'>
+            <div class="width50 table-cell">
+                @Html.Raw(betdetail.StakeHtml)
+            </div>
+        </td>
+        <td class="r">
+            <div class="column-winloss table-cell">
+                @if (statusTemp == "running" || statusTemp == "waiting")
+                {
+                    <div class="margin-top-5">
+                        -
+                    </div>
+                }
+                else if (statusTemp == "void" || statusTemp == "reject")
+                {
+                    <div class="margin-top-5">
+                        0.00
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
+                            @winlost.Format(2)
+                        </div>
+                        <div class="margin-top-5">
+                            @playerComm.Format(2)
+                        </div>
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="c">
+            <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
+                @Html.Raw(betdetail.StatusHtml)
+                @if (ip != "-")
+                {
+                    <br />
+                    <a onclick="viewBetListByIP('@betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betdetail.Ticket.IP');"
+                       href="">@ip</a>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div id="comm_@betdetail.Ticket.TransId" class="width60 table-cell">
+                @if (isHRWinPlaceBettype)
+                {
+                    <div class="blue">
+                        <span>Win: </span><span class="b">
+                            @betlistHelper.PercentFormat(superPT)
+                    </span>
+                </div>
+                    <div class="margin-top-5">
+                        <span>Place: </span><span class="b">@betlistHelper.PercentFormat(superPT2)</span>
+                    </div>
+                }
+                else if (isShowPT)
+                {
+                    <div class="@betlistHelper.IsNegative(superPT)">
+                        <span>@betlistHelper.PercentFormat(superPT)</span>
+                    </div>
+                }
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(superWinlost) margin-top-5">
+                        @superWinlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    @if (isShowPT)
+                    {
+                        <span>@doubleCom @betlistHelper.PercentFormat(superDiscount)</span>
+                    }
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @superComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @if (isHRWinPlaceBettype)
+                {
+                    <div class="blue">
+                        <span>Win: </span><span class="b">
+                            @betlistHelper.PercentFormat(masterPT)
+                    </span>
+                </div>
+                    <div class="margin-top-5">
+                        <span>Place: </span><span class="b">@betlistHelper.PercentFormat(masterPT2)</span>
+                    </div>
+                }
+                else if (isShowPT)
+                {
+                    <div class="@betlistHelper.IsNegative(masterPT)">
+                        <span>@betlistHelper.PercentFormat(masterPT)</span>
+                    </div>
+                }
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(masterWinlost) margin-top-5">
+                        @masterWinlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    @if (isShowPT)
+                    {
+                        <span>@doubleCom @betlistHelper.PercentFormat(masterDiscount)</span>
+                    }
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @masterComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+        <td class="r">
+            <div class="width60 table-cell">
+                @if (isHRWinPlaceBettype)
+                {
+                    <div class="blue">
+                        <span>Win: </span><span class="b">
+                            @betlistHelper.PercentFormat(agentPT)
+                    </span>
+                </div>
+                    <div class="margin-top-5">
+                        <span>Place: </span><span class="b">@betlistHelper.PercentFormat(agentPT2)</span>
+                    </div>
+                }
+                else if (isShowPT)
+                {
+                    <div class="@betlistHelper.IsNegative(agentPT)">
+                        <span>@betlistHelper.PercentFormat(agentPT)</span>
+                    </div>
+                }
+                @if (isShowWinLoss)
+                {
+                    <div class="@betlistHelper.IsNegative(agentWinlost) margin-top-5">
+                        @agentWinlost.Format(2)
+                    </div>
+                }
+                <div class="margin-top-5">
+                    @if (isShowPT)
+                    {
+                        <span>@doubleCom @betlistHelper.PercentFormat(agentDiscount)</span>
+                    }
+                </div>
+                @if (isShowWinLoss)
+                {
+                    <div class="margin-top-5">
+                        @agentComm.Format(2)
+                    </div>
+                }
+            </div>
+        </td>
+    </tr>
+}
+
+@if (Model.TotalRows > 0)
+{
+    @MvcHtmlString.Create(renderResult[1])
+}
+else
+{
+    <tr class="c">
+        <td colspan="10" class="r column-no-data">
+            <div class="c b">
+                There is no data
+            </div>
+        </td>
+    </tr>
+}
