@@ -16,7 +16,7 @@
     <body>
         <div class="main">
             <div class="maincontent">
-                <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+                <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">                    
                     <tr>
                         <td class="maincontent_headerL"></td>
                         <td class="maincontent_headerC fixfont">
@@ -29,8 +29,11 @@
                     <div id="ErrMsg" style="display: none">
                     </div>
                 </div>
-                <div class="header-scroll">
+                <div class="header-scroll" style="line-height: 2">
                     <table class="tbl-body-scroll">
+                        <tr style="border-left: 1px solid #7C98A4" class="tbl-header-scroll">
+                            <td colspan="4" class="r c"><img style="vertical-align: middle" class="hand" src="@Url.Content("~/App_Themes/Images/icn_add.png")" /></td>
+                        </tr>
                         <tr class="tbl-header-scroll">
                             <td class="c" style="width: 20px; border-left: 1px solid #7C98A4"><div>#</div></td>
                             <td>
@@ -62,7 +65,7 @@
                                     <div>@item.CurrencyCode</div>
                                 </td>
                                     <td class="r normal">
-                                        <div>@item.BaseRate.ToString("#,###.0000")</div>
+                                        <div>@item.BaseRate</div>
                                 </td>
                             </tr>
                         }

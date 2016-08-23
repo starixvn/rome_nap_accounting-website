@@ -333,6 +333,11 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncVoidbridgeUpline = true;
                             bool isSyncVoidbridgeDownline = true;
 
+                            bool isHideNG2 = roleId < 4;
+                            bool isHideNG2Upline = true;
+                            bool isSyncNG2 = true;
+                            bool isSyncNG2Upline = true;
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -363,6 +368,13 @@ namespace Sunplus.Accounting.Business.Customer
                                             isHideVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             isSyncVoidbridgeDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
+                                            break;
+
+                                        case "23":
+                                            isHideNG2 = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowNG2;
+                                            isSyncNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isHideNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
+                                            isSyncNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             break;
                                     }
                                 }
@@ -920,6 +932,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
+                                var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || (roleId < 4 && isHideNG2Upline) || !isSyncNG2Upline;
+
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
@@ -939,7 +953,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     CustId = custId,
                                     IsDeposit = isDeposit,
                                     Username = userName,
-                                    AccId = AppSession.AccId
+                                    AccId = AppSession.AccId,
+                                    IsShowNG2 = !isHideNG2
                                 };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
@@ -1319,6 +1334,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (isHideVoidbridgeUpline || !isSyncVoidbridgeUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
+                                }
+
+                                if (isHideNG2Upline || !isSyncNG2Upline)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-NG2");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));

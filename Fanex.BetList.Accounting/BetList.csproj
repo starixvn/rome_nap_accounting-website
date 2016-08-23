@@ -85,8 +85,11 @@
     <Reference Include="Fanex.BetList.MyanmarOdds">
       <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.4\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.2\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
+    <Reference Include="Fanex.BetList.NG2">
+      <HintPath>..\Dependency\Fanex.BetList.NG2.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.1\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Voidbridge, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
@@ -356,7 +359,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Allbet.css" />
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
   </ItemGroup>
   <ItemGroup>

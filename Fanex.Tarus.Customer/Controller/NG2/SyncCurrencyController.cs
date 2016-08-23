@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core.Attributes;
+using Fanex.Tarus.Customer.Business.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
 using Fanex.Tarus.Web.Controllers;
 using Newtonsoft.Json;
@@ -10,8 +11,12 @@ namespace Fanex.Tarus.Customer.Controller.NG2
     public class SyncCurrencyController : BaseController
     {
         [HttpGet]
+        [SpecialSiteFilter]
         public ActionResult Index()
         {
+            var service = new SyncCurrencyService();
+            service.AddSyncCurrency(new SyncCurrencyEntity());
+
             var model = new SyncCurrencyModel();
             model.Currencies.Add(new SyncCurrencyEntity { BaseRate = 1.1M, CurrencyCode = "USD", CurrencyId = 1, CurrencyName = "US$" });
             model.Currencies.Add(new SyncCurrencyEntity { BaseRate = 1.2M, CurrencyCode = "AUD", CurrencyId = 2, CurrencyName = "AUD" });
