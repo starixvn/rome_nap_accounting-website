@@ -340,9 +340,6 @@
     <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
   </Function>
-  <Function Name="Bet List - BetTrade Detail">
-    <Setting Key="Acc_BetList_BetTrade_Detail" SpName="Acc_BetList_BetTrade_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
-  </Function>
   <Function Name="BetList - BetTrade">
     <Setting Key="BetList_BetTradeDetails" SpName="Acc_BetList_BetTrade_Detail" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
