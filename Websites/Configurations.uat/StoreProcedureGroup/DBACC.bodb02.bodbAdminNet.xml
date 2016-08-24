@@ -23,7 +23,7 @@
     <Setting Key="Acc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
@@ -94,7 +94,7 @@
     <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
