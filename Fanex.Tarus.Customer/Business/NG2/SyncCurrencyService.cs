@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fanex.Tarus.Customer.DataAccess.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
 using ONEbook.NG2.API;
 using ONEbook.NG2.API.DTO;
@@ -9,6 +10,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
 {
     public class SyncCurrencyService : ISyncCurrencyService
     {
+        private readonly ISyncCurrencyRepository _repository = new SyncCurrencyRepository();
         public CustomerSetting.Module.Core.Models.Result AddSyncCurrency(SyncCurrencyEntity entity)
         {
             // Do add currency in OW DB here. And then sync to 3rd.
@@ -30,14 +32,19 @@ namespace Fanex.Tarus.Customer.Business.NG2
             };
         }
 
+        public SyncCurrencyEntity GetCurrencyByName(string currencyCode)
+        {
+            return _repository.GetCurrencyByName(currencyCode);
+        }
+
         public SyncCurrencyModel SyncCurrencies()
         {
-            throw new NotImplementedException();
+            return _repository.SyncCurrencies();
         }
 
         public IList<CustomerSetting.Module.Core.Models.Result> UpdateCurrencies(SyncCurrencyModel model)
         {
-            throw new NotImplementedException();
+            return _repository.UpdateCurrencies(model);
         }
     }
 }

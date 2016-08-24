@@ -1,17 +1,11 @@
-﻿@model Fanex.Tarus.Customer.Entities.NG2.SyncCurrencyModel
-@{ 
-    var index = 0;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/table.css")" />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/Message.css")" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Report/reportgrid.css")" />
     </head>
     <body>
         <div class="main">
@@ -25,56 +19,17 @@
                         <td class="maincontent_headerR"></td>
                     </tr>
                 </table>
-                <div class="maincontent_box" style="width: 287px">
-                    <div id="ErrMsg" style="display: none">
+                <div class="maincontent_box" style="width: 250px">
+                    <div id="errMsg">
                     </div>
-                </div>
-                <div class="header-scroll" style="line-height: 2">
-                    <table class="tbl-body-scroll">
-                        <tr style="border-left: 1px solid #7C98A4" class="tbl-header-scroll">
-                            <td colspan="4" class="r c"><img style="vertical-align: middle" class="hand" src="@Url.Content("~/App_Themes/Images/icn_add.png")" /></td>
-                        </tr>
-                        <tr class="tbl-header-scroll">
-                            <td class="c" style="width: 20px; border-left: 1px solid #7C98A4"><div>#</div></td>
-                            <td>
-                                <div class="c" style="width:80px">
-                                    Currency
-                                </div>
-                            </td>
-                            <td>
-                                <div class="c" style="width:100px">
-                                    Standard Code
-                                </div>
-                            </td>
-                            <td>
-                                <div class="r" style="width:80px">
-                                    Base Rate
-                                </div>
-                            </td>
-                        </tr>
-                        @foreach (var item in Model.Currencies)
-                        {
-                            index++;
-                            var rowClass = index % 2 == 0 ? string.Empty : "evenrow";
-                            <tr class="@rowClass">
-                                <td class="c normal" style="border-left: 1px solid #7C98A4"><div>@index</div></td>
-                                <td class="c normal">
-                                    <div>@item.CurrencyName</div>
-                                </td>
-                                <td class="c normal">
-                                    <div>@item.CurrencyCode</div>
-                                </td>
-                                    <td class="r normal">
-                                        <div>@item.BaseRate</div>
-                                </td>
-                            </tr>
-                        }
-                        </table>
-                    </div>
-            </div>
+                    <div class="header-scroll" style="line-height: 2">
+                        Currency <input id="currency" class="text" type="text" placeholder="Enter currency name" /> <input onclick="syncCurrency()" class="btn" type="button" value="Sync" />
+                    </div>                    
+                </div>                
+            </div>            
         </div>
-        <script type="text/javascript">
-            
-        </script>
+        <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")"></script>
+        <script src="@Url.Content("~/js/Message/message.js")"></script>
+        <script src="@Url.Content("~/Views/ExchangeRate/Scripts/SyncCurrency.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     </body>
 </html>

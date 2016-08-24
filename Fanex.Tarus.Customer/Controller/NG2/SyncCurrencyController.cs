@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core.Attributes;
+using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Tarus.Customer.Business.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
 using Fanex.Tarus.Web.Controllers;
@@ -12,11 +13,8 @@ namespace Fanex.Tarus.Customer.Controller.NG2
     {
         [HttpGet]
         public ActionResult Index()
-        {
-            var service = new SyncCurrencyService();
-            var model = service.SyncCurrencies();
-
-            return View("~/Views/ExchangeRate/SyncCurrency.cshtml", model);
+        {            
+            return View("~/Views/ExchangeRate/SyncCurrency.cshtml");
         }
 
         [HttpPost]
@@ -28,12 +26,15 @@ namespace Fanex.Tarus.Customer.Controller.NG2
             return View("~/Views/ExchangeRate/SyncCurrency.cshtml", model);
         }
 
-        public ActionResult Add(string entity)
+        [HttpPost]
+        public ActionResult Add(string currencyCode)
         {
-            var ent = JsonConvert.DeserializeObject<SyncCurrencyEntity>(entity);
-            ViewBag.ErrorMessage = string.Empty;
+            var service = new SyncCurrencyService();
+            var model = service.GetCurrencyByName(currencyCode);
 
-            return View("~/Views/ExchangeRate/SyncCurrency.cshtml", ent);
+            var result = new Result(model.CurrencyId == 0 ? 1 : 0, "This currency is not available in system!");
+
+            return Json(result);
         }
     }
 }

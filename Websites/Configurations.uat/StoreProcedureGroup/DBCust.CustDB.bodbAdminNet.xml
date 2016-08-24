@@ -300,7 +300,7 @@
   <Function Name="Sportsbook2">
     <Function Name="Enable Status">
       <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>

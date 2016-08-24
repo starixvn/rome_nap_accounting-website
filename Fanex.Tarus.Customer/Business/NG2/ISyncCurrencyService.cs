@@ -14,5 +14,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
         IList<Result> UpdateCurrencies(SyncCurrencyModel model);
 
         Result AddSyncCurrency(SyncCurrencyEntity entity);
+
+        SyncCurrencyEntity GetCurrencyByName(string currencyCode);
     }
 }
