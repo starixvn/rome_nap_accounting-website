@@ -1,9 +1,8 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Core;
-@using Fanex.BetList.Accounting.Extensions;
-@using Fanex.BetList.Accounting.Services;
 @using DNAide.Core;
+@using Fanex.BetList.Accounting.Constants;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -84,6 +83,10 @@
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
                 @Html.Raw(betdetail.StatusHtml)
+                @if (betdetail.Ticket.BetTypeId == BetTypeContants.BetTradeSold)
+                {
+                    <a onclick="ViewBettradeDetails(@betdetail.Ticket.TransId, @betdetail.Ticket.RefNo)">@Resources.BetList.details</a>
+                }
                 @{
                     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }

@@ -299,7 +299,7 @@ namespace Fanex.BetList.Accounting.Services
                     Odds = Converter.ToDecimal(r["odds"]),
                     OddsType = Converter.ToString2(r["OddsType"]),
                     PlayerComm = Converter.ToDecimal(r["commission"]),
-                    Race = Converter.ToString2(r["race"]),
+                    Race = r.Table.Columns.Contains("race") ? Converter.ToString2(r["race"]) : string.Empty,
                     RefNo = Converter.ToString2(r["refno"]),
                     ShowTime = Converter.ToString2(r["showtime"]),
                     SportTypeId = Converter.To<int>(r["sporttype"]),
@@ -313,7 +313,7 @@ namespace Fanex.BetList.Accounting.Services
 
                     TransDate = Converter.ToDateTime(r["transdate"]),
                     TransId = Converter.To<long>(r["transid"]),
-                    UserName = Converter.ToString2(r["username"]),
+                    UserName = r.Table.Columns.Contains("username") ? Converter.ToString2(r["username"]) : string.Empty,
                     Winlost = Converter.ToDecimal(r["winlost"]),
                     WinlostDate = Convert.ToDateTime(r["winlostdate"]),
                     TransDesc = Converter.ToString2(r["transdesc"]),
@@ -324,11 +324,11 @@ namespace Fanex.BetList.Accounting.Services
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
                 StakeHtml = string.Empty,
-                IsShowOtExRate = Converter.To<bool>(r["isShowOTExRate"]),
-                VirtualRate = Converter.ToDecimal(r["virtualrate"]),
-                AgentPositionTaking2 = Converter.ToDecimal(r["apositiontaking2"]),
-                MasterPositionTaking2 = Converter.ToDecimal(r["mpositiontaking2"]),
-                SuperPositionTaking2 = Converter.ToDecimal(r["spositiontaking2"])
+                IsShowOtExRate = r.Table.Columns.Contains("isShowOTExRate") ? Converter.To<bool>(r["isShowOTExRate"]): false,
+                VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]):0,
+                AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]):0,
+                MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]):0,
+                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]):0
             };
 
             try
@@ -366,6 +366,11 @@ namespace Fanex.BetList.Accounting.Services
         public IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria)
         {
             return GetBetListBy(betListByRefNoCriteria);
+        }
+
+        public IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria)
+        {
+            return GetBetListBy(criteria);
         }
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductCriteria betListByProductCriteria)
@@ -1421,9 +1426,9 @@ namespace Fanex.BetList.Accounting.Services
         }
 
         public string GetCombinationTypeComboNames(
-            string betTeam, 
-            string betCheck, 
-            decimal hdp1, 
+            string betTeam,
+            string betCheck,
+            decimal hdp1,
             decimal hdp2,
             IList<TicketDetail> ticketDetails)
         {

@@ -39,6 +39,7 @@
 
         AreaRegistration.RegisterAllAreas();
 
+
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();

@@ -17,13 +17,15 @@ namespace Fanex.BetList.Accounting.Services
     public interface IBetListService
     {
         BetListDetail GetWinLossMemberBetList(WinLossMemberBetListCriteria winLossMemberBetListCriteria);
-        
+
         IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
 
         IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria);
 
+        IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria);
+
         IList<TicketDetail> GetBetListByProduct(BetListByProductCriteria betListByProductCriteria);
-        
+
         IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria betTypebyDateCriteria);
 
         IList<TicketDetail> GetBetListByCustInfo_DateRange(

@@ -742,3 +742,24 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
         null,
         null);
 }
+
+function ViewBettradeDetails(transId, refNo)
+{
+    var params = $.param({
+        TransId: transId,
+        Refno: refNo
+    });
+
+    parent.OpenNextPopup(
+        'Details',
+        'BetList/GetBetListBetTradeDetails?' + params,
+        'Details',
+        600,
+        200,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}

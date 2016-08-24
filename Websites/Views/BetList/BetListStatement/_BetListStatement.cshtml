@@ -22,6 +22,7 @@
 @using Fanex.BetList.Accounting.Core
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Constants;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -105,6 +106,10 @@
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width80">
                 @Html.Raw(betdetail.StatusHtml)
+                @if (betdetail.Ticket.BetTypeId == BetTypeContants.BetTradeSold)
+                {
+                    <a onclick="ViewBettradeDetails(@betdetail.Ticket.TransId, @betdetail.Ticket.RefNo)">@Resources.BetList.details</a>
+                }
             </div>
         </td>
         <td class="r">

@@ -1553,7 +1553,7 @@ namespace Sunplus.Accounting.Business.BetList
             return "";
         }
 
-        protected bool IsSportBook(int bettype)
+        protected virtual bool IsSportBook(int bettype)
         {
             return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
         }

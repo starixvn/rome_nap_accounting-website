@@ -286,6 +286,31 @@ namespace Fanex.BetList.Accounting.Controllers
             return PartialView("~/Views/BetList/BetListStatement/_BetListStatement.cshtml", result);
         }
 
+
+        /// <summary>
+        /// Gets the bet list by reference no.
+        /// </summary>
+        /// <param name="refno">The ref no.</param>
+        /// <returns>The bet list by reference no.</returns>
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        public ActionResult GetBetListBetTradeDetails(long transId, long refNo)
+        {
+            IList<TicketDetail> result = new List<TicketDetail>();
+            result = _betListService.GetBetListBetTradeDetails(new BetListBetTradeDetailCriteria
+            {
+                TransId = transId,
+                RefNo = refNo
+            });
+
+            Hashtable paramHastable = new Hashtable();
+            int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
+            paramHastable.Add("custId", custId);
+
+            TempData["paramHastable"] = paramHastable;
+
+            return PartialView("~/Views/BetList/BetTradeDetails/Index.cshtml", result);
+        }
+
         /// <summary>
         /// Exports the bet list statement.
         /// </summary>
