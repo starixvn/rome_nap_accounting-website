@@ -323,4 +323,8 @@
   <Function Name="NG2">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+	<Function Name="NG2">
+		<Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+	</Function>
 </Functions>
