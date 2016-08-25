@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Tarus.Customer.DataAccess.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
 using ONEbook.NG2.API;
@@ -17,13 +18,11 @@ namespace Fanex.Tarus.Customer.Business.NG2
             var service = new Services();
             var request = new Request();
 
-            request.Auth = new Auth
-            {
-                SiteId = "2000"
-            };
+            request.Auth.SiteId = "2000";
+            request.Call.UserId = AppSession.AccId;
             request.Call.Currencies.Add(new KeyValuePair<int, decimal>(entity.CurrencyId, entity.BaseRate));
 
-            var response = service.SyncExchangeRates(request);
+            var response = service.CreateCurrency(request);
 
             return new CustomerSetting.Module.Core.Models.Result
             {

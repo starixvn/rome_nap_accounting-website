@@ -33,6 +33,10 @@ namespace Fanex.Tarus.Customer.Controller.NG2
             var model = service.GetCurrencyByName(currencyCode);
 
             var result = new Result(model.CurrencyId == 0 ? 1 : 0, "This currency is not available in system!");
+            if (result.IsSuccess)
+            {
+                result = service.AddSyncCurrency(model);
+            }
 
             return Json(result);
         }

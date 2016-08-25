@@ -19,11 +19,11 @@ using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 
 public class UpdateExRate : IHttpHandler,IRequiresSessionState {
-    
-    public void ProcessRequest (HttpContext context) 
+
+    public void ProcessRequest (HttpContext context)
     {
         context.Response.ContentType = "text/html";
-        
+
         try
         {
             string errMsg = "";
@@ -40,10 +40,10 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             string Code = CastAide.AsString(context.Request["Code"]);
             string Description = CastAide.AsString(context.Request["Description"]);
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
-            
+
             int exRateId = 0;
             ExChangeRate exRate = new ExChangeRate();
-            
+
             if (context.Request["type"] == "insert")
             {
 
@@ -60,17 +60,26 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     context.Response.Write("ok|Insert exchange rate successfully!");
                     //context.Response.Write("ok|" + exRate.GenListContent());
                 }
-                
-                
+
+
             }
             else if (context.Request["type"] == "update")
             {
                 try
-                {                    
+                {
                     exRateId = CastAide.AsInt32(context.Request["exrateId"]);
                     errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, AUDRate, ZARRate, EURORate, USDRate, Description, MultipliedBy, Code);
                     if (errMsg.Length == 0)
-                    {                       
+                    {
+                        var service = new ONEbook.NG2.API.Services();
+                        var request = new ONEbook.NG2.API.DTO.Request();
+
+                        request.Auth.SiteId = "2000";
+                        request.Call.Currencies.Add(new KeyValuePair<int, decimal>(exRateId, Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate)));
+                        request.Call.UserId = AppSession.AccId;
+
+                        service.SyncExchangeRates(request);
+
                         System.Threading.Thread.Sleep(3000);
                         context.Response.Write("ok|Update exchange rate successfully!");//exRate.GenListContent());
                         return;
@@ -85,12 +94,12 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                         {
                             context.Response.Write("no|" + errMsg);
                         }
-                        
+
                     }
                 }
                 catch (Exception ex)
                 {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     errMsg = ex.Message;
                     context.Response.Write("no|" + errMsg);
                 }
@@ -101,7 +110,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                 exRateId = CastAide.AsInt32(context.Request["exrateId"]);
                 context.Response.Write( exRate.ResetEditExchangeRate(exRateId));
             }
-            
+
         }
         catch (Exception ex)
         {
@@ -109,7 +118,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             context.Response.Write("no|" + ex.Message);
         }
     }
- 
+
     public bool IsReusable {
         get {
             return false;
