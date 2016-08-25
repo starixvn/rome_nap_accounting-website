@@ -3,16 +3,10 @@
 using System;
 using System.Web;
 using Sunplus.Accounting.Business.ExChangeRate;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using System.Collections;
 using System.Web.SessionState;
-using IBCUtils;
-
-using BLL;
+using Fanex.CustomerSetting.Module.Core.Web;
 using DNAide.Core;
-using DNAide.Web;
 using System.Collections.Generic;
 
 using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
@@ -76,7 +70,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
 
                         request.Auth.SiteId = "2000";
                         request.Call.Currencies.Add(new KeyValuePair<int, decimal>(exRateId, Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate)));
-                        request.Call.UserId = AppSession.AccId;
+                        request.Call.UserId = AppSession.CurrentSession.UserId;
 
                         service.SyncExchangeRates(request);
 

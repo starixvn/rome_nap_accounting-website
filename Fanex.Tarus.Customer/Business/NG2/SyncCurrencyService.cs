@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Tarus.Customer.DataAccess.NG2;
@@ -19,7 +18,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
             var request = new Request();
 
             request.Auth.SiteId = "2000";
-            request.Call.UserId = AppSession.AccId;
+            request.Call.UserId = AppSession.CurrentSession.UserId;
             request.Call.Currencies.Add(new KeyValuePair<int, decimal>(entity.CurrencyId, entity.BaseRate));
 
             var response = service.CreateCurrency(request);
@@ -39,11 +38,6 @@ namespace Fanex.Tarus.Customer.Business.NG2
         public SyncCurrencyModel SyncCurrencies()
         {
             return _repository.SyncCurrencies();
-        }
-
-        public IList<CustomerSetting.Module.Core.Models.Result> UpdateCurrencies(SyncCurrencyModel model)
-        {
-            return _repository.UpdateCurrencies(model);
         }
     }
 }

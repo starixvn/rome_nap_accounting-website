@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Fanex.CustomerSetting.Module.Core;
-using Fanex.CustomerSetting.Module.Core.Models;
+﻿using Fanex.CustomerSetting.Module.Core;
 using Fanex.Data;
 using Fanex.Tarus.Customer.Entities.NG2;
 
@@ -8,14 +6,6 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
 {
     public class SyncCurrencyRepository : ISyncCurrencyRepository
     {
-        public Result AddSyncCurrency(SyncCurrencyEntity entity)
-        {
-            // Create currency to 3rd by API only.
-            var result = new Result();
-
-            return result;
-        }
-
         public SyncCurrencyEntity GetCurrencyByName(string currencyCode)
         {
             var entity = new SyncCurrencyEntity();
@@ -61,14 +51,6 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
             }
 
             return model;
-        }
-
-        public IList<Result> UpdateCurrencies(SyncCurrencyModel model)
-        {
-            // Updates list of currencies to 3rd by API only.
-            var result = new List<Result>();
-            
-            return result;
         }
     }
 }
