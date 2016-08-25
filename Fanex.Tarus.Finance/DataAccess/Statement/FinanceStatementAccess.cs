@@ -6,7 +6,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Finance.Entities;
-
+    using Sunplus.Accounting.Core.Common;
     public class FinanceStatementAccess : IFinanceStatementAccess
     {
         public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                 db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(toDay));
                 db.AddInParameter("BalanceUpDay", DbType.DateTime, CastAide.AsDateTime(balanceUpDay));
                 db.AddInParameter("IncludeAccBal", DbType.Boolean, CastAide.AsBoolean(IncludeAccBall));
+                db.AddInParameter("UserId", DbType.Int32, AppSession.AccId);
 
                 var result = db.ExecuteDataSet();
                 return result;
