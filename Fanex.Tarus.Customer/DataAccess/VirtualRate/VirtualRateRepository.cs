@@ -68,6 +68,7 @@
                     var targetSport = sportPosition.IsSubSport ?
                         sportList[sportPosition.SportIndex].SubSportList[sportPosition.SubSportIndex] :
                         sportList[sportPosition.SportIndex];
+                    targetSport.BetTypeList.Clear();
 
                     var betTypeOrderDictionary = new Dictionary<int, int>();
                     var betTypeOrderList = sportList[sportPosition.SportIndex].BetTypeOrder.Split(',').Select(betType => Converter.ToInt(betType));
@@ -120,9 +121,12 @@
                             targetSport.NonLiveVirtualRate[betTypeIndex].PercentRate = virtualRateEntity.Rate;
                         }
                     }
-                }
 
-                result.SportVirtualRateList = sportList;
+                    if(targetSport.NonLiveVirtualRate != null)
+                    {
+                        result.SportVirtualRateList.Add(targetSport);
+                    }
+                }
             }
 
             return result;

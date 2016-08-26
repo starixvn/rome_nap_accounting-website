@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 {
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.Core.Configurations;
 
     /// <summary>
     /// View Virtual Rate Criteria.
@@ -23,6 +24,14 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         [SpParam(Ignored = true)]
         public string RoleName { get; set; }
+
+        public bool IsTest
+        {
+            get
+            {
+                return WebSettings.IsVirtualRateTest;
+            }
+        }
 
         public override string GetSettingKey()
         {
