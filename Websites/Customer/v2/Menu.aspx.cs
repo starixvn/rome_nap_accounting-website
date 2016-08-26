@@ -5,6 +5,7 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using RemotingRef;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
@@ -20,14 +21,15 @@ public partial class Others_Menu : System.Web.UI.Page
         cockfighting = 19,
         cricket = 20,
         allbet = 21,
-        voidbridge = 22
+        voidbridge = 22,
+        ng2 = 23
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge;
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -47,6 +49,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
         hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
+        hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -116,6 +119,7 @@ public partial class Others_Menu : System.Web.UI.Page
 
         TemplateHandler.Assign(ref this.tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref this.tplMenu, "{urlHorse}", HRURL);
+        TemplateHandler.Assign(ref this.tplMenu, "{NG2}", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
         this.RenderSettingTab("Bingo", "{urlBingo}", bingopath, !BingoSettings.BingoGame.Enabled || !AllowedBI);
         this.RenderSettingTab("Casino", "{urlCasino}", casinoPath, WebSettings.disableCS || !AllowedCS);
@@ -129,6 +133,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("cricket", "{cricketLinkSetting}", creditDCSLink + (int)products.cricket, hideCricket);
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", creditDCSLink + (int)products.allbet, hideAllbet);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", creditDCSLink + (int)products.voidbridge, hideVoidbridge);
+        this.RenderSettingTab("ng2", "{ng2LinkSetting}", creditDCSLink + (int)products.ng2, hideNG2);
 
         this.sMenu.Text = this.tplMenu;
     }

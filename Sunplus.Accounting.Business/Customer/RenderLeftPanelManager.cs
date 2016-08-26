@@ -8,9 +8,9 @@ namespace Sunplus.Accounting.Business.Customer
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities;
     using System.Data;
-    /// <summary>
-    /// Render Left Panel Manager.
-    /// </summary>
+    using RemotingRef;    /// <summary>
+                          /// Render Left Panel Manager.
+                          /// </summary>
     public static class RenderLeftPanelManager
     {
         public static void RenderEnableLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
@@ -229,12 +229,15 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
                         "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, 
+                        isEnabled ? productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " was disabled at upline"  :
+                            "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
                 new SettingControl(
-                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
+                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : 
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
                     jsonclick,
