@@ -422,9 +422,9 @@ namespace Fanex.BetList.Accounting.Core
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
                         case SportContants.AllBet:
-                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
-                                string.Empty : 
-                                "ViewAllBetResult('" + ticketDetail.Ticket.BetTypeId + "')";
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc)
+                                ? string.Empty
+                                : string.Format("ViewAllBetResult('{0}','{1}',{2})", ticketDetail.Ticket.TransDesc, ticketDetail.Ticket.BetCheck, ticketDetail.Ticket.BetTypeId);
                             break;
                         case SportContants.Voidbridge:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?

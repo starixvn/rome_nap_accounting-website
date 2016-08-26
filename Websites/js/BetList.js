@@ -3,8 +3,8 @@
 }
 
 function showMP(refno, listType) {
-	var spEvent = obj('spEvent_' + refno);
-	if (!spEvent) return;
+    var spEvent = obj('spEvent_' + refno);
+    if (!spEvent) return;
 
     if (spEvent.className == 'hide') {
         if (spEvent.innerHTML == "") {
@@ -715,21 +715,21 @@ function ViewVoidbridgeResult(custId, betCheck) {
     });
 }
 
-function ViewAllBetResult(transId) {
+function ViewAllBetResult(transDesc, betCheck, betTypeId) {
     var width = 945;
-    var url = 'Report/ViewAllBetResult.aspx?transId=' + transId;
+    var url = 'Report/ViewAllBetResult.aspx?transDesc=' + transDesc + "&betCheck=" + betCheck + "&betTypeId=" + betTypeId;
     parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
-	var params = $.param({
-		Refno: refno,
-		WinLossDate: winlossDate,
-		CustId: custId,
-		TransType: transType
-	});
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        CustId: custId,
+        TransType: transType
+    });
 
-	parent.OpenNextPopup(
+    parent.OpenNextPopup(
         'AllBetDetails',
         'AGCasinoBetList/BetDetails?' + params,
         'AllBet - Detailed Bet list - ' + winlossDate.split(' ')[0],
