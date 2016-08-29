@@ -326,5 +326,6 @@
 	<Function Name="NG2">
 		<Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
 		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+		<Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />		
 	</Function>
 </Functions>

@@ -12,15 +12,19 @@ using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Common;
+using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Tarus.DataAccess.Implement.Customer;
 using IBCUtils.Objects;
+using ONEbook.NG2.API.Interface;
+using RemotingRef;
 using Sunplus.Accounting.Business.Criteria;
 using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
+using Sunplus.Accounting.Business.Customer.NG2;
 using Sunplus.Accounting.Business.CustSetting;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
@@ -39,9 +43,6 @@ using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Domain;
 using Fanex.Tarus.Security.Services;
 using Result = Sunplus.Accounting.Entities.Result;
-using RemotingRef;
-using Fanex.CustomerSetting.Module.Core.Services.Impl;
-using Fanex.CustomerSetting.Module.Core.Criteria;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -3227,7 +3228,7 @@ namespace Sunplus.Accounting.Business.Customer
             if (allowedNG2 && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
             {
                 // Call API to sync to 3rd.
-                var serviceAPI = new ONEbook.NG2.API.Services();
+                IThirdPartyServices serviceAPI = new ONEbook.NG2.API.Services();
                 var request = new ONEbook.NG2.API.DTO.Request();
 
                 request.Auth.SiteId = "2000";
@@ -3236,7 +3237,18 @@ namespace Sunplus.Accounting.Business.Customer
                 request.Call.UplineId = custInfo.RoleId == 4 ? custInfo.IBCCustID : custInfo.UpperCustID;
                 request.Call.UserId = AppSession.AccId;
 
-                serviceAPI.SyncCustomers(request);
+                var response = serviceAPI.SyncCustomers(request);
+
+                if (response.Result.ResultDetail[0].IsSuccess)
+                {
+                    ISyncStatusService syncService = new SyncStatusService();
+                    var sysStatus = syncService.SyncStatus(custInfo.IBCCustID, AppSession.AccId, HttpContext.Current.Request.UserHostName);
+
+                    if (sysStatus.IsSuccess)
+                    {
+                        syncService.EnableStatus(custInfo.IBCCustID, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
+                    }
+                }
             }
 
             return result;

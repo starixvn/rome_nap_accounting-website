@@ -179,6 +179,8 @@
     <Compile Include="IReportDAO\IReportRacingDAO.cs" />
     <Compile Include="IReportWinLossDAO.cs" />
     <Compile Include="IUserDAO.cs" />
+    <Compile Include="NG2\ISyncStatusRepository.cs" />
+    <Compile Include="NG2\SyncStatusRepository.cs" />
     <Compile Include="OtherProvider.cs" />
     <Compile Include="PositionTakingProvider.cs" />
     <Compile Include="PositionTaking\IPokerDAO.cs" />
