@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.NG2
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                param.Add("isdisabled", "<ROOT><ProductStatus SportType=\"213\" BetType=\"2501\" IsDisabled=\"0\" IsDisabledDowline=\"0\" /></ROOT>");
+                param.Add("isdisabled", "<ROOT><ProductStatus SportType=\"213\" BetType=\"2501\" IsDisabled=\"0\" /></ROOT>");
                 param.Add("msgtype", 0);
                 param.Add("userid", userId);
                 param.Add("subaccid", 0);

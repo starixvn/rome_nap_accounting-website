@@ -177,8 +177,8 @@ ans.addNewSuper = function () {
         else {
             return;
         }
-
-        try { parent.parent.BlockUI(); } catch (e) { }
+        
+        try {  BlockUI(); } catch (e) { try { parent.parent.BlockUI(); } catch (ee) { } }
         $.ajax({
             type: "POST",
             url: "DoAddNewSuper",

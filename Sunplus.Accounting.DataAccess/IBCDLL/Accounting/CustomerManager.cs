@@ -56,9 +56,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            {                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return dbCheckCurrency;

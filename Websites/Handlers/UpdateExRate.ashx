@@ -65,14 +65,29 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, AUDRate, ZARRate, EURORate, USDRate, Description, MultipliedBy, Code);
                     if (errMsg.Length == 0)
                     {
-                        var service = new ONEbook.NG2.API.Services();
-                        var request = new ONEbook.NG2.API.DTO.Request();
+                        Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
+                        var currencies = syncCurrencyService.SyncCurrencies().Currencies;
+                        var allowedCurrency = false;
+                        foreach (var item in currencies)
+                        {
+                            if (item.CurrencyId == exRateId)
+                            {
+                                allowedCurrency = true;
+                                break;
+                            }
+                        }
 
-                        request.Auth.SiteId = "2000";
-                        request.Call.Currencies.Add(new KeyValuePair<int, decimal>(exRateId, Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate)));
-                        request.Call.UserId = AppSession.CurrentSession.UserId;
+                        if (allowedCurrency)
+                        {
+                            ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
+                            var request = new ONEbook.NG2.API.DTO.Request();
 
-                        service.SyncExchangeRates(request);
+                            request.Auth.SiteId = "2000";
+                            request.Call.Currencies.Add(new KeyValuePair<int, decimal>(exRateId, Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate)));
+                            request.Call.UserId = AppSession.CurrentSession.UserId;
+
+                            service.SyncExchangeRates(request);
+                        }
 
                         System.Threading.Thread.Sleep(3000);
                         context.Response.Write("ok|Update exchange rate successfully!");//exRate.GenListContent());

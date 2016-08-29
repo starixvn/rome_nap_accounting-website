@@ -188,7 +188,7 @@ ana.addNewAgent = function () {
         else {
             return;
         }
-        try { parent.parent.BlockUI(); } catch (e) { parent.BlockUI(); }
+        try { BlockUI(); } catch (e) { try { parent.parent.BlockUI(); } catch (ee) { } }
         $.ajax({
             type: "POST",
             url: "DoAddNewAgent",

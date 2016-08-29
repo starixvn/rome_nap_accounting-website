@@ -167,7 +167,7 @@ anmb.addNewMember = function () {
         else {
             return;
         }
-        try { parent.parent.parent.BlockUI(); } catch (e) { try { parent.BlockUI(); } catch (e) {  } }
+        try { BlockUI(); } catch (e) { try { parent.parent.BlockUI(); } catch (ee) { } }
         $.ajax({
             type: "POST",
             url: "DoAddNewMember",

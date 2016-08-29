@@ -25,7 +25,25 @@ namespace Fanex.Tarus.Customer.Controller.NG2
             var result = new Result(model.CurrencyId == 0 ? 1 : 0, model.CurrencyId == 0 ? "This currency is not available in system!": string.Empty);
             if (result.IsSuccess)
             {
-                result = service.AddSyncCurrency(model);
+                var currencies = service.SyncCurrencies().Currencies;
+                var allowed = false;
+                foreach (var item in currencies)
+                {
+                    if (model.CurrencyId == item.CurrencyId)
+                    {
+                        allowed = true;
+                        break;
+                    }
+                }
+
+                if (allowed)
+                {
+                    result = service.AddSyncCurrency(model);
+                }
+                else
+                {
+                    result = new Result(1, "This currency is not allowed to sync!");
+                }
             }
 
             return Json(result);
