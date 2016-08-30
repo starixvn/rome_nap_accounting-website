@@ -12,9 +12,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Module.NG2.Entities;
+    using Module.NG2.Services;
     using Newtonsoft.Json;
-    using ONEbook.NG2.API.Interface;
-    using Sunplus.Accounting.Business.Customer.NG2;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
@@ -146,7 +146,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                     string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
                     result.ErrorMessage = strUrl;
                     Thread.Sleep(3000);
-                    AutoInsertNG2(superId, customer.UserName, 4, superId);
+                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId);
                 }
             }
             catch (Exception ex)
@@ -194,7 +194,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             return result;
         }
 
-        private void AutoInsertNG2(int custId, string username, int roleId, int uplineId)
+        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId)
         {
             var service = new ServiceBase();
             var hasSpecialPermission = service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
@@ -207,30 +207,10 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             var db = CustomerManager.CheckAllowedCurrencyAll(custId);
             var allowedNG2 = CastAide.AsBoolean(db.Outputs["allowedng2"]);
 
-            if (allowedNG2 && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
+            if (allowedNG2 && syncUpline && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
             {
-                // Call API to sync to 3rd.
-                IThirdPartyServices serviceAPI = new ONEbook.NG2.API.Services();
-                var request = new ONEbook.NG2.API.DTO.Request();
-
-                request.Auth.SiteId = "2000";
-                request.Call.CustIds.Add(custId);
-                request.Call.RoleId = roleId;
-                request.Call.UplineId = roleId == 4 ? custId : uplineId;
-                request.Call.UserId = AppSession.AccId;
-
-                var response = serviceAPI.SyncCustomers(request);
-
-                if (response.Result.ResultDetail[0].IsSuccess)
-                {
-                    ISyncStatusService syncService = new SyncStatusService();
-                    var syncStatus = syncService.SyncStatus(custId, AppSession.AccId, Request.UserHostName);
-
-                    if (syncStatus.IsSuccess)
-                    {
-                        syncService.EnableStatus(custId, AppSession.AccId, Request.UserHostAddress);
-                    }
-                }
+                ING2StatusService syncService = new NG2StatusService();
+                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP);
             }
         }
     }

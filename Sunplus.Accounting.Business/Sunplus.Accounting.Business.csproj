@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sunplus.Accounting.Business</RootNamespace>
     <AssemblyName>Sunplus.Accounting.Business</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -105,6 +105,10 @@
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.NG2.1.0.0-beta1\lib\net40\Fanex.Module.NG2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
@@ -157,7 +161,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.0-beta7\lib\net461\ONEbook.NG2.API.dll</HintPath>
+      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.0-beta8\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -256,8 +260,6 @@
     <Compile Include="Customer\ICustomerManager.cs" />
     <Compile Include="Customer\IServiceCustomerList.cs" />
     <Compile Include="Customer\MoveCustomer.cs" />
-    <Compile Include="Customer\NG2\ISyncStatusService.cs" />
-    <Compile Include="Customer\NG2\SyncStatusService.cs" />
     <Compile Include="Customer\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\RenderLeftPanelParameter.cs" />
     <Compile Include="Helper.cs" />
@@ -615,7 +617,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

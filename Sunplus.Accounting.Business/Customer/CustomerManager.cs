@@ -19,12 +19,12 @@ using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.LiveCasino.CoreSetting.Services;
+using Fanex.Module.NG2.Entities;
+using Fanex.Module.NG2.Services;
 using IBCUtils.Objects;
-using ONEbook.NG2.API.Interface;
 using RemotingRef;
 using Sunplus.Accounting.Business.Criteria;
 using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
-using Sunplus.Accounting.Business.Customer.NG2;
 using Sunplus.Accounting.Business.CustSetting;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
@@ -3225,30 +3225,10 @@ namespace Sunplus.Accounting.Business.Customer
             var db = DataAccess.IBCDLL.Accounting.CustomerManager.CheckAllowedCurrencyAll(custInfo.IBCCustID);
             var allowedNG2 = CastAide.AsBoolean(db.Outputs["allowedng2"]);
 
-            if (allowedNG2 && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
+            if (allowedNG2 && custInfo.IsSyncNG2Upline && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
             {
-                // Call API to sync to 3rd.
-                IThirdPartyServices serviceAPI = new ONEbook.NG2.API.Services();
-                var request = new ONEbook.NG2.API.DTO.Request();
-
-                request.Auth.SiteId = "2000";
-                request.Call.CustIds.Add(custInfo.IBCCustID);
-                request.Call.RoleId = custInfo.RoleId;
-                request.Call.UplineId = custInfo.RoleId == 4 ? custInfo.IBCCustID : custInfo.UpperCustID;
-                request.Call.UserId = AppSession.AccId;
-
-                var response = serviceAPI.SyncCustomers(request);
-
-                if (response.Result.ResultDetail[0].IsSuccess)
-                {
-                    ISyncStatusService syncService = new SyncStatusService();
-                    var sysStatus = syncService.SyncStatus(custInfo.IBCCustID, AppSession.AccId, HttpContext.Current.Request.UserHostName);
-
-                    if (sysStatus.IsSuccess)
-                    {
-                        syncService.EnableStatus(custInfo.IBCCustID, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
-                    }
-                }
+                ING2StatusService syncService = new NG2StatusService();
+                syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP);
             }
 
             return result;
