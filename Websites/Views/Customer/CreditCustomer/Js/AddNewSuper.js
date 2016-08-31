@@ -204,7 +204,7 @@ ans.addNewSuper = function () {
                 else {
                     showAlertMessage("err", "Insert Super Unsuccessfully!", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
             , error: function (e) {
                 $('#divShowInfo').show();
@@ -220,7 +220,7 @@ ans.addNewSuper = function () {
                 else {
                     showAlertMessage("err", "Request Error", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
         });
     }

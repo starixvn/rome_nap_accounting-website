@@ -219,8 +219,7 @@ ana.addNewAgent = function () {
                 else {
                     showAlertMessage("err", "Insert Agent Unsuccessfully!", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
             , error: function (e) {
                 $('#divShowInfo').show();
@@ -236,8 +235,7 @@ ana.addNewAgent = function () {
                 else {
                     showAlertMessage("err", "Request Error", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
         });
     }
