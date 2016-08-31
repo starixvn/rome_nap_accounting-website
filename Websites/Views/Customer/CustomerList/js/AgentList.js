@@ -283,8 +283,8 @@
     },
     liveCasinoSetting: function (custId, exchangeId, uplineId) {
         showPopup("Live Casino"
-                , "LiveCasino/PTSetting/EditAgent.aspx?custId=" + custId + "&uplineId=" + uplineId
-                , 0, 0, 640, 480, false, 2000, null);
+                , window.rootUrl + "LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + _adminID + "&actorUsername=" + _adminUserName + "&customerId=" + custId + "&customerLevel=2"
+                , 0, 0, 880, 580, false, 2000, null);
     },
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup("Virtual Sport"
