@@ -270,7 +270,7 @@
   <Function Name="View Pt">
     <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT" DbName="DBCust.CustDB.bodbAdminNet" />
