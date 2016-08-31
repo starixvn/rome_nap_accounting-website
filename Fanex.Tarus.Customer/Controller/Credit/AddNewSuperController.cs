@@ -5,9 +5,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using System.Threading;
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Attributes;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using DNAide.Core;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
@@ -16,8 +13,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Module.NG2.Services;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
     [SpecialSiteFilter]
     public class AddNewSuperController : CustomerSettingBaseController
     {
@@ -196,18 +191,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
 
         private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId)
         {
-            var service = new ServiceBase();
-            var hasSpecialPermission = service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = custId,
-                CustName = username,
-                UserID = AppSession.AccId
-            });
-
-            var db = CustomerManager.CheckAllowedCurrencyAll(custId);
-            var allowedNG2 = CastAide.AsBoolean(db.Outputs["allowedng2"]);
-
-            if (allowedNG2 && syncUpline && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
+            if (syncUpline)
             {
                 ING2StatusService syncService = new NG2StatusService();
                 syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP);

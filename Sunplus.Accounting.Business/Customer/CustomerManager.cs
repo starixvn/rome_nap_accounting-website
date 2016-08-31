@@ -12,8 +12,6 @@ using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Common;
-using Fanex.CustomerSetting.Module.Core.Criteria;
-using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
@@ -1222,7 +1220,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", creditDCSLink + 21);
                                 TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", creditDCSLink + 22);
                                 TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", creditDCSLink + 23);
-                                TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "Edit NG2"));
+                                TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -3197,6 +3195,9 @@ namespace Sunplus.Accounting.Business.Customer
 
         public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
         {
+            // Delay 3 sec to allow system do replication.
+            System.Threading.Thread.Sleep(3000);
+
             var result = new Result();
             if (uplineInfo.IsUplineSyncCasino)
             {
@@ -3209,18 +3210,9 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
             {
-                SettingService liveCasinoSettingService = new SettingService();
-                System.Threading.Thread.Sleep(3000);
+                SettingService liveCasinoSettingService = new SettingService();                
                 var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
-            }
-
-            var service = new ServiceBase();
-            var hasSpecialPermission = service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = custInfo.IBCCustID,
-                CustName = custInfo.UserName,
-                UserID = AppSession.AccId
-            });
+            }            
 
             if (custInfo.IsSyncNG2)
             {
