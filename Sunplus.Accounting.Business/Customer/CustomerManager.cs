@@ -376,7 +376,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
 
                                         case "23":
-                                            isHideNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]);
+                                            isHideNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowNG2;
                                             isSyncNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
@@ -3222,10 +3222,7 @@ namespace Sunplus.Accounting.Business.Customer
                 UserID = AppSession.AccId
             });
 
-            var db = DataAccess.IBCDLL.Accounting.CustomerManager.CheckAllowedCurrencyAll(custInfo.IBCCustID);
-            var allowedNG2 = CastAide.AsBoolean(db.Outputs["allowedng2"]);
-
-            if (allowedNG2 && custInfo.IsSyncNG2Upline && hasSpecialPermission.IsSuccess && WebSettings.IsShowNG2)
+            if (custInfo.IsSyncNG2)
             {
                 ING2StatusService syncService = new NG2StatusService();
                 syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP);
