@@ -229,9 +229,9 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
                         "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
+                        productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " was disabled at upline" :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, 
-                        isEnabled ? productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " was disabled at upline"  :
-                            "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+                        isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
