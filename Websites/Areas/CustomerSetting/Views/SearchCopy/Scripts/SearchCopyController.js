@@ -173,6 +173,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
+        $("#frmNG2").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -259,6 +260,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCricket", url);
                 $scope.resize("#frmCricket");
+                break;
+            case 'tabNG2': url += "DCS/ViewCustomerSetting?productId=23&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmNG2", url);
+                $scope.resize("#frmNG2");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }

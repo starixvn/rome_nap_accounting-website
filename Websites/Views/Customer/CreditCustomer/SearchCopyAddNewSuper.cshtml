@@ -1,5 +1,6 @@
 ﻿@{ 
     var level = string.IsNullOrWhiteSpace(Request.QueryString["level"]) ? "member" : Request.QueryString["level"];
+    var showNG2 = Sunplus.Accounting.Business.Security.Permissions.HasPermission(Sunplus.Accounting.Core.Common.Enumerations.Functions.AccessSpecialSites) == true ? 1 : 0;
 }
 <link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
 
@@ -24,6 +25,7 @@
 </div>
 <script type="text/javascript">
     var level = '@level';
+    var showNG2 = @showNG2;
     var sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
             { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
@@ -40,6 +42,10 @@
             { sportname: 'Albet', sportvalue: 'tabAllbet' },
             { sportname: 'Macau Games', sportvalue: 'tabVoidbridge' }
     ];
+
+    if(showNG2){
+        sports.push({ sportname: '@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")', sportvalue: 'tabNG2' });
+    }
 
     if ('@level' == 'member') {
         sports = [
@@ -122,7 +128,7 @@
 
     function ShowSearchCopy() {
         $("#tabSearchCopy").addClass("current");
-        $("#tabFullMode").removeClass("current");        
+        $("#tabFullMode").removeClass("current");
         $("#frmSearchCopyAddNewSuper").attr('src', "../customersetting/searchcopy/super/index");
 
         $("#agent-name").hide();

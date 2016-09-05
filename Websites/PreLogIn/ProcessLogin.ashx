@@ -116,7 +116,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     context.Session.Clear();
                     FormsAuthentication.SignOut();
 					context.Response.Clear();
-                    context.Response.Write("<script type='text/javascript'>top.location.href='https://www.726872.com/accext';</script>");
+                    context.Response.Write("<script type='text/javascript'>top.location.href='https://www.726872.com';</script>");
 					return;
                 }
 
