@@ -111,5 +111,7 @@ namespace Fanex.BetList.Accounting.Constants
         public const int ColossusBetsBonusPrize = 18006;
 
         public const int CockFighting = 1003;
+
+        public static bool IsNG2BetType(int betType) { return betType >= 2501 && betType <= 2699; }
     }
 }
