@@ -1764,7 +1764,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                isManageCustomerAccess,
                                                CustParent.IsDisableNG2,
                                                hasDownline,
-                                               RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"),
+                                               "NG2"/*RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")*/,
                                                renderLeftPanelParameter.IsShowNG2,
                                                renderLeftPanelParameter,
                                                "Update " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
