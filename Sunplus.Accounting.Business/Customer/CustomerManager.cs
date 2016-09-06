@@ -891,7 +891,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
                                 }
 
-                                if (isHideAllBet)
+                                if (isHideAllBet || isHideAllbetUpline || !isSyncAllbetUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
                                 }
@@ -1293,17 +1293,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
                                 }
 
-                                if (isHideAllBet)
-                                {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
-                                }
-
                                 if (isHideCricketSettingLink)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (isHideAllbetUpline || !isSyncAllbetUpline)
+                                if (isHideAllBet || isHideAllbetUpline || !isSyncAllbetUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
