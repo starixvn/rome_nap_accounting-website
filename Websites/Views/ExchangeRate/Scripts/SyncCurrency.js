@@ -8,7 +8,7 @@
                 url: "Add",
                 data: { currencyCode: document.getElementById("currency").value },
                 success: function (rs) {
-                    showAlertMessage("errMsg", rs.IsSuccess ? "Synchronizes currency successfully!" : rs.ErrorMessage, rs.ErrorCode);
+                    showAlertMessage("errMsg", rs.IsSuccess ? "Sync currency successfully. Please contact to DBA to update synchronized currency list" : rs.ErrorMessage, rs.ErrorCode);
                 },
                 error: function (rs) {
                     showAlertMessage("errMsg", rs.responseText + "!", 1);

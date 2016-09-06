@@ -39,6 +39,10 @@ namespace Fanex.Tarus.Customer.Controller.NG2
                 if (allowed)
                 {
                     result = service.AddSyncCurrency(model);
+                    if (!result.IsSuccess)
+                    {
+                        result.ErrorMessage = "Sync currency failed. Please try it again later";
+                    }
                 }
                 else
                 {
