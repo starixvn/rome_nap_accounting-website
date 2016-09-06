@@ -39,6 +39,7 @@ public partial class InternalView : System.Web.UI.Page
                 Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
                 return;
             }
+            }
         }
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);        
