@@ -21,7 +21,6 @@ using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Bingo.Core;
 using Sunplus.Bingo.Entities;
-using Sunplus.Bingo.Services;
 using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Result = Sunplus.Bingo.Entities.Result;
@@ -1403,19 +1402,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-
-            if (BingoSettings.BingoGame.Enabled)
-            {
-                bettype = GetListBingoGameKindGameType();
-                var sport = new Sport()
-                {
-                    SportId = Constants.Sport.BingoGame,
-                    SportName = "Bingo",
-                    Bettype = bettype
-                };
-                sports.SportsList.Add(sport);
-            }
+            }        
 
             #region Parlay Mix Sport
 
@@ -1513,65 +1500,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             #endregion All Sports
         }
 
-
-        private static BettypeDTO GetListBingoGameKindGameType()
-        {
-            var bettypes = new BettypeDTO { BettypeList = new List<Bettype>() };
-
-            #region get game kind and game type from db
-
-            var customerService = BingoContainer.Current.Resolve<ICustomerService>();
-            IResult result = new Result();
-            var tblGameKind = customerService.GetListGameKind(BingoSettings.BingoGame.CodeGameNo, ref  result);
-
-            if (tblGameKind != null && tblGameKind.Count > 0)
-            {
-                //Load Game Type
-                foreach (GameKind dr in tblGameKind)
-                {
-                    var tblGameType = customerService.GetListGameType(dr.ID, ref result);
-                    if (tblGameType != null && tblGameType.Count > 0)
-                    {
-                        var gameKind = new Bettype()
-                                           {
-                                               BettypeId = (-CastAide.AsInt32(dr.ID.ToString())),
-                                               BettypeName = string.Format("Group - {0}", dr.Name)
-                                           };
-                        bettypes.BettypeList.Add(gameKind);
-                        foreach (GameType dr2 in tblGameType)
-                        {
-                            var gameType = new Bettype()
-                                               {
-                                                   BettypeId = CastAide.AsInt32(dr2.ID.ToString()),
-                                                   BettypeName = dr2.Name
-                                               };
-                            bettypes.BettypeList.Add(gameType);
-                        }
-                    }
-                }
-            }
-
-            #endregion get game kind and game type from db
-
-            #region add All Game Kind and All Game Type
-
-            var allGameKind = new Bettype()
-                                  {
-                                      BettypeId = -1,
-                                      BettypeName = ".: ALL - Game Kind :."
-                                  };
-            bettypes.BettypeList.Add(allGameKind);
-            var allGameType = new Bettype()
-            {
-                BettypeId = 0,
-                BettypeName = ".: ALL - Game Type :."
-            };
-            bettypes.BettypeList.Add(allGameType);
-
-            #endregion add All Game Kind and All Game Type
-
-            return bettypes;
-        }
 
         private static BettypeDTO GetListCasinoGameKindGameType(string rngSiteName)
         {
@@ -2364,14 +2292,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         dtPt = bettypeId < 0
                                    ? SelectCustomer.GetCSPT(userName, bettypeId * (-1), 0)
                                    : SelectCustomer.GetCSPT(userName, 0, bettypeId);
-                        break;
-
-                    case Constants.Sport.BingoGame:
-                        var customerService = BingoContainer.Current.Resolve<ICustomerService>();
-                        dtPt = bettypeId < 0
-                                   ? customerService.GetCustomerPt(userName, bettypeId * (-1), 0)
-                                   : customerService.GetCustomerPt(userName, 0, bettypeId);
-                        break;
+                        break;                        
                 }
 
                 #endregion get data
