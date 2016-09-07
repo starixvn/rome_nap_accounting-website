@@ -62,15 +62,16 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                 try
                 {
                     exRateId = CastAide.AsInt32(context.Request["exrateId"]);
+                    Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
+                    var currencies = syncCurrencyService.SyncCurrencies().Currencies;
+                        
                     errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, AUDRate, ZARRate, EURORate, USDRate, Description, MultipliedBy, Code);
                     if (errMsg.Length == 0)
                     {
-                        Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
-                        var currencies = syncCurrencyService.SyncCurrencies().Currencies;
                         var allowedCurrency = false;
                         foreach (var item in currencies)
                         {
-                            if (item.CurrencyId == exRateId)
+                            if (item.CurrencyId == exRateId && actualRate != item.BaseRate.ToString())
                             {
                                 allowedCurrency = true;
                                 break;
