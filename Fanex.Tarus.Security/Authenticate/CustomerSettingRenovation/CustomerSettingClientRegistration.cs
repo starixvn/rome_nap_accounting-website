@@ -25,7 +25,9 @@
                 UserID = permissionContext.ActorId
             });
 
-            return hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowRead(GetActionName());
+            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowRead(GetActionName());
+
+            return allowed;
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
@@ -36,7 +38,9 @@
                 UserID = permissionContext.ActorId
             });
 
-            return hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowUpdate(GetActionName());
+            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowUpdate(GetActionName());
+
+            return allowed;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
@@ -144,7 +148,7 @@
                 {
                     var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
                     var actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
-                    return controllerName + '/' + actionName;
+                    return (controllerName + '/' + actionName).ToLower();
                 }
             }
 

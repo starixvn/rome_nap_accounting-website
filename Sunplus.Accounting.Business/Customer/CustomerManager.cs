@@ -3214,7 +3214,7 @@ namespace Sunplus.Accounting.Business.Customer
                 var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
             }            
 
-            if (custInfo.IsSyncNG2)
+            if (uplineInfo.IsUplineSyncNG2)
             {
                 ING2StatusService syncService = new NG2StatusService();
                 syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP);
