@@ -217,7 +217,7 @@ namespace Fanex.BetList.Accounting.Services
 
             if (2631 <= betTypeId && betTypeId <= 2659)
             {
-                return 217;
+                return 218;
             }
 
             if (2661 <= betTypeId && betTypeId <= 2669)
