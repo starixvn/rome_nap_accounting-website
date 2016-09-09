@@ -1510,6 +1510,10 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(SportContants.Voidbridge);
             }
+            else if (ReportService.IsNG2NeedSuffix(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(ReportService.GetNG2SportType(betTypeId));
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

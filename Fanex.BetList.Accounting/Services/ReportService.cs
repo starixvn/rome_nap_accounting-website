@@ -11,6 +11,7 @@ namespace Fanex.BetList.Accounting.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Models;
@@ -180,6 +181,57 @@ namespace Fanex.BetList.Accounting.Services
         public static bool IsVoidbridge(int betTypeId)
         {
             return 4001 <= betTypeId && betTypeId <= 7999;
+        }
+
+        public static bool IsNG2NeedSuffix(int betTypeId)
+        {
+            var betTypes = new int[] { 2504, 2505, 2506, 2538, 2539, 2540, 2561, 2562, 2563, 2580, 2581, 2582, 2610, 2611, 2612, 2640, 2641, 2642, 2661, 2662, 2663, 2671, 2672, 2673 };
+            return betTypes.Contains(betTypeId);
+        }
+
+        public static int GetNG2SportType(int betTypeId)
+        {
+            if (2501 <= betTypeId && betTypeId <= 2529)
+            {
+                return 213;
+            }
+
+            if (2531 <= betTypeId && betTypeId <= 2559)
+            {
+                return 214;
+            }
+
+            if (2561 <= betTypeId && betTypeId <= 2569)
+            {
+                return 215;
+            }
+
+            if (2571 <= betTypeId && betTypeId <= 2599)
+            {
+                return 216;
+            }
+
+            if (2601 <= betTypeId && betTypeId <= 2629)
+            {
+                return 217;
+            }
+
+            if (2631 <= betTypeId && betTypeId <= 2659)
+            {
+                return 217;
+            }
+
+            if (2661 <= betTypeId && betTypeId <= 2669)
+            {
+                return 219;
+            }
+
+            if (2671 <= betTypeId && betTypeId <= 2689)
+            {
+                return 220;
+            }
+
+            return 23;
         }
         #endregion StaticMethods
     }
