@@ -74,7 +74,5 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int AllBet = 211;
         public const int Voidbridge = 212;
-
-        public static bool IsNG2SportType(int sportType) { return sportType >= 213 && sportType <= 220; }
     }
 }
