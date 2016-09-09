@@ -935,7 +935,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
-                                var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || (roleId < 4 && isHideNG2Upline) || !isSyncNG2Upline;
+                                var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || (roleId < 4 && isHideNG2Upline) || !isSyncNG2Upline || !isSyncNG2;
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
@@ -957,7 +957,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsDeposit = isDeposit,
                                     Username = userName,
                                     AccId = AppSession.AccId,
-                                    IsShowNG2 = !isHideNG2
+                                    IsShowNG2 = !hideCheckBoxNG2
                                 };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
