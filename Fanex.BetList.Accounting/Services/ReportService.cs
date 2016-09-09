@@ -185,8 +185,7 @@ namespace Fanex.BetList.Accounting.Services
 
         public static bool IsNG2NeedSuffix(int betTypeId)
         {
-            var betTypes = new int[] { 2504, 2505, 2506, 2538, 2539, 2540, 2561, 2562, 2563, 2580, 2581, 2582, 2610, 2611, 2612, 2640, 2641, 2642, 2661, 2662, 2663, 2671, 2672, 2673 };
-            return betTypes.Contains(betTypeId);
+            return 2501 <= betTypeId && betTypeId <= 2699;
         }
 
         public static int GetNG2SportType(int betTypeId)
