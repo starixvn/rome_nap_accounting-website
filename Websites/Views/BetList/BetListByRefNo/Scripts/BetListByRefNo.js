@@ -126,7 +126,7 @@ BetList.BetListByRefNo = (function ($) {
             showError("Either PlayerID or Username is required");
             return false;
         }
-        if (selProductValue === "12" && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if ((selProductValue === "12" || selProductValue ==="21") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
