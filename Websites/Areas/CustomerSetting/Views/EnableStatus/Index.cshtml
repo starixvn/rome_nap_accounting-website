@@ -14,9 +14,21 @@
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/EnableStatus/Styles/EnableStatus.less")" rel="stylesheet" type="text/css" />
-<div id="ng-app"  data-ng-app="enableStatusApp" data-ng-controller="EnableStatusController" data-ng-init="Init()" style="display: none; margin-right: 15px">
+<div id="ng-app" data-ng-app="enableStatusApp" data-ng-controller="EnableStatusController" data-ng-init="Init()" style="display: none; margin-right: 15px">
     <div id="errMsg" style="display: none" class="successMsg"></div>
+
+    <div class="notes" data-ng-show="model.notes && !model.warning">
+        <div>
+            <span class="title-icon"></span>
+            <span class="title-text">@EnableStatusResources.Notes:</span>
+        </div>
+        <div class="note-text" data-ng-repeat="note in model.notes">
+            {{note}}
+        </div>
+    </div>
+
     <div class="errMsg" style="color: #ff5411" data-ng-hide="!model.warning || model.warning == ''">{{model.warning}}</div>
+
     <table class="tableInfo" cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td colspan="2" class="bold bgTitle c" style="border-bottom: none !important">
@@ -36,7 +48,7 @@
             <tr data-ng-hide="sortedModel.length == 1"><td colspan="2" class="bold bgHeader">{{group.sportTypeName}}</td></tr>
             <tr data-ng-repeat="item in group" data-ng-init="item.isDirty = item.betTypeId == 0 || item.betTypeId == -1 || !context.enableUplines; item.disable = false; item.enable = !item.disabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.disabledDownlines; item.preValDownline = item.enableDownline" data-ng-hide="item.hide">
                 <td style="border-bottom: none !important">
-                    <label><input id="{{(item.hide) + '_' + item.betTypeId}}" name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.disabledUplines || item.betTypeId == 0 || model.readOnly || (item.betTypeId == -1 && !context.enableUplines)"/><span>{{item.enableText}}</span></label>
+                    <label><input id="{{(item.hide) + '_' + item.betTypeId}}" name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.disabledUplines || item.betTypeId == 0 || model.readOnly || (item.betTypeId == -1 && !context.enableUplines)" /><span>{{item.enableText}}</span></label>
                 </td>
                 <td style="border-bottom: none !important">
                     <label>
@@ -46,8 +58,8 @@
                                data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline" type="checkbox"
                                data-ng-change="item.disabledDownlines = !item.enableDownline"
                                data-ng-model="item.enableDownline"
-                               data-ng-disabled="{{ item.betTypeId == 0 || (item.betTypeId == -1 && !context.enableUplines) ? !item.enable : item.disableDownline }}"/>
-                        <span  data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline">{{item.enableDownlinesText}}</span>
+                               data-ng-disabled="{{ item.betTypeId == 0 || (item.betTypeId == -1 && !context.enableUplines) ? !item.enable : item.disableDownline }}" />
+                        <span data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline">{{item.enableDownlinesText}}</span>
                     </label>
                 </td>
             </tr>
@@ -57,15 +69,16 @@
         <tr style="height: 1px">
             <td colspan="2" style="border-top: none; border-left: none; border-right: none"></td>
         </tr>
-    </table>  
-    <div style="text-align: right" >
+    </table>
+    <div style="text-align: right">
         <input id="submit" data-ng-hide="model.readOnly" class="buttonPopup" type="button" value="@EnableStatusResources.submit" data-ng-click="isDisabledAll == true ? void() : Update()" style="margin-right: 0" />
     </div>
 </div>
 @Html.AntiForgeryToken()
-<script type="text/javascript">  
+<script type="text/javascript">
+
     var successMsg = '@EnableStatusResources.successMsg';
-    var errMsgAccountDisabled = '@EnableStatusResources.accountDisabled';      
+    var errMsgAccountDisabled = '@EnableStatusResources.accountDisabled';
     var model = @Html.Raw(model);
     function resolveClientUrl(relativePath){
         return '@Url.Content("~/")' + relativePath;
