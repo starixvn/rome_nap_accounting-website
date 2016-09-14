@@ -327,6 +327,6 @@
 		<Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
 		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
 		<Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />
+		<Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
 	</Function>
 </Functions>
