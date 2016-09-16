@@ -17,7 +17,7 @@
 	var colNoWidth = 30,
 		colGroupHeadlineWidth = 150,
 		colHeadlineTypeWidth = 150,
-		colOwnerWidth = 150,
+		colOwnerWidth = 250,
 		colUsernameWidth = 120,
 		colStatusWidth = 120,
 		colSiteWidth = 100,
@@ -569,7 +569,7 @@
 
 		return '<div class="c " style="width:' + colOwnerWidth + 'px;height:20px">\
 					<span id="spanOwner' + headlineId + '">' + owner + '</span>\
-					<input type="text" class="hidden" style="width:100px" value="' + owner + '" id="input' + headlineId + '"/>\
+					<input type="text" class="hidden" style="width:200px" value="' + owner + '" id="input' + headlineId + '"/>\
 					<div style="float:right">\
 						<img style="cursor:pointer" src="../App_Themes/Images/icn_edit.png" title="Edit" alt="Edit" class="edit-owner" data-headlineid="' + headlineId + '">\
 						<div style="float:right" class="hidden">\
