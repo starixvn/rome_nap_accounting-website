@@ -5,6 +5,7 @@ using Fanex.Tarus.Customer.DataAccess.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
 using ONEbook.NG2.API;
 using ONEbook.NG2.API.DTO;
+using ONEbook.NG2.API.DTO.CreateCurrency;
 
 namespace Fanex.Tarus.Customer.Business.NG2
 {
@@ -17,16 +18,16 @@ namespace Fanex.Tarus.Customer.Business.NG2
             var service = new Services();
             var request = new Request();
 
-            request.Auth.SiteId = "2000";
-            request.Call.UserId = AppSession.CurrentSession.UserId;
-            request.Call.Currencies.Add(new KeyValuePair<int, decimal>(entity.CurrencyId, entity.BaseRate));
+            request.Auth.SiteId = 2000;
+            request.UserId = AppSession.CurrentSession.UserId;
+            request.Call.CurrencyArray.Add(new CurrencyInfo() { CurrencyId = entity.CurrencyId, ExchangeRate = entity.BaseRate });
 
             var response = service.CreateCurrency(request);
 
             return new CustomerSetting.Module.Core.Models.Result
             {
-                ErrorCode = response.Result.ResultDetail.ElementAt(0).ErrorCode,
-                ErrorMessage = response.Result.ResultDetail.ElementAt(0).ErrorDescription
+                ErrorCode = response.Result.ErrorCode,
+                ErrorMessage = response.Result.ErrorDescription
             };
         }
 
