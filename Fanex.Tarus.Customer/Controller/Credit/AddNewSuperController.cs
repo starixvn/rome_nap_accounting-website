@@ -141,7 +141,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                     string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
                     result.ErrorMessage = strUrl;
                     Thread.Sleep(3000);
-                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId);
+                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId, customer.CurrencyId);
                 }
             }
             catch (Exception ex)
@@ -189,12 +189,12 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             return result;
         }
 
-        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId)
+        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId, int currencyId)
         {
             if (syncUpline)
             {
                 ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP);
+                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId);
             }
         }
     }

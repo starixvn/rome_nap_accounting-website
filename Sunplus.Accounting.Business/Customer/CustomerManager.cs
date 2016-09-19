@@ -3217,7 +3217,7 @@ namespace Sunplus.Accounting.Business.Customer
             if (uplineInfo.IsUplineSyncNG2)
             {
                 ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP);
+                syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP, custInfo.Currency);
             }
 
             return result;
