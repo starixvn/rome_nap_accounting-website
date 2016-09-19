@@ -141,7 +141,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                     string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
                     result.ErrorMessage = strUrl;
                     Thread.Sleep(3000);
-                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId, customer.CurrencyId);
+                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId, customer.CurrencyId, AppSession.AccId);
                 }
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         [NonAction]
         public Fanex.PTEngine.BusinessObjects.Result CheckPermissionInsert(bool isInternal)
         {
-            Result result = new Result
+            var result = new PTEngine.BusinessObjects.Result
             {
                 ErrorCode = "0",
                 ErrorMessage = "Success"
@@ -189,12 +189,12 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             return result;
         }
 
-        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId, int currencyId)
+        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId, int currencyId, int userId)
         {
             if (syncUpline)
             {
                 ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId);
+                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId, userId);
             }
         }
     }
