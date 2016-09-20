@@ -20,7 +20,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
 
             request.Auth.SiteId = 2000;
             request.UserId = AppSession.CurrentSession.UserId;
-            request.Call.CurrencyArray.Add(new CurrencyInfo() { CurrencyId = entity.CurrencyId, ExchangeRate = entity.BaseRate });
+            request.Call.CurrencyArray.Add(new CurrencyInfo() { CurrencyId = entity.CurrencyId, CurrencyName = entity.CurrencyCode, ExchangeRate = entity.BaseRate });
 
             var response = service.CreateCurrency(request);
 
