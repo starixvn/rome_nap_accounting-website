@@ -24,11 +24,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
 
             var response = service.CreateCurrency(request);
 
-            return new CustomerSetting.Module.Core.Models.Result
-            {
-                ErrorCode = response.Result.ErrorCode,
-                ErrorMessage = response.Result.ErrorDescription
-            };
+            return new CustomerSetting.Module.Core.Models.Result(response.Result.ErrorCode, response.Result.ErrorCode != 0 ? "Sync currency failed. Please try it again later" : response.Result.ErrorDescription);
         }
 
         public SyncCurrencyEntity GetCurrencyByName(string currencyCode)
