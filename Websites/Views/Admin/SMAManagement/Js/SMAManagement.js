@@ -325,19 +325,14 @@
             css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
 
             if (i === 0) {
-                var height = totalItems * 17;
                 rowsSpan = '<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px">' + groupIndex + '</div>\
                                 </td>\
-                                <td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: ' + height + 'px">' + smaGroup.GroupName + '</div>\
+                                <td rowspan="' + totalItems + '" class="group">\
+                                    <div class="c " style="width: ' + colGroupHeadlineWidth + 'px; height: 20px" des="Group Headline: ' + smaGroup.GroupName + '">' + smaGroup.GroupName + '</div>\
                                 </td>\
-								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; height: ' + height + 'px">' + "NORMAL" + '</div>\
-                                </td>\
-								<td rowspan="' + totalItems + '">\
-                                    <div class="c" style="width: ' + colOwnerWidth + 'px; height: ' + height + 'px">' + "XXX" + '</div>\
-                                </td>';
+								<td rowspan="' + totalItems + '">' + renderHeadlineTypeRow(smaGroup.GroupId, row.HeadlineType) + '</td>\
+								<td rowspan="' + totalItems + '">' + renderOwnerRow(smaGroup.GroupId, row.Owner) + '</td>';
             }
 
             var rowHtml = '<tr>' + rowsSpan + '\
