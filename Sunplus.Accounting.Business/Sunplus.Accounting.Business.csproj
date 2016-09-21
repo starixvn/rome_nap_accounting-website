@@ -179,9 +179,6 @@
     <Reference Include="Sunplus.Bingo.Entities">
       <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Services">
-      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Services.dll</HintPath>
-    </Reference>
     <Reference Include="Sunplus.Core.CachingLib">
       <HintPath>..\Dependency\Sunplus.Core.CachingLib.dll</HintPath>
     </Reference>
@@ -394,13 +391,9 @@
     <Compile Include="PositionTaking\SportBook\SportDetail.cs" />
     <Compile Include="PositionTaking\SportBook\SuperPT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PT\Bingo\BingoManager.cs" />
-    <Compile Include="PT\Bingo\IBingoService.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
     <Compile Include="PT\SportBooks\NumberGameManager.cs" />
-    <Compile Include="PT\SportBooks\SportBooksBase.cs" />
-    <Compile Include="PT\ViewPT\BingoViewPT.cs" />
-    <Compile Include="PT\ViewPT\IBingoViewPT.cs" />
+    <Compile Include="PT\SportBooks\SportBooksBase.cs" />  
     <Compile Include="Report\DirectBalance\DirectBalanceManager.cs" />
     <Compile Include="Report\DirectBalance\IServiceDirectBalance.cs" />
     <Compile Include="Report\DirectBalance\ServiceDirectBalance.cs" />

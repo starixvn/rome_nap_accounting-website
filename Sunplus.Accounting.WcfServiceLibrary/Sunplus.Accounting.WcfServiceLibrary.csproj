@@ -156,8 +156,6 @@
     <Compile Include="BetList\BetListNumberGameManager.cs" />
     <Compile Include="BetList\BetListService.cs" />
     <Compile Include="BetList\IBetListService.cs" />
-    <Compile Include="Bingo\BingoService.cs" />
-    <Compile Include="Bingo\IBingoService.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="CreditTerm\CreditTermService.cs" />
     <Compile Include="CreditTerm\ICreditTermService.cs" />

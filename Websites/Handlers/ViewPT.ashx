@@ -34,12 +34,7 @@ public class ViewPT : BaseHandler
                     bool _isLive = (context.Request["isLive"] == "1");
                     bool _hasComm = (string.Compare(_type, "comm", true) ==0);
 
-                    if (_sportID == 252)
-                    {
-                        IBingoViewPT bingoViewPT = new BingoViewPT();
-                        _s = bingoViewPT.GetPTBingo(username,_bettype);
-                    }
-                    else if (_sportID != 251)
+                    if (_sportID != 251)
                     {
                         DbResult dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetPT(username, _sportID == 999 ? Sunplus.Accounting.Core.Common.Constants.Sport.OtherSports : _sportID, _bettype, _isLive, _hasComm);
                         if (CastAide.AsInt32(dr.Outputs["errcode"], -1) != 0)
@@ -100,12 +95,6 @@ public class ViewPT : BaseHandler
                     + "<option value='0'>.: ALL - Game Type :.</option></select>";
         return ListGameType + ListGameKind + ALL;
     }
-
-    public static string GetGameTypeBingo()
-    {
-        IBingoViewPT bingoViewPT = new BingoViewPT();
-        return bingoViewPT.GetListBingoGameKindGameType();
-    }
     
     public static string GetBettypeList(HttpContext hc, int sportID)
     {
@@ -120,46 +109,40 @@ public class ViewPT : BaseHandler
                 {
                     var rngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
                     _s.Append(GetGameTypeCasino(rngSiteName));
-                }
-                
+                }                
             }
-            else if (sportID == 252)
+          
+            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetPTBetType(sportID))
             {
-                _s.Append(GetGameTypeBingo());
-            }
-            else
-            {
-                using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetPTBetType(sportID))
+                while (dr.Read())
                 {
-                    while (dr.Read())
+                    if (sportID == 151) // For Racing
                     {
-                        if (sportID == 151) // For Racing
+                        if (CastAide.AsInt32(dr["bettype"]) < 33)
                         {
-                            if (CastAide.AsInt32(dr["bettype"]) < 33)
-                            {
-                                if (!WebSettings.DisableHRPT_Tote)
-                                    _s.Append("<option value='" + dr["bettype"].ToString() + "'>" +
-                                              dr["typenamee"].ToString() + "</option>");
-                            }
-                            else
-                            {
-                                if (!WebSettings.DisableHRPT_OpenTote)
-                                    _s.Append("<option value='" + dr["bettype"].ToString() + "'>" +
-                                              dr["typenamee"].ToString() + "</option>");
-                            }
-                        }
-                        else if (sportID == Constants.Sport.OtherSports)
-                        {
-                            if (CastAide.AsInt32(dr["bettype"]) != Constants.BetType.MixParlay)
-                                _s.Append("<option value='" + dr["bettype"].ToString() + "'>" + dr["typenamee"].ToString() +
-                                      "</option>");
+                            if (!WebSettings.DisableHRPT_Tote)
+                                _s.Append("<option value='" + dr["bettype"].ToString() + "'>" +
+                                            dr["typenamee"].ToString() + "</option>");
                         }
                         else
-                            _s.Append("<option value='" + dr["bettype"].ToString() + "'>" + dr["typenamee"].ToString() + "</option>");
+                        {
+                            if (!WebSettings.DisableHRPT_OpenTote)
+                                _s.Append("<option value='" + dr["bettype"].ToString() + "'>" +
+                                            dr["typenamee"].ToString() + "</option>");
+                        }
                     }
+                    else if (sportID == Constants.Sport.OtherSports)
+                    {
+                        if (CastAide.AsInt32(dr["bettype"]) != Constants.BetType.MixParlay)
+                            _s.Append("<option value='" + dr["bettype"].ToString() + "'>" + dr["typenamee"].ToString() +
+                                    "</option>");
+                    }
+                    else
+                        _s.Append("<option value='" + dr["bettype"].ToString() + "'>" + dr["typenamee"].ToString() + "</option>");
                 }
-                _s.Append("<option value='0'>..:: ALL ::..</option></select>");
             }
+            _s.Append("<option value='0'>..:: ALL ::..</option></select>");
+            
         }
         catch (Exception ex)
         {

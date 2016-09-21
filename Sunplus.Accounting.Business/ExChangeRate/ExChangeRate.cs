@@ -11,7 +11,6 @@ using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Tarus.LiveCasino.Business.ExRate;
 using Fanex.Tarus.LiveCasino.Entities.ExRate;
-using Sunplus.Accounting.Business.PT.Bingo;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
@@ -194,14 +193,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     CasinoLibrary.SBAgent.BasicInfo info = new CasinoLibrary.SBAgent.BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (BingoSettings.BingoGame.Enabled)
-                    {
-                        var bingoManager = new BingoManager();
-                        bingoManager.UpdateExchangeRate(BingoSettings.BingoGame.CodeGameNo, exid, currency,
-                                                        CastAide.AsDouble(actualrate), AppSession.AccId,
-                                                        AppSession.AccUserName, HttpContext.Current.Request.UserHostAddress);
-                    }
+               
                     if (WebSettings.EnableLiveCasino)
                     {
                         var liveCs = new ExRateManager();
@@ -429,14 +421,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     CasinoLibrary.SBAgent.BasicInfo info = new CasinoLibrary.SBAgent.BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (BingoSettings.BingoGame.Enabled)
-                    {
-                        var bingoManager = new BingoManager();
-                        bingoManager.UpdateExchangeRate(BingoSettings.BingoGame.CodeGameNo, exid, currency,
-                                                        CastAide.AsDouble(actualrate), AppSession.AccId,
-                                                        AppSession.AccUserName, HttpContext.Current.Request.UserHostAddress);
-                    }
+                
                     if (WebSettings.EnableLiveCasino)
                     {
                         var liveCs = new ExRateManager();

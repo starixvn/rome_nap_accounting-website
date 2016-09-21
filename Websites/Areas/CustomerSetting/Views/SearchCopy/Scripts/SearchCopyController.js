@@ -164,8 +164,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmRacing").attr('src', "");
         $("#frmRacingMinPT").attr('src', "");
         $("#frmCasino").attr('src', "");
-        $("#frmVirtualSports").attr('src', "");
-        $("#frmBingo").attr('src', "");
+        $("#frmVirtualSports").attr('src', "");      
         $("#frmLiveCasino").attr('src', "");
         $("#frmGoldDleluxe").attr('src', "");
         $("#frmColossusBets").attr('src', "");
@@ -290,10 +289,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
         if (!statusSports.HideVirtualSports) {
             $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
-        }
-        if (!statusSports.HideBingo) {
-            $scope.sports.push({ sportname: 'Bingo', sportvalue: 'tabBingo' });
-        }
+        }      
         if (!statusSports.HideLiveCasino) {
             $scope.sports.push({ sportname: 'Live Casino', sportvalue: 'tabLiveCasino' });
         }
