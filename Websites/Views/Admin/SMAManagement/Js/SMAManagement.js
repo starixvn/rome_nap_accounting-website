@@ -411,36 +411,29 @@
                     var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
                     var rowHtml = '<tr>\
                                 <td>\
-                                    <div class="c" style="width: ' + colNoWidth + 'px; height: 20px; line-height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colNoWidth + 'px; line-height: 20px">&nbsp;</div>\
                                 </td>\
                                 <td>\
-                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; ">&nbsp;</div>\
                                 </td>\
 								<td>\
-                                    <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; ">&nbsp;</div>\
                                 </td>\
-								<td>\
-                                    <div class="c" style="width: ' + colOwnerWidth + 'px; height: 20px">\
-										<span>' + row.Owner + '</span>\
-										<div style="float:right">\
-											<img style="cursor:pointer" src="../App_Themes/Images/icn_edit.png" title="Edit" alt="Edit" class="edit-owner">\
-										</div>\
-									</div>\
+								<td>'+ renderOwnerRow(smaGroup.GroupId, row.Owner) + '</td>\
+                                <td class="' + css + '">\
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; line-height: 20px">&nbsp;</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">&nbsp;</div>\
+                                    <div class="c" style="width: ' + colStatusWidth + 'px; line-height: 20px">' + row.Status + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + colStatusWidth + 'px; height: 20px; line-height: 20px">' + row.Status + '</div>\
+                                    <div class="c" style="width: ' + colSiteWidth + 'px; line-height: 20px">' + row.Site + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + colSiteWidth + 'px; height: 20px; line-height: 20px">' + row.Site + '</div>\
+                                    <div class="c" style="width: ' + colCurrencyWidth + 'px; line-height: 20px">' + row.Currency + '</div>\
                                 </td>\
                                 <td class="' + css + '">\
-                                    <div class="c" style="width: ' + colCurrencyWidth + 'px; height: 20px; line-height: 20px">' + row.Currency + '</div>\
-                                </td>\
-                                <td class="' + css + '">\
-                                    <div class="c" style="width: ' + colPositionWidth + 'px; height: 20px; line-height: 20px">' + row.Position + '</div>\
+                                    <div class="c" style="width: ' + colPositionWidth + 'px; line-height: 20px">' + row.Position + '</div>\
                                 </td>\
                             </tr>';
 
@@ -558,10 +551,10 @@
 
     function renderOwnerRow(headlineId, owner) {
         if (!hostPermission) {
-            return '<div class="c " style="width:' + colOwnerWidth + 'px;height:20px">' + owner + '</div>';
+            return '<div class="c " style="width:' + colOwnerWidth + 'px">' + owner + '</div>';
         }
 
-        return '<div class="c " style="width:' + colOwnerWidth + 'px;height:20px">\
+        return '<div class="c " style="width:' + colOwnerWidth + 'px">\
 					<span id="spanOwner' + headlineId + '">' + owner + '</span>\
 					<input type="text" class="hidden" style="width:200px" value="' + owner + '" id="input' + headlineId + '"/>\
 					<div style="float:right">\
