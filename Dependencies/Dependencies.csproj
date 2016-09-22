@@ -431,6 +431,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Shared.ViewLogLib">
+      <HintPath>..\Dependency\Sunplus.Shared.ViewLogLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />

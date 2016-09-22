@@ -52,8 +52,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.5\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.1\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
