@@ -72,6 +72,7 @@
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.15.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.15.4.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.15.2.9\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
@@ -84,12 +85,8 @@
     <Reference Include="Fanex.BetList.MyanmarOdds">
       <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.0.1.4\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.NG2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NG2.1.0.0.2-beta\lib\Fanex.BetList.NG2.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetList.NG2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NG2.1.0.0.0-beta\lib\Fanex.BetList.NG2.dll</HintPath>
+    <Reference Include="Fanex.BetList.NG2, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.NG2.1.0.0.3-beta\lib\Fanex.BetList.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
