@@ -31,7 +31,7 @@
     }
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
-    {
+{
     <tr class="c">
         <td>
             <div class="c width30 table-cell">
@@ -51,14 +51,14 @@
                     }
                 </div>
                 <div class="c">
-                    @betdetail.Ticket.TransDate</div>
+                    @betdetail.Ticket.TransDate
+                </div>
             </div>
         </td>
-        <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
+        <td id="td_right_@betdetail.Ticket.TransId" class='r bl_evt'>
             <div id="choice_right_@betdetail.Ticket.TransId" class="width275 table-cell">
                 @Html.Raw(betdetail.ChoiceHtml)
-                @if (betdetail.Ticket.BetTypeId == 9 ||
-                    betdetail.Ticket.BetTypeId == 29)
+                @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
                 {
                     <div class="parlay_@betdetail.Ticket.TransId ">
                     </div>
@@ -76,7 +76,7 @@
             </div>
         </td>
         <td class="r">
-            <div class="width60 table-cell">
+            <div class="width80 table-cell">
                 @Html.Partial("~/Views/BetList/_WinLoss.cshtml", betdetail)
             </div>
         </td>
@@ -113,7 +113,7 @@
             </div>
         </td>
     </tr>
- 
+
 }
 <div id="BetlistByCustInfo" class="freegrid display-none">
     <div class="col_header row-headers-background scroll-y">
@@ -123,49 +123,59 @@
                     <tr>
                         <th>
                             <div class="width30 height34 table-cell">
-                                No</div>
+                                No
+                            </div>
                         </th>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date</div>
+                                Date
+                            </div>
                         </th>
                         <th>
                             <div class="width275 height34 table-cell">
-                                Choice</div>
+                                Choice
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Odds</div>
+                                Odds
+                            </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake</div>
+                                Stake
+                            </div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
-                                Win Loss</div>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Super
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Master
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Agent
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -179,49 +189,59 @@
                     <tr>
                         <th>
                             <div class="width30 height34 table-cell">
-                                No</div>
+                                No
+                            </div>
                         </th>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date</div>
+                                Date
+                            </div>
                         </th>
                         <th>
                             <div class="width275 height34 table-cell">
-                                Choice</div>
+                                Choice
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Odds</div>
+                                Odds
+                            </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake</div>
+                                Stake
+                            </div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
-                                Win Loss</div>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Super
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Master
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
                                 Agent
                                 <br />
-                                PT/Comm</div>
+                                PT/Comm
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -232,7 +252,7 @@
                         @MvcHtmlString.Create(renderResult[1])
                     }
                     else
-                    { 
+                    {
                         <tr class="c">
                             <td colspan="11" class='r'>
                                 <div class="c b">
@@ -248,7 +268,7 @@
     </div>
 </div>
 <script type="text/javascript">
-   var _custid = @betdetail.Ticket.CustId;
-   var _length = @ViewBag.Quantity;
-   var _arrayTransID = @serializer.Serialize(arrTransID);
+    var _custid = @betdetail.Ticket.CustId;
+    var _length = @ViewBag.Quantity;
+    var _arrayTransID = @serializer.Serialize(arrTransID);
 </script>
