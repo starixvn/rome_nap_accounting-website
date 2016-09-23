@@ -4,6 +4,8 @@ using DNAide.Core;
 using Fanex.Tarus.BetList.Business.Results;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Business.BetList;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 
 public partial class Report_ViewResult : System.Web.UI.Page
 {
@@ -15,8 +17,17 @@ public partial class Report_ViewResult : System.Web.UI.Page
             int bettype = CastAide.AsInt32(Request.QueryString["bettype"], 0);
             long betId = CastAide.AsInt64(Request.QueryString["betid"], 0);
             bool isSupportFromFanexResult = false;
-            string result = new ScoreInformationService().GetResult(matchID, bettype, betId, out isSupportFromFanexResult);
 
+            if (2501 <= bettype && bettype <= 2699)
+            {
+                if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+                {
+                    this.lResult.Text = "<script type=\"text/javascript\">location.href='../../AccessSpecialSiteDenied.aspx';</script>";
+                    return;
+                }
+            }
+            
+            string result = new ScoreInformationService().GetResult(matchID, bettype, betId, out isSupportFromFanexResult);
             if (isSupportFromFanexResult)
             {
                 this.lResult.Text = result;

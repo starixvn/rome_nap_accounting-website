@@ -721,6 +721,11 @@ function ViewAllBetResult(transDesc, betCheck, betTypeId) {
     parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 
+function showNG2Details(transId, refno, custId) {
+    var width = 750;
+    parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, 'Result', width, 500, true, false, window, 0, null, null);
+}
+
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     var params = $.param({
         Refno: refno,
