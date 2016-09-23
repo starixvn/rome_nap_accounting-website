@@ -190,47 +190,37 @@ namespace Fanex.BetList.Accounting.Services
 
         public static int GetNG2SportType(int betTypeId)
         {
-            if (2501 <= betTypeId && betTypeId <= 2529)
+            if (2501 <= betTypeId && betTypeId <= 2539)
             {
                 return 213;
             }
 
-            if (2531 <= betTypeId && betTypeId <= 2559)
+            if (2541 <= betTypeId && betTypeId <= 2579)
             {
                 return 214;
             }
 
-            if (2561 <= betTypeId && betTypeId <= 2569)
+            if (2581 <= betTypeId && betTypeId <= 2619)
             {
                 return 215;
             }
 
-            if (2571 <= betTypeId && betTypeId <= 2599)
+            if (2621 <= betTypeId && betTypeId <= 2659)
             {
                 return 216;
             }
 
-            if (2601 <= betTypeId && betTypeId <= 2629)
+            if (2661 <= betTypeId && betTypeId <= 2679)
             {
                 return 217;
             }
 
-            if (2631 <= betTypeId && betTypeId <= 2659)
+            if (2681 <= betTypeId && betTypeId <= 2699)
             {
                 return 218;
             }
 
-            if (2661 <= betTypeId && betTypeId <= 2669)
-            {
-                return 219;
-            }
-
-            if (2671 <= betTypeId && betTypeId <= 2689)
-            {
-                return 220;
-            }
-
-            return 23;
+            return 0;
         }
         #endregion StaticMethods
     }
