@@ -7,7 +7,7 @@ public partial class Report_ViewAllBetResult : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string allbetResult;
-        IBuilderService allbetResultService = new BuilderService();
+        IAllbetResultBuilder allbetResultService = new AllbetResultBuilder();
 
         try
         {
