@@ -47,42 +47,41 @@ namespace Fanex.Tarus.BetList.Business.Results
         /// </returns>
         public string GetResult(int matchId, int betType, long betId, out bool isSupport)
         {
-            isSupport = false;
             var criteria = GetCriteria(matchId, betType, betId);
             List<Sportsbook> sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(ref criteria);
 
-            if (2501 <= betType && betType <= 2699)
+            if (IsSupport(criteria.SportType))
             {
                 isSupport = true;
-                var service = new Services();
-                var req = new ONEbook.NG2.API.DTO.ShowTicketResult.Request();
-                req.Auth.SiteId = 3000;
-                req.UserId = AppSession.AccId;
-                req.Call.GambleId = matchId;
-                var res = service.ShowTicketResult(req);
-                if (res.Result.IsSuccess)
-                {
-                    if (string.IsNullOrWhiteSpace(res.Result.Url))
-                    {
-                        return "<div>There is no information available.</div>";
-                    }
-
-                    return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
-                }
-
-                return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";
+                ResultSetting resultSetting = GetFanexResultSetting(criteria);
+                return ResultEngine.HtmlParser(sportsbooks, resultSetting).Replace("original-title", " title ");
             }
             else
             {
-                if (IsSupport(criteria.SportType))
+                isSupport = false;
+                return string.Empty;
+            }
+        }
+
+        public string GetNG2Result(int matchId)
+        {
+            var service = new Services();
+            var req = new ONEbook.NG2.API.DTO.ShowTicketResult.Request();
+            req.Auth.SiteId = 3000;
+            req.UserId = AppSession.AccId;
+            req.Call.GambleId = matchId;
+            var res = service.ShowTicketResult(req);
+            if (res.Result.IsSuccess)
+            {
+                if (string.IsNullOrWhiteSpace(res.Result.Url))
                 {
-                    isSupport = true;
-                    ResultSetting resultSetting = GetFanexResultSetting(criteria);
-                    return ResultEngine.HtmlParser(sportsbooks, resultSetting).Replace("original-title", " title ");
+                    return "<div>There is no information available.</div>";
                 }
+
+                return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
             }
 
-            return string.Empty;
+            return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";
         }
 
         private static bool IsSupport(int sportType)

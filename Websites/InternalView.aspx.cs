@@ -16,7 +16,7 @@ public partial class InternalView : System.Web.UI.Page
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        string internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
+        var serviceBase = new ServiceBase();
         if (isDummyAcc)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
@@ -26,8 +26,7 @@ public partial class InternalView : System.Web.UI.Page
             }
         }
         else
-        {
-            var serviceBase = new ServiceBase();
+        {            
             var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
                        new CheckSpecialSitePermissionCriteria()
                        {
@@ -38,7 +37,6 @@ public partial class InternalView : System.Web.UI.Page
             {
                 Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
                 return;
-            }
             }
         }
 

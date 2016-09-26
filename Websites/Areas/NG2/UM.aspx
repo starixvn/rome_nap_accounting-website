@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="UM.aspx.cs" Inherits="Areas_NG2_UM" %>
 <%
     var service = new ONEbook.UM.ThirdParty.Services.Impl.UMService();
-    var um = service.GetUnderMaintenanceTime();
+    var um = service.GetUnderMaintenanceTime(23);
     var UMfrom = um.From;
     var UMto = um.To;
  %>
@@ -15,15 +15,16 @@
     </head>
     <body>
 
-        <h1 class="title"><span class="icon-alert"></span>Under Maintenance</h1>
+        <h1 class="title"><span style="color: #ff0000">Under Maintenance</span></h1>
+        <hr />
         <h2 class="sub-title">Dear Valued Customers:</h2>
         <p>
             We are having server maintenance, website will be unavailable from <br />
-            HK time <span class="txt-red"><%=UMfrom %> until <%=UMto%> </span>(GMT+ 8). Sorry for the inconvenience caused.
+            HK time <span  style="color: #ff0000"><%=UMfrom %> until <%=UMto%> </span>(GMT+ 8). Sorry for the inconvenience caused.
         </p>
         <h2 class="sub-title second">尊敬的客戶:</h2>
         <p>
-            本公司將於香港時間 <span class="txt-red"><%=UMfrom%> 至 <%=UMto%> </span>(GMT +8) 對服務器進行維護，期間所有的網頁將無法登入，不便之處，敬請諒解
+            本公司將於香港時間 <span  style="color: #ff0000"><%=UMfrom%> 至 <%=UMto%> </span>(GMT +8) 對服務器進行維護，期間所有的網頁將無法登入，不便之處，敬請諒解
         </p>
     </body>
 </html>

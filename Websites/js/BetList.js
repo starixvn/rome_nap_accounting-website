@@ -140,7 +140,13 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 
 function ViewResult(matchid, bettype, betid, sporttype) {
     var width = 750;
-    parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
+    var url = 'Report/ViewResult.aspx';
+
+    if (2501 <= bettype && bettype <= 2699) {
+        url = 'Report/ViewNG2Result.aspx';
+    }
+
+    parent.OpenNextPopup("VirtualResult", url + '?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
 }
 
 function ViewResultMetricGaming(

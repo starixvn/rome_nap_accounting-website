@@ -1723,22 +1723,6 @@ namespace Sunplus.Accounting.Business.Customer
                                                20,
                                                4);
                             break;
-                        case "21":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               CustParent.IsDisableAllBet,
-                                               hasDownline,
-                                               "Allbet",
-                                               renderLeftPanelParameter.IsShowAllBetForCredit,
-                                               renderLeftPanelParameter,
-                                               "Update Allbet Status",
-                                               21,
-                                               4);
-                            break;
                         case "22":
                             RenderLeftPanelManager.RenderEnableProductBoxDCS(
                                                row1,
@@ -1764,7 +1748,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                isManageCustomerAccess,
                                                CustParent.IsDisableNG2,
                                                hasDownline,
-                                               "NG2"/*RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")*/,
+                                               "NG2",
                                                renderLeftPanelParameter.IsShowNG2,
                                                renderLeftPanelParameter,
                                                "Update " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
