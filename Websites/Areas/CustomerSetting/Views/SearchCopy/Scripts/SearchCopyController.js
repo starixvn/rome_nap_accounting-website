@@ -426,6 +426,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.disableCasino = custInfo.DisableCasino;
                 $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
                 $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
+                $scope.existedUser.disableNG2 = custInfo.DisableNG2;
 
                 $scope.getAllSites();
 
@@ -494,7 +495,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             DisableLiveCasino: $scope.existedUser.disableLiveCasino,
             CustLevel: (parent.level == 'member' ? 1 : 4),
             UplineId: $scope.parentId,
-            IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false
+            IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
+            DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false
         };
 
         message.hideAlertMessage("errorMsg");
