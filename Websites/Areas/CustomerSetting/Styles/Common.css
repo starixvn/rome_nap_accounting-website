@@ -85,32 +85,6 @@
     overflow: auto;
 }
 
-.notes {
-    color: #ff5411;
-    font-size: 13px;
-    background-color: #ffedc1;
-    border-radius: 3px;
-    border: 1px solid #d2a243;
-    padding: 5px;
-    margin-bottom: 5px;
-}
-
-    .notes .title-icon {
-        background-image: url("../Images/warning-icn.png");
-        display: inline-block;
-        width: 22px;
-        height: 18px;
-        vertical-align: middle;
-    }
-
-    .notes .title-text {
-    }
-
-    .notes .note-text {
-        margin: 5px 0;
-        margin-left: 25px;
-    }
-
 .buttonPopup, .ui-button, button[type=button] {
     background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
     color: #fff !important;
