@@ -717,7 +717,7 @@ function ViewVoidbridgeResult(custId, betCheck) {
 
 function ViewAllBetResult(transDesc, betCheck, betTypeId) {
     var width = 945;
-    var url = 'Report/ViewAllBetResult.aspx?transDesc=' + transDesc + "&betCheck=" + betCheck + "&betTypeId=" + betTypeId;
+    var url = 'Report/ViewAllBetResult.aspx?transDesc=' + transDesc + "&matchCode=" + betCheck + "&betTypeId=" + betTypeId;
     parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
 }
 

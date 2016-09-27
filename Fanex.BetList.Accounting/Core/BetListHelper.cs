@@ -424,7 +424,7 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.AllBet:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc)
                                 ? string.Empty
-                                : string.Format("ViewAllBetResult('{0}','{1}',{2})", ticketDetail.Ticket.TransDesc, ticketDetail.Ticket.BetCheck, ticketDetail.Ticket.BetTypeId);
+                                : string.Format("ViewAllBetResult('{0}','{1}',{2})", ticketDetail.Ticket.TransDesc, ticketDetail.Ticket.MatchCode, ticketDetail.Ticket.BetTypeId);
                             break;
                         case SportContants.Voidbridge:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
