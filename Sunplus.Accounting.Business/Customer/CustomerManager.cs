@@ -891,6 +891,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
                                 }
 
+                                if (isHideAllBet || isHideAllbetUpline || !isSyncAllbetUpline)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+                                }
+
                                 if (isHideCricketSettingLink)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
@@ -942,6 +947,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
+
+                                TemplateHandler.Assign(ref htmlcontent, "{AllbetId}", "21");
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
                                 RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
@@ -1290,7 +1298,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
                                 }
 
-                                if (isHideAllbetUpline || !isSyncAllbetUpline)
+                                if (isHideAllBet || isHideAllbetUpline || !isSyncAllbetUpline)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
                                 }
@@ -1674,22 +1682,6 @@ namespace Sunplus.Accounting.Business.Customer
                                                renderLeftPanelParameter,
                                                "Update Cricket Status",
                                                20,
-                                               4);
-                            break;
-                        case "21":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               CustParent.IsDisableAllBet,
-                                               hasDownline,
-                                               "Allbet",
-                                               renderLeftPanelParameter.IsShowAllBetForCredit,
-                                               renderLeftPanelParameter,
-                                               "Update Allbet Status",
-                                               21,
                                                4);
                             break;
                         case "22":

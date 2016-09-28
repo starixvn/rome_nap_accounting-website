@@ -7,11 +7,11 @@ public partial class Report_ViewAllBetResult : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string allbetResult;
-        IBuilderService allbetResultService = new BuilderService();
+        var allbetResultService = new AllbetResultBuilder();
 
         try
         {
-            allbetResult = allbetResultService.Render(Request.QueryString["transId"]);
+            allbetResult = allbetResultService.Render(Request.QueryString["transDesc"], Request.QueryString["matchCode"], Request.QueryString["betTypeId"]);
             if (string.IsNullOrEmpty(allbetResult))
             {
                 allbetResult = "<table class=\"fn-rs casino popup\"><tbody><tr><td class=\"row-noinfo\">There is no information available</td></tr></tbody></table>";

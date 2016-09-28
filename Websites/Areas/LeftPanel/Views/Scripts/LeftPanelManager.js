@@ -30,7 +30,7 @@ var LeftPanelManager = function () {
                 settingType: settingType
             });
 
-        var width = 475;
+        var width = 510;
         var height = 300;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };

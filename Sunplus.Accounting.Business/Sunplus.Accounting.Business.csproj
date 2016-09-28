@@ -393,7 +393,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
     <Compile Include="PT\SportBooks\NumberGameManager.cs" />
-    <Compile Include="PT\SportBooks\SportBooksBase.cs" />  
+    <Compile Include="PT\SportBooks\SportBooksBase.cs" />
     <Compile Include="Report\DirectBalance\DirectBalanceManager.cs" />
     <Compile Include="Report\DirectBalance\IServiceDirectBalance.cs" />
     <Compile Include="Report\DirectBalance\ServiceDirectBalance.cs" />
@@ -545,7 +545,7 @@
       <Name>Fanex.Tarus.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
-      <Project>{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}</Project>
+      <Project>{03f0b48d-0f0d-448c-a014-30fe5fde7f85}</Project>
       <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Statements\Fanex.Tarus.Statements.csproj">
@@ -606,7 +606,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
