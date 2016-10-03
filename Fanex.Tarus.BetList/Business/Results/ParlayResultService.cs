@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Linq;
+    using System.Net;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Tarus.BetList.Criteria.Results;
@@ -58,7 +59,14 @@ namespace Fanex.Tarus.BetList.Business.Results
                     return "<div>There is no information available.</div>";
                 }
 
-                return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
+                using (WebClient client = new WebClient())
+                {
+                    string s = client.DownloadString(res.Result.Url);
+
+                    return "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/ng2.css\"/>" + s;
+                }
+
+                // return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
             }
 
             return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";
