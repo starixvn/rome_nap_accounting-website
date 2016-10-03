@@ -3,6 +3,8 @@ using System;
 using System.Web.UI;
 using DNAide.Core;
 using Fanex.Tarus.BetList.Business.Results;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 
 public partial class Report_ViewNG2ParlayResult : System.Web.UI.Page
@@ -12,7 +14,14 @@ public partial class Report_ViewNG2ParlayResult : System.Web.UI.Page
         try
         {
             long refno = CastAide.AsInt64(Page.Request.QueryString["refno"], -1);
-            this.lMPResult.Text = new ParlayResultService().GetNG2Paraly(refno);
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                this.lMPResult.Text = "<script type=\"text/javascript\">location.href='../AccessSpecialSiteDenied.aspx';</script>";
+            }
+            else
+            {
+                this.lMPResult.Text = new ParlayResultService().GetNG2Paraly(refno);
+            }
         }
         catch (Exception ex)
         {

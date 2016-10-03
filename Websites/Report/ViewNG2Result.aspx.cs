@@ -18,8 +18,7 @@ public partial class Report_ViewNG2Result : System.Web.UI.Page
 
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
             {
-                this.lResult.Text = "<script type=\"text/javascript\">location.href='../../AccessSpecialSiteDenied.aspx';</script>";
-                return;
+                this.lResult.Text = "<script type=\"text/javascript\">location.href='../AccessSpecialSiteDenied.aspx';</script>";
             }
             else
             {
