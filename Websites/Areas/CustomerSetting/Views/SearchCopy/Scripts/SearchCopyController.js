@@ -23,7 +23,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.newUser = {};
     $scope.siteName = '';
 
-    $scope.sports = angular.copy(parent.sports);
+    $scope.sports = parent.sports;
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -364,6 +364,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                         $scope.getCustomerInfoByUserId(custid);
 
+                        $scope.checkAllowedShow(custid);
+
                         if (callback) {
                             callback();
                         }
@@ -388,6 +390,36 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
                 $('#step1>.btnNextR').hide()
+            }
+        });
+    };
+
+    $scope.checkAllowedShow = function (custid) {
+        $.ajax({
+            type: "POST",
+            url: toUrl("../../Handlers/CheckAllowedShow.ashx?custid=" + custid),
+            success: function (allowedng2) {
+                allowedng2 = parseInt(allowedng2);
+                var existed = false;
+                var index = -1;
+                for (var i = 0; i < parent.sports.length; i++) {
+                    if (parent.sports[i].sportvalue == 'tabNG2') {
+                        existed = true;
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (allowedng2 && parent.showNG2) {                    
+                    if (!existed) {
+                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });
+                    }                    
+                }
+                else {
+                    if (existed) {
+                        parent.sports.splice(index, 1);
+                    }
+                }
             }
         });
     };

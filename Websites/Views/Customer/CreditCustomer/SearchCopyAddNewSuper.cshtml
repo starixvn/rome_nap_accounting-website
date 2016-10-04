@@ -1,6 +1,7 @@
 ﻿@{ 
     var level = string.IsNullOrWhiteSpace(Request.QueryString["level"]) ? "member" : Request.QueryString["level"];
     var showNG2 = Sunplus.Accounting.Business.Security.Permissions.HasPermission(Sunplus.Accounting.Core.Common.Enumerations.Functions.AccessSpecialSites) == true ? 1 : 0;
+    var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
 
@@ -26,6 +27,7 @@
 <script type="text/javascript">
     var level = '@level';
     var showNG2 = @showNG2;
+    var ng2Text = '@ng2Text';
     var sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
             { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
@@ -42,11 +44,7 @@
             { sportname: 'Albet', sportvalue: 'tabAllbet' },
             { sportname: 'Macau Games', sportvalue: 'tabVoidbridge' }
     ];
-
-    if(showNG2){
-        sports.push({ sportname: '@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")', sportvalue: 'tabNG2' });
-    }
-
+    
     if ('@level' == 'member') {
         sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
