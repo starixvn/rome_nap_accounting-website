@@ -1,4 +1,5 @@
 ﻿@using Fanex.PTSetting.BettypeReference
+@using Sunplus.Accounting.Core.Common;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,6 @@
     <link href="@Url.Content("~/Views/PTInformation/Styles/style.less")" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="container">@Html.RenderBetTypeReference(false)</div>
+    <div class="container">@Html.RenderBetTypeReference(AccCommon.IsLocalTest)</div>
 </body>
 </html>

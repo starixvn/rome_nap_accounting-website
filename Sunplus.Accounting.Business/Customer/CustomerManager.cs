@@ -877,7 +877,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isDeposit;
-                                var isShowColossusBetsForCredit = !isHideColossusBets && !isDeposit;
+                                var isShowColossusBetsForCredit = !isHideColossusBets;
                                 var isShowSportsbook2 = !isHideSportsbook2 && !isDeposit;
                                 var isShowCockFighting = !isHideCockFighting && !isDeposit;
 
@@ -1278,7 +1278,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
 
-                                if (isHideColossusBets)
+                                if (isHideColossusBets|| isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
