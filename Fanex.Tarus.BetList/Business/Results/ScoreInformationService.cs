@@ -10,14 +10,15 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Collections.Generic;
+    using System.Net;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
     using ONEbook.NG2.API;
-    using Sunplus.Accounting.Core.Common;    
-    
+    using Sunplus.Accounting.Core.Common;
+
     /// <summary>
     /// The class ScoreInformationService.
     /// </summary>
@@ -77,6 +78,13 @@ namespace Fanex.Tarus.BetList.Business.Results
                 {
                     return "<div>There is no information available.</div>";
                 }
+
+                /*using (WebClient client = new WebClient())
+                {
+                    string s = client.DownloadString(res.Result.Url);
+
+                    return "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/ng2.css\"/>" + s;
+                }*/
 
                 return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
             }

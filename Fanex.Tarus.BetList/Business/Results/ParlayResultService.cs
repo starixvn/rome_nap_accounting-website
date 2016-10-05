@@ -59,14 +59,14 @@ namespace Fanex.Tarus.BetList.Business.Results
                     return "<div>There is no information available.</div>";
                 }
 
-                using (WebClient client = new WebClient())
+                /*using (WebClient client = new WebClient())
                 {
                     string s = client.DownloadString(res.Result.Url);
 
                     return "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/ng2.css\"/>" + s;
-                }
+                }*/
 
-                // return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
+                return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
             }
 
             return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";

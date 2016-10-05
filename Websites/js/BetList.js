@@ -139,7 +139,7 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 //}
 
 function ViewResult(matchid, bettype, betid, sporttype) {
-    var width = 750;
+    var width = 600;
     var url = 'Report/ViewResult.aspx';
 
     if (2501 <= bettype && bettype <= 2699) {
