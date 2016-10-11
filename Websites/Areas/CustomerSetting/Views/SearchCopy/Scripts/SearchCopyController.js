@@ -363,9 +363,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                         $("#checkExisted").addClass('success');
 
                         $scope.getCustomerInfoByUserId(custid);
-
-                        $scope.checkAllowedShow(custid);
-
+                        
                         if (callback) {
                             callback();
                         }
@@ -459,6 +457,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
                 $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
                 $scope.existedUser.disableNG2 = custInfo.DisableNG2;
+
+                if (custInfo.RoleId == 4) {
+                    $scope.checkAllowedShow(custid);
+                }
 
                 $scope.getAllSites();
 

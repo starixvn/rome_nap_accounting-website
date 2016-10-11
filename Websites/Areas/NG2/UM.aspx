@@ -4,6 +4,8 @@
     var um = service.GetUnderMaintenanceTime(23);
     var UMfrom = um.From;
     var UMto = um.To;
+    var cssUrl = HttpContext.Current.Request.ApplicationPath.Contains("/") ? "Styles/um.css"
+        : HttpContext.Current.Request.ApplicationPath + "/" + "Areas/NG2/Styles/um.css";
  %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +14,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="Styles/um.css" rel="stylesheet" />
+        <link href="<%=cssUrl %>" rel="stylesheet" />
     </head>
     <body>
         <hr />

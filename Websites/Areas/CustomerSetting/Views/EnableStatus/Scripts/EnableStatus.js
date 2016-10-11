@@ -21,6 +21,11 @@ function EnableStatusController($scope) {
     }
 
     $scope.Init = function () {
+        //$(document).bind('ajaxComplete', function (event, response) {
+        //    if (response.status == 0)
+        //        location.href = resolveClientUrl('Areas/NG2/UM.aspx');
+        //});
+
         $.ajaxSetup({
             beforeSend: function (xhr) {
                 var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
@@ -37,7 +42,7 @@ function EnableStatusController($scope) {
                 ($scope.entities[i].hide && $($scope.checkSyncProducts).index($scope.context.product) == -1) ||
                 (!$scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1);
         }
-        
+
         if ($scope.context.newMode) {
             $('#submit').addClass('disabledButton');
             $('#submit').attr('disabled', true);
@@ -167,7 +172,11 @@ function EnableStatusController($scope) {
             var message = '';
 
             $(data).each(function (i, error) {
-                if (!error.isSuccess) {
+                if (error.ErrorCode == '5003') {
+                    message = error.ErrorMessage;
+                    success = false;
+                }
+                else if (!error.isSuccess) {
                     success = false;
                     message += (parseInt(error.errorCode) == 600 ? errMsgAccountDisabled : error.errorMessage) + '<br />';
                 }
@@ -206,7 +215,11 @@ function EnableStatusController($scope) {
             if (typeof onCompleted == 'function') {
                 onCompleted(data);
             }
-        }).error(function (data) {
+        }).error(function (data) {            
+            if (data.status == 0) {
+                document.location.reload(true);
+            }
+            
             if (typeof console != 'undefined')
                 console.log(data);
 
@@ -286,7 +299,7 @@ function EnableStatusController($scope) {
             else {
                 $('#submit').addClass('disabledButton');
                 $('#submit').attr('disabled', true);
-            } 
+            }
         }
     };
 

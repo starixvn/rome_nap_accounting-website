@@ -11,6 +11,10 @@
                     showAlertMessage("errMsg", rs.IsSuccess ? "Sync currency successfully. Please contact to DBA to update synchronized currency list" : rs.ErrorMessage, (rs.IsSuccess ? 0 : 1));
                 },
                 error: function (rs) {
+                    if (rs.status == 0) {
+                        document.location.reload(true);
+                    }
+
                     showAlertMessage("errMsg", rs.responseText + "!", 1);
                 },
                 complete: function () {
