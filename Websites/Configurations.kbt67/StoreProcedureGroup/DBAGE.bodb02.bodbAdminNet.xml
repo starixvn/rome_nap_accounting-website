@@ -377,7 +377,7 @@
     <Setting Key="BetList_BetTradeDetails" SpName="Acc_BetList_BetTrade_Detail" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 	<Function Name="NG2">
-		<Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBAGE.bodb02.bodbAdminNet" />
-		<Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBAGE.bodb02.bodbAdminNet" />
+		<Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
+		<Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
 	</Function>
 </Functions>
