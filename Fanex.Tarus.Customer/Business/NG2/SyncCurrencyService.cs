@@ -24,6 +24,18 @@ namespace Fanex.Tarus.Customer.Business.NG2
 
             var response = service.CreateCurrency(request);
 
+            if (!response.Result.IsSuccess)
+            {
+                var req = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
+                req.Auth.SiteId = 2000;
+                req.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = entity.CurrencyId, ExchangeRate = entity.BaseRate });
+                req.UserId = AppSession.CurrentSession.UserId;
+
+                var res = service.SyncExchangeRates(req);
+
+                return new CustomerSetting.Module.Core.Models.Result(res.Result.ErrorCode, res.Result.ErrorCode != 0 ? "Sync currency failed. Please try it again later" : res.Result.ErrorDescription);
+            }
+
             return new CustomerSetting.Module.Core.Models.Result(response.Result.ErrorCode, response.Result.ErrorCode != 0 ? "Sync currency failed. Please try it again later" : response.Result.ErrorDescription);
         }
 
