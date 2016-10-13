@@ -10,11 +10,16 @@
 
 namespace Fanex.Tarus.Customer.Controller
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.ViewPT;
     using Fanex.Tarus.Customer.Criteria.ViewPT;
     using Fanex.Tarus.Web.Controllers;
+    using Infrastructure.Constants;
+    using Sunplus.Accounting.Business.Security;
+    using Sunplus.Accounting.Core.Common;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", 
         "SA1600:ElementsMustBeDocumented", 
@@ -51,9 +56,20 @@ namespace Fanex.Tarus.Customer.Controller
             return Json(isDepositCustomer, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult GetBettypesReference()
         {
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                IList<int> exclusiveRefSportIds = new List<int>(8);
+
+                for (int i = Sports.NG2Start; i <= Sports.NG2End; i++)
+                {
+                    exclusiveRefSportIds.Add(i);
+                }
+
+                ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
+            }
+
             return View("~/Views/PTInformation/Index.cshtml");
         }
     }
