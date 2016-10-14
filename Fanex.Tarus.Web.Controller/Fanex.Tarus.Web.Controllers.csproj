@@ -169,6 +169,7 @@
     <Compile Include="Areas\RouteCollectionExtensions.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CommonController.cs" />
+    <Compile Include="Customer\CustomerBalanceController.cs" />
     <Compile Include="Customer\DepositCustomerController.cs" />
     <Compile Include="ErrorController.cs" />
     <Compile Include="Filters\AuthenticateHost.cs" />

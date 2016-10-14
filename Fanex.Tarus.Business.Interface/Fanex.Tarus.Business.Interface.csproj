@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\ICustomerBalanceService.cs" />
     <Compile Include="Customer\IDepositCustomerService.cs" />
     <Compile Include="IAdminService.cs" />
     <Compile Include="ICommonService.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
       <Project>{0D0F3C0D-F85C-4B0D-B033-16424E1AE5E0}</Project>
       <Name>Fanex.Tarus.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
+      <Project>{3ada1c70-fd55-4c89-bfef-1b695b1042cd}</Project>
+      <Name>Fanex.Tarus.Web.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
       <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>

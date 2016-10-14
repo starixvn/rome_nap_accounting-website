@@ -29,11 +29,13 @@
                 <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','CrossTransfer/Index?fromCustName={fromCustName}&fromCustID={fromCustID}')">Transfer</div>
             </div>
         </td>
+        <!--balance-->
         <td width="82">
-            <div class="buttonLeft_main01 {AgentShow}">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','Customer/CustomerBalance.aspx?agentid={custid}');">Balance</div>
+            <div class="buttonLeft_main01">
+                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{CustomerBalanceURL}');">Balance</div>
             </div>
         </td>
+        <!--/balance-->
     </tr>
 </table>
 
