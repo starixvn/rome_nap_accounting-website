@@ -1096,7 +1096,7 @@ var ViewPT = {
     },
     getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive, productId) {
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?isLive=" + (isLive == 1 ? "true" : "false") + "&productId=" + productId + "&showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + productId + "&isLive=" + (isLive == 1 ? "true" : "false") + "&showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
@@ -1190,7 +1190,7 @@ var ViewPT = {
     },
     viewCommFromDynamicSettingFormat: function () {
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?showFilter=false&settingTypeId=" + ($("#ddlProduct").val() == "20" ? "5" : "3") + "&productId=" + $("#ddlProduct").val() + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + $("#ddlProduct").val() + "&showFilter=false&settingTypeId=" + ($("#ddlProduct").val() == "20" ? "5" : "3") + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },

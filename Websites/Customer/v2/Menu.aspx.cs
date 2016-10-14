@@ -70,7 +70,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?customerLevel=1&uplinelevel=2&customerId=" + custID + "&productId=");
+            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
         }
         else if (roleid == 2)
         {
@@ -82,7 +82,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
             colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2&UserId=" + AppSession.AccId;
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=2&customerId=" + custID + "&productId=");
+            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
         }
         else if (roleid == 3)
         {
@@ -94,7 +94,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
             colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3&UserId=" + AppSession.AccId;
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=3&customerId=" + custID + "&productId=");
+            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
         }
         else
         {
@@ -107,7 +107,7 @@ public partial class Others_Menu : System.Web.UI.Page
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
             colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?&customerLevel=4&customerId=" + custID + "&productId=");
+            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
         if (WebSettings.disabledHR)
@@ -128,12 +128,12 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);
         this.RenderSettingTab("GoldDeluxe", "{urlgolddeluxe}", goldDeluxePath, !WebSettings.IsShowGoldDeluxeSettingForCredit);
         this.RenderSettingTab("ColossusBet", "{urlColossusBet}", colossusBetPath, hideColossusbets);
-        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", creditDCSLink + (int)products.sportsbook2, !WebSettings.IsShowSportsbook2);
-        this.RenderSettingTab("cockFighting", "{cockFightingLinkSetting}", creditDCSLink + (int)products.cockfighting, hideCockfighting);
-        this.RenderSettingTab("cricket", "{cricketLinkSetting}", creditDCSLink + (int)products.cricket, hideCricket);
-        this.RenderSettingTab("allbet", "{allbetLinkSetting}", creditDCSLink + (int)products.allbet, hideAllbet);
-        this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", creditDCSLink + (int)products.voidbridge, hideVoidbridge);
-        this.RenderSettingTab("ng2", "{ng2LinkSetting}", creditDCSLink + (int)products.ng2, hideNG2);
+        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
+        this.RenderSettingTab("cockFighting", "{cockFightingLinkSetting}", string.Format(creditDCSLink, (int)products.cockfighting), hideCockfighting);
+        this.RenderSettingTab("cricket", "{cricketLinkSetting}", string.Format(creditDCSLink, (int)products.cricket), hideCricket);
+        this.RenderSettingTab("allbet", "{allbetLinkSetting}", string.Format(creditDCSLink, (int)products.allbet), hideAllbet);
+        this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
+        this.RenderSettingTab("ng2", "{ng2LinkSetting}", string.Format(creditDCSLink, (int)products.ng2), hideNG2);
 
         this.sMenu.Text = this.tplMenu;
     }

@@ -1090,7 +1090,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember/" + custId + "/" + parentId;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
-                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId + "&productId=";
+                                        creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId;
                                         break;
 
                                     case 2: // agent
@@ -1113,7 +1113,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/" + _masterID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", _masterID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, _masterID, AppSession.AccId);
-                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=2&customerId=" + custId + "&productId=";
+                                        creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=2&customerId=" + custId;
                                         break;
 
                                     case 3: // master
@@ -1135,7 +1135,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster/" + custId + "/" + _superID;
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", _superID, AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, _superID, AppSession.AccId);
-                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=3&customerId=" + custId + "&productId=";
+                                        creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
                                         break;
 
                                     case 4: // super
@@ -1158,7 +1158,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0";
                                         goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
                                         colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
-                                        creditDCSLink = "DCS/ViewCustomerSetting?language=en-US&customerLevel=4&customerId=" + custId + "&productId=";
+                                        creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
                                         break;
 
                                     default:
@@ -1214,12 +1214,12 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
                                 TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
-                                TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", creditDCSLink + 16);
-                                TemplateHandler.Assign(ref htmlcontent, "{cockFightingSettingLink}", creditDCSLink + 19);
-                                TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", creditDCSLink + 20);
-                                TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", creditDCSLink + 21);
-                                TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", creditDCSLink + 22);
-                                TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", creditDCSLink + 23);
+                                TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
+                                TemplateHandler.Assign(ref htmlcontent, "{cockFightingSettingLink}", string.Format(creditDCSLink, 19));
+                                TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", string.Format(creditDCSLink, 20));
+                                TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", string.Format(creditDCSLink, 21));
+                                TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
+                                TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", string.Format(creditDCSLink, 23));
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
@@ -1827,32 +1827,32 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (!isHideSportsbook2 && !isDeposit)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Sportsbook 2</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=16&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Sportsbook 2</a>";
                     }
 
                     if (!isHideCockFighting && !isDeposit)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cockfighting</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=19&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cockfighting</a>";
                     }
 
                     if (!isHideCricket)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=20&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Cricket</a>";
                     }
 
                     if (isShowAllBet)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Allbet</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=21&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Allbet</a>";
                     }
 
                     if (isShowVoidbridge)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Macau Games</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=22&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Macau Games</a>";
                     }
 
                     if (isShowNG2)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=23&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
@@ -1894,32 +1894,32 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (!isHideSportsbook2 && !isDeposit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Sportsbook 2</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=16&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Sportsbook 2</a>";
                     }
 
                     if (!isHideCockFighting && !isDeposit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cockfighting</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=19&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cockfighting</a>";
                     }
 
                     if (!isHideCricket)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=20&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=20&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Cricket</a>";
                     }
 
                     if (isShowAllBet)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=21&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Allbet</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=21&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Allbet</a>";
                     }
 
                     if (isShowVoidbridge)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=22&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Macau Games</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=22&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Macau Games</a>";
                     }
 
                     if (isShowNG2)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=23&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
