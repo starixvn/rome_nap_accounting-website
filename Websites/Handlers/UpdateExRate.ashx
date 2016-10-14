@@ -8,6 +8,8 @@ using System.Web.SessionState;
 using Fanex.CustomerSetting.Module.Core.Web;
 using DNAide.Core;
 using System.Collections.Generic;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Configurations;
 
 using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
@@ -87,7 +89,19 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                             request.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = exRateId, ExchangeRate = Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate) });
                             request.UserId = AppSession.CurrentSession.UserId;
 
-                            service.SyncExchangeRates(request);
+                            var result = service.SyncExchangeRates(request);
+                            if (!result.Result.IsSuccess)
+                            {
+                                // Send email notify IT to sync manually.
+                                var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
+                                var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
+                                var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
+                                subject = string.Format(subject, RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+                                var body = Resources.MiniTemplate.UpdateExtRateFailedNg2Email;
+                                body = string.Format(body, exRateId, currency, actualRate);
+
+                                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+                            }
                         }
 
                         System.Threading.Thread.Sleep(3000);
