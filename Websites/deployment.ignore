@@ -1,10 +1,7 @@
 ﻿\\*.local.config
 \\*.local2.config
 \\*.master.config
-\\*.uat.config
-\\*.pro.config
 \\*.dev.config
-\\*.bkkbt67.config
 \\*.txt
 \\LogCS\\*
 \\RobotDetection\\*
