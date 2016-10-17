@@ -44,20 +44,18 @@ namespace Fanex.Tarus.Security.Permission
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool IsDeniedViewSmartPunter(int? custID, string userName)
         {
+            bool isSmartPunter = _smartPunterService.CheckSmartPunter(new CheckSmartPunterCriteria
+            {
+                CustID = custID.HasValue ? custID : null,
+                UserName = userName
+            });
+
             if (PermissionService.HasPermission(this._smartPunterFunctionName))
             {
                 return false;
             }
-            else
-            {
-                bool isSmartPunter = _smartPunterService.CheckSmartPunter(new CheckSmartPunterCriteria
-                   {
-                       CustID = custID.HasValue ? custID : null,
-                       UserName = userName
-                   });
 
-                return isSmartPunter;
-            }
+            return isSmartPunter;
         }
     }
 }
