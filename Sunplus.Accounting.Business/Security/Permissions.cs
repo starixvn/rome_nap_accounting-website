@@ -18,6 +18,7 @@ using Sunplus.Bingo.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Sunplus.Accounting.Business.Criteria;
 using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Services;
 
 namespace Sunplus.Accounting.Business.Security
 {
@@ -498,7 +499,7 @@ namespace Sunplus.Accounting.Business.Security
 
         public static bool CheckDummyAccount(CheckDummyAccountCriteria criteria)
         {
-            var tarusSecurityPermissionService = new Fanex.Tarus.Security.Permission.PermissionService();
+            var tarusSecurityPermissionService = new PermissionService();
             return tarusSecurityPermissionService.CheckDummyAccount(criteria);
         }
     }

@@ -9,12 +9,12 @@ using DNAide.Core;
 using Fanex.Tarus.Entities.Sport;
 using Fanex.Tarus.Infrastructure.Caching;
 using Fanex.Tarus.Infrastructure.Extensions;
-using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.VirtualSport.Business.Constants;
 using Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete;
 using Fanex.Tarus.VirtualSport.Entities;
 using Fanex.Tarus.VirtualSport.Entities.SpecialDelete;
 using Fanex.Tarus.Infrastructure.Common;
+using Fanex.Tarus.Security.Services;
 using AppSession = Sunplus.Accounting.Core.Common.AppSession;
 
 namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete

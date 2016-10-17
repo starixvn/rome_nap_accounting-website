@@ -7,6 +7,8 @@
 //   <change who="Kan.Nguyen" date="2015.03.13">Created</change>
 // </history>
 
+using Fanex.Tarus.Security.Services;
+
 namespace Fanex.Tarus.Customer.Controller
 {
     using System.Web.Mvc;
@@ -14,7 +16,6 @@ namespace Fanex.Tarus.Customer.Controller
     using Fanex.Tarus.Customer.Criteria.GoldDeluxe;
     using Fanex.Tarus.Customer.Entities.GoldDeluxe;
     using Fanex.Tarus.Customer.Resources;
-    using Fanex.Tarus.Security.Permission;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;

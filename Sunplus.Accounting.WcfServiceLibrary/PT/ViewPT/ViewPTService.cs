@@ -4,7 +4,6 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using System.Collections.Generic;
-using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.Security.Criteria;
 using Sunplus.Accounting.Core.Common;
 using Fanex.CustomerSetting.Module.Core.Criteria;

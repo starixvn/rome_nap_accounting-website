@@ -11,10 +11,12 @@
 /// <summary>
 /// The Authenticate namespace.
 /// </summary>
+
+using Fanex.Tarus.Security.Services;
+
 namespace Fanex.Tarus.Security.Authenticate
 {
     using Fanex.AuthenticationFilter;
-    using Fanex.Tarus.Security.Permission;
     using Fanex.Tarus.Security.Web;
     using System.Web;
     using Fanex.Common;

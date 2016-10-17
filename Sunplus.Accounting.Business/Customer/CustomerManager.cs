@@ -9,7 +9,6 @@ using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Tarus.Security.Permission;
 using IBCUtils.Objects;
 using Sunplus.Accounting.Business.Criteria;
 using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
@@ -35,6 +34,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using Fanex.Tarus.Security.Services;
 using Result = Sunplus.Accounting.Entities.Result;
 
 /// <summary>

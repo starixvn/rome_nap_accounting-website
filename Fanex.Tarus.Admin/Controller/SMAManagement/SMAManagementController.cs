@@ -8,7 +8,7 @@ using Fanex.Tarus.Admin.Entities.SMAManagement;
 using Fanex.Tarus.Admin.Resource;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Helper;
-using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Services;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
 

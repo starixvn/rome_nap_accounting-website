@@ -13,7 +13,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Web.Controllers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Security.Permission;
     using Sunplus.Accounting.Core.Extensions;
     using System;
     using System.Collections.Generic;

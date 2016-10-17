@@ -9,7 +9,7 @@ using Fanex.Tarus.Infrastructure.Caching;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Infrastructure.Helper;
-using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Services;
 using Fanex.Tarus.VirtualSport.Business.Constants;
 using Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete;
 using Fanex.Tarus.VirtualSport.Entities;

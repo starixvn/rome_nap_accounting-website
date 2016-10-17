@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
-using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Services;
 using Sunplus.Accounting.Core.Common;
 
 
