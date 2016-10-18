@@ -55,7 +55,8 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
                     { Name: "YesterdayCash", Value: data.CustomerBalance[i].YesterdayCash },
                     { Name: "AvailableCredit", Value: data.CustomerBalance[i].AvailableCredit },
                     { Name: "Outstanding", Value: data.CustomerBalance[i].Outstanding }
-            ]
+            ],
+            CssClass: data.CustomerBalance[i].Closed ? 'add-customer-bggray' : ''
         };
         bodyRows.push(row);
     }

@@ -22,6 +22,11 @@
     <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .freegrid .grid-fixed-table tr.add-customer-bggray td {
+           background: #CCC7BA;
+        }
+    </style>
 </head>
 <body id="body">
     <input id="CustId" type="hidden" vale="" />
@@ -72,7 +77,7 @@
             superName: '@customerBalancePageStatus.SuperName',
             masterId: @customerBalancePageStatus.MasterId,
             masterName: '@customerBalancePageStatus.MasterName'
-            };
+        };
 
         $gridSuperContainer.hide();
         $gridMasterContainer.hide();
