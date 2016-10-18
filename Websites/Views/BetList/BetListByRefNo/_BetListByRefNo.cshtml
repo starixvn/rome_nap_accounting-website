@@ -47,13 +47,13 @@
                     string usernameTmp = betdetail.Ticket.UserName;
                     string firstSubstring = usernameTmp.Substring(0, 13);
                     string secondSubstring = usernameTmp.Substring(13, betdetail.Ticket.UserName.Length - 13);
-                    <div>
+                    <div class="b">
                         @firstSubstring<br />@secondSubstring
                     </div>
                 }
                 else
                 {
-                    <div>@betdetail.Ticket.UserName</div>
+                    <div class="b">@betdetail.Ticket.UserName</div>
                 }
                 <div class="custId">@betdetail.Ticket.CustId</div>
             </div>
