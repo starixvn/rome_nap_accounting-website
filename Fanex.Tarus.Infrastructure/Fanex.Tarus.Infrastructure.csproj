@@ -163,6 +163,7 @@
     <Compile Include="Configurations\VirtualRate\VirtualRateSection.cs" />
     <Compile Include="Configurations\VirtualSportsSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
+    <Compile Include="Constants\CustomerBalanceConstants.cs" />
     <Compile Include="Constants\BetType.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\SMALevelNameConstants.cs" />

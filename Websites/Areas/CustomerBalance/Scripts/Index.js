@@ -1,17 +1,8 @@
 ﻿$(document).ready(function () {
-    if (roleId == 4) {
-        cachedInputData.superId = custId;
-        cachedInputData.superName = userName;
-    }
-    else {
-        cachedInputData.masterId = custId;
-        cachedInputData.masterName = userName;
-    }
-
-    GetData(custId, userName, roleId, 1, 50);
+    GetData(custId, userName, roleId, 1, 50, isCached);
 });
 
-function GetData(custId, userName, roleId, pageIndex, pageSize) {
+function GetData(custId, userName, roleId, pageIndex, pageSize, isCached) {
     if (roleId == 3) {
         cachedInputData.masterId = custId;
         cachedInputData.masterName = userName;
@@ -21,7 +12,7 @@ function GetData(custId, userName, roleId, pageIndex, pageSize) {
         type: "POST",
         url: "GetCustomerBalance",
         contentType: "application/json; charset=utf-8",
-        data: '{ CustId:"' + custId + '", PageIndex:' + pageIndex + ', PageSize:' + pageSize + ' }',
+        data: '{ CustId:"' + custId + '", UserName:"' + userName + '", RoleId:"' + roleId + '", IsCached:' + (isCached == undefined ? false : isCached.toString()) + ', PageIndex:' + pageIndex + ', PageSize:' + pageSize + ' }',
         beforeSend: function () {
             try { parent.BlockUI(); } catch (e) { }
         },
@@ -52,15 +43,15 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
                     { Name: "No", Value: data.CustomerBalance[i].RowNum },
                     {
                         Name: "UserName", Value: roleId == 4 ?
-                          "<a href='javascript:GetData(" + data.CustomerBalance[i].CustId + ", \"" + data.CustomerBalance[i].UserName + "\", 3, 1, 50)'>" + data.CustomerBalance[i].UserName + "</a>" :
-                          "<a href='javascript:parent.resetMenu();parent.gotoURL(\"centerFr\",\"Customer/CustomerBalance.aspx?custid=" + data.CustomerBalance[i].CustId + "\")'>" + data.CustomerBalance[i].UserName + "</a>"
+                          "<a href='javascript:GetData(" + data.CustomerBalance[i].CustId + ", \"" + data.CustomerBalance[i].UserName + "\", 3, 1, 50, true)'>" + data.CustomerBalance[i].UserName + "</a>" :
+                          "<a href='javascript:parent.resetMenu();parent.gotoURL(\"centerFr\",\"Customer/CustomerBalance.aspx?custid=" + data.CustomerBalance[i].CustId + "&userName=" + data.CustomerBalance[i].UserName + "&isCached=true\")'>" + data.CustomerBalance[i].UserName + "</a>"
                     },
                     { Name: "FirstName", Value: data.CustomerBalance[i].FirstName },
                     { Name: "LastName", Value: data.CustomerBalance[i].LastName },
                     { Name: "GivenCredit", Value: data.CustomerBalance[i].GivenCredit },
-                    { Name: "TotalBalance", Value: data.CustomerBalance[i].TotalBalance },
+                    { Name: "TotalBalance", Value: data.CustomerBalance[i].Balance },
                     { Name: "YesterdayBalance", Value: data.CustomerBalance[i].YesterdayBalance },
-                    { Name: "TotalCash", Value: data.CustomerBalance[i].TotalCash },
+                    { Name: "TotalCash", Value: data.CustomerBalance[i].Cash },
                     { Name: "YesterdayCash", Value: data.CustomerBalance[i].YesterdayCash },
                     { Name: "AvailableCredit", Value: data.CustomerBalance[i].AvailableCredit },
                     { Name: "Outstanding", Value: data.CustomerBalance[i].Outstanding }
@@ -101,6 +92,12 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
            }
        };
 
+    if (roleId == 4) {
+        $('#ReportTitle').html('Master Balance');
+    }
+    else {
+        $('#ReportTitle').html('Agent Balance');
+    }
     $gridId.fanexGrid(gridOptions);
 }
 
@@ -118,13 +115,10 @@ function GetBreadScrum(roleId) {
     }
     else {
 
-        return cachedInputData.superName == undefined ? cachedInputData.masterName : "<a href='javascript:GetBack()'>" + cachedInputData.superName + "<a/> > " + cachedInputData.masterName;
+        return cachedInputData.superName == "" ? cachedInputData.masterName : "<a href='javascript:GetBack()'>" + cachedInputData.superName + "<a/> > " + cachedInputData.masterName;
     }
 }
 
 function GetBack() {
-    $gridSuperContainer.show();
-    $gridMasterContainer.hide();
-    cachedInputData.masterId = null;
-    cachedInputData.masterName = null;
+    GetData(cachedInputData.superId, cachedInputData.superName, 4, 1, 50, true);
 }

@@ -5,7 +5,9 @@ namespace Fanex.Tarus.Web.Controllers.Customer
     using Business.Implement.Customer.Balance;
     using Business.Interface.Customer;
     using Entities.Criteria;
-    using Fanex.Tarus.Web.Controllers.Filters;
+    using Entities.Customer;
+    using Infrastructure.Constants;
+    using Models.Customer.Balance;
     using System.Web.Mvc;
 
     public class CustomerBalanceController : BaseController
@@ -23,17 +25,49 @@ namespace Fanex.Tarus.Web.Controllers.Customer
 
         }
 
-        public ActionResult Index(int custId, string userName, int roleId)
+        public ActionResult Index(int custId, string userName, int roleId, bool isCached = false)
         {
             ViewBag.CustId = custId;
             ViewBag.UserName = userName;
             ViewBag.RoleId = roleId;
+            ViewBag.IsCached = isCached;
+            this.ValidationRequest(new CustomerBalanceRequest() { CustId = custId, UserName = userName, RoleId = roleId, IsCached = isCached });
             return View("~/Areas/CustomerBalance/Views/Index.cshtml");
         }
 
-        public ActionResult GetCustomerBalance(CustomerBalanceCriteria criteria)
+        public ActionResult GetCustomerBalance(CustomerBalanceRequest request)
         {
-            return Json(_customerBalanceService.GetCustomerBalance(criteria));
+            this.ValidationRequest(request);
+            return Json(_customerBalanceService.GetCustomerBalance(new CustomerBalanceCriteria() {
+                CustId = request.CustId,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize
+            }));
+        }
+
+        private void ValidationRequest(CustomerBalanceRequest request)
+        {
+            if (!request.IsCached)
+            {
+                Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys] = null;
+            }
+
+            CustomerBalancePageStatus customerBalancePageStatus = Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys] == null ?
+                    new CustomerBalancePageStatus() :
+                    (CustomerBalancePageStatus)Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys];
+            if (request.RoleId == 4)
+            {
+                customerBalancePageStatus.SuperId = request.CustId;
+                customerBalancePageStatus.SuperName = request.UserName;
+            }
+            else if (request.RoleId == 3)
+            {
+                customerBalancePageStatus.MasterId = request.CustId;
+                customerBalancePageStatus.MasterName = request.UserName;
+            }
+
+            customerBalancePageStatus.CurrentRoleId = request.RoleId;
+            Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys] = customerBalancePageStatus;
         }
     }
 }

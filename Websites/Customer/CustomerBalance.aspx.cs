@@ -11,6 +11,8 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities.Casino;
+using Fanex.Common;
+using Fanex.Tarus.Web.Models.Customer.Balance;
 
 public partial class CustomerBalance : PageBase
 {
@@ -23,6 +25,7 @@ public partial class CustomerBalance : PageBase
         try
         {
             int _custid = CastAide.AsInt32(Request["custid"]);
+            
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
 
             string _custIdList = Request["memberIdList"] as string ?? string.Empty;

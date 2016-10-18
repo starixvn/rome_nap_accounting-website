@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="CustomerView.cs" />
     <Compile Include="Customer\Balance\CustomerBalance.cs" />
+    <Compile Include="Customer\Balance\CustomerBalancePageStatus.cs" />
     <Compile Include="Customer\DepositCustomer\SuperSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\LiveCasinoWinLoss.cs" />

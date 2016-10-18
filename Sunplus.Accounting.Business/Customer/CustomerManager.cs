@@ -2888,7 +2888,7 @@ namespace Sunplus.Accounting.Business.Customer
                             downlineListURL = "FinanceCustomerList/Index?upline=" + custId + "&roleid=2";
                         }
 
-                        customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + custId.ToString();
+                        customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + custId.ToString() + "&userName=" + custName;
                         lblDownlineList = "Member List";
                         break;
 
