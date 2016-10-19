@@ -17,7 +17,7 @@ function GetData(custId, userName, roleId, pageIndex, pageSize, isCached) {
             try { parent.BlockUI(); } catch (e) { }
         },
         success: function (data) {
-
+            cachedInputData.currentRoleId = roleId;
             RenderGrid(data, roleId == 4 ? $gridSuper : $gridMaster, roleId, pageIndex, pageSize);
             if (roleId == 4) {
                 $gridSuperContainer.show();
@@ -104,10 +104,10 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
 
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
     //// Set grid option for re-render pager
-    var custId = cachedInputData.masterId == undefined ? cachedInputData.superId : cachedInputData.masterId;
-    var userName = cachedInputData.masterName == undefined ? cachedInputData.superName : cachedInputData.masterName;
+    var custId = cachedInputData.currentRoleId == 4 ? cachedInputData.superId : cachedInputData.masterId;
+    var userName = cachedInputData.currentRoleId == 4 ? cachedInputData.superName : cachedInputData.masterName;
 
-    GetData(custId, userName, cachedInputData.masterId == null ? 4 : 3, currentPageIndex + 1, itemsPerPage);
+    GetData(custId, userName, cachedInputData.currentRoleId, currentPageIndex + 1, itemsPerPage, true);
 }
 
 function GetBreadScrum(roleId) {

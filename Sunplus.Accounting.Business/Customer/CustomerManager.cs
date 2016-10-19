@@ -2895,6 +2895,7 @@ namespace Sunplus.Accounting.Business.Customer
                     case Globals.AccountType.Member:
                         downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + custId;
                         lblDownlineList = "Bet List";
+                        TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                         break;
                 }
 

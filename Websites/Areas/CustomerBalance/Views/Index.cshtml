@@ -24,7 +24,7 @@
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .freegrid .grid-fixed-table tr.add-customer-bggray td {
-           background: #CCC7BA;
+            background: #CCC7BA;
         }
     </style>
 </head>
@@ -60,7 +60,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerBalance/Scripts/Index.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerBalance/Scripts/Index.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var data = "";
@@ -76,7 +76,8 @@
             superId: @customerBalancePageStatus.SuperId,
             superName: '@customerBalancePageStatus.SuperName',
             masterId: @customerBalancePageStatus.MasterId,
-            masterName: '@customerBalancePageStatus.MasterName'
+            masterName: '@customerBalancePageStatus.MasterName',
+            currentRoleId: '@customerBalancePageStatus.CurrentRoleId'
         };
 
         $gridSuperContainer.hide();
