@@ -1,25 +1,20 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CheckSmartPunterCriteria.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Tarus.Security.Criteria
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.NAP.Framework.Data;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CheckSmartPunterCriteria : CriteriaBase
     {
-        public int? CustID { get; set; }
+        public int? CustId { get; set; }
 
         public string UserName { get; set; }
+
+        public int UserId { get; set; }
+
+        public bool IsRestricted { get; set; }
+
+        public int ActionId { get; set; }
+
+        public string Ip { get; set; }
 
         public override string GetSettingKey()
         {

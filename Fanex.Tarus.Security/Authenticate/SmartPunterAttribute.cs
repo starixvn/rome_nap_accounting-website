@@ -12,7 +12,9 @@
 /// The Authenticate namespace.
 /// </summary>
 
+using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Services;
+using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.Security.Authenticate
 {
@@ -30,9 +32,10 @@ namespace Fanex.Tarus.Security.Authenticate
         /// <summary>
         /// The _permission service.
         /// </summary>
-        private readonly ISmartPunterPermissionService _smartPunterPermissionService = new SmartPunterPermissionService();
+        private readonly ISmartPunterService _smartPunterPermissionService = new SmartPunterService();
         private readonly IPermissionService _permissionService = new PermissionService();
 
+        private string _smartPunterFunctionName = "SmartPunter";
         private string _betlistFunctionName = "BetList";
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerSettingAttribute"/> class.
@@ -68,18 +71,36 @@ namespace Fanex.Tarus.Security.Authenticate
                 return true;
             }
 
+            int actionId = Converter.To<int>(ParamHastable["actionId"]);
+
             if (ParamHastable.ContainsKey("custId"))
             {
-
                 int custId = Converter.To<int>(ParamHastable["custId"]);
-              
-                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(custId, string.Empty);
+
+
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
+                {
+                    CustId = custId,
+                    UserName = string.Empty,
+                    UserId = AppSession.AccId,
+                    ActionId = actionId,
+                    Ip = Utils.GetClientIP(),
+                    IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+                });
             }
 
             if (ParamHastable.ContainsKey("username"))
             {
                 var username = Converter.ToString2(ParamHastable["username"]);
-                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(null, username);
+                return !_smartPunterPermissionService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
+                {
+                    CustId = null,
+                    UserName = username,
+                    UserId = AppSession.AccId,
+                    ActionId = actionId,
+                    Ip = Utils.GetClientIP(),
+                    IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+                });
             }
 
             return true;

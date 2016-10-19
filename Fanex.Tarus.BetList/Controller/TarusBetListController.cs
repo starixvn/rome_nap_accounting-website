@@ -7,6 +7,10 @@
 
 using Fanex.BetList.Accounting.Models;
 using Fanex.Tarus.Security.Authenticate;
+using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Domain;
+using Fanex.Tarus.Security.Services;
+using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.BetList.Controller
 {
@@ -23,10 +27,13 @@ namespace Fanex.Tarus.BetList.Controller
     public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;
+        private readonly ISmartPunterService _smartPunterService;
+        private string _smartPunterFunctionName = "SmartPunter";
 
         public TarusBetListController()
         {
             this._betListService = new BetListService();
+            this._smartPunterService = new SmartPunterService();
         }
 
         /// <summary>
@@ -52,6 +59,16 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByCustInfo(int CustID)
         {
+            _smartPunterService.TryLogIfSmartPunter(new CheckSmartPunterCriteria
+            {
+                CustId = CustID,
+                UserName = null,
+                UserId = AppSession.AccId,
+                ActionId = SmartPunterActionId.ViewBetList,
+                Ip = Utils.GetClientIP(),
+                IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+            });
+
             ViewBag.CustID = CustID;
             var dateTmp = new DateTime(0001, 1, 1);
             DateTime fromDate = CastAide.AsDateTime(AppSession.GetSession(System.Web.HttpContext.Current.Session, "FROM_DATE"));

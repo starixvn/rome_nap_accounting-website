@@ -3,29 +3,24 @@ using Fanex.Tarus.Security.Repositories;
 
 namespace Fanex.Tarus.Security.Services
 {
-    public class SmartPunterPermissionService : ISmartPunterPermissionService
+    public class SmartPunterService : ISmartPunterService
     {
         private readonly ISmartPunterRepository _smartPunterRepository;
 
         private string _smartPunterFunctionName = "SmartPunter";
 
-        public SmartPunterPermissionService()
-            : this(new SmartPunterRepository())
+        public SmartPunterService() : this(new SmartPunterRepository())
         {
         }
 
-        public SmartPunterPermissionService(ISmartPunterRepository smartPunterRepository)
+        public SmartPunterService(ISmartPunterRepository smartPunterRepository)
         {
             _smartPunterRepository = smartPunterRepository;
         }
 
-        public bool IsDeniedViewSmartPunter(int? custID, string userName)
+        public bool IsDeniedViewSmartPunter(CheckSmartPunterCriteria criteria)
         {
-            bool isSmartPunter = _smartPunterRepository.CheckSmartPunter(new CheckSmartPunterCriteria
-            {
-                CustID = custID.HasValue ? custID : null,
-                UserName = userName
-            });
+            bool isSmartPunter = _smartPunterRepository.CheckSmartPunter(criteria);
 
             if (PermissionService.HasPermission(_smartPunterFunctionName))
             {
@@ -33,6 +28,11 @@ namespace Fanex.Tarus.Security.Services
             }
 
             return isSmartPunter;
+        }
+
+        public void TryLogIfSmartPunter(CheckSmartPunterCriteria criteria)
+        {
+            _smartPunterRepository.CheckSmartPunter(criteria);
         }
     }
 }

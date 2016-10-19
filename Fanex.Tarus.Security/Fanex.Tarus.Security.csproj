@@ -152,10 +152,11 @@
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
+    <Compile Include="Domain\SmartPunterActionId.cs" />
     <Compile Include="Services\IPermissionService.cs" />
-    <Compile Include="Services\ISmartPunterPermissionService.cs" />
+    <Compile Include="Services\ISmartPunterService.cs" />
     <Compile Include="Services\PermissionService.cs" />
-    <Compile Include="Services\SmartPunterPermissionService.cs" />
+    <Compile Include="Services\SmartPunterService.cs" />
     <Compile Include="Repositories\ISmartPunterRepository.cs" />
     <Compile Include="Repositories\SmartPunterRepository.cs" />
     <Compile Include="Web\AppSessions.cs" />
