@@ -284,7 +284,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 UserId = AppSession.AccId,
                                 ActionId = SmartPunterActionId.SearchCustomer,
                                 Ip = Utils.GetClientIP(),
-                                IsRestricted = PermissionService.HasPermission("SmartPunter")
+                                IsRestricted = !PermissionService.HasPermission("SmartPunter")
                             });
 
                             if (isDenied)

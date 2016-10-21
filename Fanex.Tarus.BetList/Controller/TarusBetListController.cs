@@ -66,7 +66,7 @@ namespace Fanex.Tarus.BetList.Controller
                 UserId = AppSession.AccId,
                 ActionId = SmartPunterActionId.ViewBetList,
                 Ip = Utils.GetClientIP(),
-                IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+                IsRestricted = !PermissionService.HasPermission(_smartPunterFunctionName)
             });
 
             ViewBag.CustID = CustID;

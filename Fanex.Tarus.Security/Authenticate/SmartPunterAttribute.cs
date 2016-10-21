@@ -85,7 +85,7 @@ namespace Fanex.Tarus.Security.Authenticate
                     UserId = AppSession.AccId,
                     ActionId = actionId,
                     Ip = Utils.GetClientIP(),
-                    IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+                    IsRestricted = !PermissionService.HasPermission(_smartPunterFunctionName)
                 });
             }
 
@@ -99,7 +99,7 @@ namespace Fanex.Tarus.Security.Authenticate
                     UserId = AppSession.AccId,
                     ActionId = actionId,
                     Ip = Utils.GetClientIP(),
-                    IsRestricted = PermissionService.HasPermission(_smartPunterFunctionName)
+                    IsRestricted = !PermissionService.HasPermission(_smartPunterFunctionName)
                 });
             }
 
