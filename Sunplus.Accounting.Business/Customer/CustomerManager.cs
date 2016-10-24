@@ -336,7 +336,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncVoidbridgeUpline = true;
                             bool isSyncVoidbridgeDownline = true;
 
-                            bool isHideNG2 = roleId < 4;
+                            bool isHideNG2 = true;
                             bool isHideNG2Upline = true;
                             bool isSyncNG2 = true;
                             bool isSyncNG2Upline = true;
@@ -935,7 +935,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
-                                var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || (roleId < 4 && isHideNG2Upline) || !isSyncNG2Upline || !isSyncNG2;
+                                var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
