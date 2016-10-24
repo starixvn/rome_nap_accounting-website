@@ -195,7 +195,7 @@
   </Function>
   <Function Name="Helper">
     <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xpre" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
