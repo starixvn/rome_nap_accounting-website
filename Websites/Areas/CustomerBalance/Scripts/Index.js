@@ -65,7 +65,7 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
        {
            columns: [
                { HeaderText: "No", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "User Name", Width: 150, Name: "UserName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
+               { HeaderText: "User Name", Width: 150, Name: "UserName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: false },
                { HeaderText: "First Name", Width: 80, Name: "FirstName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
                { HeaderText: "Last Name", Width: 80, Name: "LastName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
                { HeaderText: "Given Credit", Width: 120, Name: "GivenCredit", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: '$' },
@@ -84,7 +84,6 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
            },
            showPager: true,
            customPager: true,
-           allowTruncate: true,
            pagerOption: {
                itemsPerPage: pageSize,
                currentPage: pageIndex - 1,
