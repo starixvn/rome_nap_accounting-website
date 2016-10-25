@@ -64,10 +64,10 @@ function RenderGrid(data, $gridId, roleId, pageIndex, pageSize) {
     var gridOptions =
        {
            columns: [
-               { HeaderText: "No", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "User Name", Width: 150, Name: "UserName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: false },
-               { HeaderText: "First Name", Width: 80, Name: "FirstName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
-               { HeaderText: "Last Name", Width: 80, Name: "LastName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
+               { HeaderText: "No", Width: 40, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+               { HeaderText: "User Name", Width: 150, Name: "UserName", HeaderAlign: "center", CellAlign: "center" },
+               { HeaderText: "First Name", Width: 120, Name: "FirstName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
+               { HeaderText: "Last Name", Width: 120, Name: "LastName", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true },
                { HeaderText: "Given Credit", Width: 120, Name: "GivenCredit", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: '$' },
                { HeaderText: "Total Balance", Width: 120, Name: "TotalBalance", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: '$' },
                { HeaderText: "Yesterday Balance", Width: 120, Name: "YesterdayBalance", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: '$' },

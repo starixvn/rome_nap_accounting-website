@@ -1,10 +1,7 @@
-﻿/*---*/
-
-body
+﻿.freegrid .y-scrollbar,
+.freegrid .x-scrollbar
 {
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+    box-sizing: content-box;
 }
 
 .freegrid
@@ -13,7 +10,8 @@ body
     position: relative;
     z-index: 0;
     border: solid 1px #c5c5c5;
-    font-size: 12px;
+    font-size: 1.2em;
+    
 }
 .freegrid .grid-toolbox input[type='button']:hover
 {
@@ -27,7 +25,7 @@ body
     background: url("images/excel-icon.png") 0px -26px no-repeat;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -45,7 +43,7 @@ body
     background: url("images/back-icon.png") 0px -27px no-repeat;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -64,7 +62,7 @@ body
     background: url("images/send-mail.png") 0px 20px;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     height: 18px;
     margin: 0 2px;
     overflow: visible;
@@ -82,7 +80,7 @@ body
 {
     border: none;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     height: 17px;
     margin-right: 2px;
     overflow: visible;
@@ -96,7 +94,7 @@ body
     background: url("images/expand-icon.png") 0px -27px;
     border: 0 solid red;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     height: 17px;
     margin: 0 2px;
     overflow: visible;
@@ -141,7 +139,7 @@ body
 .grid-title .grid-title-label
 {
     color: #4a4b4f;
-    font-size: 12px;
+    font-size: 1.2em;
     float: left;
     height: 18px;
     padding-left: 4px;
@@ -172,7 +170,7 @@ body
 
 .freegrid .free-cell-bottom-left div, .free-cell-bottom-right div
 {
-    height: 13px;
+    height: 15px;
 }
 
 .freegrid .free-bottom-left
@@ -205,7 +203,7 @@ body
 
 .freegrid .y-scrollbar
 {
-    width: 17.5px;
+    width: 17px;
     background-color: #f1f1f1;
     border-left: solid 1px #c5c5c5 !important;
     position: absolute;
@@ -214,6 +212,14 @@ body
     top: 0;
     z-index: 4;
 }
+
+.freegrid .y-scrollbar-fix-width {
+        width: 17.1px !important;
+    }
+
+.freegrid .x-scrollbar-fix-height {
+        height: 17.1px !important;
+    }
 
 .freegrid .x-scrollbar
 {
@@ -290,10 +296,13 @@ body
     border-top: none;
     border-left: none;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 0.9em;
     padding: 2px;
     font-weight: bold;
-    height: 21px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    /*height: 21px;*/
 }
 .freegrid .free-top-left table thead th, .freegrid .col_header table thead th
 {
@@ -301,6 +310,9 @@ body
     background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
     background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
     color: #fff;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .freegrid .row_footer table thead th, .freegrid .col_footer table thead th
@@ -309,6 +321,9 @@ body
     background: -moz-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
     background: -webkit-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
     color: #4F4F4F;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .freegrid .free-bottom-right table thead th, .freegrid .free-top-right table thead th {
@@ -336,8 +351,11 @@ body
     border-style: solid;
     border-width: 0 1px 1px 0;
     padding: 2px;
-    height: 21px;
-    font-size: 12px;
+    /*height: 21px;*/
+    font-size: 0.9em;
+    /*-webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;*/
 }
 
 .freegrid div.row-headers-background
@@ -537,9 +555,9 @@ div.divSorter.desc {
 	
 }
 
-/*Ricky updated 2013/07/04*/
+
 .freegrid tr.highlight-row:hover td {
-	 background-color: #E2FFFF ;
+	 background-color: #E2FFFF;
 }
 
 .freegrid .mousehoverbeyond td {
@@ -562,7 +580,16 @@ div.divSorter.desc {
 	display: inline-block;
     position: relative;
     white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+.freegrid .freegrid-active-row td 
+{
+     background-color: #9EB2DC;
+}
+
+
+
 ::-webkit-scrollbar
 {
 	height: 18px;
@@ -616,14 +643,14 @@ div.divSorter.desc {
 	background-color: rgba(0,0,0,.2);
 	background-clip: padding-box;
 	border: solid transparent;
-	border-width: 3px 1px 1px 3px;
+	border-width: 1px 1px 1px 2px;
 	min-height: 28px;
 	padding: 100px 0 0;
 	box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
 }
 ::-webkit-scrollbar-thumb:horizontal
 {
-	border-width: 3px 1px 1px;
+	border-width: 2px 1px 1px 1px;
 	padding: 0 0 0 100px;
 	box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset -1px 0 0 rgba(0,0,0,.07);
 }
@@ -640,4 +667,11 @@ div.divSorter.desc {
 ::-webkit-scrollbar-corner
 {
 	background: transparent;
+}
+
+.fanex-grid-show-parent-block
+{
+   position: absolute; 
+   visibility: hidden; 
+   display: block;
 }

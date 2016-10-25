@@ -20,8 +20,8 @@
 <head>
     <title>Customer Balance</title>
     <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .freegrid .grid-fixed-table tr.add-customer-bggray td {
             background: #CCC7BA;
@@ -56,10 +56,10 @@
             allowtransparency="true"></iframe>
 
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerBalance/Scripts/Index.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
