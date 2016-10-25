@@ -2847,6 +2847,7 @@ namespace Sunplus.Accounting.Business.Customer
                         }
 
                         customerBalanceURL = "CustomerBalance/Index?custid=" + custId.ToString() + "&roleId=4&userName=" + custName;
+                        TemplateHandler.RemoveBlock(ref tplTransLink, isDeposit ? "balance" : null);
                         lblDownlineList = "Master List";
                         break;
 
@@ -2868,6 +2869,7 @@ namespace Sunplus.Accounting.Business.Customer
                         }
 
                         customerBalanceURL = "CustomerBalance/Index?custid=" + custId.ToString() + "&roleId=3&userName=" + custName;
+                        TemplateHandler.RemoveBlock(ref tplTransLink, isDeposit ? "balance" : null);
                         lblDownlineList = "Agent List";
                         break;
 
@@ -2912,7 +2914,7 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                 }
-                
+
                 TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL);
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
