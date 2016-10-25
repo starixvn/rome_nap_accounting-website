@@ -1,4 +1,4 @@
-﻿var BetList = BetList || {};
+﻿var BetList = BetList || {}; 
 
 BetList.BetListByRefNo = (function ($) {
 
