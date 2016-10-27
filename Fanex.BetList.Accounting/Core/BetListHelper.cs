@@ -632,7 +632,16 @@ namespace Fanex.BetList.Accounting.Core
                                         halfTimeAwayScore);
                         break;
                     default:
-                        statusHtml = status;
+                        if (2501 <= ticketDetail.Ticket.BetTypeId && ticketDetail.Ticket.BetTypeId <= 2699 && (isWonStatus || isLoseStatus))
+                        {
+                            var result = "<div class='bl_status c'>{0}</div><br><a id='result_{1}' onclick='ViewResult({2},{3},{4})'>Result</a><br>";
+                            statusHtml = string.Format(result, ticketDetail.Ticket.Status.ToUpper(), ticketDetail.Ticket.TransId, ticketDetail.Ticket.MatchId, ticketDetail.Ticket.BetTypeId, ticketDetail.Ticket.BetId);
+                        }
+                        else
+                        {
+                            statusHtml = status;
+                        }
+                        
                         break;
                 }
             }
