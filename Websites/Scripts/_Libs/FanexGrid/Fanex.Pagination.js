@@ -1,3 +1,4 @@
+/*global fanexGridCurrentLanguage*/
 (function ($) {
     $.fn.fanexPagination = function (maxentries, opts) {
         opts = $.extend({
@@ -50,7 +51,7 @@
             function pageSelected(page_id, evt) {
                 currentPage = page_id;
                 //drawLinks();
-                var continuePropagation = opts.callback(page_id, opts.itemsPerPage, panel);
+                var continuePropagation = opts.callback(parseInt(page_id), parseInt(opts.itemsPerPage), panel);
                 if (!continuePropagation) {
                     if (evt.stopPropagation) {
                         evt.stopPropagation();
@@ -75,7 +76,7 @@
                 }
 
                 //Generate Items Per Page
-                $('<div class="itemperpage">Page size </div>').appendTo(panel);
+                $('<div class="itemperpage">' + fanexGridCurrentLanguage.pageSize + ' </div>').appendTo(panel);
                 var optPageSize = $('<select id="itemperpage"></select>').css("width", "50px");
                 var totalItemPerPage = opts.itemsPerPageArray.length;
 
@@ -137,7 +138,7 @@
                         appendItem(i, ((i == (end - 1)) ? ' last' : ''));
                     }
                     if (opts.numEdgeEntries < interval[0] && opts.ellipseText) {
-                        $('<li><span class="lnk go-to-page" title="Go To Page">' + opts.ellipseText + '</span></li>').appendTo(numberList);
+                        $('<li><span class="lnk go-to-page" title="' + fanexGridCurrentLanguage.goToPage + '">' + opts.ellipseText + '</span></li>').appendTo(numberList);
                     }
                 }
                 // Generate interval links
@@ -147,7 +148,7 @@
                 // Generate ending points
                 if (interval[1] < np && opts.numEdgeEntries > 0) {
                     if (np - opts.numEdgeEntries > interval[1] && opts.ellipseText) {
-                        $('<li><span class="lnk go-to-page" title="Go To Page">' + opts.ellipseText + '</span></li>').appendTo(numberList);
+                        $('<li><span class="lnk go-to-page" title="' + fanexGridCurrentLanguage.goToPage + '">' + opts.ellipseText + '</span></li>').appendTo(numberList);
                     }
                     var begin = Math.max(np - opts.numEdgeEntries, interval[1]);
                     for (var i = begin; i < np; i++) {
@@ -165,16 +166,21 @@
 
                 // Generate Status
                 if (opts.showDetail) {
-                    $('<div class="detailtext">Displaying <b>' + (opts.itemsPerPage * opts.currentPage + 1) + '</b> to <b>' + Math.min(opts.itemsPerPage * (opts.currentPage + 1), maxentries) + '</b> of <b>' + maxentries + '</b> item(s)</div>').appendTo(panel);
+                    var pagingText = fanexGridCurrentLanguage.pagingText
+                                                            .replace('{0}', (opts.itemsPerPage * opts.currentPage + 1))
+                                                            .replace('{1}', Math.min(opts.itemsPerPage * (opts.currentPage + 1), maxentries))
+                                                            .replace('{2}', maxentries);
+                    $('<div class="detailtext">' + pagingText + '</div>').appendTo(panel);
                 }
 
                 //GotoPage Pane
                 $(drawGoToPage()).appendTo(panel);
                 panel.find("#pagenav_ibtn").bind("click", function () {
-                    if (isNumberNotNull("txtpage")) {
-                        var curr_page = Math.min(parseInt($("#txtpage").val()) - 1, np - 1);
+                    var txtPage = panel.find("#txtpage");
+                    if (isNumberNotNull(txtPage)) {
+                        var curr_page = Math.min(parseInt(parseFloat(txtPage.val())) - 1, np - 1);
                         if (curr_page < 0) {
-                            $("#txtpage").val(0);
+                            txtPage.val(0);
                             curr_page = 0;
                         }
 
@@ -193,7 +199,7 @@
                     //                goto.css("top", "-25px");
                     var gotoOffset = goto.offset();
                     goto.offset({
-                        top: (gotoOffset.top - 25),
+                        top: offset.top - 25,
                         left: (offset.left + (w - gotow) / 2)
                     });
                 });
@@ -213,25 +219,26 @@
                             panel.find("#pagenav_ibtn").click();
                             return true;
                         } catch (error)
-                    { return false; }
+                        { return false; }
                     }
                 });
             }
 
             //check Numeric input field by id
-            function isNumberNotNull(id) {
+            function isNumberNotNull(txtPage) {
                 var result = false;
                 try {
-                    if (!$.trim($("#" + id).val()) == "") {
-                        result = !isNaN($("#" + id).val());
+                    if (!$.trim(txtPage.val()) == "") {
+                        result = !isNaN(txtPage.val());
                     }
                 } catch (error) {
                 }
+
                 return result;
             }
 
             function drawGoToPage() {
-                var goto_page = '<table class="c gotopage_box" id="page_menu" cellpadding="0px" cellspacing="0px"><tr><td style="width:80px;">Go to Page</td><td><input type="text" name="txtpage" id="txtpage" class="txt" size="4"></td><td><input type="button" id="pagenav_ibtn" class="pagenav_ibtn" ></input></td></tr></table>';
+                var goto_page = '<table class="c gotopage_box" id="page_menu" cellpadding="0px" cellspacing="0px"><tr><td class="go-to-page-text">' + fanexGridCurrentLanguage.goToPage + '</td><td><input type="text" name="txtpage" id="txtpage" class="txt" size="4"></td><td><input type="button" id="pagenav_ibtn" class="pagenav_ibtn" ></input></td></tr></table>';
                 return goto_page;
             }
 
@@ -239,7 +246,7 @@
                 opts.itemsPerPage = $(obj).val();
                 drawLinks();
                 //alert(opts.currentPage);
-                opts.callback(opts.currentPage, opts.itemsPerPage, this);
+                opts.callback(parseInt(opts.currentPage), parseInt(opts.itemsPerPage), this);
             }
             // Extract currentPage from options
             var currentPage = opts.currentPage;

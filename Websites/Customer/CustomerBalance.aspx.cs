@@ -11,6 +11,8 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities.Casino;
+using Fanex.Common;
+using Fanex.Tarus.Web.Models.Customer.Balance;
 
 public partial class CustomerBalance : PageBase
 {
@@ -22,7 +24,8 @@ public partial class CustomerBalance : PageBase
         string _s = string.Empty;
         try
         {
-            int _custid = CastAide.AsInt32(Request["agentid"]);
+            int _custid = CastAide.AsInt32(Request["custid"]);
+            
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
 
             string _custIdList = Request["memberIdList"] as string ?? string.Empty;
@@ -129,9 +132,9 @@ public partial class CustomerBalance : PageBase
                 }
 
                 strcontent.Append("[");
-                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["credit"]) ? "0.00" : dr["credit"])) + "',");
-                double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["balance"]));
-                double yesterdayBalance = (Convert.IsDBNull(dr["yesterday_balance"]) ? 0.00 : Convert.ToDouble(dr["yesterday_balance"]));
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["GivenCredit"]) ? "0.00" : dr["GivenCredit"])) + "',");
+                double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["Balance"]));
+                double yesterdayBalance = (Convert.IsDBNull(dr["YesterdayBalance"]) ? 0.00 : Convert.ToDouble(dr["YesterdayBalance"]));
 
                 string balanceColor = (balance < 0) ? "#ff0000" : "#0000ff";
                 string yesterdayBalanceColor = (yesterdayBalance < 0) ? "#ff0000" : "#0000ff";
@@ -139,16 +142,16 @@ public partial class CustomerBalance : PageBase
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", balance) + "',");
                 strcontent.Append("'" + yesterdayBalanceColor + "',");
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", yesterdayBalance) + "',");
-                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["outstanding"]) ? "0.00" : dr["outstanding"])) + "',");
-                strcontent.Append("'" + dr["custid"].ToString() + "',");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["Outstanding"]) ? "0.00" : dr["Outstanding"])) + "',");
+                strcontent.Append("'" + dr["Custid"].ToString() + "',");
                 strcontent.Append("'" + yesterdayBalance.ToString() + "',");
 
-                strcontent.Append("'" + dr["username"].ToString().Replace("'", "&#39;") + "',");
+                strcontent.Append("'" + dr["UserName"].ToString().Replace("'", "&#39;") + "',");
 
-                strcontent.Append("'" + StringUtils.ToHTMLString(dr["firstname"].ToString()) + "',");
-                strcontent.Append("'" + StringUtils.ToHTMLString(dr["lastname"].ToString()) + "',");
+                strcontent.Append("'" + StringUtils.ToHTMLString(dr["FirstName"].ToString()) + "',");
+                strcontent.Append("'" + StringUtils.ToHTMLString(dr["LastName"].ToString()) + "',");
 
-                if (Convert.ToDouble(dr["yesterday_balance"]) == 0.00)
+                if (Convert.ToDouble(dr["YesterdayBalance"]) == 0.00)
                 {
                     strcontent.Append("'yes',");
                 }

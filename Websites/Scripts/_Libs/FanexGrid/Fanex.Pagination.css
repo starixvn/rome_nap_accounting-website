@@ -50,7 +50,6 @@
     padding: 0px !important;
     position: absolute;
     z-index: 9999;
-    width: 135px;
 }
 #pagination .lnk
 {
@@ -65,7 +64,9 @@
     border: none 0px;
     padding:1px !important;
     font-size: 1em;
+    white-space: nowrap;
 }
+
 #pagenav_ibtn
 {
     background:url(images/go-hover-icon.png) 0 0 no-repeat;

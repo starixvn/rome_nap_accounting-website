@@ -1,0 +1,87 @@
+﻿@using Fanex.Tarus.Web.Models.Customer.Balance;
+@using Fanex.Tarus.Infrastructure.Constants;
+@{
+    Layout = null;
+    CustomerBalancePageStatus customerBalancePageStatus = Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys] == null ?
+                    new CustomerBalancePageStatus() :
+                    (CustomerBalancePageStatus)Session[CustomerBalanceConstants.CustomerBalancePageStatusSessionKeys];
+    var title = " Balance";
+    if (customerBalancePageStatus.CurrentRoleId == 4)
+    {
+        title = "Master" + title;
+    }
+    else if (customerBalancePageStatus.CurrentRoleId == 3)
+    {
+        title = "Agent" + title;
+    }
+}
+<!DOCTYPE html>
+<html lang="en" class="linen">
+<head>
+    <title>Customer Balance</title>
+    <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .freegrid .grid-fixed-table tr.add-customer-bggray td {
+            background: #CCC7BA;
+        }
+    </style>
+</head>
+<body id="body">
+    <input id="CustId" type="hidden" vale="" />
+    <div class="main">
+        <div class="maincontent">
+            <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL"></td>
+                    <td id="ReportTitle" class="maincontent_headerC">
+                        @title
+                    </td>
+                    <td class="maincontent_headerR"></td>
+                </tr>
+            </table>
+            <div class="maincontent_box">
+                <div id="gridSuperContainer" class="grid-container">
+                    <div id="gridSuper" class="freegrid"></div>
+                </div>
+                <div id="gridMasterContainer" class="grid-container">
+                    <div id="gridMaster" class="freegrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="centerFr2" name="centerFr2" src="../_blankpage.htm" scrolling="auto" marginwidth="0"
+            marginheight="0" frameborder="0" vspace="0" hspace="0" style="width: 100%; height: 0px;"
+            allowtransparency="true"></iframe>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerBalance/Scripts/Index.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" ></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var data = "";
+        var custId = @ViewBag.CustId;
+        var roleId = @ViewBag.RoleId;
+        var userName = '@ViewBag.UserName';
+        var isCached = '@ViewBag.IsCached.ToString().ToLower()';
+        var $gridSuper = $("#gridSuper");
+        var $gridMaster = $("#gridMaster");
+        var $gridSuperContainer = $("#gridSuperContainer");
+        var $gridMasterContainer = $("#gridMasterContainer");
+        var cachedInputData = {
+            superId: @customerBalancePageStatus.SuperId,
+            superName: '@customerBalancePageStatus.SuperName',
+            masterId: @customerBalancePageStatus.MasterId,
+            masterName: '@customerBalancePageStatus.MasterName',
+            currentRoleId: '@customerBalancePageStatus.CurrentRoleId'
+        };
+
+        $gridSuperContainer.hide();
+        $gridMasterContainer.hide();
+    </script>
+</body>
+</html>

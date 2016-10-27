@@ -1278,7 +1278,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
 
-                                if (isHideColossusBets|| isDeposit)
+                                if (isHideColossusBets || isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
                                 }
@@ -2805,6 +2805,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 string tplTransLink = WebUtils.LoadTemplateBySystem("CustomerInfo/TransLinksBox.htm");
                 string downlineListURL = string.Empty;
+                string customerBalanceURL = string.Empty;
                 string lblDownlineList = string.Empty;
                 Globals.AccountType accLevel = (Globals.AccountType)roleid;
 
@@ -2844,8 +2845,10 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             downlineListURL = "FinanceCustomerList/Index?upline=" + custId + "&roleid=4";
                         }
+
+                        customerBalanceURL = "CustomerBalance/Index?custid=" + custId.ToString() + "&roleId=4&userName=" + custName;
+                        TemplateHandler.RemoveBlock(ref tplTransLink, isDeposit ? "balance" : null);
                         lblDownlineList = "Master List";
-                        TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
                         break;
 
                     case Globals.AccountType.Master:
@@ -2864,8 +2867,10 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             downlineListURL = "FinanceCustomerList/Index?upline=" + custId + "&roleid=3";
                         }
+
+                        customerBalanceURL = "CustomerBalance/Index?custid=" + custId.ToString() + "&roleId=3&userName=" + custName;
+                        TemplateHandler.RemoveBlock(ref tplTransLink, isDeposit ? "balance" : null);
                         lblDownlineList = "Agent List";
-                        TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
                         break;
 
                     case Globals.AccountType.Agent:
@@ -2884,14 +2889,15 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             downlineListURL = "FinanceCustomerList/Index?upline=" + custId + "&roleid=2";
                         }
+
+                        customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + custId.ToString() + "&userName=" + custName;
                         lblDownlineList = "Member List";
-                        TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "");
                         break;
 
                     case Globals.AccountType.Member:
                         downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + custId;
                         lblDownlineList = "Bet List";
-                        TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
+                        TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                         break;
                 }
 
@@ -2900,7 +2906,15 @@ namespace Sunplus.Accounting.Business.Customer
                 custName = System.Web.HttpUtility.UrlEncode(custName);
 
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", custName);
-                TemplateHandler.Assign(ref tplTransLink, "{custid}", custId.ToString());
+                if (Permissions.HasPermission(Enumerations.Functions.Customer.CustomerBalance))
+                {
+                    TemplateHandler.Assign(ref tplTransLink, "{CustomerBalanceURL}", customerBalanceURL);
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
+                }
+
                 TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL);
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
 
@@ -3109,7 +3123,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                 csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
             }
-            
+
             if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
             {
                 SettingService liveCasinoSettingService = new SettingService();
