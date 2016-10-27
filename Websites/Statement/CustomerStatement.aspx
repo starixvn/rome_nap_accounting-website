@@ -51,10 +51,7 @@
     
     <div id="betListContent" style="margin-top: 10px;">
     </div>
-    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
-    <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
-    <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Scripts/_Libs/jQuery/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Grid.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Pagination.js"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/moment.js"></script>
