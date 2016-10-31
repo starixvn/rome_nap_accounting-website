@@ -11,7 +11,7 @@ namespace Fanex.Tarus.Security.Web
     using System.Web;
     using Fanex.CustomerSetting.Module.Core.Web;
     using System;
-
+    using System.Globalization;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -125,11 +125,11 @@ namespace Fanex.Tarus.Security.Web
         {
             get
             {
-                throw new System.NotImplementedException();
+                return CultureInfo.CurrentCulture.Name;
             }
             set
             {
-                throw new System.NotImplementedException();
+                value = "en-US";
             }
         }
 
