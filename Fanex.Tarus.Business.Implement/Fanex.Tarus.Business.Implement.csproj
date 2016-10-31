@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService.cs" />
+    <Compile Include="Admin\TicketToHeadlineService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="CacheUtils.cs" />
     <Compile Include="CommonService.cs" />

@@ -160,6 +160,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\TicketToHeadlineController.cs" />
     <Compile Include="Admin\AdminController.cs" />
     <Compile Include="Admin\AgentAccessController.cs" />
     <Compile Include="Admin\NumberGame\NumberWheelChoiceController.cs" />

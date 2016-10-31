@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\ITicketToHeadlineService.cs" />
     <Compile Include="Customer\ICustomerBalanceService.cs" />
     <Compile Include="Customer\IDepositCustomerService.cs" />
     <Compile Include="IAdminService.cs" />

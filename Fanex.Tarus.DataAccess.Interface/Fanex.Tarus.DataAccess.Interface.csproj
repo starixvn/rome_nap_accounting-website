@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\ITicketToHeadlineRepository.cs" />
     <Compile Include="Customer\ICustomerBalanceRepository.cs" />
     <Compile Include="Customer\IDepositCustomerAccess.cs" />
     <Compile Include="IAdminAccess.cs" />
