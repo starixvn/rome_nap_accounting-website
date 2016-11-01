@@ -11,7 +11,7 @@
     <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Log">
-    <Setting Key="GetLogSetting" SpName="Acc_UserLog_RunSPSel_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSetting" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogSettingTotal" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogLogin" SpName="Acc_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogLoginTotal" SpName="Acc_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
