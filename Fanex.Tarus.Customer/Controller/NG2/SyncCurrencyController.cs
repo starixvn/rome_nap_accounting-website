@@ -41,7 +41,7 @@ namespace Fanex.Tarus.Customer.Controller.NG2
                     result = service.AddSyncCurrency(model);
                     if (!result.IsSuccess)
                     {
-                        result.ErrorMessage = "Sync currency failed. Please try it again later";
+                        result.ErrorMessage = "Update base rate failed. Please try it again later";
                     }
                 }
                 else
