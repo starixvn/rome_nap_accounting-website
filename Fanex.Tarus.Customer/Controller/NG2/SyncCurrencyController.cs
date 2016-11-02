@@ -46,7 +46,7 @@ namespace Fanex.Tarus.Customer.Controller.NG2
                 }
                 else
                 {
-                    result = new Result(1, "This currency is not allowed to sync!");
+                    result = new Result(1, "The currency has not created in 3rd party side yet.");
                 }
             }
 

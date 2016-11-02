@@ -28,7 +28,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
             {*/
                 var req = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
                 req.Auth.SiteId = 2000;
-                req.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = entity.CurrencyId, ExchangeRate = entity.BaseRate });
+                req.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = entity.CurrencyId, ExchangeRate = (decimal)entity.BaseRate });
                 req.UserId = AppSession.CurrentSession.UserId;
 
                 var res = service.SyncExchangeRates(req);

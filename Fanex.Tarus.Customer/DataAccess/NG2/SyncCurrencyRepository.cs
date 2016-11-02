@@ -17,7 +17,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                     {
                         while (reader.Read())
                         {
-                            entity.BaseRate = reader.ToDecimal("actualrate");
+                            entity.BaseRate = (double)reader["actualrate"];
                             entity.CurrencyCode = reader.ToString("currency");
                             entity.CurrencyId = reader.ToInt32("exchangeid");
                         }
@@ -41,7 +41,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                         {
                             model.Currencies.Add(new SyncCurrencyEntity
                             {
-                                BaseRate = reader.ToDecimal("actualrate"),
+                                BaseRate = (double)reader["actualrate"],
                                 CurrencyCode = reader.ToString("currency"),
                                 CurrencyId = reader.ToInt32("exchangeid")
                             }); 

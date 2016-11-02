@@ -71,9 +71,12 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     if (errMsg.Length == 0)
                     {
                         var allowedCurrency = false;
+                        var format = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
                         foreach (var item in currencies)
                         {
-                            if (item.CurrencyId == exRateId && actualRate != item.BaseRate.ToString())
+                            double rate = 0;
+                            double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format,  out rate);
+                            if (item.CurrencyId == exRateId && rate != item.BaseRate)
                             {
                                 allowedCurrency = true;
                                 break;

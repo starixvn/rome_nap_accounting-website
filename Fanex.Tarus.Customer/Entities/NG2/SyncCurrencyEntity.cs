@@ -13,6 +13,6 @@ namespace Fanex.Tarus.Customer.Entities.NG2
 
         public string CurrencyCode { get; set; }
 
-        public decimal BaseRate { get; set; }
+        public double BaseRate { get; set; }
     }
 }
