@@ -34,10 +34,10 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
             $("#innerFrame").css({ "height": $(this).css("height"), "width": $(this).css("width") }).show();
         },
         close: function (event, ui) {
-            //            if (currentExecFrame != null && currentExecFrame.onclose) {
-            //                currentExecFrame.onclose();
-            //                setTimeout('currentExecFrame=null;', 500);
-            //            }
+                        if (currentExecFrame != null && currentExecFrame.onclose) {
+                            currentExecFrame.onclose();
+                            setTimeout('currentExecFrame=null;', 500);
+                        }
 
             $("#dialog-modal").remove();
         }

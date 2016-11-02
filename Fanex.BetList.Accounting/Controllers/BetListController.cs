@@ -1,4 +1,5 @@
 ﻿using Fanex.Tarus.Security.Authenticate;
+using Fanex.Tarus.Security.Domain;
 using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.BetList.Accounting.Controllers
@@ -51,7 +52,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="refno">The ref no.</param>
         /// <returns>The bet list by reference no.</returns>
         [AuthorizeFunctions("BetListByIP")]
-        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
         public ActionResult GetBetListByRefNo(string refno)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
@@ -82,7 +83,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// </summary>
         /// <param name="betListByProductCriteria">The criteria.</param>
         /// <returns>The bet list by reference no.</returns>
-        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
         public ActionResult GetBetListByProduct(BetListByProductCriteria betListByProductCriteria)
         {
             BalanceUp balanceUp = ReportService.BalanceUp;
@@ -221,7 +222,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="pageIndex">Index of the page.</param>
         /// <returns>The bet list by IP soccer.</returns>
         [AuthorizeFunctions("BetListByIP")]
-        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByIp)]
         public ActionResult GetBetListByIP_Soccer(
             int customerId,
             string ip,
@@ -261,7 +262,7 @@ namespace Fanex.BetList.Accounting.Controllers
         /// <param name="transType">Type of the trans.</param>
         /// <param name="fromDate">From date.</param>
         /// <returns>The bet list statement.</returns>
-        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListFromStatement)]
         public ActionResult GetBetListStatement(string username, int transType, DateTime fromDate)
         {
             Hashtable paramHastable = new Hashtable();

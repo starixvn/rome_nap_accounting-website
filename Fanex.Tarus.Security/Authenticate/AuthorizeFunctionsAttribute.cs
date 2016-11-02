@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Fanex.AuthenticationFilter.Configurations;
-using Fanex.Tarus.Security.Permission;
+using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Security.Authenticate
 {

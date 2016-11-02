@@ -9,7 +9,6 @@ using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Tarus.Security.Permission;
 using IBCUtils.Objects;
 using Sunplus.Accounting.Business.Criteria;
 using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
@@ -35,6 +34,9 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Domain;
+using Fanex.Tarus.Security.Services;
 using Result = Sunplus.Accounting.Entities.Result;
 
 /// <summary>
@@ -274,7 +276,18 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
-                            if (new SmartPunterPermissionService().IsDeniedViewSmartPunter(custId, userName))
+                            ISmartPunterService smartPunterService = new SmartPunterService();
+                            bool isDenied = smartPunterService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
+                            {
+                                CustId = custId,
+                                UserName = userName,
+                                UserId = AppSession.AccId,
+                                ActionId = SmartPunterActionId.SearchCustomer,
+                                Ip = Utils.GetClientIP(),
+                                IsRestricted = !PermissionService.HasPermission("SmartPunter")
+                            });
+
+                            if (isDenied)
                             {
                                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "smartPunterAtuthorized"), AlertMessage.MsgType.Error);
                                 arrcontent.Add("strcontent", htmlcontent);

@@ -2,8 +2,8 @@
 @using Fanex.Tarus.Customer.Entities;
 @using Fanex.Tarus.Customer.Entities.ConfigureDirectAccount;
 @using Fanex.Tarus.Business.Implement;
+@using Fanex.Tarus.Security.Services
 @using Sunplus.Accounting.Core.Common;
-@using Fanex.Tarus.Security.Permission;
 @{
     var permissionService = new PermissionService();
     var hasHostPermission = permissionService.GetHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount, permissionService.GetRoleAccess(AppSession.AccId));

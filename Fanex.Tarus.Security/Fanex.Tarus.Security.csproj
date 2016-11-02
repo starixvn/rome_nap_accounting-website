@@ -152,12 +152,13 @@
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
-    <Compile Include="Permission\IPermissionService.cs" />
-    <Compile Include="Permission\ISmartPunterPermissionService.cs" />
-    <Compile Include="Permission\PermissionService.cs" />
-    <Compile Include="Permission\SmartPunterPermissionService.cs" />
-    <Compile Include="Services\Implement\CheckSmartPunterService.cs" />
-    <Compile Include="Services\Interface\ICheckSmartPunterService.cs" />
+    <Compile Include="Domain\SmartPunterActionId.cs" />
+    <Compile Include="Services\IPermissionService.cs" />
+    <Compile Include="Services\ISmartPunterService.cs" />
+    <Compile Include="Services\PermissionService.cs" />
+    <Compile Include="Services\SmartPunterService.cs" />
+    <Compile Include="Repositories\ISmartPunterRepository.cs" />
+    <Compile Include="Repositories\SmartPunterRepository.cs" />
     <Compile Include="Web\AppSessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

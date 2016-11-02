@@ -2,6 +2,7 @@
 using System;
 using System.Web;
 using System.Web.Mvc;
+using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Web.Controllers
 {
@@ -13,7 +14,6 @@ namespace Fanex.Tarus.Web.Controllers
 
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
-    using Fanex.Tarus.Security.Permission;
     using System.Collections.Generic;
 
     public class BaseController : Controller

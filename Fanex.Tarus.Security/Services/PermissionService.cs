@@ -1,18 +1,18 @@
-namespace Fanex.Tarus.Security.Permission
+using System;
+using System.Collections.Generic;
+using System.Data;
+using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
+using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Web;
+
+namespace Fanex.Tarus.Security.Services
 {
-    using Criteria;
-    using CustomerSetting.Module.Core.Models;
-    using Data;
-    using DNAide.Core;
-    using DNAide.Data;
-    using Fanex.Tarus.Security.Web;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-/// <summary>
+    /// <summary>
                /// Class PermissionService.
                /// </summary>
-    public class PermissionService : Security.Permission.IPermissionService
+    public class PermissionService : IPermissionService
     {
         /// <summary>
         /// Determines whether the specified function name has permission.

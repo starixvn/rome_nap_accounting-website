@@ -17,14 +17,16 @@ namespace Fanex.AuthenticationFilter
     public class AuthenticateSmartPunterAction : ActionFilterAttribute
     {
         private readonly AuthenticationType _authenticationType;
+        private readonly int _actionId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticateSmartPunterAction"/> class.
         /// </summary>
         /// <param name="authenticationType">Authentication type.</param>
-        public AuthenticateSmartPunterAction(AuthenticationType authenticationType)
+        public AuthenticateSmartPunterAction(AuthenticationType authenticationType, int actionId = 0)
         {
             _authenticationType = authenticationType;
+            _actionId = actionId;
         }
 
         /// <summary>
@@ -50,8 +52,14 @@ namespace Fanex.AuthenticationFilter
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var paramHastable = filterContext.Controller.TempData["paramHastable"] as Hashtable;
+
+            if (paramHastable != null)
+            {
+                paramHastable.Add("actionId", _actionId);
+            }
+
             var authenticateFactory = AuthenticateFactory.Create(_authenticationType, paramHastable);
-            
+
             switch (_authenticationType)
             {
                 case AuthenticationType.Read:
@@ -80,7 +88,7 @@ namespace Fanex.AuthenticationFilter
         /// </summary>
         /// <param name="filterContext">Action executed context.</param>
         private static void ActionDenied(ActionExecutedContext filterContext)
-        {   
+        {
             filterContext.Result = new PartialViewResult
             {
                 ViewName = AuthenticationFilterSection.Instance.DeniedView
