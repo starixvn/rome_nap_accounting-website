@@ -10,7 +10,8 @@
       <MaxBetMin></MaxBetMin>
       <MaxPerMatchMin></MaxPerMatchMin>
       <MaxPerMatchMax></MaxPerMatchMax>
-    </BettingLimitItem>
+    </BettingLimitItem>  
+  
 
     <BettingLimitItem id="2" name="Basketball" key="Basketball" resourcekey="Basketball">
       <MinBet></MinBet>
@@ -20,8 +21,8 @@
       <MaxBetMin></MaxBetMin>
       <MaxPerMatchMin></MaxPerMatchMin>
       <MaxPerMatchMax></MaxPerMatchMax>
-    </BettingLimitItem>
-
+    </BettingLimitItem>   
+    
     <BettingLimitItem id="3" name="Football" key="Football" resourcekey="Football">
       <MinBet></MinBet>
       <MaxBet></MaxBet>
@@ -82,6 +83,8 @@
       <MaxPerMatchMax></MaxPerMatchMax>
     </BettingLimitItem>
 
+   
+    
     <BettingLimitItem id="99" name="Mix Sports Parlay" key="Mix Sports Parlay" resourcekey="mixsports">
       <MinBet></MinBet>
       <MaxBet></MaxBet>

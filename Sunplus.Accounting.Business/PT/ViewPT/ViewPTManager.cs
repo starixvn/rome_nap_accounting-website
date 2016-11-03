@@ -7,7 +7,7 @@ using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.PositionTaking;

@@ -2512,4 +2512,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="NormalGroup" xml:space="preserve">
     <value>Normal Group</value>
   </data>
+  <data name="SoccerParlay" xml:space="preserve">
+    <value>Soccer Parlay</value>
+  </data>
 </root>

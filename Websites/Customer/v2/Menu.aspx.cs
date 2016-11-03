@@ -4,7 +4,7 @@ using System.Threading;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using RemotingRef;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;

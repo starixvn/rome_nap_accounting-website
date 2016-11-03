@@ -12,7 +12,7 @@ using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Common;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
