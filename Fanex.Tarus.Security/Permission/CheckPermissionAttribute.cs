@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core.Web;
+using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Security.Permission
 {
