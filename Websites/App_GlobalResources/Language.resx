@@ -2519,9 +2519,12 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Remove OTP</value>
   </data>
   <data name="removeOTPGuide" xml:space="preserve">
-    <value>Resetting a user's OTP will remove the registered Sophos key and disable his OTP status.</value>
+    <value>Removing a user's OTP will remove the registered Sophos key and disable his OTP status.</value>
   </data>
   <data name="removeOTPsuccessfullyMessage" xml:space="preserve">
-    <value>Remove OTP successfully!</value>
+    <value>Removed the registered device successfully.</value>
+  </data>
+  <data name="removingOTPConfirm" xml:space="preserve">
+    <value>Do you want to remove this user's registered device?</value>
   </data>
 </root>

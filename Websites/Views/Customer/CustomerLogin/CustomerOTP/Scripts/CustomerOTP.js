@@ -1,10 +1,34 @@
 ﻿customerOTP = {
     initialize: function () {
         $("#btnSubmit").click(function () {
-            customerOTP.RemoveOTP();
+            customerOTP.removeOTP();
         });
     },
-    RemoveOTP: function () {
+    removeOTP: function () { 
+        $('#dialogConfirm').empty().append($("#removingOTPConfirm").val());
+        $("#dialogConfirm").dialog({
+           title: "Remove OTP",
+            autoOpen: false,
+            resizable: false,
+            height: 100,
+            width: 400,
+            modal: true,
+            position: [30, 100],
+            create: function (event) { $(event.target).parent().css('position', 'fixed'); },
+            buttons: {
+                "OK": function () {
+                    customerOTP.doRemoveOTP();
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            },
+        });
+        $('a.ui-dialog-titlebar-close').show();
+        $("#dialogConfirm").dialog("open");
+    },
+    doRemoveOTP: function () {
         try { parent.BlockUI(); } catch (e) { }
         var $errorMessage = $("#errorMessage");
         $errorMessage.empty();

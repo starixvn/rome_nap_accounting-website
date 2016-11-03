@@ -157,27 +157,31 @@ input.verifiedmember{
 
 .ui-widget-header 
 {
-     background: url("Images/bg_popup.png") repeat-x scroll 50% 50% #000000 !important;
-     border-color: #000000;
+     background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
     color: #FFFFFF;
     font-weight: bold;
 
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-    background: url("Images/bg_popup.png") repeat-x scroll 50% 50% #000000 !important;
-     border-color: #000000;
+    background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
     color: #FFFFFF;
     font-weight: bold;
 }
 
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    background: #1F384C repeat-x scroll 50% 50% #1F384C !important;
+}
+
+
+
 .tipsy-inner {
-   background: none repeat scroll 0 0 black!important;
+   background: none repeat scroll 0 0 #1F384C !important;
     color: White !important;
 }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
-    background: url("Images/bg_popup-hover.jpg") repeat-x scroll 50% 50% #000000 !important;
-}
+
 
 .display
 {

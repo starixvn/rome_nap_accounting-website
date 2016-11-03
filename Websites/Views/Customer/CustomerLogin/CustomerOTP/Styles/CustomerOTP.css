@@ -40,3 +40,23 @@
     padding: 10px 0px 5px 0px;
     font-size : 13px;
 }
+
+.ui-widget-header 
+{
+     background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
+    color: #FFFFFF;
+    font-weight: bold;
+
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    background: #1F384C repeat-x scroll 50% 50% #1F384C !important;
+}

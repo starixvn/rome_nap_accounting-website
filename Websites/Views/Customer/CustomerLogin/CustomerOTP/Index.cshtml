@@ -1,9 +1,10 @@
 ﻿@using DNAide.Core;
 @using Sunplus.Accounting.Core.Extensions;
-@{ 
+@{
     var removeOTPtitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "removeOTP");
     var removeOTPGuidetitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "removeOTPGuide");
     var removeOTPsuccessfully = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "removeOTPsuccessfullyMessage");
+    var removingOTPConfirm = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "removingOTPConfirm");
     int customerId = Request["CustomerId"] != null ? CastAide.AsInt32(Request["CustomerId"]) : 0;
     string customerName = Request["CustomerName"] != null ? CastAide.AsString(Request["CustomerName"]) : string.Empty;
 }
@@ -11,10 +12,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>@removeOTPtitle</title>
+    <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="~/Views/Customer/CustomerLogin/CustomerOTP/Styles/CustomerOTP.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="~/js/common.js"></script>
+    <script src="~/js/jQuery/jquery-1.7.js" type="text/javascript"></script>
     <script src="~/Views/Customer/CustomerLogin/CustomerOTP/Scripts/CustomerOTP.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="main">
@@ -23,24 +30,29 @@
                 <table class="tbllayout" cellspacing="1">
                     <tr class="title">
                         <td>
-                          @removeOTPtitle: @customerName
+                            @removeOTPtitle: @customerName
                         </td>
                     </tr>
                     <tr>
-                        <td class="c" >
+                        <td class="c">
                             <input id="btnSubmit" class="btn" type="submit" value="Submit" />
                         </td>
                     </tr>
                 </table>
                 <div class="OTPGuide">
-                   @removeOTPGuidetitle
+                    @removeOTPGuidetitle
                 </div>
                 <div id="errorMessage" class="hidden">
                 </div>
             </div>
         </div>
     </div>
+    <div id="dialogConfirm" style="display: none; height: 0px !important; font-size: 13px;">
+
+    </div>
+
     @Html.Hidden("removeOTPsuccessfully", removeOTPsuccessfully)
+    @Html.Hidden("removingOTPConfirm", removingOTPConfirm)
     @Html.Hidden("rootUrl", Url.Content("~"))
     @Html.Hidden("customerId", customerId)
 </body>
