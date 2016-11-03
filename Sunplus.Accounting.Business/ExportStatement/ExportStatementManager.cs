@@ -285,7 +285,9 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     TemplateHandler.Assign(ref row, "Currency",
                                            CacheUtils.GetExchangeName(CastAide.AsInt32(dr["currency"])));
 
-                    transtype = CacheRef.GetBettype(dr["transtype"]);
+                    int bettypeId = 0;
+                    int.TryParse(dr["transtype"].ToString(), out bettypeId);
+                    transtype = bettypeId == 0 ? dr["transtype"].ToString() : CacheRef.GetBettype(dr["transtype"]);
                     if (transtype.Length == 0)
                         transtype = CastAide.AsString(dr["transtype"]);
 
@@ -461,7 +463,9 @@ namespace Sunplus.Accounting.Business.ExportStatement
             foreach (DataRow dr in Rows)
             {
                 username_p = CastAide.AsString(dr["username"]);
-                transtype = CacheRef.GetBettype(dr["transtype"]);
+                int bettypeId = 0;
+                int.TryParse(dr["transtype"].ToString(), out bettypeId);
+                transtype = bettypeId == 0 ? dr["transtype"].ToString() : CacheRef.GetBettype(dr["transtype"]);
                 transdesc = CastAide.AsString(dr["transdesc"]);
 
                 if (username.ToLower() != username_p.ToLower())
