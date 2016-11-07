@@ -9,6 +9,10 @@ namespace Fanex.Tarus.DataAccess.Interface.Admin
 {
     public interface ITicketToHeadlineRepository
     {
-        List<TicketToHeadline> GetData(TicketToHeadlineCriteria criteria);
+        TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria);
+
+        TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400);
+
+        void RePaginationData(List<TicketToHeadline> data, int pageSize);
     }
 }
