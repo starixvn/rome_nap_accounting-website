@@ -292,8 +292,9 @@
                 , 0, 0, 860, 480, false, 2000, null);
     },
     kenoSetting: function (custId) {
+        var url = "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId=" + _userId;
         showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
+                , url, 0, 0, 900, 700, false, 2000, null);
     },
     casino: function (custId, uplineId) {
         showPopup(""
