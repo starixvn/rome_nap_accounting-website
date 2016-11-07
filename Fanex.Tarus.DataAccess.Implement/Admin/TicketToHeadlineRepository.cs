@@ -29,13 +29,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
         {
             var result = new TicketToHeadlineViewModel();
             TicketToHeadline trackingDataRow = new TicketToHeadline();
-
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AssignParamValues(criteria.GetSpParams());
                 var reader = db.ExecuteReader();
+                var rowCount = 0;
                 while (reader.Read())
                 {
+                    rowCount++;
                     var currentDataRow = new TicketToHeadline()
                     {
                         RowNum = Utils.ToInt32(reader["RowNum"]),
@@ -51,17 +52,21 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                     };
 
                     result.TicketToHeadlineCollection.Add(currentDataRow);
-                    GenerateMergeRowNumber(trackingDataRow, currentDataRow, currentDataRow.RowNum, criteria.PageSize);
+                    GenerateMergeRowNumber(trackingDataRow, currentDataRow, rowCount, criteria.PageSize);
                 }
 
                 reader.Close();
                 result.TotalRows = Utils.ToInt32(db.GetOuputParams()["totalrows"]);
             }
 
-            groupHeadlineDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-            superDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-            masterDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-            agentDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
+            criteria.PageSize = criteria.PageSize ?? 1000;
+            if (result.TicketToHeadlineCollection.Count % (int)criteria.PageSize != 0)
+            {
+                groupHeadlineDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
+                superDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
+                masterDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
+                agentDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
+            }
 
             ReassignMergeRowNum(result.TicketToHeadlineCollection);
             return result;
@@ -184,6 +189,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
 
         private void GenerateMergeRowNumber(TicketToHeadline trackingDataRow, TicketToHeadline currentDataRow, int currentRowIndex, int? pageSize = 1000)
         {
+            pageSize = pageSize ?? 1000;
             int currentPageIndex = currentRowIndex / (int)pageSize;
             if (currentRowIndex == 1)
             {

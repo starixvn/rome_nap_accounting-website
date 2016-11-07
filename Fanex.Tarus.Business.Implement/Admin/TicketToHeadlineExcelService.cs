@@ -60,9 +60,21 @@ namespace Fanex.Tarus.Business.Implement.Admin
             CreateFont();
             CreateCellStyles();
             FilterData();
-            ExportData("VIP", _vipHeadlineData);
-            ExportData("Normal", _normalHeadlineData);
-            ExportData("Error", _errorData);
+            if (_vipHeadlineData.Count > 0)
+            {
+                ExportData("VIP", _vipHeadlineData);
+            }
+
+            if (_normalHeadlineData.Count > 0)
+            {
+                ExportData("Normal", _normalHeadlineData);
+            }
+
+            if (_errorData.Count > 0)
+            {
+                ExportData("Error", _errorData);
+            }
+
             return this._workbook;
         }
 
@@ -133,6 +145,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             if (dataRow.ErrorCode != 0)
             {
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1, 1, 6));
+                return;
             }
 
             if (dataRow.MergeRowNumGroupHeadline > 0)
@@ -212,6 +225,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._oddCellStyle.FillPattern = FillPattern.SolidForeground;
             this._oddCellStyle.BorderBottom = this._oddCellStyle.BorderLeft = this._oddCellStyle.BorderRight = this._oddCellStyle.BorderTop = BorderStyle.Thin;
             this._oddCellStyle.BottomBorderColor = this._oddCellStyle.TopBorderColor = this._oddCellStyle.LeftBorderColor = this._oddCellStyle.RightBorderColor = HSSFColor.Black.Index;
+            this._oddCellStyle.VerticalAlignment = VerticalAlignment.Top;
 
 
             this._evenCellStyle = this._workbook.CreateCellStyle();
@@ -219,6 +233,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._evenCellStyle.SetFont(this._normalFont);
             this._evenCellStyle.BorderBottom = this._evenCellStyle.BorderLeft = this._evenCellStyle.BorderRight = this._evenCellStyle.BorderTop = BorderStyle.Thin;
             this._evenCellStyle.BottomBorderColor = this._evenCellStyle.TopBorderColor = this._evenCellStyle.LeftBorderColor = this._evenCellStyle.RightBorderColor = HSSFColor.Black.Index;
+            this._evenCellStyle.VerticalAlignment = VerticalAlignment.Top;
 
             this._oddErrorCellStyle = this._workbook.CreateCellStyle();
             this._oddErrorCellStyle.Alignment = HorizontalAlignment.Center;
@@ -227,12 +242,14 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._oddErrorCellStyle.FillPattern = FillPattern.SolidForeground;
             this._oddErrorCellStyle.BorderBottom = this._oddErrorCellStyle.BorderLeft = this._oddErrorCellStyle.BorderRight = this._oddErrorCellStyle.BorderTop = BorderStyle.Thin;
             this._oddErrorCellStyle.BottomBorderColor = this._oddErrorCellStyle.TopBorderColor = this._oddErrorCellStyle.LeftBorderColor = this._oddErrorCellStyle.RightBorderColor = HSSFColor.Black.Index;
+            this._oddErrorCellStyle.VerticalAlignment = VerticalAlignment.Top;
 
             this._evenErrorCellStyle = this._workbook.CreateCellStyle();
             this._evenErrorCellStyle.Alignment = HorizontalAlignment.Center;
             this._evenErrorCellStyle.SetFont(this._errorFont);
             this._evenErrorCellStyle.BorderBottom = this._oddErrorCellStyle.BorderLeft = this._oddErrorCellStyle.BorderRight = this._oddErrorCellStyle.BorderTop = BorderStyle.Thin;
             this._evenErrorCellStyle.BottomBorderColor = this._oddErrorCellStyle.TopBorderColor = this._oddErrorCellStyle.LeftBorderColor = this._oddErrorCellStyle.RightBorderColor = HSSFColor.Black.Index;
+            this._evenErrorCellStyle.VerticalAlignment = VerticalAlignment.Top;
         }
 
         private void FilterData()
@@ -260,9 +277,11 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
         private void ColumnAutoWidth()
         {
-            for (int i = 0; i < 10; i++)
+            this._sheet.AutoSizeColumn(0);
+            
+            for (int i = 1; i < 10; i++)
             {
-                this._sheet.AutoSizeColumn(i);
+                this._sheet.SetColumnWidth(i, 5000);
             }
         }
     }
