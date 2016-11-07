@@ -99,7 +99,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                                 var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
                                 var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
                                 var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
-                                subject = string.Format(subject, RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+                                subject = string.Format(subject, /*RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")*/"NG2");
                                 var body = Resources.MiniTemplate.UpdateExtRateFailedNg2Email;
                                 body = string.Format(body, exRateId, currency, actualRate);
 
