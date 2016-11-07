@@ -207,7 +207,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                 return;
             }
 
-            if (trackingDataRow.GroupHeadline != currentDataRow.GroupHeadline)
+            if (trackingDataRow.GroupHeadline != currentDataRow.GroupHeadline || trackingDataRow.ErrorCode != currentDataRow.ErrorCode)
             {
                 groupHeadlineDataChangeRowNumber.Add(currentRowIndex - 1);
                 trackingDataRow.GroupHeadline = currentDataRow.GroupHeadline;
