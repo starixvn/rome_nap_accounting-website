@@ -199,7 +199,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._boldFont.FontName = "Tahoma";
             this._boldFont.FontHeightInPoints = 8;
             this._boldFont.Boldweight = (short)FontBoldWeight.Bold;
-            this._boldFont.Color = HSSFColor.Black.Index;
+            this._boldFont.Color = HSSFColor.White.Index;
 
             this._errorFont = this._workbook.CreateFont();
             this._errorFont.FontName = "Tahoma";

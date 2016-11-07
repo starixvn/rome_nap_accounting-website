@@ -60,13 +60,12 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             }
 
             criteria.PageSize = criteria.PageSize ?? 1000;
-            if (result.TicketToHeadlineCollection.Count % (int)criteria.PageSize != 0)
-            {
-                groupHeadlineDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-                superDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-                masterDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-                agentDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)criteria.PageSize);
-            }
+            int endMergedPage = result.TicketToHeadlineCollection.Count % (int)criteria.PageSize;
+            endMergedPage = endMergedPage == 0 ? (int)criteria.PageSize : endMergedPage;
+            groupHeadlineDataChangeRowNumber.Add(endMergedPage);
+            //superDataChangeRowNumber.Add(endMergedPage);
+            //masterDataChangeRowNumber.Add(endMergedPage);
+            //agentDataChangeRowNumber.Add(endMergedPage);
 
             ReassignMergeRowNum(result.TicketToHeadlineCollection);
             return result;
@@ -107,9 +106,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             }
 
             groupHeadlineDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
-            superDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
-            masterDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
-            agentDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
+            //superDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
+            //masterDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
+            //agentDataChangeRowNumber.Add(result.TicketToHeadlineCollection.Count % (int)pageSize);
             result.TotalRows = rowNo;
             ReassignMergeRowNum(result.TicketToHeadlineCollection);
             if (pageSize != null && pageIndex != null)
@@ -137,9 +136,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             }
 
             groupHeadlineDataChangeRowNumber.Add(data.Count % pageSize);
-            superDataChangeRowNumber.Add(data.Count % pageSize);
-            masterDataChangeRowNumber.Add(data.Count % pageSize);
-            agentDataChangeRowNumber.Add(data.Count % pageSize);
+            //superDataChangeRowNumber.Add(data.Count % pageSize);
+            //masterDataChangeRowNumber.Add(data.Count % pageSize);
+            //agentDataChangeRowNumber.Add(data.Count % pageSize);
             ReassignMergeRowNum(data);
         }
 
@@ -159,32 +158,32 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                 startRow = endRow;
             }
 
-            startRow = 0;
-            endRow = 0;
-            for (int i = 0; i < superDataChangeRowNumber.Count; i++)
-            {
-                endRow = superDataChangeRowNumber[i];
-                data[startRow].MergeRowNumSuper = endRow - startRow + 1;
-                startRow = endRow;
-            }
+            //startRow = 0;
+            //endRow = 0;
+            //for (int i = 0; i < superDataChangeRowNumber.Count; i++)
+            //{
+            //    endRow = superDataChangeRowNumber[i];
+            //    data[startRow].MergeRowNumSuper = endRow - startRow + 1;
+            //    startRow = endRow;
+            //}
 
-            startRow = 0;
-            endRow = 0;
-            for (int i = 0; i < masterDataChangeRowNumber.Count; i++)
-            {
-                endRow = masterDataChangeRowNumber[i];
-                data[startRow].MergeRowNumMaster = endRow - startRow + 1;
-                startRow = endRow;
-            }
+            //startRow = 0;
+            //endRow = 0;
+            //for (int i = 0; i < masterDataChangeRowNumber.Count; i++)
+            //{
+            //    endRow = masterDataChangeRowNumber[i];
+            //    data[startRow].MergeRowNumMaster = endRow - startRow + 1;
+            //    startRow = endRow;
+            //}
 
-            startRow = 0;
-            endRow = 0;
-            for (int i = 0; i < agentDataChangeRowNumber.Count; i++)
-            {
-                endRow = agentDataChangeRowNumber[i];
-                data[startRow].MergeRowNumAgent = endRow - startRow + 1;
-                startRow = endRow;
-            }
+            //startRow = 0;
+            //endRow = 0;
+            //for (int i = 0; i < agentDataChangeRowNumber.Count; i++)
+            //{
+            //    endRow = agentDataChangeRowNumber[i];
+            //    data[startRow].MergeRowNumAgent = endRow - startRow + 1;
+            //    startRow = endRow;
+            //}
         }
 
         private void GenerateMergeRowNumber(TicketToHeadline trackingDataRow, TicketToHeadline currentDataRow, int currentRowIndex, int? pageSize = 1000)
@@ -201,9 +200,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             {
                 trackingDataRow.Clone(currentDataRow);
                 groupHeadlineDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
-                superDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
-                masterDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
-                agentDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
+                //superDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
+                //masterDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
+                //agentDataChangeRowNumber.Add(currentPageIndex * (int)pageSize);
                 return;
             }
 
@@ -213,23 +212,23 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                 trackingDataRow.GroupHeadline = currentDataRow.GroupHeadline;
             }
 
-            if (trackingDataRow.Super != currentDataRow.Super)
-            {
-                superDataChangeRowNumber.Add(currentRowIndex - 1);
-                trackingDataRow.Super = currentDataRow.Super;
-            }
+            //if (trackingDataRow.Super != currentDataRow.Super)
+            //{
+            //    superDataChangeRowNumber.Add(currentRowIndex - 1);
+            //    trackingDataRow.Super = currentDataRow.Super;
+            //}
 
-            if (trackingDataRow.Master != currentDataRow.Master)
-            {
-                masterDataChangeRowNumber.Add(currentRowIndex - 1);
-                trackingDataRow.Master = currentDataRow.Master;
-            }
+            //if (trackingDataRow.Master != currentDataRow.Master)
+            //{
+            //    masterDataChangeRowNumber.Add(currentRowIndex - 1);
+            //    trackingDataRow.Master = currentDataRow.Master;
+            //}
 
-            if (trackingDataRow.Agent != currentDataRow.Agent)
-            {
-                agentDataChangeRowNumber.Add(currentRowIndex - 1);
-                trackingDataRow.Agent = currentDataRow.Agent;
-            }
+            //if (trackingDataRow.Agent != currentDataRow.Agent)
+            //{
+            //    agentDataChangeRowNumber.Add(currentRowIndex - 1);
+            //    trackingDataRow.Agent = currentDataRow.Agent;
+            //}
         }
 
     }
