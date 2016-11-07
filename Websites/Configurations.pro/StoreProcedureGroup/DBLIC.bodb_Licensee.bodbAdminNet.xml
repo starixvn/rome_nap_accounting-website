@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Functions>
   <Function Name="Exchange Rate">
     <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA" DbName="DBLIC.bodb_Licensee.bodbAdminNet" />
