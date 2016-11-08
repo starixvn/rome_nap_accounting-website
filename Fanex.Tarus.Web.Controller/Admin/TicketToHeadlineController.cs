@@ -34,6 +34,11 @@ namespace Fanex.Tarus.Web.Controllers.Admin
             criteria.PageSize = null;
             //var data = _ticketToHeadlineService.GetFakeData(null, null, 5000);
             var data = _ticketToHeadlineService.GetData(uploadFile, criteria);
+            if (!string.IsNullOrEmpty(data.ErrorMessage))
+            {
+                return Json(data);
+            }
+
             var excelService = new TicketToHeadlineExcelService(data);
             ExcelExtension.ResponseStreamExcel(excelService.Export(), GetExcelFileName());
             return new EmptyResult();

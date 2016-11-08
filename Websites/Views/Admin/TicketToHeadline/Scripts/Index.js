@@ -29,6 +29,13 @@ function GetExcelFile() {
 }
 
 function RenderData(data) {
+    if (data.ErrorMessage != undefined || data.ErrorMessage != '')
+    {
+        showAlertMessage('errMsg', data.ErrorMessage, 1);
+        try { parent.jQuery.unblockUI(); } catch (e) { }
+        return;
+    }
+
     var bodyRows = [];
     var rowCount = data.TicketToHeadlineCollection.length;
     var mergeRowNumGroupHeadline = 0;

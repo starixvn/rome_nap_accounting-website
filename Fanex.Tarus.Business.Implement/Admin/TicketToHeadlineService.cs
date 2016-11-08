@@ -40,6 +40,10 @@ namespace Fanex.Tarus.Business.Implement.Admin
                     string refno = row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString();
                     xmlParam += string.Format("<File UserName=\"{0}\" RefNo=\"{1}\" />", userName, refno.ToString());
                 }
+
+                xmlParam += "</ROOT>";
+                criteria.File = xmlParam;
+                result = this._ticketToHeadlineRepository.GetData(criteria);
             }
             catch (Exception ex)
             {
@@ -48,9 +52,6 @@ namespace Fanex.Tarus.Business.Implement.Admin
                 return result;
             }
 
-            xmlParam += "</ROOT>";
-            criteria.File = xmlParam;
-            result = this._ticketToHeadlineRepository.GetData(criteria);
             return result;
         }
 
