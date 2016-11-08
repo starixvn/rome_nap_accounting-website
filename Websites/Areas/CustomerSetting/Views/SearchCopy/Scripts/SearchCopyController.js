@@ -410,7 +410,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 if (allowedng2 && parent.showNG2) {                    
                     if (!existed) {
-                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });
+                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });                        
                     }                    
                 }
                 else {
@@ -418,6 +418,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                         parent.sports.splice(index, 1);
                     }
                 }
+
+                $scope.$apply(function () {
+                    $scope.sports = parent.sports;
+                    $scope.selectedSport = $scope.sports[0];
+                });
             }
         });
     };
