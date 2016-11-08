@@ -339,5 +339,9 @@ namespace Sunplus.Accounting.Entities.Casino
         public string SiteName { get; set; }
 
         public bool DisableBingo { get; set; }
+
+        public bool IsDisableNG2Upline { get; set; }
+
+        public bool IsSyncNG2 { get; set; }
     }
 }

@@ -139,8 +139,15 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 //}
 
 function ViewResult(matchid, bettype, betid, sporttype) {
-    var width = 750;
-    parent.OpenNextPopup("VirtualResult", 'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
+    var width = 600;
+    var url = 'Report/ViewResult.aspx';
+
+    if (2501 <= bettype && bettype <= 2699) {
+        width = 500;
+        url = 'Report/ViewNG2Result.aspx';
+    }
+
+    parent.OpenNextPopup("VirtualResult", url + '?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
 }
 
 function ViewResultMetricGaming(
@@ -719,6 +726,11 @@ function ViewAllBetResult(transDesc, betCheck, betTypeId) {
     var width = 945;
     var url = 'Report/ViewAllBetResult.aspx?transDesc=' + transDesc + "&matchCode=" + betCheck + "&betTypeId=" + betTypeId;
     parent.OpenNextPopup("ViewAllBetResult", url, 'Allbet Result', width, 500, true, false, window, 0, null, null);
+}
+
+function showNG2Details(transId, refno, custId) {
+    var width = 660;
+    parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {

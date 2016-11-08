@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/Message.css")" />
+    </head>
+    <body>
+        <div class="main">
+            <div class="maincontent">
+                <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">                    
+                    <tr>
+                        <td class="maincontent_headerL"></td>
+                        <td class="maincontent_headerC fixfont">
+                            Sync Currency
+                        </td>
+                        <td class="maincontent_headerR"></td>
+                    </tr>
+                </table>
+                <div class="maincontent_box" style="width: 250px">
+                    <div id="errMsg">
+                    </div>
+                    <div class="header-scroll" style="line-height: 2">
+                        Currency <input id="currency" class="text" type="text" placeholder="Enter currency name" /> <input onclick="syncCurrency()" class="btn" type="button" value="Sync" />
+                    </div>                    
+                </div>                
+            </div>            
+        </div>
+        <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")"></script>
+        <script src="@Url.Content("~/js/Message/message.js")"></script>
+        <script src="@Url.Content("~/Views/ExchangeRate/Scripts/SyncCurrency.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    </body>
+</html>

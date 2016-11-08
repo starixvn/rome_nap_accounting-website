@@ -179,7 +179,7 @@ anm.addNewMaster = function () {
         else {
             return;
         }
-        try { parent.parent.BlockUI(); } catch (e) { parent.BlockUI(); }
+        try { BlockUI(); } catch (e) { try { parent.parent.BlockUI(); } catch (ee) { } }
 
         context.siteName = siteName;
 
@@ -213,8 +213,7 @@ anm.addNewMaster = function () {
                 else {
                     showAlertMessage("err", "Insert Master Unsuccessfully!", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
             , error: function (e) {
                 $('#divShowInfo').show();
@@ -230,8 +229,7 @@ anm.addNewMaster = function () {
                 else {
                     showAlertMessage("err", "Request Error", 1);
                 }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
         });
     }

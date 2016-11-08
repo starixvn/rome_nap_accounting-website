@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Functions>
   <Function Name="Live Casino - Move Account">
     <Setting Key="TP_User_Customer_MoveMaster_Update" SpName="TP_User_Customer_MoveMaster_Update" DbName="LV_BackupDB" Plain="1" />

@@ -23,7 +23,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.newUser = {};
     $scope.siteName = '';
 
-    $scope.sports = angular.copy(parent.sports);
+    $scope.sports = parent.sports;
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -173,6 +173,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
+        $("#frmNG2").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -259,6 +260,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCricket", url);
                 $scope.resize("#frmCricket");
+                break;
+            case 'tabNG2': url += "DCS/ViewCustomerSetting?productId=23&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmNG2", url);
+                $scope.resize("#frmNG2");
                 break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
@@ -358,7 +363,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                         $("#checkExisted").addClass('success');
 
                         $scope.getCustomerInfoByUserId(custid);
-
+                        
                         if (callback) {
                             callback();
                         }
@@ -383,6 +388,41 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
                 $('#step1>.btnNextR').hide()
+            }
+        });
+    };
+
+    $scope.checkAllowedShow = function (custid) {
+        $.ajax({
+            type: "POST",
+            url: toUrl("../../Handlers/CheckAllowedShow.ashx?custid=" + custid),
+            success: function (allowedng2) {
+                allowedng2 = parseInt(allowedng2);
+                var existed = false;
+                var index = -1;
+                for (var i = 0; i < parent.sports.length; i++) {
+                    if (parent.sports[i].sportvalue == 'tabNG2') {
+                        existed = true;
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (allowedng2 && parent.showNG2) {                    
+                    if (!existed) {
+                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });                        
+                    }                    
+                }
+                else {
+                    if (existed) {
+                        parent.sports.splice(index, 1);
+                    }
+                }
+
+                $scope.$apply(function () {
+                    $scope.sports = parent.sports;
+                    $scope.selectedSport = $scope.sports[0];
+                });
             }
         });
     };
@@ -420,6 +460,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.disableBingo = custInfo.DisableBingo;
                 $scope.existedUser.disableCasino = custInfo.DisableCasino;
                 $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
+                $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
+                $scope.existedUser.disableNG2 = custInfo.DisableNG2;
+
+                if (custInfo.RoleId == 4) {
+                    $scope.checkAllowedShow(custid);
+                }
 
                 $scope.getAllSites();
 
@@ -487,7 +533,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             DisableCasino: $scope.existedUser.disableCasino,
             DisableLiveCasino: $scope.existedUser.disableLiveCasino,
             CustLevel: (parent.level == 'member' ? 1 : 4),
-            UplineId: $scope.parentId
+            UplineId: $scope.parentId,
+            IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
+            DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false
         };
 
         message.hideAlertMessage("errorMsg");

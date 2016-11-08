@@ -1,3 +1,6 @@
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,8 +13,8 @@ using Fanex.Tarus.Security.Web;
 namespace Fanex.Tarus.Security.Services
 {
     /// <summary>
-               /// Class PermissionService.
-               /// </summary>
+    /// Class PermissionService.
+    /// </summary>
     public class PermissionService : IPermissionService
     {
         /// <summary>
@@ -29,6 +32,32 @@ namespace Fanex.Tarus.Security.Services
 
             var roleAccess = (Dictionary<string, int>)roleAccessSession;
             return roleAccess.ContainsKey("[" + functionName.Trim().ToLower() + "]");
+        }
+
+        public static bool CheckReadPermission(string actionName, int userId)
+        {
+            var pageAccess = AppSessions.PageAccess;
+            if (null == pageAccess)
+            {
+                return false;
+            }
+
+            var roleAccess = (Dictionary<string, int>)pageAccess;
+
+            return roleAccess.ContainsKey(actionName.ToLower());
+        }
+
+        public static bool CheckHostPermission(string actionName, int userId)
+        {
+            var pageAccess = AppSessions.PageAccess;
+            if (null == pageAccess)
+            {
+                return false;
+            }
+
+            var roleAccess = (Dictionary<string, int>)pageAccess;
+
+            return roleAccess.ContainsKey(actionName.ToLower()) && roleAccess[actionName.ToLower()] == 3;
         }
 
         /// <summary>

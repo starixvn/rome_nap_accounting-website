@@ -10,11 +10,14 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Collections.Generic;
+    using System.Net;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
+    using ONEbook.NG2.API;
+    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// The class ScoreInformationService.
@@ -59,6 +62,34 @@ namespace Fanex.Tarus.BetList.Business.Results
                 isSupport = false;
                 return string.Empty;
             }
+        }
+
+        public string GetNG2Result(int matchId)
+        {
+            var service = new Services();
+            var req = new ONEbook.NG2.API.DTO.ShowTicketResult.Request();
+            req.Auth.SiteId = 3000;
+            req.UserId = AppSession.AccId;
+            req.Call.GambleId = matchId;
+            var res = service.ShowTicketResult(req);
+            if (res.Result.IsSuccess)
+            {
+                if (string.IsNullOrWhiteSpace(res.Result.Url))
+                {
+                    return "<div>There is no information available.</div>";
+                }
+
+                /*using (WebClient client = new WebClient())
+                {
+                    string s = client.DownloadString(res.Result.Url);
+
+                    return "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/ng2.css\"/>" + s;
+                }*/
+
+                return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
+            }
+
+            return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";
         }
 
         private static bool IsSupport(int sportType)

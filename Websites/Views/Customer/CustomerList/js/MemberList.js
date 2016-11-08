@@ -295,7 +295,7 @@
     },
     kenoSetting: function (custId) {
         showPopup(""
-                , "customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
+                , "customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custId + "&userId=" + _userId, 0, 0, 900, 700, false, 2000, null);
     },
     casino: function (custId, uplineId) {
         showPopup(""

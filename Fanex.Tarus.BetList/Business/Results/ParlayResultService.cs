@@ -10,14 +10,15 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Linq;
+    using System.Net;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
-
-    /// <summary>
-    /// The class ParlayResultService.
-    /// </summary>
+    using ONEbook.NG2.API;
+    using Sunplus.Accounting.Core.Common;    /// <summary>
+                                             /// The class ParlayResultService.
+                                             /// </summary>
     public class ParlayResultService : IParlayResultService
     {
         private IParlayResultDataAccess _parlayResultDataAccess;
@@ -40,6 +41,35 @@ namespace Fanex.Tarus.BetList.Business.Results
             });
 
             return ResultEngine.HtmlParser(parlayData.ToList(), this.GetFanexResultSetting()).Replace("original-title", " title ");
+        }
+
+        public string GetNG2Paraly(long refNo)
+        {
+            var service = new Services();
+            var req = new ONEbook.NG2.API.DTO.ShowParlayDetail.Request();
+            req.Auth.SiteId = 3000;
+            req.UserId = AppSession.AccId;
+            req.Call.TransactionId = refNo.ToString();
+            var res = service.ShowParlayDetail(req);
+
+            if (res.Result.IsSuccess)
+            {
+                if (string.IsNullOrWhiteSpace(res.Result.Url))
+                {
+                    return "<div>There is no information available.</div>";
+                }
+
+                /*using (WebClient client = new WebClient())
+                {
+                    string s = client.DownloadString(res.Result.Url);
+
+                    return "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/ng2.css\"/>" + s;
+                }*/
+
+                return "<script type=\"text/javascript\">location.href='" + res.Result.Url + "';</script>";
+            }
+
+            return "<div style=\"color: #ff0000; font-weight: bold\">" + res.Result.ErrorDescription + "</div>";
         }
 
         /// <summary>

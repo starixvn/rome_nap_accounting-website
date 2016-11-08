@@ -198,6 +198,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.MIBCCustID = custDetail.MasterId;
                 csCustomerInfo.AIBCCustID = custDetail.AgentId;
                 csCustomerInfo.CasinoDisabled = custDetail.IsUplineDisableCasino;
+                csCustomerInfo.IsSyncNG2 = custDetail.IsUplineSyncNG2;
 
                 var custManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                 custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
@@ -226,7 +227,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
             customer.CurrencyId = uplineDetail.Currency;
             customer.CurrencyName = uplineDetail.CurrencyName;
-            
+            customer.IsUplineSyncNG2 = uplineDetail.IsSyncNG2;
 
             return customer;
         }

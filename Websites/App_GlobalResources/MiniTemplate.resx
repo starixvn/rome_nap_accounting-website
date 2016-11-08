@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrMsg" xml:space="preserve">
     <value>&lt;div class='error-message'&gt;{ErrorMsg}&lt;/div&gt;</value>
@@ -127,5 +127,31 @@
     <value>&lt;li&gt;
 	&lt;a href="{ReportFile}" onclick="open_report(this); return false;"&gt;{ReportName}&lt;/a&gt;
 &lt;/li&gt;</value>
+  </data>
+  <data name="UpdateExtRateFailedNg2Email" xml:space="preserve">
+    <value>Dear All,&lt;br&gt;
+&lt;br&gt;
+Please be informed that the exchange rate below had been updated in our DB, however not updated in 3rd party's DB.&lt;br&gt;
+Please help to sync to 3rd party again if needed.&lt;br&gt;
+&lt;br&gt;
+&lt;table border="1" style="border: 1px solid #ccc; border-collapse: collapse"&gt;
+  &lt;tbody&gt;&lt;tr&gt;
+    &lt;td&gt;Currency ID&lt;/td&gt;
+    &lt;td&gt;Currency Name&lt;/td&gt;
+    &lt;td&gt;Exchange Rate&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;{0}&lt;/td&gt;
+    &lt;td&gt;{1}&lt;/td&gt;
+    &lt;td&gt;{2}&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;br&gt;
+Thanks, &lt;br&gt;
+IT Team &lt;br&gt;
+This is an auto-mail. Please do not reply.</value>
+  </data>
+  <data name="UpdateExtRateFailedNg2Title" xml:space="preserve">
+    <value>[{0}] Update Exchange Rate Notification</value>
   </data>
 </root>

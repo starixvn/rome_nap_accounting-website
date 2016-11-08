@@ -325,7 +325,7 @@
     },
     kenoSetting: function (custId) {
         showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custId + "&userId = " + _userId, 0, 0, 900, 700, false, 2000, null);
+                , "customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custId + "&userId=" + _userId, 0, 0, 900, 700, false, 2000, null);
     },
     goldDeluxeSetting: function (custId) {
         showPopup("Gold Deluxe"

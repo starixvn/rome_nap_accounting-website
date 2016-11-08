@@ -262,14 +262,16 @@ namespace Sunplus.Accounting.Core.Extensions
                     // send mail
                     client.SendMail(mailItem);
                 }
-                Fanex.Logging.Logger.Log.Info(mailSend.Subject + " success");
+
+                // Fanex.Logging.Logger.Log.Info(mailSend.Subject + " success");
                 return true;
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            Fanex.Logging.Logger.Log.Info(mailSend.Subject + " fail");
+
+            // Fanex.Logging.Logger.Log.Info(mailSend.Subject + " fail");
             return false;
         }
 

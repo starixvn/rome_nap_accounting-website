@@ -1,0 +1,487 @@
+﻿@charset "utf-8";
+body {
+	font-family: Tahoma;
+	background-repeat: repeat-x;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	background-color: #e8eff5;
+	width: 780px;
+	font-size:11px;
+}
+body[lang="cs"], body[lang="ch"] {
+	font-family:Tahoma, "新細明體";
+}
+body[lang="mm"], body[lang="mm"] input {
+	font-family: Padauk, Padauk Book, Parabaik, Myanmar3, Myanmar2, Myanmar1, MyMyanmar, 'Noto Sans Myanmar', 'Myanmar Text', Zawgyi-One, Tahoma;
+}
+table {
+	border-collapse:collapse;
+}
+table td {
+	padding:0px;
+}
+a {
+	text-decoration: none;
+}
+.board {
+	background-color: #ededed;
+	border: #D4D4D4 1px solid;
+	border-bottom-color: #C8C8C8;
+	border-radius: 3px 3px 0 0;
+	color:#323232;
+}
+ul.panelInfo {
+	list-style:none;
+	padding:0;
+	display:block;
+	margin: 4px 12px;
+}
+ul.panelInfo > li {
+	display:inline-block;
+	margin-right: 5px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	line-height: 19px;
+}
+ul.panelInfo > li:first-child {
+	margin-left:0px;
+}
+ul.panelInfo > li .title {
+	background-image:url(../images/layout/icon_arrow.png?v=20151216001);
+	background-repeat:no-repeat;
+	background-position: left 3px;
+	float:left;
+	font-weight:bold;
+	margin-right:7px;
+	padding-left: 10px;
+	white-space:nowrap;
+}
+ul.panelInfo > li .title.selected {
+	color:#B50000;
+}
+/*checkbox*/
+ul.panelInfo > li a {
+	color:#323232;
+}
+ul.panelInfo > li input {
+	vertical-align: top;
+}
+ul.panelInfo > li input[type="checkbox"] + a {
+	color:#003399;
+	font-weight:bold;
+}
+/* 上下排列 */
+ul.panelInfo.row > li {
+	background-image:url(../images/layout/panelInfo_line.png?v=20151216001);
+	background-repeat:repeat-y;
+	background-position:left;
+	padding-left:8px;
+	line-height: 14px;
+	vertical-align: top;
+}
+ul.panelInfo.row > li:first-child {
+	background-image: none;
+	padding-left: 0px;
+}
+ul.panelInfo.row > li .title {
+	background-image:none;
+	display:block;
+	margin-right:10px;
+	padding-left: 0;
+	float:none;
+}
+ul.panelInfo.row > li .detail {
+	display:block;
+	color: #000000;
+	margin-top: 6px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width:350px;
+	white-space:nowrap;
+}
+ul.panelInfo.row > li .detail.IsLive {
+	color: #ff0000;
+}
+.infoBar {
+	background-color: #D0D0D0;
+	border: #D4D4D4 1px solid;
+	border-top: #E9E9E9 1px solid;
+	min-height:22px;
+	color:#323232;
+}
+.tabtitle {
+	background-color: #b1b1b1;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+.tabtitle_Result {
+	background-color: #b1b1b1;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	left: 20px;
+	padding-right: 50px;
+	padding-left: 50px;
+	text-indent:120px;
+}
+/*Odds Table list*/
+.oddsTable, .scoremapInfo {
+	font-size:11px;
+	line-height: 16px;
+	border-collapse: separate;
+	margin-bottom:8px;
+}
+.oddsTable th {
+	background-image:url(../images/layout/oddsTable_th.png?v=20151216001);
+	background-repeat:repeat-y;
+	background-position: right bottom;
+	background-color: #6787bb;
+	font-weight: normal;
+	color:#FFFFFF;
+	height: 18px;
+	border-color:#476596;
+	border-bottom: #3b598d 1px solid;
+	border-right-width: 1px;
+	border-right-style:solid;
+	padding:3px 5px;
+	white-space: nowrap;
+}
+.oddsTable th.even {
+	background-position: left bottom;
+}
+.oddsTable th:first-child {
+	border-top-left-radius:  3px;
+}
+.oddsTable th:last-child {
+	border-right-style: none;
+	border-top-right-radius:  3px;
+}
+.oddsTable .tabthdwn th {
+	border-radius:0px;
+	border-right-style: solid;
+}
+.oddsTable tbody+tbody th, .oddsTable tr+tr>th, .oddsTable thead+tbody td {
+	border-radius: 0px !important;
+}
+.oddsTable td {
+	padding: 1px 3px;
+	border-color:#b1b1b1;
+	border-bottom-width: 1px;
+	border-bottom-style:solid;
+	border-right-width: 1px;
+	border-right-style:solid;
+}
+.oddsTable .nbsp {
+	height: 16px;
+}
+.oddsTable td:first-child {
+	border-left-width: 1px;
+	border-left-style:solid;
+}
+.oddsTable td.tabt_unL:first-child {
+	border-left-style: none;
+}
+.oddsTable td.tabtitle {
+	background-color: #b1b1b1;
+	border-left-style:none;
+	border-right-style:none;
+	height:16px;
+	border-radius:3px 3px 0 0;
+	padding-left: 4px;
+}
+.oddsTable tr:first-child td {
+	border-top-width: 1px;
+	border-top-style:solid;
+}
+.oddsTable tr:first-child td.tabtitle {
+	border-top-width: 0;
+	border-top-style: none;
+}
+.oddsTable tbody+tbody td.tabtitle, .oddsTable tr+tr td.tabtitle {
+	border-radius:0px;
+	border-top: #b1b1b1 1px solid;
+}
+.oddsTable .tabt_L {
+	border-left-width:2px;
+}
+.oddsTable a {
+	color:#01122B;
+}
+.oddsTable td.bgGray {
+	background-color: #dadada;
+}
+.bgcpe {
+	background-color: #c6d4f1;
+}
+.bgcpelight {
+	background-color: #e4e4e4;
+}
+.bgwhite {
+	background-color: #FFFFFF;
+}
+.bgcpepk {
+	background-color: #FFCECE;
+}
+.live {
+	background-color: #FFCCBC;
+}
+.liveligh {
+	background-color: #ffddd2;
+}
+.trbgov {
+	background-color: #F5EEB8 !important;
+}
+.even.trbgov {
+	background-color: #F7EA81 !important;
+}
+/*popup*/
+#contentWrapperPop {
+	position:relative;
+	z-index:100;
+	height:400px;
+	overflow:hidden;
+}
+.popupW {
+	border-radius: 2px;
+	-webkit-box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.4);
+	min-width: 350px;
+	max-width:680px;
+}
+.popupWTitle {
+	background: url(../images/layout/popup.png?v=20151216001) no-repeat 0 0;
+	margin: 0 2px 0 0;
+}
+.popupWTitle > span {
+	background: url(../images/layout/popup.png?v=20151216001) no-repeat right 0;
+	margin: 0 -2px 0 2px;
+	display: block;
+	padding: 5px;
+	height: 17px;
+	overflow:hidden\0;
+}
+.popWIcon {
+	background: url(../images/layout/icon_UI02.png?v=20151216001) no-repeat -96px 0;
+	width: 15px;
+	height: 15px;
+	float: left;
+	margin-right: 5px;
+	display: none;
+}
+.popWTitleContain {
+	float: left;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bold;
+	white-space: nowrap;
+}
+.popWClose {
+	float: right;
+	cursor: default;
+	background: url(../images/layout/btn_UI04.png?v=20151216001) no-repeat 0 0;
+	width: 16px;
+	height: 16px;
+	margin-left: 2px;
+    display: none;
+}
+.popWClose:hover {
+	background-position: 0 -20px;
+}
+.popWRefresh {
+	float: right;
+	cursor: pointer;
+	background: url(../images/layout/btn_UI04.png?v=20151216001) no-repeat -20px 0;
+	width: 16px;
+	height: 16px;
+	margin-left: 2px;
+}
+.popWRefresh:hover {
+	background-position: -20px -20px;
+}
+.popWContain {
+	margin: -1px 0px 0 0;
+	border: 1px solid #363636;
+	border-radius: 0 0 2px 2px;
+}
+.popWTableArea {
+	padding: 10px;
+	border: 1px solid #ffffff;
+	border-radius: 0 0 2px 2px;
+	background: #f5f3f2;
+}
+/*OddsFamily*/
+.FavOddsClass, .FavOddsClass a {
+	color: #B50000!important;
+	font-weight: bold;
+}
+.FavTeamClass, .FavTeamClass a {
+	color: #B50000;
+	font-weight: bold;
+}
+.UdrDogOddsClass, .UdrDogOddsClass a {
+	color: #01122B;
+	font-weight: bold;
+}
+.UdrDogOddsClass span {
+	color: #01122B;
+	font-weight: bold;
+}
+.UdrDogTeamClass, .UdrDogTeamClass a {
+	color: #01122B;
+	font-weight: bold;
+}
+.HdpGoalClass, .HdpGoalClass a {
+	color: #606060;
+	font-weight: bold;
+	font-size: 10px;
+}
+.button {
+	background-image: url(../images/layout/button.png?v=20151216001);
+	background-repeat: no-repeat;
+	background-position: right top;
+	color: #000000;
+	float:left;
+	height:19px;
+	padding-right: 4px;
+	margin-right:4px;
+	margin-left:4px;
+	text-decoration: none;
+	cursor: pointer;
+}
+.button:focus {
+	outline: none;
+}
+.button span, .button.nohover:hover span {
+	background-color:transparent;
+	background-image: url(../images/layout/button.png?v=20151216001);
+	background-repeat: no-repeat;
+	background-position: left top;
+	line-height: 19px;
+	padding-right: 0px;
+	padding-left: 4px;
+	margin-left:-5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 175px;
+	height: 19px;
+	vertical-align: top;
+	display:block;
+	text-align:center;
+	font-size:11px;
+}
+.button:hover {
+	background-position: right -20px;
+	color: #fff;
+}
+.button:hover span {
+	background-position: left -20px;
+}
+.button.disable {
+	background-position: right -60px;
+	color: #8C8C8C;
+	cursor: default;
+}
+.button.disable span {
+	background-position: left -60px;
+}
+/*button select */
+.button.select.percent {
+	width: 92%;
+	margin: 4px 0 4px 4px;
+	float: none;
+}
+.button.select {
+	outline: none;
+	background-position: right -160px;
+}
+.button.select span {
+	background-position: left -160px;
+	max-width:none;
+	text-align: left;
+	padding-right:5px;
+	margin-right: 20px;
+}
+.button.select:hover {
+	background-position: right -180px;
+}
+.button.select:hover span {
+	background-position: left -180px;
+}
+.button.select.disable {
+	background-position: right -220px;
+}
+.button.select.disable span {
+	background-position: left -220px;
+}
+.button.select .submenu {
+	clear:both;
+	text-align:left;
+	visibility:hidden;
+	margin:0;
+	padding:0;
+	list-style:none;
+	position: relative;
+	margin-left: -5px;
+	margin-right: -4px;
+	background-color:#F2F2F2;
+	color:#000000;
+	line-height:12px;
+	-webkit-box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+	-webkit-border-radius: 3px;
+	border: #afb6bc 1px solid;
+	border-radius: 3px;
+	z-index:999999;
+	overflow:auto;
+	max-height: 300px;
+}
+.button.select.disable:hover .submenu {
+	visibility: hidden !important;
+}
+.submenu li {
+	padding: 5px;
+	padding-right: 20px;
+	cursor:pointer;
+	display:block;
+	white-space: nowrap;
+	overflow:hidden;
+	border: 1px transparent solid;
+}
+.submenu li.selected, .restyle .button .submenu li:hover {
+	color: #ff6a00;
+	background-color:#FFF;
+	border: #ff6a00 1px solid;
+	padding:4px 19px 4px 4px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+}
+.submenu li a {
+	color:#2f4a77;
+}
+.submenu li a:hover {
+	color: #ff6a00;
+}
+.nameResult {
+	background: #ffba00;
+}
+.TextStyle03 {
+	color: #606060;
+	font-weight:bold;
+}
+.none_lline {
+	border-left-style: none!important;
+}
+.WinResult {
+	background-color: #535353;
+	color:#FFFFFF;
+	padding: 2px 5px;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 2px 2px;}

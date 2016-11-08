@@ -7,12 +7,13 @@ using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Business.Resources;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
@@ -125,6 +126,20 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
+
+            // Check special site permission to limit access NG2
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                result.SportsList = result.SportsList.Where(s => s.SportId != 213 
+                    && s.SportId != 214
+                    && s.SportId != 215
+                    && s.SportId != 216
+                    && s.SportId != 217
+                    && s.SportId != 218
+                    && s.SportId != 219
+                    && s.SportId != 220).ToList();
+            }
+
             return result;
         }
 
@@ -3029,7 +3044,16 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         public IList<DCSProduct> GetProducts()
         {
             var repository = new ViewCommDCSRepository();
-            return repository.GetProducts();
+            var products = repository.GetProducts();
+
+            // Check special site permission to limit access NG2.
+
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                products = products.Where(p => p.ProductId != 23).ToList();
+            }
+
+            return products;
         }
     }
 }

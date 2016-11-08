@@ -72,7 +72,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.SyncBingo = CastAide.AsBoolean(row["syncbingo"]);
                     _custSetting.LiveCasinoDisabled = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["disablelivecasino"]) : true;
                     _custSetting.LiveCasinoSync = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["synclivecasino"]) : false;
-
+                    _custSetting.IsSyncNG2 = WebSettings.IsShowNG2 ? CastAide.AsBoolean(row["syncedng2"]) : false;
 
                     _custSetting.NoIBCData = false;
                 }

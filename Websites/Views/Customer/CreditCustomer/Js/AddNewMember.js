@@ -167,7 +167,7 @@ anmb.addNewMember = function () {
         else {
             return;
         }
-        try { parent.parent.parent.BlockUI(); } catch (e) { try { parent.BlockUI(); } catch (e) {  } }
+        try { BlockUI(); } catch (e) { try { parent.parent.BlockUI(); } catch (ee) { } }
         $.ajax({
             type: "POST",
             url: "DoAddNewMember",
@@ -203,8 +203,7 @@ anmb.addNewMember = function () {
                 else {
                     showAlertMessage("err", "Insert Member Unsuccessfully!", 1);
                 }
-                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
             , error: function (e) {
                 $('#divShowInfo').show();
@@ -220,8 +219,7 @@ anmb.addNewMember = function () {
                 else {
                     showAlertMessage("err", "Request Error", 1);
                 }
-                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { $.unblockUI(); } catch (e) { }
             }
         });
     }
