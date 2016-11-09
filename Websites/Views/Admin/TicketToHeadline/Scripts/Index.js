@@ -106,11 +106,11 @@ function RenderData(data) {
                { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
                { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
                { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left" }
+               { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+               { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+               { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+               { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+               { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
            ],
            bodyRows: bodyRows,
            gridExpandHeight: 150,
