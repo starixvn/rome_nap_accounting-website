@@ -47,7 +47,7 @@ namespace Fanex.Tarus.Web.Models.Admin
 
         public string Member { get; set; }
 
-        public long RefNo { get; set; }
+        public string RefNo { get; set; }
 
         public int ErrorCode { get; set; }
 

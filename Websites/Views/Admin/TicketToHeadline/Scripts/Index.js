@@ -12,6 +12,8 @@ function GetData() {
         return;
     }
 
+    $('#PageSize').val(1);
+    $('#PageIndex').val(50);
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'GetData');
     form.submit();
@@ -22,6 +24,8 @@ function GetExcelFile() {
         return;
     }
 
+    $('#PageSize').val(1);
+    $('#PageIndex').val(50);
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'ExportExcel');
     form.submit();
@@ -100,13 +104,13 @@ function RenderData(data) {
            columns: [
                { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
                { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Headline Type", Width: 120, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Currency", Width: 120, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Super", Width: 120, Name: "Super", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Master", Width: 120, Name: "Master", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Agent", Width: 120, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Member", Width: 120, Name: "Member", HeaderAlign: "center", CellAlign: "left" },
-               { HeaderText: "Ref No", Width: 120, Name: "RefNo", HeaderAlign: "center", CellAlign: "left" }
+               { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
+               { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
+               { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left" },
+               { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left" },
+               { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
+               { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left" },
+               { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left" }
            ],
            bodyRows: bodyRows,
            gridExpandHeight: 150,

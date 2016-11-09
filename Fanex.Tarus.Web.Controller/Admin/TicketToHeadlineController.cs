@@ -46,7 +46,7 @@ namespace Fanex.Tarus.Web.Controllers.Admin
 
         private string GetExcelFileName()
         {
-            return string.Format("ExportedTicketToGroupHeadline{0}.xls", DateTime.Now.ToString("yyyyMMdd_hh-mm-ss"));
+            return string.Format("ExportedTicketToGroupHeadline{0}", DateTime.Now.ToString("yyyyMMdd_HH-mm-ss"));
         }
     }
 }

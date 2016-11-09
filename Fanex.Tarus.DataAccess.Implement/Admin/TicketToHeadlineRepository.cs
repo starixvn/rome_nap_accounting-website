@@ -47,7 +47,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                         HeadlineType = Utils.ToString(reader["HeadlineType"]),
                         Master = Utils.ToString(reader["Master"]),
                         Member = Utils.ToString(reader["Member"]),
-                        RefNo = Utils.ToInt64(reader["Refno"]),
+                        RefNo = Utils.ToString(reader["Refno"]),
                         Super = Utils.ToString(reader["Super"])
                     };
 
@@ -96,7 +96,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                     HeadlineType = i < rowNo / 2 ? "VIP" : "Normal",// "HeadlineType" + groupHeadlineGroupNo.ToString(),
                     Master = "Master" + masterGroupNo.ToString(),
                     Member = "Member" + (i + 1),
-                    RefNo = 123456,
+                    RefNo = "123456",
                     RowNum = i + 1,
                     Super = "Super" + superGroupNo.ToString(),
                 };
