@@ -29,7 +29,7 @@ function GetExcelFile() {
 }
 
 function RenderData(data) {
-    if (data.ErrorMessage != undefined || data.ErrorMessage != '')
+    if (data.ErrorMessage != null)
     {
         showAlertMessage('errMsg', data.ErrorMessage, 1);
         try { parent.jQuery.unblockUI(); } catch (e) { }
