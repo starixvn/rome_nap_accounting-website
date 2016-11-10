@@ -10,7 +10,7 @@
            title: "Remove OTP",
             autoOpen: false,
             resizable: false,
-            height: 100,
+            height: 110,
             width: 400,
             modal: true,
             position: [30, 100],
