@@ -12,8 +12,8 @@ function GetData() {
         return;
     }
 
-    $('#PageSize').val(1);
-    $('#PageIndex').val(50);
+    $('#PageSize').val(50);
+    $('#PageIndex').val(1);
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'GetData');
     form.submit();
@@ -24,8 +24,8 @@ function GetExcelFile() {
         return;
     }
 
-    $('#PageSize').val(1);
-    $('#PageIndex').val(50);
+    $('#PageSize').val(50);
+    $('#PageIndex').val(1);
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'ExportExcel');
     form.submit();

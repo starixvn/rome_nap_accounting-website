@@ -2,6 +2,10 @@ using Fanex.Tarus.Business.Implement.Admin;
 using Fanex.Tarus.Business.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Tarus.Security.Services;
+using Fanex.Tarus.Web.Controllers.Filters;
+using Fanex.Tarus.Web.Models.Admin;
+using Sunplus.Accounting.Core.Common;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +21,7 @@ namespace Fanex.Tarus.Web.Controllers.Admin
             this._ticketToHeadlineService = new TicketToHeadlineService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index()
         {
             return View("~/Views/Admin/TicketToHeadline/Index.cshtml");
