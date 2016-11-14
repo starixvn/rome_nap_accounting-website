@@ -522,4 +522,7 @@
   <data name="VirtualRate_UpdateConfirmMember" xml:space="preserve">
     <value>Are you sure that you want to update this Virtual Exchange Rate value for this account?</value>
   </data>
+  <data name="_1X2" xml:space="preserve">
+    <value>1X2</value>
+  </data>
 </root>
