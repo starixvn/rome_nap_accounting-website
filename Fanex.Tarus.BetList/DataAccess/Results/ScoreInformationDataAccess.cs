@@ -107,6 +107,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 Color = string.Empty,
                 MatchCode = reader["matchcode"] != DBNull.Value ? Convert.ToString(reader["matchcode"]) : string.Empty,
                 GoalRecord = reader["GoalRecord"] != DBNull.Value ? Convert.ToString(reader["GoalRecord"]) : string.Empty,
+                LiveHomeScore = reader["livehomescore"] != DBNull.Value ? Convert.ToInt32(reader["livehomescore"]) : new int?(),
+                LiveAwayScore = reader["liveawayscore"] != DBNull.Value ? Convert.ToInt32(reader["liveawayscore"]) : new int?(),
                 IsHTCal = false,
                 Calculate = false,
                 RefNo = string.Empty,
