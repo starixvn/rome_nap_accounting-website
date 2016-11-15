@@ -54,5 +54,6 @@
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_xtest" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite_xtest" DbName="DBPOLICY.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
