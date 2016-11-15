@@ -250,15 +250,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                             }
                             userName = row1["username"].ToString();
-                            AppSession.CustUName = userName;
-                            AppSession.MemberID = CastAide.AsInt32(row2["MemberID"]);
-                            AppSession.AgentID = CastAide.AsInt32(row2["AgentID"]);
-                            AppSession.MasterID = CastAide.AsInt32(row2["MasterID"]);
-                            AppSession.SuperID = CastAide.AsInt32(row2["SuperID"]);
-                            AppSession.MemberUserName = CastAide.AsString(row2["MemberName"]);
-                            AppSession.AgentUserName = CastAide.AsString(row2["AgentName"]);
-                            AppSession.MasterUserName = CastAide.AsString(row2["MasterName"]);
-                            AppSession.SusperUserName = CastAide.AsString(row2["SuperName"]);
+
+                            SetCustomerInfoAppSession(userName, row2);
 
                             string downlinename = "";
                             int custId = Convert.ToInt32(row1["custid"]);
@@ -341,6 +334,8 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncNG2 = true;
                             bool isSyncNG2Upline = true;
 
+                            bool hideEnableAndEditFishingWorld = true;
+                                  
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -378,6 +373,13 @@ namespace Sunplus.Accounting.Business.Customer
                                             isSyncNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                                            break;
+                                        case "24":
+                                            bool isHideUplineFishingWorld = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]);
+                                            bool isSyncUplineFishingWorld = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+
+                                            hideEnableAndEditFishingWorld = (roleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
+
                                             break;
                                     }
                                 }
@@ -949,6 +951,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
                                     IsShowAllBetForCredit = !hideCheckBoxAllbet,
                                     IsShowVoidbridge = !hideCheckBoxVoidbridge,
+                                    IsShowFishingWorld = !hideEnableAndEditFishingWorld,
                                     IsShowSportsbook2 = isShowSportsbook2,
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
@@ -989,23 +992,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #region Abnormal
 
-                                if (WebSettings.EnableAbnormal)
-                                {
-                                    if (roleId > 2)
-                                    {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Abnormal");
-                                    }
-                                    else
-                                    {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
-                                        int currentLevel = Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
-                                        TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}", GetSettingAbnormal(roleId, isManageCustomerAccess, currentLevel));
-                                    }
-                                }
-                                else
-                                {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
-                                }
+                                RenderAbnormalCustomer(roleId, ref htmlcontent, row1, isManageCustomerAccess);
 
                                 #endregion Abnormal
 
@@ -1053,6 +1040,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     renderLeftPanelParameter.IsShowAllBetForCredit,
                                     renderLeftPanelParameter.IsShowVoidbridge,
                                     renderLeftPanelParameter.IsShowNG2);
+                                    renderLeftPanelParameter.IsShowFishingWorld);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1221,6 +1209,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", string.Format(creditDCSLink, 21));
                                 TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
                                 TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", string.Format(creditDCSLink, 23));
+                                TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", creditDCSLink + 24);
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
@@ -1348,6 +1337,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-NG2");
                                 }
 
+                                if (hideEnableAndEditFishingWorld)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-FishingWorld");
+                                }
+                                
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1388,6 +1382,41 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return arrcontent;
             }
+        }
+
+        private void RenderAbnormalCustomer(int roleId, ref string htmlcontent, DataRow row1, bool isManageCustomerAccess)
+        {
+            if (WebSettings.EnableAbnormal)
+            {
+                if (roleId > 2)
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Abnormal");
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
+                    int currentLevel = Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
+                    TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}",
+                        GetSettingAbnormal(roleId, isManageCustomerAccess, currentLevel));
+                }
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
+            }
+        }
+
+        private void SetCustomerInfoAppSession(string userName, DataRow row2)
+        {
+            AppSession.CustUName = userName;
+            AppSession.MemberID = CastAide.AsInt32(row2["MemberID"]);
+            AppSession.AgentID = CastAide.AsInt32(row2["AgentID"]);
+            AppSession.MasterID = CastAide.AsInt32(row2["MasterID"]);
+            AppSession.SuperID = CastAide.AsInt32(row2["SuperID"]);
+            AppSession.MemberUserName = CastAide.AsString(row2["MemberName"]);
+            AppSession.AgentUserName = CastAide.AsString(row2["AgentName"]);
+            AppSession.MasterUserName = CastAide.AsString(row2["MasterName"]);
+            AppSession.SusperUserName = CastAide.AsString(row2["SuperName"]);
         }
 
         private bool IsShowDCSStatusLink(bool isHiddenUpline, bool isSync, bool isSyncedUpline, bool isSyncDownline)
@@ -1756,6 +1785,22 @@ namespace Sunplus.Accounting.Business.Customer
                                                23,
                                                4);
                             break;
+                        case "24":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               false, // ???
+                                               hasDownline,
+                                               "FishingWorld",
+                                               renderLeftPanelParameter.IsShowFishingWorld,
+                                               renderLeftPanelParameter,
+                                               "Update Fishing World Status",
+                                               24,
+                                               4);
+                            break;
                     }
                 }
             }
@@ -1764,7 +1809,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld)
         {
             int parentId;
             string submenu1 = "";
@@ -1856,6 +1901,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
+                    if (isShowVoidbridge)
+                    {
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Fishing World</a>";
+                    }
+
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
                     if (!WebSettings.disabledHR)
@@ -1923,6 +1973,11 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
+                    if (isShowFishingWorld)
+                    {
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Fishing World</a>";
+                    }
+                    
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 
