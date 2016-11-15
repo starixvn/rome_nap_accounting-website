@@ -348,7 +348,4 @@
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Ticket To Group Headline">
-    <Setting Key="Acc_CustomerSelGroupHeadlineByRefno" SpName="Acc_CustomerSelGroupHeadlineByRefno" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
 </Functions>
