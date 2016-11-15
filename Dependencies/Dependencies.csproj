@@ -104,7 +104,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.NG2, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NG2.1.0.1\lib\Fanex.BetList.NG2.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.NG2.1.0.2\lib\net40\Fanex.BetList.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
