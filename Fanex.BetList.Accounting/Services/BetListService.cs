@@ -7,6 +7,8 @@
 //   <change who="Ricky.Nguyen" date="2012.12.10">Created</change>
 // </history>
 
+using Sunplus.Accounting.DataAccess.Report;
+
 namespace Fanex.BetList.Accounting.Services
 {
     using System;
@@ -1210,7 +1212,8 @@ namespace Fanex.BetList.Accounting.Services
                 {
                     CustId = custId,
                     TransType = transType,
-                    FromDate = fromDate
+                    FromDate = fromDate,
+                    MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay
                 };
 
                 using (var db = new ObjectDb(criteria.GetSettingKey()))

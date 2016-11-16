@@ -87,6 +87,10 @@
       <HintPath>..\packages\Fanex.BetList.Core.2.16.2.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.GlobalGaming.1.0.0.2-beta\lib\net40\Fanex.BetList.GlobalGaming.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GoldDeluxe.1.0.5.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
@@ -276,7 +280,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.1\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.2-FishingWorld\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap">

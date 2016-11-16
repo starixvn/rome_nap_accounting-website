@@ -643,6 +643,27 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
         null);
 }
 
+function showGlobalGaming(transId, winlossDate, custId, transType) {
+    var params = $.param({
+        TransId: transId,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "VoidbridgeDetails",
+        'VoidbridgeBetList/BetDetails?' + params,
+        "Fishing World Details",
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
     var params = $.param({
         Refno: refNo,
