@@ -20,7 +20,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -140,9 +140,9 @@
   </Function>
   <Function Name="External">
     <Setting Key="WinLossDetail_ComEx" SpName="Acc_Rpt_WinLossDetail_ComEx" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="WinLossDetail_SAg" SpName="Age_Rpt_WinLossDetail_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="WinLossDetail_MAg_New" SpName="Age_Rpt_WinLossDetail_MAg_New" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="WinLossDetail_Ag" SpName="Age_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="WinLossDetail_SAg" SpName="Age_Rpt_WinLossDetail_SAg_xpre" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="WinLossDetail_MAg_New" SpName="Age_Rpt_WinLossDetail_MAg_New_xpre" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="WinLossDetail_Ag" SpName="Age_Rpt_WinLossDetail_Ag_xpre" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -159,7 +159,7 @@
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -283,8 +283,8 @@
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting_xpre" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
@@ -323,7 +323,7 @@
     </Setting>
   </Function>
   <Function Name="AG Casino">
-    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail_xpre" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Bet List - Result">
     <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
