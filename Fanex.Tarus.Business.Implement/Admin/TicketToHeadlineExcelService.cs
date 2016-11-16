@@ -150,7 +150,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
             if (dataRow.MergeRowNumGroupHeadline > 0)
             {
-                this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumGroupHeadline -2, 1, 1));
+                this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumGroupHeadline - 2, 1, 1));
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumGroupHeadline - 2, 2, 2));
             }
 
@@ -256,9 +256,10 @@ namespace Fanex.Tarus.Business.Implement.Admin
         {
             foreach (var dataRow in this._data.TicketToHeadlineCollection)
             {
-                if (dataRow.HeadlineType == "Normal")
+                if (dataRow.ErrorCode != 0)
                 {
-                    _normalHeadlineData.Add(dataRow);
+
+                    _errorData.Add(dataRow);
                 }
                 else if (dataRow.HeadlineType == "VIP")
                 {
@@ -266,7 +267,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
                 }
                 else
                 {
-                    _errorData.Add(dataRow);
+                    _normalHeadlineData.Add(dataRow);
                 }
             }
 
@@ -278,7 +279,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
         private void ColumnAutoWidth()
         {
             this._sheet.AutoSizeColumn(0);
-            
+
             for (int i = 1; i < 10; i++)
             {
                 this._sheet.SetColumnWidth(i, 5000);
