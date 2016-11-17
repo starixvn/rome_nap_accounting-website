@@ -11,7 +11,6 @@
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
-    using Fanex.Tarus.Infrastructure.Caching;
 
     public class VirtualRateRepository : IVirtualRateRepository
     {

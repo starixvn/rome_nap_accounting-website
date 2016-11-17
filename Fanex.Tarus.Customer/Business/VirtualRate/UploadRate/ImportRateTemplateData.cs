@@ -97,6 +97,42 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                 {
                     new ImportVirtualRateResult
                     {
+                        SportName = "Cricket",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.Handicap
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "Cricket",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.OneXTwo,
+                        VirtualRateString = "20"
+                    },
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Cricket",
+                    //    LiveTypeName = "Non-Live",
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "40"
+                    //},
+                   null
+                }
+            });
+
+            result.Add(new ImportVirtualRateResultGroup
+            {
+                GroupName = "SuperTest1",
+                ImportVirtualRateResultList = new List<ImportVirtualRateResult>()
+                {
+                    new ImportVirtualRateResult
+                    {
                         SportName = "Other Sports",
                         LiveTypeName = "Non-Live",
                         BetTypeId = BetType.Handicap,
