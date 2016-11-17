@@ -156,6 +156,11 @@ namespace Fanex.BetList.Accounting.Core
             return sportType == SportContants.Voidbridge;
         }
 
+        public bool IsFishingWorld(int sportType)
+        {
+            return sportType == SportContants.FishingWorld;
+        }
+
         public string PercentFormat(decimal input)
         {
             var isInputInterger = (input * 100) % 1 == 0;
@@ -277,6 +282,32 @@ namespace Fanex.BetList.Accounting.Core
             return statusLabel + resultLink1;
         }
 
+        public string GetFishingWorldStatus(TicketDetail ticketDetail)
+        {
+            var statusLabel = string.Empty;
+            var status = ticketDetail.Ticket.Status.ToLower();
+            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
+            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
+            bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
+
+            statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+
+            var resultLink = string.Empty;
+            if (isWonStatus || isLoseStatus || isDrawStatus)
+            {
+                resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
+                     string.Empty :
+                     "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", ' " + ticketDetail.Ticket.BetCheck + "')";
+            }
+
+            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
+                 string.Empty :
+                 "<br />" +
+                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
+                 "<br />";
+            return statusLabel + resultLink1;
+        }
+
         /// <summary>
         /// Gets the status reference no.
         /// </summary>
@@ -301,6 +332,11 @@ namespace Fanex.BetList.Accounting.Core
             if (IsVoidbridge(ticketDetail.Ticket.SportTypeId))
             {
                 return betlistHelper.GetVoidbridgeStatus(ticketDetail);
+            }
+
+            if (IsFishingWorld(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetFishingWorldStatus(ticketDetail);
             }
 
             string status = ticketDetail.Ticket.Status.ToLower();
@@ -431,6 +467,11 @@ namespace Fanex.BetList.Accounting.Core
                                 string.Empty :
                                 "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                             break;
+                        case SportContants.FishingWorld:
+                            resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
+                               string.Empty :
+                               "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
+                            break;
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -533,6 +574,11 @@ namespace Fanex.BetList.Accounting.Core
             if (IsVoidbridge(ticketDetail.Ticket.SportTypeId))
             {
                 return betlistHelper.GetVoidbridgeStatus(ticketDetail);
+            }
+
+            if (IsFishingWorld(ticketDetail.Ticket.SportTypeId))
+            {
+                return betlistHelper.GetFishingWorldStatus(ticketDetail);
             }
 
             string statusHtml = string.Empty;

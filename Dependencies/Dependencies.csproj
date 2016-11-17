@@ -209,7 +209,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.8\lib\Fanex.Module.RNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.RNGCasino.1.0.0.9-FishingWorld\lib\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -280,7 +280,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.2-FishingWorld\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.1\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap">

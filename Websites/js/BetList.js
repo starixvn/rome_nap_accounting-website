@@ -651,8 +651,8 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
     });
 
     parent.OpenNextPopup(
-        "VoidbridgeDetails",
-        'VoidbridgeBetList/BetDetails?' + params,
+        "RNGCasinoDetails",
+        'RNGCasinoBetList/BetDetails?' + params,
         "Fishing World Details",
         1030,
         600,
@@ -662,6 +662,10 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
         0,
         null,
         null);
+}
+
+function ViewFishingWorldResult(custId, betCheck) {
+    console.log("TODO");
 }
 
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
@@ -675,18 +679,26 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
         WinLostDate: winlostDate
     });
 
-    parent.OpenNextPopup(
-        "RNGCasinoResult",
-        'RNGCasinoBetList/GetHandHistory?' + params,
-        "RNG Casino Result",
-        835,
-        675,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
+    var title = sportType === 219 ? "Fishing World Result" : "RNG Casino Result";
+
+    if (sportType === 219) {
+
+        ViewFishingWorldResult();
+
+    } else {
+        parent.OpenNextPopup(
+            "RNGCasinoResult",
+            'RNGCasinoBetList/GetHandHistory?' + params,
+            title,
+            835,
+            675,
+            true,
+            false,
+            window,
+            0,
+            null,
+            null);
+    }
 }
 
 function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
