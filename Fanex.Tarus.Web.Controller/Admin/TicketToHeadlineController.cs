@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Web.Controllers.Admin
 
         public ActionResult GetData(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)
         {
-            return Json(_ticketToHeadlineService.GetData(uploadFile, criteria));
+            return Json(_ticketToHeadlineService.GetData(uploadFile, criteria), "text/html");
             //return Json(_ticketToHeadlineService.GetFakeData((int?)criteria.PageSize, (int?)criteria.PageIndex, 1001));
         }
 
