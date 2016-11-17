@@ -38,7 +38,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
                     IRow row = (IRow)rows.Current;
                     string userName = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString());
                     string refno = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString());
-                    xmlParam += string.Format("<File UserName=\"{0}\" RefNo=\"{1}\" />", userName, refno.ToString());
+                    xmlParam += string.Format("<File UserName=\"{0}\" RefNo=\"{1}\" />", userName.Trim(), refno.Trim());
                 }
 
                 xmlParam += "</ROOT>";
