@@ -45,6 +45,8 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
         private int _maxRowPerSheet = 1000;
 
+        private bool toggleFlag = true;
+
         public TicketToHeadlineExcelService(TicketToHeadlineViewModel data)
         {
             this._data = data;
@@ -84,6 +86,8 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._currentRow = 0;
             this._sheet = this._workbook.CreateSheet(string.Format("{0} ({1})", sheetName, sheetNo++));
             this.RenderHeader();
+            string cacheGroupHeadline = string.Empty;
+            toggleFlag = true;
             foreach (var dataRow in data)
             {
                 if (this._currentRow > _maxRowPerSheet)
@@ -126,14 +130,16 @@ namespace Fanex.Tarus.Business.Implement.Admin
                             dataRow.RefNo.ToString()
                        };
                 }
-
+                
+                toggleFlag = cacheGroupHeadline != dataRow.GroupHeadline || dataRow.ErrorCode != 0 ? !toggleFlag : toggleFlag;
                 for (int i = 0; i < rowValues.Length; i++)
                 {
                     var currentCell = currentRow.CreateCell(i);
                     currentCell.SetCellValue(rowValues[i]);
-                    currentCell.CellStyle = (dataRow.ErrorCode != 0 && i >= 1 && i <= 6) ? (this._currentRow % 2 == 0 ? this._evenErrorCellStyle : this._oddErrorCellStyle) : (this._currentRow % 2 == 0 ? this._evenCellStyle : this._oddCellStyle);
+                    currentCell.CellStyle = (dataRow.ErrorCode != 0 && i >= 1 && i <= 6) ? (this._currentRow % 2 != 0 ? this._evenErrorCellStyle : this._oddErrorCellStyle) : (this.toggleFlag ? this._evenCellStyle : this._oddCellStyle);
                 }
 
+                cacheGroupHeadline = dataRow.GroupHeadline;
                 GenerateMergeRegion(dataRow);
             }
 
@@ -221,7 +227,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._oddCellStyle = this._workbook.CreateCellStyle();
             this._oddCellStyle.Alignment = HorizontalAlignment.Center;
             this._oddCellStyle.SetFont(this._normalFont);
-            this._oddCellStyle.FillForegroundColor = HSSFColor.LightCornflowerBlue.Index;
+            this._oddCellStyle.FillForegroundColor = 43;
             this._oddCellStyle.FillPattern = FillPattern.SolidForeground;
             this._oddCellStyle.BorderBottom = this._oddCellStyle.BorderLeft = this._oddCellStyle.BorderRight = this._oddCellStyle.BorderTop = BorderStyle.Thin;
             this._oddCellStyle.BottomBorderColor = this._oddCellStyle.TopBorderColor = this._oddCellStyle.LeftBorderColor = this._oddCellStyle.RightBorderColor = HSSFColor.Black.Index;
@@ -238,7 +244,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             this._oddErrorCellStyle = this._workbook.CreateCellStyle();
             this._oddErrorCellStyle.Alignment = HorizontalAlignment.Center;
             this._oddErrorCellStyle.SetFont(this._errorFont);
-            this._oddErrorCellStyle.FillForegroundColor = HSSFColor.LightCornflowerBlue.Index;
+            this._oddErrorCellStyle.FillForegroundColor = 43;
             this._oddErrorCellStyle.FillPattern = FillPattern.SolidForeground;
             this._oddErrorCellStyle.BorderBottom = this._oddErrorCellStyle.BorderLeft = this._oddErrorCellStyle.BorderRight = this._oddErrorCellStyle.BorderTop = BorderStyle.Thin;
             this._oddErrorCellStyle.BottomBorderColor = this._oddErrorCellStyle.TopBorderColor = this._oddErrorCellStyle.LeftBorderColor = this._oddErrorCellStyle.RightBorderColor = HSSFColor.Black.Index;

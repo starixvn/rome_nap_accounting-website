@@ -33,8 +33,7 @@ function GetExcelFile() {
 }
 
 function RenderData(data) {
-    if (data.ErrorMessage != null)
-    {
+    if (data.ErrorMessage != null) {
         showAlertMessage('errMsg', data.ErrorMessage, 1);
         try { parent.jQuery.unblockUI(); } catch (e) { }
         return;
@@ -48,35 +47,37 @@ function RenderData(data) {
     var mergeRowNumSuper = 0;
     var mergeRowNumMaster = 0;
     var mergeRowNumAgent = 0;
+    var cacheGroupHeadline = '';
+    var currentBGColor = '';
     for (i = 0 ; i < rowCount; i++) {
         var row = { Columns: [] };
         row.Columns.push({ Name: 'RowNum', Value: data.TicketToHeadlineCollection[i].RowNum });
 
         if (data.TicketToHeadlineCollection[i].ErrorCode == 0) {
             if (mergeRowNumGroupHeadline > 0) {
-                
+
             } else {
-                row.Columns.push({ Name: 'GroupHeadline', Value: data.TicketToHeadlineCollection[i].GroupHeadline, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumGroupHeadline-1 });
-                row.Columns.push({ Name: 'HeadlineType', Value: data.TicketToHeadlineCollection[i].HeadlineType, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumHeadlineType-1 });
+                row.Columns.push({ Name: 'GroupHeadline', Value: data.TicketToHeadlineCollection[i].GroupHeadline, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumGroupHeadline - 1 });
+                row.Columns.push({ Name: 'HeadlineType', Value: data.TicketToHeadlineCollection[i].HeadlineType, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumHeadlineType - 1 });
             }
-            
+
             if (mergeRowNumSuper > 0) {
-               
+
             } else {
-                row.Columns.push({ Name: 'Currency', Value: data.TicketToHeadlineCollection[i].Currency, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumCurrency-1 });
-                row.Columns.push({ Name: 'Super', Value: data.TicketToHeadlineCollection[i].Super, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumSuper-1 });
+                row.Columns.push({ Name: 'Currency', Value: data.TicketToHeadlineCollection[i].Currency, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumCurrency - 1 });
+                row.Columns.push({ Name: 'Super', Value: data.TicketToHeadlineCollection[i].Super, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumSuper - 1 });
             }
-            
+
             if (mergeRowNumMaster > 0) {
-                
+
             } else {
-                row.Columns.push({ Name: 'Master', Value: data.TicketToHeadlineCollection[i].Master, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumMaster-1 });
+                row.Columns.push({ Name: 'Master', Value: data.TicketToHeadlineCollection[i].Master, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumMaster - 1 });
             }
-            
+
             if (mergeRowNumAgent > 0) {
-                
+
             } else {
-                row.Columns.push({ Name: 'Agent', Value: data.TicketToHeadlineCollection[i].Agent, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumAgent-1 });
+                row.Columns.push({ Name: 'Agent', Value: data.TicketToHeadlineCollection[i].Agent, MergeRowNumber: data.TicketToHeadlineCollection[i].MergeRowNumAgent - 1 });
             }
 
             mergeRowNumGroupHeadline = data.TicketToHeadlineCollection[i].MergeRowNumGroupHeadline != 0 ? data.TicketToHeadlineCollection[i].MergeRowNumGroupHeadline - 1 : mergeRowNumGroupHeadline;
@@ -88,13 +89,17 @@ function RenderData(data) {
             mergeRowNumSuper--;
             mergeRowNumMaster--;
             mergeRowNumAgent--;
+            currentBGColor = cacheGroupHeadline != data.TicketToHeadlineCollection[i].GroupHeadline ? toggleColor(currentBGColor) : currentBGColor;
+            cacheGroupHeadline = data.TicketToHeadlineCollection[i].GroupHeadline;
         }
         else {
             row.Columns.push({ Name: 'GroupHeadline', Value: '<span class="no-data-not-frozen">' + data.TicketToHeadlineCollection[i].ErrorMessage + '</span>', MergeColNumber: 6 });
+            currentBGColor = toggleColor(currentBGColor);
         }
 
         row.Columns.push({ Name: 'Member', Value: data.TicketToHeadlineCollection[i].Member });
         row.Columns.push({ Name: 'RefNo', Value: data.TicketToHeadlineCollection[i].RefNo });
+        row.CssClass = currentBGColor;
         bodyRows.push(row);
     }
 
@@ -113,13 +118,14 @@ function RenderData(data) {
                { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
            ],
            bodyRows: bodyRows,
-           gridExpandHeight: 150,
+           gridExpandHeight: 200,
            showTitle: true,
            titleInfo: {
                text: 'List of tickets with their headlines retrieved'
            },
            showPager: true,
            customPager: true,
+           showDistinctRow: false,
            pagerOption: {
                itemsPerPage: parseInt($('#PageSize').val()),
                currentPage: parseInt($('#PageIndex').val()) - 1,
@@ -131,6 +137,14 @@ function RenderData(data) {
 
     $('#gridId').fanexGrid(gridOptions);
     try { parent.jQuery.unblockUI(); } catch (e) { }
+}
+
+function toggleColor(colorCss) {
+    if (colorCss == '') {
+        return 'bgeven';
+    }
+
+    return '';
 }
 
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
