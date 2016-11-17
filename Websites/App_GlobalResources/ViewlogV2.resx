@@ -1602,4 +1602,16 @@
   <data name="isa_v99mpt_mem_9" xml:space="preserve">
     <value>Outright</value>
   </data>
+  <data name="Maxbv1mp" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="Minbv1mp" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="Mpmv1mp" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="Soccerparlay" xml:space="preserve">
+    <value>Soccer Parlay</value>
+  </data>
 </root>

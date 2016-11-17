@@ -595,6 +595,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                      select LogFormater.FormatElement(attr)).ToList();
                     }
                 }
+                else if (sport.Id == 1999) //soccer parlay
+                {
+                    rex = new Regex("v1MP", RegexOptions.IgnoreCase);
+                    sportVals = (from attr in attrs
+                                 where rex.IsMatch(attr.Name.ToString()) &&
+                                 !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                }
                 else if (sport.Id == 999) //mix sport parlay
                 {
                     sportVals = (from attr in attrs
