@@ -256,7 +256,7 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
