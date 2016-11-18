@@ -135,7 +135,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                 GenerateMergeRowNumber(trackingDataRow, data[i], i + 1);
             }
 
-            groupHeadlineDataChangeRowNumber.Add(data.Count % pageSize);
+            groupHeadlineDataChangeRowNumber.Add(data.Count);
             //superDataChangeRowNumber.Add(data.Count % pageSize);
             //masterDataChangeRowNumber.Add(data.Count % pageSize);
             //agentDataChangeRowNumber.Add(data.Count % pageSize);
