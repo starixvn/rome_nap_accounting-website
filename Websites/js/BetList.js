@@ -664,11 +664,7 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
         null);
 }
 
-function ViewFishingWorldResult(custId, betCheck) {
-    console.log("TODO");
-}
-
-function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
+function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
         Refno: refNo,
         RoleId: 0,
@@ -682,9 +678,7 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
     var title = sportType === 219 ? "Fishing World Result" : "RNG Casino Result";
 
     if (sportType === 219) {
-
-        ViewFishingWorldResult();
-
+        ViewGlobalGamingResult(custId, refNo);
     } else {
         parent.OpenNextPopup(
             "RNGCasinoResult",
@@ -753,6 +747,11 @@ function ViewVoidbridgeResult(custId, betCheck) {
             parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
         }
     });
+}
+
+function ViewGlobalGamingResult(custId, betCheck) {
+    var url = "../Report/ViewGlobalGamingResult.aspx?custId=" + custId + "&gameId=" + betCheck;
+    parent.OpenNextPopup("ViewGlobalGamingResult", url, "Fishing Wolrd Result", 945, 500, true, false, window, 0, null, null);
 }
 
 function ViewAllBetResult(transDesc, betCheck, betTypeId) {

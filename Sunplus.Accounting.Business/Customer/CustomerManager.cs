@@ -1039,7 +1039,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     isHideCricketSettingLink,
                                     renderLeftPanelParameter.IsShowAllBetForCredit,
                                     renderLeftPanelParameter.IsShowVoidbridge,
-                                    renderLeftPanelParameter.IsShowNG2);
+                                    renderLeftPanelParameter.IsShowNG2,
                                     renderLeftPanelParameter.IsShowFishingWorld);
 
                                 string infoUrl = "";

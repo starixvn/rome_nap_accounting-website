@@ -22,7 +22,7 @@ public partial class Others_Menu : System.Web.UI.Page
         cricket = 20,
         allbet = 21,
         voidbridge = 22,
-        ng2 = 23
+        ng2 = 23,
         fishingworld = 24
     };
 
