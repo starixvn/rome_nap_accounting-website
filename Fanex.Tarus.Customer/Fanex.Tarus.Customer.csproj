@@ -333,6 +333,7 @@
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\GoldDeluxeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
+    <Compile Include="Controller\NG2\SyncCustomerController.cs" />
     <Compile Include="Controller\NG2\SyncCurrencyController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
