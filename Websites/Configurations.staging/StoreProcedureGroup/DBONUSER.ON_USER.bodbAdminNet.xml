@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Functions>
+  <Function Name="Report">
+    <Setting Key="ConcurrentUserReport" SpName="Acc_Rpt_LicenseeOnlineUserSel" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+  </Function>
+  <Function Name="Loin">
+    <Setting Key="UserUpdLogout" SpName="Acc_CheckOut" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="UserUpd" SpName="Acc_Recheckin" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="Checkin" SpName="Acc_Checkin" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="UserLoginClaimed_out" SpName="UserLoginClaimed_out" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+  </Function>
+  <Function Name="Users">
+    <Setting Key="CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+  </Function>
+</Functions>

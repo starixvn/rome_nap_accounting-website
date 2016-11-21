@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Functions>
+  <Function Name="Message">
+    <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+  </Function>
+</Functions>

@@ -323,14 +323,13 @@
   <Function Name="Colossus Bets Bet List - Get SiteId">
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-	<Function Name="NG2">
-		<Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustSetting_SyncGameStatusSelect" SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-	</Function> 
+  <Function Name="NG2">
+    <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_SyncGameStatusSelect" SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
   <Function Name="OTP">
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
 </Functions>

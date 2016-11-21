@@ -332,5 +332,4 @@
 	<Function Name="OTP">
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
 </Functions>
