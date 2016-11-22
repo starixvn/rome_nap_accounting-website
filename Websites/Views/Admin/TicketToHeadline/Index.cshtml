@@ -1,0 +1,119 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+<html>
+<head>
+    <link href="@Url.Content("~/App_Themes/Public/input.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/Message.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/commonIOM.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .filterBox {
+            float: left;
+            width: 100%;
+        }
+
+        .floatLeft {
+            float: left;
+            margin: 10px 10px 10px 10px;
+        }
+
+        input[type="image"] {
+            border: none;
+        }
+        .bgeven td{
+            background-color:#FFFF99 !important;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div id="divMainHeader" class="">
+            <div id="left_tab1">
+                <ul>
+                    <li class="lefticon"></li>
+                    <li class="current"><span>Ticket to Group Headline</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="maincontent">
+            <div class="filterBox">
+                <div class="filterContent">
+                    <form id="mainForm" action="GetData" method="post" enctype="multipart/form-data">
+                        <input id="PageSize" name="PageSize" type="hidden" value="50" />
+                        <input id="PageIndex" name="PageIndex" type="hidden" value="1" />
+                        <div id="errMsg">
+                        </div>
+                        <div class="clear"></div>
+                        <div class="b">&nbsp;&nbsp;&nbsp;Choose an excel file to upload (Format: *.xls, *.xlsx)</div>
+                        <div class="clear"></div>
+
+                        <div class="floatLeft">
+                            <input id="uploadFile" name="uploadFile" type="file" style="width: 280px" />
+                        </div>
+                        <div class="floatLeft">
+                            <label class="b" for="headlineType">Headline Type</label>
+                        </div>
+                        <div class="floatLeft">
+                            <select id="headlineType" name="headlineType">
+                                <option value="2">All</option>
+                                <option value="1">VIP</option>
+                                <option value="0">Normal</option>
+                            </select>
+                        </div>
+                        <div class="floatLeft">
+                            <label class="b" for="productId">Product</label>
+                        </div>
+                        <div class="floatLeft">
+                            <select id="productId" name="productId">
+                                <option value="1">Sportsbook</option>
+                                <option value="2">Racing</option>
+                                <option value="3">Number Game</option>
+                                <option value="4">Live Casino</option>
+                                <option value="5">Virtual Sports</option>
+                                <option value="6">Casino</option>
+                                <option value="8">Keno</option>
+                                <option value="12">Gold Deluxe</option>
+                                <option value="15">Colossus Bets</option>
+                                <option value="21">Allbet</option>
+                                <option value="22">Macau Games</option>
+                            </select>
+                        </div>
+                        <div class="floatLeft">
+                            <input type="button" value="Submit" class="btn" onclick="GetData()" />
+                        </div>
+                        <div class="floatLeft">
+                            <input type="image" src="~/App_Themes/Images/excel.gif" onclick="GetExcelFile()" />
+                        </div>
+
+                    </form>
+                    <div style="clear: both"></div>
+                    <div>
+                        <span class="label-filesize-limit">
+                            @Customer_Labels.Message_ExcelFileSizeLimit
+                        </span>
+                        <a class="link-download-excel-template b" href="@Url.Content("~/Views/Admin/TicketToHeadline/TicketToGroupHeadlineTemplate.xls")">@Customer_Labels.Message_DownloadTemplate</a>
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div id="gridContainer" class="grid-container">
+                <div id="gridId" class="freegrid"></div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/IBCWnd/IBCWnd.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/TicketToHeadline/Scripts/Index.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+    </script>
+</body>
+</html>
