@@ -325,39 +325,6 @@
   <Function Name="AG Casino">
     <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="MicroGaming">
-    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0">
-      <Mapping DataField="transid" ObjectProperty="TransId" />
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="transdate" ObjectProperty="TransDate" />
-      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
-      <Mapping DataField="status" ObjectProperty="Status" />
-      <Mapping DataField="statusid" ObjectProperty="StatusId" />
-      <Mapping DataField="odds" ObjectProperty="Odds" />
-      <Mapping DataField="stake" ObjectProperty="Stake" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
-      <Mapping DataField="ip" ObjectProperty="IP" />
-      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="comm" ObjectProperty="Comm" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-    </Setting>
-  </Function>
-  <Function Name="AG Casino">
-    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
-  </Function>
   <Function Name="Bet List - Result">
     <Setting Key="All_BetList_MatchResultDetail3rdSel" SpName="All_BetList_MatchResultDetail3rdSel" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping ObjectProperty="LeagueId" DataField="Leagueid" />
@@ -379,5 +346,6 @@
   <Function Name="NG2">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
+	  <Setting Key="Acc_CustomerSelByListUserName" SpName="Acc_CustomerSelByListUserName" DbName="DBAGE.bodb02.bodbAdminNet" />	  
   </Function>
 </Functions>

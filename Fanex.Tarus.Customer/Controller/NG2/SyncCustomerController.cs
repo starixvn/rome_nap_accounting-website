@@ -1,13 +1,16 @@
 ﻿using System.Web.Mvc;
-using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Tarus.Customer.Business.NG2;
+using Fanex.Tarus.Customer.Entities.NG2;
 using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.Web.Controllers;
+using Newtonsoft.Json;
 
 namespace Fanex.Tarus.Customer.Controller.NG2
 {
     public class SyncCustomerController : BaseController
     {
+        private readonly ISyncCustomerService _service = new SyncCustomerService();
+
         [HttpGet]
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
         public ActionResult Index()
@@ -16,77 +19,20 @@ namespace Fanex.Tarus.Customer.Controller.NG2
         }
 
         [HttpPost]
-        [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
-        public ActionResult Check(string currencyCode)
+        [CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
+        public ActionResult Check(string usernames)
         {
-            var service = new SyncCurrencyService();
-            var model = service.GetCurrencyByName(currencyCode);
-
-            var result = new Result(model.CurrencyId == 0 ? 1 : 0, model.CurrencyId == 0 ? "This currency is not available in system!" : string.Empty);
-            if (result.IsSuccess)
-            {
-                var currencies = service.SyncCurrencies().Currencies;
-                var allowed = false;
-                foreach (var item in currencies)
-                {
-                    if (model.CurrencyId == item.CurrencyId)
-                    {
-                        allowed = true;
-                        break;
-                    }
-                }
-
-                if (allowed)
-                {
-                    result = service.AddSyncCurrency(model);
-                    if (!result.IsSuccess)
-                    {
-                        result.ErrorMessage = "Update base rate failed. Please try it again later";
-                    }
-                }
-                else
-                {
-                    result = new Result(1, "The currency has not created in 3rd party side yet.");
-                }
-            }
+            var result = _service.GetCustomersByUsernames(usernames);
 
             return Json(result);
         }
 
         [HttpPost]
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
-        public ActionResult Sync(string currencyCode)
+        public ActionResult Sync(string syncCustomerModel)
         {
-            var service = new SyncCurrencyService();
-            var model = service.GetCurrencyByName(currencyCode);
-
-            var result = new Result(model.CurrencyId == 0 ? 1 : 0, model.CurrencyId == 0 ? "This currency is not available in system!": string.Empty);
-            if (result.IsSuccess)
-            {
-                var currencies = service.SyncCurrencies().Currencies;
-                var allowed = false;
-                foreach (var item in currencies)
-                {
-                    if (model.CurrencyId == item.CurrencyId)
-                    {
-                        allowed = true;
-                        break;
-                    }
-                }
-
-                if (allowed)
-                {
-                    result = service.AddSyncCurrency(model);
-                    if (!result.IsSuccess)
-                    {
-                        result.ErrorMessage = "Update base rate failed. Please try it again later";
-                    }
-                }
-                else
-                {
-                    result = new Result(1, "The currency has not created in 3rd party side yet.");
-                }
-            }
+            var model = JsonConvert.DeserializeObject<SyncCustomerModel>(syncCustomerModel);
+            var result = _service.SyncCustomers(model);
 
             return Json(result);
         }

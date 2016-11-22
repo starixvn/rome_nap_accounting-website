@@ -328,6 +328,8 @@
     <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SyncGameStatusSelect" SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+	  <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_CustID" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_CustID" DbName="DBCust.CustDB.bodbAdminNet" />
+	  <Setting Key="Acc_CustSetting_SyncGameStatusUpd_Multiple" SpName="Acc_CustSetting_SyncGameStatusUpd_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />	  
   </Function>
  <Function Name="OTP">
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
