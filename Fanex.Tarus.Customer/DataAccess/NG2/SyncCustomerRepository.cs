@@ -81,9 +81,12 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                                 result.Usernames.Add(entity);
                             }
 
-                            while (reader.NextResult())
+                            if (reader.NextResult())
                             {
-                                result.NotExistUsernames.Add(reader.ToString("Username"));
+                                while (reader.Read())
+                                {
+                                    result.NotExistUsernames.Add(reader.ToString("Username"));
+                                }                                
                             }
                         }
                     }

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Tarus.Customer.DataAccess.NG2;
 using Fanex.Tarus.Customer.Entities.NG2;
@@ -44,28 +46,29 @@ namespace Fanex.Tarus.Customer.Business.NG2
             return result;
         }
 
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public SyncCustomerModel SyncCustomers(SyncCustomerModel model)
         {
             var custIds = string.Join(",", model.Usernames.Select(u => u.CustId));
             var usernames = string.Join(",", model.Usernames.Select(u => u.Username));
             var customers = model.Usernames.GroupBy(u => new { u.Currency, u.UplineId });
-
             var api = new Services();
-            
+            IEnumerable<AccountInfoResult> resultInfo = new List<AccountInfoResult>();            
+
             foreach (var customer in customers)
             {
+                var first = customer.FirstOrDefault();
                 var request = new Request();
+
                 request.Auth.SiteId = 2000;
                 request.UserId = AppSession.CurrentSession.UserId;
-
-                var first = customer.FirstOrDefault();
                 request.Call.CurrencyId = first.Currency;
                 request.Call.Level = first.RoleId;
                 request.Call.UplineId = first.UplineId;
 
                 foreach (var cust in customer)
                 {
-                    if (cust.IsSync == cust.IsSync3rd == false || cust.IsSync != cust.IsSync3rd)
+                    if (cust.IsSelected && (cust.IsSync == cust.IsSync3rd == false || cust.IsSync != cust.IsSync3rd))
                     {
                         request.Call.AccountArray.Add(new AccountInfo { ObCustId = cust.CustId });
                     }
@@ -74,6 +77,8 @@ namespace Fanex.Tarus.Customer.Business.NG2
                 if (request.Call.AccountArray.Count > 0)
                 {
                     var apiResult = api.SyncCustomers(request);
+                    resultInfo = resultInfo.Concat(apiResult.Result.AccountArray);
+
                     if (apiResult.Result.IsSuccess && apiResult.Result.AccountArray.Count > 0)
                     {
                         custIds = string.Join(",", apiResult.Result.AccountArray.Where(u => u.IsCreated == 1).Select(u => u.ObCustId));
@@ -87,6 +92,18 @@ namespace Fanex.Tarus.Customer.Business.NG2
             }
                         
             var result = GetCustomersByUsernames(usernames);
+            if (resultInfo.Count() > 0)
+            {
+                foreach (var item in result.Usernames)
+                {
+                    var resultItem = resultInfo.Where(r => r.ObCustId == item.CustId);
+
+                    if (resultItem.Count() > 0)
+                    {
+                        item.IsUpdated = resultItem.FirstOrDefault().IsSuccess;
+                    }                    
+                }
+            }
 
             return result;
         }

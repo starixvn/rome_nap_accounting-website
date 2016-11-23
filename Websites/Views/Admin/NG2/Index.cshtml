@@ -1,11 +1,12 @@
 ﻿<!DOCTYPE html>
-<html>
+<html id="ng-app" ng-app="syncCustomerApp" data-ng-controller="SyncCustomerController">
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/Message.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/Admin/NG2/Styles/SyncCustomer.css?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
     <div class="main">
@@ -19,18 +20,46 @@
                     <td class="maincontent_headerR"></td>
                 </tr>
             </table>
-            <div class="maincontent_box" style="width: 350px">
+            <div class="maincontent_box" style="width: 500px">
                 <div id="errMsg">
                 </div>
                 <div class="header-scroll" style="line-height: 2">
                     <label class="b">Username</label><br /> 
-                    <textarea id="usernames" class="text" style="width: 280px; min-height: 60px" placeholder="Enter username separated by comma. There is no space between comma and username. Maximum is 10 usernames."></textarea>
-                    <br /> <input id="check" onclick="check()" class="btn" type="button" value="Search" /><input id="sync" disabled="disabled" onclick="sync()" class="btn" type="button" value="Sync Customer" />
+                    <textarea id="usernames" class="text" style="width: 300px; min-height: 60px" placeholder="Enter username separated by comma. There is no space between comma and username. Maximum is 10 usernames."></textarea>
+                    <br /> <input id="check" data-ng-click="Check()" class="btn" type="button" value="Search" /><input id="sync" disabled="disabled" data-ng-click="Sync()" class="btn" type="button" value="Sync Customer" />
                 </div>
-                <div id="customers" class="header-scroll" style="line-height: 2; display: none">
-                    <div id="no-info">There is no information available.</div>                    
+                <br />
+                <div id="syncCustomerApp" class="header-scroll" style="line-height: 2; display: none">           
                     <div id="customer-list">
-
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td width="20px">&nbsp;</td>
+                                    <td width="20px">#</td>
+                                    <td width="120px">Username</td>
+                                    <td>Level</td>
+                                    <td>Upline</td>
+                                    <td>Currency</td>
+                                    <td>MBC Profile</td>
+                                    <td>3rd party Profile</td>
+                                </tr>
+                            </thead>
+                            <tbody id="body-row">
+                                <tr id="no-info">
+                                    <td colspan="8">There is no information available.</td>
+                                </tr>
+                                <tr data-ng-repeat="customer in Customers track by $index">
+                                    <td>&nbsp;</td>
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{customer.Username}}</td>
+                                    <td>{{customer.RoleName}}</td>
+                                    <td>{{customer.UplineUserName}}</td>
+                                    <td>{{CurrencyName}}</td>
+                                    <td>{{IsSync}}</td>
+                                    <td>{{IsSync3rd}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -38,6 +67,7 @@
     </div>
     <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")"></script>
     <script src="@Url.Content("~/js/Message/message.js")"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>    
     <script src="@Url.Content("~/Views/Admin/NG2/Scripts/SyncCustomer.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 </body>
 </html>
