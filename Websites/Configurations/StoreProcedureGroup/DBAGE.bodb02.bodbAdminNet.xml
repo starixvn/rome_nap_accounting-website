@@ -346,6 +346,6 @@
   <Function Name="NG2">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
-	  <Setting Key="Acc_CustomerSelByListUserName" SpName="Acc_CustomerSelByListUserName" DbName="DBAGE.bodb02.bodbAdminNet" />	  
+	  <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />	  
   </Function>
 </Functions>

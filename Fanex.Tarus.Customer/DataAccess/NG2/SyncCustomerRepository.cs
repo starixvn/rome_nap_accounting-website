@@ -61,7 +61,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
 
             try
             {
-                using (var db = new ObjectDb("Acc_CustomerSelByListUserName"))
+                using (var db = new ObjectDb("Acc_CustSetting_SyncAPICustomerProfileSelect_UserName"))
                 {
                     var param = new Hashtable();
                     param.Add("usernamelist", usernames);
