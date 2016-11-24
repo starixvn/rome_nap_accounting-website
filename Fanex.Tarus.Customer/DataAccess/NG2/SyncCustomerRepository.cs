@@ -73,9 +73,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                             while (reader.Read())
                             {
                                 entity = new SyncCustomerEntity();
-                                entity.Currency = reader.ToInt32("Currency");
                                 entity.CustId = reader.ToInt32("CustId");
-                                entity.RoleId = reader.ToInt32("RoleId");
                                 entity.Username = reader.ToString("Username");
 
                                 result.Usernames.Add(entity);
