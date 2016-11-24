@@ -100,7 +100,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
 
                     if (resultItem.Count() > 0)
                     {
-                        item.IsUpdated = resultItem.FirstOrDefault().IsSuccess;
+                        item.IsUpdated = resultItem.FirstOrDefault().IsSuccess && item.IsSync;
                     }                    
                 }
             }
