@@ -1614,4 +1614,7 @@
   <data name="Soccerparlay" xml:space="preserve">
     <value>Soccer Parlay</value>
   </data>
+  <data name="ummbv1mp" xml:space="preserve">
+    <value>Update Min-Max Bet</value>
+  </data>
 </root>
