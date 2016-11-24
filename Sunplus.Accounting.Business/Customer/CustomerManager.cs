@@ -627,6 +627,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     }
                                     else
                                     {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "OTP");
                                         TemplateHandler.RemoveBlock(ref htmlcontent, "loginoption");
                                     }
                                 }
@@ -2831,6 +2832,11 @@ namespace Sunplus.Accounting.Business.Customer
                     string.Empty :
                     Convert.ToString(loginData["LastChangedSecurityCodeDate"]);
 
+                string lastChangeOTPCodeDate =
+                  Convert.IsDBNull(loginData["OTPCreateDate"]) ?
+                  string.Empty :
+                  Convert.ToString(loginData["OTPCreateDate"]);
+
                 var site = new CustSettingMoveSite();
                 AppSession.SiteName = customerSite;
                 customerSite = site.GetSiteNameByCustId(custId, roleId, customerSite, username);
@@ -2857,6 +2863,7 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref tplLoginDetail, "{custid}", custId);
                 TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", lastChangeSecurityCodeDate);
                 TemplateHandler.Assign(ref htmlCustInfo, "{logindetail}", tplLoginDetail);
+                TemplateHandler.Assign(ref htmlCustInfo, "{last_change_OTP_date}", lastChangeOTPCodeDate);  
             }
             catch (Exception ex)
             {

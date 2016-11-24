@@ -281,6 +281,8 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Business\CustomerLogin\CustomerOTPService.cs" />
+    <Compile Include="Business\CustomerLogin\ICustomerOTPService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
@@ -325,6 +327,7 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
+    <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -354,6 +357,7 @@
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
+    <Compile Include="Criteria\CustomerLogin\RemoveOTPCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
@@ -385,6 +389,8 @@
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
+    <Compile Include="DataAccess\CustomerLogin\CustomerOTPDataAccess.cs" />
+    <Compile Include="DataAccess\CustomerLogin\ICustomerOTPDataAccess.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />
     <Compile Include="DataAccess\EditLicensee\IEditLicenseeRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\AutoSuspendRepository.cs" />

@@ -1,0 +1,62 @@
+﻿.tbllayout
+{
+    width: 300px;
+}
+
+#errorMessage
+{
+    margin-top: 5px;
+}
+
+
+#reportNote
+{
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.warning ul
+{
+    color: #6F6F6F;
+    font-weight: bold;
+    list-style: none outside none;
+    margin-bottom: 0px;
+    margin-left: -41px;
+    margin-top: 0;
+}
+
+.warning ul li
+{
+    line-height: 17px;
+}
+
+.warning li>ul 
+{
+    margin-left: -20px;
+}
+
+.OTPGuide
+{
+    padding: 10px 0px 5px 0px;
+    font-size : 13px;
+}
+
+.ui-widget-header 
+{
+     background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
+    color: #FFFFFF;
+    font-weight: bold;
+
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #1F384C repeat-x scroll 50% 50% !important;
+     border-color: #1F384C;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    background: #1F384C repeat-x scroll 50% 50% #1F384C !important;
+}
