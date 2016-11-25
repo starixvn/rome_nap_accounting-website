@@ -22,5 +22,7 @@
         public bool IsSelected { get; set; }
 
         public bool? IsUpdated { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

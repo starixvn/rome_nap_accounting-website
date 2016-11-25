@@ -18,9 +18,11 @@ function SyncCustomerController($scope, $compile) {
     $scope.Check = function () {
         if ($('#usernames').val().trim() == '') {
             showAlertMessage("errMsg", "Please enter username!", 1);
+            $("#errMsg").show();
         }
         else if ($('#usernames').val().trim().split(',').length > 10) {
             showAlertMessage("errMsg", "You input more than 10 usernames!", 1);
+            $("#errMsg").show();
         }
         else {
             $("#errMsg").hide();
@@ -111,7 +113,16 @@ function SyncCustomerController($scope, $compile) {
 
                 if ($scope.customers.length > 0) {
                     $('#no-info').hide();
-                    $('#sync').attr('disabled', false);
+
+                    var hasUnsync = false;
+                    for (var i = 0; i < $scope.customers.length; i++) {
+                        if ($scope.customers[i].IsSync != $scope.customers[i].IsSync3rd || ($scope.customers[i].IsSync == false && $scope.customers[i].IsSync3rd == false)) {
+                            hasUnsync = true;
+                            break;
+                        }
+                    }
+
+                    $('#sync').attr('disabled', !hasUnsync);
                 }
                 else {
                     $('#no-info').show();
@@ -123,7 +134,7 @@ function SyncCustomerController($scope, $compile) {
                     var checkbox = ($scope.customers[i].IsSync != $scope.customers[i].IsSync3rd || (!$scope.customers[i].IsSync && !$scope.customers[i].IsSync3rd)) ?
                         '<input id="' + $scope.customers[i].CustId + '" type="checkbox" checked />' : '';
                     var rowColor = $scope.customers[i].IsUpdated == true ? 'success-row' : $scope.customers[i].IsUpdated == false ? 'error-row' : '';
-                    var title = $scope.customers[i].IsUpdated == true ? 'This customer was synced successfully' : $scope.customers[i].IsUpdated == false ? 'This customer was synced failed, please try again, later' : '';
+                    var title = $scope.customers[i].ErrorMessage || '';
                     var row =
                     '<tr class="' + className + ' ' + rowColor + ' compiled" title="' + title + '">\
                                     <td>' + checkbox + '</td>\
@@ -156,10 +167,6 @@ function SyncCustomerController($scope, $compile) {
                     }
                 });
             });
-
-            if (rs.Usernames.length > 0) {
-                $('#sync').attr('disabled', false);
-            }
         }
     };
 }

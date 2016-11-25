@@ -35,11 +35,20 @@ namespace Fanex.Tarus.Customer.Business.NG2
             var response = api.CheckIsSyncCustomers(request);
             var apiResult = response.Result;
 
-            if (apiResult.IsSuccess)
+            if (apiResult.AccountArray.Count > 0)
             {
                 foreach (var cust in apiResult.AccountArray)
                 {
                     result.Usernames.Where(u => u.CustId == cust.ObCustId).FirstOrDefault().IsSync3rd = cust.IsCreated == 1;
+                }
+            }
+            else
+            {
+                foreach (var cust in request.Call.AccountArray)
+                {
+                    var first = result.Usernames.Where(u => u.CustId == cust.ObCustId).FirstOrDefault();
+                    first.IsUpdated = false;
+                    first.ErrorMessage = "Cannot connect API to check sync status at 3rd party";
                 }
             }
             
@@ -68,7 +77,7 @@ namespace Fanex.Tarus.Customer.Business.NG2
 
                 foreach (var cust in customer)
                 {
-                    if (cust.IsSelected && (cust.IsSync == cust.IsSync3rd == false || cust.IsSync != cust.IsSync3rd))
+                    if (cust.IsSelected && ((cust.IsSync == false && cust.IsSync3rd == false) || cust.IsSync != cust.IsSync3rd))
                     {
                         request.Call.AccountArray.Add(new AccountInfo { ObCustId = cust.CustId });
                     }
@@ -77,8 +86,21 @@ namespace Fanex.Tarus.Customer.Business.NG2
                 if (request.Call.AccountArray.Count > 0)
                 {
                     var apiResult = api.SyncCustomers(request);
-                    resultInfo = resultInfo.Concat(apiResult.Result.AccountArray);
+                    if (apiResult.Result.AccountArray.Count > 0)
+                    {
+                        resultInfo = resultInfo.Concat(apiResult.Result.AccountArray);
+                    }
+                    else
+                    {
+                        var tmpList = new List<AccountInfoResult>();
+                        foreach (var item in request.Call.AccountArray)
+                        {
+                            tmpList.Add(new AccountInfoResult { ObCustId = item.ObCustId });
+                        }
 
+                        resultInfo = resultInfo.Concat(tmpList);
+                    }
+                    
                     if (apiResult.Result.IsSuccess && apiResult.Result.AccountArray.Count > 0)
                     {
                         custIds = string.Join(",", apiResult.Result.AccountArray.Where(u => u.IsCreated == 1).Select(u => u.ObCustId));
@@ -92,19 +114,27 @@ namespace Fanex.Tarus.Customer.Business.NG2
             }
                         
             var result = GetCustomersByUsernames(usernames);
-            if (resultInfo.Count() > 0)
+            foreach (var item in result.Usernames)
             {
-                foreach (var item in result.Usernames)
+                if (resultInfo.Count() > 0)
                 {
                     var resultItem = resultInfo.Where(r => r.ObCustId == item.CustId);
 
                     if (resultItem.Count() > 0)
                     {
-                        item.IsUpdated = resultItem.FirstOrDefault().IsSuccess && item.IsSync;
-                    }                    
+                        var first = resultItem.FirstOrDefault();
+                        item.IsUpdated = first.IsSuccess && item.IsSync;
+                        item.ErrorMessage = item.IsUpdated == true ? "This customer was synced successfully" : 
+                            "This customer was synced failed, please try again later";
+                    }
+                }
+                else if ((item.IsSync == false && item.IsSync3rd == false) || item.IsSync != item.IsSync3rd)
+                {
+                    item.IsUpdated = false;
+                    item.ErrorMessage = "Cannot connect API to check sync status at 3rd party";
                 }
             }
-
+            
             return result;
         }
     }
