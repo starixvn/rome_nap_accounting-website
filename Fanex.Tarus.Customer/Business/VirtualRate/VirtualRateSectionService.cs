@@ -259,6 +259,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
                     return Customer_Labels._1stOU;
                 case BetType.FirstOddEven:
                     return Customer_Labels._1stOE;
+                case BetType.OneXTwo:
+                    return Customer_Labels._1X2;
                 default:
                     return CacheRef.GetBettype(betType);
             }

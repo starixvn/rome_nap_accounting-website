@@ -9,6 +9,7 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int Handicap = 1;
         public const int OverUnder = 3;
         public const int CorrectScore = 4;
+        public const int OneXTwo = 5;
         public const int TotalGoal = 6;
         public const int FirstHandicap = 7;
         public const int FirstOverUnder = 8;

@@ -78,14 +78,51 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     },
                     null,
                     null,
+                    null,
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Other Sports",
+                    //    LiveTypeName = "Non-Live",
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "40"
+                    //},
+                    null
+                }
+            });
+
+            result.Add(new ImportVirtualRateResultGroup
+            {
+                GroupName = "SuperTest1",
+                ImportVirtualRateResultList = new List<ImportVirtualRateResult>()
+                {
                     new ImportVirtualRateResult
                     {
-                        SportName = "Other Sports",
+                        SportName = "Cricket",
                         LiveTypeName = "Non-Live",
-                        BetTypeId = BetType.SetXWinner,
-                        VirtualRateString = "40"
+                        BetTypeId = BetType.Handicap
                     },
-                    null
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    new ImportVirtualRateResult
+                    {
+                        SportName = "Cricket",
+                        LiveTypeName = "Non-Live",
+                        BetTypeId = BetType.OneXTwo,
+                        VirtualRateString = "20"
+                    },
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Cricket",
+                    //    LiveTypeName = "Non-Live",
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "40"
+                    //},
+                   null
                 }
             });
 
@@ -154,9 +191,16 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     {
                         SportName = "Other Sports",
                         LiveTypeName = "Non-Live",
-                        BetTypeId = BetType.SetXWinner,
-                        VirtualRateString = "40"
+                        BetTypeId = BetType.OneXTwo,
+                        VirtualRateString = "20"
                     },
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Other Sports",
+                    //    LiveTypeName = "Non-Live",
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "40"
+                    //},
                     new ImportVirtualRateResult
                     {
                         SportName = "Other Sports",
@@ -203,13 +247,14 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                     },
                     null,
                     null,
-                    new ImportVirtualRateResult
-                    {
-                        SportName = "Other Sports",
-                        LiveTypeName = "Non-Live",
-                        BetTypeId = BetType.SetXWinner,
-                        VirtualRateString = "40"
-                    },
+                    null,
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Other Sports",
+                    //    LiveTypeName = "Non-Live",
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "40"
+                    //},
                     null
                 }
             });
@@ -250,13 +295,14 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         BetTypeId = BetType.FirstMoneyLine,
                         VirtualRateString = "60"
                     },
-                    new ImportVirtualRateResult
-                    {
-                        SportName = "Other Sports",
-                        LiveTypeName = string.Empty,
-                        BetTypeId = BetType.SetXWinner,
-                        VirtualRateString = "30"
-                    },
+                    null,
+                    //new ImportVirtualRateResult
+                    //{
+                    //    SportName = "Other Sports",
+                    //    LiveTypeName = string.Empty,
+                    //    BetTypeId = BetType.SetXWinner,
+                    //    VirtualRateString = "30"
+                    //},
                     null
                 }
             });

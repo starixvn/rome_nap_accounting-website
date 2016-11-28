@@ -88,6 +88,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1X2.
+        /// </summary>
+        public static string _1X2 {
+            get {
+                return ResourceManager.GetString("_1X2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actual Exchange Rate.
         /// </summary>
         public static string Actual_Exchange_Rate {
