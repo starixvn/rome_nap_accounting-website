@@ -1,0 +1,24 @@
+﻿#customer-list>table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+#customer-list>table>thead{
+    font-weight: bold;
+    text-align: center;
+    background-color: #b5c4d0;
+}
+#customer-list>table>tbody{
+    text-align: center;
+}
+.even-row{
+    background-color: #eee;
+}
+.error-row{
+    background-color: #dcada6;
+    border: 1px solid #ff0000;
+}
+.success-row{
+    background-color: #b2f1b9;
+    border: 1px solid #0000ff;
+}
