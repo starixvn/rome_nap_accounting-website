@@ -136,7 +136,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", string.Format(creditDCSLink, (int)products.allbet), hideAllbet);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("ng2", "{ng2LinkSetting}", string.Format(creditDCSLink, (int)products.ng2), hideNG2);
-        this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", creditDCSLink + (int)products.fishingworld, hideFishingWorld);
+        this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
 
         this.sMenu.Text = this.tplMenu;
     }
