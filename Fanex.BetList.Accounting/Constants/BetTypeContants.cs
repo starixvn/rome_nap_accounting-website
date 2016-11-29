@@ -112,6 +112,12 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int CockFighting = 1003;
 
+        public const int FastMarketNext1Minutes = 221;
+        public const int FastMarketNext5Minutes = 222;
+        public const int FastMarketWhatWillHappenFirstInNext1Minute = 223;
+        public const int FastMarketWhatWillHappenFirstInNext5Minutes = 224;
+        public const int FastMarketNext1MinuteSetPiece = 225;
+
         public static bool IsNG2BetType(int betType) { return betType >= 2501 && betType <= 2699; }
     }
 }
