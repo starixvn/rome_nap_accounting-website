@@ -20,6 +20,7 @@ PTSetting.SportType = new function () {
                 $content.find(".tblcollapse tr:eq(0)").remove();
             }
             //disable edit
+            $content.find('.BettingLimitHeaderCopied').removeAttr("onclick");
             $content.find('input:text').attr('disabled', true);
             $content.find('.selectcomm').attr('disabled', true);
             $content.find('.PTSelect').attr('disabled', true);
