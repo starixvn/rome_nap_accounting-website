@@ -142,11 +142,11 @@
       <HintPath>..\Dependency\Fanex\Fanex.CustomerSetting.Module.CloneSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.6\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.6\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
