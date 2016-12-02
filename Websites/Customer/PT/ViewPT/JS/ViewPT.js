@@ -1062,12 +1062,14 @@ var ViewPT = {
             case 216:
             case 217:
             case 218:
-            case 219:
             case 220:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 23:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
+                break;
+            case 219:
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
                 break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
