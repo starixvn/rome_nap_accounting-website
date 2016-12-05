@@ -10,6 +10,7 @@ using System.Collections;
 using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Domain;
 using Fanex.Tarus.Security.Services;
+using Sunplus.Accounting.Business.Security;
 
 public partial class CustInfo : PageBase
 {
@@ -26,6 +27,18 @@ public partial class CustInfo : PageBase
         }
 
         var serviceBase = new ServiceBase();
+        bool isSpecialSiteCustomer = false;
+        bool isSpecialHeadline = false;
+        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+        if (isSpecialHeadline)
+        {
+            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                HtmlHolder.Text = AlertMessage.GetMsg(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission").ToString(), AlertMessage.MsgType.Error);
+                return;
+            }
+        }
+
         var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
                    new CheckSpecialSitePermissionCriteria()
                    {
