@@ -217,6 +217,12 @@
                             Macau Games
                         </li>
                     }
+                    @if (!memberItem.IsHideFishingWorld)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 24, 'Fishing World');">
+                            Fishing World
+                        </li>
+                    }
                 </ul>
             </div>
         </td>

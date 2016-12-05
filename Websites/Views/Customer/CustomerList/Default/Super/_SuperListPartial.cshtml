@@ -212,6 +212,10 @@
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'Macau Games');">Macau Games</li>
                     }
+                    @if (!superItem.IsHideFishingWorld)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 24, 'Fishing World');">Fishing World</li>
+                    }
                 </ul>
             </div>
         </td>
