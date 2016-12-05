@@ -85,7 +85,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = AppSession.AccId,
-                SiteName = siteName
+                SiteName = siteName,
+                Language = "En",
+                LangKey = "E"
             };
             //format json return
 

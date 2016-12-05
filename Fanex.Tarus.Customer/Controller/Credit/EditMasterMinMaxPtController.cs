@@ -81,7 +81,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 FormId = FormType.EditMinMaxPT,
                 SubAccId = 0,
                 AdminId = AppSession.AccId,
-                Language = "E",
+                Language = "En",
                 LangKey = "E"
             };
 

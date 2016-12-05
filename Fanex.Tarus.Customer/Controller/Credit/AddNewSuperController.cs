@@ -96,7 +96,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 RoleId = 0,// role of the member do insert
                 TargetRoleId = 4,// role of the super be inserted
-                FormId = FormType.Add
+                FormId = FormType.Add,
+                Language = "En",
+                LangKey = "E"
             };
             // Format json return
             return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
