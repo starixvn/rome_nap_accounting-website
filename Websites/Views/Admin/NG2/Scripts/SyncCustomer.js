@@ -20,8 +20,8 @@ function SyncCustomerController($scope, $compile) {
             showAlertMessage("errMsg", "Please enter username!", 1);
             $("#errMsg").show();
         }
-        else if ($('#usernames').val().trim().split(',').length > 10) {
-            showAlertMessage("errMsg", "You input more than 10 usernames!", 1);
+        else if ($('#usernames').val().trim().split(',').length > 500) {
+            showAlertMessage("errMsg", "You input more than 500 usernames!", 1);
             $("#errMsg").show();
         }
         else {
