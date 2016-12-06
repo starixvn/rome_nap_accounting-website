@@ -13,11 +13,15 @@ public partial class InternalView : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        var serviceBase = new ServiceBase();
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        var serviceBase = new ServiceBase();
-        if (isDummyAcc)
+        bool isSpecialSiteCustomer = false;
+        bool isSpecialHeadline = false;
+        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+        
+        if (isDummyAcc || isSpecialHeadline)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
             {
@@ -40,8 +44,8 @@ public partial class InternalView : System.Web.UI.Page
             }
         }
 
-        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);        
-        bool isSpecialSiteCustomer = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] });
+        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
+       
         string internalAgentUrl = ConfigurationManager.AppSettings[isSpecialSiteCustomer ? "int_agent_url2" : "int_agent_url"];
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
