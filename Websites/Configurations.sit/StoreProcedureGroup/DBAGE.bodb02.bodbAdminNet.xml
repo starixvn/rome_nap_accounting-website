@@ -159,7 +159,7 @@
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -284,7 +284,7 @@
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
