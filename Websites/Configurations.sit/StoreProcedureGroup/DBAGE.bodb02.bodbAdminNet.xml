@@ -279,7 +279,7 @@
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername_xpre" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
@@ -346,6 +346,6 @@
   <Function Name="NG2">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
-	  <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />	  
+    <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
