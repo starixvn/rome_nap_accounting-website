@@ -58,12 +58,12 @@
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/numeral.js"></script>
     <script src="../js/jQuery/autocomplete/jquery.autocomplete.min.js" type="text/javascript"></script>
     <%--<script src="../js/IBCWnd/IBCWnd.js" type="text/javascript"></script>--%>
-    <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+    <script src="WebResources/js/jquery-ui.js?ver=20161208" type="text/javascript"></script>
     <script src="../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
     <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
-    <script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
-    <script src="WebResources/js/CustomerStatement.js" type="text/javascript"></script>
+    <script src="../js/Popup/confirmbox.js?ver=20161208" type="text/javascript"></script>
+    <script src="WebResources/js/CustomerStatement.js?ver=20161208" type="text/javascript"></script>
     <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         window.rootUrl = '<%=rootUrl%>'; 
