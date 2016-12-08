@@ -80,7 +80,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 TargetRoleId = 4,
                 FormId = FormType.EditMinPT,
                 SubAccId = 0,
-                AdminId = AppSession.AccId
+                AdminId = AppSession.AccId,
+                Language = "En",
+                LangKey = "E"
             };
 
             return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
