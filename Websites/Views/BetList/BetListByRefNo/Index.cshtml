@@ -5,7 +5,7 @@
 @{ 
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
-    var allowedProducts = "Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet" + ng2Text;
+    var allowedProducts = "Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet" + ng2Text + "/Fishing World";
 }
 <html>
 <head>
@@ -112,6 +112,7 @@
                                     <option value="12">Gold Deluxe</option>
                                     <option value="22">Macau Games</option>
                                     <option value="21">Allbet</option>
+                                    <option value="24">Fishing World</option>
                                 </select>
                             </td>
                             <td style="min-width: 65px">
