@@ -297,7 +297,7 @@ namespace Fanex.BetList.Accounting.Core
             {
                 resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
                      string.Empty :
-                     "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", ' " + ticketDetail.Ticket.BetCheck + "')";
+                     "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
             }
 
             var resultLink1 = string.IsNullOrEmpty(resultLink) ?

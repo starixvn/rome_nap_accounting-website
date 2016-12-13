@@ -664,6 +664,10 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
         null);
 }
 
+function ViewFishingWorldResult(custId, betCheck) {
+    ViewGlobalGamingResult(custId, betCheck);
+}
+
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
         Refno: refNo,
@@ -675,9 +679,11 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
         WinLostDate: winlostDate
     });
 
-    var title = sportType === 219 ? "Fishing World Result" : "RNG Casino Result";
+    var isFw = betType >= 1011 && betType <= 1020;
 
-    if (sportType === 219) {
+    var title = isFw ? "Fishing World Result" : "RNG Casino Result";
+
+    if (isFw === true) {
         ViewGlobalGamingResult(custId, refNo);
     } else {
         parent.OpenNextPopup(
