@@ -21,7 +21,7 @@ var resultbetlist = {
                 success: function (rs) {
                     var bettypeName = '';
                     if (parseInt(bettype) == 1101)
-                        bettypeName = "Party Baccarat"
+                        bettypeName = "Premium Baccarat"
                     else if (parseInt(bettype) == 1102)
                         bettypeName = "Party Roulette"
                     else if (parseInt(bettype) == 1103)
