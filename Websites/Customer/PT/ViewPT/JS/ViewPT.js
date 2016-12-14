@@ -1062,7 +1062,6 @@ var ViewPT = {
             case 216:
             case 217:
             case 218:
-            case 220:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 23:

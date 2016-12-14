@@ -135,9 +135,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     && s.SportId != 215
                     && s.SportId != 216
                     && s.SportId != 217
-                    && s.SportId != 218
-                    && s.SportId != 219
-                    && s.SportId != 220).ToList();
+                    && s.SportId != 218).ToList();
             }
 
             return result;
