@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     var level = string.IsNullOrWhiteSpace(Request.QueryString["level"]) ? "member" : Request.QueryString["level"];
     var showNG2 = Sunplus.Accounting.Business.Security.Permissions.HasPermission(Sunplus.Accounting.Core.Common.Enumerations.Functions.AccessSpecialSites) == true ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
@@ -9,8 +9,11 @@
     <div class="box_header" style="width: 100%;">
         <div id="left_tab1" class="left_tab" style="width: 100%">
             <ul>
-                <li id="tabSearchCopy" class="current"><a onclick="ShowSearchCopy();" href="javascript:;"><span>Search & Copy</span></a></li>
-                <li id="tabFullMode" ><a onclick="ShowFullMode();"href="javascript:;"><span>Full Mode</span></a></li>
+                @if (level != "member")
+                {
+                    <li id="tabSearchCopy" class="current"><a onclick="ShowSearchCopy();" href="javascript:;"><span>Search & Copy</span></a></li>
+                }
+                <li id="tabFullMode"><a onclick="ShowFullMode();" href="javascript:;"><span>Full Mode</span></a></li>
             </ul>
         </div>
     </div>
@@ -22,7 +25,7 @@
     </div>
     <iframe id="frmSearchCopyAddNewSuper" scrolling="auto" frameborder="0" style="width: 100%;
         height: 770px;" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="../customersetting/searchcopy/super/index"
-        name="frmSearchCopyAddNewSuper"></iframe>
+            name="frmSearchCopyAddNewSuper"></iframe>
 </div>
 <script type="text/javascript">
     var level = '@level';
@@ -35,7 +38,7 @@
             { sportname: 'Racing', sportvalue: 'tabRacing' },
             { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
             { sportname: 'Casino', sportvalue: 'tabCasino' },
-            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },        
+            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
             { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
             { sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' },
             { sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' },
@@ -44,7 +47,7 @@
             { sportname: 'Albet', sportvalue: 'tabAllbet' },
             { sportname: 'Macau Games', sportvalue: 'tabVoidbridge' }
     ];
-    
+
     if ('@level' == 'member') {
         sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
@@ -59,8 +62,14 @@
         $(window).resize(function () {
             pre_resize();
         });
-
-        ShowSearchCopy();
+        if ("@level" != "member")
+        {
+            ShowSearchCopy();
+        }
+        else
+        {
+            ShowFullMode();
+        }
     });
 
     function CheckUserName() {
