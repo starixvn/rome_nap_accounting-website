@@ -59,8 +59,6 @@
         </span>                
     </div>
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
-        @*<span data-ng-hide="CustomerModel.roleId == 1">@NGCasinoLang.lblMemberWinLimit</span>
-        <span data-ng-hide="CustomerModel.roleId != 1">@NGCasinoLang.lblMemberWinLossLimit</span>*@
         <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
     </div>
     <table cellpadding="0" cellspacing="0" class="tableInfo">

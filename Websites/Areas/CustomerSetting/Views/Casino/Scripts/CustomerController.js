@@ -173,7 +173,6 @@ function CustomerController($scope, $element) {
                     currentWinLoss.lossPercent,
                     currentWinLoss.maxLossAmount);
 
-                
                 var $currentWinLimit = $('#currentWinLimit');
                 $currentWinLimit
                     .attr('style', '')
