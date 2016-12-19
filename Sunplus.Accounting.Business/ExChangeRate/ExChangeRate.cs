@@ -41,8 +41,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             ex.Minbet = string.Empty;
             ex.MinbetLive = string.Empty;
             ex.GBPRate = string.Empty;
-            ex.AUDRate = string.Empty;
-            ex.ZARRate = string.Empty;
             ex.EURORate = string.Empty;
             ex.USDRate = string.Empty;
             ex.function = FunctionName;
@@ -110,8 +108,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "MinBet", NumberFormat.DecFormat(dr["MinBet"], 0));
                 TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
                 TemplateHandler.Assign(ref exRow, "GBPRate", (Convert.IsDBNull(dr["GBPRate"]) ? "-" : dr["GBPRate"].ToString()));
-                TemplateHandler.Assign(ref exRow, "AUDRate", (Convert.IsDBNull(dr["AUDRate"]) ? "-" : dr["AUDRate"].ToString()));
-                TemplateHandler.Assign(ref exRow, "ZARRate", (Convert.IsDBNull(dr["ZARRate"]) ? "-" : dr["ZARRate"].ToString()));
                 TemplateHandler.Assign(ref exRow, "EURORate", (Convert.IsDBNull(dr["EURORate"]) ? "-" : dr["EURORate"].ToString()));
                 TemplateHandler.Assign(ref exRow, "USDRate", (Convert.IsDBNull(dr["US$Rate"]) ? "-" : dr["US$Rate"].ToString()));
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
@@ -145,7 +141,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         #region InsertExChangeRate
 
         public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive,
-            string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, string Code, string Description, string MultipliedBy)
+            string GBPRate, string EURORate, string USDRate, string Code, string Description, string MultipliedBy)
         {
             string msg = "";
             try
@@ -159,12 +155,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 if (GBPRate.Length != 0)
                     hash.Add("gbprate", GBPRate);
-
-                if (AUDRate.Length != 0)
-                    hash.Add("audrate", AUDRate);
-
-                if (ZARRate.Length != 0)
-                    hash.Add("zarrate", ZARRate);
 
                 if (EURORate.Length != 0)
                     hash.Add("eurorate", EURORate);
@@ -323,10 +313,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     list.Add(ex.MinbetLive);
                     ex.GBPRate = CastAide.AsString(dr["GBPRate"]);
                     list.Add(ex.GBPRate);
-                    ex.AUDRate = CastAide.AsString(dr["AUDRate"]);
-                    list.Add(ex.AUDRate);
-                    ex.ZARRate = CastAide.AsString(dr["ZARRate"]);
-                    list.Add(ex.ZARRate);
                     ex.EURORate = CastAide.AsString(dr["EURORate"]);
                     list.Add(ex.EURORate);
                     ex.USDRate = CastAide.AsString(dr["US$Rate"]);
@@ -359,8 +345,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 html += CastAide.AsString(dr["minbet"]) + "|";
                 html += CastAide.AsString(dr["minbetlive"]) + "|";
                 html += CastAide.AsString(dr["GBPRate"]) + "|";
-                html += CastAide.AsString(dr["AUDRate"]) + "|";
-                html += CastAide.AsString(dr["ZARRate"]) + "|";
                 html += CastAide.AsString(dr["EURORate"]) + "|";
                 html += CastAide.AsString(dr["US$Rate"]) + "|";
                 html += CastAide.AsString(dr["Description"]) + "|";
@@ -373,7 +357,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region UpdateEditExChangeRate
 
-        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, string Description, string MultipliedBy, string Code)
+        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string GBPRate, string EURORate, string USDRate, string Description, string MultipliedBy, string Code)
         {
             string msg = "";
             try
@@ -388,12 +372,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 if (GBPRate.Length != 0)
                     hash.Add("gbprate", GBPRate);
-
-                if (AUDRate.Length != 0)
-                    hash.Add("audrate", AUDRate);
-
-                if (ZARRate.Length != 0)
-                    hash.Add("zarrate", ZARRate);
 
                 if (EURORate.Length != 0)
                     hash.Add("eurorate", EURORate);
@@ -461,26 +439,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             mail.GBPRate.oldGBPRate = dr["GBPRate"].ToString();
                             if (GBPRate != dr["GBPRate"].ToString())
                                 mail.GBPRate.newGBPRate = changeColor(GBPRate);
-                        }
-
-                        if (Convert.IsDBNull(dr["AUDRate"]) && AUDRate.Length == 0)
-                            mail.AUDRate.Clear();
-                        else
-                        {
-                            mail.AUDRate.newAUDRate = AUDRate;
-                            mail.AUDRate.oldAUDRate = dr["AUDRate"].ToString();
-                            if (AUDRate != dr["AUDRate"].ToString())
-                                mail.AUDRate.newAUDRate = changeColor(AUDRate);
-                        }
-
-                        if (Convert.IsDBNull(dr["ZARRate"]) && ZARRate.Length == 0)
-                            mail.ZARRate.Clear();
-                        else
-                        {
-                            mail.ZARRate.newZARRate = ZARRate;
-                            mail.ZARRate.oldZARRate = dr["ZARRate"].ToString();
-                            if (ZARRate != dr["ZARRate"].ToString())
-                                mail.ZARRate.newZARRate = changeColor(ZARRate);
                         }
 
                         if (Convert.IsDBNull(dr["EURORate"]) && EURORate.Length == 0)

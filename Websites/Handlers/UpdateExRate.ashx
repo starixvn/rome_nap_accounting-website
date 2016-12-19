@@ -43,7 +43,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             if (context.Request["type"] == "insert")
             {
 
-                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, GBPRate, AUDRate, ZARRate, EURORate, USDRate, Code, Description, MultipliedBy);
+                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, GBPRate, EURORate, USDRate, Code, Description, MultipliedBy);
                 if (errMsg.Length > 0)
                     context.Response.Write("no|" + errMsg);
                 else
@@ -67,7 +67,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
                     var currencies = syncCurrencyService.SyncCurrencies().Currencies;
 
-                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, AUDRate, ZARRate, EURORate, USDRate, Description, MultipliedBy, Code);
+                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, EURORate, USDRate, Description, MultipliedBy, Code);
                     if (errMsg.Length == 0)
                     {
                         var allowedCurrency = false;

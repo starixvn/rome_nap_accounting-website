@@ -31,13 +31,11 @@ public partial class EditRate : PageBase
             exrateEditContent.Text = exrateEditContent.Text.Replace("{Minbet}", list[2]);
             exrateEditContent.Text = exrateEditContent.Text.Replace("{MinbetLive}", list[3]);
             exrateEditContent.Text = exrateEditContent.Text.Replace("{GBPRate}", list[4]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{AUDRate}", list[5]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{ZARRate}", list[6]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{EURORate}", list[7]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{USDRate}", list[8]);
-            tbxStandardCurrency.Value = list[9];
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{Description}", list[10]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{MultipliedBy}", list[11]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{EURORate}", list[5]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{USDRate}", list[6]);
+            tbxStandardCurrency.Value = list[7];
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Description}", list[8]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{MultipliedBy}", list[9]);
 
             exrateEditContent.Text = exrateEditContent.Text.Replace("{submit}", "Submit");
             exrateEditContent.Text = exrateEditContent.Text.Replace("{reset}", "Reset");
@@ -55,7 +53,7 @@ public partial class EditRate : PageBase
 
             for (int i = 0; i < selectStandardCurrency.Items.Count; ++i )
             {
-                if (selectStandardCurrency.Items[i].Value == list[9])
+                if (selectStandardCurrency.Items[i].Value == list[7])
                 {
                     selectStandardCurrency.SelectedIndex = i;
                     break;

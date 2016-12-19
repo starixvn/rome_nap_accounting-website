@@ -41,8 +41,8 @@ function Validator() {
         return false;
     }*/
     document.getElementById('errMsg').innerHTML = '';
-    var arrIDs = ['txtCurrency', 'txtBaseRate', 'txtMinbet', 'txtMinbetLive', 'txtGBPRate', 'txtAUDRate', 'txtZARRate', 'txtEURORate', 'txtUSDRate', 'tbxMultipliedBy'];
-    var arrNames = ['Currency', 'Base Rate', 'Min Bet', 'Min Bet Live', 'GBP', 'AUD', 'ZAR', 'EURO', 'US$', 'MultipliedBy'];
+    var arrIDs = ['txtCurrency', 'txtBaseRate', 'txtMinbet', 'txtMinbetLive', 'txtGBPRate', 'txtEURORate', 'txtUSDRate', 'tbxMultipliedBy'];
+    var arrNames = ['Currency', 'Base Rate', 'Min Bet', 'Min Bet Live', 'GBP', 'EURO', 'US$', 'MultipliedBy'];
     for (i = 0; i < arrIDs.length; i++) {
         if ($('#' + arrIDs[i]).val().length == 0) {
             showAlertMessage('errMsg', 'Please input ' + arrNames[i] + '.', 1);
@@ -76,8 +76,6 @@ function InsertExChangeRate() {
         param += '&Minbet=' + $('#txtMinbet').val();
         param += '&MinbetLive=' + $('#txtMinbetLive').val();
         param += '&GBPRate=' + $('#txtGBPRate').val();
-        param += '&AUDRate=' + $('#txtAUDRate').val();
-        param += '&ZARRate=' + $('#txtZARRate').val();
         param += '&EURORate=' + $('#txtEURORate').val();
         param += '&USDRate=' + $('#txtUSDRate').val();
         param += '&Code=' + $('#tbxStandardCurrency').val();
@@ -119,8 +117,6 @@ function UpdateEditExChangeRate() {
         param += '&Minbet=' + $('#txtMinbet').val();
         param += '&MinbetLive=' + $('#txtMinbetLive').val();
         param += '&GBPRate=' + $('#txtGBPRate').val();
-        param += '&AUDRate=' + $('#txtAUDRate').val();
-        param += '&ZARRate=' + $('#txtZARRate').val();
         param += '&EURORate=' + $('#txtEURORate').val();
         param += '&USDRate=' + $('#txtUSDRate').val();
         param += '&Code=' + $('#tbxStandardCurrency').val();
@@ -160,7 +156,7 @@ function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
     //showPopup('Edit Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
     //OpenPopup(url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose)
-    parent.OpenPopup(url, "Edit Exchange Rate", 1100, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Edit Exchange Rate", 950, 220, true, true, window, 2000, null, null);
 }
 
 
@@ -254,7 +250,7 @@ function loadwindow() {
 function AddNewExChangeRate() {
     var url = 'ExRate/AddNewExRate.aspx';
     //showPopup('Add New Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
-    parent.OpenPopup(url, "Add New Exchange Rate", 1100, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Add New Exchange Rate", 950, 220, true, true, window, 2000, null, null);
 }
 
 

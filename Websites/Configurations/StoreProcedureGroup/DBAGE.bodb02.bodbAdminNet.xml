@@ -20,7 +20,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
