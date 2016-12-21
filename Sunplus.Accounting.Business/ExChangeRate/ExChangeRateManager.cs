@@ -265,6 +265,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 try
                                 {
                                     DataTable dtb = GetDataFromExcel(strLocation);
+                                    if (dtb.Columns.Count > 8)
+                                    {
+                                        result.ErrorCode = 1;
+                                        result.ErrorMessage = "Invalid File Uploaded.";
+
+                                        return result;
+                                    }
+
                                     HttpContext.Current.Session["ExRateOpenTote"] = dtb;
 
                                     FileInfo file = new FileInfo(strLocation);
