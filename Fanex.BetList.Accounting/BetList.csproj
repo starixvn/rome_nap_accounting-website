@@ -167,7 +167,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.6.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.6.2-beta\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.6.2\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
