@@ -61,13 +61,13 @@
                     </td>
                 </tr>
             </table>
-            <div class="maincontent_box" style="width: 778px;">
+            <div class="maincontent_box" style="width: 650px;">
                 <div id="ErrMsg">
                 </div>
                 <asp:Literal ID="ExRateAddContentHtml" runat="server"></asp:Literal>
             </div>
             <div id="sContent" style="margin-top: 5px">
-                <div id="divExhangeRate" class="content-warper" style="width: 782px">
+                <div id="divExhangeRate" class="content-warper" style="width: 654px">
                     <div class="content-toolbox bgtitle">
                         <div id="gridtitle" class="gridtitle">Exchange Rate</div>
                         <div class="btngroup">
@@ -112,14 +112,14 @@
                                         <div class="c" style="width:65px">
                                             GBP</div>
                                     </td>
-                                    <td style="border-bottom: none 0px;">
+                                    <%--<td style="border-bottom: none 0px;">
                                         <div class="c" style="width:64px">
                                             AUD</div>
                                     </td>
                                     <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:64px">
                                             ZAR</div>
-                                    </td>
+                                    </td>--%>
                                     <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:64px">
                                             EURO</div>

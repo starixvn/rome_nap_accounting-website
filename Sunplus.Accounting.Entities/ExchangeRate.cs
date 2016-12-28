@@ -42,14 +42,6 @@ namespace Sunplus.Accounting.Entities
         { get; set; }
 
         [DataMember]
-        public string AUDRate
-        { get; set; }
-
-        [DataMember]
-        public string ZARRate
-        { get; set; }
-
-        [DataMember]
         public string EURORate
         { get; set; }
 

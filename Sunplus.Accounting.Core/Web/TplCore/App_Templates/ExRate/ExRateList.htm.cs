@@ -12,7 +12,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
     {
         public class ExRateList_Template : Template
         {
-            protected static string s0 = "<span id=\"errMsg\" class=\"error-message\"></span><table id=\"table\" class=\"tbllayout\" cellspacing=\"1px\"><thead><tr class=\"title\"><th colspan=\"4\"></th><th colspan=\"5\">Open Tote Rate</th><th style=\"width: 70px\"></th></tr><tr id=\"trHeader\" class=\"title\"><th style=\"width: 70px\">Currency</th><th style=\"width: 80px;\">Base Rate</th><th style=\"width: 80px\">Min Bet</th><th style=\"width: 80px\">Min Bet Live</th><th style=\"width: 70px\">GBP</th><th style=\"width: 70px\">AUD</th><th style=\"width: 70px\">ZAR</th><th style=\"width: 70px\">EURO</th><th style=\"width: 70px\">US$</th><th style=\"width: 70px\">Edit</th></tr></thead><tbody>";
+            protected static string s0 = "<span id=\"errMsg\" class=\"error-message\"></span><table id=\"table\" class=\"tbllayout\" cellspacing=\"1px\"><thead><tr class=\"title\"><th colspan=\"4\"></th><th colspan=\"5\">Open Tote Rate</th><th style=\"width: 70px\"></th></tr><tr id=\"trHeader\" class=\"title\"><th style=\"width: 70px\">Currency</th><th style=\"width: 80px;\">Base Rate</th><th style=\"width: 80px\">Min Bet</th><th style=\"width: 80px\">Min Bet Live</th><th style=\"width: 70px\">GBP</th><th style=\"width: 70px\">EURO</th><th style=\"width: 70px\">US$</th><th style=\"width: 70px\">Edit</th></tr></thead><tbody>";
             public ExRateList_Content_Block Content = new ExRateList_Content_Block();
             protected static string s1 = "<tr id=\"trFooter\" style=\"display: none\"><td colspan=\"8\"></td></tr></tbody></table>";
 
@@ -51,13 +51,6 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
             protected static string s9 = "</div></td><td class=\"r new-rate-";
             private string t1_odd_even;
             protected static string s10 = "\"><div>";
-            public string AUDRate = "{AUDRate}";
-            protected static string s11 = "</div></td><td class=\"r new-rate-";
-            private string t2_odd_even;
-            protected static string s12 = "\"><div>";
-            public string ZARRate = "{ZARRate}";
-            protected static string s13 = "</div></td><td class=\"r new-rate-";
-            private string t3_odd_even;
             protected static string s14 = "\"><div>";
             public string EURORate = "{EURORate}";
             protected static string s15 = "</div></td><td class=\"r new-rate-";
@@ -92,12 +85,6 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
                     bd.Append(s9);
                     bd.Append(odd_even);
                     bd.Append(s10);
-                    bd.Append(AUDRate);
-                    bd.Append(s11);
-                    bd.Append(odd_even);
-                    bd.Append(s12);
-                    bd.Append(ZARRate);
-                    bd.Append(s13);
                     bd.Append(odd_even);
                     bd.Append(s14);
                     bd.Append(EURORate);

@@ -462,6 +462,15 @@ namespace Fanex.BetList.Accounting.Core
                                 case BetTypeContants.GoldDeluxeRoulette:
                                     resultLink = "ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")";
                                     break;
+                                case BetTypeContants.FastMarketNext1Minutes:
+                                case BetTypeContants.FastMarketNext5Minutes:
+                                case BetTypeContants.FastMarketWhatWillHappenFirstInNext1Minute:
+                                case BetTypeContants.FastMarketWhatWillHappenFirstInNext5Minutes:
+                                case BetTypeContants.FastMarketNext1MinuteSetPiece:
+                                    resultLink = "ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
+                                           ticketDetail.Ticket.BetTypeId + "," +
+                                           ticketDetail.Ticket.Handicap1 + ")";
+                                    break;
                                 default:
                                     if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
                                     {

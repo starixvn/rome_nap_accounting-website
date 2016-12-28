@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="Keno Setting">
     <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -156,7 +155,7 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -344,8 +343,8 @@
   <Function Name="BetList - BetTrade">
     <Setting Key="BetList_BetTradeDetails" SpName="Acc_BetList_BetTrade_Detail" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-	<Function Name="NG2">
-		<Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
-	</Function>
+  <Function Name="NG2">
+    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

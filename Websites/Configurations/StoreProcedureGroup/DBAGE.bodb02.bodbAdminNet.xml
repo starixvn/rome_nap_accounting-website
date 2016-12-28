@@ -20,7 +20,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -283,7 +283,7 @@
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting_xpre" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Colossus Bets">

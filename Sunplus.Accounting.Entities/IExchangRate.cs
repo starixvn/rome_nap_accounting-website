@@ -25,12 +25,6 @@ namespace Sunplus.Accounting.Entities
         string GBPRate
         { get; set; }
 
-        string AUDRate
-        { get; set; }
-
-        string ZARRate
-        { get; set; }
-
         string EURORate
         { get; set; }
 

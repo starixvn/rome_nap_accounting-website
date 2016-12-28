@@ -12,7 +12,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
     {
         public class ExRateAdd_Template : Template
         {
-            protected static string s0 = "<span id=\"errMsg\" class=\"error-message\"><div id=\"clear2\"></div></span><form id=\"fExRate\"><table id=\"ex\" class=\"tbllayout\" cellspacing=\"1px\" style=\"width:auto\"><tr class=\"title\"><td rowspan=\"2\">Currency</td><td rowspan='2'>Standard Code</td><td rowspan=\"2\">Base Rate</td><td rowspan=\"2\">Min Bet</td><td rowspan=\"2\">Min Bet Live</td><td colspan=\"5\"><b>Open Tote Rate</b></td><td rowspan=\"2\"></td></tr><tr class=\"title\"><td>GBP</td><td>AUD</td><td>ZAR</td><td>EURO</td><td>US$</td></tr><tr bgcolor='white'><td><input type=\"text\" class=\"w70\" ";
+            protected static string s0 = "<span id=\"errMsg\" class=\"error-message\"><div id=\"clear2\"></div></span><form id=\"fExRate\"><table id=\"ex\" class=\"tbllayout\" cellspacing=\"1px\" style=\"width:auto\"><tr class=\"title\"><td rowspan=\"2\">Currency</td><td rowspan='2'>Standard Code</td><td rowspan=\"2\">Base Rate</td><td rowspan=\"2\">Min Bet</td><td rowspan=\"2\">Min Bet Live</td><td colspan=\"5\"><b>Open Tote Rate</b></td><td rowspan=\"2\"></td></tr><tr class=\"title\"><td>GBP</td><td>EURO</td><td>US$</td></tr><tr bgcolor='white'><td><input type=\"text\" class=\"w70\" ";
             public string ReadOnly = "{ReadOnly}";
             protected static string s1 = "name=\"txtEx\" id=\"txtCurrency\" value=\"";
             public string Currency = "{Currency}";
@@ -27,10 +27,6 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
             protected static string s5 = "\" onkeypress=\"return CheckDecNumber_ExRate(event);\"/></td><td><input type=\"text\" class=\"w70\" name=\"txtEx\"id=\"txtGBPRate\" value=\"";
             public string GBPRate = "{GBPRate}";
             protected static string s6 = "\" onkeypress=\"return CheckDecNumber_ExRate(event);\"/></td><td><input type=\"text\" class=\"w70\" name=\"txtEx\"id=\"txtAUDRate\" value=\"";
-            public string AUDRate = "{AUDRate}";
-            protected static string s7 = "\" onkeypress=\"return CheckDecNumber_ExRate(event);\"/></td><td><input type=\"text\" class=\"w70\" name=\"txtEx\"id=\"txtZARRate\" value=\"";
-            public string ZARRate = "{ZARRate}";
-            protected static string s8 = "\" onkeypress=\"return CheckDecNumber_ExRate(event);\"/></td><td><input type=\"text\" class=\"w70\" name=\"txtEx\"id=\"txtEURORate\" value=\"";
             public string EURORate = "{EURORate}";
             protected static string s9 = "\" onkeypress=\"return CheckDecNumber_ExRate(event);\"/></td><td><input type=\"text\" class=\"w70\" name=\"txtEx\"id=\"txtUSDRate\" value=\"";
             public string USDRate = "{USDRate}";
@@ -70,10 +66,6 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate
                 bd.Append(s5);
                 bd.Append(GBPRate);
                 bd.Append(s6);
-                bd.Append(AUDRate);
-                bd.Append(s7);
-                bd.Append(ZARRate);
-                bd.Append(s8);
                 bd.Append(EURORate);
                 bd.Append(s9);
                 bd.Append(USDRate);

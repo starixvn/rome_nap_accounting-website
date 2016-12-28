@@ -74,8 +74,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref tpl, "Minbet", "");
                 TemplateHandler.Assign(ref tpl, "MinbetLive", "");
                 TemplateHandler.Assign(ref tpl, "GBPRate", "");
-                TemplateHandler.Assign(ref tpl, "AUDRate", "");
-                TemplateHandler.Assign(ref tpl, "ZARRate", "");
                 TemplateHandler.Assign(ref tpl, "EURORate", "");
                 TemplateHandler.Assign(ref tpl, "USDRate", "");
                 TemplateHandler.Assign(ref tpl, "submit", "Submit");
@@ -127,12 +125,16 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 #region Header
 
-                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Merged = true;
-                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 9).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 1, 1, 1).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 2, 1, 2).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 3, 1, 3).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 4, 1, 4).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 7).Merged = true;
                 //ws.Cells[0, 2].Value = "Open Tote";
-                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 9).Value = "Open Tote";
-                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 9).Style = gembox.GetStyleTitle(181, 196, 208);
-                string[] arrheaders = { "Currency", "Standard Code", "Base Rate", "Min Bet", "Min Bet Live", "GBP", "AUD", "ZAR", "EURO", "US$" };
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 7).Value = "Open Tote";
+                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 7).Style = gembox.GetStyleTitle(181, 196, 208);
+                string[] arrheaders = { "Currency", "Standard Code", "Base Rate", "Min Bet", "Min Bet Live", "GBP", "EURO", "US$" };
 
                 for (int i = 0; i < arrheaders.Length; i++)
                 {
@@ -146,7 +148,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 int indexrow = 2;
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
-                string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "GBPRate", "AUDRate", "ZARRate", "EURORate", "US$Rate" };
+                string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "GBPRate", "EURORate", "US$Rate" };
                 int red = 0, green = 0, blue = 0;
 
                 foreach (DataRow dr in Rows)
@@ -263,6 +265,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 try
                                 {
                                     DataTable dtb = GetDataFromExcel(strLocation);
+                                    if (dtb.Columns.Count > 8)
+                                    {
+                                        result.ErrorCode = 1;
+                                        result.ErrorMessage = "Invalid File Uploaded.";
+
+                                        return result;
+                                    }
+
                                     HttpContext.Current.Session["ExRateOpenTote"] = dtb;
 
                                     FileInfo file = new FileInfo(strLocation);
@@ -378,21 +388,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             }
 
                         exrate.ActualRate = row[2].ToString();
-
-                        exrate.AUDRate = row[6].ToString();
-
-                        if (exrate.AUDRate.IndexOf("e-") == -1)
-                        {
-                            try
-                            {
-                                fdata = float.Parse(exrate.AUDRate);
-                            }
-                            catch
-                            {
-                                isValidData = false;
-                            }
-                        }
-                        exrate.EURORate = row[8].ToString();
+                        exrate.EURORate = row[6].ToString();
                         if (exrate.EURORate.IndexOf("e-") == -1)
                         {
                             try
@@ -416,24 +412,12 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 isValidData = false;
                             }
                         }
-                        exrate.USDRate = row[9].ToString();
+                        exrate.USDRate = row[7].ToString();
                         if (exrate.USDRate.IndexOf("e-") == -1)
                         {
                             try
                             {
                                 fdata = float.Parse(exrate.USDRate);
-                            }
-                            catch
-                            {
-                                isValidData = false;
-                            }
-                        }
-                        exrate.ZARRate = row[7].ToString();
-                        if (exrate.ZARRate.IndexOf("e-") == -1)
-                        {
-                            try
-                            {
-                                fdata = float.Parse(exrate.ZARRate);
                             }
                             catch
                             {
@@ -482,7 +466,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     int errcode = 0;
                     string errmsg = string.Empty;
 
-                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate, ref errcode, ref errmsg);
+                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.EURORate, exrate.USDRate, ref errcode, ref errmsg);
                     if (errcode > 0 && !string.IsNullOrEmpty(errmsg))
                     {
                         listMsg.Add(errmsg);
@@ -492,7 +476,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     result.ErrorCode = 100;
                     var listMsgDistinct = listMsg.Distinct().ToList();
-                    result.ErrorMessage = string.Join(", ", listMsgDistinct); 
+                    result.ErrorMessage = string.Join(", ", listMsgDistinct);
                 }
                 else
                 {

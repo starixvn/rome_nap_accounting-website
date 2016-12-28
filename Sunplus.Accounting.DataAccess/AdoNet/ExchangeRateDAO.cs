@@ -52,7 +52,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             return result;
         }
-        public void ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, ref int errcode, ref string errmsg)
+        public void ExChangeRateUpdateOpenTote(string currency, string GBPRate, string EURORate, string USDRate, ref int errcode, ref string errmsg)
         {
             try
             {
@@ -63,10 +63,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     hash.Add("currency", currency.Trim());
                     if (GBPRate.Length != 0)
                         hash.Add("gbprate", GBPRate);
-                    if (AUDRate.Length != 0)
-                        hash.Add("audrate", AUDRate);
-                    if (ZARRate.Length != 0)
-                        hash.Add("zarrate", ZARRate);
                     if (EURORate.Length != 0)
                         hash.Add("eurorate", EURORate);
                     if (USDRate.Length != 0)
