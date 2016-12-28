@@ -20,7 +20,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -64,7 +64,7 @@
     <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Age_BetList_SelMatchResultFinance" SpName="Age_BetList_SelMatchResultFinance" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -346,6 +346,6 @@
   <Function Name="NG2">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
-	  <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />	  
+    <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
