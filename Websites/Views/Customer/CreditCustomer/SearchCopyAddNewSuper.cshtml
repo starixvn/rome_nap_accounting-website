@@ -9,10 +9,7 @@
     <div class="box_header" style="width: 100%;">
         <div id="left_tab1" class="left_tab" style="width: 100%">
             <ul>
-                @if (level != "member")
-                {
-                    <li id="tabSearchCopy" class="current"><a onclick="ShowSearchCopy();" href="javascript:;"><span>Search & Copy</span></a></li>
-                }
+                <li id="tabSearchCopy" class="current"><a onclick="ShowSearchCopy();" href="javascript:;"><span>Search & Copy</span></a></li>
                 <li id="tabFullMode"><a onclick="ShowFullMode();" href="javascript:;"><span>Full Mode</span></a></li>
             </ul>
         </div>
@@ -62,14 +59,8 @@
         $(window).resize(function () {
             pre_resize();
         });
-        if ("@level" != "member")
-        {
-            ShowSearchCopy();
-        }
-        else
-        {
-            ShowFullMode();
-        }
+        
+        ShowSearchCopy();
     });
 
     function CheckUserName() {
