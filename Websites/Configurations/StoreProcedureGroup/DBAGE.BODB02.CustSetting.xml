@@ -16,7 +16,7 @@
     <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="PT Setting">
     <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
