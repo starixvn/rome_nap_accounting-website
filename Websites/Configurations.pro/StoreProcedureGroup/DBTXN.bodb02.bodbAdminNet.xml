@@ -103,7 +103,7 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gold deluxe win limit">
-    <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Balance checking">
     <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
