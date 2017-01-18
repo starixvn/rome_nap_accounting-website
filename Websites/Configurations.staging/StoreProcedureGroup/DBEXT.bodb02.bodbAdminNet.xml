@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="PT Setting">
     <Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="DBEXT.bodb02.bodbAdminNet" />
@@ -30,9 +29,9 @@
   </Function>
   <Function Name="ResetWinning">
     <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14_xtest" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14_xtest" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer NewLicensee">
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />

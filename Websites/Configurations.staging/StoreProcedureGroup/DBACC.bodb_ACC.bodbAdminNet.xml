@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="Virtual Rate">
     <Setting Key="Customer_VirtualRate_InsertTemp" SpName="Acc_VirtualRateMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
