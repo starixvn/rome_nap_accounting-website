@@ -30,6 +30,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowVoidbridge { get; set; }
 
+        public bool IsShowFishingWorld { get; set; }
+
         public bool IsShowAutoSuspend { get; set; }
 
         public int ParentId { get; set; }

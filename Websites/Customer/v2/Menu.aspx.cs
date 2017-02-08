@@ -22,14 +22,15 @@ public partial class Others_Menu : System.Web.UI.Page
         cricket = 20,
         allbet = 21,
         voidbridge = 22,
-        ng2 = 23
+        ng2 = 23,
+        fishingworld = 24
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2;
+        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -50,6 +51,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
+        hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -134,6 +136,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", string.Format(creditDCSLink, (int)products.allbet), hideAllbet);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("ng2", "{ng2LinkSetting}", string.Format(creditDCSLink, (int)products.ng2), hideNG2);
+        this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
 
         this.sMenu.Text = this.tplMenu;
     }

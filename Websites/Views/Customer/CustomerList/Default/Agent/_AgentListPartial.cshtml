@@ -229,6 +229,10 @@
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 22, 'Macau Games');">Macau Games</li>
                     }
+                    @if (!agentItem.IsHideFishingWorld)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 24, 'Fishing World');">Fishing World</li>
+                    }
                 </ul>
             </div>
         </td>

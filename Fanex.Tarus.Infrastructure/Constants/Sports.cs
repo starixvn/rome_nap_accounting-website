@@ -60,7 +60,7 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int MicroGamingRNGCasino = 205;
 
         public const int NG2Start = 213;
-        public const int NG2End = 220;
+        public const int NG2End = 218;
 
         /// <summary>
         /// Gets the sport name.

@@ -33,6 +33,8 @@ namespace Fanex.BetList.Accounting.Criteria
         [SpParam(SqlParamName = "transid")]
         public int TransId { get; set; }
 
+        public DateTime MoveBetsDay { get; set; }
+
         public string GetSettingKey()
         {
             return "BetListByDayAll";

@@ -2527,4 +2527,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="removingOTPConfirm" xml:space="preserve">
     <value>Do you want to remove this user's registered device?</value>
   </data>
+    <data name="enableFishingWorld" xml:space="preserve">
+    <value>Fishing World</value>
+  </data>
+  <data name="lblDisabledFishingWorldUpline" xml:space="preserve">
+    <value>Fishing World has been disabled at upline</value>
+  </data>
 </root>

@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="ResetWinning">
     <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
@@ -98,5 +97,8 @@
     <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Ticket To Group Headline">
+    <Setting Key="Acc_CustomerSelGroupHeadlineByRefno" SpName="Acc_CustomerSelGroupHeadlineByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

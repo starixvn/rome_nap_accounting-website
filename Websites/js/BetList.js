@@ -643,7 +643,32 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
         null);
 }
 
-function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate) {
+function showGlobalGaming(transId, winlossDate, custId, transType) {
+    var params = $.param({
+        TransId: transId,
+        TransType: transType,
+        CustId: custId
+    });
+
+    parent.OpenNextPopup(
+        "RNGCasinoDetails",
+        'RNGCasinoBetList/BetDetails?' + params,
+        "Fishing World Details",
+        1030,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}
+
+function ViewFishingWorldResult(custId, betCheck) {
+    ViewGlobalGamingResult(custId, betCheck);
+}
+
+function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
         Refno: refNo,
         RoleId: 0,
@@ -654,18 +679,26 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
         WinLostDate: winlostDate
     });
 
-    parent.OpenNextPopup(
-        "RNGCasinoResult",
-        'RNGCasinoBetList/GetHandHistory?' + params,
-        "RNG Casino Result",
-        835,
-        675,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
+    var isFw = betType >= 1011 && betType <= 1020;
+
+    var title = isFw ? "Fishing World Result" : "RNG Casino Result";
+
+    if (isFw === true) {
+        ViewGlobalGamingResult(custId, refNo);
+    } else {
+        parent.OpenNextPopup(
+            "RNGCasinoResult",
+            'RNGCasinoBetList/GetHandHistory?' + params,
+            title,
+            835,
+            675,
+            true,
+            false,
+            window,
+            0,
+            null,
+            null);
+    }
 }
 
 function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
@@ -718,6 +751,18 @@ function ViewVoidbridgeResult(custId, betCheck) {
         }
         else {
             parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
+        }
+    });
+}
+
+function ViewGlobalGamingResult(custId, betCheck) {
+    var url = "../Report/ViewGlobalGamingResult.aspx?custId=" + custId + "&gameId=" + betCheck;
+    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewGlobalGamingResult", '_loading.htm', 'Fishing Wolrd Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
+        if (result.responseText.indexOf("<table") < 0) {
+            parent.document.getElementById('innerFrameViewGlobalGamingResult').src = result.responseText;
+        }
+        else {
+            parent.document.getElementById('innerFrameViewGlobalGamingResult').contentDocument.write(result.responseText);
         }
     });
 }

@@ -5,7 +5,7 @@
 @{ 
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
-    var allowedProducts = "Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet" + ng2Text;
+    var allowedProducts = "Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet" + ng2Text + "/Fishing World";
 }
 <html>
 <head>
@@ -93,7 +93,9 @@
                         <tr>
                             <td></td>
                             <td class="text-left" colspan="8">
-                                <div id="ref-no-info-msg" class="info-msg"> @allowedProducts tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.</div>
+                                <div id="ref-no-info-msg" class="info-msg"> 
+                                    @allowedProducts tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
+                                    <br/>
                                     For Allbet, the search result includes the related tickets with the same GameID.
                                 </div>
                             </td>
@@ -112,6 +114,7 @@
                                     <option value="12">Gold Deluxe</option>
                                     <option value="22">Macau Games</option>
                                     <option value="21">Allbet</option>
+                                    <option value="24">Fishing World</option>
                                 </select>
                             </td>
                             <td style="min-width: 65px">

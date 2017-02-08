@@ -582,6 +582,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowFishingWorld
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1");
+            }
+        }
+
         public static bool IsVirtualRateTest
         {
             get

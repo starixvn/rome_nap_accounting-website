@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="Login - Menu">
     <Setting Key="Acc_MenuSelByCustID" SpName="Acc_MenuSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />

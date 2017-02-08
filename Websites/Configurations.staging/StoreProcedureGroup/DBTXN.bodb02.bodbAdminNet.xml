@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="Helper">
     <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet" />

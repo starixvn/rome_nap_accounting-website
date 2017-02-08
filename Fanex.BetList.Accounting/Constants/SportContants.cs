@@ -74,5 +74,7 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int AllBet = 211;
         public const int Voidbridge = 212;
+        public const int FishingWorld = 219;
+
     }
 }

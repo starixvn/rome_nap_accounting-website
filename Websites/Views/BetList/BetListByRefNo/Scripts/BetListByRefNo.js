@@ -97,7 +97,7 @@ BetList.BetListByRefNo = (function ($) {
             $gameId.attr("disabled", "disabled");
             $betId.attr("disabled", "disabled");
         }
-        else if (selProductValue === "22") {
+        else if (selProductValue === "22" || selProductValue === "24") {
             $gameId.attr("disabled", "disabled");
         }
     };
@@ -130,7 +130,7 @@ BetList.BetListByRefNo = (function ($) {
             showError("Either GameID or BetID is required");
             return false;
         }
-        if (selProductValue === "22" && $betId.val().trim() === "") {
+        if ((selProductValue === "22" || selProductValue === "24") && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
         }

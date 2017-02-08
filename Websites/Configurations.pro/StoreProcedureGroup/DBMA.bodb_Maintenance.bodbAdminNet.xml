@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
   <Function Name="Maintenance">
     <Setting Key="Acc_NewsIns" SpName="Acc_NewsIns" DbName="DBMA.bodb_Maintenance.bodbAdminNet" />
