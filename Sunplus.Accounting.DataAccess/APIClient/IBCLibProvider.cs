@@ -13,10 +13,10 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
+
 /// <summary>
 /// Summary description for IBCLibProvider
 /// </summary>
-
 namespace Sunplus.Accounting.DataAccess.APIClient
 {
     public class IBCLibProvider : IBCCustomerProvider
@@ -272,7 +272,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                AppSession.AccId, AppSession.Username, 3);
         }
 
-
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string rngSite)
         {
             try
@@ -313,7 +312,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
                                                AppSession.AccId, AppSession.Username, 3);
         }
-
 
         public override bool IsDisabledCasino(int custId)
         {
@@ -512,6 +510,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 return GetStoreProcedure(storeCollection, aliasName);
             }
         }
+
         private class StoreCustomerProcedureConfiguration : DataAccess
         {
             public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection storeCollection, string aliasName)
@@ -520,6 +519,4 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             }
         }
     }
-
-
 }

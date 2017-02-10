@@ -3,8 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Web;
+using CasinoLibrary.Model.UserException;
+using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -18,15 +21,12 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate.App_Templates.ExRate;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Bingo.Core;
 
 /// <summary>
 /// Summary description for ExChangeRate
 /// </summary>
 namespace Sunplus.Accounting.Business.ExChangeRate
 {
-    using System.Linq;
-
     public class ExChangeRate
     {
         #region GenAddContent
@@ -181,30 +181,36 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 int exid = exchangeid;
                 if (msg.Length == 0)
                 {
-                    CasinoLibrary.SBAgent.BasicInfo info = new CasinoLibrary.SBAgent.BasicInfo();
+                    BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-               
+
                     if (WebSettings.EnableLiveCasino)
                     {
                         var liveCs = new ExRateManager();
                         ExRateBO exRateBo = new ExRateBO()
-                                                {
-                                                    ExchangeId = exid,
-                                                    Currency = currency,
-                                                    Actualrate = actualrate,
-                                                    ModifyBy = AppSession.AccId,
-                                                    ModifyUserName = AppSession.AccUserName,
-                                                    FromIp = HttpContext.Current.Request.UserHostAddress,
-                                                };
+                        {
+                            ExchangeId = exid,
+                            Currency = currency,
+                            Actualrate = actualrate,
+                            ModifyBy = AppSession.AccId,
+                            ModifyUserName = AppSession.AccUserName,
+                            FromIp = HttpContext.Current.Request.UserHostAddress,
+                        };
                         liveCs.UpdateExchange(exRateBo);
                     }
                 }
             }
+            catch (ErrorException casinoException)
+            {
+                msg = casinoException.Message;
+                LogExtensions.ExceptionHandler(casinoException);
+            }
             catch (Exception ex)
             {
                 msg = ex.Message;
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
+
             return msg;
         }
 
@@ -397,9 +403,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 if (msg.Length == 0)
                 {
-                    CasinoLibrary.SBAgent.BasicInfo info = new CasinoLibrary.SBAgent.BasicInfo();
+                    BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-                
+
                     if (WebSettings.EnableLiveCasino)
                     {
                         var liveCs = new ExRateManager();
@@ -471,11 +477,16 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                                   tplSubject, mail.ToString());
                 }
             }
+            catch (ErrorException casinoException)
+            {
+                msg = casinoException.Message;
+                LogExtensions.ExceptionHandler(casinoException);
+            }
             catch (Exception ex)
             {
                 msg = ex.Message;
                 //bool f = DNAide.Utils.SendMailService.SendMail2(MailSetting.MailServer, MailSetting.ToMailExchangeRate, MailSetting.FromMail, MailSetting.CCMailExchangeRate, MailSetting.BCCMailExchangeRate, "Have a problem when updating exchange rate", ex.ToString(), MailSetting.MailPwd);
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
             return msg;
         }
