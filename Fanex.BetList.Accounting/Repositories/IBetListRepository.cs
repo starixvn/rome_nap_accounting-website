@@ -37,5 +37,7 @@ namespace Fanex.BetList.Accounting.Repositories
         SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria);
 
         CombinationParlay BetList_SelDetailCombinationMP(ICriteria criteria);
+
+        string GetSiteNameByCustId(ICriteria criteria);
     }
 }

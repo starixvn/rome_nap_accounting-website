@@ -19,6 +19,7 @@ namespace Fanex.BetList.Accounting.Core
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Tarus.Infrastructure.Common;
+    using Services;
 
     /// <summary>
     /// TODO: Update summary.
@@ -441,16 +442,12 @@ namespace Fanex.BetList.Accounting.Core
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
                         case SportContants.MicroGamingLiveCasino:
-                            resultLink = "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                                "'" + AppSession.SiteName + "'," +
-                                ticketDetail.Ticket.BetCheck + ")";
+                            resultLink = BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
                         case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
-                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                                "'" + AppSession.SiteName + "'," +
-                                ticketDetail.Ticket.BetCheck + ")";
+                                BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
                         case SportContants.AGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
@@ -821,6 +818,14 @@ namespace Fanex.BetList.Accounting.Core
         public bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
+        }
+
+        private string BuildMicroGamingPopupLink(int custId, string betCheck)
+        {
+            IBetListService betListService = new BetListService();
+            string siteName = betListService.GetSiteNameByCustId(custId);
+
+            return string.Format("ViewMicroGamingPopup({0},'{1}',{2})", custId, siteName, betCheck);
         }
     }
 }
