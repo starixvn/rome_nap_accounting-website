@@ -506,7 +506,7 @@ namespace Fanex.BetList.Accounting.Core
                                 case BetTypeContants.FastMarketWhatWillHappenFirstInNext5Minutes:
                                 case BetTypeContants.FastMarketNext1MinuteSetPiece:
                                     resultLink = "ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
-                                           (ticketDetail.Ticket.BetTypeId == BetTypeContants.FastMarketNext1MinuteSetPiece ? BetTypeContants.FastMarketNext1Minutes : ticketDetail.Ticket.BetTypeId) + "," +
+                                           ticketDetail.Ticket.BetTypeId + "," +
                                            ticketDetail.Ticket.Handicap1 + ")";
                                     break;
                                 default:
