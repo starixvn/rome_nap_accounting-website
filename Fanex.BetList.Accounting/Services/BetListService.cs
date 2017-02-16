@@ -1463,6 +1463,11 @@ namespace Fanex.BetList.Accounting.Services
             return "<div class=\"offer-name-list\">" + string.Join(string.Empty, combinationTypeCombo) + "</div>";
         }
 
+        public string GetSiteNameByCustId(int custId)
+        {
+            return _betListRepository.GetSiteNameByCustId(new BetListGetSiteIdByCustIdCriteria { CustId = custId });
+        }
+
         private bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay ||

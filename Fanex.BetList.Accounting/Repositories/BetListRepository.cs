@@ -535,5 +535,23 @@ namespace Fanex.BetList.Accounting.Repositories
 
             return null;
         }
+
+        public string GetSiteNameByCustId(ICriteria criteria)
+        {
+            string siteName = string.Empty;
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    if (reader.Read())
+                    {
+                        siteName = reader["sitename"].ToString();
+                    }
+                }
+            }
+
+            return siteName;
+        }
     }
 }

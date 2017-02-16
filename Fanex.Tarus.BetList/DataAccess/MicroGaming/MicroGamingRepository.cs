@@ -18,9 +18,14 @@
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
+                    TicketDetail ticketDetail;
+
                     while (reader.Read())
                     {
-                        result.Add(ToTicketDetail(reader));
+                        ticketDetail = ToTicketDetail(reader);
+                        ticketDetail.Ticket.CustId = criteria.CustId;
+
+                        result.Add(ticketDetail);
                     }
                 }
 

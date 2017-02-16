@@ -73,5 +73,7 @@ namespace Fanex.BetList.Accounting.Services
         bool IsU3SpecialCustomers(int custId);
 
         string GetCombinationTypeComboNames(string betTeam, string betCheck, decimal hdp1, decimal hdp2, IList<TicketDetail> ticketDetails);
+
+        string GetSiteNameByCustId(int custId);
     }
 }
