@@ -92,7 +92,7 @@ namespace Sunplus.Accounting.Core.Helper.IP
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                // LogExtensions.ExceptionHandler(ex);
             }
             return countryName;
         }
