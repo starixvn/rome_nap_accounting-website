@@ -1,8 +1,8 @@
-﻿@{
+﻿@model EditSettingViewModel
+@{
     Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = GoldDeluxeLang.lblEditGoldDeluxe;
 }
-@model EditSettingViewModel
 @section modeldata
 {
     <script type="text/javascript">
@@ -71,7 +71,7 @@
                     @Model.Setting.Fax
                 </td>
                 @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
-                    || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
+        || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
                 {
                     <td class="right bold"></td>
                     <td class="left"></td>
@@ -84,7 +84,7 @@
                     <td class="left info-value">
                         <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
                         @if (Model.Level != CustomerLevel.Member
-                                            && Model.Setting.HasDownline)
+                            && Model.Setting.HasDownline)
                         {
                             <label>
                                 <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="disableCheckBoxDownline || $parent.isReadOnly" />
