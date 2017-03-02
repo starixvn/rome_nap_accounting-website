@@ -762,16 +762,12 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.MicroGamingLiveCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
-                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                                "'" + AppSession.SiteName + "'," +
-                                ticketDetail.Ticket.BetCheck + ")";
+                                BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
                         case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
-                                "ViewMicroGamingPopup(" + AppSession.CustID + "," +
-                                "'" + AppSession.SiteName + "'," +
-                                ticketDetail.Ticket.BetCheck + ")";
+                                BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
                         case SportContants.AGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
