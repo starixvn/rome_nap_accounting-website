@@ -1617,4 +1617,22 @@
   <data name="ummbv1mp" xml:space="preserve">
     <value>Update Min-Max Bet</value>
   </data>
+  <data name="a_v2mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="a_v2spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="isa_v2mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="v2apt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="v2mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="v2spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
 </root>
