@@ -46,7 +46,7 @@
   </Function>
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid_xtest" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBPOLICY.bodb02.bodbAdminNet" />
