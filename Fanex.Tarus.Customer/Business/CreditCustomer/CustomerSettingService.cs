@@ -191,8 +191,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.Currency = custDetail.CurrencyId;
                 csCustomerInfo.CurrencyName = custDetail.CurrencyName;
                 csCustomerInfo.Fax = customer.Fax;
-                csCustomerInfo.Suspend = customer.StatusSetting.Suspended;
-                csCustomerInfo.Closed = customer.StatusSetting.Closed;
+                csCustomerInfo.Suspend = custDetail.Suspend;
+                csCustomerInfo.Closed = custDetail.Closed;
                 csCustomerInfo.IsEnablePT = true;
                 csCustomerInfo.SIBCCustID = custDetail.SuperId;
                 csCustomerInfo.MIBCCustID = custDetail.MasterId;
