@@ -199,6 +199,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.AIBCCustID = custDetail.AgentId;
                 csCustomerInfo.CasinoDisabled = custDetail.IsUplineDisableCasino;
                 csCustomerInfo.IsSyncNG2 = custDetail.IsUplineSyncNG2;
+                csCustomerInfo.DisableAutoMasterPT = !customer.StatusSetting.DisableAutoMPT;
 
                 var custManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                 custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
