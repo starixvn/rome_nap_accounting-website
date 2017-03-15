@@ -132,7 +132,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.20, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.20-CasinoError1\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.20-CasinoError2\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
@@ -143,7 +143,7 @@
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.13-CasinoError2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.13-CasinoError3\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.CloneSetting">
@@ -173,7 +173,7 @@
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.7-CasinoError\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.7-CasinoError1\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
