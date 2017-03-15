@@ -42,6 +42,25 @@ namespace Sunplus.Accounting.Business.UI
                         counter++;
                         bgcolor_row = (bgcolor_row == "") ? "evenrow" : "";
                         CopyContent = ListContent;
+                        int GainLossColumnIndex = 10;
+                        string GainlossFormatted = "";
+                        if (dr.IsDBNull(GainLossColumnIndex))
+                        {
+                            GainlossFormatted = "N/A";
+                        }
+                        else
+                        {
+                            if (Convert.ToDecimal(dr["GainLoss"]) < 0)
+                            {
+                                TemplateHandler.Assign(ref CopyContent, "GainLossColor_Value", "#ff2a00");
+                            }
+                            else
+                            {
+                                TemplateHandler.Assign(ref CopyContent, "GainLossColor_Value", "");
+
+                            }
+                            GainlossFormatted = NumberFormat.DecFormat(dr["GainLoss"], 2);
+                        }
 
                         TemplateHandler.Assign(ref CopyContent, "bgcolor-row", bgcolor_row);
                         TemplateHandler.Assign(ref CopyContent, "No_Value", counter.ToString());
@@ -56,6 +75,7 @@ namespace Sunplus.Accounting.Business.UI
                         TemplateHandler.Assign(ref CopyContent, "Max_Value", NumberFormat.DecFormat(dr["maxexrate"], 4));
                         TemplateHandler.Assign(ref CopyContent, "InputRate_Value", dr["inputExRate"]);
                         TemplateHandler.Assign(ref CopyContent, "Amount_Value", NumberFormat.DecFormat(dr["Amount"], 2));
+                        TemplateHandler.Assign(ref CopyContent, "ForexGainLoss_Value", GainlossFormatted);
                         TemplateHandler.Assign(ref CopyContent, "Creator_Value", dr["creator"]);
 
                         Content.Append(CopyContent);
@@ -64,7 +84,7 @@ namespace Sunplus.Accounting.Business.UI
 
                 if (counter == 0)
                 {
-                    return AccCommon.GenNoInformation("11");
+                    return AccCommon.GenNoInformation("12");
                 }
                 else
                 {
