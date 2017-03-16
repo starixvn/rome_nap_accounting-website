@@ -1635,4 +1635,16 @@
   <data name="v2spt_9999" xml:space="preserve">
     <value>Others</value>
   </data>
+  <data name="A_v2mpt_mem_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Isa_v2mpt_mem_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Isa_v2spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Maxv2pt_9999" xml:space="preserve">
+    <value>Max Others</value>
+  </data>
 </root>
