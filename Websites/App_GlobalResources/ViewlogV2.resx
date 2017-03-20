@@ -1647,4 +1647,7 @@
   <data name="Maxv2pt_9999" xml:space="preserve">
     <value>Max Others</value>
   </data>
+  <data name="minv2pt_9999" xml:space="preserve">
+    <value>Min Others</value>
+  </data>
 </root>
