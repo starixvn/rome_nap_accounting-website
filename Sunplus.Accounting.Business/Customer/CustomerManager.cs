@@ -961,6 +961,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 };
 
                                 var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && isDeposit;
+                                var isShowEnableCashOut = WebSettings.EnableCashOut && roleId == 4 && isDeposit;
                                 var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && isDeposit;
                                 var isShowMacau = WebSettings.EnableMacau && roleId == 4 && isDeposit;
                                 var isShowColossusBetsForCredit = !isHideColossusBets;
@@ -1001,6 +1002,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowGoldDeluxe = isShowGoldDeluxe,
                                     IsShowMacau = isShowMacau,
                                     IsShowEnableBetTrade = isShowEnableBetTrade,
+                                    IsShowEnableCashOut = isShowEnableCashOut,
                                     IsShowEnableMicrogaming = isShowEnableMicrogaming,
                                     IsShowAutoSuspend = hasReadPermission_AutoSuspend,
                                     IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
@@ -1021,6 +1023,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
+
+                                TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
+                                TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
                                 TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);

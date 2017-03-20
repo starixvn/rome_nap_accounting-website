@@ -478,6 +478,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool EnableCashOut
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EnableCashOut"] == "1");
+            }
+        }
+
         public static bool EnableMicrogaming
         {
             get

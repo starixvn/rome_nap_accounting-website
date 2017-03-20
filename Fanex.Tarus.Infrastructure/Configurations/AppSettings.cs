@@ -90,6 +90,15 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+
+        public static int ProductIdCashOut
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdCashOut"]);
+            }
+        }
+
         public static int ProductIdMicrogaming
         {
             get
