@@ -272,7 +272,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 }
                 catch (ErrorException casinoException)
                 {
-                    LogExtensions.ExceptionHandler(casinoException);
+                    LogExtensions.CasinoException(casinoException);
                     success = false;
                 }
                 catch (Exception ex)

@@ -84,7 +84,7 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     catch (ErrorException casinoException)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(casinoException);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
                     }
                     catch (Exception ex)
                     {
@@ -112,7 +112,8 @@ public class UpdateCustomerStatus : BaseHandler
                         }
                         catch (ErrorException casinoException)
                         {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(casinoException);
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
+                            throw;
                         }
                         catch (Exception)
                         {
@@ -172,7 +173,7 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     catch (ErrorException casinoException)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(casinoException);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
                     }
                     catch (Exception ex)
                     {

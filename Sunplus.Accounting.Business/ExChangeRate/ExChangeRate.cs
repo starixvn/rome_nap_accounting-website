@@ -203,7 +203,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             catch (ErrorException casinoException)
             {
                 msg = casinoException.Message;
-                LogExtensions.ExceptionHandler(casinoException);
+                LogExtensions.CasinoException(casinoException);
             }
             catch (Exception ex)
             {
@@ -480,7 +480,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             catch (ErrorException casinoException)
             {
                 msg = casinoException.Message;
-                LogExtensions.ExceptionHandler(casinoException);
+                LogExtensions.CasinoException(casinoException);
             }
             catch (Exception ex)
             {
