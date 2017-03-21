@@ -13,7 +13,7 @@ var LeftPanelManager = function () {
         productName,
         productId,
         settingType) {
-        var url = (productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus/?') +
+        var url = ((productId == 24 || productId == 25) ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus/?') +
             $.param({
                 custId: custId,
                 username: username,

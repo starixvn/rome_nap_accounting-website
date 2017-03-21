@@ -22,7 +22,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (!renderLeftPanelParameter.IsShowEnableCashOut)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CashOut");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
             }
 
             if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
