@@ -137,9 +137,9 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                         var rngSiteName = new CustomerManager().GetRNGSiteNameByCustId(custid);
                         bool status = CasinoManager.UpdateCustPwd(custid, userpwd, Request.ServerVariables["REMOTE_ADDR"], rngSiteName);
                     }
-                    catch (ErrorException casinoException)
+                    catch (ErrorException casinoEx)
                     {
-                        LogExtensions.CasinoException(casinoException);
+                        LogExtensions.CasinoExceptionHandler(casinoEx);
                     }
                     catch (Exception)
                     {

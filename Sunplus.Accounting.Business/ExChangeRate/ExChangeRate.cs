@@ -200,10 +200,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     }
                 }
             }
-            catch (ErrorException casinoException)
+            catch (ErrorException casinoEx)
             {
-                msg = casinoException.Message;
-                LogExtensions.CasinoException(casinoException);
+                msg = casinoEx.Message;
+                LogExtensions.CasinoExceptionHandler(casinoEx);
             }
             catch (Exception ex)
             {
@@ -477,10 +477,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                                   tplSubject, mail.ToString());
                 }
             }
-            catch (ErrorException casinoException)
+            catch (ErrorException casinoEx)
             {
-                msg = casinoException.Message;
-                LogExtensions.CasinoException(casinoException);
+                msg = casinoEx.Message;
+                LogExtensions.CasinoExceptionHandler(casinoEx);
             }
             catch (Exception ex)
             {

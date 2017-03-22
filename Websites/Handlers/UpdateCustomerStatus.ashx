@@ -82,9 +82,9 @@ public class UpdateCustomerStatus : BaseHandler
                                                                                context.Request.UserHostAddress, customerRngSite);
                         }
                     }
-                    catch (ErrorException casinoException)
+                    catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
                     }
                     catch (Exception ex)
                     {
@@ -110,9 +110,9 @@ public class UpdateCustomerStatus : BaseHandler
                         {
                             casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
                         }
-                        catch (ErrorException casinoException)
+                        catch (ErrorException casinoEx)
                         {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
                             throw;
                         }
                         catch (Exception)
@@ -171,9 +171,9 @@ public class UpdateCustomerStatus : BaseHandler
                                                                                context.Request.UserHostAddress, customerRngSite);
                         }
                     }
-                    catch (ErrorException casinoException)
+                    catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoException(casinoException);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
                     }
                     catch (Exception ex)
                     {

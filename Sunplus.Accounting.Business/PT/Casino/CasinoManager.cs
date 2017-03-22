@@ -49,9 +49,9 @@ namespace Sunplus.Accounting.Business.PT.Casino
                     casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
                 }
             }
-            catch (ErrorException casinoException)
+            catch (ErrorException casinoEx)
             {
-                LogExtensions.CasinoException(casinoException);
+                LogExtensions.CasinoExceptionHandler(casinoEx);
                 casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
             }
             catch (Exception ex)

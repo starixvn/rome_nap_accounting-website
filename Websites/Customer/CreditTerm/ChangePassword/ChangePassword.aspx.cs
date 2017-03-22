@@ -132,9 +132,9 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
                         var rngSiteName = new CustomerManager().GetRNGSiteNameByCustId(custid);
                         bool status = CasinoManager.UpdateCustPwd(custid, Encryption.CfsEnCode(userpwd), Request.ServerVariables["REMOTE_ADDR"], rngSiteName);
                     }
-                    catch (ErrorException casinoException)
+                    catch (ErrorException casinoEx)
                     {
-                        LogExtensions.CasinoException(casinoException);
+                        LogExtensions.CasinoExceptionHandler(casinoEx);
                     }
                     catch (Exception)
                     {

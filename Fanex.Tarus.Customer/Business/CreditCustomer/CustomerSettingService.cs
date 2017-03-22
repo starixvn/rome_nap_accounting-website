@@ -270,9 +270,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                     csCustomer.SiteName = customer.SiteName;
                     success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, customer.StatusSetting.Closed, customer.StatusSetting.Suspended, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
                 }
-                catch (ErrorException casinoException)
+                catch (ErrorException casinoEx)
                 {
-                    LogExtensions.CasinoException(casinoException);
+                    LogExtensions.CasinoExceptionHandler(casinoEx);
                     success = false;
                 }
                 catch (Exception ex)

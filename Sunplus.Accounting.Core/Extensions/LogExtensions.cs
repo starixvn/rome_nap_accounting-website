@@ -21,25 +21,9 @@ namespace Sunplus.Accounting.Core.Extensions
             ex.Write();
         }
 
-        public static void CasinoException(ErrorException ex, Formater.LogType logType = Formater.LogType.Auto)
+        public static void CasinoExceptionHandler(ErrorException ex)
         {
-            var baseException = ex.GetBaseException();
-
-            if (baseException != null)
-            {
-                var logException = new Exception(ex.Message, baseException)
-                {
-                    Source = ex.Source,
-                    HelpLink = ex.HelpLink
-                };
-
-                var data = logException.Data ?? new Hashtable();
-
-                data["TARGETSITE"] = baseException.TargetSite;
-                data["STACKTRACE"] = baseException.StackTrace;
-
-                logException.Write(logType);
-            }
+            ex.WriteCasinoException();
         }
     }
 }
