@@ -22,11 +22,13 @@ namespace Fanex.BetList.Accounting.Controllers
     {
         private readonly IBetListService _betListService;
         private readonly IResultService _resultService;
+        private readonly IBetListDetailService _betListDetailService;
 
         public BetListController()
         {
             this._betListService = new BetListService();
             this._resultService = new ResultService();
+            _betListDetailService = new BetListDetailService();
         }
 
         public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam)
@@ -354,6 +356,12 @@ namespace Fanex.BetList.Accounting.Controllers
             }
 
             return new EmptyResult();
+        }
+
+        [AuthorizeFunctions("ViewInfo")]
+        public ActionResult GetCashOutHistory(GetCashOutDetailCriteria criteria)
+        {
+            return View("CashOutHistory");
         }
     }
 }

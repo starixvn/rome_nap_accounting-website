@@ -9,8 +9,8 @@
 
 namespace Fanex.BetList.Accounting.Criteria
 {
-    using Sunplus.Accounting.Core.Common;
     using System;
+    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -21,6 +21,7 @@ namespace Fanex.BetList.Accounting.Criteria
 
         public string IP { get; set; }
 
+        public DateTime MoveBetsDay { get; set; }
 
         public int UserId
         {
