@@ -579,6 +579,7 @@ namespace Fanex.BetList.Accounting.Core
             }
 
             string statusHtml = string.Empty;
+            string resultLink = string.Empty;
             int betTypeId = ticketDetail.Ticket.BetTypeId;
             int sportTypeId = ticketDetail.Ticket.SportTypeId;
             string status = ticketDetail.Ticket.Status;
@@ -625,7 +626,7 @@ namespace Fanex.BetList.Accounting.Core
                                 finalAwayScore);
                         }
                         else
-                        {
+                        {                           
                             statusHtml =
                                 string.Format("{0}@{1}-{2}",
                                                 statusFormat,
@@ -703,7 +704,7 @@ namespace Fanex.BetList.Accounting.Core
                 return statusHtml;
             }
 
-            string resultLink = string.Empty;
+           
             if (betlistHelper.IsHRBettype(ticketDetail.Ticket.BetTypeId))
             {
                 if (isWonStatus || isLoseStatus)
@@ -801,6 +802,18 @@ namespace Fanex.BetList.Accounting.Core
                 {
                     resultLink = string.Empty;
                 }
+            }
+
+            if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
+            {
+                statusHtml = statusFormat;
+                resultLink = "\"ViewResultMetricGaming(" +
+                    ticketDetail.Ticket.MatchId.ToString() + "," +
+                    ticketDetail.Ticket.BetTypeId + "," +
+                    ticketDetail.Ticket.BetId + "," +
+                    ticketDetail.Ticket.SportTypeId + "," +
+                    "'" + CacheRef.GetSportName(ticketDetail.Ticket.SportTypeId) + "'" + "," +
+                    "'" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "'" + ")\"";               
             }
 
             var resultLink1 = string.IsNullOrEmpty(resultLink) ?
