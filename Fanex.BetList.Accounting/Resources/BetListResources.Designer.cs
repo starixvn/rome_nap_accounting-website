@@ -88,6 +88,24 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BOUGHT.
+        /// </summary>
+        public static string BoughtUpper {
+            get {
+                return ResourceManager.GetString("BoughtUpper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CASH OUT.
+        /// </summary>
+        public static string CashOutUpper {
+            get {
+                return ResourceManager.GetString("CashOutUpper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comm.
         /// </summary>
         public static string Comm {
@@ -102,6 +120,15 @@ namespace Fanex.BetList.Accounting.Resources {
         public static string Dividend {
             get {
                 return ResourceManager.GetString("Dividend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string History {
+            get {
+                return ResourceManager.GetString("History", resourceCulture);
             }
         }
         

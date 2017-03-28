@@ -820,3 +820,25 @@ function ViewBettradeDetails(transId, refNo)
         null,
         null);
 }
+
+function ViewCashOutHistory(transId, refNo, betType, originalTransId) {
+    var params = $.param({
+        transId: transId,
+        refNo: refNo,
+        betType: betType,
+        originalTransId: originalTransId
+    });
+
+    parent.OpenNextPopup(
+        "CashOutHistory",
+        "BetList/GetCashOutHistory?" + params,
+        "Cash Out History",
+        600,
+        200,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}

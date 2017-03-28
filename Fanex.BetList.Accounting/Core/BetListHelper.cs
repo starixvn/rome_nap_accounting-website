@@ -392,7 +392,12 @@ namespace Fanex.BetList.Accounting.Core
             }
             else
             {
-                statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+                statusLabel = BuildCashOutStatus(ticketDetail.Ticket);
+
+                if (string.IsNullOrEmpty(statusLabel))
+                {
+                    statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
+                }
             }
 
             if (IsHideResultLink(ticketDetail.Ticket.SportTypeId))
@@ -585,7 +590,17 @@ namespace Fanex.BetList.Accounting.Core
                 "<br />" +
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + Labels.Result + "</a>" +
                 "<br />";
-            return statusLabel + resultLink;
+
+            string cashOutHistoryLink = string.Empty;
+
+            if (ticketDetail.Ticket.BetTypeId != BetTypeContants.CashOut &&
+                ticketDetail.Ticket.BetTypeId != BetTypeContants.CashOutBought &&
+                IsCashOutTicket(ticketDetail.Ticket))
+            {
+                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket);
+            }
+
+            return statusLabel + cashOutHistoryLink + resultLink;
         }
 
         /// <summary>
@@ -934,5 +949,87 @@ namespace Fanex.BetList.Accounting.Core
                     return false;
             }
         }
+
+        #region For Cash Out
+
+        private string BuildCashOutStatus(ITicket ticket)
+        {
+            string statusLabel = string.Empty;
+            string upperStatus = ticket.Status.ToUpperInvariant();
+
+            if (ticket.BetTypeId == BetTypeContants.CashOut)
+            {
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOutUpper, upperStatus);
+            }
+            else if (ticket.BetTypeId == BetTypeContants.CashOutBought)
+            {
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.BoughtUpper, upperStatus);
+            }
+            else if (IsCashOutOriginalTicket(ticket))
+            {
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOutUpper);
+            }
+
+            return statusLabel;
+        }
+
+        private string BuildCashOutStatus(ITicket ticket, string upperCashOutLabel, string upperStatus = null)
+        {
+            string statusLabel = string.Empty;
+
+            if (upperStatus == null || upperStatus == "WON" || upperStatus == "LOSE" || upperStatus == "DRAW")
+            {
+                statusLabel = string.Format(
+                    "<div class=\"bl_status c\">{0}</div>",
+                    upperCashOutLabel);
+            }
+            else if (upperStatus == "VOID" || upperStatus == "REFUND")
+            {
+                statusLabel = string.Format(
+                    "<div class=\"bl_status c\">{0}<br/>({1})</div>",
+                    upperStatus,
+                    upperCashOutLabel);
+            }
+            
+            if (statusLabel.Length > 0)
+            {
+                statusLabel += BuildCashOutHistoryPopupLink(ticket);
+            }
+
+            return statusLabel;
+        }
+
+        private bool IsCashOutOriginalTicket(ITicket ticket)
+        {
+            return ticket.BetdaqId == 0 && ticket.Stake == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
+        }
+
+        private bool IsCashOutTicket(ITicket ticket)
+        {
+            return ticket.BetdaqId == 1 || HasCashOutExtraInfo(ticket.ExtraInfo);
+        }
+
+        private bool HasCashOutExtraInfo(string extraInfo)
+        {
+            if (!string.IsNullOrEmpty(extraInfo))
+            {
+                return extraInfo.Trim().StartsWith("<p25 ");
+            }
+
+            return false;
+        }
+
+        private string BuildCashOutHistoryPopupLink(ITicket ticket)
+        {
+            return string.Format(
+                "<br/><a id=\"cashout_history\" onclick=\"ViewCashOutHistory({0},{1},{2},{3})\">{4}</a><br/>",
+                ticket.TransId,
+                ticket.RefNo,
+                ticket.BetTypeId,
+                ticket.BetdaqId,
+                BetListResources.History);
+        }
+
+        #endregion
     }
 }

@@ -126,11 +126,20 @@
   <data name="Bought" xml:space="preserve">
     <value>Bought</value>
   </data>
+  <data name="BoughtUpper" xml:space="preserve">
+    <value>BOUGHT</value>
+  </data>
+  <data name="CashOutUpper" xml:space="preserve">
+    <value>CASH OUT</value>
+  </data>
   <data name="Comm" xml:space="preserve">
     <value>Comm</value>
   </data>
   <data name="Dividend" xml:space="preserve">
     <value>Dividend</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
   </data>
   <data name="HorseBetType" xml:space="preserve">
     <value>Horse/Bet Type</value>
