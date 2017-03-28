@@ -835,21 +835,33 @@ namespace Fanex.BetList.Accounting.Core
 
             if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
             {
+                resultLink = string.Empty;
                 statusHtml = statusFormat;
-                resultLink = "\"ViewResultMetricGaming(" +
+                if (isWonStatus ||
+                   isLoseStatus ||
+                   isDrawStatus)
+                {
+                    resultLink = "\"ViewResultMetricGaming(" +
                     ticketDetail.Ticket.MatchId.ToString() + "," +
                     ticketDetail.Ticket.BetTypeId + "," +
                     ticketDetail.Ticket.BetId + "," +
                     ticketDetail.Ticket.SportTypeId + "," +
                     "'" + CacheRef.GetSportName(ticketDetail.Ticket.SportTypeId) + "'" + "," +
                     "'" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "'" + ")\"";
+                }
             }
 
             if (sportTypeId == 44 && (betTypeId == 1 || betTypeId == 3))
             {
-                resultLink = "\"ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
+                resultLink = string.Empty;
+                if (isWonStatus ||
+                   isLoseStatus ||
+                  isDrawStatus)
+                {
+                    resultLink = "\"ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
                                               ticketDetail.Ticket.BetTypeId + "," +
                                               ticketDetail.Ticket.BetId + ")\"";
+                }
             }
 
             var resultLink1 = string.IsNullOrEmpty(resultLink) ?
