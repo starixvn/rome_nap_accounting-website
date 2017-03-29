@@ -126,11 +126,17 @@
   <data name="Bought" xml:space="preserve">
     <value>Bought</value>
   </data>
-  <data name="BoughtUpper" xml:space="preserve">
-    <value>BOUGHT</value>
+  <data name="BoughtStake" xml:space="preserve">
+    <value>Bought Stake</value>
   </data>
-  <data name="CashOutUpper" xml:space="preserve">
-    <value>CASH OUT</value>
+  <data name="BoughtTickets" xml:space="preserve">
+    <value>Bought Ticket[s]:</value>
+  </data>
+  <data name="CashOut" xml:space="preserve">
+    <value>Cash Out</value>
+  </data>
+  <data name="CashOutTickets" xml:space="preserve">
+    <value>Cash out Ticket[s]:</value>
   </data>
   <data name="Comm" xml:space="preserve">
     <value>Comm</value>
@@ -153,7 +159,16 @@
   <data name="MemberWL" xml:space="preserve">
     <value>Member WinLoss/Comm</value>
   </data>
+  <data name="OriginalBetTicket" xml:space="preserve">
+    <value>Original Bet Ticket:</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
   <data name="Sold" xml:space="preserve">
     <value>Sold</value>
+  </data>
+  <data name="WinSlashLoss" xml:space="preserve">
+    <value>Win/Loss</value>
   </data>
 </root>

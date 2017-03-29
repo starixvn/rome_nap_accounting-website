@@ -597,7 +597,7 @@ namespace Fanex.BetList.Accounting.Core
                 ticketDetail.Ticket.BetTypeId != BetTypeContants.CashOutBought &&
                 IsCashOutTicket(ticketDetail.Ticket))
             {
-                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket);
+                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.CashOut);
             }
 
             return statusLabel + cashOutHistoryLink + resultLink;
@@ -959,21 +959,21 @@ namespace Fanex.BetList.Accounting.Core
 
             if (ticket.BetTypeId == BetTypeContants.CashOut)
             {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOutUpper, upperStatus);
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut, upperStatus);
             }
             else if (ticket.BetTypeId == BetTypeContants.CashOutBought)
             {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.BoughtUpper, upperStatus);
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.Bought, upperStatus);
             }
             else if (IsCashOutOriginalTicket(ticket))
             {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOutUpper);
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut);
             }
 
             return statusLabel;
         }
 
-        private string BuildCashOutStatus(ITicket ticket, string upperCashOutLabel, string upperStatus = null)
+        private string BuildCashOutStatus(ITicket ticket, string cashOutLabel, string upperStatus = null)
         {
             string statusLabel = string.Empty;
 
@@ -981,19 +981,19 @@ namespace Fanex.BetList.Accounting.Core
             {
                 statusLabel = string.Format(
                     "<div class=\"bl_status c\">{0}</div>",
-                    upperCashOutLabel);
+                    cashOutLabel.ToUpperInvariant());
             }
             else if (upperStatus == "VOID" || upperStatus == "REFUND")
             {
                 statusLabel = string.Format(
                     "<div class=\"bl_status c\">{0}<br/>({1})</div>",
                     upperStatus,
-                    upperCashOutLabel);
+                    cashOutLabel.ToUpperInvariant());
             }
             
             if (statusLabel.Length > 0)
             {
-                statusLabel += BuildCashOutHistoryPopupLink(ticket);
+                statusLabel += BuildCashOutHistoryPopupLink(ticket, cashOutLabel);
             }
 
             return statusLabel;
@@ -1019,14 +1019,15 @@ namespace Fanex.BetList.Accounting.Core
             return false;
         }
 
-        private string BuildCashOutHistoryPopupLink(ITicket ticket)
+        private string BuildCashOutHistoryPopupLink(ITicket ticket, string title)
         {
             return string.Format(
-                "<br/><a id=\"cashout_history\" onclick=\"ViewCashOutHistory({0},{1},{2},{3})\">{4}</a><br/>",
+                "<br/><a id=\"cashout_history\" onclick=\"ViewCashOutHistory({0},{1},{2},{3},'{4}')\">{5}</a><br/>",
                 ticket.TransId,
                 ticket.RefNo,
                 ticket.BetTypeId,
                 ticket.BetdaqId,
+                title,
                 BetListResources.History);
         }
 

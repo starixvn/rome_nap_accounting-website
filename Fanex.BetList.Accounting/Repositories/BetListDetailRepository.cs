@@ -10,31 +10,35 @@ namespace Fanex.BetList.Accounting.Repositories
 {
     public class BetListDetailRepository : IBetListDetailRepository
     {
-        public Ticket GetBetListDetail(ICriteria criteria)
+        public CashOutHistory GetCashOutHistory(ICriteria criteria)
         {
-            IList<TicketDetail> ticketDetails = new List<TicketDetail>();
-            IList<TicketData> ticketData = new List<TicketData>();
+            TicketDetail ticketDetail = null;
+            IList<CashOutTicket> cashOutTickets = new List<CashOutTicket>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        ticketDetails.Add(BuildTicketDetail(reader));
+                        ticketDetail = BuildTicketDetail(reader);
                     }
 
                     if (reader.NextResult())
                     {
                         while (reader.Read())
                         {
-                            ticketData.Add(BuildTicketData(reader));
+                            cashOutTickets.Add(BuildTicketData(reader));
                         }
                     }
                 }
             }
 
-            throw new NotImplementedException();
+            return new CashOutHistory
+            {
+                TicketDetail = ticketDetail,
+                CashOutTickets = cashOutTickets
+            };
         }
 
         private TicketDetail BuildTicketDetail(IDataReader reader, int custId = 0)
@@ -45,13 +49,7 @@ namespace Fanex.BetList.Accounting.Repositories
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
                 StakeHtml = string.Empty,
-                IsShowOtExRate = Convert.ToBoolean(reader["isShowOTExRate"]),
-                VirtualRate = Convert.ToDecimal(reader["virtualrate"]),
-                AgentPositionTaking2 = Convert.ToDecimal(reader["apositiontaking2"]),
-                MasterPositionTaking2 = Convert.ToDecimal(reader["mpositiontaking2"]),
-                SuperPositionTaking2 = Convert.ToDecimal(reader["spositiontaking2"]),
-                BetFrom = reader["betfrom"].ToString(),
-                AllowDelete = Convert.ToBoolean(reader["allowdelete"])
+                BetFrom = Convert.ToString(reader["betfrom"])
             };
         }
 
@@ -93,7 +91,6 @@ namespace Fanex.BetList.Accounting.Repositories
                 Odds = Convert.ToDecimal(reader["odds"]),
                 OddsType = Convert.ToString(reader["OddsType"]),
                 PlayerComm = Convert.ToDecimal(reader["commission"]),
-                Race = Convert.ToString(reader["race"]),
                 RefNo = Convert.ToString(reader["refno"]),
                 ShowTime = Convert.ToString(reader["showtime"]),
                 SportTypeId = Convert.ToInt32(reader["sporttype"]),
@@ -107,7 +104,6 @@ namespace Fanex.BetList.Accounting.Repositories
 
                 TransDate = Convert.ToDateTime(reader["transdate"]),
                 TransId = Convert.ToInt64(reader["transid"]),
-                UserName = Convert.ToString(reader["username"]),
                 Winlost = Convert.ToDecimal(reader["winlost"]),
                 WinlostDate = Convert.ToDateTime(reader["winlostdate"]),
                 TransDesc = Convert.ToString(reader["transdesc"]),
@@ -115,22 +111,25 @@ namespace Fanex.BetList.Accounting.Repositories
                 BetCheck = Convert.ToString(reader["betcheck"]),
                 OddsSpread = Convert.ToDecimal(reader["OddsSpread"]),
 
-                OriginalBetType = Convert.ToInt32(reader["OriginalBetType"]),
-                BetdaqId = Convert.ToInt64(reader["BetdaqId"]),
-                ExtraInfo = Convert.ToString(reader["ExtraInfo"])
+                OriginalBetType = Convert.ToInt32(reader["originalbettype"]),
+                BetdaqId = Convert.ToInt64(reader["betdaqid"]),
+                ExtraInfo = Convert.ToString(reader["extrainfo"])
             };
         }
 
-        private TicketData BuildTicketData(IDataReader reader)
+        private CashOutTicket BuildTicketData(IDataReader reader)
         {
-            return new TicketData
+            return new CashOutTicket
             {
-                BetTypeId = Convert.ToInt32(reader["bettype"]),
-                RefNo = Convert.ToString(reader["refno"]),
+                BetType = Convert.ToInt32(reader["bettype"]),
+                TransId = Convert.ToInt64(reader["transid"]),
+                RefNo = Convert.ToInt64(reader["refno"]),
                 Status = Convert.ToString(reader["status"]),
                 Stake = Convert.ToDecimal(reader["stake"]),
-                TransDesc = Convert.ToString(reader["TransDesc"]),
-                BetTeam = Convert.ToString(reader["betteam"])
+                TransDate = Convert.ToDateTime(reader["transdate"]),
+                CustId = Convert.ToInt32(reader["custid"]),
+                Price = Convert.ToDecimal(reader["price"]),
+                WinLost = Convert.ToDecimal(reader["winlost"])
             };
         }
     }

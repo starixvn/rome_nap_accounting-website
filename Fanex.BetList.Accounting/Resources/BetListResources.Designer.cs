@@ -88,20 +88,38 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BOUGHT.
+        ///   Looks up a localized string similar to Bought Stake.
         /// </summary>
-        public static string BoughtUpper {
+        public static string BoughtStake {
             get {
-                return ResourceManager.GetString("BoughtUpper", resourceCulture);
+                return ResourceManager.GetString("BoughtStake", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CASH OUT.
+        ///   Looks up a localized string similar to Bought Ticket[s]:.
         /// </summary>
-        public static string CashOutUpper {
+        public static string BoughtTickets {
             get {
-                return ResourceManager.GetString("CashOutUpper", resourceCulture);
+                return ResourceManager.GetString("BoughtTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out.
+        /// </summary>
+        public static string CashOut {
+            get {
+                return ResourceManager.GetString("CashOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash out Ticket[s]:.
+        /// </summary>
+        public static string CashOutTickets {
+            get {
+                return ResourceManager.GetString("CashOutTickets", resourceCulture);
             }
         }
         
@@ -169,11 +187,38 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Bet Ticket:.
+        /// </summary>
+        public static string OriginalBetTicket {
+            get {
+                return ResourceManager.GetString("OriginalBetTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sold.
         /// </summary>
         public static string Sold {
             get {
                 return ResourceManager.GetString("Sold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win/Loss.
+        /// </summary>
+        public static string WinSlashLoss {
+            get {
+                return ResourceManager.GetString("WinSlashLoss", resourceCulture);
             }
         }
     }

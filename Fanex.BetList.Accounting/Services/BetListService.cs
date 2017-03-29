@@ -767,8 +767,6 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.StatusRefNo(betDetail);
-
-                        //betDetail.StatusHtml += builder.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, true);
                     }
 
                     return betDetails;

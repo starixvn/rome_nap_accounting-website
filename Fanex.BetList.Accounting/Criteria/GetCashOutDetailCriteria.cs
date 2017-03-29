@@ -12,6 +12,9 @@ namespace Fanex.BetList.Accounting.Criteria
 
         public long OriginalTransId { get; set; }
 
+        [SpParam(Ignored = true)]
+        public string Title { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_BetList_CashOut_Detail";
