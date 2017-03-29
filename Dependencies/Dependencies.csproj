@@ -180,8 +180,8 @@
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.7\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.9-BAIO\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
