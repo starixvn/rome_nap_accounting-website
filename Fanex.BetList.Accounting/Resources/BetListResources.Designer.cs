@@ -106,7 +106,7 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cash Out.
+        ///   Looks up a localized string similar to Cash out.
         /// </summary>
         public static string CashOut {
             get {

@@ -48,12 +48,12 @@ namespace Fanex.BetList.Accounting.Models
         {
             if (upperStatus == "WON" || upperStatus == "LOSE" || upperStatus == "DRAW")
             {
-                return cashOutLabel.ToUpperInvariant();
+                return cashOutLabel;
             }
 
             if (upperStatus == "VOID" || upperStatus == "REFUND")
             {
-                return string.Format("{0}<br/>({1})", upperStatus, cashOutLabel.ToUpperInvariant());
+                return string.Format("{0}<br/>({1})", upperStatus, cashOutLabel);
             }
 
             return upperStatus;

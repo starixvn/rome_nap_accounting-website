@@ -133,7 +133,7 @@
     <value>Bought Ticket[s]:</value>
   </data>
   <data name="CashOut" xml:space="preserve">
-    <value>Cash Out</value>
+    <value>Cash out</value>
   </data>
   <data name="CashOutTickets" xml:space="preserve">
     <value>Cash out Ticket[s]:</value>
