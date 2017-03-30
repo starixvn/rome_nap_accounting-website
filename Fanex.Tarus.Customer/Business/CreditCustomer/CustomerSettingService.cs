@@ -11,14 +11,15 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using CasinoLibrary.Model.UserException;
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess;
-    using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
-    using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
 
@@ -28,7 +29,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     public class CustomerSettingService : ICustomerSettingService
     {
         private ICustomerSettingDataAccess _customerSettingDataAccess;
-
 
         public CustomerSettingService()
             : this(null)
@@ -191,14 +191,15 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.Currency = custDetail.CurrencyId;
                 csCustomerInfo.CurrencyName = custDetail.CurrencyName;
                 csCustomerInfo.Fax = customer.Fax;
-                csCustomerInfo.Suspend = customer.StatusSetting.Suspended;
-                csCustomerInfo.Closed = customer.StatusSetting.Closed;
+                csCustomerInfo.Suspend = custDetail.Suspend;
+                csCustomerInfo.Closed = custDetail.Closed;
                 csCustomerInfo.IsEnablePT = true;
                 csCustomerInfo.SIBCCustID = custDetail.SuperId;
                 csCustomerInfo.MIBCCustID = custDetail.MasterId;
                 csCustomerInfo.AIBCCustID = custDetail.AgentId;
                 csCustomerInfo.CasinoDisabled = custDetail.IsUplineDisableCasino;
                 csCustomerInfo.IsSyncNG2 = custDetail.IsUplineSyncNG2;
+                csCustomerInfo.DisableAutoMasterPT = !customer.StatusSetting.DisableAutoMPT;
 
                 var custManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                 custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
@@ -259,6 +260,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         public bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext)
         {
             bool success = true;
+
             if (Permissions.IsAllowCasino() && customer.StatusSetting.SyncCasino == true)
             {
                 try
@@ -268,22 +270,27 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                     csCustomer.SiteName = customer.SiteName;
                     success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, customer.StatusSetting.Closed, customer.StatusSetting.Suspended, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
                 }
+                catch (ErrorException casinoEx)
+                {
+                    LogExtensions.CasinoExceptionHandler(casinoEx);
+                    success = false;
+                }
                 catch (Exception ex)
                 {
                     LogExtensions.ExceptionHandler(ex);
                     success = false;
                 }
             }
+
             return success;
         }
-
 
         public Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm)
         {
             return _customerSettingDataAccess.UpdateDoubleComm(userId, custId, isDoubleComm);
         }
 
-        public string GetRNGSiteNameByCustId(int custId) 
+        public string GetRNGSiteNameByCustId(int custId)
         {
             try
             {

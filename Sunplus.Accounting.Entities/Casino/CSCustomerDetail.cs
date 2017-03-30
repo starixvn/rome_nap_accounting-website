@@ -343,5 +343,7 @@ namespace Sunplus.Accounting.Entities.Casino
         public bool IsDisableNG2Upline { get; set; }
 
         public bool IsSyncNG2 { get; set; }
+
+        public bool DisableAutoMasterPT { get; set; }
     }
 }

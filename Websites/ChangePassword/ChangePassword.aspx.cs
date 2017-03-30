@@ -2,6 +2,7 @@
 using System;
 using System.Text;
 using System.Web.Security;
+using CasinoLibrary.Model.UserException;
 using IBCUtils;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Customer;
@@ -136,7 +137,13 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                         var rngSiteName = new CustomerManager().GetRNGSiteNameByCustId(custid);
                         bool status = CasinoManager.UpdateCustPwd(custid, userpwd, Request.ServerVariables["REMOTE_ADDR"], rngSiteName);
                     }
-                    catch { }
+                    catch (ErrorException casinoEx)
+                    {
+                        LogExtensions.CasinoExceptionHandler(casinoEx);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
 
                 if (error.ErrorCode != 0)

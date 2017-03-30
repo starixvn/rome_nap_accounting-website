@@ -5,18 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using CasinoLibrary.Model.UserException;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Tarus.DataAccess.Implement.Customer;
+using Fanex.Tarus.Infrastructure.Constants;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.Entities.Casino;
-using Fanex.Tarus.Infrastructure.Constants;
 
 /// <summary>
 /// Manage class for Casino Business
@@ -122,6 +123,10 @@ namespace Sunplus.Accounting.Business
             try
             {
                 return IBCProvider.Casino.UpdateCustPwd(IBCCustID, UserPwdEncrypted, FromIP, siteName);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

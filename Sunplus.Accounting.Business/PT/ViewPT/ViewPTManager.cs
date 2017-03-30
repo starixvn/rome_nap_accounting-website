@@ -9,7 +9,6 @@ using DNAide.Data;
 using DNAide.Utils;
 using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
-using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Business.Resources;
 using Sunplus.Accounting.Business.Security;
@@ -21,10 +20,8 @@ using Sunplus.Accounting.Entities.Criteria.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Bingo.Core;
-using Sunplus.Bingo.Entities;
 using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
-using Result = Sunplus.Bingo.Entities.Result;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT

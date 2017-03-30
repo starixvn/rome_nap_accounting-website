@@ -16,6 +16,7 @@ using IBCUtils;
 using IBCUtils.Web;
 using System.Text;
 using CasinoLibrary.SBAgent;
+using CasinoLibrary.Model.UserException;
 
 public class UpdateCustomerStatus : BaseHandler
 {
@@ -81,6 +82,10 @@ public class UpdateCustomerStatus : BaseHandler
                                                                                context.Request.UserHostAddress, customerRngSite);
                         }
                     }
+                    catch (ErrorException casinoEx)
+                    {
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                    }
                     catch (Exception ex)
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
@@ -101,7 +106,19 @@ public class UpdateCustomerStatus : BaseHandler
                     if (custcs.CasinoSync)
                     {
                         var casinoSync = new Customer();
-                        casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
+                        try
+                        {
+                            casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
+                        }
+                        catch (ErrorException casinoEx)
+                        {
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                            throw;
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
                     }
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
                     s = "parent.changeDisplayStatus();";
@@ -153,6 +170,10 @@ public class UpdateCustomerStatus : BaseHandler
                             bool success1 = CasinoManager.UpdateCustClosed(_custid, status,
                                                                                context.Request.UserHostAddress, customerRngSite);
                         }
+                    }
+                    catch (ErrorException casinoEx)
+                    {
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
                     }
                     catch (Exception ex)
                     {

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Web;
+using CasinoLibrary.Model.UserException;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using Fanex.Data;
@@ -16,7 +17,6 @@ using Sunplus.Accounting.Entities.Casino;
 /// <summary>
 /// Summary description for APICasinoProvider
 /// </summary>
-
 namespace Sunplus.Accounting.DataAccess.APIClient
 {
     public class APICasinoProvider : CasinoProvider
@@ -644,12 +644,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                     string FromIP, string siteName)
         {
             bool isUpdateSuccessfull = false;
+
             try
             {
                 var csCustomer = new Customer();
                 csCustomer.SiteName = siteName;
+
                 isUpdateSuccessfull = csCustomer.UpdateCustEnableCasino(IBCCustID, EnabledCasino, UpdateDownline, FromIP,
                                                                         AppSession.AccId, AppSession.Username, 3);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -663,12 +669,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool UpdateCustPwd(int IBCCustID, string UserPwdEncrypted, string FromIP, string siteName)
         {
             bool isUpdatedSuccessfull = false;
+
             try
             {
                 var csCustomer = new Customer();
                 csCustomer.SiteName = siteName;
+
                 isUpdatedSuccessfull = csCustomer.UpdateCustPwd(IBCCustID, UserPwdEncrypted, FromIP, AppSession.AccId,
                                                                 AppSession.Username, 3);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -682,12 +694,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool UpdateCustSuspend(int IBCCustID, bool Suspended, string FromIP, string siteName)
         {
             bool isUpdateSuccessfull = false;
+
             try
             {
                 var csCustomer = new Customer();
                 csCustomer.SiteName = siteName;
+
                 isUpdateSuccessfull = csCustomer.UpdateCustSuspend(IBCCustID, Suspended, FromIP, AppSession.AccId,
                                                                    AppSession.Username, 3);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -736,17 +754,24 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                      int ModifyByUserId, string ModifyByUser, string siteName)
         {
             var errors = new List<ErrorDetail>();
+
             try
             {
                 var cust = new Customer();
                 cust.SiteName = siteName;
-                DataTable tableResult = cust.MoveMaster(MasterUsername, SuperUsername, FromIP, ModifyByUserId,
-                                                        ModifyByUser);
+
+                var movingResult = cust.MoveMaster(MasterUsername, SuperUsername, FromIP, ModifyByUserId, ModifyByUser);
+
+                DataTable tableResult = new DataTable();
+
                 foreach (DataRow row in tableResult.Rows)
                 {
                     errors.Add(new ErrorDetail(row["ErrCode"].ToString(), row["ErrMsg"].ToString()));
                 }
-                return errors;
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -761,17 +786,24 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                     int modifyByUserId, string modifyByUser, string siteName)
         {
             var errors = new List<ErrorDetail>();
+
             try
             {
                 var cust = new Customer();
                 cust.SiteName = siteName;
-                DataTable tableResult = cust.MoveAgent(agentUsername, masterUsername, fromIP, modifyByUserId,
-                                                       modifyByUser);
+
+                var movingResult = cust.MoveAgent(agentUsername, masterUsername, fromIP, modifyByUserId, modifyByUser);
+
+                DataTable tableResult = new DataTable();
+
                 foreach (DataRow row in tableResult.Rows)
                 {
                     errors.Add(new ErrorDetail(row["ErrCode"].ToString(), row["ErrMsg"].ToString()));
                 }
-                return errors;
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -785,11 +817,17 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool RollbackMaster(string MasterUsername, bool IsNeedRollback, string siteName)
         {
             bool hasSuccessRollbackMaster = false;
+
             try
             {
                 var cust = new Customer();
                 cust.SiteName = siteName;
+
                 hasSuccessRollbackMaster = cust.RollbackMaster(MasterUsername, IsNeedRollback);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -803,11 +841,17 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool RollbackAgent(string AgentUsername, bool IsNeedRollback, string siteName)
         {
             bool hasSuccessRollbackAgent = false;
+
             try
             {
                 var cust = new Customer();
                 cust.SiteName = siteName;
+
                 hasSuccessRollbackAgent = cust.RollbackAgent(AgentUsername, IsNeedRollback);
+            }
+            catch (ErrorException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
