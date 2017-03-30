@@ -37,8 +37,6 @@ namespace Fanex.BetList.Accounting.Services
                 ticketDetail.StatusHtml = ticket.Status.ToUpperInvariant();
             }
 
-            cashOutHistory.TicketDetail = null;
-            cashOutHistory.CashOutTickets = new System.Collections.Generic.List<CashOutTicket>();
             return cashOutHistory;
         }
     }
