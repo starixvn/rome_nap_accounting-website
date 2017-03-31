@@ -77,8 +77,8 @@
       <HintPath>..\packages\Fanex.BetList.Core.2.19.0.0-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.CashOut, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.CashOut.1.0.0.3-beta\lib\net40\Fanex.BetList.CashOut.dll</HintPath>
+    <Reference Include="Fanex.BetList.CashOut, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.CashOut.1.0.0.5-beta\lib\net40\Fanex.BetList.CashOut.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">

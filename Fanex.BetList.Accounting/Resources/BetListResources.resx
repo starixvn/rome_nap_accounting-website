@@ -135,6 +135,9 @@
   <data name="CashOut" xml:space="preserve">
     <value>Cash out</value>
   </data>
+  <data name="CashOutStake" xml:space="preserve">
+    <value>Cash out Stake</value>
+  </data>
   <data name="CashOutTickets" xml:space="preserve">
     <value>Cash out Ticket[s]:</value>
   </data>

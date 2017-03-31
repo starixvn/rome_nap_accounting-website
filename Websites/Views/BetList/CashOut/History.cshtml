@@ -2,6 +2,7 @@
 @using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Resources;
 @using Fanex.BetList.Accounting.Extensions;
+@{ bool isCashOutString = Request["title"] == BetListResources.CashOut; }
 @model CashOutHistory
 <html>
 <head>
@@ -9,13 +10,8 @@
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
     <title>Cash Out History</title>
     <style>
-        .time {
-            font-size: 11px;
-        }
-
-        .display-none {
-            display: none;
-        }
+        .time { font-size: 11px; }
+        .display-none { display: none; }
     </style>
 </head>
 <body>
@@ -53,51 +49,52 @@
                     <tbody>
                         @if (Model.TicketDetail == null)
                         {
-                            <tr>
-                                <td colspan="6" class="c">@BetList.noInfo</td>
-                            </tr>
+                        <tr>
+                            <td colspan="6" class="c">@BetList.noInfo</td>
+                        </tr>
                         }
                         else
                         {
-                            <tr>
-                                <td>
-                                    <div class="table-cell c b width120">
-                                        @Html.Raw(Model.TicketDetail.TransDateHtml)
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-cell r width300">
-                                        @Html.Raw(Model.TicketDetail.ChoiceHtml)
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-cell r width60">
-                                        @Html.Partial("~/Views/BetList/_Odds.cshtml", Model.TicketDetail)
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-cell r width60">
-                                        @Html.Raw(Model.TicketDetail.StakeHtml)
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-cell r width100">
-                                        @Html.Partial("~/Views/BetList/_WinLoss.cshtml", Model.TicketDetail)
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-cell c width100">
-                                        @Html.Raw(Model.TicketDetail.StatusHtml)
-                                    </div>
-                                </td>
-                            </tr>
+                            var highlightClass = Request["TransId"] == Model.TicketDetail.Ticket.TransId.ToString() ? "event" : string.Empty;
+                        <tr>
+                            <td class="@highlightClass">
+                                <div class="table-cell c b width120">
+                                    @Html.Raw(Model.TicketDetail.TransDateHtml)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width300">
+                                    @Html.Raw(Model.TicketDetail.ChoiceHtml)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width60">
+                                    @Html.Partial("~/Views/BetList/_Odds.cshtml", Model.TicketDetail)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width60">
+                                    @Html.Raw(Model.TicketDetail.StakeHtml)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width100">
+                                    @Html.Partial("~/Views/BetList/_WinLoss.cshtml", Model.TicketDetail)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell c width100">
+                                    @Html.Raw(Model.TicketDetail.StatusHtml)
+                                </div>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <p>@(Request["Title"] == BetListResources.CashOut ? BetListResources.CashOutTickets : BetListResources.BoughtTickets)</p>
+    <p>@(isCashOutString ? BetListResources.CashOutTickets : BetListResources.BoughtTickets)</p>
     <div id="cashoutOrBoughtTickets" class="freegrid display-none">
         <div class="col_header row-headers-background scroll-y">
             <div class="header-container">
@@ -105,7 +102,7 @@
                     <thead>
                         <tr>
                             <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
-                            <th><div class="table-cell height34 width300">@BetListResources.BoughtStake</div></th>
+                            <th><div class="table-cell height34 width300">@(isCashOutString ? BetListResources.CashOutStake : BetListResources.BoughtStake)</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.Price</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.WinSlashLoss</div></th>
                             <th><div class="table-cell height34 width100">@Labels.Status</div></th>
@@ -120,7 +117,7 @@
                     <thead>
                         <tr>
                             <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
-                            <th><div class="table-cell height34 width300">@BetListResources.BoughtStake</div></th>
+                            <th><div class="table-cell height34 width300">@(isCashOutString ? BetListResources.CashOutStake : BetListResources.BoughtStake)</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.Price</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.WinSlashLoss</div></th>
                             <th><div class="table-cell height34 width100">@Labels.Status</div></th>
@@ -129,43 +126,43 @@
                     <tbody>
                         @if (!Model.CashOutTickets.Any())
                         {
-                            <tr>
-                                <td colspan="5" class="c">@BetList.noInfo</td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="c">@BetList.noInfo</td>
+                        </tr>
                         }
                         else
                         {
                             foreach (var ticket in Model.CashOutTickets)
                             {
                                 var highlightClass = Request["TransId"] == ticket.TransId.ToString() ? "event" : string.Empty;
-                                <tr>
-                                    <td class="@highlightClass">
-                                        <div class="table-cell c b width120">
-                                            @BetList.refno: @ticket.TransId
-                                            <div class="time">@ticket.TransDate</div>
-                                        </div>
-                                    </td>
-                                    <td class="@highlightClass">
-                                        <div class="table-cell r width300">
-                                            @ticket.Stake.Format(2)
-                                        </div>
-                                    </td>
-                                    <td class="@highlightClass">
-                                        <div class="table-cell r width60">
-                                            @ticket.Price.Format(2)
-                                        </div>
-                                    </td>
-                                    <td class="@highlightClass">
-                                        <div class="table-cell r width60">
-                                            @ticket.WinLost.Format(2)
-                                        </div>
-                                    </td>
-                                    <td class="@highlightClass">
-                                        <div class="table-cell c width100">
-                                            @Html.Raw(ticket.StatusHtml)
-                                        </div>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td class="@highlightClass">
+                                <div class="table-cell c b width120">
+                                    @BetList.refno: @ticket.TransId
+                                    <div class="time">@ticket.TransDate</div>
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width300">
+                                    @ticket.Stake.Format(2)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width60">
+                                    @ticket.Price.Format(2)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell r width60">
+                                    @ticket.WinLost.Format(2)
+                                </div>
+                            </td>
+                            <td class="@highlightClass">
+                                <div class="table-cell c width100">
+                                    @Html.Raw(ticket.StatusHtml)
+                                </div>
+                            </td>
+                        </tr>
                             }
                         }
                     </tbody>
