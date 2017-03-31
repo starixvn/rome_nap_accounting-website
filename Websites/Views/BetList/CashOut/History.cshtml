@@ -137,7 +137,7 @@
                         {
                             foreach (var ticket in Model.CashOutTickets)
                             {
-                                var highlightClass = Model.TicketDetail.Ticket.TransId == ticket.RefNo ? "event" : string.Empty;
+                                var highlightClass = Request["TransId"] == ticket.TransId.ToString() ? "event" : string.Empty;
                                 <tr>
                                     <td class="@highlightClass">
                                         <div class="table-cell c b width120">
