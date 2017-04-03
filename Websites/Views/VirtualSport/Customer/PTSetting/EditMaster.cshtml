@@ -1,6 +1,5 @@
 ﻿@using Fanex.PTVirtualSports
 @using Sunplus.Accounting.Core.Configurations
-
 <link rel="Stylesheet" href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.css")" />
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
@@ -26,13 +25,11 @@
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
         <tr>
-            <td class="maincontent_headerL">
-            </td>
+            <td class="maincontent_headerL"></td>
             <td class="maincontent_headerC fixfont">
                 Update Master
             </td>
-            <td class="maincontent_headerR">
-            </td>
+            <td class="maincontent_headerR"></td>
         </tr>
     </table>
     <div id="divShowInfo" class="maincontent_box" style="width: 844px;">
@@ -43,12 +40,12 @@
     </div>
     <div class="bg_table" style="width: 844px;">
         @Html.Partial("~/Views/VirtualSport/Customer/PTSetting/CustomerInfo.cshtml")
-        
+
         <table class="tblcollapse" style="width: 840px; margin-top: 5px; margin-bottom: 5px;">
-             <tr class="title">
+            <tr class="title">
                 <td style="width:800px">
-                    Bet Setting                    
-                </td>                
+                    Bet Setting
+                </td>
                 <td style="width:40px"><input type="button" h="true" class="btnUpdate" title="Save" onclick="vsCustomer.updateBettingLimit()" /></td>
             </tr>
             <tr>
@@ -57,9 +54,8 @@
                 </td>
             </tr>
         </table>
-
         <table class="tblcollapse" style="width: 840px; margin-top: 5px; margin-bottom: 5px;">
-             <tr class="title">
+            <tr class="title">
                 <td style="width:800px">
                     Position Taking
                 </td>
@@ -74,8 +70,7 @@
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>
                 <tr>
-                    <td class="custBtn1">
-                    </td>
+                    <td class="custBtn1"></td>
                     <td onclick="return vsCustomer.updateMaster();" id="btnAdd" class="custBtn2 hand">
                         Update
                     </td>

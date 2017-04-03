@@ -306,4 +306,7 @@
   <data name="TimeOutError" xml:space="preserve">
     <value>The Operation has timed out due to intensive processes. Please, reselect filter options appropriatedly to avoid the time-out situation.</value>
   </data>
+  <data name="ThereIsNoChange" xml:space="preserve">
+    <value>There is no change to update.</value>
+  </data>
 </root>

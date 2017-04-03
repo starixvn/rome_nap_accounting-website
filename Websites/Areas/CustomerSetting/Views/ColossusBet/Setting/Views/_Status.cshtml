@@ -4,17 +4,17 @@
     <tr>
         <td colspan="4" class="header c b">
             <span>@Messages.Status</span>
-              @if (!Model.CustomerInformationPartial.ReadOnly)
-              {
-            <input ng-class-name="btnSave" check-disable-element ng-model="statusPartial.IsStatusUpdated"
-                ng-click="updated(true, 'StatusPartial')" type="button" />
-              }
+            @if (!Model.CustomerInformationPartial.ReadOnly)
+            {
+                <input ng-class-name="btnSave" check-disable-element ng-model="statusPartial.IsStatusUpdated"
+                       ng-click="!statusPartial.IsStatusUpdated||updated(true, 'StatusPartial')" type="button" />
+            }
         </td>
     </tr>
     <tr>
-         <td colspan="4" class="formatCol l betSetting height34">
+        <td colspan="4" class="formatCol l betSetting height34">
             <span class="b padding-left30">@Messages.ColossusBet</span>
-            <div class="divInline padding-left30" >
+            <div class="divInline padding-left30">
                 <input ng-disabled="!statusPartial.Upline.IsEnabled" type="checkbox" ng-model="statusPartial.IsEnabled" />
                 @Messages.Enable
                 @if (Model.CustomerInformationPartial.RoleId != 1 && Model.StatusPartial.IsHasDownlines)

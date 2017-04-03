@@ -1,6 +1,7 @@
 ﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Keno.Resources;
+@using Sunplus.Accounting.Core.Common;
 <!DOCTYPE html>
 <html ng-app='kenoSettingModule' id="ng-app">
 
@@ -57,32 +58,32 @@
 </div>
 </body>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/modules/module.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/repositories/repository.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/modules/module.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/repositories/repository.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/main.controller.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/bet-setting.controller.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/position-taking.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/main.controller.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/bet-setting.controller.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/position-taking.controller.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/CommonDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/CommonDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/BetSettingDirective.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxBetDirective.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxPerMatchDirective.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MinBetDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/BetSettingDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxBetDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxPerMatchDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MinBetDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/commonService.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/dataService.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/commonService.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/dataService.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/jquery.tipsy.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.js?v=" + AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/jquery.tipsy.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 <script type="text/javascript">
     var model = @Html.Raw(KenoSetting);
     var domain = '@Url.Content("~")';

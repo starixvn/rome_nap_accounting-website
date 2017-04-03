@@ -1060,6 +1060,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     ref htmlcontent,
                                     row1,
                                     row3,
+                                    custId,
                                     roleId,
                                     parentId,
                                     _custparent,
@@ -1514,6 +1515,7 @@ namespace Sunplus.Accounting.Business.Customer
             ref string htmlcontent,
             DataRow row1,
             DataRow row3,
+            int custId,
             int roleId,
             int parentID,
             CustomerDetail CustParent,
@@ -1689,7 +1691,7 @@ namespace Sunplus.Accounting.Business.Customer
             bool hideVirtualSports = WebSettings.EnableVirtualSports ? Convert.ToBoolean(row1["hidevirtualsports"]) : false;
             if (!hideVirtualSports)
             {
-                sg.Add(GetSettingControlVirtualSports(roleId, isManageCustomerAccess, "disabledVS", !disabledVirtualSports,
+                sg.Add(GetSettingControlVirtualSports(custId, roleId, isManageCustomerAccess, "disabledVS", !disabledVirtualSports,
                                                    (roleId > 1), disabledVirtualSports,
                                                    CastAide.AsBoolean(row1["Enabled"].ToString()), disabledVSParent,
                                                    !disabledVSDownline));
@@ -1781,7 +1783,7 @@ namespace Sunplus.Accounting.Business.Customer
                 renderLeftPanelParameter,
                 "Update Super Live Status");
 
-            RenderLeftPanelManager.RenderEnableProductBox(
+            RenderLeftPanelManager.RenderEnableProductBox2(
                row1,
                sg,
                ref htmlcontent,
@@ -1791,7 +1793,8 @@ namespace Sunplus.Accounting.Business.Customer
                "ColossusBet",
                renderLeftPanelParameter.IsShowColossusBetsForCredit,
                renderLeftPanelParameter,
-               "Update Colossus Bets Status");
+               "Update Colossus Bets Status",
+               15);
 
             foreach (DataRow productRow in dcsTable.Rows)
             {
@@ -1817,7 +1820,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                4);
                             break;
                         case "22":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -1833,7 +1836,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                4);
                             break;
                         case "23":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -1849,7 +1852,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                4);
                             break;
                         case "24":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -2470,7 +2473,7 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             classname = "canchange";
                             //jsonclick = "return changeStatus('" + statusName + "'," + ((hasDownLine) ? "true" : "false") + ");";
-                            jsonclick = "return ShowDisablePopCS(this);";
+                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus({CustId}, {RoleId}, 6, 'Update Casino Status');";
                         }
                         else
                         {
@@ -2780,7 +2783,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private SettingControl GetSettingControlVirtualSports(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
+        private SettingControl GetSettingControlVirtualSports(int custId, int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
             bool hasDownLine, bool hasDownline, bool isenabled, bool disabledUpline, bool disableDownLine)
         {
             if (!WebSettings.EnableVirtualSports)
@@ -2804,7 +2807,7 @@ namespace Sunplus.Accounting.Business.Customer
                         if (4 == roleId || !disabledUpline)
                         {
                             classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
+                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus("+ custId+"," + roleId + ", 5, 'Update Virtual Sports Status');";
                         }
                         else
                         {

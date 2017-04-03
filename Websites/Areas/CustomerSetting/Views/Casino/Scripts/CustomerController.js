@@ -50,33 +50,6 @@ function CustomerController($scope, $element) {
         customerModel.maxTransferCreditLimit = 0;
     }
 
-    $('#downline').each(function (i, item) {
-        $(item).html($scope.Level)
-    });
-
-    $scope.EnableClicked = function () {
-        var checkbox = $('#chkEnable').get(0);
-
-        if (!$scope.IsMember) {
-            if (checkbox.checked) {
-                if (!$scope.Enabled) {
-                    $('#chkEnableDownline').show();
-                    $('#enableDownlineText').show();
-                }
-
-                $('#downline').html($scope.Level);
-            }
-            else {
-                $('#chkEnableDownline').hide();
-                $('#enableDownlineText').hide();
-
-                if ($scope.Enabled) {
-                    $('#downline').html($scope.Level + '&nbsp;' + "<font color='Red'>(Casino downlines will be disabled as well)</font>");
-                }
-            }
-        }
-    },
-
     $scope.Reset = function () {
         /*if ($scope.CustomerModel.roleId == 4 || ($scope.CustomerModel.uplineRoleId == 4 && $scope.CustomerModel.roleId == 2)) {
             return;

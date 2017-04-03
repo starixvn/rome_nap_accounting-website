@@ -155,31 +155,31 @@
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.13\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.14-beta2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.CloneSetting">
       <HintPath>..\Dependency\Fanex\Fanex.CustomerSetting.Module.CloneSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.7\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.9-beta1\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.7\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.9-beta1\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.0\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.3-beta1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Keno\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.NAP.1.0.0.0-beta2\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
@@ -240,15 +240,15 @@
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.4\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTRacing, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTRacing.1.0.0.3\lib\net40\Fanex.PTRacing.dll</HintPath>
+    <Reference Include="Fanex.PTRacing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTRacing.1.0.0.5-beta3\lib\net40\Fanex.PTRacing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference">
       <HintPath>..\Dependency\Fanex\PTSettingInfo\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3-EnableStatus4\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.0.8.2, Culture=neutral, processorArchitecture=MSIL">
@@ -564,6 +564,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.1-beta018\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="TplCore, Version=1.0.4694.29951, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TplCore.1.0.4694.29951\lib\net40\TplCore.dll</HintPath>
     </Reference>

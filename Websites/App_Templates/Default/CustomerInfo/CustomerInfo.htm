@@ -297,7 +297,7 @@
                 </tr>
                 <!--/AbnormalSession-->
                 <tr>
-                    <td class="l" colspan="2"><span class="canchange" onclick="showhideRacebooksStatus({CustId},{RoleId})">Enable Racing</span></td>
+                    <td class="l" colspan="2" ><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, {RoleId}, 2, 'Update Racing Status')">Enable Racing</span></td>
                     <td class="l" colspan="2"><!--edit-p2p--><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span><!--/edit-p2p--></td>
                 </tr>
                 <!--Row_ProgressiveBonus_AGCasinoStatus-->
@@ -316,7 +316,7 @@
                 <tr>
                     <!--EnableKeno-->
                     <td class="l" colspan="2">
-                        <span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span>
+                            <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, {RoleId}, 8, 'Update Keno Status')">Enable Keno</span>
                     </td>
                     <!--/EnableKeno-->
                     <td class="l" colspan="2">
@@ -373,7 +373,7 @@
                 <!--EnableAllbet-->
                 <tr>
                     <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusAllbet}, true, 'Update Allbet Status', 'Allbet', {AllbetId}, {settingType})">Enable Allbet</span>
+                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, {RoleId}, 21, 'Update Allbet Status')">Enable Allbet</span>
 
                     </td>
                     <td class="l" colspan="2"></td>
