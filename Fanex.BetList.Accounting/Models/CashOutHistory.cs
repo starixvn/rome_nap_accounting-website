@@ -6,6 +6,6 @@ namespace Fanex.BetList.Accounting.Models
     {
         public TicketDetail TicketDetail { get; set; }
 
-        public IEnumerable<CashOutTicket> CashOutTickets { get; set; }
+        public IList<CashOutTicket> CashOutTickets { get; set; }
     }
 }

@@ -690,6 +690,13 @@ namespace Fanex.BetList.Accounting.Core
                         }
                         else
                         {
+                            statusHtml = BuildCashOutStatus(ticketDetail.Ticket);
+
+                            if (!string.IsNullOrEmpty(statusHtml))
+                            {
+                                return statusHtml;
+                            }
+
                             statusHtml =
                                 string.Format("{0}@{1}-{2}",
                                                 statusFormat,

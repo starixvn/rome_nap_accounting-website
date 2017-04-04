@@ -113,7 +113,19 @@
                 var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
             }
             <div class="width120 c">
-                <span>@betdetail.Creator</span>
+                @if (betdetail.Creator.Length > 20)
+                {
+                    string creatorTmp = betdetail.Creator;
+                    string firstSubstring = creatorTmp.Substring(0, 20);
+                    string secondSubstring = creatorTmp.Substring(20, betdetail.Creator.Length - 20);
+                    <span>
+                        @firstSubstring<br/>@secondSubstring
+                    </span>
+                }
+                else
+                {
+                    <span>@betdetail.Creator</span>
+                }
                 <br />
                 @if (ip != "-")
                 {
