@@ -9,17 +9,16 @@
 
 namespace Fanex.BetList.Accounting.Core
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Text.RegularExpressions;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
-    using Fanex.Tarus.Infrastructure.Common;
     using Services;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -46,9 +45,11 @@ namespace Fanex.BetList.Accounting.Core
                 case 500:
                     isShowCommision = true;
                     break;
+
                 case 501:
                     isShowCommision = !IsIMBCMatch(ticketDetail);
                     break;
+
                 default:
                     isShowCommision = true;
                     break;
@@ -178,12 +179,15 @@ namespace Fanex.BetList.Accounting.Core
                 case BetTypeContants.BetTradeBought:
                     result = BetListResources.Bought;
                     break;
+
                 case BetTypeContants.BetTradeSold:
                     result = BetListResources.Sold;
                     break;
+
                 case BetTypeContants.BetTradeCommision:
                     result = BetListResources.Comm;
                     break;
+
                 default:
                     result = string.Empty;
                     break;
@@ -419,11 +423,13 @@ namespace Fanex.BetList.Accounting.Core
                         case SportContants.Politics:
                             resultLink = string.Empty;
                             break;
+
                         case SportContants.NumberGame:
                             resultLink = "ViewResultNumberGame('Betlist/BetListNumberGameResult.aspx?" +
                                 "matchId=" + ticketDetail.Ticket.MatchId.ToString() +
                                 "')";
                             break;
+
                         case SportContants.LiveCasino:
                             resultLink = "ViewResultLiveCasino('LiveCasino/Betlist/BetListLiveCasinoResult.aspx?" +
                                 "matchId=" + ticketDetail.Ticket.MatchId.ToString() +
@@ -431,44 +437,53 @@ namespace Fanex.BetList.Accounting.Core
                                 "&league=" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) +
                                 "')";
                             break;
+
                         case SportContants.VirtualTennis:
                             resultLink = "virtualHRPopup(" + ticketDetail.Ticket.SportTypeId + "," +
                                 ticketDetail.Ticket.MatchId + ")";
                             break;
+
                         case SportContants.Tennis:
                             resultLink = "ViewTennisPopup(" + ticketDetail.Ticket.MatchId + "," +
                                 ticketDetail.Ticket.BetTypeId + "," +
                                 ticketDetail.Ticket.BetId + ",'" +
                                 CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "')";
                             break;
+
                         case SportContants.MicroGamingLiveCasino:
                             resultLink = BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
+
                         case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
+
                         case SportContants.AGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
+
                         case SportContants.AllBet:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc)
                                 ? string.Empty
                                 : string.Format("ViewAllBetResult('{0}','{1}',{2})", ticketDetail.Ticket.TransDesc, ticketDetail.Ticket.MatchCode, ticketDetail.Ticket.BetTypeId);
                             break;
+
                         case SportContants.Voidbridge:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewVoidbridgeResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                             break;
+
                         case SportContants.FishingWorld:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                string.Empty :
                                "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
                             break;
+
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -495,11 +510,13 @@ namespace Fanex.BetList.Accounting.Core
                                 case BetTypeContants.P2PGames:
                                     resultLink = string.Empty;
                                     break;
+
                                 case BetTypeContants.GoldDeluxeBaccarat:
                                 case BetTypeContants.GoldDeluxeParlayBaccarat:
                                 case BetTypeContants.GoldDeluxeRoulette:
                                     resultLink = "ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")";
                                     break;
+
                                 case BetTypeContants.FastMarketNext1Minutes:
                                 case BetTypeContants.FastMarketNext5Minutes:
                                 case BetTypeContants.FastMarketWhatWillHappenFirstInNext1Minute:
@@ -509,6 +526,7 @@ namespace Fanex.BetList.Accounting.Core
                                            ticketDetail.Ticket.BetTypeId + "," +
                                            ticketDetail.Ticket.Handicap1 + ")";
                                     break;
+
                                 default:
                                     if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
                                     {
@@ -579,6 +597,7 @@ namespace Fanex.BetList.Accounting.Core
             }
 
             string statusHtml = string.Empty;
+            string resultLink = string.Empty;
             int betTypeId = ticketDetail.Ticket.BetTypeId;
             int sportTypeId = ticketDetail.Ticket.SportTypeId;
             string status = ticketDetail.Ticket.Status;
@@ -612,9 +631,11 @@ namespace Fanex.BetList.Accounting.Core
                     case BetTypeContants.Outright:
                         statusHtml = statusFormat;
                         break;
+
                     case BetTypeContants.SystemParlay:
                         statusHtml = status;
                         break;
+
                     default:
                         if (33 <= sportTypeId && sportTypeId <= 42)
                         {
@@ -683,6 +704,7 @@ namespace Fanex.BetList.Accounting.Core
                                         halfTimeHomeScore,
                                         halfTimeAwayScore);
                         break;
+
                     default:
                         if (2501 <= ticketDetail.Ticket.BetTypeId && ticketDetail.Ticket.BetTypeId <= 2699 && (isWonStatus || isLoseStatus))
                         {
@@ -703,7 +725,6 @@ namespace Fanex.BetList.Accounting.Core
                 return statusHtml;
             }
 
-            string resultLink = string.Empty;
             if (betlistHelper.IsHRBettype(ticketDetail.Ticket.BetTypeId))
             {
                 if (isWonStatus || isLoseStatus)
@@ -746,6 +767,7 @@ namespace Fanex.BetList.Accounting.Core
                             resultLink = "ViewResultNumberGame('Betlist/BetListNumberGameResult.aspx?" +
                                 "matchId=" + ticketDetail.Ticket.MatchId.ToString() + "')";
                             break;
+
                         case SportContants.LiveCasino:
                             resultLink = "ViewResultLiveCasino('LiveCasino/Betlist/BetListLiveCasinoResult.aspx?" +
                                  "matchId=" + ticketDetail.Ticket.MatchId.ToString() +
@@ -753,27 +775,33 @@ namespace Fanex.BetList.Accounting.Core
                                  "&league=" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) +
                                  "')";
                             break;
+
                         case SportContants.Politics:
                         case SportContants.VirtualTennis:
                             break;
+
                         case SportContants.GoldDeluxe:
                             resultLink = "\"ViewGoldDeluxeResult(" + ticketDetail.Ticket.TransId + ", " + ticketDetail.Ticket.BetTypeId.ToString() + ")\"";
                             break;
+
                         case SportContants.MicroGamingLiveCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
+
                         case SportContants.MicroGamingRNGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 BuildMicroGamingPopupLink((int)ticketDetail.Ticket.CustId, ticketDetail.Ticket.BetCheck);
                             break;
+
                         case SportContants.AGCasino:
                             resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.TransDesc) ?
                                 string.Empty :
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
+
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
@@ -783,12 +811,14 @@ namespace Fanex.BetList.Accounting.Core
                                         ticketDetail.Ticket.BetTypeId + "," +
                                         ticketDetail.Ticket.BetId + ")";
                                     break;
+
                                 case BetTypeContants.MixParlay:
                                     resultLink = "ViewMixParlayResult(" + ticketDetail.Ticket.RefNo + "," +
                                         ticketDetail.Ticket.MatchId.ToString() + "," +
                                         ticketDetail.Ticket.BetTypeId + "," +
                                         ticketDetail.Ticket.BetId + ")";
                                     break;
+
                                 default:
                                     resultLink = string.Empty;
                                     break;
@@ -800,6 +830,37 @@ namespace Fanex.BetList.Accounting.Core
                 else
                 {
                     resultLink = string.Empty;
+                }
+            }
+
+            if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
+            {
+                resultLink = string.Empty;
+                statusHtml = statusFormat;
+                if (isWonStatus ||
+                   isLoseStatus ||
+                   isDrawStatus)
+                {
+                    resultLink = "\"ViewResultMetricGaming(" +
+                    ticketDetail.Ticket.MatchId.ToString() + "," +
+                    ticketDetail.Ticket.BetTypeId + "," +
+                    ticketDetail.Ticket.BetId + "," +
+                    ticketDetail.Ticket.SportTypeId + "," +
+                    "'" + CacheRef.GetSportName(ticketDetail.Ticket.SportTypeId) + "'" + "," +
+                    "'" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "'" + ")\"";
+                }
+            }
+
+            if (sportTypeId == 44 && (betTypeId == 1 || betTypeId == 3))
+            {
+                resultLink = string.Empty;
+                if (isWonStatus ||
+                   isLoseStatus ||
+                  isDrawStatus)
+                {
+                    resultLink = "\"ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
+                                              ticketDetail.Ticket.BetTypeId + "," +
+                                              ticketDetail.Ticket.BetId + ")\"";
                 }
             }
 
