@@ -176,12 +176,26 @@ var UploadRateController = function () {
     };
     self.renderUploadResult = function (importResult) {
         self.cachedData.importResult = importResult;
+        var buttonUpdate = $("#button-update");
         var successRecordsTableContainer = $(".success-records-table-container");
         var failedRecordsTableContainer = $(".failed-records-table-container");
+        if (importResult.SucceededInfoList.length === 0) {
+            alert('disable');
+            buttonUpdate.attr("disabled", "disabled");
+            buttonUpdate.unbind('click');
+        }
+        else {
+            buttonUpdate.removeAttr("disabled");
+            buttonUpdate.unbind('click');
+            buttonUpdate.click(function () {
+                self.updateImporRate();
+            });
+        }
+
         if (importResult == null ||
             (importResult.FailedInfoList.length === 0 &&
             importResult.SucceededInfoList.length === 0)) {
-            $("#button-update").attr("disabled", "disabled");
+            
             showAlertMessage("result-message", viewResources.Error_SystemError, 1);
             self.cachedData.resultMessage.removeClass("display-none");
             failedRecordsTableContainer.addClass("display-none");
@@ -189,7 +203,6 @@ var UploadRateController = function () {
             return;
         }
 
-        $("#button-update").attr("disabled", null);
         var checkImportResultBox = $(".check-import-result-box");
         checkImportResultBox.removeClass("display-none");
         self.renderSuccessRecords(importResult);

@@ -406,38 +406,14 @@ var VirtualRateController = function () {
                         ' bettype-id="' + betTypeId + '"' +
                         (groupdId ? ' groupd-id="' + groupdId + '"' : '') +
                     '>';
-        var currentRate = parseInt((maxRate * 100).toFixed(0));
-        var limitRate = parseInt((minRate * 100).toFixed(0));
         var rate = parseInt(((selectedRate - 1) * 100).toFixed(0));
-        if (currentRate > 60) {
-            // Render for Rate above 60, only have value of 100 150 200
-            var rateAbove60 = [200, 150, 100];
-            rateAbove60 = rateAbove60.filter(function (rate) { return rate <= currentRate; });
-            for (var i = 0 ; i < rateAbove60.length; i++) {
-                var value = (rateAbove60[i] + 100) * actualExchangeRate / 100;
-                var rateText = rateAbove60[i] + ' (' + numeral(value).format(self.Constants.Format.Number.Rate) + ')';
-                html += '<option' + (rate == rateAbove60[i] ? ' selected="selected"' : '') +
-                    ' value="' + rateAbove60[i] + '"' + '>' +
-                    rateText + '</option>';
-
-            }
-
-            currentRate = 60;
-        }
-
-        while (currentRate >= limitRate) {
-            var value = (currentRate + 100) * actualExchangeRate / 100;
-            var rateText = currentRate + ' (' + numeral(value).format(self.Constants.Format.Number.Rate) + ')';
-            html += '<option' + (rate == currentRate ? ' selected="selected"' : '') +
-                ' value="' + currentRate + '"' + '>' +
+        for (var i = 0 ; i < oldCustomerVirtualRateModel.VirtualRateValueRange.length; i++) {
+            var value = (oldCustomerVirtualRateModel.VirtualRateValueRange[i] + 100) * actualExchangeRate / 100;
+            var rateText = oldCustomerVirtualRateModel.VirtualRateValueRange[i] + ' (' + numeral(value).format(self.Constants.Format.Number.Rate) + ')';
+            html += '<option' + (rate == oldCustomerVirtualRateModel.VirtualRateValueRange[i] ? ' selected="selected"' : '') +
+                ' value="' + oldCustomerVirtualRateModel.VirtualRateValueRange[i] + '"' + '>' +
                 rateText + '</option>';
 
-            if (5 < currentRate && currentRate <= 10) {
-                currentRate -= 1;
-            }
-            else {
-                currentRate -= 5;
-            }
         }
 
         html += '</select>';

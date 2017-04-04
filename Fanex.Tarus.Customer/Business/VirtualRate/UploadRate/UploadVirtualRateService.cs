@@ -393,7 +393,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                             continue;
                         }
 
-                        if (valueRate % 5 != 0)
+                        if (!VirtualRateSectionService.ValueRange.Contains((int)valueRate))
                         {
                             uploadResult.FailedInfoList.Add(new ImportVirtualRateResult
                             {

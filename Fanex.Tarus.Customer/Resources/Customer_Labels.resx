@@ -340,7 +340,7 @@
     <value>Invalid Sport value.</value>
   </data>
   <data name="VirtualRate_UploadFile_InvalidRate" xml:space="preserve">
-    <value>Virtual rate must be in a range from -80% to +60% and be multiples of 5%.</value>
+    <value>Invalid Virtual Rate.</value>
   </data>
   <data name="VirtualRate_UploadFile_NotNumberRate" xml:space="preserve">
     <value>Virtual Rate must be a number</value>

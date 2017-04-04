@@ -24,7 +24,8 @@
                 CustId = criteria.CustId,
                 Username = criteria.Username,
                 RoleName = criteria.RoleName,
-                SportVirtualRateList = new List<SportVirtualRateModel>()
+                SportVirtualRateList = new List<SportVirtualRateModel>(),
+                VirtualRateValueRange = VirtualRateSectionService.ValueRange
             };
 
             var virtualRateEntities = new List<VirtualRateEntity>();
