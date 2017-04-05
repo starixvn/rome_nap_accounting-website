@@ -288,9 +288,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TplCore">
-      <HintPath>..\..\agency-smartphone\_Dependencies\TplCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\BetList.Designer.cs" />
