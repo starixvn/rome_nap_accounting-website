@@ -40,7 +40,7 @@ namespace Fanex.BetList.Accounting.Services
                 var statusBlock = statusBuilder.Render(ticket, ticketHelper, null, true);
                 statusBlock.ShowIP = null;
                 statusBlock.StatusResult = null;
-                //ticketDetail.StatusHtml = statusBlock.ToString();
+                ticketDetail.StatusHtml = statusBlock.ToString();
 
                 if (cashOutHistory.CashOutTickets != null)
                 {
@@ -50,7 +50,7 @@ namespace Fanex.BetList.Accounting.Services
                         statusBlock = statusBuilder.Render(ticket, ticketHelper, null, true);
                         statusBlock.ShowIP = null;
                         statusBlock.StatusResult = null;
-                        //cashoutTicket.StatusHtml = statusBlock.ToString();
+                        cashoutTicket.StatusHtml = statusBlock.ToString();
                     }
                 }
             }
