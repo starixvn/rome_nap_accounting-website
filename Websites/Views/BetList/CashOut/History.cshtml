@@ -2,8 +2,8 @@
 @using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Resources;
 @using Fanex.BetList.Accounting.Extensions;
-@{ bool isCashOutString = Request["title"] == BetListResources.CashOut; }
 @model CashOutHistory
+@{ bool isCashOutString = Request["title"] == BetListResources.CashOut; }
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
@@ -56,7 +56,7 @@
                         }
                         else
                         {
-                            var highlightClass = Request["TransId"] == Model.TicketDetail.Ticket.TransId.ToString() ? "event" : string.Empty;
+                            var highlightClass = (Request["originalTransId"] == "1" || Request["TransId"] == Model.TicketDetail.Ticket.TransId.ToString()) ? "event" : string.Empty;
                         <tr>
                             <td class="@highlightClass">
                                 <div class="table-cell c b width120">

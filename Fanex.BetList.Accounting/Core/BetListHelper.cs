@@ -597,7 +597,7 @@ namespace Fanex.BetList.Accounting.Core
 
             if (IsCashOutTicket(ticketDetail.Ticket))
             {
-                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.CashOut);
+                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.Bought);
             }
 
             return statusLabel + cashOutHistoryLink + resultLink;
