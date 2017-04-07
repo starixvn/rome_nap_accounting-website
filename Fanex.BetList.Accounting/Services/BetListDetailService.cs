@@ -47,7 +47,15 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (var cashoutTicket in cashOutHistory.CashOutTickets)
                     {
                         statusBuilder = builder.CreateStatusBuilder(cashoutTicket.BetType);
-                        statusBlock = statusBuilder.Render(ticket, ticketHelper, null, true);
+                        statusBlock = statusBuilder.Render(
+                            new Ticket
+                            {
+                                BetTypeId = cashoutTicket.BetType,
+                                Status = cashoutTicket.Status
+                            },
+                            ticketHelper,
+                            null,
+                            true);
                         statusBlock.ShowIP = null;
                         statusBlock.StatusResult = null;
                         cashoutTicket.StatusHtml = statusBlock.ToString();
