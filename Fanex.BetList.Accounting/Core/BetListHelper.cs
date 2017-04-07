@@ -678,7 +678,10 @@ namespace Fanex.BetList.Accounting.Core
                     case BetTypeContants.SystemParlay:
                         statusHtml = status;
                         break;
-
+                    case BetTypeContants.CashOut:
+                    case BetTypeContants.CashOutBought:
+                        statusHtml = BuildCashOutStatus(ticketDetail.Ticket);
+                        break;
                     default:
                         if (33 <= sportTypeId && sportTypeId <= 42)
                         {
@@ -697,16 +700,26 @@ namespace Fanex.BetList.Accounting.Core
                                 return statusHtml;
                             }
 
-                            statusHtml =
-                                string.Format("{0}@{1}-{2}",
-                                                statusFormat,
-                                                finalHomeScore,
-                                                finalAwayScore) +
-                                "<br />" +
-                                string.Format("[{0}:{1}-{2}]",
-                                                Labels.HT,
-                                                halfTimeHomeScore,
-                                                halfTimeAwayScore);
+                            if (IsCashOutTicket(ticketDetail.Ticket))
+                            {
+                                statusHtml = string.Format(
+                                    "{0}<br/>{1}",
+                                    status.ToUpper(),
+                                    BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.CashOut));
+                            }
+                            else
+                            {
+                                statusHtml =
+                                    string.Format("{0}@{1}-{2}",
+                                                    statusFormat,
+                                                    finalHomeScore,
+                                                    finalAwayScore) +
+                                    "<br />" +
+                                    string.Format("[{0}:{1}-{2}]",
+                                                    Labels.HT,
+                                                    halfTimeHomeScore,
+                                                    halfTimeAwayScore);
+                            }
                         }
 
                         break;
