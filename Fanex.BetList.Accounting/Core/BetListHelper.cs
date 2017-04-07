@@ -597,7 +597,9 @@ namespace Fanex.BetList.Accounting.Core
 
             if (IsCashOutTicket(ticketDetail.Ticket))
             {
-                cashOutHistoryLink = BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.Bought);
+                cashOutHistoryLink = BuildCashOutHistoryPopupLink(
+                    ticketDetail.Ticket,
+                    ticketDetail.Ticket.BetdaqId == 1 ? BetListResources.Bought : BetListResources.CashOut);
             }
 
             return statusLabel + cashOutHistoryLink + resultLink;
@@ -705,7 +707,7 @@ namespace Fanex.BetList.Accounting.Core
                                 statusHtml = string.Format(
                                     "{0}<br/>{1}",
                                     status.ToUpper(),
-                                    BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.CashOut));
+                                    BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.Bought));
                             }
                             else
                             {
