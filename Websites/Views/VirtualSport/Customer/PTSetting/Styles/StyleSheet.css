@@ -88,3 +88,23 @@
     padding-right: 6px;
     width: 18px;
 }
+.copied{
+    background: url(copyUnChecked.png) no-repeat right top;
+    border: 0 solid red;
+    cursor: pointer;
+    height: 20px;
+    margin: 0 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 20px;
+}
+.copiedActive{
+    background: url(copyChecked.png) no-repeat right top;
+    border: 0 solid red;
+    cursor: pointer;
+    height: 20px;
+    margin: 0 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 20px;
+}
