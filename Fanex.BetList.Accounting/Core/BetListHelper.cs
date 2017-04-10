@@ -707,7 +707,7 @@ namespace Fanex.BetList.Accounting.Core
                                 statusHtml = string.Format(
                                     "{0}<br/>{1}",
                                     status.ToUpper(),
-                                    BuildCashOutHistoryPopupLink(ticketDetail.Ticket, BetListResources.Bought));
+                                    BuildCashOutHistoryPopupLink(ticketDetail.Ticket, ticketDetail.Ticket.BetdaqId == 1 ? BetListResources.Bought : BetListResources.CashOut));
                             }
                             else
                             {
