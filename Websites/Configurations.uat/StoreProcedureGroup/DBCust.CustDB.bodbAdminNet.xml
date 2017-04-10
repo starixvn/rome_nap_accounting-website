@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Functions>
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
