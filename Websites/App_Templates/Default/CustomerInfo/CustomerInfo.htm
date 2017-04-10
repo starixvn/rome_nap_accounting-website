@@ -14,9 +14,10 @@
         <!--customer detail-->
         <div class="box_header">
             <div style="padding-top:2px">
-                   <div id="" style="float: left; line-height:22px;" class="{statusClass}">
+                <div id="" style="float: left; line-height:22px;" class="{statusClass}">
                     <span id="box_02_headertext" style="{enabledbg}" onmouseover="{enabledtooltipover}"
-                        onmouseout="{enabledtooltipout}" {onclickUName} title="{FullUserName}" class="{memberClass}">{UserName}</span>&nbsp;<span id="btnupdownCustInfo" name="btnupdownCustInfo" onclick="collapseInfo();" title="Show Detail" ><img src="App_Themes/Images/icon_down.gif" class="imgDownUp" /></span></div>
+                          onmouseout="{enabledtooltipout}" {onclickUName} title="{FullUserName}" class="{memberClass}">{UserName}</span>&nbsp;<span id="btnupdownCustInfo" name="btnupdownCustInfo" onclick="collapseInfo();" title="Show Detail"><img src="App_Themes/Images/icon_down.gif" class="imgDownUp" /></span>
+                </div>
                 <div style="float: right;">
                     [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span> | <span class="canchange" onclick="OpenViewPT('{FullUserName}')">PT</span>]
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="LogID">
@@ -28,7 +29,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div id="custInfoDetal" class="box_content1">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -39,7 +40,7 @@
                         <span id="vCustName" class="text_red" title="{FullCustomerName}" style="line-height:14px;">{FullCustomerName}&nbsp;</span>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td width="25%" class="dot_left">
                         Nick Name:
                     </td>
@@ -71,6 +72,24 @@
                         <span id="vCustMobile" class="text_red">{CustomerMobile}&nbsp;</span>
                     </td>
                 </tr>
+                <!--directinfo-->
+                <tr>
+                    <td class="dot_left">
+                        Max Loss:
+                    </td>
+                    <td class="dot_left">
+                        <span id="vMaxLoss">{MaxLoss}&nbsp;</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dot_left">
+                        Headline:
+                    </td>
+                    <td class="dot_left">
+                        <span id="vHeadline" class="canchange"  onclick="parent.gotoURL('centerFr','{linkHeadline}');">{Headline}&nbsp;</span>
+                    </td>
+                </tr>
+                <!--/directinfo-->
             </table>
         </div>
         <!--end customer detail-->
@@ -83,14 +102,23 @@
         <!--end button-->
         <div class="spacing">
         </div>
-        <!--box balnace - downline list-->
+        <!--box balnace - downline list--direct info-->
         <div class="box_header">
             <div id="left_tab1" class="left_tab">
                 <ul>
-                    <li id="left_tab1_1" onclick="left_Tab1_Click(this)" class="current"><a href="javascript:;"><span>
-                        Balance Info</span></a></li>
+                    <li id="left_tab1_1" onclick="left_Tab1_Click(this)" class="current">
+                        <a href="javascript:;">
+                            <span>
+                                Balance
+                            </span>
+                        </a>
+                    </li>
                     <!--hideonmember-->
-                    <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Downline List</span></a></li><!--/hideonmember-->
+                    <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Downline</span></a></li>
+                    <!--/hideonmember-->
+                    <!--directinfo-->
+                    <li id="left_tab1_3" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Information</span></a></li>
+                    <!--/directinfo-->
                 </ul>
             </div>
         </div>
@@ -106,22 +134,103 @@
                 <div class="holder osX">
                     <div id="ctrDownlines" style="height: 265px; width: 248px; text-align: center;">
                         <div id="downlinecontent">
-                            {DownlineList}</div>
+                            {DownlineList}
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--directinfo-->
+            <div id="box_04_content_3">
+                <div class="holder osX">
+                    <div id="ctrInfo" style="height: 205px; width: 248px; text-align: center;">
+                        <table border="0" align="left" style="width: 240px;" cellspacing="1">
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Creator
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Creator}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Person In Charge
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Person In Charge}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Boss
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Boss}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Requestor
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Requestor}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Approver
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Approver}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Mobile
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Mobile}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    Max Loss
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    {Max Loss}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="dot_left" style="width: 100px;">
+                                    
+                                </td>
+                                <td class="dot_right b" style="width: 140px;">
+                                    <span class="canchange" onclick="openDirectInfoPanel('{LinkDirectInfo}');">Edit</span>
+                                </td>
+                            </tr>
+                        </table>                        
+                    </div>
+                </div>
+            </div>
+            <!--/directinfo-->
         </div>
         <div class="pagerbox">
             <div id="dllpager">
-                Pager:</div>
+                Pager:
+            </div>
         </div>
         <!--box balnace - downline list-->
         <!--box setting detail login onlinelist-->
         <div class="box_header">
             <div id="left_tab2" class="left_tab">
                 <ul>
-                    <li id="left_tab2_1" onclick="left_Tab2_Click(this)" class="current"><a href="javascript:;"><span>
-                        Setting</span></a></li>
+                    <li id="left_tab2_1" onclick="left_Tab2_Click(this)" class="current">
+                        <a href="javascript:;">
+                            <span>
+                                Setting
+                            </span>
+                        </a>
+                    </li>
                     <li id="left_tab2_2" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Detail</span></a></li>
                     <li id="left_tab2_3" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Login</span></a></li>
                     <li id="left_tab2_4" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Online List</span></a></li>
@@ -130,20 +239,20 @@
         </div>
         <div class="box_05_contents" id="box_05_contents">
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
-                cellspacing="0">
+                   cellspacing="0">
                 <tr>
                     <!--dangerous-->
                     <td class="l bot " style="width: 100px;">
                         Dangerous
                     </td>
-                    <td width="24px" class="r bot b">
-                    </td>
+                    <td width="24px" class="r bot b"></td>
                     <!--/dangerous-->
                     <!--edited-dangerous-->
                     <td class="l bot" style="width: 124px;" colspan="2">
                         <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
                             Dangerous
-                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" /></span>
+                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
+                        </span>
                         <br />
                         <div id="dangerousbox" style="position: absolute; display: none; background-color: #BBC7CE;
                             color: #4D4E4E;">
@@ -151,9 +260,9 @@
                         </div>
                     </td>
                     <!--/edited-dangerous-->
-                   
+
                     <td style="width: 100px;" class="l">
-                         Limit Per IP
+                        Limit Per IP
                     </td>
                     <td width="24px" class="l">
                         {LimitPerIP}
@@ -161,18 +270,18 @@
                 </tr>
                 <!--AbnormalSession-->
                 <tr>
-                     <!--Abnormal-->
+                    <!--Abnormal-->
                     <td class="l bot " style="width: 100px;">
                         Abnormal
                     </td>
-                    <td width="24px" class="r bot b">
-                    </td>
+                    <td width="24px" class="r bot b"></td>
                     <!--/Abnormal-->
-                     <!--edit-Abnormal-->
+                    <!--edit-Abnormal-->
                     <td class="l bot" style="width: 124px;" colspan="2">
                         <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuAbnormal()">
                             Abnormal
-                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" /></span>
+                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
+                        </span>
                         <br />
                         <div id="abnormalbox" style="position: absolute; display: none; background-color: #BBC7CE;
                             color: #4D4E4E;">
@@ -183,26 +292,26 @@
                 </tr>
                 <!--/AbnormalSession-->
                 <tr>
-                    <td class="l" colspan="2" ><span class="canchange" onclick="showhideRacebooksStatus({CustId},{RoleId})">Enable Racing</span></td>
+                    <td class="l" colspan="2"><span class="canchange" onclick="showhideRacebooksStatus({CustId},{RoleId})">Enable Racing</span></td>
                     <td class="l" colspan="2"><!--edit-p2p--><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span><!--/edit-p2p--></td>
-                </tr>             
-		        <!--Row_ProgressiveBonus_AGCasinoStatus-->
-		        <tr>
-		            <!--ProgressiveBonus-->
+                </tr>
+                <!--Row_ProgressiveBonus_AGCasinoStatus-->
+                <tr>
+                    <!--ProgressiveBonus-->
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideCasinoBonus({CustId},{RoleId},'{UserName}')">Enable Bonus</span></td>
-	                <!--/ProgressiveBonus-->
+                    <!--/ProgressiveBonus-->
                     <td class="l" colspan="2">
-                        <!--AGCasinoStatus-->             
-                            <span class="canchange" onclick="updateAGCasinoStatus({CustId},{RoleId})">Enable AG Casino</span>
+                        <!--AGCasinoStatus-->
+                        <span class="canchange" onclick="updateAGCasinoStatus({CustId},{RoleId})">Enable AG Casino</span>
                         <!--/AGCasinoStatus-->
                     </td>
-                </tr>   
+                </tr>
                 <!--/Row_ProgressiveBonus_AGCasinoStatus-->
                 <!--/Row_Keno_GoldDeluxe-->
                 <tr>
                     <!--EnableKeno-->
                     <td class="l" colspan="2">
-                            <span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span>
+                        <span class="canchange" onclick="showhideKeno({CustId},0,{RoleId},0,{userId})">Enable Keno</span>
                     </td>
                     <!--/EnableKeno-->
                     <td class="l" colspan="2">
@@ -213,49 +322,47 @@
                 </tr>
                 <!--/Row_Keno_GoldDeluxe-->
                 <!--/Row_AutoSuspend_BetTrade-->
-                <tr>           
-                    <!--autosuspendstatus-->  
-                    <td class="l" colspan="2" >
+                <tr>
+                    <!--autosuspendstatus-->
+                    <td class="l" colspan="2">
                         <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span>
                     </td>
                     <!--/autosuspendstatus-->
                     <td class="l" colspan="2">
-                        <!--BetTrade-->             
+                        <!--BetTrade-->
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status','BetTrade', {betTradeId})">Enable BetTrade</span>
                         <!--/BetTrade-->
                     </td>
-                </tr> 
+                </tr>
                 <!--/Row_AutoSuspend_BetTrade-->
                 <!--/Row_Microgaming_Macau-->
-                 <tr>
-                    <!--Microgaming-->        
-                    <td class="l" colspan="2">        
+                <tr>
+                    <!--Microgaming-->
+                    <td class="l" colspan="2">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMicrogaming}, true, 'Update Microgaming Status','MicroGaming', {microGamingId})">Enable Microgaming</span>
                     </td>
                     <!--/Microgaming-->
-                    <!--Macau--> 
-                    <td class="l" colspan="2" >
-                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">Enable Macau</span>
+                    <!--Macau-->
+                    <td class="l" colspan="2">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">Enable Macau</span>
                     </td>
                     <!--/Macau-->
-                </tr> 
+                </tr>
                 <!--/Row_Microgaming_Macau-->
                 <tr>
-                    <!--Sportsbook2-->        
-                    <td class="l" colspan="2">        
+                    <!--Sportsbook2-->
+                    <td class="l" colspan="2">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">Enable Sportsbook 2</span>
                     </td>
-                    <!--/Sportsbook2-->                    
-                    <td class="l" colspan="2" >                         
-                    </td>
-                </tr> 
-                 <!--EnableCockFighting-->    
-                 <tr>     
-                    <td class="l" colspan="2">        
+                    <!--/Sportsbook2-->
+                    <td class="l" colspan="2"></td>
+                </tr>
+                <!--EnableCockFighting-->
+                <tr>
+                    <td class="l" colspan="2">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusCockFighting}, true, 'Update Cockfighting Status','CockFighting', {CockFightingId}, {settingType})">Enable Cockfighting</span>
-                    </td>               
-                    <td class="l" colspan="2" >                         
                     </td>
+                    <td class="l" colspan="2"></td>
                 </tr>
                 <!--/EnableCockFighting-->
                 <!--EnableAllbet-->
@@ -275,10 +382,10 @@
                         {specialCustomer}
                     </td>
                     <td style="width: 100px;" class="l">
-                       Closed
+                        Closed
                     </td>
                     <td width="24px" class="l">
-                         {closedCustomer}   
+                        {closedCustomer}
                     </td>
                 </tr>
                 {settingcontrol}
@@ -288,10 +395,13 @@
                     <div id="de_left">
                         <ul>
                             <!--detail_edit_menu-->
-                            <li id="detail_tab_3" class="current" onclick="detail_tabnew_Click(this)"><a href="javascript:void(0);">
-                                <span>Edit</span></a></li>
+                            <li id="detail_tab_3" class="current" onclick="detail_tabnew_Click(this)">
+                                <a href="javascript:void(0);">
+                                    <span>Edit</span>
+                                </a>
+                            </li>
                             <!--/detail_edit_menu-->
-                                {lblMinMax}
+                            {lblMinMax}
                             <li id="detail_tab_2" onclick="detail_tabnew_Click(this)" style="display: {isHiddenMember};">
                                 {lblMinMax1}
                             </li>
@@ -299,100 +409,132 @@
                     </div>
                     <div id="detail_tab_contents">
                         <div id="detail_tab_content_1" class="l detail_tab_content hidden">
-                            {contentminmax}</div>
+                            {contentminmax}
+                        </div>
                         <div id="detail_tab_content_2" class="l detail_tab_content hidden">
-                            {contentminmax1}</div>
+                            {contentminmax1}
+                        </div>
                         <div id="detail_tab_content_3" class="l detail_tab_content ">
                             <!-- Detail menu -->
                             <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
-                                Info</a><br />
-                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
-                                Edit Position Taking</a><br />
-                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
-                                Edit Position Taking</a><br />
-                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkAddnewDownline}');">
-                                Add New</a><br />
+                                Info
+                            </a><br />
+                            <span class="{IsShow1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
+                                    Edit Position Taking
+                                </a><br />
+                            </span><span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
+                                    Edit Position Taking
+                                </a><br />
+                            </span><span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkAddnewDownline}');">
+                                    Add New
+                                </a><br />
                             </span>
                             <!--editTransferTime-->
-                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
-                                Edit Transfer Condition</a><br />
+                            <span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
+                                    Edit Transfer Condition
+                                </a><br />
                             </span>
                             <!--/editTransferTime-->
                             <!--maxexposure-->
-                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/EditMaxExposure.aspx?set=1&custId={CustId}&uname={FullUserName}&type={type}');">
-                                Max Exposure (%)</a><br />
+                            <span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/EditMaxExposure.aspx?set=1&custId={CustId}&uname={FullUserName}&type={type}');">
+                                    Max Exposure (%)
+                                </a><br />
                             </span>
                             <!--/maxexposure-->
                             <!--Horseracing update link-->
                             <!--horseracing-editlink-->
-                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                Edit Racing</a><br />
-                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                Edit Racing</a><br />
+                            <span class="{IsShow1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
+                                    Edit Racing
+                                </a><br />
+                            </span><span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
+                                    Edit Racing
+                                </a><br />
                             </span>
                             <!--/horseracing-editlink-->
                             <!--edit-casino-->
-                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                Edit Casino</a><br />
+                            <span class="{IsShow1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
+                                    Edit Casino
+                                </a><br />
                             </span>
-                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                Edit Casino</a><br />
+                            <span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
+                                    Edit Casino
+                                </a><br />
                             </span>
                             <!--/edit-casino-->
                             <!--edit-bingo-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{bingoLinkSetting}');">
-                                Edit Bingo</a><br />
+                                Edit Bingo
+                            </a><br />
                             <!--/edit-bingo-->
                             <!--edit-p2p-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{pokerLinkSetting}');">
-                                Edit Poker</a><br />
-                            <!--/edit-p2p-->      
+                                Edit Poker
+                            </a><br />
+                            <!--/edit-p2p-->
                             <!--edit-LiveCasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{livecasinoLinkSetting}');">
-                                Edit Live Casino</a><br />
-                            <!--/edit-LiveCasino-->    
-                             <!--edit-agcasino-->
+                                Edit Live Casino
+                            </a><br />
+                            <!--/edit-LiveCasino-->
+                            <!--edit-agcasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{agcasinoLinkSetting}');">
-                                Edit AG Casino</a><br />
-                            <!--/edit-agcasino-->    
+                                Edit AG Casino
+                            </a><br />
+                            <!--/edit-agcasino-->
                             <!--edit-VirtualSport-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualSportLinkSetting}');">
-                                Edit Virtual Sports</a><br />
-                            <!--/edit-VirtualSport-->        
-                             <!--edit-Keno-->
+                                Edit Virtual Sports
+                            </a><br />
+                            <!--/edit-VirtualSport-->
+                            <!--edit-Keno-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{kenoLinkSetting}');">
-                                Edit Keno</a><br />
-                            <!--/edit-Keno-->        
-                             <!--edit-GoldDeluxe-->
+                                Edit Keno
+                            </a><br />
+                            <!--/edit-Keno-->
+                            <!--edit-GoldDeluxe-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{goldDeluxeLinkSetting}');">
-                                Edit Gold Deluxe</a><br />
-                            <!--/edit-GoldDeluxe-->        
+                                Edit Gold Deluxe
+                            </a><br />
+                            <!--/edit-GoldDeluxe-->
                             <!--edit-MicroGaming-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{microgamingLinkSetting}');">
-                                Edit Microgaming</a><br />
-                            <!--/edit-MicroGaming-->   
-                             <!--edit-ColossusBet-->
+                                Edit Microgaming
+                            </a><br />
+                            <!--/edit-MicroGaming-->
+                            <!--edit-ColossusBet-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{colossusBetLinkSetting}');">
-                                Edit Colossus Bets</a><br />
-                            <!--/edit-ColossusBet-->  
-                             <!--edit-sportsbook2-->
+                                Edit Colossus Bets
+                            </a><br />
+                            <!--/edit-ColossusBet-->
+                            <!--edit-sportsbook2-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sportsbook2LinkSetting}');">
-                               Edit Sportsbook 2</a><br />
-                            <!--/edit-sportsbook2-->         
-                             <!--edit-CockFighting-->
+                                Edit Sportsbook 2
+                            </a><br />
+                            <!--/edit-sportsbook2-->
+                            <!--edit-CockFighting-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{cockFightingSettingLink}');">
-                              Edit Cockfighting</a><br />
-                            <!--/edit-CockFighting-->      
+                                Edit Cockfighting
+                            </a><br />
+                            <!--/edit-CockFighting-->
                             <!--edit-Cricket-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{cricketSettingLink}');">
                                 Edit Cricket
                             </a><br />
-                            <!--/edit-Cricket-->  
+                            <!--/edit-Cricket-->
                             <!--edit-Allbet-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{allbetLinkSetting}');">
                                 Edit Allbet
                             </a><br />
-                            <!--/edit-Allbet--> 
+                            <!--/edit-Allbet-->
                             <!--edit-Voidbridge-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{voidbridgeLinkSetting}');">
                                 Edit Macau Games
@@ -402,12 +544,12 @@
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{ng2LinkSetting}');">
                                 {Edit-NG2}
                             </a><br />
-                            <!--/edit-NG2--> 
+                            <!--/edit-NG2-->
                             <!--edit-FishingWorld-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{fishingWorldLinkSetting}');">
                                 Edit Fishing World
                             </a><br />
-                            <!--/edit-FishingWorld--> 
+                            <!--/edit-FishingWorld-->
                             <!-- Detail menu -->
                         </div>
                     </div>
@@ -433,24 +575,24 @@
 </div>
 {jsparams}
 <form name="AgLoginForm" id="AgLoginForm" method="get" action="InternalView.aspx"
-target="_blank">
-<input type="hidden" id="custid" value="{CustId}" />
-<input type="hidden" id="chalengeStr" name="chalengeStr" value="{RndStr}" />
-<input type="hidden" id="accKey" name="accKey" value="{AccKey}" />
-<input type="hidden" id="custName" name="custName" value="" />
-<input type="hidden" id="accId" name="accId" value="{AccId}" />
-<!--checkbox-oldvalue-->
-<input type="hidden" id="chkOldValueSATote" name="chkOldValueSATote" value="{chkSATote}" />
-<input type="hidden" id="chkOldValueUKTote" name="chkOldValueUKTote" value="{chkUKTote}" />
-<input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />
-<input type="hidden" id="chkOldValueBingo" name="chkOldValueBingo" value="{chkBingo}"/>
-<input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
-<input type="hidden" id="chkOldValueLiveCasino" name="chkOldValueLiveCasino" value="{chkLiveCasino}"/>
-<input type="hidden" id="chkOldValueVirtualSport" name="chkOldValueVirtualSport" value="{chkVirtualSport}"/>
-<input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}"/>
-<input type="hidden" id="chkOldValueEnableHorseRacingFixedOdds" name="chkOldValueEnableHorseRacingFixedOdds" value="{chkEnableHorseRacingFixedOdds}"/>
-<input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}"/>
-<input type="hidden" id="chkOldValueGoldDeluxe" name="chkOldValueGoldDeluxe" value="{chkGoldDeluxe}"/>
-<input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}"/>
-<!--/checkbox-oldvalue-->
+      target="_blank">
+    <input type="hidden" id="custid" value="{CustId}" />
+    <input type="hidden" id="chalengeStr" name="chalengeStr" value="{RndStr}" />
+    <input type="hidden" id="accKey" name="accKey" value="{AccKey}" />
+    <input type="hidden" id="custName" name="custName" value="" />
+    <input type="hidden" id="accId" name="accId" value="{AccId}" />
+    <!--checkbox-oldvalue-->
+    <input type="hidden" id="chkOldValueSATote" name="chkOldValueSATote" value="{chkSATote}" />
+    <input type="hidden" id="chkOldValueUKTote" name="chkOldValueUKTote" value="{chkUKTote}" />
+    <input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />
+    <input type="hidden" id="chkOldValueBingo" name="chkOldValueBingo" value="{chkBingo}" />
+    <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
+    <input type="hidden" id="chkOldValueLiveCasino" name="chkOldValueLiveCasino" value="{chkLiveCasino}" />
+    <input type="hidden" id="chkOldValueVirtualSport" name="chkOldValueVirtualSport" value="{chkVirtualSport}" />
+    <input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}" />
+    <input type="hidden" id="chkOldValueEnableHorseRacingFixedOdds" name="chkOldValueEnableHorseRacingFixedOdds" value="{chkEnableHorseRacingFixedOdds}" />
+    <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}" />
+    <input type="hidden" id="chkOldValueGoldDeluxe" name="chkOldValueGoldDeluxe" value="{chkGoldDeluxe}" />
+    <input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}" />
+    <!--/checkbox-oldvalue-->
 </form>
