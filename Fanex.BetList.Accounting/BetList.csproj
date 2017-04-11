@@ -40,7 +40,15 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.15\lib\net40\CasinoLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
@@ -129,7 +137,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.3\lib\net40\Fanex.Module.Logs.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.4\lib\net40\Fanex.Module.Logs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Core">
@@ -184,6 +192,10 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.6.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.6.12\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
