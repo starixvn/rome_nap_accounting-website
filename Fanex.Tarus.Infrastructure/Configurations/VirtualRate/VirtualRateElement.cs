@@ -11,6 +11,8 @@ namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using System.Configuration;
     using Fanex.Common;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Virtual Rate Bet Types Element.
@@ -70,6 +72,28 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             set
             {
                 this["notes"] = value;
+            }
+        }
+
+        [ConfigurationProperty("value")]
+        public string Value
+        {
+            get
+            {
+                return this["value"].ToString();
+            }
+
+            set
+            {
+                this["value"] = value;
+            }
+        }
+
+        public List<int> ValueRange
+        {
+            get
+            {
+                return this.Value.Split(',').Select(int.Parse).ToList();
             }
         }
 

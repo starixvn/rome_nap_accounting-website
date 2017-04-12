@@ -49,5 +49,18 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 return (VirtualRateCollection)base["Functions"];
             }
         }
+
+        [ConfigurationProperty("ValueRange", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(VirtualRateCollection),
+           AddItemName = "add",
+           ClearItemsName = "clear",
+           RemoveItemName = "remove")]
+        public VirtualRateCollection ValueRange
+        {
+            get
+            {
+                return (VirtualRateCollection)base["ValueRange"];
+            }
+        }
     }
 }

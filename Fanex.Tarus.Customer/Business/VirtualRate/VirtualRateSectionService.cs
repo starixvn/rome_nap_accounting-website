@@ -27,11 +27,14 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         static VirtualRateSectionService()
         {
             VirtualRateSports = VirtualRateSection.Instance.Sports;
+            ValueRange = VirtualRateSection.Instance.ValueRange[0].ValueRange;
         }
 
         public const string UploadVirtualFunction = "Upload Virtual Rate";
 
         public static VirtualRateCollection VirtualRateSports { get; set; }
+
+        public static List<int> ValueRange { get; private set; }
 
         /// <summary>
         /// Gets the sport list.

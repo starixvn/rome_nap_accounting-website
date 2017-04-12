@@ -1,9 +1,7 @@
-﻿@using Fanex.Tarus.Customer.Entities.VirtualRate;
-@using Fanex.Tarus.Customer.Resources;
-@using Newtonsoft.Json;
-@using Fanex.Tarus.Business.Implement;
+﻿@using Fanex.Tarus.Customer.Resources;
 @using Fanex.Tarus.Security.Services
 @using Sunplus.Accounting.Core.Common;
+@using Sunplus.Accounting.Core.Configurations;
 @{    
     ViewBag.Title = Customer_Labels.Virtual_Rate;
     Layout = "";
@@ -375,7 +373,7 @@
     <script type="text/javascript" src="~/js/jQuery/AjaxForm/ajax-form.js"></script>
     <script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
     <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
-    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/UploadRate/Scripts/UploadRateController.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/UploadRate/Scripts/UploadRateController.js?v=@WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var userId = @userId;

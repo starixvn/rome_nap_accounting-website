@@ -1159,7 +1159,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Virtual rate must be in a range from -80% to +60% and be multiples of 5%..
+        ///   Looks up a localized string similar to Invalid Virtual Rate..
         /// </summary>
         public static string VirtualRate_UploadFile_InvalidRate {
             get {

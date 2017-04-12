@@ -406,22 +406,14 @@ var VirtualRateController = function () {
                         ' bettype-id="' + betTypeId + '"' +
                         (groupdId ? ' groupd-id="' + groupdId + '"' : '') +
                     '>';
-        var currentRate = parseInt((maxRate * 100).toFixed(0));
-        var limitRate = parseInt((minRate * 100).toFixed(0));
         var rate = parseInt(((selectedRate - 1) * 100).toFixed(0));
-        while (currentRate >= limitRate) {
-            var value = (currentRate + 100) * actualExchangeRate / 100;
-            var rateText = currentRate + ' (' + numeral(value).format(self.Constants.Format.Number.Rate) + ')';
-            html += '<option' + (rate == currentRate ? ' selected="selected"' : '') +
-                ' value="' + currentRate + '"' + '>' +
+        for (var i = 0 ; i < oldCustomerVirtualRateModel.VirtualRateValueRange.length; i++) {
+            var value = (oldCustomerVirtualRateModel.VirtualRateValueRange[i] + 100) * actualExchangeRate / 100;
+            var rateText = oldCustomerVirtualRateModel.VirtualRateValueRange[i] + ' (' + numeral(value).format(self.Constants.Format.Number.Rate) + ')';
+            html += '<option' + (rate == oldCustomerVirtualRateModel.VirtualRateValueRange[i] ? ' selected="selected"' : '') +
+                ' value="' + oldCustomerVirtualRateModel.VirtualRateValueRange[i] + '"' + '>' +
                 rateText + '</option>';
 
-            if (5 < currentRate && currentRate <= 10) {
-                currentRate -= 1;
-            }
-            else {
-                currentRate -= 5;
-            }
         }
 
         html += '</select>';
