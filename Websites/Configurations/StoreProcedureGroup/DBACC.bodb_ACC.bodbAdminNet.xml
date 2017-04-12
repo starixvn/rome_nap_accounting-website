@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Virtual Rate">
-    <Setting Key="Customer_VirtualRate_InsertTemp" SpName="Acc_VirtualRateMulInsTmpExcel_uat1" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_InsertTemp" SpName="Acc_VirtualRateMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_CheckImport" SpName="Acc_VirtualRateMulSelCheck" DbName="DBACC.bodb_ACC.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_DeleteTemp" SpName="Acc_VirtualRateMulDelTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
   </Function>
