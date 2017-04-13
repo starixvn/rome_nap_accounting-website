@@ -240,7 +240,7 @@ namespace Fanex.NAP.SSO
                     break;
             }
 
-            return string.Format(loginUrl, uri.Scheme + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
+            return string.Format(loginUrl, (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
         }
 
         /// <summary>
