@@ -17,10 +17,10 @@ namespace Fanex.BetList.Accounting.Services
             _betListDetailRepository = betListDetailRepository ?? new BetListDetailRepository();
         }
 
-        public CashOutHistory GetCashOutHistory(ICriteria criteria)
+        public CashOutDetails GetCashOutDetails(ICriteria criteria)
         {
-            var cashOutHistory = _betListDetailRepository.GetCashOutHistory(criteria);
-            var ticketDetail = cashOutHistory.TicketDetail;
+            var cashOutDetails = _betListDetailRepository.GetCashOutDetails(criteria);
+            var ticketDetail = cashOutDetails.TicketDetail;
 
             if (ticketDetail != null)
             {
@@ -42,9 +42,9 @@ namespace Fanex.BetList.Accounting.Services
                 statusBlock.StatusResult = null;
                 ticketDetail.StatusHtml = statusBlock.ToString();
 
-                if (cashOutHistory.CashOutTickets != null)
+                if (cashOutDetails.CashOutTickets != null)
                 {
-                    foreach (var cashoutTicket in cashOutHistory.CashOutTickets)
+                    foreach (var cashoutTicket in cashOutDetails.CashOutTickets)
                     {
                         statusBuilder = builder.CreateStatusBuilder(cashoutTicket.BetType);
                         statusBlock = statusBuilder.Render(
@@ -63,7 +63,7 @@ namespace Fanex.BetList.Accounting.Services
                 }
             }
 
-            return cashOutHistory;
+            return cashOutDetails;
         }
     }
 }

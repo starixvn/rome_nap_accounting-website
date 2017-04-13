@@ -821,7 +821,7 @@ function ViewBettradeDetails(transId, refNo)
         null);
 }
 
-function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
+function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
     var params = $.param({
         transId: transId,
         refNo: refNo,
@@ -831,9 +831,9 @@ function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     });
 
     parent.OpenNextPopup(
-        "CashOutHistory",
-        "BetList/GetCashOutHistory?" + params,
-        title + " History",
+        "CashOutDetails",
+        "BetList/GetCashOutDetails?" + params,
+        title + " Details",
         840,
         600,
         true,

@@ -6,6 +6,6 @@ namespace Fanex.BetList.Accounting.Repositories
 {
     public interface IBetListDetailRepository
     {
-        CashOutHistory GetCashOutHistory(ICriteria criteria);
+        CashOutDetails GetCashOutDetails(ICriteria criteria);
     }
 }

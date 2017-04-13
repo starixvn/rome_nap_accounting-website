@@ -359,11 +359,11 @@ namespace Fanex.BetList.Accounting.Controllers
         }
 
         [AuthorizeFunctions("ViewInfo")]
-        public ActionResult GetCashOutHistory(GetCashOutDetailCriteria criteria)
+        public ActionResult GetCashOutDetails(GetCashOutDetailCriteria criteria)
         {
-            var cashOutHistory = _betListDetailService.GetCashOutHistory(criteria);
+            var cashOutDetails = _betListDetailService.GetCashOutDetails(criteria);
 
-            return View("~/Views/BetList/CashOut/History.cshtml", cashOutHistory);
+            return View("~/Views/BetList/CashOut/Details.cshtml", cashOutDetails);
         }
     }
 }

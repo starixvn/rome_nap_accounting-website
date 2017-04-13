@@ -2,7 +2,7 @@
 
 namespace Fanex.BetList.Accounting.Models
 {
-    public class CashOutHistory
+    public class CashOutDetails
     {
         public TicketDetail TicketDetail { get; set; }
 

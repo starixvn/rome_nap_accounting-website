@@ -2,7 +2,7 @@
 @using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Resources;
 @using Fanex.BetList.Accounting.Extensions;
-@model CashOutHistory
+@model CashOutDetails
 @{ bool isCashOutString = Request["title"] == BetListResources.CashOut; }
 <html>
 <head>
@@ -104,7 +104,7 @@
                         <tr>
                             <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
                             <th><div class="table-cell height34 width300">@(isCashOutString ? BetListResources.CashOutStake : BetListResources.BoughtStake)</div></th>
-                            <th><div class="table-cell height34 width60">@BetListResources.Price</div></th>
+                            <th><div class="table-cell height34 width60">@(isCashOutString ? BetListResources.CashOutAmount : BetListResources.BoughtAmount)</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.WinSlashLoss</div></th>
                             <th><div class="table-cell height34 width100">@Labels.Status</div></th>
                         </tr>
@@ -119,7 +119,7 @@
                         <tr>
                             <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
                             <th><div class="table-cell height34 width300">@(isCashOutString ? BetListResources.CashOutStake : BetListResources.BoughtStake)</div></th>
-                            <th><div class="table-cell height34 width60">@BetListResources.Price</div></th>
+                            <th><div class="table-cell height34 width60">@(isCashOutString ? BetListResources.CashOutAmount : BetListResources.BoughtAmount)</div></th>
                             <th><div class="table-cell height34 width60">@BetListResources.WinSlashLoss</div></th>
                             <th><div class="table-cell height34 width100">@Labels.Status</div></th>
                         </tr>

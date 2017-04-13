@@ -339,7 +339,7 @@
     <Compile Include="Models\BetListByIP_Username.cs" />
     <Compile Include="Models\BetListDetail.cs" />
     <Compile Include="Models\BetType.cs" />
-    <Compile Include="Models\CashOutHistory.cs" />
+    <Compile Include="Models\CashOutDetails.cs" />
     <Compile Include="Models\CashOutTicket.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />

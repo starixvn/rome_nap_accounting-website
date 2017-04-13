@@ -10,7 +10,7 @@ namespace Fanex.BetList.Accounting.Repositories
 {
     public class BetListDetailRepository : IBetListDetailRepository
     {
-        public CashOutHistory GetCashOutHistory(ICriteria criteria)
+        public CashOutDetails GetCashOutDetails(ICriteria criteria)
         {
             TicketDetail ticketDetail = null;
             IList<CashOutTicket> cashOutTickets = new List<CashOutTicket>();
@@ -34,7 +34,7 @@ namespace Fanex.BetList.Accounting.Repositories
                 }
             }
 
-            return new CashOutHistory
+            return new CashOutDetails
             {
                 TicketDetail = ticketDetail,
                 CashOutTickets = cashOutTickets

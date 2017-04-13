@@ -5,6 +5,6 @@ namespace Fanex.BetList.Accounting.Services
 {
     public interface IBetListDetailService
     {
-        CashOutHistory GetCashOutHistory(ICriteria criteria);
+        CashOutDetails GetCashOutDetails(ICriteria criteria);
     }
 }
