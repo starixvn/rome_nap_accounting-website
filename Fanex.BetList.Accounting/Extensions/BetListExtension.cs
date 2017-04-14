@@ -107,10 +107,6 @@ namespace Fanex.BetList.Accounting.Extensions
                     case BetTypeContants.SystemParlay:
                         statusHtml = status;
                         break;
-                    case BetTypeContants.CashOut:
-                    case BetTypeContants.CashOutBought:
-                        statusHtml = BuildCashOutStatus(ticketDetail.Ticket);
-                        break;
                     default:
                         if (33 <= sportTypeId && sportTypeId <= 42)
                         {
@@ -130,24 +126,18 @@ namespace Fanex.BetList.Accounting.Extensions
 
                             if (string.IsNullOrEmpty(statusHtml))
                             {
-                                if (IsCashOutTicket(ticketDetail.Ticket))
-                                {
-                                    statusHtml = status.ToUpper();
-                                }
-                                else
-                                {
-                                    statusHtml =
-                                        string.Format("{0}@{1}-{2}",
-                                                        statusFormat,
-                                                        finalHomeScore,
-                                                        finalAwayScore) +
-                                        "\n" +
-                                        string.Format("[{0}:{1}-{2}]",
-                                                        Labels.HT,
-                                                        halfTimeHomeScore,
-                                                        halfTimeAwayScore);
-                                }
+                                statusHtml = statusFormat;
                             }
+
+                            string briefResult = string.Format(
+                                "@{0}-{1}\n[{2}:{3}-{4}]",
+                                finalHomeScore,
+                                finalAwayScore,
+                                Labels.HT,
+                                halfTimeHomeScore,
+                                halfTimeAwayScore);
+
+                            statusHtml += briefResult;
                         }
 
                         break;
@@ -385,11 +375,6 @@ namespace Fanex.BetList.Accounting.Extensions
         private static bool IsCashOutOriginalTicket(ITicket ticket)
         {
             return ticket.BetdaqId == 0 && ticket.Stake == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
-        }
-
-        private static bool IsCashOutTicket(ITicket ticket)
-        {
-            return ticket.BetdaqId == 1 || HasCashOutExtraInfo(ticket.ExtraInfo);
         }
 
         private static bool HasCashOutExtraInfo(string extraInfo)
