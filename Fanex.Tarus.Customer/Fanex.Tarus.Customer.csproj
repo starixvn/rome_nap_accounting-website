@@ -110,8 +110,8 @@
       <HintPath>..\packages\Fanex.PTRacing.1.0.0.3\lib\net40\Fanex.PTRacing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2-beta9\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2-beta9-1\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -613,7 +613,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
