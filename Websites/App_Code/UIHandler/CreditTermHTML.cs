@@ -135,6 +135,9 @@ namespace Sunplus.Accounting.Presentation
                     TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
                     TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
                     TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
+                    TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
+                    TemplateHandler.Assign(ref _userrow, "{TotalBalance}", member.TotalBalance);
+                    TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
                     TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                     TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
                     TemplateHandler.Assign(ref _userrow, "{jsaddheadline}", jsheadline);

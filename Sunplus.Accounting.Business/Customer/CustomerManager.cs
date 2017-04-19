@@ -249,6 +249,14 @@ namespace Sunplus.Accounting.Business.Customer
                                     dynamicSettingtable = ds.ResultSet.Tables[4];
                                 }
                             }
+
+                            DataRow directCustomerInfo = null;
+
+                            if (ds.ResultSet.Tables.Count > 5 && ds.ResultSet.Tables[5].Rows.Count>0)
+                            {
+                                directCustomerInfo = ds.ResultSet.Tables[5].Rows[0];
+                            }
+
                             userName = row1["username"].ToString();
 
                             SetCustomerInfoAppSession(userName, row2);
@@ -732,6 +740,45 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #endregion BalanceInfo
 
+
+                                #region Information 
+                                if (directCustomerInfo == null)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotab");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotabcontent"); 
+                                }
+                                else
+                                {
+                                    if (Convert.IsDBNull(directCustomerInfo["groupheadlineid"]))
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
+                                       
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noheadline");
+                                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(directCustomerInfo["groupheadlineid"])));
+                                    }
+                                   
+                                    
+                                    TemplateHandler.Assign(ref htmlcontent, "{Headline}", directCustomerInfo["headline"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyInfo}", directCustomerInfo["currency"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLoss}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfo["maxloss"]));
+
+                                    TemplateHandler.Assign(ref htmlcontent, "{Creator}", directCustomerInfo["createdby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{PersonInCharge}", directCustomerInfo["processedby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Boss}", directCustomerInfo["boss"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Requestor}", directCustomerInfo["requestby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Approver}", directCustomerInfo["approvedby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Mobile}", directCustomerInfo["mobilephone"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyTab}", directCustomerInfo["currency"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfo["maxloss"]));
+                                    
+                                    TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", roleId, custId, userName));
+                                }
+                                #endregion Informtion
+
                                 //Setting
 
                                 #region Setting
@@ -1212,8 +1259,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", string.Format(creditDCSLink, 24));
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
-                                int creditTermGroupId = 510;                               
-                                TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", creditTermGroupId));
+                               
+                              
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {

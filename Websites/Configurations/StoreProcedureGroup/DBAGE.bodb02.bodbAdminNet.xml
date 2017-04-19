@@ -155,7 +155,8 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -185,7 +186,7 @@
     <Setting Key="OperatorSelByID" SpName="Acc_OperatorSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />

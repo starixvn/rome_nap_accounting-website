@@ -301,6 +301,9 @@ namespace Sunplus.Accounting.Business.CreditTerm
                     {
                         CustId = CastAide.AsInt32(drow["custid"]),
                         Username = CastAide.AsString(drow["username"]),
+                        Currency = CastAide.AsString(drow["currency"]),
+                        TotalBalance = CastAide.AsString(drow["totalbalance"]),
+                        MaxLoss = IBCUtils.FormatHandler.FormatNumber20(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
                     });
                 }
@@ -355,9 +358,12 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             // set columns width
             int fontWidth = 30;
-            int maxColumnIndex = 1;
+            int maxColumnIndex = 4;
             workSheet.Columns[0].Width = 60 * fontWidth;
             workSheet.Columns[1].Width = 300 * fontWidth;
+            workSheet.Columns[2].Width = 120 * fontWidth;
+            workSheet.Columns[3].Width = 120 * fontWidth;
+            workSheet.Columns[4].Width = 120 * fontWidth;
 
             // title
             string title = sheetName;
@@ -385,6 +391,21 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
             currentCell.Value = "Username";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Currency";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Total Balance";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Max Loss";
             currentCell.Style = headerTextStyle;
 
             #endregion Header
@@ -420,6 +441,21 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = username;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Currency;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.TotalBalance;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.MaxLoss;
                 currentCell.Style = textStyle;
             }
 

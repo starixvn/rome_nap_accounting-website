@@ -15,6 +15,7 @@ using Sunplus.Bingo.Core;
 public partial class Others_Menu : System.Web.UI.Page
 {
     private string tplMenu = string.Empty;
+    public bool IsDirectCustomer = false;
     private enum products
     {
         sportsbook2 = 16,

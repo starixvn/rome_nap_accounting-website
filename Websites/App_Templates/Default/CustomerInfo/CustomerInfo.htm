@@ -78,7 +78,7 @@
                         Max Loss:
                     </td>
                     <td class="dot_left">
-                        <span id="vMaxLoss">{MaxLoss}&nbsp;</span>
+                        <span id="vMaxLoss">{CurrencyInfo} {MaxLoss}&nbsp;</span>
                     </td>
                 </tr>
                 <tr>
@@ -86,7 +86,12 @@
                         Headline:
                     </td>
                     <td class="dot_left">
+                        <!--haveHeadline-->
                         <span id="vHeadline" class="canchange"  onclick="parent.gotoURL('centerFr','{linkHeadline}');">{Headline}&nbsp;</span>
+                        <!--/haveHeadline-->
+                        <!--noheadline-->
+                        Unassigned
+                        <!--/noheadline-->
                     </td>
                 </tr>
                 <!--/directinfo-->
@@ -116,9 +121,9 @@
                     <!--hideonmember-->
                     <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Downline</span></a></li>
                     <!--/hideonmember-->
-                    <!--directinfo-->
+                    <!--directinfotab-->
                     <li id="left_tab1_3" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Information</span></a></li>
-                    <!--/directinfo-->
+                    <!--/directinfotab-->
                 </ul>
             </div>
         </div>
@@ -139,10 +144,10 @@
                     </div>
                 </div>
             </div>
-            <!--directinfo-->
+            <!--directinfotabcontent-->
             <div id="box_04_content_3">
                 <div class="holder osX">
-                    <div id="ctrInfo" style="height: 205px; width: 248px; text-align: center;">
+                    <div id="ctrInfo" style="height: 230px; width: 248px; text-align: center;">
                         <table border="0" align="left" style="width: 240px;" cellspacing="1">
                             <tr>
                                 <td class="dot_left" style="width: 100px;">
@@ -157,7 +162,7 @@
                                     Person In Charge
                                 </td>
                                 <td class="dot_right b" style="width: 140px;">
-                                    {Person In Charge}
+                                    {PersonInCharge}
                                 </td>
                             </tr>
                             <tr>
@@ -197,7 +202,7 @@
                                     Max Loss
                                 </td>
                                 <td class="dot_right b" style="width: 140px;">
-                                    {Max Loss}
+                                    {CurrencyTab} {MaxLossTab}
                                 </td>
                             </tr>
                             <tr>
@@ -212,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <!--/directinfo-->
+            <!--/directinfotabcontent-->
         </div>
         <div class="pagerbox">
             <div id="dllpager">

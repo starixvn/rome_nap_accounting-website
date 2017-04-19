@@ -21,12 +21,18 @@
 <table class="tbllayout" cellspacing="1">
     <tr class="title">
         <td>UserName</td>
+        <td style="width:100px;">Currency</td>
+        <td style="width:100px;">Total Balance</td>
+        <td style="width:100px;">Max Loss</td>
         <td style="width:100px;">Set Headline</td>
         <td style="width:100px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></td>
     </tr>
     <!--UserRow-->
     <tr align="center" class="{row-even}">
         <td class="{headlineclasstext}">{UserName}</td>
+        <td class="c">{Currency}</td>
+        <td class="c">{TotalBalance}</td>
+        <td class="c">{MaxLoss}</td>
         <td class="c">
             <img src="{headline}" onclick="{jsaddheadline}" title="{title}" width="16px" height="14px" border="0" style="cursor:pointer;" />
        </td>
@@ -35,6 +41,9 @@
     <!--/UserRow-->
     {UserRowList}
     <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td class="c"><input class="btn" onclick="ExecuteCreditTerm('3');" type="button" value="Remove" name="btnremove"></input></td>

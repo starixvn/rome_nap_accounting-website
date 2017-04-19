@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <div class="main" style="width: 608px">
+    <div class="main" style="width: 908px">
         <div class="maincontent">
              <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
@@ -36,7 +36,7 @@
                 <%=strfilter%>
             </div>
             <div class="bg_table">
-                <div style="width: 600px">
+                <div style="width: 900px">
                     <div id="sContent">
                         <%=strContent%>
                     </div>

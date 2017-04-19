@@ -1,0 +1,44 @@
+<table class="tbllayout" cellspacing="1">
+    <tr>
+        <td class="b r">Person In Charge</td>
+        <td class="l">
+            <input type="text" name="txtPersonInCharge" id="txtPersonInCharge" value="{PersonInCharge}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="b r">Boss</td>
+        <td class="l">
+            <input type="text" name="txtBoss" id="txtBoss" value="{Boss}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="b r">Requestor</td>
+        <td class="l">
+            <input type="text" name="txtRequestor" id="txtRequestor" value="{Requestor}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="b r">Approver</td>
+        <td class="l">
+            <input type="text" name="txtApprover" id="txtApprover" value="{Approver}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="b r">Mobile Phone</td>
+        <td class="l">
+            <input type="text" name="txtPhone" id="txtPhone" value="{Phone}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="b r">Max Loss {Currency}</td>
+        <td class="l">
+            <input type="text" name="txtMaxLoss" id="txtMaxLoss" onkeypress="return On_KeyPress(event);" value="{MaxLoss}" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="c">
+            <input class="btn" type="submit" name="btnSubmit" id="btnSubmit" value="Update" onclick="return CheckInputValue();" />
+            <input class="btn" type="reset" name="btnReset" id="btnReset" value="Reset" />
+        </td>
+    </tr>
+</table>
