@@ -24,7 +24,12 @@
                 $("txtMaxLoss").focus();
                 return false;
             }
-            $("#errMsg").hide();
+            else if (isNumeric("txtMaxLoss")>=0)
+            {
+                showAlertMessage("errMsg", "Max Loss should be negative!", 1);
+                $("txtMaxLoss").focus();
+                return false;
+            }         
             return true;
         }
         function On_KeyPress(e) {

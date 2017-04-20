@@ -224,7 +224,7 @@ function openInfoPanel(url) {
 }
 
 function openDirectInfoPanel(url) {
-    showPopup("Edit Information", url, "", "", 400, 250, true, 2000, null);
+    showPopup("Edit Information", url, "", "", 400, 280, true, 2000, null);
 }
 
 function openMinMaxPtPanel(url) {

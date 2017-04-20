@@ -17,7 +17,7 @@
     <script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
     <script type="text/javascript" src="../PT/Racing/JS/CommonPT.js"></script>
     <script type="text/javascript">
-        bool isDirectCustomer = <%=IsDirectCustomer%>;
+        var isDirectCustomer = <%=IsDirectCustomer%>;
         function LinkOnClick(link, url) {
             PTBlockUI();
             $(".current").removeClass("current");
