@@ -302,12 +302,27 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         CustId = CastAide.AsInt32(drow["custid"]),
                         Username = CastAide.AsString(drow["username"]),
                         Currency = CastAide.AsString(drow["currency"]),
-                        TotalBalance = CastAide.AsString(drow["totalbalance"]),
+                        TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
                         MaxLoss = IBCUtils.FormatHandler.FormatNumber20(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
                     });
                 }
 
+              
+                DataTable dttotal = dbResult.ResultSet.Tables[1];
+                if (dttotal.Rows.Count > 0)
+                {
+                    var totalrow = dttotal.Rows[0];
+                    memberList.Add(new GroupEditing
+                    {
+                        CustId = 0,
+                        Username = "Total (RM)",
+                        Currency = "RM",
+                        TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
+                        MaxLoss = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalmaxloss_rm"]),
+                        IsGroupHeadline = false
+                    });
+                }
                 // add to Session
                 SessionExtension.AddSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY, memberList);
             }
