@@ -3,7 +3,7 @@
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_GetCustomerSetting" SpName="Acc_Dep_CustomerSelSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_UpdateCustomerSetting" SpName="Acc_Dep_CustomerUpdSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -196,7 +196,7 @@
   <Function Name="Customer - New Licensee">
     <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
