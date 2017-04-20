@@ -9,6 +9,9 @@
 
 namespace Fanex.BetList.Accounting.Core
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Text.RegularExpressions;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
@@ -16,9 +19,6 @@ namespace Fanex.BetList.Accounting.Core
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
     using Services;
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -985,7 +985,10 @@ namespace Fanex.BetList.Accounting.Core
             }
             else if (IsCashOutOriginalTicket(ticket))
             {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut, briefResult: briefResult);
+                if (upperStatus != "VOID" && upperStatus != "REFUND")
+                {
+                    statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut, briefResult: briefResult);
+                }
             }
 
             return statusLabel;

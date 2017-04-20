@@ -350,7 +350,10 @@ namespace Fanex.BetList.Accounting.Extensions
             }
             else if (IsCashOutOriginalTicket(ticket))
             {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut);
+                if (upperStatus != "VOID" && upperStatus != "REFUND")
+                {
+                    statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut);
+                }
             }
 
             return statusLabel;
