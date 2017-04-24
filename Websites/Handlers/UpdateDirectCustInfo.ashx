@@ -1,4 +1,4 @@
-<%@ WebHandler Language="C#" Class="UpdateCustInfo" %>
+<%@ WebHandler Language="C#" Class="UpdateDirectCustInfo" %>
 
 using System;
 using System.Web;
@@ -10,7 +10,7 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using IBCUtils;
 using DNAide.Core;
 
-public class UpdateCustInfo : BaseHandler
+public class UpdateDirectCustInfo : BaseHandler
 {
     protected override void RedirectError()
     {
@@ -52,12 +52,12 @@ public class UpdateCustInfo : BaseHandler
                     ht.Add("custid", custId);
                     ht.Add("processedby", context.Request["txtPersonInCharge"]);
                     ht.Add("boss", context.Request["txtBoss"]);
-                    ht.Add("requestby", context.Request["txtRequestor"]);
-                    ht.Add("approvedby ", context.Request["txtApprover"]);
-                    ht.Add("mobilephone ", context.Request["txtPhone"]);
-                    ht.Add("maxLoss ", context.Request["txtMaxLoss"]);
+                    ht.Add("requestedby", context.Request["txtRequestor"]);
+                    ht.Add("approvedby", context.Request["txtApprover"]);
+                    ht.Add("mobilephone", context.Request["txtPhone"]);
+                    ht.Add("maxloss", context.Request["txtMaxLoss"]);
                     ht.Add("ip", context.Request.UserHostAddress);
-                    ht.Add("userid", context.Session["AccId"]);
+                    ht.Add("creator", context.Session["AccId"]);
                     IbcError error = UpdateCustomer.CustomerUpdDirectInfomation(ht);
                     if (error.IsSuccess())
                     {
