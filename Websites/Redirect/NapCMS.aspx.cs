@@ -47,6 +47,6 @@ public partial class NapCMS_Redirect : System.Web.UI.Page
 	private string NapURL()
     {
         Uri uri = HttpContext.Current.Request.Url;        
-        return string.Format(ConfigurationManager.AppSettings["NapCMSLoginUrl"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Current.Request.Headers["Host"].ToString());
+        return string.Format(ConfigurationManager.AppSettings["NapCMSLoginUrl"], (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + HttpContext.Current.Request.Headers["Host"].ToString());
     }
 }
