@@ -244,7 +244,7 @@
       <HintPath>..\Dependency\Fanex\PTSettingInfo\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2-beta9-1\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.0.8.1, Culture=neutral, processorArchitecture=MSIL">
