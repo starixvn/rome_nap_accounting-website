@@ -1,9 +1,10 @@
 ﻿@using Fanex.PTVirtualSports
+@using Sunplus.Accounting.Core.Configurations
 
 <link rel="Stylesheet" href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.css")" />
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-<link rel="Stylesheet" href="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Styles/StyleSheet.css")" />
+<link rel="Stylesheet" href="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Styles/StyleSheet.css?v=" + WebSettings.Version)" />
 @*PT Engine Script*@
 <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery-1.7.js")"></script>
 <script src="~/js/common.js" type="text/javascript"></script>
@@ -16,8 +17,8 @@
 <script type="text/javascript" src="@Url.Content("~/js/jQuery/json2.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
 <script src="~/js/jQuery/knockout/knockout-2.0.0.js" type="text/javascript"></script>
-<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Js/EditMember.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Js/CommonPT.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Js/EditMember.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/PTSetting/Js/CommonPT.js?v=" + WebSettings.Version)"></script>
 <script type="text/javascript">
     var uplineId = @Request["uplineId"] ? @Request["uplineId"] : 0;
     var MemberId = @Request["custId"] ? @Request["custId"] : 0;
