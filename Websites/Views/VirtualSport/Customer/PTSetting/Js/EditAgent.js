@@ -66,7 +66,7 @@
 
         if (this.currentSetting.ptSetting && this.currentSetting.ptSetting.sportTypes && this.currentSetting.ptSetting.sportTypes.length > 0) {
             Fanex.PTVirtualSports.CURRENT_CONTEXT = this.context;
-            this.ptGrid = new Fanex.PTVirtualSports.PTGrid(Fanex.copy(this.currentSetting.ptSetting));
+            this.ptGrid = new Fanex.PTVirtualSports.PTGrid(/*Fanex.copy*/(this.currentSetting.ptSetting));
             var ptContainer = document.getElementById('ptContainer');
             this.ptGrid.Render(ptContainer);
         }
