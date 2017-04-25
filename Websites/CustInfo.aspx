@@ -30,8 +30,7 @@
     <script src="js/jQuery/message/jquery.msg.js" type="text/javascript"></script>
     <script src="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <style type="text/css">
-        #popLimitPerIP
-        {
+        #popLimitPerIP {
             display: none;
             position: absolute;
             background: #fff;
@@ -40,16 +39,16 @@
             padding: 2px;
             border: solid 1px;
         }
-        .memberClosed
-        {
+        .memberClosed {
             background-color: #CCC7BA;
         }
-        .memberSuspended
-        {
+        .memberClosed.pwd-sc-otp {
+            background-color: #98AFC7;
+        }
+        .memberSuspended {
             background-color: #F8DED7;
         }
-        .memberDisabled
-        {
+        .memberDisabled {
             background-color: #A0A97A;
         }
     </style>
