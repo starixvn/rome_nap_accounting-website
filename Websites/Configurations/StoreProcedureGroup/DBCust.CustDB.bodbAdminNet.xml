@@ -289,8 +289,8 @@
   </Function>
   <Function Name="Colossus Bet Setting">
     <Function Name="Get Setting">
-      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
