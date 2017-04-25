@@ -44,6 +44,6 @@ public partial class View : System.Web.UI.Page
         //}
 
         //return isUsedIP ? string.Format(ConfigurationManager.AppSettings["NapReportSSOUrl"],host) : ConfigurationManager.AppSettings["NapReportLoginUrl"];
-        return string.Format(ConfigurationManager.AppSettings["link_BA_url"], uri.Scheme + Uri.SchemeDelimiter + HttpContext.Current.Request.Headers["Host"].ToString());
+        return string.Format(ConfigurationManager.AppSettings["link_BA_url"], (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + HttpContext.Current.Request.Headers["Host"].ToString());
     }
 }
