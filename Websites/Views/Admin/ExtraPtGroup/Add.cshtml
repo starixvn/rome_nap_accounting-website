@@ -1,1 +1,102 @@
-﻿
+﻿@using Fanex.Tarus.Customer.Entities.ExtraPtGroup
+@model AddGroupByProductViewModel
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" /> 
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/Message.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Report/reportgrid.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/Admin/ExtraPtGroup/Styles/ExtraPtGroup.css?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+</head>
+<body>
+    <table width="100%" style="line-height: 30px">
+        <tr>
+            <td colspan="2">
+                <div id="errMsg">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="30%">Group <span class="asterisk">*</span></td>
+            <td>
+                <select id="group" class="edit-control-width">
+                    <option value="0">Please select</option>
+                    @foreach (var item in Model.Groups)
+                    {
+                        <option value="@item.GroupId">@item.GroupName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Product <span class="asterisk">*</span></td>
+            <td>
+                <select id="product">
+                    <option value="0">Please select</option>
+                    @foreach (var item in Model.Products)
+                    {
+                        <option value="@item.ProductId">@item.ProductName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>%Extra PT <span class="asterisk">*</span></td>
+            <td><input id="extrapt" maxlength="5" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true);" class="edit-control-width" style="text-align: right" type="text" value="0.00" /></td>
+        </tr>
+        <tr>
+            <td>Effective Date <span class="asterisk">*</span></td>
+            <td>
+                @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
+                "19000101",
+                "99991231",
+                "effdate",
+                "../",
+                "fdateTrigger",
+                DateTime.Now.ToString("MM/dd/yyyy"),
+                false,
+                false,
+                string.Empty,
+                string.Empty,
+                string.Empty))
+            </td>
+        </tr>
+        <tr>
+            <td>End Date</td>
+                <td>
+                @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
+                "19000101",
+                "99991231",
+                "enddate",
+                "../",
+                "tdateTrigger",
+                DateTime.MaxValue.ToString("MM/dd/yyyy"),
+                false,
+                false,
+                string.Empty,
+                string.Empty,
+                string.Empty))
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="button" value="Submit" style="cursor: pointer" onclick="Insert()" /></td>
+        </tr>
+    </table>
+    <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/Message/message.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/Popup/confirmbox.js")"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
+    <script src="@Url.Content("~/Views/Admin/ExtraPtGroup/Scripts/ExtraPtGroup.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script type="text/javascript">
+        function resolveClientUrl(relativePath) {
+            return '@Url.Content("~/")' + relativePath;
+        }
+    </script>
+</body>
+</html>

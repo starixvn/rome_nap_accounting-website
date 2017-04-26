@@ -7,6 +7,7 @@ using Fanex.Tarus.Customer.Entities.ExtraPtGroup;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Security.Permission;
 using Fanex.Tarus.Web.Controllers;
+using Newtonsoft.Json;
 using Sunplus.Accounting.Business.Security;
 
 namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
@@ -68,33 +69,36 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
                             select p).ToList();
             }
 
-            var model = new ModifyGroupByProductViewModel { Products = products, Groups = groups };
+            var model = new AddGroupByProductViewModel { Products = products, Groups = groups };
 
             return View("~/Views/Admin/ExtraPtGroup/Add.cshtml", model);
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
-        public ActionResult Insert(GroupByProduct model)
+        public ActionResult Insert(string data)
         {
+            var model = JsonConvert.DeserializeObject<GroupByProduct>(data);
             var result = _service.InsertGroupByProduct(new InsertGroupByProductCriteria
             {
                 EffectiveDate = model.EffectiveDate,
                 EndDate = model.EndDate,
-                ExtraPt = model.ExtraPt,
+                ExtraPt = model.ExtraPt / 100,
                 GroupId = model.Group.GroupId,
                 ProductId = model.Product.ProductId,
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.IsSuccess ? "New setting has been successfully created." : result.ErrorMessage));
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
-        public ActionResult Update(UpdateGroupByProduct model)
+        public ActionResult Update(string data)
         {
+            var model = JsonConvert.DeserializeObject<UpdateGroupByProduct>(data);
             var result = _service.UpdateGroupByProduct(new UpdateGroupByProductCriteria
             {
-                ExtraPt = model.ExtraPt,
+                NewExtraPt = model.NewExtraPt / 100,
+                OldExtraPt = model.OldExtraPt / 100,
                 GroupId = model.Group.GroupId,
                 NewEffectiveDate = model.NewEffectiveDate,
                 NewEndDate = model.NewEndDate,
@@ -104,23 +108,24 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.IsSuccess ? "New setting has been successfully updated." : result.ErrorMessage));
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
-        public ActionResult Delete(GroupByProduct model)
+        public ActionResult Delete(string data)
         {
+            var model = JsonConvert.DeserializeObject<GroupByProduct>(data);
             var result = _service.DeleteGroupByProduct(new DeleteGroupByProductCriteria
             {
                 EffectiveDate = model.EffectiveDate,
                 EndDate = model.EndDate,
-                ExtraPt = model.ExtraPt,
+                ExtraPt = model.ExtraPt / 100,
                 GroupId = model.Group.GroupId,
                 ProductId = model.Product.ProductId,
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.IsSuccess ? "The selected Extra PT setting was successfully deleted." : result.ErrorMessage));
         }
     }
 }

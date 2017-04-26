@@ -91,6 +91,12 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
             //            jQuery("#innerFrame" + popupId).empty();
 
             jQuery('#dialog-modal' + popupId).remove();
+            if (typeof fnRecall == 'function') {
+                fnRecall();
+            }
+            if (typeof fnOnClose == 'function') {
+                fnOnClose();
+            }
         }
     });
 

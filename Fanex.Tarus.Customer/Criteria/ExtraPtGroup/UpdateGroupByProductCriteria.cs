@@ -12,7 +12,9 @@ namespace Fanex.Tarus.Customer.Criteria.ExtraPtGroup
 
         public byte ProductId { get; set; }
 
-        public decimal ExtraPt { get; set; }
+        public decimal NewExtraPt { get; set; }
+        
+        public decimal OldExtraPt { get; set; }
 
         public DateTime OldEffectiveDate { get; set; }
 
@@ -33,7 +35,8 @@ namespace Fanex.Tarus.Customer.Criteria.ExtraPtGroup
             param.Add("userid", UserId);
             param.Add("groupid", GroupId);
             param.Add("productid", ProductId);
-            param.Add("extrapt", ExtraPt);
+            param.Add("newextrapt", NewExtraPt);
+            param.Add("oldextrapt", OldExtraPt);
             param.Add("oldeffectivedate", OldEffectiveDate);
             param.Add("oldenddate", OldEndDate);
             param.Add("neweffectivedate", NewEffectiveDate);

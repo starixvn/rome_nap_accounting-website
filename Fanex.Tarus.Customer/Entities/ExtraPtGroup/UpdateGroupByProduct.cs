@@ -14,7 +14,9 @@ namespace Fanex.Tarus.Customer.Entities.ExtraPtGroup
 
         public Product Product { get; set; }
 
-        public decimal ExtraPt { get; set; }
+        public decimal NewExtraPt { get; set; }
+
+        public decimal OldExtraPt { get; set; }
 
         public DateTime OldEffectiveDate { get; set; }
 
