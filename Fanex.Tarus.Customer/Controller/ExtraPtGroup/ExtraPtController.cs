@@ -34,12 +34,12 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
-        public ActionResult Edit(byte groupId = 0, byte productId = 0)
+        public ActionResult Edit(byte groupId = 0, byte productId = 0, string effectiveDate = null)
         {
             var groups = _service.GetGroups(new GroupCriteria());
             var products = _service.GetProducts(new ProductCriteria { IsExtra = false });
             var groupByProduct = _service.GetGroupsByProduct(new GroupByProductCriteria { ProductId = productId })
-                .FirstOrDefault(g => g.Group.GroupId == groupId && g.Product.ProductId == productId);
+                .FirstOrDefault(g => g.Group.GroupId == groupId && g.Product.ProductId == productId && g.EffectiveDate.ToString("MMddyyyy") == effectiveDate);
             if (!Permissions.HasPermission(Sunplus.Accounting.Core.Common.Enumerations.Functions.AccessSpecialSites))
             {
                 products = (from p in products
@@ -88,7 +88,7 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.IsSuccess ? "New setting has been successfully created." : result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.ErrorCode <= 0 ? "New setting has been successfully created." : result.ErrorMessage));
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
@@ -108,7 +108,7 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.IsSuccess ? "New setting has been successfully updated." : result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.ErrorCode <= 0 ? "New setting has been successfully updated." : result.ErrorMessage));
         }
 
         [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
@@ -125,7 +125,7 @@ namespace Fanex.Tarus.Customer.Controller.ExtraPtGroup
                 UserId = AppSession.AccId
             });
 
-            return Json(new Result(result.ErrorCode, result.IsSuccess ? "The selected Extra PT setting was successfully deleted." : result.ErrorMessage));
+            return Json(new Result(result.ErrorCode, result.ErrorCode <= 0 ? "The selected Extra PT setting was successfully deleted." : result.ErrorMessage));
         }
     }
 }

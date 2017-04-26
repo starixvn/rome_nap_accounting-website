@@ -7,8 +7,8 @@ function Search() {
     parent.$.unblockUI();
 }
 
-function GetEditForm(groupId, productId) {
-    url = resolveClientUrl('ExtraPt/Edit?groupId=' + groupId + '&productId=' + productId);
+function GetEditForm(groupId, productId, effDate) {
+    url = resolveClientUrl('ExtraPt/Edit?groupId=' + groupId + '&productId=' + productId + '&effectiveDate=' + effDate);
     parent.OpenNextPopup('edit', url, 'Edit Extra PT Group', 400, 450, true, false, this, 2000, null, function () {
         location.reload(true);
     });
@@ -103,7 +103,7 @@ function Insert() {
                 350, 150,
                 'confirm',
                 function () { DoInsert(); },
-                function () { },
+                function () { __close(false, 300, 'confirm'); },
                 function () { },
                 false);
         }

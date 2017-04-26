@@ -25,7 +25,7 @@
                 </tr>
             </table>
             <div class="maincontent_box" style="width: 500px">
-                <div id="errMsg">
+                <div id="errMsg" style="line-height: 18px">
                 </div>
                 <div class="header-scroll" style="line-height: 2">
                     <label class="b">Product&nbsp;</label>
@@ -83,11 +83,11 @@
                                             <td class="c">
                                                 @if (item.EffectiveDate <= DateTime.Now)
                                                 {
-                                                    <img src="@Url.Content("~/App_Themes/Images/icn_edit.png")" onclick="javascript:GetEditForm(@item.Group.GroupId, @item.Product.ProductId);" style="cursor:pointer" title="Edit">
+                                                    <img src="@Url.Content("~/App_Themes/Images/icn_edit.png")" onclick="javascript:GetEditForm(@item.Group.GroupId, @item.Product.ProductId, '@item.EffectiveDate.ToString("MMddyyyy")');" style="cursor:pointer" title="Edit">
                                                 }
                                                 else
                                                 {
-                                                    <img src="@Url.Content("~/App_Themes/Images/icn_edit.png")" onclick="javascript:GetEditForm(@item.Group.GroupId, @item.Product.ProductId);" style="cursor:pointer" title="Edit">
+                                                    <img src="@Url.Content("~/App_Themes/Images/icn_edit.png")" onclick="javascript:GetEditForm(@item.Group.GroupId, @item.Product.ProductId, '@item.EffectiveDate.ToString("MMddyyyy")');" style="cursor:pointer" title="Edit">
                                                     <img src="@Url.Content("~/App_Themes/Images/icn_del.png")" onclick="javascript:ConfirmDelete(@item.Group.GroupId, @item.Product.ProductId, @(item.ExtraPt * 100), '@item.EffectiveDate.ToString("MM/dd/yyyy")', '@item.EndDate.ToString("MM/dd/yyyy")');" style="cursor:pointer" title="Remove">
                                                 }
                                             </td>
