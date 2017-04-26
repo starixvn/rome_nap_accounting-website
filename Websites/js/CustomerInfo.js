@@ -487,6 +487,10 @@ function left_Tab1_Click(item) {
     }
     else {
         $("#box_04_content_3").css("display", "block");
+        try {
+            $('#ctrInfo').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
+        }
+        catch (error) { }
         $(".pagerbox").css("display", "none");
     }
 }
