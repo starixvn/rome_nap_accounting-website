@@ -750,14 +750,15 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 else
                                 {
-                                    if (Convert.IsDBNull(directCustomerInfo["groupheadlineid"]))
+
+                                    if (Convert.IsDBNull(directCustomerInfo["groupheadlineid"]) || Convert.ToInt32(directCustomerInfo["groupheadlineid"]) == 0)
                                     {
                                         TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
                                        
                                     }
                                     else
                                     {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noheadline");
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
                                         TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(directCustomerInfo["groupheadlineid"])));
                                     }
                                    
