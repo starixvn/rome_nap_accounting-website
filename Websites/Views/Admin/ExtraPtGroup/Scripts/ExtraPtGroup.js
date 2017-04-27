@@ -15,6 +15,19 @@ function GetEditForm(groupId, productId, effDate) {
 }
 
 function Update() {
+    if (parseFloat($('#extrapt').val()) <= 0 || $('#extrapt').val() == '') {
+        showAlertMessage("errMsg", "Please input %Extra PT.", 1);
+        $("#errMsg").show();
+
+        return;
+    }
+    else if ($('#effdate').val() > $('#enddate').val()) {
+        showAlertMessage("errMsg", "Effective Date is greater than End Date.", 1);
+        $("#errMsg").show();
+
+        return;
+    }
+
     parent.BlockUI();
     $.ajax({
         dataType: 'application/json',
@@ -87,7 +100,7 @@ function Insert() {
         showAlertMessage("errMsg", "Please select Product.", 1);
         $("#errMsg").show();
     }
-    else if (parseFloat($('#extrapt').val()) <= 0) {
+    else if (parseFloat($('#extrapt').val()) <= 0 || $('#extrapt').val() == '') {
         showAlertMessage("errMsg", "Please input %Extra PT.", 1);
         $("#errMsg").show();
     }
