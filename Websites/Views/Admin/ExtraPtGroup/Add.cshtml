@@ -1,9 +1,12 @@
 ﻿@using Fanex.Tarus.Customer.Entities.ExtraPtGroup
 @model AddGroupByProductViewModel
+@{
+    string minDate = DateTime.Today.ToString("yyyyMMdd");
+}
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" /> 
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
@@ -51,7 +54,7 @@
             <td>Effective Date <span class="asterisk">*</span></td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                "19000101",
+                minDate,
                 "99991231",
                 "effdate",
                 "../",
@@ -66,9 +69,9 @@
         </tr>
         <tr>
             <td>End Date</td>
-                <td>
+            <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                "19000101",
+                minDate,
                 "99991231",
                 "enddate",
                 "../",

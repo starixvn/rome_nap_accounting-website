@@ -3,6 +3,7 @@
 @{ 
     var disabled = Model.SelectedItem.EffectiveDate <= DateTime.Now ? 1 : 0;
     var displayAsterisk = disabled == 1 ? "none" : "inline-block";
+    string minDate = DateTime.Today.ToString("yyyyMMdd");
 }
 <html>
 <head>
@@ -55,7 +56,7 @@
             <td>Effective Date <span class="asterisk" style="display: @displayAsterisk">*</span></td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                "19000101",
+                minDate,
                 "99991231",
                 "effdate",
                 "../",
@@ -71,7 +72,7 @@
         <tr>
             <td>End Date</td>
             <td>@Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                "19000101",
+                minDate,
                 "99991231",
                 "enddate",
                 "../",
