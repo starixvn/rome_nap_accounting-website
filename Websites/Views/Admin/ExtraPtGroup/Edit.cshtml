@@ -1,6 +1,6 @@
 ﻿@using Fanex.Tarus.Customer.Entities.ExtraPtGroup
 @model ModifyGroupByProductViewModel
-@{ 
+@{
     var disabled = Model.SelectedItem.EffectiveDate <= DateTime.Now ? 1 : 0;
     var displayAsterisk = disabled == 1 ? "none" : "inline-block";
     string minDate = DateTime.Today.ToString("yyyyMMdd");
@@ -8,7 +8,7 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" /> 
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/Admin/ExtraPtGroup/Styles/ExtraPtGroup.css?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
-    <table width="100%" style="line-height: 30px">
+    <table width="100%" style="line-height: 45px; margin-top: 10%;">
         <tr>
             <td colspan="2">
                 <div id="errMsg" style="line-height: 18px">
@@ -32,7 +32,7 @@
                     {
                         var selected = item.GroupId == Model.SelectedItem.Group.GroupId ? "selected=\"selected\"" : string.Empty;
                         <option value="@item.GroupId" @selected>@item.GroupName</option>
-                    }                    
+                    }
                 </select>
             </td>
         </tr>
@@ -66,12 +66,13 @@
                 false,
                 string.Empty,
                 string.Empty,
-                string.Empty))                
+                string.Empty))
             </td>
         </tr>
         <tr>
             <td>End Date</td>
-            <td>@Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
+            <td>
+                @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
                 minDate,
                 "99991231",
                 "enddate",
@@ -82,16 +83,17 @@
                 false,
                 string.Empty,
                 string.Empty,
-                string.Empty))</td>
+                string.Empty))
+            </td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="button" value="Submit" style="cursor: pointer" onclick="Update()" /></td>
+            <td><input type="button" class="btn" value="Submit" style="cursor: pointer" onclick="Update()" /></td>
         </tr>
     </table>
     <input type="hidden" value="@Model.SelectedItem.EffectiveDate.ToString("MM/dd/yyyy")" id="oldEffdate" />
-    <input type="hidden" value="@Model.SelectedItem.EndDate.ToString("MM/dd/yyyy")" id="oldEnddate" />    
-    <input type="hidden" value="@(Model.SelectedItem.ExtraPt * 100)" id="oldExtrapt" />    
+    <input type="hidden" value="@Model.SelectedItem.EndDate.ToString("MM/dd/yyyy")" id="oldEnddate" />
+    <input type="hidden" value="@(Model.SelectedItem.ExtraPt * 100)" id="oldExtrapt" />
     <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/Message/message.js")" type="text/javascript"></script>
@@ -106,8 +108,8 @@
 
         if (@disabled) {
             $('#fdateTrigger').attr('disabled', 'disabled');
-            $('#effdate').css('background-color', '#eee');
-            $('#extrapt').attr('disabled', 'disabled');
+        $('#effdate').css('background-color', '#eee');
+        $('#extrapt').attr('disabled', 'disabled');
         }
     </script>
 </body>

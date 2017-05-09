@@ -9,7 +9,7 @@ function Search() {
 
 function GetEditForm(groupId, productId, effDate) {
     url = resolveClientUrl('ExtraPt/Edit?groupId=' + groupId + '&productId=' + productId + '&effectiveDate=' + effDate);
-    parent.OpenNextPopup('edit', url, 'Edit Extra PT Group', 400, 450, true, false, this, 2000, null, function () {
+    parent.OpenNextPopup('edit', url, 'Edit Extra PT Group', 400, 430, true, false, this, 2000, null, function () {
         location.reload(true);
     });
 }
@@ -21,7 +21,7 @@ function Update() {
 
         return;
     }
-    else if ($('#effdate').val() > $('#enddate').val()) {
+    else if (new Date($('#effdate').val()) > new Date($('#enddate').val())) {
         showAlertMessage("errMsg", "Effective Date is greater than End Date.", 1);
         $("#errMsg").show();
 
@@ -86,7 +86,7 @@ function Delete(groupId, productId, extraPt, effDate, endDate) {
 
 function GetAddForm() {
     url = resolveClientUrl('ExtraPt/Add');
-    parent.OpenNextPopup('edit', url, 'Add Extra PT Group', 400, 450, true, false, this, 2000, null, function () {
+    parent.OpenNextPopup('edit', url, 'Add Extra PT Group', 400, 430, true, false, this, 2000, null, function () {
         location.reload(true);
     });
 }
@@ -104,7 +104,7 @@ function Insert() {
         showAlertMessage("errMsg", "Please input %Extra PT.", 1);
         $("#errMsg").show();
     }
-    else if ($('#effdate').val() > $('#enddate').val()) {
+    else if (new Date($('#effdate').val()) > new Date($('#enddate').val())) {
         showAlertMessage("errMsg", "Effective Date is greater than End Date.", 1);
         $("#errMsg").show();
     }
