@@ -110,7 +110,7 @@ function Insert() {
     }
     else {
         $("#errMsg").html('').hide();
-        if ($('#effdate').val() == $('#enddate').val()) {
+        if (new Date($('#effdate').val()) == new Date($('#enddate').val())) {
             __confirm("Confirm",
                 "Adding a new Extra PT setting which take effect from today might have impact on the reset amounts in the Reset Winning report. Are you sure you want to change?",
                 350, 150,
