@@ -14,11 +14,11 @@
     <Setting Key="Customer_ConfigureDirectAccount_CheckImportDirectAccount" SpName="Acc_CustDirectMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
   </Function>
   <Function Name="Manage Extra PT for External Groups">
-	<Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-	<Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-	<Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-	<Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-	<Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-	<Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />	  
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel_xtest" DbName="DBACC.bodb_ACC.bodbAdminNet" />
   </Function>
 </Functions>
