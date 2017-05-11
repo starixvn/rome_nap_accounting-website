@@ -222,6 +222,11 @@ function updateCloseStatus(type, hasDownLine) {
 function openInfoPanel(url) {
     showPopup("Edit Customer", url, "", "", 600, 420, true, 2000, null);
 }
+
+function openDirectInfoPanel(url) {
+    showPopup("Edit Information", url, "", "", 400, 280, true, 2000, null);
+}
+
 function openMinMaxPtPanel(url) {
     if (url == "") return;
     window.open(url, "EditCust", "height=700,width=980,top=200,left=200,scrollbars=1");
@@ -469,7 +474,8 @@ function left_Tab1_Click(item) {
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $(".pagerbox").css("display", "none");
     }
-    else {
+    else if (item.id.indexOf("_2") >= 0)
+    {
         $("#box_04_content_2").css("display", "block");
         try {
             $('#ctrDownlines').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
@@ -478,6 +484,14 @@ function left_Tab1_Click(item) {
         if (totalPage > 1) {
             $(".pagerbox").css("display", "block");
         }
+    }
+    else {
+        $("#box_04_content_3").css("display", "block");
+        try {
+            $('#ctrInfo').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
+        }
+        catch (error) { }
+        $(".pagerbox").css("display", "none");
     }
 }
 

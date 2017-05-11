@@ -80,7 +80,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.22.0.0-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.22.0.1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -91,8 +91,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.7\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.22.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.22.0.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.22.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.22.0.1\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -181,7 +181,7 @@
       <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.9\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.1.10-DirectCust\lib\net40\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -291,8 +291,8 @@
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.0.0.9\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.8.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.8.2\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.8.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.8.3\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
@@ -477,7 +477,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
+      <HintPath>..\packages\RemotingRef.2.0.0.5\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">

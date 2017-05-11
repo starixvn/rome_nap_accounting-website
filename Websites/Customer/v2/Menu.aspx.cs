@@ -11,10 +11,13 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Bingo.Core;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using System.Data;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
     private string tplMenu = string.Empty;
+    public string IsDirectCustomer = "false";
     private enum products
     {
         sportsbook2 = 16,
@@ -30,10 +33,21 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, AllowedPoker, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld;
+        Boolean AllowedCS, AllowedBI, allowEditLiveCs, allowVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
+
+        var ds = SelectCustomer.CustomerSelDirectInfo(custID);
+        if (ds != null)
+        {
+            DataTable tbl = ds.ResultSet.Tables[0];
+            if (tbl.Rows.Count > 0)
+            {
+                IsDirectCustomer = "true";
+            }
+        }
+
         var HRURL = string.Empty;
         Thread.Sleep(2000);
         DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));

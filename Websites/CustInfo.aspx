@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Customer Info</title>
-    <link href="App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/LeftPanel/left_panel.css?ver=11" rel="stylesheet" type="text/css" />
     <link href="App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="js/jQuery/scrollbar/jScrollPane.css" rel="stylesheet" type="text/css" />

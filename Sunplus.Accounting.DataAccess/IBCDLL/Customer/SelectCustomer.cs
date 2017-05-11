@@ -599,6 +599,32 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             return ds;
         }
 
+        public static DbResult CustomerSelDirectInfo(object custid)
+        {
+            var hash = new Hashtable();
+            DbResult ds = null;
+            hash.Add("custid", custid);
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_CustDirectSel", 120))
+                {
+                    db.AssignParamValues(hash);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return ds;
+        }
+
         /// <summary>
         /// Execute SP CustomerSelComEditOverride_Ag, CustomerSelComEditOverride_MAg, or CustomerSelComEditOverride_SAg
         /// to get Min Max position taking

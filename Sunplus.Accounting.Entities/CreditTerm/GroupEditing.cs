@@ -15,6 +15,15 @@ namespace Sunplus.Accounting.Entities.CreditTerm
         public string Username { get; set; }
 
         [DataMember]
+        public string Currency { get; set; }
+
+        [DataMember]
+        public string TotalBalance { get; set; }
+
+        [DataMember]
+        public string MaxLoss { get; set; }
+
+        [DataMember]
         public bool IsGroupHeadline { get; set; }
     }
 }

@@ -435,6 +435,33 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             return error;
         }
 
+        public static IbcError CustomerUpdDirectInfomation(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("Acc_CustDirectUpd"))
+                {
+                    objDb.AssignParamValues(hash);
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    if (errCode != 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                error.ErrorCode = 100;
+                error.ErrorMsg = ex.Message;
+            }
+            return error;
+        }
+
         /// <summary>
         /// Execute SP CustOverrideUpd to update Max, Min, Mid position taking of Dead ball soccer, Live soccer, Basket ball
         /// @PhuongDN

@@ -2,35 +2,38 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1">
     <title></title>
     <link href="../../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
-   <style>
-         body
-        {
-	        margin:2px 0 0 0;
+    <style type="text/css">
+        body {
+            margin: 2px 0 0 0;
         }
     </style>
 
     <script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
     <script type="text/javascript" src="../PT/Racing/JS/CommonPT.js"></script>
     <script type="text/javascript">
+        var isDirectCustomer = <%=IsDirectCustomer%>;
         function LinkOnClick(link, url) {
-            PTBlockUI();         
+            PTBlockUI();
             $(".current").removeClass("current");
             $("#" + link).addClass("current");
-            parent.openPage(url);                               
+            parent.openPage(url);
         }
-       
     </script>
 </head>
 <body>
     <asp:Literal ID="sMenu" runat="server"></asp:Literal>
-    
+
     <script type="text/javascript">
+        if (isDirectCustomer)
+        {
+            alert('Please fulfill the Extra Information via the Information tab on the left panel');
+        }
 
         $(document).ready(function () {
             parent.openPage($('#URL').val());

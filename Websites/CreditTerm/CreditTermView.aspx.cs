@@ -56,7 +56,7 @@ public partial class CreditTerm_CreditTermView : PageBase
                         int IsGroupHeadline = 0; if (!string.IsNullOrEmpty(Request["groupheadline"])) IsGroupHeadline = 1;
                         int checkerid = CastAide.AsInt32(Request["ddlCheckerList"], 0);
                         var rs = AccountCredit.Acc_CreditTermUpdCustomer(custid, creditgrade, preagreeamount, installmentamount, installmentdate, accountremark, groupid, IsGroupHeadline, userid, checkerid);
-                        msg = AlertMessage.GetMsg(rs.ErrorMessage, AlertMessage.MsgType.Success);
+                        msg = AlertMessage.GetMsg(rs.ErrorMessage, rs.ErrorCode == 0 ?  AlertMessage.MsgType.Success:AlertMessage.MsgType.Error);
                         System.Threading.Thread.Sleep(2000);
                     }
                 }

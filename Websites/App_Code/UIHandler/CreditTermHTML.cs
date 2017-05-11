@@ -109,38 +109,49 @@ namespace Sunplus.Accounting.Presentation
                 string roweven = "evenrow";
                 foreach (var member in memberList)
                 {
-                    _userrow = (string)userrow.Clone();
-                    if (member.IsGroupHeadline)
+                    if (member.CustId > 0)
                     {
-                        jsheadline = "";
-                        headline = "(HEAD LINE)";
-                        headlineclass = "../App_Themes/Images/headlineH.gif";
-                        headlineclasstext = "headlinetext";
-                        removeitem = "";
-                        title = "Headline user";
+                        _userrow = (string)userrow.Clone();
+                        if (member.IsGroupHeadline)
+                        {
+                            jsheadline = "";
+                            headline = "(HEAD LINE)";
+                            headlineclass = "../App_Themes/Images/headlineH.gif";
+                            headlineclasstext = "headlinetext";
+                            removeitem = "";
+                            title = "Headline user";
+                        }
+                        else
+                        {
+                            title = "Set this user to headline";
+                            headlineclass = "../App_Themes/Images/headline.gif";
+                            headlineclasstext = "";
+                            headline = "";
+                            removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
+                                         "' name='chkuser' id='chkuser' />";
+                            jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                        }
+                        if (roweven == "") roweven = "evenrow";
+                        else roweven = "";
+                        TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
+                        TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
+                        TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
+                        TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
+                        TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
+                        TemplateHandler.Assign(ref _userrow, "{TotalBalance}", member.TotalBalance);
+                        TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
+                        TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
+                        TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
+                        TemplateHandler.Assign(ref _userrow, "{jsaddheadline}", jsheadline);
+                        TemplateHandler.Assign(ref _userrow, "{title}", title);
+
+                        userrows.Append(_userrow);
                     }
                     else
                     {
-                        title = "Set this user to headline";
-                        headlineclass = "../App_Themes/Images/headline.gif";
-                        headlineclasstext = "";
-                        headline = "";
-                        removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
-                                     "' name='chkuser' id='chkuser' />";
-                        jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                        TemplateHandler.Assign(ref from, "{SumTotalBalance}", member.TotalBalance);
+                        TemplateHandler.Assign(ref from, "{SumMaxLoss}", member.MaxLoss);
                     }
-                    if (roweven == "") roweven = "evenrow";
-                    else roweven = "";
-                    TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
-                    TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
-                    TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
-                    TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
-                    TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
-                    TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
-                    TemplateHandler.Assign(ref _userrow, "{jsaddheadline}", jsheadline);
-                    TemplateHandler.Assign(ref _userrow, "{title}", title);
-
-                    userrows.Append(_userrow);
                 }
                 TemplateHandler.Assign(ref from, "{UserRowList}", userrows.ToString());
             }

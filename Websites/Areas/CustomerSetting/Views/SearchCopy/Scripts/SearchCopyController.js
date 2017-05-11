@@ -467,6 +467,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
                 $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
                 $scope.existedUser.disableNG2 = custInfo.DisableNG2;
+                $scope.existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
                 if (custInfo.RoleId == 4) {
                     $scope.checkAllowedShow(custid);
@@ -563,6 +564,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     msg = result.ErrorMessage != undefined ? result.ErrorMessage : msg;
                     message.showAlertMessage("errorMsg", msg, 3);
                     $("#errorMsg").width("700");
+
+                    if (result.IsSuccessful && $scope.existedUser.isDirectCustomer)
+                    {
+                        alert('Please fulfill the Extra Information via the Information tab on the left panel');
+                    }
+
                 }
                 else {
                     message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
