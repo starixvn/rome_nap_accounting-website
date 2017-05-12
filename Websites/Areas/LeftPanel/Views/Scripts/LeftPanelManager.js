@@ -37,11 +37,13 @@ var LeftPanelManager = function () {
 
     self.updateThirdPartyProductStatus = function (
         custId,
+        custName,
         roleId,
         productId,
         title) {
         var param = {
             custId: custId,
+            custName: custName,
             roleId: roleId,
             productId: productId
         };

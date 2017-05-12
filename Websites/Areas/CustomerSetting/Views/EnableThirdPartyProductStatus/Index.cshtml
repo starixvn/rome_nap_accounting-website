@@ -7,29 +7,8 @@
     bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
     int productId = Model.ProductStatusList[0].ProductId;
     bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !isSyncAllDownline;
-}
-@functions{
-
-    public string GetRoleName(int roleId)
-    {
-        switch (roleId)
-        {
-            case 1:
-                return "Member";
-            case 2:
-                return "Agent";
-            case 3:
-                return "Master";
-            case 4:
-                return "Super";
-            default:
-                return string.Empty;
-        }
-    }
-
     int sportTypePrevious = 0;
 }
-
 <div id="updateStatusDialog">
     <div id="successMsg" class="hidden successMsg"></div>
     @if (isWarningSyncedAllDownlineProduct)
@@ -59,7 +38,7 @@
                     </div>
                 }
 
-                @GetRoleName(AppSession.CustRoleId): @AppSession.CustUName
+                @Model.RoleName: @Model.CustName
             </th>
         </tr>
         @for (int i = 0; i < Model.ProductStatusList.Count; i++)
@@ -76,11 +55,11 @@
                 sportTypePrevious = item.SportType;
             }
             <tr>
-                <td @(AppSession.CustRoleId == 1 ? "colspan=\"2\"" : " ")>
+                <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
                     <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="leftPanel.enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
                     <label for="checkEnable">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                 </td>
-                @if (AppSession.CustRoleId != 1 && Model.ProductStatusList[0].HasDownline)
+                @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
                 {
                     <td>
                         <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="leftPanel.enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />

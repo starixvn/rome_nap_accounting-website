@@ -252,6 +252,13 @@ namespace Sunplus.Accounting.Business.Customer
                             }
                           
 
+                            DataRow directCustomerInfo = null;
+
+                            if (ds.ResultSet.Tables.Count > 5 && ds.ResultSet.Tables[5].Rows.Count > 0)
+                            {
+                                directCustomerInfo = ds.ResultSet.Tables[5].Rows[0];
+                            }
+
                             userName = row1["username"].ToString();
 
                             SetCustomerInfoAppSession(userName, row2);
@@ -340,7 +347,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncNG2Upline = true;
 
                             bool hideEnableAndEditFishingWorld = true;
-                                  
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -1273,8 +1280,8 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", string.Format(creditDCSLink, 24));
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
-                               
-                              
+
+
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1405,7 +1412,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-FishingWorld");
                                 }
-                                
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
@@ -1538,7 +1545,7 @@ namespace Sunplus.Accounting.Business.Customer
             //Render Setting Control
             //HuyNguyen
             SettingGroup sg = new SettingGroup();
-
+            string userName = Converter.ToString2(row1["username"]);
             //Get setting controll Suspended
             sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
 
@@ -1565,7 +1572,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 SettingGroup = sg,
                 UserId = Converter.ToString2(row1["custid"]),
-                Username = Converter.ToString2(row1["username"]),
+                Username = userName,
                 DirectAccountStatusInfo = new DirectAccountStatusInfo
                 {
                     IsShowDirectStatus = !Converter.ToBool(row1["IsHideDirectStatus"]),
@@ -1691,7 +1698,7 @@ namespace Sunplus.Accounting.Business.Customer
             bool hideVirtualSports = WebSettings.EnableVirtualSports ? Convert.ToBoolean(row1["hidevirtualsports"]) : false;
             if (!hideVirtualSports)
             {
-                sg.Add(GetSettingControlVirtualSports(custId, roleId, isManageCustomerAccess, "disabledVS", !disabledVirtualSports,
+                sg.Add(GetSettingControlVirtualSports(custId, userName, roleId, isManageCustomerAccess, "disabledVS", !disabledVirtualSports,
                                                    (roleId > 1), disabledVirtualSports,
                                                    CastAide.AsBoolean(row1["Enabled"].ToString()), disabledVSParent,
                                                    !disabledVSDownline));
@@ -1964,7 +1971,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (isShowNG2)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
                     if (isShowVoidbridge)
@@ -2036,14 +2043,14 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (isShowNG2)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>"+ RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
                     if (isShowFishingWorld)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Fishing World</a>";
                     }
-                    
+
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 
@@ -2473,7 +2480,7 @@ namespace Sunplus.Accounting.Business.Customer
                         {
                             classname = "canchange";
                             //jsonclick = "return changeStatus('" + statusName + "'," + ((hasDownLine) ? "true" : "false") + ");";
-                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus({CustId}, {RoleId}, 6, 'Update Casino Status');";
+                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus({CustId}, '{Username}', {RoleId}, 6, 'Update Casino Status');";
                         }
                         else
                         {
@@ -2783,7 +2790,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private SettingControl GetSettingControlVirtualSports(int custId, int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
+        private SettingControl GetSettingControlVirtualSports(int custId, string userName, int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
             bool hasDownLine, bool hasDownline, bool isenabled, bool disabledUpline, bool disableDownLine)
         {
             if (!WebSettings.EnableVirtualSports)
@@ -2807,7 +2814,7 @@ namespace Sunplus.Accounting.Business.Customer
                         if (4 == roleId || !disabledUpline)
                         {
                             classname = "canchange";
-                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus("+ custId+"," + roleId + ", 5, 'Update Virtual Sports Status');";
+                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus(" + custId + ", '" + userName + "', " + roleId + ", 5, 'Update Virtual Sports Status');";
                         }
                         else
                         {
@@ -2984,7 +2991,7 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref tplLoginDetail, "{custid}", custId);
                 TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", lastChangeSecurityCodeDate);
                 TemplateHandler.Assign(ref htmlCustInfo, "{logindetail}", tplLoginDetail);
-                TemplateHandler.Assign(ref htmlCustInfo, "{last_change_OTP_date}", lastChangeOTPCodeDate);  
+                TemplateHandler.Assign(ref htmlCustInfo, "{last_change_OTP_date}", lastChangeOTPCodeDate);
             }
             catch (Exception ex)
             {
@@ -3322,9 +3329,9 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
             {
-                SettingService liveCasinoSettingService = new SettingService();                
+                SettingService liveCasinoSettingService = new SettingService();
                 var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
-            }            
+            }
 
             if (uplineInfo.IsUplineSyncNG2)
             {

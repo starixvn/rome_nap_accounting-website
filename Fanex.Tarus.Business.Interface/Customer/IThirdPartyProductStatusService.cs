@@ -9,7 +9,7 @@ namespace Fanex.Tarus.Business.Interface.Customer
 {
     public interface IThirdPartyProductStatusService
     {
-        ThirdPartyProductStatusViewModel Select(int custId, int roleId, int productId);
+        ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
 
         List<ProductStatusResult> Update(
             int custId,

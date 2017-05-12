@@ -21,12 +21,13 @@ namespace Fanex.Tarus.Web.Controllers.Customer
             thirdPartyProductStatusService = new ThirdPartyProductStatusService();
         }
 
-        public ActionResult Index(int custId, int roleId, int productId)
+        public ActionResult Index(int custId, string custName, int roleId, int productId)
         {
             return View(
                 "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml",
                 thirdPartyProductStatusService.Select(
                     custId,
+                    custName,
                     roleId,
                     productId
                     ));

@@ -16,11 +16,12 @@ namespace Fanex.Tarus.Business.Implement.Customer
         private const int KenoProductId = 8;
         private const int RacingProductId = 2;
 
-        public ThirdPartyProductStatusViewModel Select(int custId, int roleId, int productId)
+        public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
         {
             return new ThirdPartyProductStatusViewModel()
             {
                 CustId = custId,
+                CustName = custName,
                 RoleId = roleId,
                 HasCheckAll = productId == KenoProductId,
                 GroupBySport = productId == RacingProductId,
