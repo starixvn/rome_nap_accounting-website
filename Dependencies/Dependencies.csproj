@@ -155,6 +155,10 @@
       <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.14\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta6\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>

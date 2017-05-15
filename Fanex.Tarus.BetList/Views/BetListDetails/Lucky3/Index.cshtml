@@ -1,0 +1,212 @@
+﻿@using Fanex.BetListDetail.Lucky3.ViewModels
+
+@model Lucky3DetailViewModel
+<html>
+<head>
+
+</head>
+<body>
+    <div id="betlist-details" class="freegrid display-none">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="width30 height34 table-cell">
+                                    Number
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width120 height34 table-cell">
+                                    Hits
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width275 height34 table-cell">
+                                    Bets
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Prize
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width50 height34 table-cell">
+                                    Stake
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-winloss height34 table-cell">
+                                    Win Loss
+                                </div>
+                            </th>
+                            @if (Model.IsSuper)
+                            {
+                                <th>
+                                    <div class="width100 height34 table-cell">
+                                        Super Comm
+                                    </div>
+                                </th>
+                            }
+                            @if (Model.IsSuper || Model.IsMaster)
+                            {
+                                <th>
+                                    <div class="width60 height34 table-cell">
+                                        Master Comm
+                                    </div>
+                                </th>
+                            }
+                            @if (Model.IsAgent || Model.IsMaster || Model.IsSuper)
+                            {
+                                <th>
+                                    <div class="width60 height34 table-cell">
+                                        Agent Comm
+                                    </div>
+                                </th>
+                            }
+
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Status
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="tblContent" class="grid-fixed-table col_header_content ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="width30 height34 table-cell">
+                                    Number
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width120 height34 table-cell">
+                                    Hits
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width275 height34 table-cell">
+                                    Bets
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Prize
+                                </div>
+                            </th>
+                            <th>
+                                <div class="width50 height34 table-cell">
+                                    Stake
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-winloss height34 table-cell">
+                                    Win Loss
+                                </div>
+                            </th>
+                            @if (Model.IsSuper)
+                            {
+                                <th>
+                                    <div class="width100 height34 table-cell">
+                                        Super Comm
+                                    </div>
+                                </th>
+                            }
+                            @if (Model.IsSuper || Model.IsMaster)
+                            {
+                                <th>
+                                    <div class="width60 height34 table-cell">
+                                        Master Comm
+                                    </div>
+                                </th>
+                            }
+                            @if (Model.IsAgent || Model.IsMaster || Model.IsSuper)
+                            {
+                                <th>
+                                    <div class="width60 height34 table-cell">
+                                        Agent Comm
+                                    </div>
+                                </th>
+                            }
+
+                            <th>
+                                <div class="width60 height34 table-cell">
+                                    Status
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Details.Any())
+                        {
+                            foreach (var ticket in Model.Details)
+                            {
+                                <tr>
+                                    <td>@ticket.Prize</td>
+                                    <td>@ticket.Hits</td>
+                                    <td>@ticket.Bets</td>
+                                    <td>@ticket.Prize</td>
+                                    <td>@ticket.Stake</td>
+                                    <td>@ticket.Winlost</td>
+                                    @if (Model.IsSuper)
+                                    {
+                                        <td>@ticket.SuperCommition <br /> @ticket.SuperDiscount</td>
+                                    }
+                                    @if (Model.IsSuper || Model.IsMaster)
+                                    {
+                                        <td>@ticket.Commmition <br /> @ticket.Discount</td>
+                                    }
+                                    @if (Model.IsAgent || Model.IsMaster || Model.IsSuper)
+                                    {
+                                        <td>@ticket.AgentCommition <br /> @ticket.AgentDiscount</td>
+                                    }
+
+                                    <td>@ticket.StatusId</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="4">Total of losing combinations</td>
+                                <td>10.00</td>
+                                <td>-10.00</td>
+                                <td>10% <br /> 0.5</td>
+                                <td>5% <br /> 0.3</td>
+                                <td>3% <br /> 0.2</td>
+                                <td>Lose</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td>@Model.TotalWinlost</td>
+                                <td>@Model.TotalSuperDiscount</td>
+                                <td>@Model.TotalMasterDiscount</td>
+                                <td>@Model.TotalAgentDiscount</td>
+                                <td></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="c">
+                                <td colspan="@Model.TotalColumns" class="r column-no-data">
+                                    <div class="c b">
+                                        There is no data
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

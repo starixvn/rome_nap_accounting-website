@@ -135,6 +135,10 @@
       <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.14\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta6\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -364,11 +368,13 @@
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
+    <Compile Include="Controller\Lucky3Controller.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Criteria\GetMicroGamingBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
+    <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
@@ -383,6 +389,7 @@
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
+    <Compile Include="DataAccess\Lucky3\Lucky3Repository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
@@ -482,6 +489,7 @@
     <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\popup.png" />
     <Content Include="Content\Fanex.Result.3rdLiveCasino\css\table_w.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
