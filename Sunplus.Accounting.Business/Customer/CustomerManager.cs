@@ -737,16 +737,24 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #endregion BalanceInfo
 
-                                if (Convert.IsDBNull(row1["groupheadlineid"]) || Convert.ToInt32(row1["groupheadlineid"]) == 0)
+                                if (isDeposit)
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "headline");
                                 }
                                 else
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
-                                    TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(row1["groupheadlineid"])));
-                                    TemplateHandler.Assign(ref htmlcontent, "{Headline}", row1["headline"].ToString());
-                                }
+                                    if (Convert.IsDBNull(row1["groupheadlineid"]) || Convert.ToInt32(row1["groupheadlineid"]) == 0)
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
+                                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(row1["groupheadlineid"])));
+                                        TemplateHandler.Assign(ref htmlcontent, "{Headline}", row1["headline"].ToString());
+                                    }
+
+                                }                               
 
                                 #region Information 
                                 var directCustomerInfo = SelectCustomer.CustomerSelDirectInfo(custId);
