@@ -41,6 +41,7 @@ using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Domain;
 using Fanex.Tarus.Security.Services;
 using Result = Sunplus.Accounting.Entities.Result;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -249,13 +250,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     dynamicSettingtable = ds.ResultSet.Tables[4];
                                 }
                             }
-
-                            DataRow directCustomerInfo = null;
-
-                            if (ds.ResultSet.Tables.Count > 5 && ds.ResultSet.Tables[5].Rows.Count>0)
-                            {
-                                directCustomerInfo = ds.ResultSet.Tables[5].Rows[0];
-                            }
+                          
 
                             userName = row1["username"].ToString();
 
@@ -279,6 +274,8 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
+
+                           
 
                             ISmartPunterService smartPunterService = new SmartPunterService();
                             bool isDenied = smartPunterService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
@@ -740,42 +737,52 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 #endregion BalanceInfo
 
+                                if (isDeposit)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "headline");
+                                }
+                                else
+                                {
+                                    if (Convert.IsDBNull(row1["groupheadlineid"]) || Convert.ToInt32(row1["groupheadlineid"]) == 0)
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
+                                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(row1["groupheadlineid"])));
+                                        TemplateHandler.Assign(ref htmlcontent, "{Headline}", row1["headline"].ToString());
+                                    }
+
+                                }                               
 
                                 #region Information 
-                                if (directCustomerInfo == null)
+                                var directCustomerInfo = SelectCustomer.CustomerSelDirectInfo(custId);
+                                DataRow directCustomerInfoRow = null;
+
+                                if (directCustomerInfo.ResultSet.Tables.Count > 0 && directCustomerInfo.ResultSet.Tables[0].Rows.Count > 0)
+                                {
+                                    directCustomerInfoRow = directCustomerInfo.ResultSet.Tables[0].Rows[0];
+                                }
+
+                                if (directCustomerInfoRow == null)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotab");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotabcontent"); 
                                 }
                                 else
-                                {
-
-                                    if (Convert.IsDBNull(directCustomerInfo["groupheadlineid"]) || Convert.ToInt32(directCustomerInfo["groupheadlineid"]) == 0)
-                                    {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
-                                       
-                                    }
-                                    else
-                                    {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
-                                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", Convert.ToInt32(directCustomerInfo["groupheadlineid"])));
-                                    }
-                                   
-                                    
-                                    TemplateHandler.Assign(ref htmlcontent, "{Headline}", directCustomerInfo["headline"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyInfo}", directCustomerInfo["currency"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLoss}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfo["maxloss"]));
-
-                                    TemplateHandler.Assign(ref htmlcontent, "{Creator}", directCustomerInfo["createdby"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{PersonInCharge}", directCustomerInfo["processedby"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{Boss}", directCustomerInfo["boss"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{Requestor}", directCustomerInfo["requestby"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{Approver}", directCustomerInfo["approvedby"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{Mobile}", directCustomerInfo["mobilephone"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyTab}", directCustomerInfo["currency"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfo["maxloss"]));
-                                    
+                                {                                   
+                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyInfo}", directCustomerInfoRow["currency"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLoss}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfoRow["maxloss"]));
+                                    TemplateHandler.Assign(ref htmlcontent, "{Creator}", directCustomerInfoRow["createdby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{PersonInCharge}", directCustomerInfoRow["processedby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Boss}", directCustomerInfoRow["boss"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Requestor}", directCustomerInfoRow["requestby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Approver}", directCustomerInfoRow["approvedby"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{Mobile}", directCustomerInfoRow["mobilephone"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{CurrencyTab}", directCustomerInfoRow["currency"].ToString());
+                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfoRow["maxloss"]));                                    
                                     TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", roleId, custId, userName));
                                 }
                                 #endregion Informtion
