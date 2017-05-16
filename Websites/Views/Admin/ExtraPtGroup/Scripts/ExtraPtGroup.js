@@ -110,18 +110,18 @@ function Insert() {
     }
     else {
         $("#errMsg").html('').hide();
-        if (new Date($('#effdate').val()) == new Date($('#enddate').val())) {
+        if (EqualDate(new Date($('#effdate').val()), new Date())) {
             __confirm("Confirm",
                 "Adding a new Extra PT setting which take effect from today might have impact on the reset amounts in the Reset Winning report. Are you sure you want to change?",
-                350, 150,
+                350, 170,
                 'confirm',
-                function () { DoInsert(); },
+                function () { DoInsert(); __close(false, 300, 'confirm'); },
                 function () { __close(false, 300, 'confirm'); },
                 function () { },
                 false);
         }
         else {
-            DoInsert();
+           DoInsert();
         }
     }
 }
@@ -158,4 +158,9 @@ function ConfirmDelete(groupId, productId, extraPt, effDate, endDate) {
         Delete(groupId, productId, extraPt, effDate, endDate);
         __close(true, 3000, 'del', null);
     }, function () { __close(false, 300, 'del', null); }, function () { __close(false, 300, 'del', null); }, null, false);
+}
+
+function EqualDate(date1, date2)
+{
+    return (date1.getDate() == date2.getDate() && date1.getMonth() == date2.getMonth() && date1.getYear() == date2.getYear());
 }
