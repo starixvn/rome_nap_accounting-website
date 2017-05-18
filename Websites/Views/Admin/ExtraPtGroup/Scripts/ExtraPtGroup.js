@@ -15,7 +15,7 @@ function GetEditForm(groupId, productId, effDate) {
 }
 
 function Update() {
-    if (parseFloat($('#extrapt').val()) <= 0 || $('#extrapt').val() == '') {
+    if (parseFloat($('#extrapt').val()) < 0 || $('#extrapt').val() == '') {
         showAlertMessage("errMsg", "Please input %Extra PT.", 1);
         $("#errMsg").show();
 
@@ -100,7 +100,7 @@ function Insert() {
         showAlertMessage("errMsg", "Please select Product.", 1);
         $("#errMsg").show();
     }
-    else if (parseFloat($('#extrapt').val()) <= 0 || $('#extrapt').val() == '') {
+    else if (parseFloat($('#extrapt').val()) < 0 || $('#extrapt').val() == '') {
         showAlertMessage("errMsg", "Please input %Extra PT.", 1);
         $("#errMsg").show();
     }

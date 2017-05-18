@@ -50,7 +50,7 @@
         </tr>
         <tr>
             <td>%Extra PT <span class="asterisk" style="display: @displayAsterisk">*</span></td>
-            <td><input id="extrapt" maxlength="5" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true);" class="edit-control-width" style="text-align: right" type="text" value="@((Model.SelectedItem.ExtraPt * 100).ToString("#,###.00"))" /></td>
+            <td><input id="extrapt" maxlength="5" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true);" class="edit-control-width" style="text-align: right" type="text" value="@((Model.SelectedItem.ExtraPt * 100).ToString("#,##0.00"))" /></td>
         </tr>
         <tr>
             <td>Effective Date <span class="asterisk" style="display: @displayAsterisk">*</span></td>
