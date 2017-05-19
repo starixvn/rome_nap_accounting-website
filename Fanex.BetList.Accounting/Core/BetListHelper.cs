@@ -173,7 +173,7 @@ namespace Fanex.BetList.Accounting.Core
 
         public string GetBetTradeStatus(TicketDetail betDetail)
         {
-            var result = CacheRef.GetBettype(betDetail.Ticket.BetTypeId);
+            var result = string.Empty;
             switch (betDetail.Ticket.BetTypeId)
             {
                 case BetTypeContants.BetTradeBought:
@@ -189,7 +189,6 @@ namespace Fanex.BetList.Accounting.Core
                     break;
 
                 default:
-                    result = string.Empty;
                     break;
             }
 
@@ -203,6 +202,30 @@ namespace Fanex.BetList.Accounting.Core
             }
 
             return "<div class=\"bl_status c\">" + result + "</div>";
+        }
+
+
+        public string GetBetTradeStatusExcel(int betType)
+        {
+            var result = string.Empty;
+            switch (betType)
+            {
+                case BetTypeContants.BetTradeBought:
+                    result = BetListResources.Bought;
+                    break;
+
+                case BetTypeContants.BetTradeSold:
+                    result = BetListResources.Sold;
+                    break;
+
+                case BetTypeContants.BetTradeCommision:
+                    result = BetListResources.Comm;
+                    break;
+
+                default:
+                    break;
+            }
+            return result;
         }
 
         public string GetRNGCasinoStatus(TicketDetail ticketDetail)
@@ -844,8 +867,6 @@ namespace Fanex.BetList.Accounting.Core
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=" + resultLink + ">" + Labels.Result + "</a>" +
                 "<br />";
 
-           
-
             return statusHtml + resultLink1;
         }
 
@@ -868,17 +889,20 @@ namespace Fanex.BetList.Accounting.Core
             {
                 case SportContants.Soccer:
                     return IsApplyStatusBuilderForSoccer(ticketDetail.Ticket.BetTypeId);
+
                 case SportContants.VirtualTennis:
                 case SportContants.AllBet:
                 case SportContants.GoldDeluxe:
                     return true;
+
                 case SportContants.MuayThai:
                     return IsMuayThaiBetType(ticketDetail.Ticket.BetTypeId);
 
                 default:
                     return false;
             }
-        }        
+        }
+
         private bool IsMuayThaiBetType(int betTypeId)
         {
             switch (betTypeId)
@@ -886,6 +910,7 @@ namespace Fanex.BetList.Accounting.Core
                 case BetTypeContants.Handicap:
                 case BetTypeContants.OverUnder2:
                     return true;
+
                 default:
                     return false;
             }
@@ -897,13 +922,14 @@ namespace Fanex.BetList.Accounting.Core
                 return true;
 
             switch (betTypeId)
-            {               
+            {
                 case BetTypeContants.FastMarketNext1Minutes:
                 case BetTypeContants.FastMarketNext5Minutes:
                 case BetTypeContants.FastMarketWhatWillHappenFirstInNext1Minute:
                 case BetTypeContants.FastMarketWhatWillHappenFirstInNext5Minutes:
                 case BetTypeContants.FastMarketNext1MinuteSetPiece:
                     return true;
+
                 default:
                     return false;
             }
