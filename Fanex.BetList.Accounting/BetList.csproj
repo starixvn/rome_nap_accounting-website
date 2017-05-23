@@ -318,7 +318,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\BetList.Designer.cs" />
+    <Compile Include="App_GlobalResources\BetList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BetList.resx</DependentUpon>
+    </Compile>
     <Compile Include="BetListAreaRegistration.cs" />
     <Compile Include="Constants\BetListConstants.cs" />
     <Compile Include="Constants\BetTypeContants.cs" />
@@ -341,6 +345,7 @@
     <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
     <Compile Include="Criteria\BetListSystemParlayDetailsCriteria.cs" />
     <Compile Include="Criteria\GetCashOutDetailCriteria.cs" />
+    <Compile Include="Criteria\GetLicenseeBonusDetailCriteria.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -420,7 +425,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\BetList.resx" />
+    <EmbeddedResource Include="App_GlobalResources\BetList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BetList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\BetListResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BetListResources.Designer.cs</LastGenOutput>

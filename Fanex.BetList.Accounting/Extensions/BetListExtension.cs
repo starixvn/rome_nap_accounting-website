@@ -34,8 +34,8 @@ namespace Fanex.BetList.Accounting.Extensions
         /// <returns>The stake.</returns>
         public static string BuildStake(this TicketDetail betDetail, ref BetListHTMLBuilder builder)
         {
-            string stakeBuilder = string.Empty;
-            stakeBuilder = builder.BuildStake(betDetail.Ticket);
+            string stakeBuilder = builder.BuildStake(betDetail.Ticket);
+
             if (betDetail.IsShowOtExRate)
             {
                 stakeBuilder +=

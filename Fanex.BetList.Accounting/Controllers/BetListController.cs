@@ -4,6 +4,10 @@ using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.BetList.Accounting.Controllers
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using CustomerSetting.Module.Core.Attributes;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
@@ -11,10 +15,6 @@ namespace Fanex.BetList.Accounting.Controllers
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     using Fanex.Common;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     [SpecialSiteFilter]
@@ -298,8 +298,7 @@ namespace Fanex.BetList.Accounting.Controllers
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListBetTradeDetails(long transId, long refNo)
         {
-            IList<TicketDetail> result = new List<TicketDetail>();
-            result = _betListService.GetBetListBetTradeDetails(new BetListBetTradeDetailCriteria
+            var result = _betListService.GetBetListBetTradeDetails(new BetListBetTradeDetailCriteria
             {
                 TransId = transId,
                 RefNo = refNo
@@ -357,13 +356,21 @@ namespace Fanex.BetList.Accounting.Controllers
 
             return new EmptyResult();
         }
-
+        
         [AuthorizeFunctions("ViewInfo")]
         public ActionResult GetCashOutDetails(GetCashOutDetailCriteria criteria)
         {
             var cashOutDetails = _betListDetailService.GetCashOutDetails(criteria);
 
             return View("~/Views/BetList/CashOut/Details.cshtml", cashOutDetails);
+        }
+
+        [HttpGet]
+        public ActionResult ViewBonusDetails(GetLicenseeBonusDetailCriteria criteria)
+        {
+            var result = _betListDetailService.GetLicenseeBonusDetails(criteria);
+
+            return View("~/Views/BetList/LicenseeBonus/Details.cshtml", result);
         }
     }
 }

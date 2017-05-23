@@ -330,6 +330,9 @@ namespace Fanex.BetList.Accounting.Services
                     ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
 
                     Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
+                    
+                    WalletType = Convert.ToSByte(r["wallettype"]),
+                    RefCode = Convert.ToInt64(r["refcode"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -535,6 +538,9 @@ namespace Fanex.BetList.Accounting.Services
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                     Currency = Converter.ToString2(r["Currency"])
+                    
+                    WalletType = Convert.ToSByte(r["wallettype"]),
+                    RefCode = Convert.ToInt64(r["refcode"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -743,6 +749,9 @@ namespace Fanex.BetList.Accounting.Services
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                     Currency = Converter.ToString2(r["Currency"])
+                    
+                    WalletType = Convert.ToSByte(r["wallettype"]),
+                    RefCode = Convert.ToInt64(r["refcode"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -1025,7 +1034,6 @@ namespace Fanex.BetList.Accounting.Services
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
                 IList<TicketDetail> betDetailsModel = new List<TicketDetail>();
-                StringBuilder content = new StringBuilder();
                 DataSet dataSet = new DataSet();
 
                 if (isSoccer)
@@ -1142,6 +1150,9 @@ namespace Fanex.BetList.Accounting.Services
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
+                                
+                                WalletType = Convert.ToSByte(r["wallettype"]),
+                                RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1244,8 +1255,6 @@ namespace Fanex.BetList.Accounting.Services
                 ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
-                IList<TicketDetail> betDetailsModel = new List<TicketDetail>();
-                StringBuilder content = new StringBuilder();
                 BetListHelper betListHelper = new BetListHelper();
                 DataSet dataSet = new DataSet();
 
@@ -1347,6 +1356,9 @@ namespace Fanex.BetList.Accounting.Services
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = Converter.ToString2(r["Currency"])
+                                
+                                WalletType = Convert.ToSByte(r["wallettype"]),
+                                RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
