@@ -296,6 +296,8 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerOTPService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerOTPService.cs" />
+    <Compile Include="Business\ExtraPtGroup\ExtraPtService.cs" />
+    <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
+    <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
     <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -378,6 +381,12 @@
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\DeleteGroupByProductCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\UpdateGroupByProductCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\InsertGroupByProductCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\GroupByProductCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\GroupCriteria.cs" />
+    <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
@@ -410,6 +419,8 @@
     <Compile Include="DataAccess\EditLicensee\IEditLicenseeRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\AutoSuspendRepository.cs" />
     <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
+    <Compile Include="DataAccess\ExtraPtGroup\ExtraPtRepository.cs" />
+    <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
@@ -496,6 +507,13 @@
     <Compile Include="Entities\EditLicensee\SettingInfo.cs" />
     <Compile Include="Entities\EditLicensee\VirtualSportsSettingInfo.cs" />
     <Compile Include="Entities\ExportExcelInfo.cs" />
+    <Compile Include="Entities\ExtraPtGroup\AddGroupByProductViewModel.cs" />
+    <Compile Include="Entities\ExtraPtGroup\ModifyGroupByProductViewModel.cs" />
+    <Compile Include="Entities\ExtraPtGroup\GroupByProductViewModel.cs" />
+    <Compile Include="Entities\ExtraPtGroup\UpdateGroupByProduct.cs" />
+    <Compile Include="Entities\ExtraPtGroup\GroupByProduct.cs" />
+    <Compile Include="Entities\ExtraPtGroup\Group.cs" />
+    <Compile Include="Entities\ExtraPtGroup\Product.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\MicroGaming\GameTypeModel.cs" />
@@ -610,6 +628,7 @@
   <ItemGroup>
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

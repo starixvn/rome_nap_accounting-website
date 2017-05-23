@@ -62,11 +62,10 @@
 function __close(reload, delay, popupId, callBack) {
     var delayTime = delay ? delay : 100;
     var id = popupId ? popupId : 'windowPopup';
-
-    reload && location.reload(true);
+    $('#' + id).remove();
 
     var timeout = setTimeout(function () {
-        $('#' + id).remove();
+        reload && location.reload(true);        
         clearTimeout(timeout);
     }, delayTime);
 

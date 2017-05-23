@@ -1,0 +1,13 @@
+﻿.group-header-bg{
+    background-color: #cddef3
+}
+.group-effective-greater-current-date-bg{
+    background-color: #e0ffff;
+}
+.edit-control-width{
+    width: 100px;
+}
+.asterisk{
+    color: #ff0000;
+    font-weight: bold;
+}

@@ -11,13 +11,6 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Fanex.BetList.Accounting.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
@@ -32,6 +25,13 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -596,7 +596,6 @@ namespace Fanex.BetList.Accounting.Services
                     SessionManager.Set<List<ITicketData>>(BetListConstants.BetListOutputLiveCasinoSessionKey, outputLiveCasino_Merge);
 
                 quantity = betDetailsMerge.Count;
-                StringBuilder content = new StringBuilder();
                 BetListHelper betlistHelper = new BetListHelper();
 
                 if (pageIndex > 0 && betDetailsMerge != null)
@@ -741,8 +740,7 @@ namespace Fanex.BetList.Accounting.Services
                 IList<TicketDetail> betDetails = isLimitForU3 ?
                     _betListRepository.Fetch<TicketDetail>(criteriaForU3, mapTicketObjectFunction, ref outputLiveCasino) :
                     _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref outputLiveCasino);
-
-                StringBuilder content = new StringBuilder();
+            
                 BetListHelper betListHelper = new BetListHelper();
 
                 if (betDetails != null)

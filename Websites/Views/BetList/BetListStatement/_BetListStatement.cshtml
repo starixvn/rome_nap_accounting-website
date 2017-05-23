@@ -40,11 +40,7 @@
         string[] result = new string[2];
         int i = 0;
         foreach (var betdetail in Model)
-        {
-            if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
-            {
-                betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
-            }
+        {          
             result[1] += renderContent(betdetail, NumberBegining);
             arrTransID[i++] = betdetail.Ticket.TransId;
             NumberBegining++;

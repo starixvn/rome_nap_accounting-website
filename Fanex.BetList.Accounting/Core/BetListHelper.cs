@@ -173,7 +173,7 @@ namespace Fanex.BetList.Accounting.Core
 
         public string GetBetTradeStatus(TicketDetail betDetail)
         {
-            var result = CacheRef.GetBettype(betDetail.Ticket.BetTypeId);
+            var result = string.Empty;
             switch (betDetail.Ticket.BetTypeId)
             {
                 case BetTypeContants.BetTradeBought:
@@ -189,7 +189,6 @@ namespace Fanex.BetList.Accounting.Core
                     break;
 
                 default:
-                    result = string.Empty;
                     break;
             }
 
@@ -203,6 +202,30 @@ namespace Fanex.BetList.Accounting.Core
             }
 
             return "<div class=\"bl_status c\">" + result + "</div>";
+        }
+
+
+        public string GetBetTradeStatusExcel(int betType)
+        {
+            var result = string.Empty;
+            switch (betType)
+            {
+                case BetTypeContants.BetTradeBought:
+                    result = BetListResources.Bought;
+                    break;
+
+                case BetTypeContants.BetTradeSold:
+                    result = BetListResources.Sold;
+                    break;
+
+                case BetTypeContants.BetTradeCommision:
+                    result = BetListResources.Comm;
+                    break;
+
+                default:
+                    break;
+            }
+            return result;
         }
 
         public string GetRNGCasinoStatus(TicketDetail ticketDetail)
@@ -575,6 +598,11 @@ namespace Fanex.BetList.Accounting.Core
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusStatement(TicketDetail ticketDetail)
         {
+            if (IsApplyStatusBuilder(ticketDetail))
+            {
+                return StatusRefNo(ticketDetail);
+            }
+
             BetListHelper betlistHelper = new BetListHelper();
             if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
             {
@@ -833,42 +861,12 @@ namespace Fanex.BetList.Accounting.Core
                 }
             }
 
-            if (BetListHelper.IsMetricGamingBetType(ticketDetail.Ticket.BetTypeId))
-            {
-                resultLink = string.Empty;
-                statusHtml = statusFormat;
-                if (isWonStatus ||
-                   isLoseStatus ||
-                   isDrawStatus)
-                {
-                    resultLink = "\"ViewResultMetricGaming(" +
-                    ticketDetail.Ticket.MatchId.ToString() + "," +
-                    ticketDetail.Ticket.BetTypeId + "," +
-                    ticketDetail.Ticket.BetId + "," +
-                    ticketDetail.Ticket.SportTypeId + "," +
-                    "'" + CacheRef.GetSportName(ticketDetail.Ticket.SportTypeId) + "'" + "," +
-                    "'" + CacheRef.GetLeagueName(ticketDetail.Ticket.LeagueId) + "'" + ")\"";
-                }
-            }
-
-            if (sportTypeId == 44 && (betTypeId == 1 || betTypeId == 3))
-            {
-                resultLink = string.Empty;
-                if (isWonStatus ||
-                   isLoseStatus ||
-                  isDrawStatus)
-                {
-                    resultLink = "\"ViewResult(" + ticketDetail.Ticket.MatchId.ToString() + "," +
-                                              ticketDetail.Ticket.BetTypeId + "," +
-                                              ticketDetail.Ticket.BetId + ")\"";
-                }
-            }
-
             var resultLink1 = string.IsNullOrEmpty(resultLink) ?
                 string.Empty :
                 "<br />" +
                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=" + resultLink + ">" + Labels.Result + "</a>" +
                 "<br />";
+
             return statusHtml + resultLink1;
         }
 
@@ -883,6 +881,58 @@ namespace Fanex.BetList.Accounting.Core
             string siteName = betListService.GetSiteNameByCustId(custId);
 
             return string.Format("ViewMicroGamingPopup({0},'{1}',{2})", custId, siteName, betCheck);
+        }
+
+        private bool IsApplyStatusBuilder(TicketDetail ticketDetail)
+        {
+            switch (ticketDetail.Ticket.SportTypeId)
+            {
+                case SportContants.Soccer:
+                    return IsApplyStatusBuilderForSoccer(ticketDetail.Ticket.BetTypeId);
+
+                case SportContants.VirtualTennis:
+                case SportContants.AllBet:
+                case SportContants.GoldDeluxe:
+                    return true;
+
+                case SportContants.MuayThai:
+                    return IsMuayThaiBetType(ticketDetail.Ticket.BetTypeId);
+
+                default:
+                    return false;
+            }
+        }
+
+        private bool IsMuayThaiBetType(int betTypeId)
+        {
+            switch (betTypeId)
+            {
+                case BetTypeContants.Handicap:
+                case BetTypeContants.OverUnder2:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        private bool IsApplyStatusBuilderForSoccer(int betTypeId)
+        {
+            if (IsMetricGamingBetType(betTypeId))
+                return true;
+
+            switch (betTypeId)
+            {
+                case BetTypeContants.FastMarketNext1Minutes:
+                case BetTypeContants.FastMarketNext5Minutes:
+                case BetTypeContants.FastMarketWhatWillHappenFirstInNext1Minute:
+                case BetTypeContants.FastMarketWhatWillHappenFirstInNext5Minutes:
+                case BetTypeContants.FastMarketNext1MinuteSetPiece:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
 }
