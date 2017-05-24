@@ -151,18 +151,18 @@ div.match {
     text-align: center;
     margin-top: 5px;
 }
-
 /* Status */
-
 .status {
-    color: #606060;
-    font-size: 11px;
-    font-weight: bold;
 }
 
 .result {
+    color: #0066cc;
+    margin-top: 12px;
+    text-decoration: none;
+}
+.result:hover {
+    color: #d66d35;
     cursor: pointer;
-    color: rgb(27, 164, 237);
 }
 
 .ip {
@@ -175,13 +175,9 @@ div.match {
 .blue {
     color: #2673CE;
 }
-
-
-
 tr.r-o td {
     background: none repeat scroll 0 0 #F9F9F7;
 }
-
 tr.r-e td {
     background: none repeat scroll 0 0 #DFEAFF;
 }
@@ -190,7 +186,6 @@ tr.event-live td {
     background: none repeat scroll 0 0 #FFFFCC;
 }
 /*Agent Css*/
-
 html {
     color: #171717;
     cursor: default;
@@ -246,7 +241,6 @@ html {
     color: #2673CE;
     font-weight: 700;
 }
-
 .blue {
     color: #2673CE;
 }
@@ -260,7 +254,6 @@ html {
     color: #0066CC;
     text-decoration: none;
 }
-
 .refno {
     text-decoration: none;
     font-weight: bold;
@@ -308,114 +301,84 @@ td, span, div, a {
         padding-right: 4px;
         padding-top: 4px;
     }
-
 .loading {
     width: 32px;
     height: 32px;
-    background: url(Images/loading.gif) no-repeat scroll 0 0 transparent;
+    background:url(Images/loading.gif) no-repeat scroll 0 0 transparent;
 }
-
-
 .width100 {
     width: 100px;
 }
-
 .width120 {
     width: 120px;
 }
-
 .width150 {
     width: 150px;
 }
-
 .width200 {
     width: 200px;
 }
-
 .width300 {
     width: 300px;
 }
-
 .width350 {
     width: 350px;
 }
-
-
 .width270 {
     width: 230px;
 }
-
 .width250 {
     width: 250px;
 }
-
 .width40 {
     width: 40px;
 }
-
 .width45 {
     width: 45px;
 }
-
 .width50 {
     width: 50px;
 }
-
 .width80 {
     width: 80px;
 }
-
 .width60 {
     width: 70px;
 }
-
 .width65 {
     width: 65px;
 }
-
 .width30 {
     width: 30px;
 }
-
 .width80 {
     width: 80px;
 }
-
 .height34 {
     height: 34px;
 }
-
 .z999 {
     z-index: 9999;
 }
-
 .margin-top-5 {
     margin-top: 5px;
 }
-
-
 .exrate2 {
     color: #0066CC;
     font-size: 9px;
 }
-
-
 div.match {
     white-space: normal !important;
 }
-
 span.favorite {
     white-space: normal !important;
 }
-
 table#tbl-content {
     border-spacing: 0;
     table-layout: fixed;
     background: #fff;
     border-collapse: collapse;
 }
-
-
     table#tbl-content th {
         font-size: 11px;
         font-weight: bold;
@@ -425,7 +388,7 @@ table#tbl-content {
         text-align: center;
         border: 1px solid #7C98A4;
         vertical-align: middle;
-    }
+}
 
     table#tbl-content td {
         border: 1px solid #7C98A4;
@@ -433,20 +396,16 @@ table#tbl-content {
         height: 20px;
         vertical-align: middle;
     }
-
 .ui-dialog .ui-dialog-title {
     text-align: center !important;
     width: 100%;
 }
-
 .event {
     background: none repeat scroll 0 0 #FFFFCC !important;
 }
-
 .none-border-right {
     border-right: none !important;
 }
-
 div.ticketList div.void span, div.ticketList div.void div {
     text-decoration: line-through;
 }
@@ -454,105 +413,68 @@ div.ticketList div.void span, div.ticketList div.void div {
     div.ticketList div.void > div.match, div.ticketList div.void div.firstGoal, div.ticketList div.void div.lastGoal {
         text-decoration: none;
     }
-
 .event-live {
     background: none repeat scroll 0 0 #FFFFCC;
 }
-
-
 span.ui-dialog-title-dialog-modal-TennisResult {
     margin-left: 25px;
 }
-
 .main-ticket {
     color: #0066cc;
 }
-
 .light-blue {
     color: #0017CD;
 }
-
 .dark-orange {
     color: #AF5319;
 }
-
 .ag-casino-bet-type {
     color: #808080;
 }
-
 .ag-casino-game-name {
     color: #000000;
     font-weight: bold;
 }
-
 .micro-gaming-bet-type {
     color: #808080;
 }
-
 .micro-gaming-game-name {
     color: #000000;
     font-weight: bold;
 }
-
 .column-winloss {
     width: 120px;
 }
-
 .meron-choice {
     color: #f00;
     font-weight: bold;
 }
-
 .wala-choice {
     color: #000080;
     font-weight: bold;
 }
-
 .ftd-choice, .bdd-choice {
     color: #484848;
     font-weight: bold;
 }
-
 .viewbrokengame-link {
     color: #0066cc;
     cursor: pointer;
 }
-
     .viewbrokengame-link:hover {
         color: #d66d35;
     }
+.allbet-bet-id { color: #bbb; }
+.allbet-bet-type-name { color: #696969; }
+.allbet-game-id { color: #01122b; }
+.offer-name-list { font-weight: bold; }
+.unit-stake { color: #003399; }
+.voidbridge-sporttypename { color: #0000FF; }
 
-.allbet-bet-id {
-    color: #bbb;
-}
+.gametypename { color: #696969; }
 
-.allbet-bet-type-name {
-    color: #696969;
-}
 
-.allbet-game-id {
-    color: #01122b;
-}
 
-.offer-name-list {
-    font-weight: bold;
-}
-
-.unit-stake {
-    color: #003399;
-}
-
-.voidbridge-sporttypename {
-    color: #0000FF;
-}
-
-.gamegroupname {
-    color: #008000;
-}
-
-.gametypename {
-    color: #696969;
-}
 
 .lucky3 {
     color: #b50000;

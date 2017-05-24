@@ -346,13 +346,14 @@ namespace Fanex.BetList.Accounting.Services
                 ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref outputLiveCasino);
-                StringBuilder content = new StringBuilder();
                 BetListHelper betListHelper = new BetListHelper();
+
                 if (betDetails != null)
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -361,7 +362,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.StatusRefNo(betDetail);
+                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
                     return betDetails;
@@ -623,6 +624,7 @@ namespace Fanex.BetList.Accounting.Services
 
                     int from = pageSize * (pageIndex - 1);
                     int to = pageSize * pageIndex;
+
                     for (int i = from; i < betDetailsMerge.Count && i < to; i++)
                     {
                         betDetailsMergeModel.Add(betDetailsMerge[i]);
@@ -636,7 +638,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino_Merge, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betlistHelper.StatusRefNo(betDetail);
+                        betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino_Merge, factory, builder);
                     }
 
                     return betDetailsMergeModel;
@@ -758,8 +760,8 @@ namespace Fanex.BetList.Accounting.Services
             {
                 ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount)
-                || (AppSession.IsU3SpecialAccount && !this.IsU3SpecialCustomers(customerId));
+                bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount) ||
+                    (AppSession.IsU3SpecialAccount && !this.IsU3SpecialCustomers(customerId));
 
                 IList<TicketDetail> betDetails = isLimitForU3 ?
                     _betListRepository.Fetch<TicketDetail>(criteriaForU3, mapTicketObjectFunction, ref outputLiveCasino) :
@@ -772,6 +774,7 @@ namespace Fanex.BetList.Accounting.Services
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -780,7 +783,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.StatusRefNo(betDetail);
+                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
                     return betDetails;
@@ -835,7 +838,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.StatusRefNo(betDetail);
+                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
                     if (systempParlayModel.SystemParlayChoice != null)
@@ -1187,6 +1190,7 @@ namespace Fanex.BetList.Accounting.Services
                     int from = pageSize * (pageIndex - 1);
                     int to = pageSize * pageIndex;
                     quality = betDetails.Count;
+
                     for (int i = from; i < betDetails.Count && i < to; i++)
                     {
                         betDetailsModel.Add(betDetails[i]);
@@ -1200,7 +1204,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betlistHelper.StatusRefNo(betDetail);
+                        betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
                     return betDetailsModel;

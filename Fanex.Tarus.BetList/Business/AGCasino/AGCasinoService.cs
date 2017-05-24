@@ -46,7 +46,7 @@
                     betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                     betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                    betDetail.StatusHtml = betListHelper.StatusRefNo(betDetail);
+                    betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                 }
             }
 

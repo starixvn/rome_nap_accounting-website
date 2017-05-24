@@ -1,50 +1,50 @@
-﻿function virtualHRPopup(sporttype, matchID, raceNo) {
-    try { parent.BlockUI(); } catch (e) { }
-    var URL = "Report/GetVirtualHRPopup.aspx?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sporttype=" + sporttype;
-    var title = "";
-    var heightTmp = 0;
-    var widthTmp = 0;
-    var params = {
-        MatchID: matchID,
-        RaceNo: raceNo
-    };
-    switch (sporttype) {
-        case 181:          
-            title = "Virtual Horse Racing";
-            heightTmp = 200;
-            widthTmp = 750;
-            break;
-        case 182:
-            title = "Virtual Greyhound";
-            heightTmp = 200;
-            widthTmp = 750;
-            break;
-        case 183:
-            title = "Virtual Speedway";
-            heightTmp = 200;
-            widthTmp = 750;
-            break;
-        case 184:
-            title = "Virtual Motor Racing";
-            heightTmp = 200;
-            widthTmp = 750;
-            break;
-        case 185:
-            title = "Virtual Cycling";
-            heightTmp = 200;
-            widthTmp = 750;
-            break;
-        case 186:
-            title = "Tennis - Virtual Tennis";
-            heightTmp = 180;
-            widthTmp = 700;
-            break;
-    }
+﻿//function virtualHRPopup(sporttype, matchID, raceNo) {
+//    try { parent.BlockUI(); } catch (e) { }
+//    var URL = "Report/GetVirtualHRPopup.aspx?MatchID=" + matchID + "&RaceNo=" + raceNo + "&sporttype=" + sporttype;
+//    var title = "";
+//    var heightTmp = 0;
+//    var widthTmp = 0;
+//    var params = {
+//        MatchID: matchID,
+//        RaceNo: raceNo
+//    };
+//    switch (sporttype) {
+//        case 181:          
+//            title = "Virtual Horse Racing";
+//            heightTmp = 200;
+//            widthTmp = 750;
+//            break;
+//        case 182:
+//            title = "Virtual Greyhound";
+//            heightTmp = 200;
+//            widthTmp = 750;
+//            break;
+//        case 183:
+//            title = "Virtual Speedway";
+//            heightTmp = 200;
+//            widthTmp = 750;
+//            break;
+//        case 184:
+//            title = "Virtual Motor Racing";
+//            heightTmp = 200;
+//            widthTmp = 750;
+//            break;
+//        case 185:
+//            title = "Virtual Cycling";
+//            heightTmp = 200;
+//            widthTmp = 750;
+//            break;
+//        case 186:
+//            title = "Tennis - Virtual Tennis";
+//            heightTmp = 180;
+//            widthTmp = 700;
+//            break;
+//    }
 
-    parent.OpenNextPopup("popupVirtualHR", window.rootUrl + URL, title, widthTmp, heightTmp, true, true, window, 2000, null, null);
+//    parent.OpenNextPopup("popupVirtualHR", window.rootUrl + URL, title, widthTmp, heightTmp, true, true, window, 2000, null, null);
 
-    try { parent.jQuery.unblockUI(); } catch (e) { }
-}
+//    try { parent.jQuery.unblockUI(); } catch (e) { }
+//}
 
 
 function ViewTennisPopup(matchID, bettype, betId, leagueName) {

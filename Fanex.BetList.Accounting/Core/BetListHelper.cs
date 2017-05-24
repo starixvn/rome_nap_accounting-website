@@ -10,9 +10,13 @@
 namespace Fanex.BetList.Accounting.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Text.RegularExpressions;
-    using BetList.Core.Utils.StringExt;
+    using BetList.Core.Builder;
+    using BetList.Core.Builder.StatusBuilder;
+    using BetList.Core.Factories;
+    using BetList.Core.Templates;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
@@ -197,7 +201,6 @@ namespace Fanex.BetList.Accounting.Core
             return "<div class=\"bl_status c\">" + result + "</div>";
         }
 
-
         public string GetBetTradeStatusExcel(int betType)
         {
             var result = string.Empty;
@@ -337,7 +340,7 @@ namespace Fanex.BetList.Accounting.Core
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public string StatusRefNo(TicketDetail ticketDetail)
+        public string StatusRefNo_123456(TicketDetail ticketDetail)
         {
             BetListHelper betlistHelper = new BetListHelper();
             if (betlistHelper.IsBetTradeBettype(ticketDetail.Ticket.BetTypeId))
@@ -611,7 +614,7 @@ namespace Fanex.BetList.Accounting.Core
         {
             if (IsApplyStatusBuilder(ticketDetail))
             {
-                return StatusRefNo(ticketDetail);
+                return StatusRefNo_123456(ticketDetail);
             }
 
             BetListHelper betlistHelper = new BetListHelper();
@@ -972,6 +975,23 @@ namespace Fanex.BetList.Accounting.Core
                 default:
                     return false;
             }
+        }
+
+        public string BuildStatus(
+            ITicket ticket,
+            ITicketHelper ticketHelper,
+            List<ITicketData> ticketData,
+            BetListHTMLFactory htmlFactory = null,
+            BetListHTMLBuilder builder = null)
+        {
+            htmlFactory = htmlFactory ?? new BetListHTMLFactory();
+            builder = builder ?? htmlFactory.CreateBuilder();
+
+            IStatus statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
+            Status_Template statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
+            statusBlock.ShowIP = null;
+
+            return statusBlock.ToString();
         }
 
         #region For Cash Out
