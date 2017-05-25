@@ -41,6 +41,24 @@ namespace Fanex.BetList.Accounting.Repositories
             };
         }
 
+        public IEnumerable<ITicket> GetLicenseeBonusDetails(ICriteria criteria)
+        {
+            IList<ITicket> tickes = new List<ITicket>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        tickes.Add(BuildCoreTicket(reader));
+                    }
+                }
+            }
+
+            return tickes;
+        }
+
         private TicketDetail BuildTicketDetail(IDataReader reader, int custId = 0)
         {
             return new TicketDetail
@@ -113,7 +131,10 @@ namespace Fanex.BetList.Accounting.Repositories
 
                 OriginalBetType = Convert.ToInt32(reader["originalbettype"]),
                 BetdaqId = Convert.ToInt64(reader["betdaqid"]),
-                ExtraInfo = Convert.ToString(reader["extrainfo"])
+                ExtraInfo = Convert.ToString(reader["extrainfo"]),
+
+                WalletType = Convert.ToSByte(reader["wallettype"]),
+                RefCode = Convert.ToInt64(reader["refcode"])
             };
         }
 

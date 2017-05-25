@@ -69,5 +69,46 @@ namespace Fanex.BetList.Accounting.Services
 
             return cashOutDetails;
         }
+
+        public IEnumerable<TicketDetail> GetLicenseeBonusDetails(ICriteria criteria)
+        {
+            var ticketDetails = new List<TicketDetail>();
+
+            var tickets = _betListDetailRepository.GetLicenseeBonusDetails(criteria);
+
+            if (tickets.Any())
+            {
+                var betListHelper = new BetListHelper();
+
+                ITicketHelper ticketHelper = new TicketHelper();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+
+                foreach (ITicket ticket in tickets)
+                {
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(ticket.BetTypeId);
+
+                    TicketDetail ticketDetail = new TicketDetail
+                    {
+                        Ticket = ticket,
+                        TransDateHtml = builder.BuildTrans(ticket),
+                        ChoiceHtml = builder.BuildChoice(ticket, ticketHelper, null, false),
+                        OddHtml = builder.BuildOdds(ticket, null, CacheRef.GetOddsTypeName)
+                    };
+
+                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                    ticketDetail.StatusHtml = betListHelper.StatusRefNo(ticketDetail);
+
+                    ticketDetails.Add(ticketDetail);
+                }
+            }
+
+            return ticketDetails;
+        }
+
+        private bool IsShowOddsWithChoice(int betTypeId)
+        {
+            return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
+        }
     }
 }
