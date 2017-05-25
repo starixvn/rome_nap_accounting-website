@@ -820,3 +820,26 @@ function ViewBettradeDetails(transId, refNo)
         null,
         null);
 }
+
+function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
+    var params = $.param({
+        transId: transId,
+        refNo: refNo,
+        betType: betType,
+        originalTransId: originalTransId,
+        title: title
+    });
+
+    parent.OpenNextPopup(
+        "CashOutDetails",
+        "BetList/GetCashOutDetails?" + params,
+        title + " Details",
+        840,
+        600,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
+}

@@ -20,6 +20,11 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
             }
 
+            if (!renderLeftPanelParameter.IsShowEnableCashOut)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
+            }
+
             if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");

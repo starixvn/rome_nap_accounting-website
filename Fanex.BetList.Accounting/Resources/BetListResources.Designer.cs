@@ -88,11 +88,83 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bought Amount.
+        /// </summary>
+        public static string BoughtAmount {
+            get {
+                return ResourceManager.GetString("BoughtAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought Stake.
+        /// </summary>
+        public static string BoughtStake {
+            get {
+                return ResourceManager.GetString("BoughtStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought Ticket[s]:.
+        /// </summary>
+        public static string BoughtTickets {
+            get {
+                return ResourceManager.GetString("BoughtTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out.
+        /// </summary>
+        public static string CashOut {
+            get {
+                return ResourceManager.GetString("CashOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Amount.
+        /// </summary>
+        public static string CashOutAmount {
+            get {
+                return ResourceManager.GetString("CashOutAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Stake.
+        /// </summary>
+        public static string CashOutStake {
+            get {
+                return ResourceManager.GetString("CashOutStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Ticket[s]:.
+        /// </summary>
+        public static string CashOutTickets {
+            get {
+                return ResourceManager.GetString("CashOutTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comm.
         /// </summary>
         public static string Comm {
             get {
                 return ResourceManager.GetString("Comm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
             }
         }
         
@@ -142,11 +214,29 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Bet Ticket:.
+        /// </summary>
+        public static string OriginalBetTicket {
+            get {
+                return ResourceManager.GetString("OriginalBetTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sold.
         /// </summary>
         public static string Sold {
             get {
                 return ResourceManager.GetString("Sold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win/Loss.
+        /// </summary>
+        public static string WinSlashLoss {
+            get {
+                return ResourceManager.GetString("WinSlashLoss", resourceCulture);
             }
         }
     }

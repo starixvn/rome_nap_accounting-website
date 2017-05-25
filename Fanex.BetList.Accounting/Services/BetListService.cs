@@ -321,7 +321,11 @@ namespace Fanex.BetList.Accounting.Services
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
+
+                    OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
+                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -517,7 +521,11 @@ namespace Fanex.BetList.Accounting.Services
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
+
+                    OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
+                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -716,7 +724,11 @@ namespace Fanex.BetList.Accounting.Services
                     TransDesc = Converter.ToString2(r["transdesc"]),
 
                     BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"])
+                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
+
+                    OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
+                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -880,7 +892,8 @@ namespace Fanex.BetList.Accounting.Services
             BetListByIP_UsernameCriteria criteria = new BetListByIP_UsernameCriteria
             {
                 FromDate = fromDate,
-                IP = ip
+                IP = ip,
+                MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay
             };
 
             try
@@ -1101,7 +1114,11 @@ namespace Fanex.BetList.Accounting.Services
                                 TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"]),
-                                OddsSpread = Convert.ToDecimal(r["OddsSpread"])
+                                OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
+
+                                OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                                BetdaqId = Convert.ToInt64(r["BetdaqId"]),
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1297,7 +1314,11 @@ namespace Fanex.BetList.Accounting.Services
                                 TransDesc = Converter.ToString2(r["transdesc"]),
 
                                 BetCheck = Convert.ToString(r["betcheck"]),
-                                OddsSpread = Convert.ToDecimal(r["OddsSpread"])
+                                OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
+
+                                OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                                BetdaqId = Convert.ToInt64(r["BetdaqId"]),
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

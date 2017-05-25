@@ -1522,6 +1522,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("ip", ip);
                 p.Add("UserId", AppSession.AccId);
+                p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
 
                 using (ObjectDb db = new ObjectDb("BetList_IP_Username", 600))
                 {

@@ -119,5 +119,8 @@ namespace Fanex.BetList.Accounting.Constants
         public const int FastMarketNext1MinuteSetPiece = 225;
 
         public static bool IsNG2BetType(int betType) { return betType >= 2501 && betType <= 2699; }
+
+        public const int CashOut = 911;
+        public const int CashOutBought = 912;
     }
 }

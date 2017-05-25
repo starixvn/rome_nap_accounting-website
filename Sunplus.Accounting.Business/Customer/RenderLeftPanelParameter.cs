@@ -16,6 +16,8 @@ namespace Sunplus.Accounting.Business.Customer
     {
         public bool IsShowEnableBetTrade { get; set; }
 
+        public bool IsShowEnableCashOut { get; set; }
+
         public bool IsShowEnableMicrogaming { get; set; }
 
         public bool IsShowMacau { get; set; }

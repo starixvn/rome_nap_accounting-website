@@ -107,7 +107,6 @@ namespace Fanex.BetList.Accounting.Extensions
                     case BetTypeContants.SystemParlay:
                         statusHtml = status;
                         break;
-
                     default:
                         if (33 <= sportTypeId && sportTypeId <= 42)
                         {
@@ -123,16 +122,22 @@ namespace Fanex.BetList.Accounting.Extensions
                         }
                         else
                         {
-                            statusHtml =
-                                string.Format("{0}@{1}-{2}",
-                                                statusFormat,
-                                                finalHomeScore,
-                                                finalAwayScore) +
-                                "\n" +
-                                string.Format("[{0}:{1}-{2}]",
-                                                Labels.HT,
-                                                halfTimeHomeScore,
-                                                halfTimeAwayScore);
+                            statusHtml = BuildCashOutStatus(ticketDetail.Ticket);
+
+                            if (string.IsNullOrEmpty(statusHtml))
+                            {
+                                statusHtml = statusFormat;
+                            }
+
+                            string briefResult = string.Format(
+                                "@{0}-{1}\n[{2}:{3}-{4}]",
+                                finalHomeScore,
+                                finalAwayScore,
+                                Labels.HT,
+                                halfTimeHomeScore,
+                                halfTimeAwayScore);
+
+                            statusHtml += briefResult;
                         }
 
                         break;
@@ -327,5 +332,64 @@ namespace Fanex.BetList.Accounting.Extensions
 
             return factory;
         }
+
+        #region For Cash Out
+
+        private static string BuildCashOutStatus(ITicket ticket)
+        {
+            string statusLabel = string.Empty;
+            string upperStatus = ticket.Status.ToUpperInvariant();
+
+            if (ticket.BetTypeId == BetTypeContants.CashOut)
+            {
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut, upperStatus);
+            }
+            else if (ticket.BetTypeId == BetTypeContants.CashOutBought)
+            {
+                statusLabel = BuildCashOutStatus(ticket, BetListResources.Bought, upperStatus);
+            }
+            else if (IsCashOutOriginalTicket(ticket))
+            {
+                if (upperStatus != "VOID" && upperStatus != "REFUND")
+                {
+                    statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut);
+                }
+            }
+
+            return statusLabel;
+        }
+
+        private static string BuildCashOutStatus(ITicket ticket, string cashOutLabel, string upperStatus = null)
+        {
+            string statusLabel = string.Empty;
+
+            if (upperStatus == null || upperStatus == "WON" || upperStatus == "LOSE" || upperStatus == "DRAW")
+            {
+                statusLabel = cashOutLabel;
+            }
+            else if (upperStatus == "VOID" || upperStatus == "REFUND")
+            {
+                statusLabel = string.Format("{0}\n({1})", upperStatus, cashOutLabel);
+            }
+
+            return statusLabel;
+        }
+
+        private static bool IsCashOutOriginalTicket(ITicket ticket)
+        {
+            return ticket.BetdaqId == 0 && ticket.Stake == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
+        }
+
+        private static bool HasCashOutExtraInfo(string extraInfo)
+        {
+            if (!string.IsNullOrEmpty(extraInfo))
+            {
+                return extraInfo.Trim().StartsWith("<p25 ");
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }
