@@ -11,6 +11,7 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Fanex.BetList.Accounting.Services
 {
+    using CustomerSetting.Module.Core;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
@@ -39,6 +40,7 @@ namespace Fanex.BetList.Accounting.Services
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
         private readonly IBetListRepository _betListRepository;
+        private const int DefaultBetdaqId = -1;
 
         public BetListService()
         {
@@ -323,9 +325,9 @@ namespace Fanex.BetList.Accounting.Services
                     BetCheck = Convert.ToString(r["betcheck"]),
                     OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
 
-                    OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
-                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                    OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Convert.ToInt32(r["OriginalBetType"]) : 0,
+                    BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Convert.ToInt64(r["BetdaqId"]) : DefaultBetdaqId,
+                    ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
