@@ -1089,11 +1089,11 @@ namespace Fanex.BetList.Accounting.Core
             string siteName = betListService.GetSiteNameByCustId(custId);
 
             return string.Format(
-                "<div class=\"result\" onclick=\"ViewMicroGamingPopup({0},'{1}',{2});\">{3}</div>",
+                "<div class=\"result\" onclick=\"ViewMicroGamingPopup({0},'{1}','{2}');\">{3}</div>",
                 custId,
                 siteName,
                 betCheck,
-                "Results");
+                App_GlobalResources.BetList.results);
         }
     }
 }
