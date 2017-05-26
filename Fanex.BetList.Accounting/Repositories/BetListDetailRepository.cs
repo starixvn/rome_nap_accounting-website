@@ -22,6 +22,10 @@ namespace Fanex.BetList.Accounting.Repositories
                     if (reader.Read())
                     {
                         ticketDetail = BuildTicketDetail(reader);
+
+                        ticketDetail.Ticket.OriginalBetType = Convert.ToInt32(reader["originalbettype"]);
+                        ticketDetail.Ticket.BetdaqId = Convert.ToInt64(reader["betdaqid"]);
+                        ticketDetail.Ticket.ExtraInfo = Convert.ToString(reader["extrainfo"]);
                     }
 
                     if (reader.NextResult())
@@ -49,9 +53,15 @@ namespace Fanex.BetList.Accounting.Repositories
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
+                    ITicket ticket;
+
                     while (reader.Read())
                     {
-                        tickes.Add(BuildCoreTicket(reader));
+                        ticket = BuildCoreTicket(reader);
+                        ticket.WalletType = Convert.ToSByte(reader["wallettype"]);
+                        ticket.RefCode = Convert.ToInt64(reader["refcode"]);
+
+                        tickes.Add(ticket);
                     }
                 }
             }
@@ -127,14 +137,7 @@ namespace Fanex.BetList.Accounting.Repositories
                 TransDesc = Convert.ToString(reader["transdesc"]),
 
                 BetCheck = Convert.ToString(reader["betcheck"]),
-                OddsSpread = Convert.ToDecimal(reader["OddsSpread"]),
-
-                OriginalBetType = Convert.ToInt32(reader["originalbettype"]),
-                BetdaqId = Convert.ToInt64(reader["betdaqid"]),
-                ExtraInfo = Convert.ToString(reader["extrainfo"]),
-
-                WalletType = Convert.ToSByte(reader["wallettype"]),
-                RefCode = Convert.ToInt64(reader["refcode"])
+                OddsSpread = Convert.ToDecimal(reader["OddsSpread"])
             };
         }
 
