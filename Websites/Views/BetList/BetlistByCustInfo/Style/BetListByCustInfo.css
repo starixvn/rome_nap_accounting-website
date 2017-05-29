@@ -74,3 +74,9 @@
     width: 14px;
     margin-left: 10px;
 }
+
+.info-msg {
+    color: #979797;
+    font-weight: bold;
+    padding: 5px 25px;
+}
