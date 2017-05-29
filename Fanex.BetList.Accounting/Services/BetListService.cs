@@ -1406,7 +1406,7 @@ namespace Fanex.BetList.Accounting.Services
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.StatusStatement(betDetail);
+                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
                     return betDetails;

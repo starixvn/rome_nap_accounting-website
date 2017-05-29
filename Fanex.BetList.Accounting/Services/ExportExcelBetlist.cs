@@ -222,7 +222,7 @@ namespace Fanex.BetList.Accounting.Services
 
                         builder.AddWinLoss(betdetail.Ticket);
 
-                        builder.AddStatusStatement(betdetail, ticketHelper);
+                        builder.AddStatusStatement(betdetail.Ticket, ticketHelper, outputLiveCasino);
 
                         builder.AddCreator(betdetail, ticketHelper);
                         tickets.Add(betdetail.Ticket);

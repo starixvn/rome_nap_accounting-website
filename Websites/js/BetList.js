@@ -466,76 +466,9 @@ function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
         null);
 }
 
-function showAGCasinoDetails(refno, winlossDate, custId, transType) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        TransType: transType,
-        CustId: custId
-    });
-
-    parent.OpenNextPopup(
-        "AGCasinoDetails",
-        'AGCasinoBetList/BetDetails?' + params,
-        'AG Casino Details',
-        1030,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
-}
-
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
-}
-
-function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        CustId: custId,
-        TransType: transType
-    });
-
-    parent.OpenNextPopup(
-        'AllBetDetails',
-        'AGCasinoBetList/BetDetails?' + params,
-        'AllBet - Detailed Bet list - ' + winlossDate.split(' ')[0],
-        1030,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
-}
-
-function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
-    var params = $.param({
-        transId: transId,
-        refNo: refNo,
-        betType: betType,
-        originalTransId: originalTransId,
-        title: title
-    });
-
-    parent.OpenNextPopup(
-        "CashOutDetails",
-        "BetList/GetCashOutDetails?" + params,
-        title + " Details",
-        840,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
 }
 
 // -------------------- Functions whose name must name by BetListCore
@@ -614,18 +547,6 @@ function ViewAGCasinoPopup(transId, betType) {
     openResultsPopUp(agCasinoParam);
 }
 
-function ViewAllBetResult(transDesc, betCheck, betTypeId) {
-    var allbetParam = {
-        url: "Report/ViewAllBetResult.aspx",
-        title: "Allbet Result",
-        jsonParam: { transDesc: transDesc, matchCode: betCheck, betTypeId: betTypeId },
-        width: 945,
-        height: 500
-    };
-
-    openResultsPopUp(allbetParam);
-}
-
 function ViewResultMetricGaming(matchid, bettype, betid, sporttype) {
     var metricGamingParam = {
         url: "Report/ViewMetricGamingResult.aspx",
@@ -636,6 +557,42 @@ function ViewResultMetricGaming(matchid, bettype, betid, sporttype) {
     };
 
     openResultsPopUp(metricGamingParam);
+}
+
+function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "AllBet - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showAGCasinoDetails(refno, winlossDate, custId, transType) {
+    var agCasinoParam = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "AG Casino Details",
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
+    var cashoutParam = {
+        url: "BetList/GetCashOutDetails",
+        title: title + " Details",
+        jsonParam: { transId: transId, refNo: refNo, betType: betType, originalTransId: originalTransId, title: title },
+        width: 840,
+        height: 600
+    };
+
+    openResultsPopUp(cashoutParam);
 }
 
 // -------------------- Functions whose name must name by Fanex.Toco
@@ -741,8 +698,8 @@ function ViewFishingWorldResult(custId, betCheck) {
 }
 
 // --------------------
-function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid) {
-    var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, league, betid);
+function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {
+    var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, league, betid, matchcode, transdesc);
 
     resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid);
 
@@ -766,7 +723,7 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
     openResultsPopUp(defaultResultParam);
 }
 
-function getResultParamBySportType(matchid, race, bettype, sporttype, league, betid) {
+function getResultParamBySportType(matchid, race, bettype, sporttype, league, betid, matchcode, transdesc) {
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
@@ -789,6 +746,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, league, be
 
         case 186: // Virtual Tennis.
             return getVirtualHRAndTennisParam(matchid, race, sporttype);
+
+        case 211: // Allbet.
+            return getAllbetParam(transdesc, matchcode, bettype);
 
         default:
             return undefined;
@@ -879,6 +839,16 @@ function getVirtualHRAndTennisParam(matchid, race, sporttype) {
     };
 }
 
+function getAllbetParam(transdesc, betcheck, bettype) {
+    return {
+        url: "Report/ViewAllBetResult.aspx",
+        title: "Allbet Result",
+        jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
+        width: 945,
+        height: 500
+    };
+}
+
 function getSystemParlayParam(matchid, refno, bettype, betid) {
     return {
         url: "Report/ViewMixParlayResult.aspx",
@@ -911,7 +881,7 @@ function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
     var width = resultParam.width || 600;
     var height = resultParam.height || 500;
-    var popupName = resultParam.title.replace(/\s/g, "");
+    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "");
 
     parent.OpenNextPopup(popupName, url, resultParam.title, width, height, true, false, window, 0, null, null);
 }

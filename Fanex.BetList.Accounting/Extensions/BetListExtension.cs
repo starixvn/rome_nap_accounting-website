@@ -9,8 +9,10 @@
 
 namespace Fanex.BetList.Accounting.Extensions
 {
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using BetList.Core.Factories;
     using Fanex.BetList.Accounting.Constants;
-    using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
     using Fanex.BetList.Core.Builder;
@@ -18,8 +20,6 @@ namespace Fanex.BetList.Accounting.Extensions
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using System;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// TODO: Update summary.
@@ -68,97 +68,21 @@ namespace Fanex.BetList.Accounting.Extensions
             Justification = "Reviewed. Suppression is OK here.")]
         public static BetListExcelBuilder AddStatusStatement(
             this BetListExcelBuilder factory,
-            TicketDetail ticketDetail,
-            ITicketHelper ticketHelper)
-        {
-            string statusHtml = string.Empty;
-            int betTypeId = ticketDetail.Ticket.BetTypeId;
-            int sportTypeId = ticketDetail.Ticket.SportTypeId;
-            string status = ticketDetail.Ticket.Status;
-            string finalHomeScore = ticketDetail.FinalHomeScore;
-            string finalAwayScore = ticketDetail.FinalAwayScore;
-            string halfTimeHomeScore = ticketDetail.HTHomeScore;
-            string halfTimeAwayScore = ticketDetail.HTAwayScore;
-            string statusFormat = string.Equals(status, "reject", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(status, "refund", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(status, "void", StringComparison.OrdinalIgnoreCase) ?
-                status.ToUpper() :
-                status;
-            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
-            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
-            var betlistHelper = new BetListHelper();
-            if (sportTypeId <= 42 ||
-                sportTypeId == SportContants.OtherSports)
-            {
-                switch (betTypeId)
-                {
-                    case BetTypeContants.CasinoGames:
-                    case BetTypeContants.RNGCasinoBonus:
-                    case BetTypeContants.Bingo:
-                    case 113:
-                    case 114:
-                    case 112:
-                    case BetTypeContants.MixParlay:
-                    case BetTypeContants.P2PGames:
-                    case BetTypeContants.Outright:
-                        statusHtml = statusFormat;
-                        break;
-
-                    case BetTypeContants.SystemParlay:
+            ITicket ticket,
+            ITicketHelper ticketHelper,
+            List<ITicketData> ticketData)
                     case BetTypeContants.MixParlayVirtualSports2:
-                        statusHtml = status;
-                        break;
-                    default:
-                        if (33 <= sportTypeId && sportTypeId <= 42)
-                        {
-                            statusHtml = string.Format(
-                                "{0}@{1}-{2}",
-                                statusFormat,
-                                finalHomeScore,
-                                finalAwayScore);
-                        }
-                        else if (betlistHelper.IsBetTradeBettype(betTypeId))
-                        {
-                            statusHtml = betlistHelper.GetBetTradeStatusExcel(betTypeId);
-                        }
-                        else
-                        {
-                            statusHtml = BuildCashOutStatus(ticketDetail.Ticket);
+        {
+            var htmlFactory = new BetListHTMLFactory();
+            var builder = htmlFactory.CreateBuilder();
 
-                            if (string.IsNullOrEmpty(statusHtml))
-                            {
-                                statusHtml = statusFormat;
-                            }
+            var statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
+            var statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
 
-                            string briefResult = string.Format(
-                                "@{0}-{1}\n[{2}:{3}-{4}]",
-                                finalHomeScore,
-                                finalAwayScore,
-                                Labels.HT,
-                                halfTimeHomeScore,
-                                halfTimeAwayScore);
+            statusBlock.StatusResult = null;
+            statusBlock.ShowIP = null;
 
-                            statusHtml += briefResult;
-                        }
-
-                        break;
-                }
-            }
-            else if (betlistHelper.IsHRWinPlaceBettype(betTypeId) &&
-                (isWonStatus || isLoseStatus))
-            {
-                string winStatus = GetScoreStatusName(ticketDetail.Ticket.LiveHomeScore);
-                string winStatusHtml = Labels.Win + ": " + winStatus + "\n";
-                string placeStatus = GetScoreStatusName(ticketDetail.Ticket.LiveAwayScore);
-                string placeStatusHtml = Labels.Place + ": " + placeStatus;
-                statusHtml = winStatusHtml + placeStatusHtml;
-            }
-            else
-            {
-                statusHtml = status;
-            }
-
-            IRichTextString rtfCreator = new HSSFRichTextString(statusHtml);
+            IRichTextString rtfCreator = new HSSFRichTextString(statusBlock.ToString());
             factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
             return factory;
         }
