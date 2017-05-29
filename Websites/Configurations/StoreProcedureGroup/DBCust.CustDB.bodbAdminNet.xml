@@ -230,7 +230,7 @@
     <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.bodbAdminNet" />
