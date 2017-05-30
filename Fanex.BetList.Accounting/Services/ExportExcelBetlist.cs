@@ -204,6 +204,7 @@ namespace Fanex.BetList.Accounting.Services
                     string reportTitle = "Daily Statement - " + fromDate.ToShortDateString() + " - " + betDetails[0].Ticket.UserName;
                     fileName = "DailyStatement-" + fromDate.ToShortDateString() + "-" + betDetails[0].Ticket.UserName + ".xls";
                     int index = 0;
+                    ticketHelper.HideStatusCashOutHistory = true;
 
                     builder.BuildWorksheet("BetList", 8);
                     builder.AddCaption(reportTitle, 8);
