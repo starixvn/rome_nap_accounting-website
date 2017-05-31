@@ -3,7 +3,7 @@
     // Arguments are image paths relative to the current page.
     $.preLoadImages = function () {
         var args_len = arguments.length;
-        for (var i = args_len; i--; ) {
+        for (var i = args_len; i--;) {
             var cacheImage = document.createElement('img');
             cacheImage.src = arguments[i];
             cache.push(cacheImage);
@@ -474,8 +474,7 @@ function left_Tab1_Click(item) {
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $(".pagerbox").css("display", "none");
     }
-    else if (item.id.indexOf("_2") >= 0)
-    {
+    else if (item.id.indexOf("_2") >= 0) {
         $("#box_04_content_2").css("display", "block");
         try {
             $('#ctrDownlines').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
@@ -554,10 +553,10 @@ function detail_tabnew_Click(item) {
         $("#detail_tab_content_1").removeClass("hidden"); //.css("display", "block");
     }
     else if (item.id.indexOf("_2") >= 0) {
-        $("#detail_tab_content_2").removeClass("hidden"); ;
+        $("#detail_tab_content_2").removeClass("hidden");;
     }
     else {
-        $("#detail_tab_content_3").removeClass("hidden"); ;
+        $("#detail_tab_content_3").removeClass("hidden");;
     }
 }
 
@@ -933,4 +932,13 @@ function updateDoubleCommLosing(hasDownLine) {
             if (PTUnBlockUI) PTUnBlockUI();
         }
     });
+}
+
+function ChangeAllDayBalTransfer() {
+    if (confirm("Are you sure you want to change All-Day Bal Transfer status for this customer?")) {
+        var yes = ($("#AllDayBalTransfer").attr("class").indexOf("chkuncheck") > -1);
+        var url = "CustomerSetting/UpdateAllDayBalTransfer?custid=" + GetCustId() + "&status=" + String(yes);
+        var fr = self.frames["frmUpdate"];
+        if (typeof fr != 'undefined' && fr) fr.location.href = url;
+    }
 }
