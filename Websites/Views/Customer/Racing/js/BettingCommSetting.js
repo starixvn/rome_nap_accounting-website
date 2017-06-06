@@ -61,7 +61,7 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                 var maxBetMax = item.maxBetMax;
                 var maxPerMatchMax = item.maxPerMatchMax;
 
-                if (this.isCopyAll) {
+                if (this.isCopyAll && document.getElementById('btnEditBetSetting').getAttribute('copybetsetting') == '1') {
                     minBet = parseFloat(this.items[0].betTypeGroups[0].bettingCommSetting.minBetElement.value, true);
                     maxBet = parseFloat(this.items[0].betTypeGroups[0].bettingCommSetting.maxBetElement.value, true);
                     maxPerMatch = parseFloat(this.items[0].betTypeGroups[0].bettingCommSetting.maxPerMatchElement.value, true);
@@ -134,6 +134,8 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
         else {
             betSettingHeaderBox.className = "headerBetSettingBox";
         }
+
+        /**/
         var betSettingMergeTitleBox = document.createElement("DIV");
         betSettingMergeTitleBox.id = "betsettingheader";
         if (this.context.formId == 1) {
@@ -144,6 +146,29 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
         }
         betSettingMergeTitleBox.innerHTML = Language.BETTING_LIMIT;
         betSettingHeaderBox.appendChild(betSettingMergeTitleBox);
+
+        /* Insert copy all for bet setting part*/
+        var buttonEditBetSetting = document.createElement("INPUT");
+        buttonEditBetSetting.type = "button";
+        buttonEditBetSetting.title = Language.EDIT;
+        buttonEditBetSetting.id = "btnEditBetSetting";
+        buttonEditBetSetting.className = "bettingCommSportEdit hidden";
+        buttonEditBetSetting.onclick = function () {
+            if (Fanex.hasClass(this, 'bettingCommSportEdit')) {
+                Fanex.removeClass(this, 'bettingCommSportEdit');
+                Fanex.addClass(this, 'bettingCommSportActive');
+                this.setAttribute('copyBetSetting', 0);
+            }
+            else {
+                Fanex.removeClass(this, 'bettingCommSportActive');
+                Fanex.addClass(this, 'bettingCommSportEdit');
+                this.setAttribute('copyBetSetting', 1);
+            }
+            Fanex.PTRacing.ToggleBetCommSetting(grid);
+        };
+
+        betSettingMergeTitleBox.appendChild(buttonEditBetSetting);
+        /*endregion edit comm button*/
 
         var betSettingTitleBox = document.createElement("DIV");
         var minBetHeader = document.createElement("DIV");
@@ -366,6 +391,7 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                 }
 
                 var bettingCommCopySettingClass = " bettingCommCopySetting ";
+                var betSettingCopyBetSetting = "betSettingCopyBetSetting ";
                 var betSettingCopyStatus = "betSettingCopyStatus ";
                 var betSettingCopyComm = "betSettingCopyComm ";
 
@@ -391,6 +417,10 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                         var grid = this;
                         buttonCopyBettingComm.onclick = function () {
                             grid.isCopyAll = !grid.isCopyAll;
+
+                            var editBetSettingButton = document.getElementById('btnEditBetSetting');
+                            editBetSettingButton.setAttribute('copyBetsetting', "1");
+
                             var editStatusButton = document.getElementById('btnEditStatus');
                             editStatusButton.setAttribute('copyStatus', "1");
 
@@ -399,12 +429,15 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
 
                             Fanex.removeClass(editStatusButton, 'bettingCommSportActive');
                             Fanex.removeClass(editCommButton, 'bettingCommSportActive');
+                            Fanex.removeClass(editBetSettingButton, 'bettingCommSportActive');
                             Fanex.addClass(editStatusButton, 'bettingCommSportEdit');
                             Fanex.addClass(editCommButton, 'bettingCommSportEdit');
+                            Fanex.addClass(editBetSettingButton, 'bettingCommSportEdit');
 
                             if (Fanex.hasClass(this, 'bettingCommSportCopied')) {
                                 Fanex.removeClass(this, 'bettingCommSportCopied');
                                 Fanex.addClass(this, 'bettingCommSportCopiedActive');
+                                Fanex.removeClass(editBetSettingButton, 'hidden');
                                 Fanex.removeClass(editStatusButton, 'hidden');
                                 Fanex.removeClass(editCommButton, 'hidden');
                                 document.getElementById(this.id).setAttribute('copyBettingComm', 1);
@@ -412,6 +445,7 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                             else {
                                 Fanex.removeClass(this, 'bettingCommSportCopiedActive');
                                 Fanex.addClass(this, 'bettingCommSportCopied');
+                                Fanex.addClass(editBetSettingButton, 'hidden');
                                 Fanex.addClass(editStatusButton, 'hidden');
                                 Fanex.addClass(editCommButton, 'hidden');
                                 document.getElementById(this.id).setAttribute('copyBettingComm', 0);
@@ -424,6 +458,7 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                     }
 
                     bettingCommCopySettingClass = "";
+                    betSettingCopyBetSetting = "";
                     betSettingCopyStatus = "";
                     betSettingCopyComm = "";
                 }

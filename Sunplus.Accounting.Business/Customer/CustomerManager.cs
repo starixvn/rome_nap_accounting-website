@@ -250,14 +250,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     dynamicSettingtable = ds.ResultSet.Tables[4];
                                 }
                             }
-                          
-
-                            DataRow directCustomerInfo = null;
-
-                            if (ds.ResultSet.Tables.Count > 5 && ds.ResultSet.Tables[5].Rows.Count > 0)
-                            {
-                                directCustomerInfo = ds.ResultSet.Tables[5].Rows[0];
-                            }
 
                             userName = row1["username"].ToString();
 
