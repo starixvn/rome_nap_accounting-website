@@ -29,6 +29,8 @@ namespace Fanex.Tarus.Web.Models.Customer.Balance
 
         public bool Closed { get; set; }
 
+        public string ClosedClassName { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

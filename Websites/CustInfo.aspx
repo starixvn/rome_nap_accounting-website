@@ -39,12 +39,6 @@
             padding: 2px;
             border: solid 1px;
         }
-        .memberClosed {
-            background-color: #CCC7BA;
-        }
-        .memberClosed.pwd-sc-otp {
-            background-color: #98AFC7;
-        }
         .memberSuspended {
             background-color: #F8DED7;
         }

@@ -42,7 +42,6 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-using CustomerClosedReason = Sunplus.Accounting.Core.Common.Enumerations.CustomerClosedReason;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -529,16 +528,9 @@ namespace Sunplus.Accounting.Business.Customer
                             }
                             else if (CastAide.AsBoolean(row1["closed"]))
                             {
-                                statusClass = "memberClosed ";
+                                statusClass = ClosedReasonUtils.GetClassName(row1) + " ";
                                 statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblClosedAccount");
                                 isOpenStatus = false;
-
-                                var closedReason = (CustomerClosedReason)CastAide.AsByte(row1["closedreason"]);
-
-                                if (closedReason == CustomerClosedReason.WrongPasswordOrSCOrOTP)
-                                {
-                                    statusClass += "pwd-sc-otp ";
-                                }
                             }
                             else if (CastAide.AsBoolean(row1["suspended"]))
                             {

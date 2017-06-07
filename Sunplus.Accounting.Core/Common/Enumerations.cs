@@ -280,6 +280,7 @@ namespace Sunplus.Accounting.Core.Common
 
         public enum CustomerClosedReason : byte
         {
+            None = byte.MaxValue,
             WrongPasswordOrSCOrOTP = 0,
             ByUplineOrAdmin = 1
         }
