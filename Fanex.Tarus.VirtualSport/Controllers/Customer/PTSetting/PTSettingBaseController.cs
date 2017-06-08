@@ -8,16 +8,18 @@ namespace Fanex.Tarus.VirtualSport.Controllers.Customer.PTSetting
     using System.Web.Mvc;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Fanex.PTEngine.BusinessObjects;    
+    using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.VirtualSport.Helpers;
     using Fanex.PTVirtualSports.Utilities;
-
+    using System.Configuration;
+    using Sunplus.Accounting.Core.Common;
     public class PTSettingBaseController : BaseController
     {
         protected static ICustomerService _customerService;
+
         public PTSettingBaseController(ICustomerService customerService)
         {            
-            _customerService = customerService ?? new CustomerService();
+            _customerService = customerService ?? new CustomerService((byte)Enumerations.AccountingSystem.Accounting);
         }
 
         public PTSettingBaseController(): this(null)

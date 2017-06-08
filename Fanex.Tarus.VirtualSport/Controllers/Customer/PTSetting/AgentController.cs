@@ -50,7 +50,6 @@ namespace Fanex.Tarus.VirtualSport.Controllers.Customer.PTSetting
                 IsNeutralSite = false,
                 FormId = FormType.EditPT   ,
                 IP = System.Web.HttpContext.Current.Request.UserHostAddress
-                
             };
 
             return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));

@@ -2,6 +2,7 @@
     Async="true" %>
 
 <%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -15,6 +16,7 @@
     <link href="js/jQuery/message/jquery.msg.css" rel="stylesheet" type="text/css" />
     <script src="js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
+    <script src="js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js"></script>
     <script type="text/javascript" src="js/common.js?v=<%=AccCommon.Version() %>"></script>
@@ -26,6 +28,7 @@
     <script src="js/pager_v2.js" type="text/javascript"></script>
     <script src="js/jQuery/message/jquery.center.min.js" type="text/javascript"></script>
     <script src="js/jQuery/message/jquery.msg.js" type="text/javascript"></script>
+    <script src="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <style type="text/css">
         #popLimitPerIP
         {
@@ -253,13 +256,6 @@
          
     </script>
     <script language="javascript" type="text/javascript">
-        function showhideRacebooksStatus(id, roleids) {
-            var title = 'Update Racing Status';
-            var url = 'Customer/PT/Racing/RacingStatusUpdate.aspx?custId=' + id;
-            var width = 350;
-            var height = 360;
-            parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
-        }
         function showhideP2PStatus(id, roleids) {
             var title = 'Update Poker Status';
             var url = 'Customer/PT/Poker/P2PStatusUpdate.aspx?custId=' + id + '&roleId=' + roleid;
@@ -308,7 +304,7 @@
             }
         }
     </script>
-    <script type="text/javascript" src="Areas/LeftPanel/Views/Scripts/LeftPanelManager.js"></script>
+    <script type="text/javascript" src="Areas/LeftPanel/Views/Scripts/LeftPanelManager.js?v=<%=WebSettings.Version%>"></script>
 </head>
 <body>
     <script type="text/javascript">

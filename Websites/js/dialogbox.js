@@ -13,11 +13,12 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
 
 
     $("#dialog-modal").dialog({
-        resizable: resizable,
+        //resizable: resizable,
         modal: modal,
         width: width,
         height: height,
         autoOpen: false,
+        resize: "auto",
         open: function (event, ui) {
             $("#innerFrame").attr({ "src": url }).css({ "height": $(this).css("height"), "width": $(this).css("width") });
         },
@@ -34,10 +35,10 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
             $("#innerFrame").css({ "height": $(this).css("height"), "width": $(this).css("width") }).show();
         },
         close: function (event, ui) {
-                        if (currentExecFrame != null && currentExecFrame.onclose) {
-                            currentExecFrame.onclose();
-                            setTimeout('currentExecFrame=null;', 500);
-                        }
+            if (currentExecFrame != null && currentExecFrame.onclose) {
+                currentExecFrame.onclose();
+                setTimeout('currentExecFrame=null;', 500);
+            }
 
             $("#dialog-modal").remove();
         }
@@ -50,6 +51,18 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
         if (fnRecall) currentExecFrame.callback = fnRecall;
         if (fnOnClose) currentExecFrame.onclose = fnOnClose;
     }
+}
+
+function OpenPopup2(dialogId) {
+    $(dialogId).dialog({
+        resizable: true,
+        modal: true,
+        width: 'auto',
+        height: 'auto',
+        close: function (event, ui) {
+            $(this).dialog('destroy').remove()
+        }
+    });
 }
 
 

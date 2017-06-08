@@ -4,22 +4,22 @@
     <tr class="title">
         <td colspan="4">
             <span style="padding-left:330px">General Information</span>
-             @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-             {  
-                <span style="padding-left:350px">  
+            @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+            {
+                <span style="padding-left:350px">
                     <!-- ko if: (context.targetRoleId != 1 || (context.targetRoleId == 1 &&  context.roleId == 2 ))  -->
-                    <input type="button" class="btnUpdate" title="Save" onclick="vsCustomer.updateStatusSetting()"/>
+                    <input type="button" class="btnUpdate" title="Save" onclick="vsCustomer.updateStatusSetting()" />
                     <!--/ko-->
                 </span>
-             }
-        </td>        
+            }
+        </td>
     </tr>
-    
+
     <tr>
         <td style="width: 15%" class="l">@Resources.Language.lblUsername</td>
-        <td style="width: 35%"  class="l"><span data-bind="text: custSetting.userName"></span></td>
-        <td style="width: 15%"  class="l">Nickname</td>
-        <td style="width: 35%"  class="l"><span ></span></td>
+        <td style="width: 35%" class="l"><span data-bind="text: custSetting.userName"></span></td>
+        <td style="width: 15%" class="l">Nickname</td>
+        <td style="width: 35%" class="l"><span></span></td>
     </tr>
     <tr>
         <td class="l">@Resources.Language.lblFirstname</td>
@@ -58,9 +58,13 @@
         <td class="l"><span data-bind="text: custSetting.fax"></span></td>
         <td class="l">Enable</td>
         <td class="l">
+            
             <input id="chkEnabled" type="checkbox" data-bind="checked: isChecked, enable: isEnable, value: isChecked" />
+            <label for="chkEnabled">Enable</label>
             <span>&nbsp;&nbsp; </span>
-            <input id="chkDownline" type="checkbox" data-bind="checked: isCheckedDownlines, enable: isEnableDownline, value: isCheckedDownlines"/>Downline
+            
+            <input id="chkDownline" type="checkbox" data-bind="checked: isCheckedDownlines, enable: isChecked || (isChecked && !isCheckedDownlines) , value: isCheckedDownlines" />
+            <label for="chkDownline">Enable Downline</label>
         </td>
     </tr>
     <!--/ko-->

@@ -1,4 +1,4 @@
-﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+﻿@using Sunplus.Accounting.Core.Common;
 @{
     Layout = "~/Areas/CustomerSetting/Views/Keno/Setting/Shared/_Layout.cshtml";
 }
@@ -10,6 +10,6 @@
 
 @section scripts
 {
-    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/positionTaking/SuperPositionTakingDirective.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/positionTaking/SuperPositionTakingDirective.js?v=" + AccCommon.Version())" type="text/javascript"></script>
 }
 

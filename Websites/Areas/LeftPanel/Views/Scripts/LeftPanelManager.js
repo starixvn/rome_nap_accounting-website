@@ -34,6 +34,30 @@ var LeftPanelManager = function () {
         var height = 300;
         parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
     };
+
+    self.updateThirdPartyProductStatus = function (
+        custId,
+        custName,
+        roleId,
+        productId,
+        title) {
+        var param = {
+            custId: custId,
+            custName: custName,
+            roleId: roleId,
+            productId: productId
+        };
+
+        parent.BlockUI();
+        $.post("ThirdPartyProductStatus/Index", param, function (data) { SuccessGetThirdPartyProductStatus(data, title); });
+    };
+
+    function SuccessGetThirdPartyProductStatus(data, title) {
+        var dialoghtml = jQuery('<div id="dialog-modal" title="' + title + '">' + data + '</div>');
+        dialoghtml.appendTo(jQuery("body"));
+        parent.jQuery.unblockUI();
+        parent.OpenPopup2($("#dialog-modal"));
+    }
 };
 
 var leftPanelManager = new LeftPanelManager();

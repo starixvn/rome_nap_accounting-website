@@ -11,7 +11,6 @@
     var ErrorMessage = '';
     var SuccessMessage = '';
     var actionName = '';
-    CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
     CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated;
     if (isMultiple) {
         if (!custIds) {
@@ -131,7 +130,7 @@
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
         data.username = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
-
+        
         $.ajax({
             url: toUrl(actionName),
             data: JSON.stringify(data),
