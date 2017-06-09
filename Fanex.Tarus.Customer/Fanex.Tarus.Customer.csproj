@@ -376,6 +376,7 @@
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CustomerLogin\RemoveOTPCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
@@ -632,7 +633,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
