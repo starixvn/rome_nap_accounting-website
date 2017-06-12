@@ -175,6 +175,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmVoidbridge").attr('src', "");
         $("#frmNG2").attr('src', "");
         $("#frmFishingWorld").attr('src', "");
+        $("#frmKenoLottery").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -261,6 +262,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabFishingWorld': url += "DCS/ViewCustomerSetting?productId=24&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmFishingWorld", url);
                 $scope.resize("#frmFishingWorld");
+                break;
+            case 'tabKenoLottery': url += "DCS/ViewCustomerSetting?productId=28&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmKenoLottery", url);
+                $scope.resize("#frmKenoLottery");
                 break;
             case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCricket", url);

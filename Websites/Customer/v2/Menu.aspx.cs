@@ -34,7 +34,7 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, allowEditLiveCs, hideVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld;
+        Boolean AllowedCS, AllowedBI, allowEditLiveCs, hideVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -67,6 +67,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
         hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
+        hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedkenolottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
@@ -147,6 +148,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("ng2", "{ng2LinkSetting}", string.Format(creditDCSLink, (int)products.ng2), hideNG2);
         this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
+        this.RenderSettingTab("KenoLottery", "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery), hideKenoLottery);
 
         this.sMenu.Text = this.tplMenu;
     }
