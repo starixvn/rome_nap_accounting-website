@@ -1966,7 +1966,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
                     }
 
-                    if (isShowVoidbridge)
+                    if (isShowFishingWorld)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Fishing World</a>";
                     }
