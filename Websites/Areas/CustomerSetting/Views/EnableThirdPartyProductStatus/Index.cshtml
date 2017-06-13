@@ -62,7 +62,7 @@
                 @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
                 {
                     <td>
-                        <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="leftPanel.enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
+                        <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="leftPanel.enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
                         <label for="checkEnableDownlines">Enable Downlines</label>
                     </td>
                 }
