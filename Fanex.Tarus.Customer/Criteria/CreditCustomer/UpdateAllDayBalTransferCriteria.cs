@@ -6,11 +6,11 @@ namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
     {
         public int CustId { get; set; }
 
-        public bool Status { get; set; }
-
-        public int UserId { get; set; }
+        public bool IsAllDayBalTransfer { get; set; }
 
         public string IP { get; set; }
+
+        public int UserId { get; set; }
 
         public int ErrCode { get; set; }
 
@@ -18,7 +18,7 @@ namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
 
         public override string GetSettingKey()
         {
-            return string.Empty;
+            return "Acc_CustomerUpdAllDayBalTransfer";
         }
 
         public override bool IsValid()

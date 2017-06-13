@@ -935,10 +935,20 @@ function updateDoubleCommLosing(hasDownLine) {
 }
 
 function ChangeAllDayBalTransfer() {
-    if (confirm("Are you sure you want to change All-Day Bal Transfer status for this customer?")) {
+    if (confirm("Are you sure you want to change Transfer Mode for this line?")) {
         var yes = ($("#AllDayBalTransfer").attr("class").indexOf("chkuncheck") > -1);
-        var url = "CustomerSetting/UpdateAllDayBalTransfer?custid=" + GetCustId() + "&status=" + String(yes);
-        var fr = self.frames["frmUpdate"];
-        if (typeof fr != 'undefined' && fr) fr.location.href = url;
+        $.ajax({
+            type: "POST",
+            url: "CustomerSetting/UpdateAllDayBalTransfer",
+            data: JSON.stringify({ custid: GetCustId(), status: yes }),
+            contentType: "application/json; charset=utf-8",
+            success: function (rs) {
+                changeDisplayStatus();
+                if (PTUnBlockUI) PTUnBlockUI();
+            },
+            error: function (e) {
+                if (PTUnBlockUI) PTUnBlockUI();
+            }
+        });
     }
 }

@@ -37,11 +37,12 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return jsonResult;
         }
 
+        [HttpPost]
         public JsonResult UpdateAllDayBalTransfer(int custId, bool status)
         {
             var result = _customerSetting.UpdateAllDayBalTransfer(custId, status, AppSession.AccId, Utils.GetClientIP());
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
     }
 }

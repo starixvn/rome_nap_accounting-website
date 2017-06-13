@@ -71,6 +71,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         string GetRNGSiteNameByCustId(int custId);
 
-        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool status, int userId, string ip);
+        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, int userId, string ip);
     }
 }

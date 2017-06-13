@@ -216,6 +216,7 @@
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />

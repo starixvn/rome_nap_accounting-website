@@ -305,12 +305,12 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             }
         }
 
-        public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool status, int userId, string ip)
+        public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, int userId, string ip)
         {
             ICriteria criteria = new UpdateAllDayBalTransferCriteria
             {
                 CustId = custId,
-                Status = status,
+                IsAllDayBalTransfer = isAllDayBalTransfer,
                 UserId = userId,
                 IP = ip
             };
