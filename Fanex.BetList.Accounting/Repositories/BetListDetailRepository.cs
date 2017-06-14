@@ -58,7 +58,7 @@ namespace Fanex.BetList.Accounting.Repositories
                     while (reader.Read())
                     {
                         ticket = BuildCoreTicket(reader);
-                        ticket.WalletType = Convert.ToSByte(reader["wallettype"]);
+                        ticket.WalletType = Convert.ToByte(reader["wallettype"]);
                         ticket.RefCode = Convert.ToInt64(reader["refcode"]);
 
                         tickes.Add(ticket);

@@ -331,8 +331,8 @@ namespace Fanex.BetList.Accounting.Services
 
                     Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
                     
-                    WalletType = Convert.ToSByte(r["wallettype"]),
-                    RefCode = Convert.ToInt64(r["refcode"])
+                    WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -539,8 +539,8 @@ namespace Fanex.BetList.Accounting.Services
 
                     Currency = Converter.ToString2(r["Currency"])
                     
-                    WalletType = Convert.ToSByte(r["wallettype"]),
-                    RefCode = Convert.ToInt64(r["refcode"])
+                    WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -749,8 +749,7 @@ namespace Fanex.BetList.Accounting.Services
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                     Currency = Converter.ToString2(r["Currency"])
-                    
-                    WalletType = Convert.ToSByte(r["wallettype"]),
+                    WalletType = Convert.ToByte(r["wallettype"]),
                     RefCode = Convert.ToInt64(r["refcode"])
                 },
                 ChoiceHtml = string.Empty,
@@ -1150,8 +1149,8 @@ namespace Fanex.BetList.Accounting.Services
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
+                                WalletType = Convert.ToByte(r["wallettype"]),
                                 
-                                WalletType = Convert.ToSByte(r["wallettype"]),
                                 RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
@@ -1357,7 +1356,7 @@ namespace Fanex.BetList.Accounting.Services
 
                                 Currency = Converter.ToString2(r["Currency"])
                                 
-                                WalletType = Convert.ToSByte(r["wallettype"]),
+                                WalletType = Convert.ToByte(r["wallettype"]),
                                 RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
