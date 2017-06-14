@@ -59,11 +59,11 @@
         <td class="l">Enable</td>
         <td class="l">
             
-            <input id="chkEnabled" type="checkbox" data-bind="checked: isChecked, enable: isEnable, value: isChecked" />
+            <input id="chkEnabled" type="checkbox" data-bind="checked: isChecked(), enable: isEnable(), value: isChecked()" />
             <label for="chkEnabled">Enable</label>
             <span>&nbsp;&nbsp; </span>
             
-            <input id="chkDownline" type="checkbox" data-bind="checked: isCheckedDownlines, enable: isChecked || (isChecked && !isCheckedDownlines) , value: isCheckedDownlines" />
+            <input id="chkDownline" type="checkbox" data-bind="checked: isCheckedDownlines(), enable: isChecked() && !isCheckedDownlines(), value: isCheckedDownlines()" />
             <label for="chkDownline">Enable Downline</label>
         </td>
     </tr>

@@ -146,7 +146,6 @@
         var setting = { "custSetting": this.currentSetting, "context": this.context };
         customerInfoBinding.createDependentObservable(setting);
         ko.applyBindings(setting);
-
         $('#chkEnabled').bind('click', function () { customerInfoBinding.enableCheckboxClick(4); });
     }
 };
