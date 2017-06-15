@@ -12,6 +12,7 @@ namespace Fanex.BetList.Accounting.Core
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Text.RegularExpressions;
+    using BetList.Core.Utils.StringExt;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
@@ -25,6 +26,8 @@ namespace Fanex.BetList.Accounting.Core
     /// </summary>
     public class BetListHelper
     {
+        private const string CashOutXmlTag = "p25";
+
         public static readonly Regex IsNumericRegex = new Regex("^(" +
             /*Hex*/ @"0x[0-9a-f]+" + "|" +
             /*Bin*/ @"0b[01]+" + "|" +
@@ -1032,12 +1035,7 @@ namespace Fanex.BetList.Accounting.Core
 
         private bool HasCashOutExtraInfo(string extraInfo)
         {
-            if (!string.IsNullOrEmpty(extraInfo))
-            {
-                return extraInfo.Trim().StartsWith("<p25 ");
-            }
-
-            return false;
+            return extraInfo.HasAttributeInXmlTag(CashOutXmlTag, "s");
         }
 
         private string BuildCashOutHistoryPopupLink(ITicket ticket, string title)
