@@ -16,6 +16,7 @@ namespace Fanex.BetList.Accounting.Core
     using BetList.Core.Builder.StatusBuilder;
     using BetList.Core.Factories;
     using BetList.Core.Templates;
+    using BetList.Core.Utils.StringExt;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Resources;
