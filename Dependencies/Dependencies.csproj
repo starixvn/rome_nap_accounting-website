@@ -71,6 +71,14 @@
     <Reference Include="Fanex.AccountingReports.Core">
       <HintPath>..\Dependency\Fanex\Fanex.AccountingReports.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.ActivityTracking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ActivityTracking.1.0.0-beta05\lib\net40\Fanex.ActivityTracking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.ActivityTracking.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0-beta05\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.4\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
       <Private>True</Private>
@@ -590,6 +598,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App_Data\activitytracking.json" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.mnl.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
@@ -614,6 +623,10 @@
     <ProjectReference Include="..\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
       <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
       <Name>Fanex.Nap.SSO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.ActivityTracking\Fanex.Tarus.ActivityTracking.csproj">
+      <Project>{97df67f5-124c-448b-973c-05379e0a6404}</Project>
+      <Name>Fanex.Tarus.ActivityTracking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
       <Project>{b7fd958b-43db-45ee-895e-2105971893e3}</Project>

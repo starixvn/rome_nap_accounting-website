@@ -1,0 +1,24 @@
+{
+  "rabbitMQConnectionString": "host=10.35.35.253,10.35.35.254;virtualHost=/ActivityTracking_Ricky;username=activity_tracking;password=1234bb",
+  "enabledTrackAllRequests": false,
+  "system": "NAP",
+  "environment": "UAT",
+  "logCategory": "NAP-Activity-Tracking",
+  "trackingItems": [
+    {
+      "level": "2",
+      "action": "Search Account",
+      "urls": [ "CustInfo.aspx" ]
+    },
+    {
+      "level": "2",
+      "action": "View Info",
+      "function": "[ViewInfo]"
+    },
+    {
+      "level": "2",
+      "action": "Customer",
+      "function": "[Customer]"
+    }
+  ]
+}
