@@ -2,6 +2,7 @@
 using Fanex.Module.Logs;
 using Fanex.Module.Logs.Services;
 using Fanex.Tarus.Business.Implement.Customer;
+using Fanex.Tarus.Web.Controllers.Filters;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using System;
@@ -13,7 +14,7 @@ using ThirdPartyProducts.StatusSetting.Model;
 
 namespace Fanex.Tarus.Web.Controllers.Customer
 {
-    public class ThirdPartyProductStatusController : Controller
+    public class ThirdPartyProductStatusController : BaseController
     {
         private ThirdPartyProductStatusService thirdPartyProductStatusService;
 
@@ -22,6 +23,7 @@ namespace Fanex.Tarus.Web.Controllers.Customer
             thirdPartyProductStatusService = new ThirdPartyProductStatusService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index(int custId, string custName, int roleId, int productId)
         {
             return View(
@@ -34,6 +36,7 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                     ));
         }
 
+        [AuthenticateHost]
         public JsonResult Update(
             int custId,
             int productId,
