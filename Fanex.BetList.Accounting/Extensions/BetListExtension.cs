@@ -71,7 +71,6 @@ namespace Fanex.BetList.Accounting.Extensions
             ITicket ticket,
             ITicketHelper ticketHelper,
             List<ITicketData> ticketData)
-                    case BetTypeContants.MixParlayVirtualSports2:
         {
             var htmlFactory = new BetListHTMLFactory();
             var builder = htmlFactory.CreateBuilder();

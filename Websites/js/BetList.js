@@ -16,8 +16,8 @@ function showMP(refno, listType) {
                     spEvent.innerHTML = data;
                     spEvent.className = '';
                     $.unblockUI();
-                }
-                , error: function () {
+                },
+                error: function () {
                     $.unblockUI();
                 }
             });
@@ -55,8 +55,8 @@ function showCMP(event, refno, listType) {
                     });
 
                     $.unblockUI();
-                }
-                , error: function () {
+                },
+                error: function () {
                     $.unblockUI();
                 }
             });
@@ -476,7 +476,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
         title: "RNG Casino Details",
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId },
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 209,/*[208,209,210]*/ PageSize: 500 },
         width: 1030,
         height: 600
     };
@@ -500,7 +500,7 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
         title: "Macau Games Details",
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId },
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 212, PageSize: 500 },
         width: 1030,
         height: 600
     };
@@ -512,7 +512,7 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
     var globalGamingParam = {
         url: "RNGCasinoBetList/BetDetails",
         title: "Fishing World Details",
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId },
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 219, PageSize: 500 },
         width: 1030,
         height: 600
     };
@@ -562,8 +562,8 @@ function ViewResultMetricGaming(matchid, bettype, betid, sporttype) {
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
-        title: "AllBet - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType },
+        title: "Allbet - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 211, PageSize: 500 },
         width: 1040,
         height: 600
     };
@@ -593,6 +593,11 @@ function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
     };
 
     openResultsPopUp(cashoutParam);
+}
+
+function showLucky3Details(transId, custId) {
+    var width = 830;
+    parent.OpenNextPopup("Lucky3Details", 'Lucky3/ViewDetail?TransactionId=' + transId + '&CustomerId=' + custId, '', width, 500, true, false, window, 0, null, null);
 }
 
 // -------------------- Functions whose name must name by Fanex.Toco

@@ -130,8 +130,6 @@ namespace Fanex.BetList.Accounting.Core
         public bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
-                                case BetTypeContants.MixParlayVirtualSports2:
-                    case BetTypeContants.MixParlayVirtualSports2:
         }
 
         public string BuildStatus(
@@ -153,16 +151,6 @@ namespace Fanex.BetList.Accounting.Core
                 statusBlock.StatusResult.Clear();
                 statusBlock.StatusResult.Append(BuildMicroGamingResult((int)ticket.CustId, ticket.BetCheck));
             }
-                        case SportContants.Lucky3:
-                            resultLink = string.Format(
-                                "ViewResult({0},{1},{2},{3})",
-                                ticketDetail.Ticket.MatchId,
-                                ticketDetail.Ticket.BetTypeId,
-                                ticketDetail.Ticket.BetId,
-                                ticketDetail.Ticket.SportTypeId);
-                            break;
-
-                                case BetTypeContants.MixParlayVirtualSports2:
 
             string cashOutDetailsLink = CheckCashOutAndBuildDetails(ticket);
 
@@ -188,10 +176,6 @@ namespace Fanex.BetList.Accounting.Core
                 siteName,
                 betCheck,
                 App_GlobalResources.BetList.results);
-                case SportContants.MuayThai:
-                    return IsMuayThaiBetType(ticketDetail.Ticket.BetTypeId);
-
-                case SportContants.Bullfighting:
         }
 
         #region For Cash Out
