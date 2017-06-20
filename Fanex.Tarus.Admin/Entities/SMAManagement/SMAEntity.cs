@@ -1,4 +1,5 @@
 ﻿using System;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.Admin.Entities.SMAManagement
 {
@@ -16,6 +17,8 @@ namespace Fanex.Tarus.Admin.Entities.SMAManagement
         public bool IsSuspend { get; set; }
 
         public bool IsClosed { get; set; }
+
+        public CustomerClosedReason ClosedReason { get; set; }
 
         public bool IsEnable { get; set; }
 

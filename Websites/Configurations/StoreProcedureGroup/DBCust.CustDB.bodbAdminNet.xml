@@ -58,7 +58,7 @@
   </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -132,7 +132,7 @@
   </Function>
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -230,7 +230,7 @@
     <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.bodbAdminNet" />

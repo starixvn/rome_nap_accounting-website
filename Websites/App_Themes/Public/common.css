@@ -299,15 +299,15 @@ span.cannotchangeinternal {
     height: 430px !important;
 }
 
-.closed-wrongPwdOthers {
-    background-color: #ccc7ba;
+.closed-wrongPwdOthers, .closed-wrongPwdOthers td {
+    background-color: #ccc7ba !important;
 }
-.closed-byAdmin {
-    background-color: #b3a2c7;
+.closed-byAdmin, .closed-byAdmin td {
+    background-color: #b3a2c7 !important;
 }
-.closed-byUpline {
-    background-color: #f79646;
+.closed-byUpline, .closed-byUpline td {
+    background-color: #f79646 !important;
 }
-.closed-wrongOTPSC {
-    background-color: #86c5e4;
+.closed-wrongOTPSC, .closed-wrongOTPSC td {
+    background-color: #86c5e4 !important;
 }

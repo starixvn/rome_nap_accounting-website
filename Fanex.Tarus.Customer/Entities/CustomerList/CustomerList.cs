@@ -7,6 +7,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
     using System.Linq;
     using System.Text;
     using Fanex.Tarus.Customer.Entities.SettingCustomer;
+    using Sunplus.Accounting.Core.Common;
 
     public class CustomerListModel
     {
@@ -59,6 +60,8 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }
         public bool IsIMBCCustomers { get; set; }
+
+        public CustomerClosedReason ClosedReason { get; set; }
     }
 
     public class Currency

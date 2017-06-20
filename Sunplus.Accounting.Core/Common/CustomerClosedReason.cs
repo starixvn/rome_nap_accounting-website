@@ -2,6 +2,7 @@
 
 namespace Sunplus.Accounting.Core.Common
 {
+    [Serializable]
     public sealed class CustomerClosedReason
     {
         private const byte WrongPasswordOthers = 0; // gray: #ccc7ba
