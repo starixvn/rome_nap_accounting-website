@@ -4,6 +4,7 @@ using Fanex.Data;
 using Fanex.Tarus.DataAccess.Interface.Customer;
 using Fanex.Tarus.Entities.Criteria;
 using Fanex.Tarus.Web.Models.Customer.Balance;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.DataAccess.Implement.Customer
 {
@@ -54,7 +55,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
             if (customerBalance.Closed)
             {
-                customerBalance.ClosedClassName = Sunplus.Accounting.Core.Helper.ClosedReasonUtils.GetClassName(reader);
+                customerBalance.ClosedReason = new CustomerClosedReason(reader["closedreason"]);
             }
 
             return customerBalance;

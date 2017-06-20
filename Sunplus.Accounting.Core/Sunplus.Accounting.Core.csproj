@@ -180,6 +180,7 @@
     <Compile Include="Common\AccCommon.cs" />
     <Compile Include="Common\AppSession.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\CustomerClosedReason.cs" />
     <Compile Include="Common\Enumerations.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Functions.cs" />
@@ -238,7 +239,6 @@
     <Compile Include="Helper\AlertMessage.cs" />
     <Compile Include="Cache\Report.cs" />
     <Compile Include="Helper\Check.cs" />
-    <Compile Include="Helper\ClosedReasonUtils.cs" />
     <Compile Include="Helper\DataUtils.cs" />
     <Compile Include="Helper\EncodingUtil.cs" />
     <Compile Include="Helper\ExcelAutomationUtils.cs" />
@@ -409,7 +409,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

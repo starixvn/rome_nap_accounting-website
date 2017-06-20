@@ -528,8 +528,10 @@ namespace Sunplus.Accounting.Business.Customer
                             }
                             else if (CastAide.AsBoolean(row1["closed"]))
                             {
-                                statusClass = ClosedReasonUtils.GetClassName(row1) + " ";
-                                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblClosedAccount");
+                                var customerClosedReason = new CustomerClosedReason(row1["closedreason"]);
+
+                                statusClass = customerClosedReason.ClassName + " ";
+                                statusTip = customerClosedReason.ClosedReason;
                                 isOpenStatus = false;
                             }
                             else if (CastAide.AsBoolean(row1["suspended"]))

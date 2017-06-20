@@ -277,12 +277,5 @@ namespace Sunplus.Accounting.Core.Common
             P2PDefaultSetting = 3,
             SMAManagement = 4
         }
-
-        public enum CustomerClosedReason : byte
-        {
-            None = byte.MaxValue,
-            WrongPasswordOrSCOrOTP = 0,
-            ByUplineOrAdmin = 1
-        }
     }
 }
