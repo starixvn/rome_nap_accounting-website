@@ -385,17 +385,17 @@ updSuperSetting.getPostParam = function () {
     this.assignRacingBetSettingComPT(params);
 
     //virtual sports
-    var virtualSportsSettingInfo = [];
-    if (this.roleId == 4) {
-        if (typeof vsSuperSetting != 'undefined') {
-            virtualSportsSettingInfo = vsSuperSetting.getUpdateVirtualSportsSettings();
-        }
-    }
-    else {
-        if (typeof vsDownlineSettings != 'undefined') {
-            virtualSportsSettingInfo = vsDownlineSettings.getUpdateVirtualSportsSettings();
-        }
-    }
+    //var virtualSportsSettingInfo = [];
+    //if (this.roleId == 4) {
+    //    if (typeof vsSuperSetting != 'undefined') {
+    //        virtualSportsSettingInfo = vsSuperSetting.getUpdateVirtualSportsSettings();
+    //    }
+    //}
+    //else {
+    //    if (typeof vsDownlineSettings != 'undefined') {
+    //        virtualSportsSettingInfo = vsDownlineSettings.getUpdateVirtualSportsSettings();
+    //    }
+    //}
 
     if (window.kenoSettingsManager) {
         kenoBetTypesSettingInfo = window.kenoSettingsManager.getSettings();
@@ -404,7 +404,7 @@ updSuperSetting.getPostParam = function () {
     return {
         postParam: {
             PostParams: params,
-            VirtualSportsSettingInfo: virtualSportsSettingInfo,
+            //VirtualSportsSettingInfo: virtualSportsSettingInfo,
             KenoBetTypesSettingInfo: kenoBetTypesSettingInfo,
             IsCopySettingsToMasterAgent: $("#cbxCopySettingsToMasterAgent").is(":checked")
         }

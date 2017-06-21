@@ -283,10 +283,10 @@ newLic.getPostParam = function () {
         , Value: !$("#cbxEnableNumberGame").is(":checked")
     });
 
-    //virtual sports
-    if (typeof vsSuperSetting != 'undefined') {
-        vsSuperSetting.assignVirtualSportsSettings(params);
-    }
+    ////virtual sports
+    //if (typeof vsSuperSetting != 'undefined') {
+    //    vsSuperSetting.assignVirtualSportsSettings(params);
+    //}
 
     if (window.kenoSettingsManager) {
         window.kenoSettingsManager.getSettings(params);

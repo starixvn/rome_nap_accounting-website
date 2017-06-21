@@ -1054,6 +1054,8 @@ var ViewPT = {
             case 44: //Sportsbook 2 
             case 206: //Cockfighting
             case 50: //Cricket
+            case 190: // Virtual Sports Soccer Nation
+            case 191: // Virtual Sports Soccer League
             case 211: // Allbet
             case 212: // Voidbridge
             case 213: //NG2            

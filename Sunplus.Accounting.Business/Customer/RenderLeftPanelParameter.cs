@@ -36,6 +36,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowAutoSuspend { get; set; }
 
+        public bool IsShowVirtualSport { get; set; }
+
         public int ParentId { get; set; }
 
         public int RoleId { get; set; }

@@ -143,6 +143,20 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
+        /// <summary>
+        /// Enable Status - New Direction Flow.
+        /// </summary>
+        /// <param name="custInfoRow"></param>
+        /// <param name="settingGroup"></param>
+        /// <param name="htmlcontent"></param>
+        /// <param name="isManageCustomerAccess"></param>
+        /// <param name="disabledProductParent"></param>
+        /// <param name="hasDownline"></param>
+        /// <param name="productName"></param>
+        /// <param name="isSupport"></param>
+        /// <param name="renderLeftPanelParameter"></param>
+        /// <param name="title"></param>
+        /// <param name="productId"></param>
         public static void RenderEnableProductBox2(
         DataRow custInfoRow,
         SettingGroup settingGroup,
@@ -186,7 +200,6 @@ namespace Sunplus.Accounting.Business.Customer
                     isManageCustomerAccess,
                     "disabled" + productName,
                     !isDisabled,
-                    hasDownline,
                     true,
                     Converter.ToBool(isCustomerEnabled),
                     disabledProductParent,
@@ -321,14 +334,11 @@ namespace Sunplus.Accounting.Business.Customer
             SettingGroup settingGroup,
             ref string htmlcontent,
             bool isManageCustomerAccess,
-            bool disabledProductParent,
-            bool hasDownline,
             string productName,
             bool isSupport,
             RenderLeftPanelParameter renderLeftPanelParameter,
             string title,
-            int productId = 0,
-            int settingType = 0)
+            int productId = 0)
         {
             if (isSupport)
             {
@@ -341,15 +351,13 @@ namespace Sunplus.Accounting.Business.Customer
                     isManageCustomerAccess,
                     "disabled" + productName,
                     !isDisabled,
-                    hasDownline,
                     true,
                     Converter.ToBool(isCustomerEnabled),
                     disableUplines,
                     disableDownlines,
                     productName,
                     title,
-                    productId,
-                    settingType));
+                    productId));
 
                 TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
             }
@@ -405,15 +413,13 @@ namespace Sunplus.Accounting.Business.Customer
            bool isManageCustomerAccess,
            string statusName,
            bool currStatus,
-           bool hasDownLine,
            bool isAllowEdit,
            bool isEnabled,
            bool disabledUpline,
            bool disableDownLine,
            string productName,
            string title,
-           int productId = 0,
-           int settingType = 0)
+           int productId = 0)
         {
             string classname = string.Empty;
             string jsonclick = string.Empty;
