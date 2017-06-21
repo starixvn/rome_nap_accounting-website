@@ -1541,8 +1541,11 @@ namespace Sunplus.Accounting.Business.Customer
             //Get setting controll Suspended
             sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
 
-            bool isAllDayBalTransfer = row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
-            sg.Add(GetSettingControlAllDayBalTransfer(roleId, isManageCustomerAccess, "AllDayBalTransfer", isAllDayBalTransfer));
+            if (roleId == 4)
+            {
+                bool isAllDayBalTransfer = row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
+                sg.Add(GetSettingControlAllDayBalTransfer(roleId, isManageCustomerAccess, "AllDayBalTransfer", isAllDayBalTransfer));
+            }
 
             #region Selected Betting
 
