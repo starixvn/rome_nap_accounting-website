@@ -154,147 +154,147 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-        private List<VirtualSportsSettingInfo> GetVirtualSportsSettingInfoList(string virtualSportsParams, int roleId, bool isAddNew)
-        {
-            var virtualSports = VirtualSportsSection.Instance.Sports;
-            Dictionary<string, bool> activeVirtualSportsInfo = new Dictionary<string, bool>();
-            string sportId;
-            foreach (VirtualSportsElement sport in virtualSports)
-            {
-                sportId = sport.Id;
-                if (activeVirtualSportsInfo.ContainsKey(sportId))
-                {
-                    continue;
-                }
+        //private List<VirtualSportsSettingInfo> GetVirtualSportsSettingInfoList(string virtualSportsParams, int roleId, bool isAddNew)
+        //{
+        //    var virtualSports = VirtualSportsSection.Instance.Sports;
+        //    Dictionary<string, bool> activeVirtualSportsInfo = new Dictionary<string, bool>();
+        //    string sportId;
+        //    foreach (VirtualSportsElement sport in virtualSports)
+        //    {
+        //        sportId = sport.Id;
+        //        if (activeVirtualSportsInfo.ContainsKey(sportId))
+        //        {
+        //            continue;
+        //        }
 
-                activeVirtualSportsInfo.Add(sportId, sport.Active);
-            }
+        //        activeVirtualSportsInfo.Add(sportId, sport.Active);
+        //    }
 
-            string roleName = string.Empty;
-            switch (roleId)
-            {
-                case RoleIdConstants.Super:
-                    roleName = SMALevelNameConstants.Super;
-                    break;
-                case RoleIdConstants.Master:
-                    roleName = SMALevelNameConstants.Master;
-                    break;
-                case RoleIdConstants.Agent:
-                    roleName = isAddNew ? SMALevelNameConstants.Master : SMALevelNameConstants.Agent;
-                    break;
-                case RoleIdConstants.Member:
-                    roleName = SMALevelNameConstants.Agent;
-                    break;
-                default:
-                    roleName = string.Empty;
-                    break;
-            }
+        //    string roleName = string.Empty;
+        //    switch (roleId)
+        //    {
+        //        case RoleIdConstants.Super:
+        //            roleName = SMALevelNameConstants.Super;
+        //            break;
+        //        case RoleIdConstants.Master:
+        //            roleName = SMALevelNameConstants.Master;
+        //            break;
+        //        case RoleIdConstants.Agent:
+        //            roleName = isAddNew ? SMALevelNameConstants.Master : SMALevelNameConstants.Agent;
+        //            break;
+        //        case RoleIdConstants.Member:
+        //            roleName = SMALevelNameConstants.Agent;
+        //            break;
+        //        default:
+        //            roleName = string.Empty;
+        //            break;
+        //    }
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(virtualSportsParams);
-            string xpath = "/products/product";
-            var virtualSportsNodes = xmlDoc.SelectNodes(xpath);
-            List<VirtualSportsSettingInfo> virtualSportsSettingInfoList = new List<VirtualSportsSettingInfo>();
-            double positionTakingValue = 0;
-            double positionTakingValue_Min = 0;
-            double positionTakingValue_Max = 0;
-            foreach (XmlNode childrenNode in virtualSportsNodes)
-            {
-                sportId = childrenNode.Attributes["SportType"].Value;
-                if (!activeVirtualSportsInfo.ContainsKey(sportId) ||
-                    !activeVirtualSportsInfo[sportId])
-                {
-                    continue;
-                }
+        //    XmlDocument xmlDoc = new XmlDocument();
+        //    xmlDoc.LoadXml(virtualSportsParams);
+        //    string xpath = "/products/product";
+        //    var virtualSportsNodes = xmlDoc.SelectNodes(xpath);
+        //    List<VirtualSportsSettingInfo> virtualSportsSettingInfoList = new List<VirtualSportsSettingInfo>();
+        //    double positionTakingValue = 0;
+        //    double positionTakingValue_Min = 0;
+        //    double positionTakingValue_Max = 0;
+        //    foreach (XmlNode childrenNode in virtualSportsNodes)
+        //    {
+        //        sportId = childrenNode.Attributes["SportType"].Value;
+        //        if (!activeVirtualSportsInfo.ContainsKey(sportId) ||
+        //            !activeVirtualSportsInfo[sportId])
+        //        {
+        //            continue;
+        //        }
 
-                VirtualSportsSettingInfo virtualSportsSettingInfo = new VirtualSportsSettingInfo
-                {
-                    Id = sportId,
-                    Name = CacheRef.GetSportName(sportId),
-                    SettingInfo = new List<SettingInfo>()
-                };
+        //        VirtualSportsSettingInfo virtualSportsSettingInfo = new VirtualSportsSettingInfo
+        //        {
+        //            Id = sportId,
+        //            Name = CacheRef.GetSportName(sportId),
+        //            SettingInfo = new List<SettingInfo>()
+        //        };
 
-                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                {
-                    Name = "maxbetv" + sportId,
-                    Value = childrenNode.Attributes["MaxBet"].Value
-                });
+        //        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //        {
+        //            Name = "maxbetv" + sportId,
+        //            Value = childrenNode.Attributes["MaxBet"].Value
+        //        });
 
-                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                {
-                    Name = "minbetv" + sportId,
-                    Value = childrenNode.Attributes["MinBet"].Value
-                });
+        //        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //        {
+        //            Name = "minbetv" + sportId,
+        //            Value = childrenNode.Attributes["MinBet"].Value
+        //        });
 
-                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                {
-                    Name = "maxpermatchv" + sportId,
-                    Value = childrenNode.Attributes["MaxPerMatch"].Value
-                });
+        //        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //        {
+        //            Name = "maxpermatchv" + sportId,
+        //            Value = childrenNode.Attributes["MaxPerMatch"].Value
+        //        });
 
-                if (string.Equals(sportId, Sports.VirtualSoccer.ToString()))
-                {
-                    positionTakingValue = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking"].Value);
-                    switch (roleId)
-                    {
-                        case RoleIdConstants.Master:
-                            positionTakingValue_Min = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Min"].Value);
-                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
-                            break;
-                        case RoleIdConstants.Agent:
-                        case RoleIdConstants.Member:
-                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
-                            break;
-                        default:
-                            break;
-                    }
+        //        if (string.Equals(sportId, Sports.VirtualSoccer.ToString()))
+        //        {
+        //            positionTakingValue = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking"].Value);
+        //            switch (roleId)
+        //            {
+        //                case RoleIdConstants.Master:
+        //                    positionTakingValue_Min = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Min"].Value);
+        //                    positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+        //                    break;
+        //                case RoleIdConstants.Agent:
+        //                case RoleIdConstants.Member:
+        //                    positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+        //                    break;
+        //                default:
+        //                    break;
+        //            }
 
-                    sportId = virtualSportsSettingInfo.Id;
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "v" + sportId + roleName + "positiontaking",
-                        Value = positionTakingValue
-                    });
+        //            sportId = virtualSportsSettingInfo.Id;
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "v" + sportId + roleName + "positiontaking",
+        //                Value = positionTakingValue
+        //            });
 
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "v" + sportId + roleName + "positiontaking_min",
-                        Value = positionTakingValue_Min
-                    });
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "v" + sportId + roleName + "positiontaking_min",
+        //                Value = positionTakingValue_Min
+        //            });
 
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "v" + sportId + roleName + "positiontaking_max",
-                        Value = positionTakingValue_Max
-                    });
-                }
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "v" + sportId + roleName + "positiontaking_max",
+        //                Value = positionTakingValue_Max
+        //            });
+        //        }
 
-                if (roleId != RoleIdConstants.Super)
-                {
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "minbetv" + sportId + "_max",
-                        Value = childrenNode.Attributes["MinBet_Max"].Value
-                    });
+        //        if (roleId != RoleIdConstants.Super)
+        //        {
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "minbetv" + sportId + "_max",
+        //                Value = childrenNode.Attributes["MinBet_Max"].Value
+        //            });
 
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "maxbetv" + sportId + "_min",
-                        Value = childrenNode.Attributes["MaxBet_Min"].Value
-                    });
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "maxbetv" + sportId + "_min",
+        //                Value = childrenNode.Attributes["MaxBet_Min"].Value
+        //            });
 
-                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                    {
-                        Name = "maxpermatchv" + sportId + "_max",
-                        Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
-                    });
-                }
+        //            virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+        //            {
+        //                Name = "maxpermatchv" + sportId + "_max",
+        //                Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
+        //            });
+        //        }
 
-                virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);
-            }
+        //        virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);
+        //    }
 
-            return virtualSportsSettingInfoList;
-        }
+        //    return virtualSportsSettingInfoList;
+        //}
 
         private List<KenoBetTypesSettingInfo> GetKenoBetTypesSettingInfoList(
             string kenoBetTypesParams,
@@ -447,8 +447,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                if (columName == "VirtualSportList" ||
-                    columName == "KenoList")
+                if (columName == "KenoList")
                 {
                     continue;
                 }
@@ -456,9 +455,9 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 listProp.Add("\"\"" + columName.ToLower() + "\"\":\"\"" + CastAide.AsString(row[columName]) + "\"\"");
             }
 
-            var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
-            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, false);
-            listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
+            //var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
+            //var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, false);
+            //listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
 
             var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
             var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, false);
@@ -549,8 +548,8 @@ namespace Fanex.Tarus.Business.Implement.Customer
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                if (columName == "VirtualSportList" ||
-                    columName == "KenoList")
+                //if (columName == "VirtualSportList" ||
+                if (columName == "KenoList")
                 {
                     continue;
                 }
@@ -558,9 +557,9 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 listProp.Add("\"\"" + columName.ToLower() + "\"\":\"\"" + CastAide.AsString(row[columName]) + "\"\"");
             }
 
-            var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
-            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
-            listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
+            //var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
+            //var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
+            //listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
 
             var kenoBetTypesParams = CastAide.AsString(row["KenoList"]);
             var kenoBetTypesSettingInfoList = GetKenoBetTypesSettingInfoList(kenoBetTypesParams, roleId, true);

@@ -220,8 +220,8 @@ var arrRacing = [];
     var dataJsonStr = '@Model.DataJson';
     dataJsonStr = dataJsonStr.replace(/&quot;&quot;/g, '"');
     var dataJson = jQuery.parseJSON(dataJsonStr);
-    dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
-    dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
+    //dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
+    //dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
 
     dataJson.KenoBetTypesSettingInfo = dataJson.KenoBetTypesSettingInfo.replace(/&quot;/g, '"');
     dataJson.KenoBetTypesSettingInfo = jQuery.parseJSON(dataJson.KenoBetTypesSettingInfo);

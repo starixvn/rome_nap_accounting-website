@@ -2398,7 +2398,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableVirtualSports" xml:space="preserve">
     <value>Virtual Sports</value>
   </data>
-  <data name="lblDisabledVSUpline" xml:space="preserve">
+  <data name="lblDisabledVirtualSportsUpline" xml:space="preserve">
     <value>Virtual Sports status has been disabled at upline</value>
   </data>
   <data name="virtualsports" xml:space="preserve">
