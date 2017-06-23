@@ -11,7 +11,13 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Fanex.BetList.Accounting.Services
 {
-    using CustomerSetting.Module.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
@@ -26,13 +32,6 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -1543,8 +1542,18 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(ReportService.GetNG2SportType(betTypeId));
             }
+            else if (ReportService.IsBetradarVirtualSports(betTypeId))
+            {
+                const int VirtualSportsProductId = 5;
+                sportName = string.Format("{0} {1}", Labels.Betradar, GetProductName(VirtualSportsProductId));
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
+        }
+
+        private string GetProductName(int productId)
+        {
+            return CacheRef.GetResourceData("Product", productId.ToString());
         }
     }
 }

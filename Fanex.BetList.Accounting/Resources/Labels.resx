@@ -255,4 +255,7 @@
   <data name="DeniedAccessSpecialSite" xml:space="preserve">
     <value>You don't have permission to access</value>
   </data>
+  <data name="Betradar" xml:space="preserve">
+    <value>Betradar</value>
+  </data>
 </root>

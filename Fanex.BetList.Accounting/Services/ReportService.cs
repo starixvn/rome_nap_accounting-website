@@ -11,7 +11,6 @@ namespace Fanex.BetList.Accounting.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Models;
@@ -222,6 +221,12 @@ namespace Fanex.BetList.Accounting.Services
 
             return 0;
         }
+
+        public static bool IsBetradarVirtualSports(int betTypeId)
+        {
+            return 2700 <= betTypeId && betTypeId <= 2899;
+        }
+
         #endregion StaticMethods
     }
 }

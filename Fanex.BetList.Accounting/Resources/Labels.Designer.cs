@@ -97,6 +97,15 @@ namespace Fanex.BetList.Accounting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Betradar.
+        /// </summary>
+        public static string Betradar {
+            get {
+                return ResourceManager.GetString("Betradar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Canadian.
         /// </summary>
         public static string Canadian {
