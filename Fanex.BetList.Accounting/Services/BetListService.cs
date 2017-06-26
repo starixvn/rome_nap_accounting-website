@@ -212,7 +212,8 @@ namespace Fanex.BetList.Accounting.Services
                     AwayId = Converter.To<long>(r["AwayID"]),
                     IsNeutral = Converter.ToBool(r["isNeutral"]),
                     BetCheck = Converter.ToString2(r["BetCheck"]),
-                    TransDesc = Converter.ToString2(r["transdesc"])
+                    TransDesc = Converter.ToString2(r["transdesc"]),
+                    ShowTime = Converter.ToString2(r["showtime"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
