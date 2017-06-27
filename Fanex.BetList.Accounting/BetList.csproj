@@ -350,6 +350,7 @@
     <Compile Include="Models\EventExcel.cs" />
     <Compile Include="Models\Excel\ExcelCell.cs" />
     <Compile Include="Models\Excel\ExcelCellRange.cs" />
+    <Compile Include="Models\Excel\MOdds4Cell.cs" />
     <Compile Include="Models\GroupParlayEvent.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
