@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2453,7 +2453,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Disable Gold Deluxe</value>
   </data>
   <data name="enableGoldDeluxe" xml:space="preserve">
-    <value>Enable Gold Deluxe</value>
+    <value>Gold Deluxe</value>
   </data>
   <data name="lblDisabledGoldDeluxeUpline" xml:space="preserve">
     <value>Gold Deluxe status has been disabled at upline</value>

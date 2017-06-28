@@ -274,7 +274,7 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
                             AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
-                           
+
 
                             ISmartPunterService smartPunterService = new SmartPunterService();
                             bool isDenied = smartPunterService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
@@ -755,7 +755,7 @@ namespace Sunplus.Accounting.Business.Customer
                                         TemplateHandler.Assign(ref htmlcontent, "{Headline}", row1["headline"].ToString());
                                     }
 
-                                }                               
+                                }
 
                                 #region Information 
                                 var directCustomerInfo = SelectCustomer.CustomerSelDirectInfo(custId);
@@ -770,10 +770,10 @@ namespace Sunplus.Accounting.Business.Customer
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotab");
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotabcontent"); 
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotabcontent");
                                 }
                                 else
-                                {                                   
+                                {
                                     TemplateHandler.Assign(ref htmlcontent, "{CurrencyInfo}", directCustomerInfoRow["currency"].ToString());
                                     TemplateHandler.Assign(ref htmlcontent, "{MaxLoss}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfoRow["maxloss"]));
                                     TemplateHandler.Assign(ref htmlcontent, "{Creator}", directCustomerInfoRow["createdby"].ToString());
@@ -783,7 +783,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{Approver}", directCustomerInfoRow["approvedby"].ToString());
                                     TemplateHandler.Assign(ref htmlcontent, "{Mobile}", directCustomerInfoRow["mobilephone"].ToString());
                                     TemplateHandler.Assign(ref htmlcontent, "{CurrencyTab}", directCustomerInfoRow["currency"].ToString());
-                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfoRow["maxloss"]));                                    
+                                    TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", IBCUtils.FormatHandler.FormatNumber20(directCustomerInfoRow["maxloss"]));
                                     TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", roleId, custId, userName));
                                 }
                                 #endregion Informtion
@@ -1000,7 +1000,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
-                                    IsShowGoldDeluxe = isShowGoldDeluxe,
+                                    IsShowGoldDeluxe =
+                                        WebSettings.EnableGoldDeluxe &&
+                                        Converter.ToBool(row1["IsSyncUplineGoldDeluxe"])
+                                        && !isDeposit
+                                        && !string.Equals(currency, "Won", StringComparison.OrdinalIgnoreCase),
                                     IsShowMacau = isShowMacau,
                                     IsShowEnableBetTrade = isShowEnableBetTrade,
                                     IsShowEnableCashOut = isShowEnableCashOut,
@@ -1765,18 +1769,6 @@ namespace Sunplus.Accounting.Business.Customer
             var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
                 false :
                 Convert.ToBoolean(row1["HasDownline"]);
-            //if (WebSettings.IsShowGoldDeluxeSettingForCredit && !renderLeftPanelParameter.IsDeposit)
-            //{
-            //    RenderEnableGoldDeluxeBox(
-            //        row1,
-            //        sg,
-            //        ref htmlcontent,
-            //        roleId,
-            //        isManageCustomerAccess,
-            //        CustParent.IsDisableGoldDeluxe,
-            //        Permissions.IsAllowEditGoldDeluxe(parentID),
-            //        hasDownline);
-            //}
 
             RenderLeftPanelManager.RenderEnableProductBox(
                 row1,
@@ -1878,6 +1870,18 @@ namespace Sunplus.Accounting.Business.Customer
                 }
             }
 
+            RenderLeftPanelManager.RenderOldProductEnableBoxLikeDCS(
+                row1,
+                sg,
+                ref htmlcontent,
+                isManageCustomerAccess,
+                false, // ???
+                hasDownline,
+                "GoldDeluxe",
+                renderLeftPanelParameter.IsShowGoldDeluxe,
+                renderLeftPanelParameter,
+                "Update Gold Deluxe Status",
+                12);
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
@@ -3406,7 +3410,6 @@ namespace Sunplus.Accounting.Business.Customer
             int roleId,
             bool isManageCustomerAccess,
             bool disabledGoldDeluxeParent,
-            bool allowEditGoldDeluxe,
             bool hasDownline)
         {
             var productName = "GoldDeluxe";
@@ -3425,7 +3428,7 @@ namespace Sunplus.Accounting.Business.Customer
                     "disabled" + productName,
                     !disableGoldDeluxe,
                     hasDownline,
-                    allowEditGoldDeluxe,
+                    true,
                     CastAide.AsBoolean(custInfoRow["Enabled"].ToString()),
                     disabledGoldDeluxeParent,
                     !disableGoldDeluxeDownline));
