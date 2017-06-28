@@ -1790,7 +1790,7 @@ namespace Sunplus.Accounting.Business.Customer
                                                "VirtualSports",
                                                renderLeftPanelParameter.IsShowVirtualSport,
                                                renderLeftPanelParameter,
-                                               "Update Virtual Sport Status",
+                                               "Update Virtual Sports Status",
                                                5);
                             break;
                         case "20":
