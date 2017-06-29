@@ -164,7 +164,7 @@
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance_uat2" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelDisableHR" SpName="Acc_CustomerSelDisableHR" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDisableOutright" SpName="Acc_CustomerSelDisableOutright" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
