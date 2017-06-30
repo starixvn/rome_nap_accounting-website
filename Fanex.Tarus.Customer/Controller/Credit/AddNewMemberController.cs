@@ -116,6 +116,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 currentContext.AdminId = AppSession.AccId;
                 customer.Language = "E";
                 currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                currentContext.SystemId = SystemId;
+
                 result = _customerService.AddNewMember(customer, currentContext, out memberId);
                 //redirectToEditPage
                 if (result.ErrorCode == "0")

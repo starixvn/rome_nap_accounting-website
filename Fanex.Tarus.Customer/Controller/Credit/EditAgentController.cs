@@ -111,6 +111,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 currentContext.CustId = AppSession.AccId;
                 currentContext.AdminId = AppSession.AccId;
                 currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                currentContext.SystemId = SystemId;
+
                 customer.Language = "E";
                 result = _customerService.MasterUpdateAgent(customer, currentContext, isUpdateAllMembers, (decimal)newPositionTakingValue);
                 // format template of error message
