@@ -339,49 +339,36 @@ function showDetail(id) {
 }
 
 function showMP(transid, refno) {
-    if ($("#td_right_" + transid).hasClass("isClient")) {
-        if (!$("#td_right_" + transid).hasClass("isShow")) {
-            $(".parlay_" + transid).each(function () {
-                $(this).hide();
-                var idTdParent = $(this).parent().parent().attr('id');
-                $("#" + idTdParent).addClass("isShow");
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    var divEvent = $("#divEvent_" + transid);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetList/GetMixParlayDetail",
+                data: "transid=" + transid + "&refno=" + refno,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
             });
         }
         else {
-            $(".parlay_" + transid).each(function () {
-                $(this).show();
-                $("#choice_left_" + transid).css("height", "");
-                var idTdParent = $(this).parent().parent().attr('id');
-                $("#" + idTdParent).removeClass("isShow");
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-            });
+            divEvent.css("display", "");
+            $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
         }
     }
     else {
-        try { parent.BlockUI(); } catch (e) { }
-        $.ajax({
-            type: "POST",
-            url: window.rootUrl + "BetList/GetMixParlayDetail",
-            data: "transid=" + transid + "&refno=" + refno,
-            success: function (result) {
-                $(".parlay_" + transid + ":visible").each(function () {
-                    $(this).html(result);
-                    var id = $(this).parent().attr('id');
-                    $("#" + id).css("height", "");
-
-                    var idTdParent = $(this).parent().parent().attr('id');
-                    $("#" + idTdParent).addClass("isClient");
-                });
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-            },
-            error: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+        divEvent.css("display", "none");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
     }
 }
 
