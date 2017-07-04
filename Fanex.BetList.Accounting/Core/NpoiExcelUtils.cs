@@ -22,6 +22,7 @@
         private const string FontName = "Tahoma";
         private const string IntNumberFormat = "#,##0";
         private const string TwoDecimalDigitNumber = "##,##0.00";
+        private const string FourDecimalDigitNumber = "##,##0.0000";
         private const string NegativeNumberFormat = "#,##0.00;[RED]-#,##0.00";
 
         private const int VerticalAlignTop = 0;
@@ -103,6 +104,11 @@
             return negativedFormat ?
                 StyleWithFormula(excelFile, cellColor, bold, NegativeNumberFormat, fontColor) :
                 StyleWithFormula(excelFile, cellColor, bold, TwoDecimalDigitNumber, fontColor);
+        }
+
+        public static ICellStyle MOdds4Style(HSSFWorkbook excelFile, short cellColor, short fontColor = 8)
+        {
+            return StyleWithFormula(excelFile, cellColor, false, FourDecimalDigitNumber, fontColor);
         }
 
         public static ICellStyle IntStyle(

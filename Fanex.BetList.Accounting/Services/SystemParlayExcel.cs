@@ -24,7 +24,12 @@
         private int _startColumnIndex = 0;
         private int _currentRowIndex = 0;
 
-        private ICellStyle _textCenter, _textLeft, _textRight, _number, _negativeNumber;
+        private ICellStyle _textCenter,
+            _textLeft,
+            _textRight,
+            _number,
+            _negativeNumber,
+            _modds4Style;
 
         public SystemParlayExcel(ISystemParlayRepository systemParlayRepository = null)
         {
@@ -268,7 +273,7 @@
             }
             else
             {
-                cell = new ExcelCell(columnIndex++, eventObject.Odds, _number);
+                cell = new MOdds4Cell(columnIndex++, eventObject.Odds, _modds4Style);
             }
 
             cell.RenderCell(row);
@@ -277,8 +282,8 @@
             cell.RenderCell(row);
 
             string winLossPlayerComm = string.Format(
-                "{0}\n{1}", 
-                eventObject.WinLoss.ToString("N2"), 
+                "{0}\n{1}",
+                eventObject.WinLoss.ToString("N2"),
                 eventObject.PlayerComm.ToString("N2"));
             cell = new ExcelCell(columnIndex++, winLossPlayerComm, _negativeNumber);
             cell.RenderCell(row);
@@ -326,6 +331,7 @@
             _textRight = NpoiExcelUtils.TextStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, HorizontalAlignment.Right);
             _number = NpoiExcelUtils.DecimalStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, false, false);
             _negativeNumber = NpoiExcelUtils.DecimalStyle(workbook, NpoiExcelUtils.BackgroundColorIndex, true, true);
+            _modds4Style = NpoiExcelUtils.MOdds4Style(workbook, NpoiExcelUtils.BackgroundColorIndex);
         }
     }
 }

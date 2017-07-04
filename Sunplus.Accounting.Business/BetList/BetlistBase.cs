@@ -9,6 +9,7 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
+using Fanex.BetList.Core.Utils;
 using Fanex.Tarus.LiveCasino.Entities.Betlist;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Settle;
@@ -1034,6 +1035,7 @@ namespace Sunplus.Accounting.Business.BetList
             string footer = WebUtils.LoadTemplate("BetList\\CombinationMP\\footer.htm");
             string row = WebUtils.LoadTemplate("BetList\\CombinationMP\\row.htm");
             var subtotal = WebUtils.LoadTemplate("BetList\\CombinationMP\\subtotal.htm");
+            var note = WebUtils.LoadTemplate("BetList\\CombinationMP\\note.htm");
             string rowTemp = string.Empty;
             var subtotalTemp = string.Empty;
 
@@ -1116,7 +1118,7 @@ namespace Sunplus.Accounting.Business.BetList
                     }
                     else
                     {
-                        TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
+                        TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["modds"]));
                     }
 
                     #endregion odds
@@ -1237,6 +1239,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref footer, "{wl-color}", CastAide.AsDouble(totalWin) >= 0 ? "" : "color:red");
             TemplateHandler.Assign(ref footer, "{footer}", IBCUtils.FormatHandler.FormatNumber20(outStanding));
             TemplateHandler.Assign(ref container, "{footer}", footer);
+            TemplateHandler.Assign(ref container, "{note}", note);
 
             #endregion footer
 
@@ -3173,7 +3176,7 @@ namespace Sunplus.Accounting.Business.BetList
                 kickoffTime = row["eventdate"];
                 timeFormat = "MM/dd/yyyy";
             }
-            
+
             return Convert.ToDateTime(kickoffTime).ToString(timeFormat);
         }
     }

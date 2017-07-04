@@ -23,27 +23,33 @@
                     <tr>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date</div>
+                                Date
+                            </div>
                         </th>
                         <th>
                             <div class="width270 height34 table-cell">
-                                Event</div>
+                                Event
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Odds</div>
+                                Odds
+                            </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake</div>
+                                Stake
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Win Loss</div>
+                                Win Loss
+                            </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -57,27 +63,33 @@
                     <tr>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date</div>
+                                Date
+                            </div>
                         </th>
                         <th>
                             <div class="width270 height34 table-cell">
-                                Event</div>
+                                Event
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Odds</div>
+                                Odds
+                            </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake</div>
+                                Stake
+                            </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Win Loss</div>
+                                Win Loss
+                            </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status</div>
+                                Status
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -88,9 +100,10 @@
                         <tr>
                             @if (i == 0)
                             {
-                                <td rowspan = " @systemParlayDetail.EventList.Count">
+                                <td rowspan=" @systemParlayDetail.EventList.Count ">
                                     <div class="width120 height34 table-cell">
-                                        @eventTmp.WinLossDate</div>
+                                        @eventTmp.WinLossDate
+                                    </div>
                                 </td>
                             }
                             <td>
@@ -99,27 +112,32 @@
                                     {
                                         var match = eventTmp.MatchList[j];
                                         <div>
-                                            <span>@CacheRef.GetTeamName(match.HomeID) </span>- <span>@CacheRef.GetTeamName(match.AwayID)
-                                            </span>
-                                        </div>
+                                            <span>@CacheRef.GetTeamName(match.HomeID) </span>- <span>
+                                                @CacheRef.GetTeamName(match.AwayID)
+                                        </span>
+                                    </div>
                                     }
                                 </div>
                             </td>
-                            <td >
+                            <td>
                                 <div class="width60 height34 table-cell r">
-                                  @String.Format("{0:0.00#}", eventTmp.Odds)</div>
+                                    @String.Format("{0:0.0000}", eventTmp.Odds)
+                                </div>
                             </td>
-                            <td >
+                            <td>
                                 <div class="width50 height34 table-cell r">
-                                    @eventTmp.Stake.Format(2)</div>
+                                    @eventTmp.Stake.Format(2)
+                                </div>
                             </td>
-                            <td >
+                            <td>
                                 <div class="width60 height34 table-cell r  @betlistHelper.IsNegative(systemParlayDetail.EventList[i].WinLoss)">
-                                    @eventTmp.WinLoss.Format(2)</div>
+                                    @eventTmp.WinLoss.Format(2)
+                                </div>
                             </td>
                             <td>
                                 <div class="width100 height34 table-cell c">
-                                    @eventTmp.Status</div>
+                                    @eventTmp.Status
+                                </div>
                             </td>
                         </tr>
                     }
@@ -134,7 +152,8 @@
                     <tr>
                         <th colspan="4">
                             <div style="width: 505px;" class=" table-cell r">
-                                Sub total</div>
+                                Sub total
+                            </div>
                         </th>
                         <th>
                             <div class="width60  table-cell r @betlistHelper.IsNegative(systemParlayDetail.SubTotal)">
@@ -143,7 +162,8 @@
                         </th>
                         <th>
                             <div class="width100  table-cell">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </th>
                     </tr>
                 </thead>

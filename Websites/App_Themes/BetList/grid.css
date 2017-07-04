@@ -1,53 +1,67 @@
-.gridtitle
-{
-	background-color:#B5C4D0;
-	height:22px
+.gridtitle {
+    background-color: #B5C4D0;
+    height: 22px;
 }
 
-.gridtitle th
-{
-	border:1px solid #7C98A4;
-	vertical-align:middle;
+    .gridtitle th {
+        border: 1px solid #7C98A4;
+        vertical-align: middle;
+    }
+
+        .gridtitle th div {
+            text-align: center;
+            font-weight: bold;
+        }
+
+.gridrowdata td {
+    border-left: 1px solid #7C98A4;
+    border-right: 1px solid #7C98A4;
+    border-bottom: 1px solid #7C98A4;
 }
 
-.gridtitle th div
-{
-	text-align:center;
-	font-weight:bold;
+.gridrow tr {
+    background-color: White;
+    height: 22px;
 }
 
-.gridrowdata td
-{
-	border-left:1px solid #7C98A4;
-	border-right:1px solid #7C98A4;
-	border-bottom:1px solid #7C98A4;
+.gridrow td {
+    border-left: 1px solid #7C98A4;
+    border-bottom: 1px solid #7C98A4;
+    border-right: 1px solid #7C98A4;
 }
 
-.gridrow tr
-{
-	background-color:White;
-	height:22px;
+    .gridrow td div {
+        text-align: center;
+        overflow: hidden;
+    }
+
+.highlight {
+    color: #3399FF;
 }
 
-.gridrow td
-{
-	border-left:1px solid #7C98A4;
-	border-bottom:1px solid #7C98A4;
-	border-right:1px solid #7C98A4;
+.buttonhover:hover {
+    color: #195687;
 }
 
-.gridrow td div
-{
-	text-align:center;
-	overflow:hidden;
+.comm_note {
+    padding-top: 10px;
+    font-size: 13px;
 }
 
-.highlight
-{
-	color:#3399FF
-}
+    .comm_note .title {
+        margin-left: 4px;
+        padding-right: 4px;
+        line-height: 18px;
+        font-weight: bold;
+        color: #666;
+    }
 
-.buttonhover:hover
-{
-	color:#195687
-}
+        .comm_note .title .star {
+            color: #ff0101;
+            padding-right: 8px;
+        }
+
+    .comm_note .content {
+        margin: 8px 20px 10px 20px;
+        font-style: italic;
+    }
