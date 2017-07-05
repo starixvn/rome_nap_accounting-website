@@ -72,11 +72,11 @@
       <HintPath>..\Dependency\Fanex\Fanex.AccountingReports.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.ActivityTracking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.1.0.0-beta05\lib\net40\Fanex.ActivityTracking.dll</HintPath>
+      <HintPath>..\packages\Fanex.ActivityTracking.1.0.0-beta07\lib\net40\Fanex.ActivityTracking.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ActivityTracking.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0-beta05\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
+      <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0-beta08\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
