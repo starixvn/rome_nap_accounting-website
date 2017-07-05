@@ -530,6 +530,7 @@ namespace Fanex.BetList.Accounting.Core
                                     break;
 
                                 case BetTypeContants.MixParlay:
+                                case BetTypeContants.MixParlayBetRadarVirtualSports:
                                     resultLink = "ViewMixParlayResult(" + ticketDetail.Ticket.RefNo + "," +
                                         ticketDetail.Ticket.MatchId.ToString() + "," +
                                         ticketDetail.Ticket.BetTypeId + "," +
@@ -877,6 +878,7 @@ namespace Fanex.BetList.Accounting.Core
                                     break;
 
                                 case BetTypeContants.MixParlay:
+                                case BetTypeContants.MixParlayBetRadarVirtualSports:
                                     resultLink = "ViewMixParlayResult(" + ticketDetail.Ticket.RefNo + "," +
                                         ticketDetail.Ticket.MatchId.ToString() + "," +
                                         ticketDetail.Ticket.BetTypeId + "," +
