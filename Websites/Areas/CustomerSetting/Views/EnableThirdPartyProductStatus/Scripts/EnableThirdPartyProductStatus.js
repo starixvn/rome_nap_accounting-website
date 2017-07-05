@@ -84,7 +84,8 @@
             var param = {
                 custId: model.CustId,
                 productId: model.ProductStatusList[0].ProductId,
-                productStatus: JSON.stringify(model.ProductStatusList)
+                productStatus: JSON.stringify(model.ProductStatusList),
+                isDeposit: model.IsDeposit
             };
 
             $.post("ThirdPartyProductStatus/Update", param, function (result) { UpdateSuccess(result); });

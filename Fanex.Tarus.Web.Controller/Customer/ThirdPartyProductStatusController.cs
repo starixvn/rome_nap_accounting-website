@@ -24,7 +24,7 @@ namespace Fanex.Tarus.Web.Controllers.Customer
         }
 
         [AuthenticateRead]
-        public ActionResult Index(int custId, string custName, int roleId, int productId)
+        public ActionResult Index(int custId, string custName, int roleId, int productId, bool isDeposit = false)
         {
             return View(
                 "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml",
@@ -32,15 +32,16 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                     custId,
                     custName,
                     roleId,
-                    productId
-                    ));
+                    productId,
+                    isDeposit));
         }
 
         [AuthenticateHost]
         public JsonResult Update(
             int custId,
             int productId,
-            string productStatus)
+            string productStatus,
+            bool isDeposit = false)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
             var productStatusModel = js.Deserialize<List<ProductStatus>>(productStatus);
@@ -51,7 +52,8 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                 AppSession.AccId,
                 (int)Enumerations.AccountingSystem.Accounting,
                 Utils.GetClientIP(),
-                productStatusModel);
+                productStatusModel,
+                isDeposit);
 
             if (productId == (int)Product.Casino && result[0].ErrorCode.Equals("0"))
             {

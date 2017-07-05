@@ -430,7 +430,7 @@ namespace Sunplus.Accounting.Business.Customer
                 var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
                 classname = canChange ? "canchange" : "cannotchange";
                 jsonclick = canChange ?
-                    string.Format("return leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}');", renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title) :
+                    string.Format("return leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', {5});", renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title, renderLeftPanelParameter.IsDeposit.ToString().ToLower()) :
                     string.Empty;
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
