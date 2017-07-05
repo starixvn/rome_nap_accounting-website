@@ -27,7 +27,8 @@ public partial class Others_Menu : System.Web.UI.Page
         allbet = 21,
         voidbridge = 22,
         ng2 = 23,
-        fishingworld = 24
+        fishingworld = 24,
+        lottery = 28
     };
 
     protected void Page_Load(object sender, EventArgs e)
@@ -67,7 +68,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
         hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
-        hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedkenolottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
+        hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedlottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
 
         string bingopath = "../PT/Bingo/";
         string liveCasinoPath = string.Empty;
