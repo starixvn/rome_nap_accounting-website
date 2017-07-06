@@ -2536,4 +2536,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="warningUnsyncedAllDownline" xml:space="preserve">
     <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
   </data>
+  <data name="enableBetradarVirtualSports" xml:space="preserve">
+    <value>Betradar Virtual Sports</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
 </root>

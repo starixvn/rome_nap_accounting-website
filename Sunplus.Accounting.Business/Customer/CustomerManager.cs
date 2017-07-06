@@ -339,6 +339,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncNG2Upline = true;
 
                             bool isHideVirtualSports = true;
+                            bool isHideBetradarVirtualSports = true;
 
                             bool hideEnableAndEditFishingWorld = true;
 
@@ -389,6 +390,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                                             hideEnableAndEditFishingWorld = (roleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
 
+                                            break;
+                                        case "27":
+                                            isHideBetradarVirtualSports = (CastAide.AsBoolean(row["IsHiddenUpline"]) && roleId < 4) || !WebSettings.EnableVirtualSports;
                                             break;
                                     }
                                 }
@@ -1020,6 +1024,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
                                     IsShowVirtualSport = !isHideVirtualSports,
+                                    IsShowBetradarVirtualSport = !isHideBetradarVirtualSports,
                                     ParentId = parentId,
                                     RoleId = roleId,
                                     CustId = custId,
@@ -1847,6 +1852,19 @@ namespace Sunplus.Accounting.Business.Customer
                                                renderLeftPanelParameter,
                                                "Update Fishing World Status",
                                                24);
+                            break;
+                        case "27":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "BetradarVirtualSports",
+                                               renderLeftPanelParameter.IsShowBetradarVirtualSport,
+                                               renderLeftPanelParameter,
+                                               "Update Betradar Virtual Sports Status",
+                                               27);
                             break;
                     }
                 }
