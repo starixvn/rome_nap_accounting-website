@@ -12,9 +12,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using System.Collections.Generic;
     using System.Data;
     using CasinoLibrary.Model.UserException;
+    using Criteria.CreditCustomer;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using NAP.Framework.Data;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
@@ -301,6 +303,19 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 LogExtensions.ExceptionHandler(ex);
                 return null;
             }
+        }
+
+        public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, int userId, string ip)
+        {
+            ICriteria criteria = new UpdateAllDayBalTransferCriteria
+            {
+                CustId = custId,
+                IsAllDayBalTransfer = isAllDayBalTransfer,
+                UserId = userId,
+                IP = ip
+            };
+
+            return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
         }
     }
 }

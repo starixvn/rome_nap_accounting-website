@@ -11,6 +11,7 @@ using Fanex.Tarus.Admin.Entities;
 using Fanex.Tarus.Admin.Entities.SMAManagement;
 using Fanex.Tarus.Admin.Enums;
 using Fanex.Tarus.Admin.Resource;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 
@@ -265,7 +266,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             {
                 startCol = 0;
                 smaEntity = groupHeadline.SMAEntities[i];
-                backgroundColor = GetBackgroudColorByStatus(smaEntity.IsClosed, smaEntity.IsSuspend, smaEntity.IsEnable);
+                backgroundColor = GetBackgroudColorByStatus(smaEntity.IsClosed, smaEntity.IsSuspend, smaEntity.IsEnable, smaEntity.ClosedReason);
 
                 if (i == 0)
                 {
@@ -392,7 +393,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             }
         }
 
-        private Color GetBackgroudColorByStatus(bool isClosed, bool isSuspended, bool isEnable)
+        private Color GetBackgroudColorByStatus(bool isClosed, bool isSuspended, bool isEnable, CustomerClosedReason customerClosedReason)
         {
             // The top priority will be Disabled - Closed - Suspended - Open.
             if (!isEnable)
@@ -402,7 +403,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
             if (isClosed)
             {
-                return Color.FromArgb(204, 199, 186);
+                return customerClosedReason.ClosedColorForExcel;
             }
 
             if (isSuspended)

@@ -82,7 +82,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         superItem.No = CastAide.AsInt32(row["RowNumber"]);
 
-                        superItem.Status = GetStatusName(row);
+                        superItem.Status = GetStatusName(row, ref superItem);
 
                         superItem.UserName = row["username"].ToString();
 
@@ -210,7 +210,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         masterItem.No = CastAide.AsInt32(row["RowNumber"]);
 
-                        masterItem.Status = GetStatusName(row);
+                        masterItem.Status = GetStatusName(row, ref masterItem);
 
                         masterItem.UserName = row["username"].ToString();
 
@@ -313,7 +313,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         agentItem.No = CastAide.AsInt32(row["RowNumber"]);
 
-                        agentItem.Status = GetStatusName(row);
+                        agentItem.Status = GetStatusName(row, ref agentItem);
 
                         agentItem.UserName = row["username"].ToString();
 
@@ -414,7 +414,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         memberItem.No = CastAide.AsInt32(row["RowNumber"]);
 
-                        memberItem.Status = GetStatusName(row);
+                        memberItem.Status = GetStatusName(row, ref memberItem);
 
                         memberItem.UserName = row["username"].ToString();
 
@@ -531,7 +531,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
             }
             return result;
         }
-        private string GetStatusName(DataRow row)
+        private string GetStatusName(DataRow row, ref CustomerList customer)
         {
             var status = "";
             if (!CastAide.AsBoolean(row["enabled"]))
@@ -543,6 +543,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 if (CastAide.AsBoolean(row["closed"]))
                 {
                     status = "Closed";
+                    customer.ClosedReason = new CustomerClosedReason(row["closedreason"]);
                 }
                 else if (CastAide.AsBoolean(row["suspended"]))
                 {

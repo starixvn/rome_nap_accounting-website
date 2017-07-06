@@ -7,13 +7,9 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -74,5 +70,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
 
         string GetRNGSiteNameByCustId(int custId);
+
+        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, int userId, string ip);
     }
 }

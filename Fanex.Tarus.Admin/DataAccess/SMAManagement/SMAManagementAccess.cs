@@ -6,6 +6,7 @@ using Fanex.Data;
 using Fanex.Tarus.Admin.Criteria.SMAManagement;
 using Fanex.Tarus.Admin.Entities;
 using Fanex.Tarus.Admin.Entities.SMAManagement;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
@@ -148,6 +149,11 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             else
             {
                 entity.HeadlineTypeId = Convert.ToInt32(headlineType);
+            }
+
+            if (entity.IsClosed)
+            {
+                entity.ClosedReason = new CustomerClosedReason(reader["closedreason"]);
             }
 
             return entity;

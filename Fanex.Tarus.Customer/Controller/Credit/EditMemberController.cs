@@ -106,6 +106,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 currentContext.AdminId = AppSession.AccId;
                 customer.Language = "E";
                 currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                currentContext.SystemId = SystemId;
+
                 result = _customerService.AgentUpdateMember(customer, currentContext);
 
                 int tempErrorCode = 0;

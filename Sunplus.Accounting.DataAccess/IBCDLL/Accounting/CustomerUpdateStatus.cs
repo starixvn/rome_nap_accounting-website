@@ -51,6 +51,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     param.Add("errcode", 0);
                     param.Add("errmsg", string.Empty);
                     param.Add("ip", Ip);// Vinh add Ip for closed member
+                    param.Add("systemid", AccCommon.SystemId);
 
                     objDb.AssignParamValues(param);
 

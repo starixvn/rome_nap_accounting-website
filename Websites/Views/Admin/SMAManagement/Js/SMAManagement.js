@@ -287,7 +287,7 @@
             row = smaGroup.SMAEntities[i];
 
             rowsSpan = "";
-            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
+            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
 
             if (i === 0) {
                 rowsSpan = '<td rowspan="' + totalItems + '">\
@@ -322,7 +322,7 @@
             row = smaGroup.SMAEntities[i];
 
             rowsSpan = "";
-            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
+            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
 
             if (i === 0) {
                 rowsSpan = '<td rowspan="' + totalItems + '">\
@@ -370,7 +370,7 @@
                     var row = this.SMAEntities[0];
 
                     var rowsSpan = '';
-                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
+                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
 
                     if (i === 0) {
                         rowsSpan = '<td class="group" rowspan="' + totalItems + '">\
@@ -408,7 +408,7 @@
             $.each(smaGroup, function () {
                 if (this.SMAEntities != null && this.SMAEntities.length > 0) {
                     var row = this.SMAEntities[0];
-                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable);
+                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
                     var rowHtml = '<tr>\
                                 <td>\
                                     <div class="c" style="width: ' + colNoWidth + 'px; line-height: 20px">&nbsp;</div>\
@@ -630,7 +630,7 @@
 			});
     }
 
-    function getCssFormatForEachRow(isClosed, isSuspended, isEnable) {
+    function getCssFormatForEachRow(isClosed, isSuspended, isEnable, closedReason) {
         // The top priority will be Disabled - Closed - Suspended - Open.
         var css = 'open';
 
@@ -638,7 +638,7 @@
             css = 'disabled';
         }
         else if (isClosed) {
-            css = 'closed';
+            css = closedReason.ClassName;
         }
         else if (isSuspended) {
             css = 'suspended';

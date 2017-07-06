@@ -11,15 +11,15 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using System.Text;
-    using Fanex.Data;
-    using Sunplus.Accounting.Core.Extensions;
-    using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using Sunplus.Accounting.Core.Configurations;
-    using Fanex.Tarus.Customer.Entities;
     using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.Entities;
+    using NAP.Framework.Data;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Extensions;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -113,7 +113,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                 }
                 sites.Add(creditSites);
                 // Because integrate of Deposit customer, so remove licensee customer in future
-                if(!WebSettings.IsApplySplitingDepositeCustomer) sites.Add(licenseeSites);
+                if (!WebSettings.IsApplySplitingDepositeCustomer) sites.Add(licenseeSites);
             }
             catch (Exception ex)
             {
@@ -186,6 +186,25 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     return CastAide.AsString(objdb.GetParameterValue("siterng"));
                 return null;
             }
+        }
+
+        public Result UpdateAllDayBalTransfer(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+
+                if (outputParams != null)
+                {
+                    return new Result(
+                        Convert.ToInt32(outputParams["errcode"]),
+                        outputParams["errmsg"].ToString());
+                }
+            }
+
+            return new Result(500, string.Empty);
         }
     }
 }

@@ -19,6 +19,9 @@ using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 using Fanex.LiveCasino.CoreSetting.Services;
 using Fanex.Module.NG2.Entities;
 using Fanex.Module.NG2.Services;
+using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Domain;
+using Fanex.Tarus.Security.Services;
 using IBCUtils.Objects;
 using RemotingRef;
 using Sunplus.Accounting.Business.Criteria;
@@ -33,15 +36,12 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.Tarus.Security.Domain;
-using Fanex.Tarus.Security.Services;
 using Result = Sunplus.Accounting.Entities.Result;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -528,8 +528,10 @@ namespace Sunplus.Accounting.Business.Customer
                             }
                             else if (CastAide.AsBoolean(row1["closed"]))
                             {
-                                statusClass = "memberClosed ";
-                                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblClosedAccount");
+                                var customerClosedReason = new CustomerClosedReason(row1["closedreason"]);
+
+                                statusClass = customerClosedReason.ClassName + " ";
+                                statusTip = customerClosedReason.ClosedReason;
                                 isOpenStatus = false;
                             }
                             else if (CastAide.AsBoolean(row1["suspended"]))
@@ -1540,6 +1542,12 @@ namespace Sunplus.Accounting.Business.Customer
             string userName = Converter.ToString2(row1["username"]);
             //Get setting controll Suspended
             sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
+
+            if (roleId == 4)
+            {
+                bool isAllDayBalTransfer = row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
+                sg.Add(GetSettingControlAllDayBalTransfer(roleId, isManageCustomerAccess, "AllDayBalTransfer", isAllDayBalTransfer));
+            }
 
             #region Selected Betting
 
@@ -2828,6 +2836,31 @@ namespace Sunplus.Accounting.Business.Customer
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, "VS");
             }
+        }
+
+        private SettingControl GetSettingControlAllDayBalTransfer(int roleId, bool isManageCustomerAccess, string statusName, bool currentStatus)
+        {
+            string classname = string.Empty;
+            string jsonclick = string.Empty;
+            string jsonmouseover = string.Empty;
+            string jsonmouseout = string.Empty;
+
+            if (isManageCustomerAccess)
+            {
+                if (roleId == 4)
+                {
+                    classname = "canchange";
+                    jsonclick = "return ChangeAllDayBalTransfer(this);";
+                    jsonmouseout = "UnTip()";
+                    jsonmouseover = "Tip('Check to allow All-Day Balance Transfer mode', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                }
+                else
+                {
+                    classname = "cannotchange";
+                }
+            }
+
+            return new SettingControl("All-Day Bal Transfer", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
         }
 
         #endregion GetSettingControl

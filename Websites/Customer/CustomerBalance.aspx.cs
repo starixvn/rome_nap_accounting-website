@@ -163,7 +163,8 @@ public partial class CustomerBalance : PageBase
                 bool isClosed = Convert.ToBoolean(dr["closed"]);
                 if (isClosed)
                 {
-                    strcontent.Append("'add-customer-bggray',");
+                    var closedReason = new CustomerClosedReason(dr["closedreason"]);
+                    strcontent.Append("'").Append(closedReason.ClassName).Append("',");
                 }
                 else
                 {

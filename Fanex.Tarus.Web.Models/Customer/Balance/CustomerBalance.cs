@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.Web.Models.Customer.Balance
 {
-
     public class CustomerBalanceViewModel
     {
         public int TotalRows { get; set; }
@@ -18,7 +15,6 @@ namespace Fanex.Tarus.Web.Models.Customer.Balance
         }
     }
 
-
     public class CustomerBalance
     {
         public int RowNum { get; set; }
@@ -28,6 +24,8 @@ namespace Fanex.Tarus.Web.Models.Customer.Balance
         public int CustId { get; set; }
 
         public bool Closed { get; set; }
+
+        public CustomerClosedReason ClosedReason { get; set; }
 
         public string FirstName { get; set; }
 

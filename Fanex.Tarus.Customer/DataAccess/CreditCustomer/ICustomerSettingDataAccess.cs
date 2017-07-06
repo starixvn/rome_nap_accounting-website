@@ -7,10 +7,11 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
-    using System.Collections.Generic;
-    using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using System.Data;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -39,6 +40,10 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         DataTable GetCustomerInfoForMemberGroup(Hashtable paramerters);
 
         Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
+
         string GetRNGSiteNameByCustId(int custId);
+
+        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(ICriteria criteria);
+
     }
 }

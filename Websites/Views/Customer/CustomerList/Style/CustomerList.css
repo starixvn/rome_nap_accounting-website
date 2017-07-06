@@ -6,10 +6,6 @@ tr.disabled td
 {
     background: #A0A97A !important;
 }
-tr.closed td
-{
-    background: #CCC7BA !important;
-}
 tr.suspended td
 {
     background: #F8DED7 !important;

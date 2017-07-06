@@ -7,21 +7,21 @@
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
-    using Fanex.Tarus.Web.Controllers;
     using System.Web.Mvc;
-    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Web.Controllers;
     using Sunplus.Accounting.Core.Common;
-    using Fanex.Tarus.Web.Controllers.Filters;
+    using Sunplus.Accounting.Core.Helper;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CustomerSettingController: BaseController
     {
-        private ICustomerSettingService _customerSetting;
+        private readonly ICustomerSettingService _customerSetting;
 
-        public CustomerSettingController(): this(null){ }
+        public CustomerSettingController()
+            : this(null)
+        {
+        }
 
         public CustomerSettingController(ICustomerSettingService customerSetting)
         {
@@ -35,7 +35,14 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
+        }
 
+        [HttpPost]
+        public JsonResult UpdateAllDayBalTransfer(int custId, bool status)
+        {
+            var result = _customerSetting.UpdateAllDayBalTransfer(custId, status, AppSession.AccId, Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
     }
 }
