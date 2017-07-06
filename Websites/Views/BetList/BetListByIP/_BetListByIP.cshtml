@@ -21,10 +21,6 @@
         int i = 0;
         foreach (var betdetail in Model)
         {
-            if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
-            {
-                betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
-            }
             result[1] += renderContent(betdetail, NumberBegining);
             arrTransID[i++] = betdetail.Ticket.TransId;
             NumberBegining++;
@@ -41,19 +37,8 @@
             </div>
         </td>
         <td class="c">
-            <div class="width120">
-                <div class="refno ">
-                    @if (BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
-                    {
-                        <span>Ref No: @betdetail.Ticket.RefNo </span>
-                    }
-                    else
-                    {
-                        <span>Ref No: @betdetail.Ticket.TransId </span>
-                    }
-                </div>
-                <div class="c">
-                    @betdetail.Ticket.TransDate</div>
+            <div class="width120 refno">
+                @Html.Raw(betdetail.TransDateHtml);
             </div>
         </td>
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>

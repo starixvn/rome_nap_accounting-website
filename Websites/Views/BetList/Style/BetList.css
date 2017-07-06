@@ -123,10 +123,9 @@ div.match + div.league {
 }
 .time {
 	color: #434343;
-	font-size: 7pt;	
 	font-weight: normal;
 	text-align: center;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 /* Status */

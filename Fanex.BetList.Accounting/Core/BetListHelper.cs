@@ -66,18 +66,6 @@ namespace Fanex.BetList.Accounting.Core
             return ticketDetail.Ticket.SuperDiscount < 0 || ticketDetail.Ticket.MasterDiscount < 0 || ticketDetail.Ticket.AgentDiscount < 0;
         }
 
-        public static bool IsUseRefNoInsteadOfTransId(ITicket ticket)
-        {
-            return ticket.BetTypeId == 73 ||
-                ticket.BetTypeId == 71 ||
-                ticket.SportTypeId == SportContants.Keno ||
-                ticket.SportTypeId == 255 ||
-                ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
-                IsMetricGamingBetType(ticket.BetTypeId) ||
-                IsColossusBetType(ticket.BetTypeId) ||
-                IsCockFightingBetType(ticket.BetTypeId);
-        }
-
         public static bool IsMetricGamingBetType(int betType)
         {
             return BetTypeContants.MetricGaming60sofKick <= betType &&
