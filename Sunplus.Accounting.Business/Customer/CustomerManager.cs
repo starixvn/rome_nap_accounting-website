@@ -2002,7 +2002,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (!isHideVirtualSports && !isDeposit)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/MasterEditMember?custId=" + custId.ToString() + "&masterId=" + masterId + "\");' target='centerFr'>Virtual Sports</a>";
+                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Virtual Sports</a>";
                     }
 
                     if (isShowSetting)

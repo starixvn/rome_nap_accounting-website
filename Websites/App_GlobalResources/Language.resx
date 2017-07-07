@@ -2542,4 +2542,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="lblDisabledBetradarVirtualSportsUpline" xml:space="preserve">
+    <value>Betradar Virtual Sports status has been disabled at upline</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value />
+  </data>
 </root>
