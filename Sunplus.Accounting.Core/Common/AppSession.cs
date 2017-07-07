@@ -27,12 +27,6 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["IsSyncLCSCurrentCust"] = value; }
         }
 
-        public static bool IsHideVirtualSportsCurrentCust
-        {
-            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsHideVirtualSportsCurrentCust"], false); }
-            set { HttpContext.Current.Session["IsHideVirtualSportsCurrentCust"] = value; }
-        }
-
         public static List<MenuBO> UserMenu
         {
             get

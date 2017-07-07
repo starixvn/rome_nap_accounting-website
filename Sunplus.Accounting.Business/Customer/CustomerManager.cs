@@ -272,10 +272,6 @@ namespace Sunplus.Accounting.Business.Customer
                             AppSession.IsSyncCSCurrentCust = CastAide.AsBoolean(row1["synccasino"], false);
                             AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
                             AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
-                            AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
-
-
-
                             ISmartPunterService smartPunterService = new SmartPunterService();
                             bool isDenied = smartPunterService.IsDeniedViewSmartPunter(new CheckSmartPunterCriteria
                             {
