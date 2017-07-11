@@ -11,7 +11,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
 {
     public class ThirdPartyProductStatusService : IThirdPartyProductStatusService
     {
-        private StatusSettingService statusSettingService = new StatusSettingService();
+        private readonly StatusSettingService statusSettingService = new StatusSettingService();
 
         private const int KenoProductId = 8;
         private const int RacingProductId = 2;
