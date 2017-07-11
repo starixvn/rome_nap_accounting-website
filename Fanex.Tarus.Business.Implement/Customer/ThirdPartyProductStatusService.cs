@@ -1,9 +1,6 @@
-﻿using Fanex.Tarus.Business.Interface.Customer;
+﻿using System.Collections.Generic;
+using Fanex.Tarus.Business.Interface.Customer;
 using Fanex.Tarus.Web.Models.Customer.ThirdPartyProductStatus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ThirdPartyProducts.StatusSetting.Model;
 using ThirdPartyProducts.StatusSetting.Services;
 

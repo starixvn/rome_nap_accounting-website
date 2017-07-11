@@ -1123,7 +1123,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     renderLeftPanelParameter.IsShowVoidbridge,
                                     renderLeftPanelParameter.IsShowNG2,
                                     renderLeftPanelParameter.IsShowFishingWorld,
-                                    isHideVirtualSports);
+                                    isHideVirtualSports,
                                     renderLeftPanelParameter.IsShowKenoLottery);
 
                                 string infoUrl = "";
@@ -1887,14 +1887,11 @@ namespace Sunplus.Accounting.Business.Customer
                                                sg,
                                                ref htmlcontent,
                                                isManageCustomerAccess,
-                                               false, // ???
-                                               hasDownline,
                                                "Lottery",
                                                renderLeftPanelParameter.IsShowKenoLottery,
                                                renderLeftPanelParameter,
                                                "Update Lottery Status",
-                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery,
-                                               4);
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
                             break;
                     }
                 }
