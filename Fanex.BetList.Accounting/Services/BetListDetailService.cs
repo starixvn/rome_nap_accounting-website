@@ -97,7 +97,7 @@ namespace Fanex.BetList.Accounting.Services
                     };
 
                     ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
-                    ticketDetail.StatusHtml = betListHelper.StatusRefNo(ticketDetail);
+                    ticketDetail.StatusHtml = betListHelper.BuildStatus(ticketDetail.Ticket, ticketHelper, new List<ITicketData>(), factory, builder);
 
                     ticketDetails.Add(ticketDetail);
                 }

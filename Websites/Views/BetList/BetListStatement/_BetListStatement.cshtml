@@ -24,6 +24,7 @@
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Constants;
 @{
+    ViewData["BetListStatement"] = true;
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
     int NumberBegining = ViewBag.NumberBegining;
@@ -85,7 +86,7 @@
         </td>
         <td class="r">
             <div class="column-winloss">
-                @Html.Partial("~/Views/BetList/_WinLoss.cshtml", betdetail)
+                @Html.Partial("~/Views/BetList/_WinLoss.cshtml", betdetail, ViewData)
             </div>
         </td>
         <td class="c">

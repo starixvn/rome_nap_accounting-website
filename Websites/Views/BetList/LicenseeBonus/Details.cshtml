@@ -1,7 +1,7 @@
 ﻿@using Fanex.BetList.Accounting.App_GlobalResources;
+@using Fanex.BetList.Accounting.Constants;
 @using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Resources;
-
 @{ Layout = null; }
 @model IEnumerable<TicketDetail>
 
@@ -101,6 +101,14 @@
                                     <td>
                                         <div class="table-cell c width80">
                                             @Html.Raw(item.StatusHtml)
+                                            @{
+                                                var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(item.Ticket.IP);
+                                            }
+                                            @if (ip != "-" && !item.Ticket.BetTypeId.Equals(500))
+                                            {
+                                                <br />
+                                                <a href="javascript:;" onclick="viewBetListByIP('@item.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@item.Ticket.IP');">@ip</a>
+                                            }
                                         </div>
                                     </td>
                                     <td>
@@ -130,6 +138,15 @@
     <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
     <script type="text/javascript" src="~/js/BetList.js"></script>
     <script type="text/javascript">
+        function viewBetListByIP(fromDate, ip) {
+            var parentIndex = 1;
+            parent[parentIndex].location = "@Url.Content("~")" + "TarusBetList/BetListByIP?IsLink=true&FromDate=" + fromDate + "&IP=" + ip;
+            parent.$(".ui-dialog .ui-dialog-content").each(function (index) {
+                var $this = parent.$(this);
+                $this.dialog("close");
+                $this.remove();
+            });
+        }
         function initGridOpts() {
             return {
                 tblContentId: "tblContent",
