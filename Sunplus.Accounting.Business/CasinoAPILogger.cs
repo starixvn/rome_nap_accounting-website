@@ -14,12 +14,12 @@ namespace Sunplus.Accounting.Business
     /// </summary>
     public class CasinoAPILogger : IAPILogger
     {
-        public void Write(int actionId, string functionName, string trackingValue, string returnValue, int returnCode)
+        public void Write(int actionId, string functionName, string strackingValue, string returnValue, int returnCode)
         {
             var custId = HttpContext.Current.Request["id"];
             var urlRef = HttpContext.Current.Request.UrlReferrer;            
             custId = string.IsNullOrWhiteSpace(custId) ? HttpContext.Current.Request["custid"] : custId;
-            if (string.IsNullOrWhiteSpace(custId))
+            if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {
                 var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
                 foreach (var item in qryCustId)
@@ -31,20 +31,20 @@ namespace Sunplus.Accounting.Business
                     }
                 }
 
-                if (string.IsNullOrWhiteSpace(custId))
+                if (string.IsNullOrWhiteSpace(custId) || custId == "0")
                 {
                     var tracking = new XmlDocument();
-                    tracking.LoadXml(trackingValue);
+                    tracking.LoadXml(strackingValue);
+
                     try
                     {
                         var id = tracking.GetElementsByTagName("DocumentElement").Item(0).FirstChild;
-                        var idNode = id.SelectSingleNode("intIBCCustID");
-                        idNode = idNode == null ? id.SelectSingleNode("IBCCustID") : idNode;
-                        custId = idNode.FirstChild.Value;
+                        var nodeId = id.SelectSingleNode("intIBCCustID");
+                        nodeId = nodeId == null ? id.SelectSingleNode("IBCCustID") : nodeId;
+                        custId = nodeId.FirstChild.Value;
                     }
                     catch
                     {
-                        custId = "0";
                     }
                 }
             }
@@ -52,10 +52,10 @@ namespace Sunplus.Accounting.Business
             var param = new Hashtable();
             param.Add("systemid", 3);
             param.Add("userid", AppSession.AccId);
-            param.Add("custid", custId);
+            param.Add("custid", string.IsNullOrWhiteSpace(custId) ? "0" : custId);
             param.Add("actionid", actionId);
             param.Add("funcname", functionName);
-            param.Add("trackingvalue", trackingValue);
+            param.Add("trackingvalue", strackingValue);
             param.Add("returnvalue", returnValue);
             param.Add("returncode", returnCode);
             //DbHelper.Execute("WriteLog_UserLog_CasinoAPI", param, DBType.LOG);
