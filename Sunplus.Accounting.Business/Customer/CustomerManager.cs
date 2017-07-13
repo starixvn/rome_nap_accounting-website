@@ -399,7 +399,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                                             hideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 || 
                                                 isHideKenoLottery ||
-                                                (isHideUplineKenoLottery && roleId < 4);
+                                                (isHideUplineKenoLottery && roleId < 4) ||
+                                                isDeposit;
                                             break;
                                     }
                                 }
