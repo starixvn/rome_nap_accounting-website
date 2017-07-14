@@ -2554,4 +2554,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="enableLottery" xml:space="preserve">
     <value>Lottery</value>
   </data>
+  <data name="lblDisabledLotteryUpline" xml:space="preserve">
+    <value>Lottery has been disabled at upline</value>
+  </data>
 </root>
