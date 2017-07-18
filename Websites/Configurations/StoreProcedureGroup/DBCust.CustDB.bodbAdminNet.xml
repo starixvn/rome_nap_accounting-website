@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions>
+<Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
