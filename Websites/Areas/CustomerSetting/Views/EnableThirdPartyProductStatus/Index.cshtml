@@ -7,7 +7,9 @@
     bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
     bool isSync = Model.ProductStatusList[0].IsSync;
     int productId = Model.ProductStatusList[0].ProductId;
-    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !(isSyncAllDownline && isSync) ;
+    bool isWarningSyncedAllDownlineProduct =
+        (productId == 21 || productId == 22 || productId == 24 || productId == 12)
+        && !(isSyncAllDownline && isSync);
     int sportTypePrevious = 0;
 }
 <div id="updateStatusDialog">
