@@ -465,8 +465,9 @@ else
     <!--/MinMaxPT-->
 </table>
 }
-
+@Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
 <script language="javascript" type="text/javascript">
     var _isOfferHRFixedOdds = "@isOfferHRFixedOdds";
     var _isShowMyanmarOdds = "@isShowMyanmarOdds";
 </script>
+<script src="~/js/encode.js"></script>

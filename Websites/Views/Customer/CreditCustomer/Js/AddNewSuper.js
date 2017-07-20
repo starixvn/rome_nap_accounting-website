@@ -170,6 +170,8 @@ ans.checkValidInput = function () {
 // do add new super
 ans.addNewSuper = function () {
     if (ans.checkValidInput()) {
+        var code = document.getElementById('code').value;
+        customer.password = customer.password.ec(code).hc();
         //get betting limit
         if (bettingLimitGrid.Validate()) {
             customer.bettingLimit = bettingLimitGrid.Save();
@@ -184,7 +186,7 @@ ans.addNewSuper = function () {
             url: "DoAddNewSuper",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"stringCustomer":' + JSON.stringify(JSON.stringify(customer)) + ', "currentContext":' + JSON.stringify(context) + '}',
+            data: '{"stringCustomer":' + JSON.stringify(JSON.stringify(customer)) + ', "currentContext":' + JSON.stringify(context) + ', "code":"' + code + '"}',
             success: function (result) {
                 $('#divShowInfo').show();
                 if (typeof result != 'undefined' && result != null) {
