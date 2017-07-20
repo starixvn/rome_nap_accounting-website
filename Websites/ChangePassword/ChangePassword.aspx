@@ -9,7 +9,7 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
-    
+    <script src="../js/encode.js"></script>
 </head>
 <body style="margin: 5px 10px 5px 5px">
     <div class="main">
@@ -24,5 +24,12 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function changePwd() {
+            document.getElementById('txtPass').value = document.getElementById('txtPass').value.ec(document.getElementById('code').value).hc();
+            document.getElementById('txtConfirmPass').value = document.getElementById('txtConfirmPass').value.ec(document.getElementById('code').value).hc();
+            return true;
+        }
+    </script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             string username = context.Request.Form["TxtUsername"];
-            string password = context.Request.Form["TxtPassword"];
+            string password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(context.Request.Form["TxtPassword"], context.Request.Form["code"]);
 
             context.Response.Write("<html><head><script type='text/javascript'>\n");
             int custId;
