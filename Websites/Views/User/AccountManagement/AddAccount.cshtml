@@ -35,3 +35,12 @@
         </tr>
     </tbody>
 </table>
+@Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
+<script src="~/js/encode.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function changePwd() {
+        var code = document.getElementById('code').value;
+        document.getElementById('tbxPassNewAcc').value = document.getElementById('tbxPassNewAcc').value.ec(code).hc();
+        return true;
+    }
+</script>
