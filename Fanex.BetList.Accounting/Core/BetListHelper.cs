@@ -91,7 +91,8 @@ namespace Fanex.BetList.Accounting.Core
         public static bool IsHideResultLink(int sportType)
         {
             return sportType == SportContants.Keno ||
-                sportType == SportContants.CockFighting;
+                sportType == SportContants.CockFighting ||
+                sportType == SportContants.KenoLottery;
         }
 
         public string IsNegative(decimal input)

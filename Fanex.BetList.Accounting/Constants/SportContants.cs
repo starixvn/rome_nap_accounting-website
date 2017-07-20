@@ -78,5 +78,6 @@ namespace Fanex.BetList.Accounting.Constants
         public const int Voidbridge = 212;
         public const int FishingWorld = 219;
 
+        public const int KenoLottery = 220;
     }
 }
