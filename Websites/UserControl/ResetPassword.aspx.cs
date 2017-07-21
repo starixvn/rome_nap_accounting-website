@@ -26,11 +26,12 @@ public partial class UserControl_ResetPassword : System.Web.UI.Page
                 custId = Convert.ToInt32(Request["custId"] as object ?? -1);
                 string newPass = Request["password"] as string ?? string.Empty;
                 string confirm = Request["confirm"] as string ?? string.Empty;
+                string code = Request["code"] as string ?? string.Empty;
                 newPass = newPass.Trim();
                 confirm = confirm.Trim();
                 if (custId == -1 || string.IsNullOrEmpty(newPass) || (string.Compare(newPass, confirm) != 0))
                     throw new AccException(IbcError.INVALID_INPUT_VALUE_MSG);
-                _s = ResetPassword(newPass);
+                _s = ResetPassword(newPass, code);
             }
             else
             {
@@ -54,12 +55,12 @@ public partial class UserControl_ResetPassword : System.Web.UI.Page
         this.sBody.Text = _s;
     }
 
-    private string ResetPassword(string newpass)
+    private string ResetPassword(string newpass, string code)
     {
         string s = string.Empty;
         try
         {
-            string password = IBCUtils.Encryption.CfsEnCode(newpass);
+            string password = IBCUtils.Encryption.CfsEnCode(Fanex.Tarus.Security.Services.Encryptor.Decrypt(newpass, code));
             Session["AccPwd"] = password;
 
             string rndStr = Encryption.RandomString(6);
