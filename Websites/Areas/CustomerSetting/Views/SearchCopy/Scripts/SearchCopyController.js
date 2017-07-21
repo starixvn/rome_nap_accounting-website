@@ -517,9 +517,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.copyExistingUser = function () {
+        var code = document.getElementById('code').value;
         var param = {
             UserName: $scope.newUser.username,
-            Userpwd: $scope.newUser.password,
+            Userpwd: $scope.newUser.password.ec(code).hc(),
             FirstName: $scope.newUser.firstname,
             LastName: $scope.newUser.lastname,
             Phone: $scope.newUser.phone,
@@ -541,7 +542,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             CustLevel: (parent.level == 'member' ? 1 : 4),
             UplineId: $scope.parentId,
             IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
-            DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false
+            DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false,
+            code: code
         };
 
         message.hideAlertMessage("errorMsg");
