@@ -391,7 +391,6 @@ namespace Sunplus.Accounting.Business.Customer
                     isManageCustomerAccess,
                     "disabled" + productName,
                     !isDisabled,
-                    hasDownline,
                     true,
                     Converter.ToBool(isCustomerEnabled),
                     disableUplines,
