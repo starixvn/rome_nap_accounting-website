@@ -1,0 +1,51 @@
+﻿<link href="~/Views/Admin/SiteManagement/Styles/AddSite.css" rel="stylesheet" type="text/css" />
+<div class="main">
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">
+                    New Site
+                </td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+        <div class="maincontent_box">
+            <div id="err-message" class="hide"></div>
+            <table cellpadding="2">
+                <tr>
+                    <td class="b">
+                        Type
+                    </td>
+                    <td>
+                        <input id="rdo-deposit" type="radio" class="styled rdo-type" name="chkType" value="1" checked="checked" />
+                    </td>
+                    <td>
+                        <label for="rdo-deposit">Deposit</label>
+                    </td>
+                    <td>
+                        <input id="rdo-credit" type="radio" class="styled rdo-type" name="chkType" value="2" />
+                    </td>
+                    <td>
+                        <label for="rdo-credit">Credit</label>
+                    </td>
+                    <td>
+                        <div class="b lbl-site-name">
+                            Site Name
+                        </div>
+                    </td>
+                    <td>
+                        <input id="txt-site-name" type="text" placeholder="Enter new site name" maxlength="50" />
+                    </td>
+                    <td>
+                        <input id="btn-add" type="button" class="btn" value="Add" name="btn-add" />
+                    </td>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/Views/Admin/SiteManagement/Scripts/AddSite.js" type="text/javascript"></script>
+<script>
+    window.rootUrl = '@Url.Content("~")';
+</script>
