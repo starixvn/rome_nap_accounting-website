@@ -169,7 +169,7 @@ namespace Fanex.BetList.Accounting.Services
 
         public static bool IsMobile_RNGCasino(int betTypeId)
         {
-            return 2301 <= betTypeId && betTypeId <= 2399;
+            return (2301 <= betTypeId && betTypeId <= 2399) || (2901 <= betTypeId && betTypeId <= 2909);
         }
 
         public static bool IsAllBet(int betTypeId)
