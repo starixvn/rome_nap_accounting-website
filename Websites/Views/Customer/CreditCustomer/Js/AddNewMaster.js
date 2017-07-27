@@ -172,6 +172,8 @@ anm.checkValidInput = function () {
 // do add new super
 anm.addNewMaster = function () {
     if (anm.checkValidInput()) {
+        var code = document.getElementById('code').value;
+        customer.password = customer.password.ec(code).hc();
         //get betting limit
         if (bettingLimitGrid.Validate()) {
             customer.bettingLimit = bettingLimitGrid.Save();
@@ -188,7 +190,7 @@ anm.addNewMaster = function () {
             url: "DoAddNewMaster",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"stringCustomer":' + JSON.stringify(JSON.stringify(customer)) + ', "currentContext":' + JSON.stringify(context) + '}',
+            data: '{"stringCustomer":' + JSON.stringify(JSON.stringify(customer)) + ', "currentContext":' + JSON.stringify(context) + ', "code":"' + code + '"}',
             success: function (result) {
                 $('#divShowInfo').show();
                 if (typeof result != 'undefined' && result != null) {

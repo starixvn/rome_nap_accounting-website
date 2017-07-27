@@ -170,6 +170,7 @@
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
     <Compile Include="Domain\SmartPunterActionId.cs" />
     <Compile Include="Permission\CheckPermissionAttribute.cs" />
+    <Compile Include="Services\Encryptor.cs" />
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISmartPunterService.cs" />
     <Compile Include="Services\PermissionService.cs" />

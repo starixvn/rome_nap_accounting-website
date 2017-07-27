@@ -8,9 +8,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>@Reports.Title</title>
-    <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+    <link href="~/App_Themes/Public/table.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
     <link href="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Styles/CustomerSecurityCode.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="~/js/common.js"></script>
+    <script type="text/javascript" src="~/js/common.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script src="~/js/encode.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
     <script src="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Scripts/CustomerSecurityCode.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 </head>
 <body>
@@ -44,7 +45,8 @@
                             <span>
                                 <input id="chbForceChange" type="checkbox" checked="checked" />
                                 <label for="chbForceChange">
-                                    Force change</label>
+                                    Force change
+                                </label>
                             </span>
                         </td>
                     </tr>
@@ -57,17 +59,23 @@
                 </table>
                 <div id="reportNote" class="warning l">
                     <ul>
-                        <li>Security Code (SC) must be:
+                        <li>
+                            Security Code (SC) must be:
                             <ul>
                                 <li>* Numeric digits only.</li>
                                 <li>* 6 digits from 0-9.</li>
                                 <li>* At least 2 different digits in the SC.</li>
-                                <li>* Not a forward run AND not a backward run number:
+                                <li>
+                                    * Not a forward run AND not a backward run number:
                                     <ul>
-                                        <li>+ A "Forward Run" number is an integer whose digits are all in consecutive, ascending
-                                            order, left to right. </li>
-                                        <li>+ A "Backward Run" number is an integer whose digits are all in consecutive, descending
-                                            order, left to right.</li>
+                                        <li>
+                                            + A "Forward Run" number is an integer whose digits are all in consecutive, ascending
+                                            order, left to right.
+                                        </li>
+                                        <li>
+                                            + A "Backward Run" number is an integer whose digits are all in consecutive, descending
+                                            order, left to right.
+                                        </li>
                                         <li>+ For example: 123456, 456789, 765432, etc. are not allowed.</li>
                                     </ul>
                                 </li>
@@ -80,31 +88,32 @@
             </div>
         </div>
     </div>
+    @Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
+    @{
+        string customerName = string.Empty;
+        int customerId = 0;
+        int roleId = -1;
+        if (Request["CustomerName"] != null)
+        {
+            customerName = CastAide.AsString(Request["CustomerName"]);
+        }
+
+        if (Request["CustomerId"] != null)
+        {
+            customerId = CastAide.AsInt32(Request["CustomerId"]);
+        }
+
+        if (Request["RoleId"] != null)
+        {
+            roleId = CastAide.AsInt32(Request["RoleId"]);
+        }
+
+    }
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var customerName = '@customerName';
+        var customerId = '@customerId';
+        var roleId = '@roleId';
+    </script>
 </body>
-@{
-    string customerName = string.Empty;
-    int customerId = 0;
-    int roleId = -1;
-    if (Request["CustomerName"] != null)
-    {
-        customerName = CastAide.AsString(Request["CustomerName"]);
-    }
-
-    if (Request["CustomerId"] != null)
-    {
-        customerId = CastAide.AsInt32(Request["CustomerId"]);
-    }
-
-    if (Request["RoleId"] != null)
-    {
-        roleId = CastAide.AsInt32(Request["RoleId"]);
-    }
-    
-}
-<script type="text/javascript">
-    window.rootUrl = '@Url.Content("~")';
-    var customerName = '@customerName';
-    var customerId = '@customerId';
-    var roleId = '@roleId';
-</script>
 </html>

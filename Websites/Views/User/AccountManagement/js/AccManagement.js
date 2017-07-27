@@ -582,6 +582,8 @@ accManager.accounts = {
         }
     },
     addAcc: function () {
+        changePwd();
+
         var userName = $("#tbxUserNameNewAcc").val();
         var firstName = $("#tbxFirstNameNewAcc").val();
         var lastName = $("#tbxLastNameNewAcc").val();
@@ -628,7 +630,8 @@ accManager.accounts = {
             firstName: accManager.utils.encodeSpecifiedCharacter(firstName),
             lastName: accManager.utils.encodeSpecifiedCharacter(lastName),
             groupId: deptId,
-            password: password
+            password: password,
+            code: $('#code').val()
         };
 
         accManager.utils.blockUI();

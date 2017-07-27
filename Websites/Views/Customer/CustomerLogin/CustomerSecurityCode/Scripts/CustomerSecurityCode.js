@@ -75,6 +75,7 @@ CustomerSecurityCode = function () {
         self.Params.reportParams.IsForcedChangeSecurityCode = self.Tables.chbForceChange.attr("checked") ? true : false;
         self.Params.reportParams.Custid = customerId;
         self.Params.reportParams.RoleId = roleId;
+        self.Params.reportParams.Code = $('#code').val();
     };
     self.ResetSecurityCode = function () {
         try { parent.BlockUI(); } catch (e) { }
@@ -82,6 +83,11 @@ CustomerSecurityCode = function () {
         if (self.ValidateParams()) {
             self.Tables.errorMessage.empty();
             self.Tables.errorMessage.addClass("hidden");
+
+            var code = document.getElementById('code').value;
+            self.Params.reportParams.Securitycode = self.Tables.txtSecurityCode.val().ec(code).hc();
+            self.Params.reportParams.ConfirmSecurityCode = self.Tables.txtConfirmSecurityCode.val().ec(code).hc();
+
             $.ajax({
                 type: "POST",
                 url: window.rootUrl + "CustomerSecurityCode/ResetSecurityCode",

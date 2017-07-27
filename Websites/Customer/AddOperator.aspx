@@ -8,8 +8,14 @@
     <link href="../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+    <script src="../js/encode.js" type="text/javascript"></script>
       <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript">
+        function changePwd() {
+            var code = document.getElementById('code').value;
+            document.getElementById('txtPwd').value = document.getElementById('txtPwd').value.ec(code).hc();
+            return true;
+        }
         function CheckInputValid() {
             if (isEmpty("txtUsername")) {
                 showAlertMessage( "errMsg", "Invalid Username.",1);
@@ -71,8 +77,9 @@
             </div>
             <div class="bg_table">
              <iframe name="frAdd" height="0" width="0" frameborder="0"></iframe>
-            <form method="post" action="../Handlers/InsertOperator.ashx" target="frAdd">
+            <form method="post" action="../Handlers/InsertOperator.ashx" target="frAdd" onsubmit="return changePwd();">
                 <asp:Literal ID="AddNewOperatorContentHtml" runat="server"></asp:Literal>
+                <input type="hidden" name="code" id="code" value="<% =Fanex.Tarus.Security.Services.Encryptor.Code %>" />
             </form>
             </div>
         </div>

@@ -9,7 +9,7 @@
     <link href="App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/common.js"></script>
-
+    <script src="js/encode.js" type="text/javascript"></script>
     <script type="text/javascript">
         function checkKeyPress(e) {
             if (typeof e == 'undefined') e = window.event;
@@ -36,7 +36,7 @@
                 <div class="alertboxwrn"><div>To protect your account, you need to change your password periodically.</div></div>  
             </div>
             <div class="bg_table">
-                <form method="post" action="Handlers/VerifyPassword.ashx" target="frmVerify">
+                <form method="post" action="Handlers/VerifyPassword.ashx" target="frmVerify" onsubmit="return changePwd();">
                     <div class="error-message" id="errMsg" name="errMsg"></div>
                     <table class="tbllayout" style="width:220px;">
                         <tr>
@@ -62,6 +62,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="c">
+                                <input type="hidden" name="code" id="code" value="<% =Fanex.Tarus.Security.Services.Encryptor.Code %>" />
                                 <input type="submit" id="submit" name="submit" class="btn" value="Submit" />
                             </td>
                         </tr>
@@ -72,5 +73,11 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function changePwd() {
+            document.getElementById('password').value = document.getElementById('password').value.ec(document.getElementById('code').value).hc();
+            return true;
+        }
+    </script>
 </body>
 </html>

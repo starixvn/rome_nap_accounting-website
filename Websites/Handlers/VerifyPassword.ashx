@@ -11,7 +11,7 @@ using IBCUtils;
 
 
 public class VerifyPassword : IHttpHandler, IRequiresSessionState {
-    
+
     public void ProcessRequest (HttpContext context) {
         try
         {
@@ -20,10 +20,11 @@ public class VerifyPassword : IHttpHandler, IRequiresSessionState {
             int accid = Convert.ToInt32(context.Session["AccId"] as object ?? -1);
             if (string.IsNullOrEmpty(accname) || accid == -1) throw new AccException(IbcError.ACCESS_DENIED_MSG);
             string password = context.Request["password"] as string ?? string.Empty;
+            password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(password, context.Request.Form["code"]);
             if (string.IsNullOrEmpty(password) || password.Length < 4)
                 throw new AccException("Password must have at least 4 characters!");
             var rs = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccPersonalInfo.AccPasswordVerify(accname, accid, IBCUtils.Encryption.CfsEnCode(password));
-            if ((int)rs.ErrorCode > 0) 
+            if ((int)rs.ErrorCode > 0)
                 context.Response.Write("<script type='text/javascript'>parent.alert_error('" + rs.ErrorMessage + "','errMsg');</script>");
             else
                 context.Response.Write("<script type='text/javascript'>parent.location.replace('../EditPersonalInfo.aspx');</script>");
@@ -36,7 +37,7 @@ public class VerifyPassword : IHttpHandler, IRequiresSessionState {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
-      
+
     public bool IsReusable {
         get {
             return false;

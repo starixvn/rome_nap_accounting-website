@@ -25,6 +25,8 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 
         public int RoleId { get; set; }
 
+        public string Code { get; set; }
+
         public string Language
         {
             get

@@ -10,9 +10,16 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../js/common.js"></script>
-
+    <script src="../js/encode.js"></script>
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
     <script type="text/javascript">
+        function changePwd() {
+            var code = document.getElementById('code').value;
+            document.getElementById('password').value = document.getElementById('password').value.ec(code).hc();
+            document.getElementById('confirm').value = document.getElementById('confirm').value.ec(code).hc();
+            return true;
+        }
+
         function validation() {
             try {
                 var pass =document.getElementById('password').value.trim();
@@ -37,7 +44,7 @@
     </script>
 </head>
 <body>    
-    <form method="post" action="ResetPassword.aspx">
+    <form method="post" action="ResetPassword.aspx" onsubmit="return changePwd();">
      <div class="main" style="width:400px;">
         <div class="maincontent">
             <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
@@ -57,6 +64,7 @@
                 <div id="clear2">
                 </div>
                 <asp:literal ID="sBody" runat="server"></asp:literal>
+                <input type="hidden" id="code" name="code" value="<% =Fanex.Tarus.Security.Services.Encryptor.Code %>" />
             </div>
         </div>
     </div>  

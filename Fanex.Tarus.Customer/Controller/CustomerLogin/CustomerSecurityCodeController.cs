@@ -41,6 +41,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerLogin
         [HttpPost, AuthenticateHost]
         public JsonResult ResetSecurityCode(ResetSecurityCodeCriteria criteria)
         {
+            criteria.Securitycode = Fanex.Tarus.Security.Services.Encryptor.Decrypt(criteria.Securitycode, criteria.Code);
             var result = this._reportService.ResetSecurityCode(criteria);
             return base.Json(result, JsonRequestBehavior.AllowGet);
         }

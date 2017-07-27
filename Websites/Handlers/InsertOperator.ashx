@@ -38,7 +38,7 @@ public class InsertOperator : BaseHandler {
                 hash.Add("email", context.Request["txtEmail"]); //nvarchar
                 hash.Add("creator", context.Session["AccId"]); //int
                 hash.Add("username", context.Request["txtUsername"].Trim()); //nvarchar
-                hash.Add("userpwd", IBCUtils.Encryption.CfsEnCode(context.Request["txtPwd"].Trim())); //nvarchar
+                hash.Add("userpwd", IBCUtils.Encryption.CfsEnCode(Fanex.Tarus.Security.Services.Encryptor.Decrypt(context.Request["txtPwd"].Trim(), context.Request["code"]))); //nvarchar
                 hash.Add("roleid", context.Request["listRole"]); //int
                 hash.Add("returnerrcode",1); //int
                 hash.Add("errcode", 0); //int

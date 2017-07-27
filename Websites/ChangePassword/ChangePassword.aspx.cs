@@ -56,10 +56,12 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             string txtConfirmPass = Request["txtConfirmPass"];
             if (txtPass == null)
             {
-                html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}" }, new string[] { strUsername, strCustID }));
+                html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}", "{code}" }, new string[] { strUsername, strCustID, Fanex.Tarus.Security.Services.Encryptor.Code }));
                 content.Text = html.ToString();
                 return;
             }
+            txtPass = Fanex.Tarus.Security.Services.Encryptor.Decrypt(txtPass, Request.Form["code"]);
+            txtConfirmPass = Fanex.Tarus.Security.Services.Encryptor.Decrypt(txtConfirmPass, Request.Form["code"]);
             string encodepwd = IBCUtils.Encryption.CfsEnCode(txtPass);
             if (txtPass.Length == 0)
                 str = AlertMessage.GetMsg("Sorry, password cannot be empty.", AlertMessage.MsgType.Error);
@@ -103,7 +105,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 str += "<script>afterUpdate(false,2000);</script>";
             }
             string strUname = strUsername;
-            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}" }, new string[] { strUname, strCustID }));
+            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}", "{code}" }, new string[] { strUname, strCustID, Fanex.Tarus.Security.Services.Encryptor.Code }));
             content.Text = html.ToString();
             msg = str;
         }

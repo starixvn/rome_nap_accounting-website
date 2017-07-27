@@ -102,12 +102,13 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// <returns>Return a result message</returns>
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult DoAddNewMaster(string stringcustomer, RequestContext currentContext)
+        public JsonResult DoAddNewMaster(string stringcustomer, RequestContext currentContext, string code)
         {
             Fanex.PTEngine.BusinessObjects.Result result;
             try
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                customer.Password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(customer.Password, code);
                 result = CheckSpecialSitePermission(AppSession.AccId, null, customer.SRecommend);
                 if (result.ErrorCode != "0")
                 {

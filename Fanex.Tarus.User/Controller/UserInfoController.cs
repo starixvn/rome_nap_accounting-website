@@ -69,8 +69,9 @@ namespace Fanex.Tarus.User.Controller
             return Json(_userInfoService.AddDept(name, description), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddAccount(string userName, string firstName, string lastName, int groupId, string password)
+        public JsonResult AddAccount(string userName, string firstName, string lastName, int groupId, string password, string code)
         {
+            password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(password, code);
             return Json(_userInfoService.AddAccount(userName, firstName, lastName, groupId, password), JsonRequestBehavior.AllowGet);
         }
 
