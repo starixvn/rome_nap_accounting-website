@@ -8,6 +8,7 @@
   @if (!string.IsNullOrEmpty(combinationTypeComboNames))
   {
     @Html.Raw(combinationTypeComboNames)
+    <div class="line"></div>
   }
   
   @foreach (TicketDetail ticketdetail in Model)

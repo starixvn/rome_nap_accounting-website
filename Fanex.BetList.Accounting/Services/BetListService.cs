@@ -839,7 +839,7 @@ namespace Fanex.BetList.Accounting.Services
                                 systempParlayModel.SystemParlayChoice);
 
                             firstTicketDetail.ChoiceHtml += string.Format(
-                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div>",
+                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
                                 combinationTypeComboNames
                             );
                         }
