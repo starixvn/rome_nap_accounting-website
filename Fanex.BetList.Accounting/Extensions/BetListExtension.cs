@@ -105,6 +105,7 @@ namespace Fanex.BetList.Accounting.Extensions
                         break;
 
                     case BetTypeContants.SystemParlay:
+                    case BetTypeContants.MixParlayBetRadarVirtualSports:
                         statusHtml = status;
                         break;
                     default:
