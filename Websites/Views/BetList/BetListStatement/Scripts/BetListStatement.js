@@ -106,28 +106,35 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
 	var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
 
-	if ($.trim(divParlay.html()) === "") {
-		try { parent.BlockUI(); } catch (e) { }
-		var params = [
-			"transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
-		];
+	if (divParlay.css("display") === "none") {
+	    if ($.trim(divParlay.html()) === "") {
+	        try { parent.BlockUI(); } catch (e) { }
+	        var params = [
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+	        ];
 
-		$.ajax({
-			type: "POST",
-			url: window.rootUrl + "BetList/GetMixParlayDetail",
-			data: params.join(""),
-			success: function (result) {
-			    divParlay.html(result).css("display", "block");
-				divCombinationOfferName.addClass("hide");
-				$("#BetlistStatement").gridScroller(gridOpts);
-			},
-			error: function () {
-				try { parent.jQuery.unblockUI(); } catch (e) { }
-			},
-			complete: function () {
-				try { parent.jQuery.unblockUI(); } catch (e) { }
-			}
-		});
+	        $.ajax({
+	            type: "POST",
+	            url: window.rootUrl + "BetList/GetMixParlayDetail",
+	            data: params.join(""),
+	            success: function (result) {
+	                divParlay.html(result).css("display", "block");
+	                divCombinationOfferName.addClass("hide");
+	                $("#BetlistStatement").gridScroller(gridOpts);
+	            },
+	            error: function () {
+	                try { parent.jQuery.unblockUI(); } catch (e) { }
+	            },
+	            complete: function () {
+	                try { parent.jQuery.unblockUI(); } catch (e) { }
+	            }
+	        });
+	    }
+	    else {
+	        divParlay.css("display", "block");
+	        divCombinationOfferName.toggleClass("hide");
+	        $("#BetlistStatement").gridScroller(gridOpts);
+	    }
 	}
 	else {
 	    divParlay.css("display", "none");
