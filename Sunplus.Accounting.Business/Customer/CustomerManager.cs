@@ -3211,8 +3211,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        #endregion private functions
-
         public Result UpdateCustomerSite(int custId, string newSite)
         {
             Result result;
