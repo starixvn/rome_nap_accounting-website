@@ -104,7 +104,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 
 	var divChoiceRight = $("#choice_right_" + transId);
 	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
-	var divParlay = divChoiceRight.find(".parlay_" + transId);
+	var divParlay = divChoiceRight.find("#divEvent_" + transId);
 
 	if ($.trim(divParlay.html()) === "") {
 		try { parent.BlockUI(); } catch (e) { }

@@ -379,7 +379,7 @@ function showCombMP(transId, transIndex, refNo) {
 function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
 	var divChoiceRight = $("#choice_right_" + transId);
 	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
-	var divParlay = divChoiceRight.find(".parlay_" + transId);
+	var divParlay = $("#divEvent_" + transId);
 
 	if ($.trim(divParlay.html()) === "") {
 		try { parent.BlockUI(); } catch (e) { }
