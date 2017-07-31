@@ -81,9 +81,9 @@
                     @Html.Raw(betdetail.ChoiceHtml)
                 </div>
                 <div>
-                    @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
+                    @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29 || betdetail.Ticket.BetTypeId == 2799)
                     {
-                        var betcheck = betdetail.Ticket.BetTypeId == 29 ? betdetail.Ticket.BetCheck : null;
+                        var betcheck = (betdetail.Ticket.BetTypeId == 29 || betdetail.Ticket.BetTypeId == 2799) ? betdetail.Ticket.BetCheck : null;
                         var html = Html.Action("GetMixParlayDetail", "BetList", new
                         {
                             transId = betdetail.Ticket.TransId,
