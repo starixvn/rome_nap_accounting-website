@@ -275,7 +275,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 			url: window.rootUrl + "BetList/GetMixParlayDetail",
 			data: params.join(""),
 			success: function (result) {
-				divParlay.html(result);
+			    divParlay.html(result).css("display", "block");
 				divCombinationOfferName.addClass("hide");
 				$("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
 			},
@@ -288,7 +288,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 		});
 	}
 	else {
-		divParlay.toggleClass("hide");
+	    divParlay.css("display", "none");
 		divCombinationOfferName.toggleClass("hide");
 		$("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
 	}
