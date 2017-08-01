@@ -222,7 +222,7 @@ namespace Fanex.BetList.Accounting.Services
             return 0;
         }
 
-        public static bool IsBetradarVirtualSports(int betTypeId)
+        public static bool IsVirtualSports2(int betTypeId)
         {
             return 2700 <= betTypeId && betTypeId <= 2899;
         }

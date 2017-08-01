@@ -1543,10 +1543,10 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(ReportService.GetNG2SportType(betTypeId));
             }
-            else if (ReportService.IsBetradarVirtualSports(betTypeId))
+            else if (ReportService.IsVirtualSports2(betTypeId))
             {
-                const int VirtualSportsProductId = 5;
-                sportName = string.Format("{0} {1}", Labels.Betradar, GetProductName(VirtualSportsProductId));
+                const int VirtualSports2ProductId = 27;
+                sportName = GetProductName(VirtualSports2ProductId);
             }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";

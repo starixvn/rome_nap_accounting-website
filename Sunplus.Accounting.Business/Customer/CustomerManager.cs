@@ -335,7 +335,7 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isSyncNG2Upline = true;
 
                             bool isHideVirtualSports = true;
-                            bool isHideBetradarVirtualSports = true;
+                            bool isHideVirtualSports2 = true;
 
                             bool hideEnableAndEditFishingWorld = true;
 
@@ -388,7 +388,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                             break;
                                         case "27":
-                                            isHideBetradarVirtualSports = (CastAide.AsBoolean(row["IsHiddenUpline"]) && roleId < 4) || !WebSettings.EnableVirtualSports;
+                                            isHideVirtualSports2 = (CastAide.AsBoolean(row["IsHiddenUpline"]) && roleId < 4) || !WebSettings.EnableVirtualSports;
                                             break;
                                     }
                                 }
@@ -1020,7 +1020,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsShowCockFighting = isShowCockFighting,
                                     IsHideCricket = isHideCricketSettingLink,
                                     IsShowVirtualSport = !isHideVirtualSports,
-                                    IsShowBetradarVirtualSport = !isHideBetradarVirtualSports,
+                                    IsShowVirtualSport2 = !isHideVirtualSports2,
                                     ParentId = parentId,
                                     RoleId = roleId,
                                     CustId = custId,
@@ -1856,10 +1856,10 @@ namespace Sunplus.Accounting.Business.Customer
                                                sg,
                                                ref htmlcontent,
                                                isManageCustomerAccess,
-                                               "BetradarVirtualSports",
-                                               renderLeftPanelParameter.IsShowBetradarVirtualSport,
+                                               "VirtualSports2",
+                                               renderLeftPanelParameter.IsShowVirtualSport2,
                                                renderLeftPanelParameter,
-                                               "Update Betradar Virtual Sports Status",
+                                               "Update Virtual Sports 2 Status",
                                                27);
                             break;
                     }

@@ -38,7 +38,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowVirtualSport { get; set; }
 
-        public bool IsShowBetradarVirtualSport { get; set; }
+        public bool IsShowVirtualSport2 { get; set; }
 
         public int ParentId { get; set; }
 
