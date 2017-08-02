@@ -1008,7 +1008,7 @@ namespace Sunplus.Accounting.Business.BetList
 
         #region combination mp
 
-        public string GenCombinationMP(int custid, string refno, double transid, string betid, DateTime movebetday, DateTime balanceupday)
+        public string GenCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday)
         {
             double outStanding = 0;
             var ds = DataAccess.IBCDLL.Accounting.Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);

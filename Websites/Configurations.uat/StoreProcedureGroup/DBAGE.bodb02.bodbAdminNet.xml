@@ -61,7 +61,7 @@
     <Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Bet List - Result">
-    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details_uat3" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.bodb02.bodbAdminNet" />
