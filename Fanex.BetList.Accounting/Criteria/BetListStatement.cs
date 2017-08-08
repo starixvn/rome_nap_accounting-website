@@ -31,7 +31,7 @@ namespace Fanex.BetList.Accounting.Criteria
         public string Language { get; set; }
 
         [SpParam(SqlParamName = "transid")]
-        public int TransId { get; set; }
+        public long TransId { get; set; }
 
         public DateTime MoveBetsDay { get; set; }
 

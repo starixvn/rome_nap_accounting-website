@@ -220,12 +220,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        public static DataSet BetList_SelDetailCombinationMP(int custid, string refno, double transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
+        public static DataSet BetList_SelDetailCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
         {
             var result = new DataSet();
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details",600))
+                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details", 600))
                 {
                     var p = new Hashtable();
                     p.Add("refno", refno);
@@ -453,7 +453,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("transid", transID);
                 p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-                
+
                 using (ObjectDb db = new ObjectDb("Age_BetList_SelMatchResultFinance", 600))
                 {
                     db.AssignParamValues(p);
@@ -668,7 +668,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 var p = new Hashtable { { "matchid", matchID } };
-                
+
                 DbResult dbResult = null;
                 using (ObjectDb db = new ObjectDb("SelMatchResultNumberGame", 600))
                 {
@@ -694,7 +694,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataTable();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult",600))
+                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult", 600))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchID);
                     objDB.AddInParameter("resourceid", DbType.String, resourceId);

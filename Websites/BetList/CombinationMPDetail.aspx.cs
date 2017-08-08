@@ -22,7 +22,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
     {
         BetListMain betlist = new BetListMain();
         string refno = CastAide.AsString(Request.QueryString["refno"]);
-        double transid = CastAide.AsDouble(Request.QueryString["transid"]);
+        string transid = CastAide.AsString(Request.QueryString["transid"]);
         string betid = CastAide.AsString(Request.QueryString["betid"]);
 
         int custId = Request.QueryString["custid"] != null ? CastAide.AsInt32(Request.QueryString["custid"]) : CastAide.AsInt32(HttpContext.Current.Session["CustId"]);
