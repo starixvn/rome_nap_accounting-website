@@ -1015,6 +1015,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Virtual Rate value from Basketball HDP Live to other sports/bettypes..
+        /// </summary>
+        public static string VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP {
+            get {
+                return ResourceManager.GetString("VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Virtual Rate value from Handicap bet type to others.
         /// </summary>
         public static string VirtualRate_CopyFromHDP {

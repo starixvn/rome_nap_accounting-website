@@ -239,15 +239,25 @@ function OpenEditVirtualExRate(id, uname, type) {
             username: uname,
             roleName: type
         });
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
+function ViewVRHistory(CustID, UserName) {
+    var url = 'VirtualRate/HistoryLogView?' +
+        $.param({
+            CustId: CustID,
+            Username: UserName
+        });
     showPopup(
-        'Edit Virtual Rate',
+        'VIRTUAL RATE UPDATE HISTORY (' + UserName + ')',
         url,
         0,
         0,
-        850,
-        750,
-        true,
-        2000,
+        960,
+        600,
+        false,
+        0,
         null);
 }
 
