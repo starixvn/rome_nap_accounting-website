@@ -271,8 +271,8 @@
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core, Version=2.0.8.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.8.5\lib\net40\Fanex.Result.Core.dll</HintPath>
+    <Reference Include="Fanex.Result.Core, Version=2.0.8.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.8.4\lib\net40\Fanex.Result.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -283,8 +283,8 @@
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.0.10\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.0.8.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.8.5\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.0.8.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.0.8.4\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -588,8 +588,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.7-lottery04\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TplCore, Version=1.0.4854.17253, Culture=neutral, processorArchitecture=MSIL">
