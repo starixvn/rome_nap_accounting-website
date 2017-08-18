@@ -3194,6 +3194,8 @@ namespace Sunplus.Accounting.Business.Customer
             return jsscript;
         }
 
+        #endregion private functions
+
         public static string GetCustName(int roleId)
         {
             switch (roleId)
