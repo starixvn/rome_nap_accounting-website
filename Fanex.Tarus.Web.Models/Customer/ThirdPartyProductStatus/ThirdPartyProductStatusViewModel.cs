@@ -18,6 +18,8 @@ namespace Fanex.Tarus.Web.Models.Customer.ThirdPartyProductStatus
 
         public bool GroupBySport { get; set; }
 
+        public bool IsDeposit { get; set; }
+
         public string RoleName
         {
             get

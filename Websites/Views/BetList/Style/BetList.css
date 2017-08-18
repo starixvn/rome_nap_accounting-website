@@ -103,7 +103,7 @@ div.match + div.league {
 .detail .detail-link {
 	color: #755200;
 }
-.combinationLink {
+.combinationLink, .vs-mix-parlay {
     line-height: 20px;
 }
 .scoremap {

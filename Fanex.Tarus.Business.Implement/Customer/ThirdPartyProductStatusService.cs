@@ -16,7 +16,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
         private const int KenoProductId = 8;
         private const int RacingProductId = 2;
 
-        public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
+        public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId, bool isDeposit = false)
         {
             return new ThirdPartyProductStatusViewModel()
             {
@@ -25,7 +25,13 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 RoleId = roleId,
                 HasCheckAll = productId == KenoProductId,
                 GroupBySport = productId == RacingProductId,
-                ProductStatusList = statusSettingService.GetProductStatus(custId, productId, roleId)
+                ProductStatusList = statusSettingService.GetProductStatus(new GetProductStatusRequest() {
+                    CustId = custId,
+                    ProductId = productId,
+                    RoleId = roleId,
+                    IsDeposit = isDeposit
+                }),
+                IsDeposit = isDeposit
             };
         }
 
@@ -36,17 +42,19 @@ namespace Fanex.Tarus.Business.Implement.Customer
             int userId,
             int systemId,
             string ip,
-            List<ProductStatus> productStatus)
+            List<ProductStatus> productStatus,
+            bool isDeposit = false)
         {
-            return statusSettingService.UpdateProductStatus(
-                custId,
-                subAccId,
-                0,
-                productId,
-                userId,
-                systemId,
-                ip,
-                productStatus);
+            return statusSettingService.UpdateProductStatus(new UpdateProductStatusRequest() {
+                CustId = custId,
+                SubAccId = subAccId,
+                ProductId = productId,
+                UserId = userId,
+                SystemId = systemId,
+                Ip = ip,
+                ProductStatus = productStatus,
+                IsDeposit = isDeposit
+            });
         }
     }
 }

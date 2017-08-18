@@ -3765,4 +3765,7 @@
   <data name="Disable219_1011" xml:space="preserve">
     <value>Disabled Fishing World</value>
   </data>
+  <data name="Disable180_1201" xml:space="preserve">
+    <value>Disable Virtual Sports</value>
+  </data>
 </root>

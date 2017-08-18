@@ -339,49 +339,36 @@ function showDetail(id) {
 }
 
 function showMP(transid, refno) {
-    if ($("#td_right_" + transid).hasClass("isClient")) {
-        if (!$("#td_right_" + transid).hasClass("isShow")) {
-            $(".parlay_" + transid).each(function () {
-                $(this).hide();
-                var idTdParent = $(this).parent().parent().attr('id');
-                $("#" + idTdParent).addClass("isShow");
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    var divEvent = $("#divEvent_" + transid);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetList/GetMixParlayDetail",
+                data: "transid=" + transid + "&refno=" + refno,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
             });
         }
         else {
-            $(".parlay_" + transid).each(function () {
-                $(this).show();
-                $("#choice_left_" + transid).css("height", "");
-                var idTdParent = $(this).parent().parent().attr('id');
-                $("#" + idTdParent).removeClass("isShow");
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-            });
+            divEvent.css("display", "");
+            $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
         }
     }
     else {
-        try { parent.BlockUI(); } catch (e) { }
-        $.ajax({
-            type: "POST",
-            url: window.rootUrl + "BetList/GetMixParlayDetail",
-            data: "transid=" + transid + "&refno=" + refno,
-            success: function (result) {
-                $(".parlay_" + transid + ":visible").each(function () {
-                    $(this).html(result);
-                    var id = $(this).parent().attr('id');
-                    $("#" + id).css("height", "");
-
-                    var idTdParent = $(this).parent().parent().attr('id');
-                    $("#" + idTdParent).addClass("isClient");
-                });
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-            },
-            error: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+        divEvent.css("display", "none");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
     }
 }
 
@@ -392,33 +379,40 @@ function showCombMP(transId, transIndex, refNo) {
 function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
 	var divChoiceRight = $("#choice_right_" + transId);
 	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
-	var divParlay = divChoiceRight.find(".parlay_" + transId);
+	var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
 
-	if ($.trim(divParlay.html()) === "") {
-		try { parent.BlockUI(); } catch (e) { }
-		var params = [
-			"transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
-		];
+	if (divParlay.css("display") === "none") {
+	    if ($.trim(divParlay.html()) === "") {
+	        try { parent.BlockUI(); } catch (e) { }
+	        var params = [
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+	        ];
 
-		$.ajax({
-			type: "POST",
-			url: window.rootUrl + "BetList/GetMixParlayDetail",
-			data: params.join(""),
-			success: function (result) {
-				divParlay.html(result);
-				divCombinationOfferName.addClass("hide");
-				$("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-			},
-			error: function () {
-				try { parent.jQuery.unblockUI(); } catch (e) { }
-			},
-			complete: function () {
-				try { parent.jQuery.unblockUI(); } catch (e) { }
-			}
-		});
+	        $.ajax({
+	            type: "POST",
+	            url: window.rootUrl + "BetList/GetMixParlayDetail",
+	            data: params.join(""),
+	            success: function (result) {
+	                divParlay.html(result).css("display", "block");
+	                divCombinationOfferName.addClass("hide");
+	                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+	            },
+	            error: function () {
+	                try { parent.jQuery.unblockUI(); } catch (e) { }
+	            },
+	            complete: function () {
+	                try { parent.jQuery.unblockUI(); } catch (e) { }
+	            }
+	        });
+	    }
+	    else {
+	        divParlay.css("display", "block");
+	        divCombinationOfferName.toggleClass("hide");
+	        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+	    }
 	}
 	else {
-		divParlay.toggleClass("hide");
+	    divParlay.css("display", "none");
 		divCombinationOfferName.toggleClass("hide");
 		$("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
 	}

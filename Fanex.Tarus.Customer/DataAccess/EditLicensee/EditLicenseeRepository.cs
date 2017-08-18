@@ -795,10 +795,10 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 updateSettingsDictionary,
                 ref hashtableParams);
 
-            GetUpdateSettingsHashTableParams_VirtualSports(
-                criteria,
-                updateSettingsDictionary,
-                ref hashtableParams);
+            //GetUpdateSettingsHashTableParams_VirtualSports(
+            //    criteria,
+            //    updateSettingsDictionary,
+            //    ref hashtableParams);
 
             return hashtableParams;
         }

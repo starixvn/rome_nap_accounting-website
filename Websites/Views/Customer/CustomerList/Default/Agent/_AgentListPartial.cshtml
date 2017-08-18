@@ -188,9 +188,9 @@
                         <li class="canchange" onclick="AgentList.liveCasinoSetting('@agentItem.ChildID', '0', '@Model.ParentId');">
                             Live Casino </li>
                     }
-                    @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
+                    @if (!agentItem.IsHideVirtualSports)
                     {
-                        <li class="canchange" onclick="AgentList.virtualSportsSetting('@agentItem.ChildID', '@Model.ParentId', '2');">
+                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 5, 'Virtual Sports');">
                             Virtual Sports </li>
                     }
                     @if (CastAide.AsBoolean(hash["allowKeno"]))

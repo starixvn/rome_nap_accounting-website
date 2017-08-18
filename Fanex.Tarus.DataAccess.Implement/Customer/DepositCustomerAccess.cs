@@ -228,42 +228,42 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             #endregion Racing
             #region VirtualSports
 
-            var virtualSports = VirtualSportsSection.Instance.Sports;
+            //var virtualSports = VirtualSportsSection.Instance.Sports;
 
-            paramName = "disablevirtualsports";
-            hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-            var virtualSportsParams = "<products>";
-            foreach (VirtualSportsElement sport in virtualSports)
-            {
-                if (!sport.Active)
-                {
-                    continue;
-                }
+            //paramName = "disablevirtualsports";
+            //hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+            //var virtualSportsParams = "<products>";
+            //foreach (VirtualSportsElement sport in virtualSports)
+            //{
+            //    if (!sport.Active)
+            //    {
+            //        continue;
+            //    }
 
-                sportId = sport.Id;
-                if (!dictionaryParams.ContainsKey("v" + sportId + "maxbet"))
-                {
-                    continue;
-                }
+            //    sportId = sport.Id;
+            //    if (!dictionaryParams.ContainsKey("v" + sportId + "maxbet"))
+            //    {
+            //        continue;
+            //    }
 
-                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
-                    " MaxBet=\"{1}\"" +
-                    " MinBet=\"{2}\"" +
-                    " MaxPerMatch=\"{3}\"" +
-                    " sPositionTaking=\"{4}\"" +
-                    " mPositionTaking=\"{5}\"" +
-                    " aPositionTaking=\"{6}\"></product>",
-                    sportId,
-                    dictionaryParams["v" + sportId + "maxbet"],
-                    dictionaryParams["v" + sportId + "minbet"],
-                    dictionaryParams["v" + sportId + "maxpermatch"],
-                    dictionaryParams["v" + sportId + "spositiontaking"],
-                    dictionaryParams["v" + sportId + "mpositiontaking"],
-                    dictionaryParams["v" + sportId + "apositiontaking"]);
-            }
+            //    virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+            //        " MaxBet=\"{1}\"" +
+            //        " MinBet=\"{2}\"" +
+            //        " MaxPerMatch=\"{3}\"" +
+            //        " sPositionTaking=\"{4}\"" +
+            //        " mPositionTaking=\"{5}\"" +
+            //        " aPositionTaking=\"{6}\"></product>",
+            //        sportId,
+            //        dictionaryParams["v" + sportId + "maxbet"],
+            //        dictionaryParams["v" + sportId + "minbet"],
+            //        dictionaryParams["v" + sportId + "maxpermatch"],
+            //        dictionaryParams["v" + sportId + "spositiontaking"],
+            //        dictionaryParams["v" + sportId + "mpositiontaking"],
+            //        dictionaryParams["v" + sportId + "apositiontaking"]);
+            //}
 
-            virtualSportsParams += "</products>";
-            hashParams.Add("virtualsportlist", virtualSportsParams);
+            //virtualSportsParams += "</products>";
+            //hashParams.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
 
@@ -453,39 +453,39 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             #endregion Racing
             #region VirtualSports
 
-            var virtualSports = VirtualSportsSection.Instance.Sports;
+            //var virtualSports = VirtualSportsSection.Instance.Sports;
 
-            paramName = "disablevirtualsports";
-            hashParam.Add(paramName, dictionaryParam[paramName]);
-            var virtualSportsParams = "<products>";
-            foreach (VirtualSportsElement sport in virtualSports)
-            {
-                if (!sport.Active)
-                {
-                    continue;
-                }
+            //paramName = "disablevirtualsports";
+            //hashParam.Add(paramName, dictionaryParam[paramName]);
+            //var virtualSportsParams = "<products>";
+            //foreach (VirtualSportsElement sport in virtualSports)
+            //{
+            //    if (!sport.Active)
+            //    {
+            //        continue;
+            //    }
 
-                var betTypes = sport.Bettype;
-                sportId = sport.Id;
+            //    var betTypes = sport.Bettype;
+            //    sportId = sport.Id;
 
-                virtualSportsParams += string.Format("<product SportType = \"{0}\"" +
-                    " MaxBet=\"{1}\"" +
-                    " MinBet=\"{2}\"" +
-                    " MaxPerMatch=\"{3}\"" +
-                    " sPositionTaking=\"{4}\"" +
-                    " mPositionTaking=\"{5}\"" +
-                    " aPositionTaking=\"{6}\"></product>",
-                    sportId,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0);
-            }
+            //    virtualSportsParams += string.Format("<product SportType = \"{0}\"" +
+            //        " MaxBet=\"{1}\"" +
+            //        " MinBet=\"{2}\"" +
+            //        " MaxPerMatch=\"{3}\"" +
+            //        " sPositionTaking=\"{4}\"" +
+            //        " mPositionTaking=\"{5}\"" +
+            //        " aPositionTaking=\"{6}\"></product>",
+            //        sportId,
+            //        0,
+            //        0,
+            //        0,
+            //        0,
+            //        0,
+            //        0);
+            //}
 
-            virtualSportsParams += "</products>";
-            hashParam.Add("virtualsportlist", virtualSportsParams);
+            //virtualSportsParams += "</products>";
+            //hashParam.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
 
@@ -1006,19 +1006,19 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         {
             Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
             string paramName;
-            foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
-            {
-                foreach (var param in sportsSettingInfo.SettingInfo)
-                {
-                    paramName = param.Name.ToLower();
-                    if (dictionaryParams.ContainsKey(paramName))
-                    {
-                        continue;
-                    }
+            //foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
+            //{
+            //    foreach (var param in sportsSettingInfo.SettingInfo)
+            //    {
+            //        paramName = param.Name.ToLower();
+            //        if (dictionaryParams.ContainsKey(paramName))
+            //        {
+            //            continue;
+            //        }
 
-                    dictionaryParams.Add(paramName, param.Value);
-                }
-            }
+            //        dictionaryParams.Add(paramName, param.Value);
+            //    }
+            //}
 
             foreach (var betTypeSettingInfo in criteria.KenoBetTypesSettingInfo)
             {
@@ -1037,37 +1037,37 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             return dictionaryParams;
         }
 
-        private void GetUpdateSettingsHashTableParams_VirtualSports(
-            NewLicenseePostParam criteria,
-            Dictionary<string, object> updateSettingsDictionary,
-            ref Hashtable hashtableParams)
-        {
-            string sportId;
-            var virtualSports = criteria.VirtualSportsSettingInfo;
+        //private void GetUpdateSettingsHashTableParams_VirtualSports(
+        //    NewLicenseePostParam criteria,
+        //    Dictionary<string, object> updateSettingsDictionary,
+        //    ref Hashtable hashtableParams)
+        //{
+        //    string sportId;
+        //    var virtualSports = criteria.VirtualSportsSettingInfo;
 
-            var virtualSportsParams = "<products>";
-            foreach (VirtualSportsSettingInfo sport in virtualSports)
-            {
-                sportId = sport.Id;
-                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
-                    " MinBet=\"{1}\"" +
-                    " MaxBet=\"{2}\"" +
-                    " MaxPerMatch=\"{3}\"" +
-                    " sPositionTaking=\"{4}\"" +
-                    " mPositionTaking=\"{5}\"" +
-                    " aPositionTaking=\"{6}\"></product>",
-                    sportId,
-                    updateSettingsDictionary["v" + sportId + "minbet"],
-                    updateSettingsDictionary["v" + sportId + "maxbet"],
-                    updateSettingsDictionary["v" + sportId + "maxpermatch"],
-                    updateSettingsDictionary["v" + sportId + "spositiontaking"],
-                    updateSettingsDictionary["v" + sportId + "mpositiontaking"],
-                    updateSettingsDictionary["v" + sportId + "apositiontaking"]);
-            }
+        //    var virtualSportsParams = "<products>";
+        //    foreach (VirtualSportsSettingInfo sport in virtualSports)
+        //    {
+        //        sportId = sport.Id;
+        //        virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+        //            " MinBet=\"{1}\"" +
+        //            " MaxBet=\"{2}\"" +
+        //            " MaxPerMatch=\"{3}\"" +
+        //            " sPositionTaking=\"{4}\"" +
+        //            " mPositionTaking=\"{5}\"" +
+        //            " aPositionTaking=\"{6}\"></product>",
+        //            sportId,
+        //            updateSettingsDictionary["v" + sportId + "minbet"],
+        //            updateSettingsDictionary["v" + sportId + "maxbet"],
+        //            updateSettingsDictionary["v" + sportId + "maxpermatch"],
+        //            updateSettingsDictionary["v" + sportId + "spositiontaking"],
+        //            updateSettingsDictionary["v" + sportId + "mpositiontaking"],
+        //            updateSettingsDictionary["v" + sportId + "apositiontaking"]);
+        //    }
 
-            virtualSportsParams += "</products>";
-            hashtableParams.Add("virtualsportlist", virtualSportsParams);
-        }
+        //    virtualSportsParams += "</products>";
+        //    hashtableParams.Add("virtualsportlist", virtualSportsParams);
+        //}
 
         private void GetUpdateSettingsHashTableParams_KenoBetTypes(
             NewLicenseePostParam criteria,
@@ -1110,7 +1110,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 hashtableParams.Add(param.Name.ToLower(), param.Value);
             }
 
-            GetUpdateSettingsHashTableParams_VirtualSports(criteria, updateSettingsDictionary, ref hashtableParams);
+            //GetUpdateSettingsHashTableParams_VirtualSports(criteria, updateSettingsDictionary, ref hashtableParams);
             GetUpdateSettingsHashTableParams_KenoBetTypes(criteria, updateSettingsDictionary, ref hashtableParams);
             return hashtableParams;
         }

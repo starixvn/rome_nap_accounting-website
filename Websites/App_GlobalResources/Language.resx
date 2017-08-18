@@ -2396,9 +2396,9 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Disable Virtual Sports</value>
   </data>
   <data name="enableVirtualSports" xml:space="preserve">
-    <value>Enable Virtual Sports</value>
+    <value>Virtual Sports</value>
   </data>
-  <data name="lblDisabledVSUpline" xml:space="preserve">
+  <data name="lblDisabledVirtualSportsUpline" xml:space="preserve">
     <value>Virtual Sports status has been disabled at upline</value>
   </data>
   <data name="virtualsports" xml:space="preserve">
@@ -2535,5 +2535,17 @@ The message is ready to be sent with the attached file {2}.</value>
   </data>
   <data name="warningUnsyncedAllDownline" xml:space="preserve">
     <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
+  </data>
+  <data name="enableVirtualSports2" xml:space="preserve">
+    <value>Virtual Sports 2</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDisabledVirtualSports2Upline" xml:space="preserve">
+    <value>Virtual Sports 2 status has been disabled at upline</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value />
   </data>
 </root>

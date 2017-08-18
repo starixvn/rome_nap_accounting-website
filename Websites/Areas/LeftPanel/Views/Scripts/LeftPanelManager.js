@@ -40,12 +40,14 @@ var LeftPanelManager = function () {
         custName,
         roleId,
         productId,
-        title) {
+        title,
+        isDeposit) {
         var param = {
             custId: custId,
             custName: custName,
             roleId: roleId,
-            productId: productId
+            productId: productId,
+            isDeposit: isDeposit
         };
 
         parent.BlockUI();

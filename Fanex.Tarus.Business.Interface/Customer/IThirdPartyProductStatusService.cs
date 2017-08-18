@@ -9,7 +9,7 @@ namespace Fanex.Tarus.Business.Interface.Customer
 {
     public interface IThirdPartyProductStatusService
     {
-        ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
+        ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId, bool isDeposit = false);
 
         List<ProductStatusResult> Update(
             int custId,
@@ -18,6 +18,7 @@ namespace Fanex.Tarus.Business.Interface.Customer
             int userId,
             int systemId,
             string ip,
-            List<ProductStatus> productStatus);
+            List<ProductStatus> productStatus,
+            bool isDeposit = false);
     }
 }

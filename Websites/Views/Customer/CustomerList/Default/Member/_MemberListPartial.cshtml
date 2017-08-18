@@ -170,10 +170,11 @@
                         <li class="canchange" onclick="MemberList.liveCasinoSetting('@memberItem.ChildID', '0', '@Model.ParentId');">
                             Live Casino </li>
                     }
-                    @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
+                    @if (!memberItem.IsHideVirtualSports)
                     {
-                        <li class="canchange" onclick="MemberList.virtualSportsSetting('@memberItem.ChildID', '@Model.ParentId', '1');">
-                            Virtual Sports </li>
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">
+                            Virtual Sports
+                        </li>
                     }
                     @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {

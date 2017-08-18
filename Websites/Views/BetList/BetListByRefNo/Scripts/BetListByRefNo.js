@@ -29,10 +29,9 @@ BetList.BetListByRefNo = (function ($) {
                 $("#BetlistByRefNo").initGrid(gridOpts);
                 $('#BetlistByRefNo').removeClass("display-none").gridScroller(gridOpts);
                 var divReplace;
-                if ($('div.combinationLink')) {
-                    divReplace = '<span style="color: #0066CC;">' + $('div.combinationLink a:first').html() + '</span>';
-                    $('div.combinationLink a:first').replaceWith(divReplace);
-                    $('div.combinationLink div.offer-name-list').addClass("hidden");
+                var divOfferNameList = $("#choice_right").find(".offer-name-list").first();
+                if (divOfferNameList) {
+                    divOfferNameList.addClass("hidden");
                 }
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';

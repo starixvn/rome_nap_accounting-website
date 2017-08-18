@@ -11,7 +11,13 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Fanex.BetList.Accounting.Services
 {
-    using CustomerSetting.Module.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
@@ -26,13 +32,6 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -213,7 +212,8 @@ namespace Fanex.BetList.Accounting.Services
                     AwayId = Converter.To<long>(r["AwayID"]),
                     IsNeutral = Converter.ToBool(r["isNeutral"]),
                     BetCheck = Converter.ToString2(r["BetCheck"]),
-                    TransDesc = Converter.ToString2(r["transdesc"])
+                    TransDesc = Converter.ToString2(r["transdesc"]),
+                    ShowTime = Converter.ToString2(r["showtime"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -839,7 +839,7 @@ namespace Fanex.BetList.Accounting.Services
                                 systempParlayModel.SystemParlayChoice);
 
                             firstTicketDetail.ChoiceHtml += string.Format(
-                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div>",
+                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
                                 combinationTypeComboNames
                             );
                         }
@@ -1543,8 +1543,18 @@ namespace Fanex.BetList.Accounting.Services
             {
                 sportName += CacheRef.GetSportName(ReportService.GetNG2SportType(betTypeId));
             }
+            else if (ReportService.IsVirtualSports2(betTypeId))
+            {
+                const int VirtualSports2ProductId = 27;
+                sportName = GetProductName(VirtualSports2ProductId);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
+        }
+
+        private string GetProductName(int productId)
+        {
+            return CacheRef.GetResourceData("Product", productId.ToString());
         }
     }
 }

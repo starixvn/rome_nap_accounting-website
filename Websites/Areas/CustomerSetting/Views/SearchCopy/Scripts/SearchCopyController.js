@@ -222,7 +222,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
                 break;
-            case 'tabVirtualSports': url += "VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4";
+            case 'tabVirtualSports': url += "DCS/ViewCustomerSetting?productId=5&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
                 break;

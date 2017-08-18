@@ -1064,6 +1064,17 @@ var ViewPT = {
             case 218:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
+            case 180: // Virtual Soccer 
+            case 181: // Virtual Horse Racing 
+            case 182: // Virtual Greyhounds
+            case 183: // Virtual Speedway
+            case 184: // Virtual Motorsports
+            case 185: // Virtual Cycling
+            case 186: // Virtual Tennis
+            case 190: // Virtual Soccer League
+            case 191: // Virtual Soccer Nation
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
+                break;
             case 23:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
                 break;
