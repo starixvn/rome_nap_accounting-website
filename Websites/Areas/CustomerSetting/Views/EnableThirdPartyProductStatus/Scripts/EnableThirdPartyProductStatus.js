@@ -51,6 +51,7 @@
             checkEnable_Element.addClass('is-data-change');
         }
 
+        self.detectAllCheckbox();
         ShowHideSubmitButton();
     }
 
@@ -64,8 +65,27 @@
         } else {
             checkEnableDownlines_Element.addClass('is-data-change');
         }
-
+                
         ShowHideSubmitButton();
+    }
+
+    self.detectAllCheckbox = function () {
+        var allChecked = true;
+        var checkEnable_Collection = top.content.$('input[id^="checkEnable_"]:enabled', '#updateStatusDialog');
+
+        checkEnable_Collection.each(function (index, checkbox) {
+            if (!checkbox.checked) {
+                allChecked = false;
+            }
+        });
+
+        var checkEnableAll_Element = top.content.$('#checkAll');
+        if (allChecked) {
+            checkEnableAll_Element.attr('checked', 'checked');
+        }
+        else {
+            checkEnableAll_Element.removeAttr('checked');
+        }
     }
 
     self.submit = function (model) {
@@ -164,3 +184,4 @@
 };
 
 var enableThirdPartyProductStatus = new EnableThirdPartyProductStatus();
+enableThirdPartyProductStatus.detectAllCheckbox();

@@ -354,6 +354,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
@@ -625,6 +627,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in betDetailsMergeModel)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino_Merge, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
@@ -765,6 +769,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
@@ -818,6 +824,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
@@ -851,6 +859,8 @@ namespace Fanex.BetList.Accounting.Services
                         foreach (TicketDetail betDetail in systempParlayModel.SystemParlayChoice)
                         {
                             totalItem--;
+
+                            betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
                             betDetail.ChoiceHtml =
                                 "<div class='ticketList'>" + builderParlayDetail.BuildChoice(betDetail.Ticket, ticketHelper, null, false) +
                                 (totalItem > 0 ?
@@ -1177,6 +1187,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in betDetailsModel)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
@@ -1375,6 +1387,8 @@ namespace Fanex.BetList.Accounting.Services
                     foreach (TicketDetail betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);

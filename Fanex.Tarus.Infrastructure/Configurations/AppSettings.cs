@@ -90,7 +90,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-
         public static int ProductIdCashOut
         {
             get
@@ -120,6 +119,21 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             get
             {
                 return Converter.ToString2(ConfigurationManager.AppSettings["ColossusBetsAPI_MemberChoice"]);
+            }
+        }
+
+        public static int ProductIdKenoLottery
+        {
+            get
+            {
+                string productId = ConfigurationManager.AppSettings["ProductIdKenoLottery"];
+
+                if (string.IsNullOrWhiteSpace(productId))
+                {
+                    return 0;
+                }
+
+                return Converter.ToInt(productId);
             }
         }
 

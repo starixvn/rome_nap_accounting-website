@@ -2548,4 +2548,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="String2" xml:space="preserve">
     <value />
   </data>
+  <data name="enableBetradarVirtualSports" xml:space="preserve">
+    <value>Betradar Virtual Sports</value>
+  </data>
+  <data name="enableLottery" xml:space="preserve">
+    <value>Lottery</value>
+  </data>
+  <data name="lblDisabledLotteryUpline" xml:space="preserve">
+    <value>Lottery has been disabled at upline</value>
+  </data>
 </root>

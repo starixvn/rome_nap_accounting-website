@@ -339,6 +339,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                             bool hideEnableAndEditFishingWorld = true;
 
+                            bool hideKenoLottery = true;
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -389,6 +391,15 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
                                         case "27":
                                             isHideVirtualSports2 = (CastAide.AsBoolean(row["IsHiddenUpline"]) && roleId < 4) || !WebSettings.EnableVirtualSports;
+                                            break;
+
+                                        case "28": // We do NOT have Unsync case for Keno Lottery.
+                                            bool isHideKenoLottery = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]);
+                                            bool isHideUplineKenoLottery = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]);
+
+                                            hideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
+                                                isDeposit ||
+                                                (roleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
                                             break;
                                     }
                                 }
@@ -1027,7 +1038,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     IsDeposit = isDeposit,
                                     Username = userName,
                                     AccId = AppSession.AccId,
-                                    IsShowNG2 = !hideCheckBoxNG2
+                                    IsShowNG2 = !hideCheckBoxNG2,
+                                    IsShowKenoLottery = !hideKenoLottery
                                 };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
@@ -1111,7 +1123,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     renderLeftPanelParameter.IsShowVoidbridge,
                                     renderLeftPanelParameter.IsShowNG2,
                                     renderLeftPanelParameter.IsShowFishingWorld,
-                                    isHideVirtualSports);
+                                    isHideVirtualSports,
+                                    renderLeftPanelParameter.IsShowKenoLottery);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1257,6 +1270,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
@@ -1277,9 +1291,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", string.Format(creditDCSLink, 23));
                                 TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", string.Format(creditDCSLink, 24));
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
-
-
-
+                                TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1409,6 +1421,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (hideEnableAndEditFishingWorld)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-FishingWorld");
+                                }
+
+                                if (hideKenoLottery)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
@@ -1862,6 +1879,20 @@ namespace Sunplus.Accounting.Business.Customer
                                                "Update Virtual Sports 2 Status",
                                                27);
                             break;
+
+                        case "28":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Lottery",
+                                               renderLeftPanelParameter.IsShowKenoLottery,
+                                               renderLeftPanelParameter,
+                                               "Update Lottery Status",
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
+                            break;
                     }
                 }
             }
@@ -1878,11 +1909,10 @@ namespace Sunplus.Accounting.Business.Customer
                 renderLeftPanelParameter,
                 "Update Gold Deluxe Status",
                 12);
-
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery)
         {
             int parentId;
             string submenu1 = "";
@@ -1943,7 +1973,6 @@ namespace Sunplus.Accounting.Business.Customer
                     if (WebSettings.IsShowGoldDeluxeSettingForCredit)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + superId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custId.ToString() + "&level=1\");' target='centerFr'>Gold Deluxe</a>";
-
                     }
 
                     if (!isHideSportsbook2 && !isDeposit)
@@ -1979,6 +2008,16 @@ namespace Sunplus.Accounting.Business.Customer
                     if (isShowFishingWorld)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Fishing World</a>";
+                    }
+
+                    if (isShowKenoLottery)
+                    {
+                        submenu1 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery,
+                            custId,
+                            4, // Super Level.
+                            "Lottery");
                     }
 
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
@@ -2048,6 +2087,16 @@ namespace Sunplus.Accounting.Business.Customer
                     if (isShowFishingWorld)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Fishing World</a>";
+                    }
+
+                    if (isShowKenoLottery)
+                    {
+                        submenu2 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery,
+                            custId,
+                            3, // Master Level.
+                            "Lottery");
                     }
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
@@ -3145,6 +3194,8 @@ namespace Sunplus.Accounting.Business.Customer
             return jsscript;
         }
 
+        #endregion private functions
+
         public static string GetCustName(int roleId)
         {
             switch (roleId)
@@ -3161,8 +3212,6 @@ namespace Sunplus.Accounting.Business.Customer
                     return "";
             }
         }
-
-        #endregion private functions
 
         public Result UpdateCustomerSite(int custId, string newSite)
         {

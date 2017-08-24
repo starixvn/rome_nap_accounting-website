@@ -33,20 +33,8 @@
             </div>
         </td>
         <td class="c">
-            <div class="width120">
-                  <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71 ||
-                        BetListHelper.IsUseRefNoInsteadOfTransId(betdetail.Ticket))
-                    {
-                        <span>No: @betdetail.Ticket.RefNo </span>
-                    }
-                    else
-                    {
-                        <span>Ref No: @betdetail.Ticket.TransId </span>
-                    }
-                </div>
-                <div class="c">
-                    @betdetail.Ticket.TransDate</div>
+            <div class="width120 refno">
+                  @Html.Raw(betdetail.TransDateHtml)
             </div>
         </td>
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
