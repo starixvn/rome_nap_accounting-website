@@ -45,6 +45,22 @@
                 }
             }
 
+            criteria.SettingType = 14;
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new DCSProduct
+                        {
+                            ProductId = Converter.ToInt(reader["ProductID"]),
+                            ProductName = Converter.ToString2(reader["Name"])
+                        });
+                    }
+                }
+            }
+
             return products;
         }
     }
