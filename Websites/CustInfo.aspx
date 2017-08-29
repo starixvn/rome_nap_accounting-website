@@ -51,24 +51,6 @@
             $('.button_left02_active').removeClass("button_left02_active");
         }
 
-        function ViewVRHistory(CustID, UserName) {
-            var url = 'VirtualRate/HistoryLogView?' +
-                $.param({
-                    CustId: CustID,
-                    Username: UserName
-                });
-            showPopup(
-                'VIRTUAL RATE UPDATE HISTORY (' + UserName + ')',
-                url,
-                0,
-                0,
-                960,
-                600,
-                false,
-                0,
-                null);
-        }
-
         var result = "";
         var custid; var roleid;
         var totalPage = 1;

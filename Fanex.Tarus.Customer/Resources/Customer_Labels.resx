@@ -525,4 +525,7 @@
   <data name="_1X2" xml:space="preserve">
     <value>1X2</value>
   </data>
+  <data name="VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP" xml:space="preserve">
+    <value>Copy Virtual Rate value from Basketball HDP Live to other sports/bettypes.</value>
+  </data>
 </root>

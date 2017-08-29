@@ -57,18 +57,12 @@ var VirtualRateController = function () {
         var tableBody = $("#virtual-rate-setting tbody");
         var settingHtml = '';
         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
-        var iconCopySport = '<input id="button-copy-sport-settings" class="icon-copy-setting" type="button" title="' +
-                            viewResources.VirtualRate_CopyToAllSportTypeBettypeFromHDP + '"/>';
 
         var startBetTypeIndex = 0;
         for (var i = 0; i < sportLength; i++) {
             var sport = customerVirtualRateModel.SportVirtualRateList[i];
             if (!sport.BetTypeList || !sport.BetTypeList.length) {
                 continue;
-            }
-
-            if (i == 0) {
-                self.cachedData.copyFromSportId = sport.Id;
             }
 
             var betTypeLength = sport.BetTypeList.length;
@@ -78,7 +72,7 @@ var VirtualRateController = function () {
                     <td colspan="' + tableColumnCount + '">' +
                         sport.Name +
                         (sport.Notes && sport.Notes != '' ? ' (' + sport.Notes + ')' : '') +
-                        (i == 0 ? iconCopySport : '') +
+                        self.renderIconCopySport(sport.Id) +
                     '</td>\
                  </tr>';
             }
@@ -229,11 +223,28 @@ var VirtualRateController = function () {
         }
     };
     self.bindingEvent = function () {
-        var buttonCopy = $("#button-copy-sport-settings");
-        buttonCopy.unbind("click");
-        buttonCopy.click(function () {
-            self.copySettingFromSport();
-        });
+        var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
+        var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
+
+        buttonCopy
+            .unbind("click")
+            .click(function () {
+                if (buttonCopyBasketball.hasClass("icon-copy-setting-checked")) {
+                    buttonCopyBasketball.trigger("click");
+                }
+
+                self.copySettingFromSport(buttonCopy);
+            });
+
+        buttonCopyBasketball
+            .unbind("click")
+            .click(function () {
+                if (buttonCopy.hasClass("icon-copy-setting-checked")) {
+                    buttonCopy.trigger("click");
+                }
+
+                self.copySettingFromSport(buttonCopyBasketball);
+            });
 
         var buttonCopyBetType = $(".icon-copy-setting.bettype-setting");
         buttonCopyBetType.unbind("click");
@@ -268,31 +279,32 @@ var VirtualRateController = function () {
             bettypeSelect.attr("disable-level", "1");
             bettypeSelect.attr("disabled", "disabled");
             iconCopySetting.unbind("click");
-            $("#button-copy-sport-settings").unbind("click");
+            $(".sport-title .icon-copy-setting").unbind("click");
             $(".icon-copy-setting.bettype-setting").unbind("click");
         }
     };
-    self.copySettingFromSport = function () {
-        var buttonCopy = $("#button-copy-sport-settings");
+    self.copySettingFromSport = function (buttonCopy) {
+        var sportId = parseInt(buttonCopy.attr("data-sport-id"));
         var isCopy = !buttonCopy.hasClass("icon-copy-setting-checked");
         if (isCopy) {
             buttonCopy.addClass("icon-copy-setting-checked");
+            self.cachedData.copyFromSportId = sportId;
         }
         else {
             buttonCopy.removeClass("icon-copy-setting-checked");
+            self.cachedData.copyFromSportId = 0;
         }
 
-        var sportId = self.cachedData.copyFromSportId;
         var liveType = self.Constants.LiveType.Live;
-        var targetDropdown = $('select[sport-id!="' + sportId + '"]' +
-            '[liveType="' + liveType + '"]');
+        var targetDropdown = $('select[liveType="' + liveType + '"]')
+            .not(self.generateSelectSelector(sportId));
         targetDropdown.each(function (index) {
             self.disableDropdownRate($(this), isCopy);
         });
 
         liveType = self.Constants.LiveType.NonLive;
-        targetDropdown = $('select[sport-id!="' + sportId + '"]' +
-            '[liveType="' + liveType + '"]');
+        targetDropdown = $('select[liveType="' + liveType + '"]')
+            .not(self.generateSelectSelector(sportId));
         targetDropdown.each(function (index) {
             self.disableDropdownRate($(this), isCopy);
         });
@@ -337,7 +349,7 @@ var VirtualRateController = function () {
         }
 
         buttonCopyBetType.attr("disabled", isCopy ? "disabled" : null);
-        $('.icon-copy-setting.bettype-setting[sport-id!="' + sportId + '"]').attr("disabled", isCopy ? "disabled" : null);
+        $('.icon-copy-setting.bettype-setting').not(self.generateSelectSelector(sportId)).attr("disabled", isCopy ? "disabled" : null);
     };
 
     self.disableDropdownRate = function (dropdown, isCopy) {
@@ -470,11 +482,18 @@ var VirtualRateController = function () {
                     criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
                     var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
-                    var isCopyFromSport = $("#button-copy-sport-settings").hasClass("icon-copy-setting-checked");
-                    criteria.LastSettings = self.cachedData.oldSettings;
+                    var isCopyFromSport = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer).hasClass("icon-copy-setting-checked");
+                    var isCopyFromBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball).hasClass("icon-copy-setting-checked");
+
+                     criteria.LastSettings = self.cachedData.oldSettings;
                     for (var i = 0; i < sportLength; i++) {
                         var sport = customerVirtualRateModel.SportVirtualRateList[i];
                         var isCopyFromBetType = $("#button-copy-bettype-settings-" + sport.Id).hasClass("icon-copy-setting-checked");
+
+                        if (!isCopyFromSport) { // Check "Copy Settings of Basketball" button is checked.
+                            isCopyFromSport = isCopyFromBasketball && sport.Id !== self.Constants.SportType.Soccer;
+                        }
+
                         if (sport.SubSportList && sport.SubSportList.length) {
                             var subSportListLength = sport.SubSportList.length;
                             for (var k = 0; k < subSportListLength; k++) {
@@ -576,7 +595,8 @@ var VirtualRateController = function () {
         showAlertMessage("result-message", updateResult.ErrorMessage, 0);
         setTimeout(function () {
             $("#result-message").empty();
-            parent.afterUpdate(true, 1000);
+            //parent.afterUpdate(true, 1000);
+            location.href = location.href;
         }, 3000);
     };
     self.blockUI = function () {
@@ -603,6 +623,39 @@ var VirtualRateController = function () {
         }
 
         return value.toFixed(decimalNumber);
+    };
+    self.renderIconCopySport = function (sportId) {
+        var title = "";
+
+        if (sportId === self.Constants.SportType.Soccer) {
+            title = viewResources.VirtualRate_CopyToAllSportTypeBettypeFromHDP;
+        }
+        else if (sportId === self.Constants.SportType.Basketball) {
+            title = viewResources.VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP;
+        }
+        else {
+            return "";
+        }
+
+        return [
+            '<input class="icon-copy-setting" type="button" title="',
+            title,
+            '" data-sport-id="',
+            sportId,
+            '" id="button-copy-sport-settings-',
+            sportId,
+            '"/>'
+        ].join("");
+    };
+    self.generateSelectSelector = function (sportId) {
+        if (sportId === self.Constants.SportType.Soccer) {
+            return '[sport-id="1"]';
+        }
+        else if (sportId === self.Constants.SportType.Basketball) {
+            return '[sport-id="1"],[sport-id="2"]';
+        }
+
+        return "";
     };
 };
 
