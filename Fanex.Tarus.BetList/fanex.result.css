@@ -1,0 +1,64 @@
+﻿.lottoBall {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: 12px;
+    color: #000;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 31px;
+    text-align: center;
+    background-image: url(../Core/img/lotto_ball.png);
+    background-repeat: no-repeat;
+}
+
+.lottoBall.red {
+    background-position: 0 0;
+}
+
+.lottoBall.blue {
+    background-position: 0 -30px;
+}
+
+.lottoBall.disable {
+    color: #999;
+    background-position: 0 -60px;
+}
+
+.lotto-bets .button i {
+    display: block;
+    width: 9px;
+    height: 19px;
+    background-image: url(../images/layout/icon_bets.png);
+}
+
+.lotto-bets .button + .button {
+    margin-right: 0;
+}
+
+.lotto-bets .min {
+    background-position: 0 -19px;
+}
+
+.lotto-bets .minus {
+    background-position: -10px -19px;
+}
+
+.lotto-bets .plus {
+    background-position: -20px -19px;
+}
+
+.lotto-bets .max {
+    background-position: -30px -19px;
+}
+
+.lotto-bets input {
+    float: left;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 16px;
+    height: 17px;
+    text-align: center;
+}
