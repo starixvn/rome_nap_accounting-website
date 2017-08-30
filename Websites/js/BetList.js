@@ -147,6 +147,11 @@ function ViewResult(matchid, bettype, betid, sporttype) {
         url = 'Report/ViewNG2Result.aspx';
     }
 
+    if (1600 <= bettype && bettype <= 1610) {
+        width = 500;
+        url = 'Report/ViewLucky3Result.aspx';
+    }
+
     parent.OpenNextPopup("VirtualResult", url + '?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
 }
 
@@ -776,6 +781,11 @@ function ViewAllBetResult(transDesc, betCheck, betTypeId) {
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
+}
+
+function showLucky3Details(transId, custId) {
+    var width = 660;
+    parent.OpenNextPopup("Lucky3Result", 'Report/ViewLucky3ParlayResult.aspx?refno=' + transId + '&custId=' + custId, '', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
