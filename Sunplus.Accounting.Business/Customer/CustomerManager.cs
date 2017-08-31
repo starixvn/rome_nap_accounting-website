@@ -341,6 +341,11 @@ namespace Sunplus.Accounting.Business.Customer
 
                             bool hideKenoLottery = true;
 
+                            bool isHideLucky3 = true;
+                            bool isHideLucky3Upline = true;
+                            bool isSyncLucky3 = true;
+                            bool isSyncLucky3Upline = true;
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -400,6 +405,13 @@ namespace Sunplus.Accounting.Business.Customer
                                             hideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                                 isDeposit ||
                                                 (roleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
+                                            break;
+
+                                        case "26":
+                                            isHideLucky3 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowLucky3;
+                                            isSyncLucky3 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
+                                            isHideLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
+                                            isSyncLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             break;
                                     }
                                 }
@@ -1009,6 +1021,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
                                 var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
+                                var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || !isSyncLucky3Upline || !isSyncLucky3 || isHideLucky3;
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
@@ -1039,7 +1052,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     Username = userName,
                                     AccId = AppSession.AccId,
                                     IsShowNG2 = !hideCheckBoxNG2,
-                                    IsShowKenoLottery = !hideKenoLottery
+                                    IsShowKenoLottery = !hideKenoLottery,
+                                    IsShowLucky3 = !hideCheckBoxLucky3
                                 };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
@@ -1124,7 +1138,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     renderLeftPanelParameter.IsShowNG2,
                                     renderLeftPanelParameter.IsShowFishingWorld,
                                     isHideVirtualSports,
-                                    renderLeftPanelParameter.IsShowKenoLottery);
+                                    renderLeftPanelParameter.IsShowKenoLottery,
+                                    renderLeftPanelParameter.IsShowLucky3);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1271,6 +1286,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
@@ -1292,6 +1308,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", string.Format(creditDCSLink, 24));
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
+                                TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1426,6 +1443,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (hideKenoLottery)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
+                                }
+
+                                if (isHideLucky3Upline || isHideLucky3 || !isSyncLucky3Upline)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
@@ -1893,6 +1915,20 @@ namespace Sunplus.Accounting.Business.Customer
                                                "Update Lottery Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
                             break;
+
+                        case "26":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Lucky3",
+                                               renderLeftPanelParameter.IsShowLucky3,
+                                               renderLeftPanelParameter,
+                                               "Update Lucky 3 Status",
+                                               26);
+                            break;
                     }
                 }
             }
@@ -1912,7 +1948,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery, bool isShowLucky3)
         {
             int parentId;
             string submenu1 = "";
@@ -2020,6 +2056,16 @@ namespace Sunplus.Accounting.Business.Customer
                             "Lottery");
                     }
 
+                    if (isShowLucky3)
+                    {
+                        submenu1 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            26,
+                            custId,
+                            4, // Super Level.
+                            "Lucky 3");
+                    }
+
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
                     if (!WebSettings.disabledHR)
@@ -2097,6 +2143,16 @@ namespace Sunplus.Accounting.Business.Customer
                             custId,
                             3, // Master Level.
                             "Lottery");
+                    }
+
+                    if (isShowLucky3)
+                    {
+                        submenu2 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            26,
+                            custId,
+                            3, // Master Level.
+                            "Lucky 3");
                     }
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);

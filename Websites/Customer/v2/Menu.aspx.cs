@@ -57,7 +57,7 @@ public partial class Others_Menu : System.Web.UI.Page
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
         allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
-        
+
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
@@ -169,4 +169,3 @@ public partial class Others_Menu : System.Web.UI.Page
         TemplateHandler.Assign(ref this.tplMenu, nodeToAssign, settingLink);
     }
 }
-

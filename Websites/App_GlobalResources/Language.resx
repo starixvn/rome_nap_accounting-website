@@ -2557,4 +2557,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblDisabledLotteryUpline" xml:space="preserve">
     <value>Lottery has been disabled at upline</value>
   </data>
+  <data name="enableLucky3" xml:space="preserve">
+    <value>Lucky 3</value>
+  </data>
+  <data name="lblDisabledLucky3Upline" xml:space="preserve">
+    <value>Lucky 3 status has been disabled at upline</value>
+  </data>
 </root>
