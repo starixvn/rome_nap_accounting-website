@@ -1,19 +1,17 @@
-﻿
-namespace Fanex.Tarus.BetList.Controller
+﻿namespace Fanex.Tarus.BetList.Controller
 {
     using System.Web.Mvc;
-    using Entities.BetList;
-    using Fanex.Tarus.BetList.Business;
-    using Fanex.Tarus.BetList.Criteria;
-    using BetListDetail.Lucky3.Services;
     using BetListDetail.Lucky3.Criteria;
+    using BetListDetail.Lucky3.Services;
+    using BetListDetail.Lucky3.ViewModels;
     using DataAccess;
 
     public class Lucky3Controller : Controller
     {
         private readonly ILucky3Service lucky3Service;
 
-        public Lucky3Controller():this(null)
+        public Lucky3Controller()
+            : this(null)
         {
         }
 
@@ -23,11 +21,13 @@ namespace Fanex.Tarus.BetList.Controller
         }
 
         [HttpGet]
-        public ActionResult BetDetails(GetLucky3DetailParameter criteria)
+        public ActionResult ViewDetail(GetLucky3DetailParameter criteria)
         {
             var result = lucky3Service.GetBetListDetail(criteria);
 
-            return View("~/Views/BetListDetails/Lucky3/Index.cshtml", result);
+            return View(
+                "~/Views/BetListDetails/Lucky3/Index.cshtml",
+                new Lucky3DetailViewModel(result, 4));
         }        
     }
 }

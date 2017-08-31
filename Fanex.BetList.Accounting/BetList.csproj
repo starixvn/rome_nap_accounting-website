@@ -196,7 +196,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0-beta3\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0-beta4\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">

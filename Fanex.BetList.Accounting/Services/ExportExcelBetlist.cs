@@ -154,7 +154,9 @@ namespace Fanex.BetList.Accounting.Services
 
                                     OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
                                     BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                                    ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+
+                                    Currency = Converter.ToString2(r["Currency"])
                                 },
                                 ChoiceHtml = string.Empty,
                                 OddHtml = string.Empty,

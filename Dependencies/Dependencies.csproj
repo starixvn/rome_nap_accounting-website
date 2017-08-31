@@ -160,7 +160,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta9\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta11\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
@@ -308,7 +308,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0-beta3\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0-beta4\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
@@ -774,7 +774,8 @@
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
     <Content Include="Content\lucky3.css" />
     <Content Include="fanex.result.css" />
-    <Content Include="Views\Lucky3\Styles\index.css" />
+    <Content Include="Views\Lucky3\images\lotto_ball.png" />
+    <Content Include="Views\Lucky3\Styles\bet-list-detail.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

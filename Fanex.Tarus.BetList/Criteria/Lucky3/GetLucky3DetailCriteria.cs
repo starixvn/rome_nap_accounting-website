@@ -1,22 +1,17 @@
-﻿
-using Fanex.BetListDetail.Lucky3.Criteria;
-using Fanex.NAP.Framework.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Fanex.Tarus.BetList.Criteria.Lucky3
+﻿namespace Fanex.Tarus.BetList.Criteria.Lucky3
 {
+    using BetListDetail.Lucky3.Criteria;
+    using NAP.Framework.Data;
+
     public class GetLucky3DetailCriteria : CriteriaBase
     {
-        public GetLucky3DetailCriteria(GetLucky3DetailParameter commandData)
+        public GetLucky3DetailCriteria(IGetLucky3DetailParameter commandData)
         {
             criteria = commandData;
         }
 
         [SpParam(Ignored = true)]
-        private GetLucky3DetailParameter criteria { get; set; }
+        private IGetLucky3DetailParameter criteria { get; set; }
 
         public long CustId
         {

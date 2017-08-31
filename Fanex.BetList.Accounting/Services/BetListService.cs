@@ -327,7 +327,9 @@ namespace Fanex.BetList.Accounting.Services
 
                     OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Convert.ToInt32(r["OriginalBetType"]) : 0,
                     BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Convert.ToInt64(r["BetdaqId"]) : DefaultBetdaqId,
-                    ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty
+                    ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
+
+                    Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -529,7 +531,9 @@ namespace Fanex.BetList.Accounting.Services
 
                     OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
                     BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                    ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+
+                    Currency = Converter.ToString2(r["Currency"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -734,7 +738,9 @@ namespace Fanex.BetList.Accounting.Services
 
                     OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
                     BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                    ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                    ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+
+                    Currency = Converter.ToString2(r["Currency"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -1130,7 +1136,9 @@ namespace Fanex.BetList.Accounting.Services
 
                                 OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+
+                                Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1332,7 +1340,9 @@ namespace Fanex.BetList.Accounting.Services
 
                                 OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+
+                                Currency = Converter.ToString2(r["Currency"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
