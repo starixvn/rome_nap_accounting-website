@@ -3,7 +3,6 @@
     using System.Web.Mvc;
     using BetListDetail.Lucky3.Criteria;
     using BetListDetail.Lucky3.Services;
-    using BetListDetail.Lucky3.ViewModels;
     using DataAccess;
 
     public class Lucky3Controller : Controller
@@ -23,11 +22,10 @@
         [HttpGet]
         public ActionResult ViewDetail(GetLucky3DetailParameter criteria)
         {
+            criteria.LevelId = 4;
             var result = lucky3Service.GetBetListDetail(criteria);
 
-            return View(
-                "~/Views/BetListDetails/Lucky3/Index.cshtml",
-                new Lucky3DetailViewModel(result, 4));
+            return View("~/Views/BetListDetails/Lucky3/Index.cshtml", result);
         }        
     }
 }

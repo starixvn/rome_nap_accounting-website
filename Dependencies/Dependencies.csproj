@@ -159,8 +159,8 @@
       <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.14\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta11\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
+    <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta14\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
@@ -630,7 +630,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Views\Lucky3\ViewDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
@@ -772,10 +771,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
-    <Content Include="Content\lucky3.css" />
-    <Content Include="fanex.result.css" />
-    <Content Include="Views\Lucky3\images\lotto_ball.png" />
-    <Content Include="Views\Lucky3\Styles\bet-list-detail.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
