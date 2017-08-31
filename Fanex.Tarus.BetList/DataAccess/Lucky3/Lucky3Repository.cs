@@ -6,8 +6,8 @@
     using BetListDetail.Lucky3.Criteria;
     using BetListDetail.Lucky3.DataAccesses;
     using BetListDetail.Lucky3.Models;
-    using Data;
     using Criteria.Lucky3;
+    using Data;
 
     public class Lucky3Repository : ILucky3DataAccess
     {
@@ -34,15 +34,15 @@
         {
             var model = new Lucky3DetailModel
             {
-                AgentCommission = Convert.ToDecimal(reader["AComm"]),
-                AgentDiscount = Convert.ToDecimal(reader["aDiscount"]),
+                MasterCommission = Convert.ToDecimal(reader["AComm"]),
+                MasterDiscount = Convert.ToDecimal(reader["aDiscount"]),
                 Bets = Convert.ToDecimal(reader["Bets"]),
                 BetType = Convert.ToInt32(reader["BetType"]),
                 CustomerId = Convert.ToInt32(reader["CustId"]),
                 Hdp1 = Convert.ToDecimal(reader["Hdp1"]),
                 Hits = Convert.ToInt32(reader["Hits"]),
-                MasterCommission = Convert.ToDecimal(reader["Comm"]),
-                MasterDiscount = Convert.ToDecimal(reader["Discount"]),
+                AgentCommission = Convert.ToDecimal(reader["Comm"]),
+                AgentDiscount = Convert.ToDecimal(reader["Discount"]),
                 MatchId = Convert.ToInt32(reader["MatchId"]),
                 Prize = Convert.ToInt32(reader["Prize"]),
                 PrizeAmount = Convert.ToDecimal(reader["PrizeAmount"]),
