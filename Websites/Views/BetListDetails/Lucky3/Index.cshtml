@@ -116,7 +116,7 @@
                     else if (ticket.IsLosingCombination)
                     {
                         <tr>
-                            <td colspan="4">@Resources.TotalLost</td>
+                            <td colspan="4" class="align-left">@Resources.TotalLost</td>
                             <td>@Model.FormatMoney(ticket.Stake)</td>
                             <td>@Model.FormatWinLost(ticket.Winlost.Value)</td>
                             @if (Model.IsSuper)
