@@ -408,7 +408,7 @@ namespace Sunplus.Accounting.Business.Customer
                                             break;
 
                                         case "26":
-                                            isHideLucky3 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowLucky3;
+                                            isHideLucky3 = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowLucky3;
                                             isSyncLucky3 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
