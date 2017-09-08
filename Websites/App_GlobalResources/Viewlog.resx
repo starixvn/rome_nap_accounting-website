@@ -3768,4 +3768,7 @@
   <data name="Disable180_1201" xml:space="preserve">
     <value>Disable Virtual Sports</value>
   </data>
+  <data name="Disable160_1601" xml:space="preserve">
+    <value>Disabled Lucky 3</value>
+  </data>
 </root>
