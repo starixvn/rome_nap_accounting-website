@@ -2,13 +2,14 @@
 using Fanex.Tarus.DataAccess.Implement.Admin;
 using Fanex.Tarus.DataAccess.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
+using Fanex.Tarus.Entities.Criteria.Admin;
 using Fanex.Tarus.Web.Models.Admin;
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Fanex.Tarus.Business.Implement.Admin
 {
@@ -19,6 +20,11 @@ namespace Fanex.Tarus.Business.Implement.Admin
         public TicketToHeadlineService()
         {
             this._ticketToHeadlineRepository = new TicketToHeadlineRepository();
+        }
+
+        public List<SelectListItem> GetSuportedProduct(GetTicketToHeadlineSupportedProductCriteria criteria)
+        {
+            return this._ticketToHeadlineRepository.GetSuportedProduct(criteria);
         }
 
         public TicketToHeadlineViewModel GetData(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)

@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Admin\AgentAccess.cs" />
     <Compile Include="Admin\QuickLink.cs" />
+    <Compile Include="Criteria\Admin\GetTicketToHeadlineSupportedProductCriteria.cs" />
     <Compile Include="Criteria\Admin\TicketToHeadlineCriteria.cs" />
     <Compile Include="Customer\CustomerBalanceRequest.cs" />
     <Compile Include="Criteria\CustomerBalanceCriteria.cs" />

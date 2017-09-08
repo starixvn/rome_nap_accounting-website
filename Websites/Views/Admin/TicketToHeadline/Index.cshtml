@@ -20,9 +20,9 @@
         input[type="image"] {
             border: none;
         }
-        .bgeven td{
-            background-color:#FFFF99 !important;
 
+        .bgeven td {
+            background-color: #FFFF99 !important;
         }
     </style>
 </head>
@@ -65,20 +65,21 @@
                             <label class="b" for="productId">Product</label>
                         </div>
                         <div class="floatLeft">
-                            <select id="productId" name="productId">
-                                <option value="1">Sportsbook</option>
-                                <option value="2">Racing</option>
-                                <option value="3">Number Game</option>
-                                <option value="4">Live Casino</option>
-                                <option value="5">Virtual Sports</option>
-                                <option value="27">Virtual Sports 2</option>
-                                <option value="6">Casino</option>
-                                <option value="8">Keno</option>
-                                <option value="12">Gold Deluxe</option>
-                                <option value="15">Colossus Bets</option>
-                                <option value="21">Allbet</option>
-                                <option value="22">Macau Games</option>
-                            </select>
+                            @*<select id="productId" name="productId">
+                                    <option value="1">Sportsbook</option>
+                                    <option value="2">Racing</option>
+                                    <option value="3">Number Game</option>
+                                    <option value="4">Live Casino</option>
+                                    <option value="5">Virtual Sports</option>
+                                    <option value="27">Virtual Sports 2</option>
+                                    <option value="6">Casino</option>
+                                    <option value="8">Keno</option>
+                                    <option value="12">Gold Deluxe</option>
+                                    <option value="15">Colossus Bets</option>
+                                    <option value="21">Allbet</option>
+                                    <option value="22">Macau Games</option>
+                                </select>*@
+                            @Html.DropDownList("productId", (List<SelectListItem>)ViewBag.SupportedProducts, new { id = "productId" })
                         </div>
                         <div class="floatLeft">
                             <input type="button" value="Submit" class="btn" onclick="GetData()" />

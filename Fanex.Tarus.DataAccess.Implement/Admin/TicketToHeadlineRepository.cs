@@ -2,10 +2,11 @@
 using Fanex.Data;
 using Fanex.Tarus.DataAccess.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
+using Fanex.Tarus.Entities.Criteria.Admin;
 using Fanex.Tarus.Web.Models.Admin;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace Fanex.Tarus.DataAccess.Implement.Admin
 {
@@ -23,6 +24,25 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             superDataChangeRowNumber = new List<int>();
             masterDataChangeRowNumber = new List<int>();
             agentDataChangeRowNumber = new List<int>();
+        }
+
+        public List<SelectListItem> GetSuportedProduct(GetTicketToHeadlineSupportedProductCriteria criteria)
+        {
+            var result = new List<SelectListItem>(50);
+            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = db.ExecuteReader();
+                while (reader.Read())
+                {
+                    result.Add(new SelectListItem()
+                    {
+                        Value = Utils.ToString(reader["ProductID"]),
+                        Text = Utils.ToString(reader["ProductName"])
+                    });
+                }
+            }
+
+            return result;
         }
 
         public TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria)
