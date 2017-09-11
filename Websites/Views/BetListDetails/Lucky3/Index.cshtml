@@ -96,7 +96,7 @@
                             <td>@Model.FormatBets(ticket.Bets)</td>
                             <td>@Model.FormatMoney(ticket.PrizeAmount)</td>
                             <td>@Model.FormatMoney(ticket.Stake)</td>
-                            <td>@Model.FormatWinLost(ticket.Winlost)</td>
+                            <td>@Html.Raw(Model.FormatWinLost(ticket.Winlost))</td>
                             @if (Model.IsSuper)
                         {
                                 <td>@Model.FormatDiscount(ticket.SuperDiscount) <br /> @Model.FormatMoney(ticket.SuperCommission)</td>
@@ -118,7 +118,7 @@
                         <tr>
                             <td colspan="4" class="align-left">@Resources.TotalLost</td>
                             <td>@Model.FormatMoney(ticket.Stake)</td>
-                            <td>@Model.FormatWinLost(ticket.Winlost.Value)</td>
+                            <td>@Html.Raw(Model.FormatWinLost(ticket.Winlost.Value))</td>
                             @if (Model.IsSuper)
                         {
                                 <td>@Model.FormatDiscount(ticket.SuperDiscount)<br /> @Model.FormatMoney(ticket.SuperCommission)</td>
@@ -156,7 +156,7 @@
 
                 <tr class="bl_footertotal">
                     <td colspan="5" class="align-right">@Resources.Total</td>
-                    <td>@Model.FormatWinLost(Model.TotalWinlost)</td>
+                    <td>@Html.Raw(Model.FormatWinLost(Model.TotalWinlost))</td>
                     @if (Model.IsSuper)
                 {
                         <td>@Model.FormatMoney(Model.TotalSuperCommission)</td>
