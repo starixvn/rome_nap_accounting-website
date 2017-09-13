@@ -63,7 +63,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                         Agent = Utils.ToString(reader["Agent"]),
                         Currency = Utils.ToString(reader["Currency"]),
                         ErrorCode = Utils.ToInt32(reader["ErrorCode"]),
-                        GroupHeadline = Utils.ToString(reader["GroupHeadLine"]),
+                        GroupHeadline = reader["GroupHeadLine"] is System.DBNull ? "Unassigned" : Utils.ToString(reader["GroupHeadLine"]),
                         HeadlineType = Utils.ToString(reader["HeadlineType"]),
                         Master = Utils.ToString(reader["Master"]),
                         Member = Utils.ToString(reader["Member"]),
