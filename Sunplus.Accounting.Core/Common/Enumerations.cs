@@ -16,6 +16,13 @@ namespace Sunplus.Accounting.Core.Common
             EXTERNAL = 2,
         }
 
+        public enum AlphaSiteCode
+        {
+            I1 = 1,
+            I2 = 2,
+            I7 = 7
+        }
+
         #endregion AccountingSystem enum
 
         #region MemberType enum

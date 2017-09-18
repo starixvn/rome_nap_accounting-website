@@ -29,7 +29,8 @@ public partial class CustInfo : PageBase
         var serviceBase = new ServiceBase();
         bool isSpecialSiteCustomer = false;
         bool isSpecialHeadline = false;
-        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+        int siteCode = 1;
+        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
         if (isSpecialHeadline)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))

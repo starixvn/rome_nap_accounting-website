@@ -19,7 +19,8 @@ public partial class InternalView : System.Web.UI.Page
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
         bool isSpecialSiteCustomer = false;
         bool isSpecialHeadline = false;
-        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+        int siteCode = 1;
+        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode );
         
         if (isDummyAcc || isSpecialHeadline)
         {
@@ -46,7 +47,7 @@ public partial class InternalView : System.Web.UI.Page
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
        
-        string internalAgentUrl = ConfigurationManager.AppSettings[isSpecialSiteCustomer ? "int_agent_url2" : "int_agent_url"];
+        string internalAgentUrl = GetInternalLoginUrl((Enumerations.AlphaSiteCode)siteCode);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),
@@ -64,5 +65,18 @@ public partial class InternalView : System.Web.UI.Page
             (ipReturn.StartsWith("10.", StringComparison.OrdinalIgnoreCase) ||
             ipReturn.StartsWith("172.16.", StringComparison.OrdinalIgnoreCase) ||
             ipReturn.StartsWith("192.168.", StringComparison.OrdinalIgnoreCase)) ? 1 : 0;
+    }
+
+    private static string GetInternalLoginUrl(Enumerations.AlphaSiteCode siteCode)
+    {
+        switch (siteCode)
+        {
+            case Enumerations.AlphaSiteCode.I2:
+                return ConfigurationManager.AppSettings["int_agent_url2"];
+            case Enumerations.AlphaSiteCode.I7:
+                return ConfigurationManager.AppSettings["int_agent_url7"];
+            default:
+                return ConfigurationManager.AppSettings["int_agent_url"];
+        }
     }
 }
