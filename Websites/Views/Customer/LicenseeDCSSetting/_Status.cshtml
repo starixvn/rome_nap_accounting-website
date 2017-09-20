@@ -1,0 +1,36 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+@model StatusViewModel
+@{
+    Layout = null;
+}
+<table class="tblcollapse status_table">
+    <tbody>
+        <tr class="title">
+            <td colspan="2">@LicenseeDcsSettingLabels.ProductStatus <span>(@Model.SuperName)</span></td>
+        </tr>
+        <tr>
+            <td class="halfwidth">@Model.ProductName</td>
+            <td>
+                <div class="">
+                    <div class="checkbox_div w80">
+                        <input type="checkbox" id="disabledCheckbox" @(!Model.IsDisabled ? "checked=checked" : string.Empty) />
+                        <label for="disabledCheckbox">@LicenseeDcsSettingLabels.Enable</label>
+                    </div>
+                    @if (Model.HasDownline)
+                    {
+                        <div class="checkbox_div w120">
+                            <input type="checkbox" id="disabledDownlineCheckbox" @(!Model.IsDisabledDownline ? "checked=checked" : string.Empty)
+                                   @(!Model.IsDisabled && !Model.IsDisabledDownline || Model.IsDisabled && Model.IsDisabledDownline ? "disabled=disabled" : string.Empty) />
+                            <label for="disabledDownlineCheckbox">@LicenseeDcsSettingLabels.EnableDownline</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<input type="hidden" id="hiddenSportType" value="@Model.SportType" />
+<input type="hidden" id="hiddenBetType" value="@Model.BetType" />
+<input type="hidden" id="hiddenBitmapOrder" value="@Model.BitmapOrder" />
+<button type="button" class="update-setting-button mT5" id="btnUpdateStatus" disabled="disabled">@LicenseeDcsSettingLabels.Update</button>

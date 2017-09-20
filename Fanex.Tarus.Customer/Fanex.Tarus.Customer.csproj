@@ -305,6 +305,8 @@
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
+    <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
+    <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
@@ -351,6 +353,7 @@
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
+    <Compile Include="Controller\LicenseeDcsSettingController.cs" />
     <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -395,6 +398,16 @@
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetPositionTakingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetProductCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetSiteCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetSuperCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\NonQueryCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
@@ -429,6 +442,8 @@
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
+    <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
@@ -522,6 +537,10 @@
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BetSetting.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\ProductSettingType.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\ProductViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\StatusEntity.cs" />
     <Compile Include="Entities\MicroGaming\GameTypeModel.cs" />
     <Compile Include="Entities\MicroGaming\MicroGamingCustomerInfo.cs" />
     <Compile Include="Entities\MicroGaming\MicroGamingStatus.cs" />
@@ -563,12 +582,23 @@
     <Compile Include="Entities\VirtualRate\UploadRate\UploadResult.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateEntity.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
+    <Compile Include="Enums\SettingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Customer_Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Customer_Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\LicenseeDcsSettingLabels1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LicenseeDcsSettingLabels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\LicenseeDcsSetting\BaseSettingViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BetSettingViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\FilterViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\PTViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\StatusViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
@@ -613,6 +643,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Customer_Labels.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LicenseeDcsSettingLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseeDcsSettingLabels1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
