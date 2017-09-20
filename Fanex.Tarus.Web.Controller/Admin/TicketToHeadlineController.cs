@@ -1,11 +1,9 @@
 using Fanex.Tarus.Business.Implement.Admin;
 using Fanex.Tarus.Business.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
+using Fanex.Tarus.Entities.Criteria.Admin;
 using Fanex.Tarus.Infrastructure.Extensions;
-using Fanex.Tarus.Security.Services;
 using Fanex.Tarus.Web.Controllers.Filters;
-using Fanex.Tarus.Web.Models.Admin;
-using Sunplus.Accounting.Core.Common;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -24,6 +22,7 @@ namespace Fanex.Tarus.Web.Controllers.Admin
         [AuthenticateRead]
         public ActionResult Index()
         {
+            ViewBag.SupportedProducts = this._ticketToHeadlineService.GetSuportedProduct(new GetTicketToHeadlineSupportedProductCriteria());
             return View("~/Views/Admin/TicketToHeadline/Index.cshtml");
         }
 
