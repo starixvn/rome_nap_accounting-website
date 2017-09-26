@@ -343,8 +343,6 @@ namespace Sunplus.Accounting.Business.Customer
 
                             bool isHideLucky3 = true;
                             bool isHideLucky3Upline = true;
-                            bool isSyncLucky3 = true;
-                            bool isSyncLucky3Upline = true;
 
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
@@ -409,9 +407,7 @@ namespace Sunplus.Accounting.Business.Customer
 
                                         case "26":
                                             isHideLucky3 = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowLucky3;
-                                            isSyncLucky3 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
-                                            isSyncLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
                                             break;
                                     }
                                 }
@@ -1021,7 +1017,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
 
                                 var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
-                                var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || !isSyncLucky3Upline || !isSyncLucky3 || isHideLucky3;
+                                var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || isHideLucky3;
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
@@ -1445,7 +1441,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
                                 }
 
-                                if (isHideLucky3Upline || isHideLucky3 || !isSyncLucky3Upline)
+                                if (isHideLucky3Upline || isHideLucky3)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
                                 }
