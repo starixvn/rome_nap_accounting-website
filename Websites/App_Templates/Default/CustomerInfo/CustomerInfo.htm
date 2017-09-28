@@ -89,14 +89,14 @@
                     </td>
                     <td class="dot_left">
                         <!--haveHeadline-->
-                        <span id="vHeadline" class="canchange"  onclick="parent.gotoURL('centerFr','{linkHeadline}');">{Headline}&nbsp;</span>
+                        <span id="vHeadline" class="canchange" onclick="parent.gotoURL('centerFr','{linkHeadline}');">{Headline}&nbsp;</span>
                         <!--/haveHeadline-->
                         <!--noHeadline-->
                         Unassigned
                         <!--/noHeadline-->
                     </td>
                 </tr>
-                <!--/headline-->              
+                <!--/headline-->
             </table>
         </div>
         <!--end customer detail-->
@@ -155,7 +155,7 @@
                                 <td class="dot_left">
                                     Creator
                                 </td>
-                                <td class="dot_right b" >
+                                <td class="dot_right b">
                                     {Creator}
                                 </td>
                             </tr>
@@ -211,9 +211,9 @@
                                 <td class="dot_left" colspan="2">
                                     <input class="btn" name="btnSubmit" id="btnSubmit" value="Edit" onclick="openDirectInfoPanel('{LinkDirectInfo}')" type="button">
                                 </td>
-                              
+
                             </tr>
-                        </table>                        
+                        </table>
                     </div>
                 </div>
             </div>
@@ -297,7 +297,7 @@
                 </tr>
                 <!--/AbnormalSession-->
                 <tr>
-                    <td class="l" colspan="2" ><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Enable Racing</span></td>
+                    <td class="l" colspan="2"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Enable Racing</span></td>
                     <td class="l" colspan="2"><!--edit-p2p--><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span><!--/edit-p2p--></td>
                 </tr>
                 <!--Row_ProgressiveBonus_AGCasinoStatus-->
@@ -316,7 +316,7 @@
                 <tr>
                     <!--EnableKeno-->
                     <td class="l" colspan="2">
-                            <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Enable Keno</span>
+                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Enable Keno</span>
                     </td>
                     <!--/EnableKeno-->
                     <td class="l" colspan="2">
@@ -381,7 +381,7 @@
                 <!--/EnableAllbet-->
                 <!--EnableCashOut-->
                 <tr>
-                    <td class="l" colspan="2">                        
+                    <td class="l" colspan="2">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">Enable Cash Out</span>
                     </td>
                     <td class="l" colspan="2"></td>
@@ -567,6 +567,11 @@
                                 Edit Lottery
                             </a><br />
                             <!--/edit-KenoLottery-->
+                            <!--edit-Lucky3-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{lucky3LinkSetting}');">
+                                Edit Lucky 3
+                            </a><br />
+                            <!--/edit-Lucky3-->
                             <!-- Detail menu -->
                         </div>
                     </div>

@@ -1,0 +1,183 @@
+﻿@using Resources = Fanex.BetDetails.Lucky3.Resources.Resource
+@using Fanex.BetDetails.Lucky3.ViewModels
+@model Lucky3DetailViewModel
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/BetListDetails/Lucky3/Styles/bet-list-detail.css")" />
+</head>
+<body>
+    <table class="lucky3">
+        <thead>
+            <tr>
+                <th>
+                    <div class="align-center">
+                        @Resources.Number
+                    </div>
+                </th>
+                <th>
+                    <div class="align-center width-50">
+                        @Resources.Hits
+                    </div>
+                </th>
+                <th>
+                    <div class="align-center width-50">
+                        @Resources.Bets
+                    </div>
+                </th>
+                <th>
+                    <div class="align-center width-80">
+                        @Resources.Prize
+                    </div>
+                </th>
+                <th>
+                    <div class="align-center width-80">
+                        @Resources.Stake
+                    </div>
+                </th>
+                <th>
+                    <div class="align-center width-80">
+                        @Resources.Winloss
+
+                    </div>
+                </th>
+                @if (Model.IsSuper)
+            {
+                    <th>
+                        <div class="align-center width-80">
+                            @Resources.SuperComm
+                        </div>
+                    </th>
+                }
+                @if (Model.IsSuper || Model.IsMaster)
+            {
+                    <th>
+                        <div class="align-center width-80">
+                            @Resources.MasterComm
+                        </div>
+                    </th>
+                }
+                @if (Model.IsAgent || Model.IsMaster || Model.IsSuper)
+            {
+                    <th>
+                        <div class="align-center width-80">
+                            @Resources.AgentComm
+                        </div>
+                    </th>
+                }
+
+                <th>
+                    <div class="align-center width-80">
+                        @Resources.Status
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Details.Any())
+            {
+                foreach (var ticket in Model.Details)
+                {
+                    if (ticket.IsPrize)
+                    {
+                        <tr>
+                            <td class="align-left">
+                                @foreach (var number in ticket.Numbers)
+                                {
+                                    var color = "color" + number;
+                                    <div class="lottoBall @color">@number</div>
+                                }
+                            </td>
+                            <td>@ticket.Hits</td>
+                            <td>@Model.FormatBets(ticket.Bets)</td>
+                            <td>@Model.FormatMoney(ticket.PrizeAmount)</td>
+                            <td>@Model.FormatMoney(ticket.Stake)</td>
+                            <td>@Html.Raw(Model.FormatWinLost(ticket.Winlost))</td>
+                            @if (Model.IsSuper)
+                        {
+                                <td>@Model.FormatDiscount(ticket.SuperDiscount) <br /> @Model.FormatMoney(ticket.SuperCommission)</td>
+                            }
+                            @if (Model.IsSuper || Model.IsMaster)
+                        {
+                                <td>@Model.FormatDiscount(ticket.MasterDiscount) <br /> @Model.FormatMoney(ticket.MasterCommission)</td>
+                            }
+                            @if (Model.IsAgent || Model.IsMaster || Model.IsSuper)
+                        {
+                                <td>@Model.FormatDiscount(ticket.AgentDiscount) <br /> @Model.FormatMoney(ticket.AgentCommission)</td>
+                            }
+
+                            <td class="align-center">@ticket.Status</td>
+                        </tr>
+                    }
+                    else if (ticket.IsLosingCombination)
+                    {
+                        <tr>
+                            <td colspan="4" class="align-left">@Resources.TotalLost</td>
+                            <td>@Model.FormatMoney(ticket.Stake)</td>
+                            <td>@Html.Raw(Model.FormatWinLost(ticket.Winlost.Value))</td>
+                            @if (Model.IsSuper)
+                        {
+                                <td>@Model.FormatDiscount(ticket.SuperDiscount)<br /> @Model.FormatMoney(ticket.SuperCommission)</td>
+                            }
+                            @if (Model.IsSuper || Model.IsMaster)
+                        {
+                                <td>@Model.FormatDiscount(ticket.MasterDiscount)<br /> @Model.FormatMoney(ticket.MasterCommission)</td>
+                            }
+
+                            <td>@Model.FormatDiscount(ticket.AgentDiscount)<br /> @Model.FormatMoney(ticket.AgentCommission)</td>
+
+                            <td class="align-center">@ticket.Status</td>
+                        </tr>
+                    }
+                    else if (ticket.IsWinningShare)
+                    {
+                        <tr>
+                            <td colspan="5" class="align-left">@Resources.WinningShare</td>
+                            <td>-</td>
+                            @if (Model.IsSuper)
+                        {
+                                <td>@Model.FormatDiscount(ticket.SuperDiscount)<br /> @Model.FormatMoney(ticket.SuperCommission)</td>
+                            }
+                            @if (Model.IsSuper || Model.IsMaster)
+                        {
+                                <td>@Model.FormatDiscount(ticket.MasterDiscount)<br /> @Model.FormatMoney(ticket.MasterCommission)</td>
+                            }
+
+                            <td>@Model.FormatDiscount(ticket.AgentDiscount)<br /> @Model.FormatMoney(ticket.AgentCommission)</td>
+
+                            <td></td>
+                        </tr>
+                    }
+                }
+
+                <tr class="bl_footertotal">
+                    <td colspan="5" class="align-right">@Resources.Total</td>
+                    <td>@Html.Raw(Model.FormatWinLost(Model.TotalWinlost))</td>
+                    @if (Model.IsSuper)
+                {
+                        <td>@Model.FormatMoney(Model.TotalSuperCommission)</td>
+                    }
+                    @if (Model.IsSuper || Model.IsMaster)
+                {
+                        <td>@Model.FormatMoney(Model.TotalMasterCommission)</td>
+                    }
+
+                    <td>@Model.FormatMoney(Model.TotalAgentCommission)</td>
+
+                    <td></td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="@Model.TotalColumns" class="align-center">@Resources.NoData</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

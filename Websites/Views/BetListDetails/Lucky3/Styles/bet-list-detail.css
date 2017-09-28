@@ -1,0 +1,35 @@
+﻿.lucky3{background: #fff;border-collapse: collapse;text-align: left;width: 100%;}
+.lucky3 th{font-weight: bold;color: #000;background-color: #cddef3;padding: 2px;border: solid 1px #7c98a4;text-align: center;}
+.lucky3 td{color: #000;vertical-align: middle;padding: 2px 2px 0px 2px;border: solid 1px #999;text-align: right;}
+.lucky3 tbody tr#tr_footer:hover td{color: #000000;background-color:#E8DFCA;}
+.lucky3 .width-50{width: 50px;}
+.lucky3 .width-80{width: 80px;}
+
+.lucky3 .align-left {
+  text-align: left; }
+
+.lucky3 .align-center {
+  text-align: center; }
+
+.lucky3 .align-right {
+  text-align: right; }
+
+.lucky3 .lottoBall {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: 12px;
+  color: #000;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 31px;
+  text-align: center;
+  background: url(images/lotto_ball.png) no-repeat -9px -65px; }
+
+.lucky3 .red, .lucky3 .color1, .lucky3 .color3, .lucky3 .color4, .lucky3 .color6, .lucky3 .color8, .lucky3 .color10, .lucky3 .color12, .lucky3 .color15, .lucky3 .color17, .lucky3 .color20, .lucky3 .color21, .lucky3 .color23, .lucky3 .color26, .lucky3 .color29, .lucky3 .color31, .lucky3 .color33, .lucky3 .color34, .lucky3 .color35, .lucky3 .color38, .lucky3 .color40, .lucky3 .color42, .lucky3 .color44, .lucky3 .color45, .lucky3 .color47, .lucky3 .color49, .lucky3 .color51, .lucky3 .color53, .lucky3 .color56, .lucky3 .color58, .lucky3 .color59, .lucky3 .color62, .lucky3 .color65, .lucky3 .color67, .lucky3 .color70, .lucky3 .color71, .lucky3 .color73, .lucky3 .color74 {
+  background-position: 0 0; }
+
+.lucky3 .blue, .lucky3 .color2, .lucky3 .color5, .lucky3 .color7, .lucky3 .color9, .lucky3 .color11, .lucky3 .color13, .lucky3 .color14, .lucky3 .color16, .lucky3 .color18, .lucky3 .color19, .lucky3 .color22, .lucky3 .color24, .lucky3 .color25, .lucky3 .color27, .lucky3 .color38, .lucky3 .color30, .lucky3 .color32, .lucky3 .color36, .lucky3 .color37, .lucky3 .color39, .lucky3 .color41, .lucky3 .color43, .lucky3 .color46, .lucky3 .color48, .lucky3 .color50, .lucky3 .color52, .lucky3 .color54, .lucky3 .color55, .lucky3 .color57, .lucky3 .color60, .lucky3 .color61, .lucky3 .color63, .lucky3 .color64, .lucky3 .color66, .lucky3 .color68, .lucky3 .color69, .lucky3 .color72, .lucky3 .color75 {
+  background-position: 0 -30px; }
+
+.lucky3 .bl_footertotal {background-color: #ffffcc;font-weight: bold;height: 25px;}

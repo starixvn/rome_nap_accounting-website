@@ -140,14 +140,34 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 
 function ViewResult(matchid, bettype, betid, sporttype) {
     var width = 600;
-    var url = 'Report/ViewResult.aspx';
+    var height = 500;
+    var url = "Report/ViewResult.aspx";
+    var title = "Result";
 
     if (2501 <= bettype && bettype <= 2699) {
         width = 500;
         url = 'Report/ViewNG2Result.aspx';
     }
 
-    parent.OpenNextPopup("VirtualResult", url + '?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype, 'Result', width, 500, true, false, window, 0, null, null);
+    if (1600 <= bettype && bettype <= 1610) {
+        width = 750;
+        height = 200;
+        url = 'Report/ViewLucky3Result.aspx';
+        title = "Lucky 3";
+    }
+
+    parent.OpenNextPopup(
+        "VirtualResult",
+        url + '?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid + '&sporttype=' + sporttype,
+        title,
+        width,
+        height,
+        true,
+        false,
+        window,
+        0,
+        null,
+        null);
 }
 
 function ViewResultMetricGaming(
@@ -776,6 +796,11 @@ function ViewAllBetResult(transDesc, betCheck, betTypeId) {
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
+}
+
+function showLucky3Details(transId, custId) {
+    var width = 830;
+    parent.OpenNextPopup("Lucky3Details", 'Lucky3/ViewDetail?TransactionId=' + transId + '&CustomerId=' + custId, '', width, 500, true, false, window, 0, null, null);
 }
 
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {

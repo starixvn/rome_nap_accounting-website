@@ -153,7 +153,7 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string DirectABSUrl
         {
             get { return _directABSUrl; }
-        }        
+        }
 
         /// <summary>
         /// Template folder
@@ -565,7 +565,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowCricket"] == "1");
             }
         }
-        
+
         public static bool IsShowAllBet
         {
             get
@@ -605,12 +605,20 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsVirtualRateTest"].Equals("1"));
             }
         }
-        
+
         public static bool IsShowNG2
         {
             get
             {
                 return (ConfigurationManager.AppSettings["IsShowNG2"] == "1");
+            }
+        }
+
+        public static bool IsShowLucky3
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowLucky3"] == "1");
             }
         }
 

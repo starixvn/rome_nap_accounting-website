@@ -108,4 +108,7 @@
   <Function Name="BetList - Cashout">
     <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Lucky3">
+    <Setting Key="Acc_BetList_Lucky3_Detail" SpName="Acc_BetList_Lucky3_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>
