@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Controller
 {
     using System.Web.Mvc;
-    using BetListDetail.Lucky3.Criteria;
-    using BetListDetail.Lucky3.Services;
+    using BetDetails.Lucky3.Criteria;
+    using BetDetails.Lucky3.Services;
     using DataAccess;
 
     public class Lucky3Controller : Controller

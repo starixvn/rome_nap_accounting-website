@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria.Lucky3
 {
-    using BetListDetail.Lucky3.Criteria;
+    using BetDetails.Lucky3.Criteria;
     using NAP.Framework.Data;
 
     public class GetLucky3DetailCriteria : CriteriaBase

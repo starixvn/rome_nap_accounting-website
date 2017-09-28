@@ -65,6 +65,10 @@
       <HintPath>..\packages\EasyNetQ.0.53.6.418\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.0\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.4\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
       <Private>True</Private>
@@ -137,10 +141,6 @@
     </Reference>
     <Reference Include="Fanex.BetList.Voidbridge, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Voidbridge.1.0.0.14\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetListDetail.Lucky3, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetListDetail.Lucky3.1.0.0.0-beta17\lib\Fanex.BetListDetail.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">

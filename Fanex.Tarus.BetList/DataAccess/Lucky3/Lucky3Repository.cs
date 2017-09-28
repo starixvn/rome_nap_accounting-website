@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using BetListDetail.Lucky3.Criteria;
-    using BetListDetail.Lucky3.DataAccesses;
-    using BetListDetail.Lucky3.Models;
+    using BetDetails.Lucky3.Criteria;
+    using BetDetails.Lucky3.DataAccesses;
+    using BetDetails.Lucky3.Models;
     using Criteria.Lucky3;
     using Data;
 
