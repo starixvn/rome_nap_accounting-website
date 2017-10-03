@@ -857,6 +857,15 @@ namespace Fanex.BetList.Accounting.Core
                                 "ViewAGCasinoPopup(" + ticketDetail.Ticket.TransId + "," + ticketDetail.Ticket.BetTypeId + ")";
                             break;
 
+                        case SportContants.Lucky3:
+                            resultLink = string.Format(
+                                "ViewResult({0},{1},{2},{3})",
+                                ticketDetail.Ticket.MatchId,
+                                ticketDetail.Ticket.BetTypeId,
+                                ticketDetail.Ticket.BetId,
+                                ticketDetail.Ticket.SportTypeId);
+                            break;
+
                         default:
                             switch (ticketDetail.Ticket.BetTypeId)
                             {
