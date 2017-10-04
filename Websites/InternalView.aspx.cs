@@ -24,12 +24,9 @@ public partial class InternalView : System.Web.UI.Page
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        bool isSpecialSiteCustomer = false;
-        bool isSpecialHeadline = false;
-        int siteCode = 1;
-        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode );
-        
-        if (isDummyAcc || isSpecialHeadline)
+        var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] });
+
+        if (isDummyAcc || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
             {
@@ -38,7 +35,7 @@ public partial class InternalView : System.Web.UI.Page
             }
         }
         else
-        {            
+        {
             var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
                        new CheckSpecialSitePermissionCriteria()
                        {
@@ -53,8 +50,8 @@ public partial class InternalView : System.Web.UI.Page
         }
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-       
-        string internalAgentUrl = GetInternalLoginUrl((AlphaSiteCode)siteCode);
+
+        string internalAgentUrl = GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),

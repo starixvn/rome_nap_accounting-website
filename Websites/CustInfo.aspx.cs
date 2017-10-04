@@ -27,11 +27,8 @@ public partial class CustInfo : PageBase
         }
 
         var serviceBase = new ServiceBase();
-        bool isSpecialSiteCustomer = false;
-        bool isSpecialHeadline = false;
-        int siteCode = 1;
-        serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] }, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
-        if (isSpecialHeadline)
+        var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] });
+        if (checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
             {
