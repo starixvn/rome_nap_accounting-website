@@ -350,7 +350,7 @@
     },
     casino: function (custId) {
         showPopup(""
-                , "CustomerSetting/Casino/Super/EditSuper/" + custId + "/0", 0, 0, 1024, 700, false, 2000, null);
+                , "CustomerSetting/Casino/Super/EditSuper?id=" + custId + "&uplineid=0", 0, 0, 1024, 700, false, 2000, null);
     },
     reCalculateGrid: function () {
         var initWidth = 1460;

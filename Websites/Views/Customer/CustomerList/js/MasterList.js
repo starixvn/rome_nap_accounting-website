@@ -331,7 +331,7 @@
     },
     casino: function (custId, uplineId) {
         showPopup(""
-                , "CustomerSetting/Casino/Master/EditMaster/" + custId + "/ " + uplineId, 0, 0, 1024, 700, false, 2000, null);
+                , "CustomerSetting/Casino/Master/EditMaster?id=" + custId + "&uplineid= " + uplineId, 0, 0, 1024, 700, false, 2000, null);
     },
     goldDeluxeSetting: function (custId, uplineId) {
         showPopup("Gold Deluxe"
