@@ -259,6 +259,52 @@
             </div>
         </div>
         <div class="box_05_contents" id="box_05_contents">
+            <div class="container">
+                <div class="col">
+                    <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
+                        Dangerous
+                        <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
+                    </span>
+                    <br />
+                    <div id="dangerousbox" style="position: absolute; display: none; background-color: #BBC7CE;
+                            color: #4D4E4E;">
+                        {dangerousCustomer}
+                    </div>
+                </div>
+                <div class="col limit-per-ip"><span class="pull-left">Limit Per IP</span>{LimitPerIP}</div>
+                <div class="col">
+                    <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuAbnormal()">
+                        Abnormal
+                        <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
+                    </span>
+                    <br />
+                    <div id="abnormalbox" style="position: absolute; display: none; background-color: #BBC7CE;
+                            color: #4D4E4E;">
+                        {AbnormalCustomer}
+                    </div>
+                </div>
+                <div class="col"><span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend<span class="icon-list"></span></span></div>
+                <div class="col">Special<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Internal<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Suspended<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Closed<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Direct Account<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Allow Auto PT<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Double Comm<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Outright<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">HR Fixed Odds<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Number Game<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Racing<span class="icon-list"></span></span></div>
+                <div class="col">Casino<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Virtual Sports<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Keno<span class="icon-list"></span></span></div>
+                <div class="col">Super Live<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col"><span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">Sportsbook 2</span><span class="icon-list"></span></div>
+                <div class="col">Colossus Bets<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">Allbet<span class="icon-list"></span></span></div>
+                <div class="col">Macau Games<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+                <div class="col">Fishing World<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
+            </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
                    cellspacing="0">
                 <tr>
@@ -346,7 +392,7 @@
                 <tr>
                     <!--autosuspendstatus-->
                     <td class="l" colspan="2">
-                        <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span>
+                        
                     </td>
                     <!--/autosuspendstatus-->
                     <td class="l" colspan="2">
@@ -417,6 +463,7 @@
                         {closedCustomer}
                     </td>
                 </tr>
+                <tr><td><div></div></td></tr>
                 {settingcontrol}
             </table>
             <div class="tab_left_content hidden" id="box_05_content_2">

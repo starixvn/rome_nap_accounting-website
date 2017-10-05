@@ -30,15 +30,7 @@
     <script src="js/jQuery/message/jquery.msg.js" type="text/javascript"></script>
     <script src="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <style type="text/css">
-        #popLimitPerIP {
-            display: none;
-            position: absolute;
-            background: #fff;
-            left: 105px;
-            width: 140px;
-            padding: 2px;
-            border: solid 1px;
-        }
+        
         .memberSuspended {
             background-color: #F8DED7;
         }
