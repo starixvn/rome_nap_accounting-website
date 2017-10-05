@@ -30,6 +30,11 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
             }
 
+            if (!renderLeftPanelParameter.IsShowAllBetForCredit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+            }
+
             if (!renderLeftPanelParameter.IsShowMacau)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");

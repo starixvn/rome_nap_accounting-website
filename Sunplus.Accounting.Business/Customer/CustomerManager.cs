@@ -1011,11 +1011,12 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 }
 
-                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || (roleId < 4 && isHideAllbetUpline) || !isSyncAllbetUpline;
-                                // !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
-                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
-                                // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
+                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || !isSyncAllbetUpline 
+                                                        || (roleId < 4 && (isHideAllbetUpline || !isSyncAllbet));
 
+                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || !isSyncVoidbridgeUpline 
+                                                        || (roleId < 4 && (isHideVoidbridgeUpline || !isSyncVoidbridge));
+                                
                                 var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
                                 var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || isHideLucky3;
 
