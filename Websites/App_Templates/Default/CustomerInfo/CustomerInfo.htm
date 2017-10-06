@@ -260,6 +260,12 @@
         </div>
         <div class="box_05_contents" id="box_05_contents">
             <div class="container">
+                <!--dangerous-->
+                <div class="col">
+                    Dangerous
+                </div>
+                <!--/dangerous-->
+                <!--edited-dangerous-->
                 <div class="col">
                     <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
                         Dangerous
@@ -271,7 +277,17 @@
                         {dangerousCustomer}
                     </div>
                 </div>
+                <!--/edited-dangerous-->
+
                 <div class="col limit-per-ip"><span class="pull-left">Limit Per IP</span>{LimitPerIP}</div>
+
+                <!--AbnormalSession-->
+                <!--Abnormal-->
+                <div class="col">
+                    Abnormal
+                </div>
+                <!--/Abnormal-->
+                <!--edit-Abnormal-->
                 <div class="col">
                     <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuAbnormal()">
                         Abnormal
@@ -283,189 +299,127 @@
                         {AbnormalCustomer}
                     </div>
                 </div>
-                <div class="col"><span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend<span class="icon-list"></span></span></div>
-                <div class="col">Special<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Internal<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Suspended<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Closed<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Direct Account<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Allow Auto PT<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Double Comm<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Outright<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">HR Fixed Odds<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Number Game<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Racing<span class="icon-list"></span></span></div>
-                <div class="col">Casino<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Virtual Sports<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Keno<span class="icon-list"></span></span></div>
-                <div class="col">Super Live<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col"><span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">Sportsbook 2</span><span class="icon-list"></span></div>
-                <div class="col">Colossus Bets<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">Allbet<span class="icon-list"></span></span></div>
-                <div class="col">Macau Games<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-                <div class="col">Fishing World<span class="chkuncheck pull-right" id="special" name="special" onclick="return changeStatus('special',true);" onmouseout="" onmouseover=""></span></div>
-            </div>
-            <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
-                   cellspacing="0">
-                <tr>
-                    <!--dangerous-->
-                    <td class="l bot " style="width: 100px;">
-                        Dangerous
-                    </td>
-                    <td width="24px" class="r bot b"></td>
-                    <!--/dangerous-->
-                    <!--edited-dangerous-->
-                    <td class="l bot" style="width: 124px;" colspan="2">
-                        <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
-                            Dangerous
-                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
-                        </span>
-                        <br />
-                        <div id="dangerousbox" style="position: absolute; display: none; background-color: #BBC7CE;
-                            color: #4D4E4E;">
-                            {dangerousCustomer}
-                        </div>
-                    </td>
-                    <!--/edited-dangerous-->
-
-                    <td style="width: 100px;" class="l">
-                        Limit Per IP
-                    </td>
-                    <td width="24px" class="l">
-                        {LimitPerIP}
-                    </td>
-                </tr>
-                <!--AbnormalSession-->
-                <tr>
-                    <!--Abnormal-->
-                    <td class="l bot " style="width: 100px;">
-                        Abnormal
-                    </td>
-                    <td width="24px" class="r bot b"></td>
-                    <!--/Abnormal-->
-                    <!--edit-Abnormal-->
-                    <td class="l bot" style="width: 124px;" colspan="2">
-                        <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuAbnormal()">
-                            Abnormal
-                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
-                        </span>
-                        <br />
-                        <div id="abnormalbox" style="position: absolute; display: none; background-color: #BBC7CE;
-                            color: #4D4E4E;">
-                            {AbnormalCustomer}
-                        </div>
-                    </td>
-                    <!--/edit-Abnormal-->
-                </tr>
+                <!--/edit-Abnormal-->
                 <!--/AbnormalSession-->
-                <tr>
-                    <td class="l" colspan="2"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Enable Racing</span></td>
-                    <td class="l" colspan="2"><!--edit-p2p--><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span><!--/edit-p2p--></td>
-                </tr>
+
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">
+                        Enable Racing
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
+
+                <!--edit-p2p-->
+                <div class="col">
+                    <span class="canchange" onclick="showhideP2PStatus({CustId}, {RoleId})">
+                        Enable Poker
+                    </span>
+                </div>
+                <!--/edit-p2p-->
                 <!--Row_ProgressiveBonus_AGCasinoStatus-->
-                <tr>
-                    <!--ProgressiveBonus-->
-                    <td class="l" colspan="2"><span class="canchange" onclick="showhideCasinoBonus({CustId},{RoleId},'{UserName}')">Enable Bonus</span></td>
-                    <!--/ProgressiveBonus-->
-                    <td class="l" colspan="2">
-                        <!--AGCasinoStatus-->
-                        <span class="canchange" onclick="updateAGCasinoStatus({CustId},{RoleId})">Enable AG Casino</span>
-                        <!--/AGCasinoStatus-->
-                    </td>
-                </tr>
+                <!--ProgressiveBonus-->
+                <div class="col">
+                    <span class="canchange" onclick="showhideCasinoBonus({CustId}, {RoleId}, '{UserName}')">
+                        Enable Bonus
+                    </span>
+                </div>
+                <!--/ProgressiveBonus-->
+                <!--AGCasinoStatus-->
+                <div class="col">
+                    <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
+                        Enable AG Casino
+                    </span>
+                </div>
+                <!--/AGCasinoStatus-->
                 <!--/Row_ProgressiveBonus_AGCasinoStatus-->
+                <!--Row_Keno_GoldDeluxe-->
+                <!--EnableKeno-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">
+                        Enable Keno
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
+                <!--/EnableKeno-->
+                <!--GoldDeluxe-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId}, '{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status', 'GoldDeluxe', 0)">
+                        Enable Gold Deluxe
+                    </span>
+                </div>
+                <!--/GoldDeluxe-->
                 <!--/Row_Keno_GoldDeluxe-->
-                <tr>
-                    <!--EnableKeno-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Enable Keno</span>
-                    </td>
-                    <!--/EnableKeno-->
-                    <td class="l" colspan="2">
-                        <!--GoldDeluxe-->
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status','GoldDeluxe', 0)">Enable Gold Deluxe</span>
-                        <!--/GoldDeluxe-->
-                    </td>
-                </tr>
-                <!--/Row_Keno_GoldDeluxe-->
+                <!--Row_AutoSuspend_BetTrade-->
+                <!--BetTrade-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
+                        Enable BetTrade
+                    </span>
+                </div>
+                <!--/BetTrade-->
                 <!--/Row_AutoSuspend_BetTrade-->
-                <tr>
-                    <!--autosuspendstatus-->
-                    <td class="l" colspan="2">
-                        
-                    </td>
-                    <!--/autosuspendstatus-->
-                    <td class="l" colspan="2">
-                        <!--BetTrade-->
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status','BetTrade', {betTradeId})">Enable BetTrade</span>
-                        <!--/BetTrade-->
-                    </td>
-                </tr>
-                <!--/Row_AutoSuspend_BetTrade-->
+                <!--Row_Microgaming_Macau-->
+                <!--Microgaming-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusMicrogaming}, true, 'Update Microgaming Status' ,'MicroGaming', {microGamingId})">
+                        Enable Microgaming
+                    </span>
+                </div>
+                <!--/Microgaming-->
+                <!--Macau-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
+                        Enable Macau
+                    </span>
+                </div>
+                <!--/Macau-->
                 <!--/Row_Microgaming_Macau-->
-                <tr>
-                    <!--Microgaming-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMicrogaming}, true, 'Update Microgaming Status','MicroGaming', {microGamingId})">Enable Microgaming</span>
-                    </td>
-                    <!--/Microgaming-->
-                    <!--Macau-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">Enable Macau</span>
-                    </td>
-                    <!--/Macau-->
-                </tr>
-                <!--/Row_Microgaming_Macau-->
-                <tr>
-                    <!--Sportsbook2-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">Enable Sportsbook 2</span>
-                    </td>
-                    <!--/Sportsbook2-->
-                    <td class="l" colspan="2"></td>
-                </tr>
+                <!--Sportsbook2-->
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">
+                        Enable Sportsbook 2
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
+                <!--/Sportsbook2-->
                 <!--EnableCockFighting-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusCockFighting}, true, 'Update Cockfighting Status','CockFighting', {CockFightingId}, {settingType})">Enable Cockfighting</span>
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusCockFighting}, true, 'Update Cockfighting Status','CockFighting', {CockFightingId}, {settingType})">
+                        Enable Cockfighting
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
                 <!--/EnableCockFighting-->
                 <!--EnableAllbet-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">Enable Allbet</span>
-
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">
+                        Enable Allbet
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
                 <!--/EnableAllbet-->
+
                 <!--EnableCashOut-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">Enable Cash Out</span>
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
+                <div class="col">
+                    <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">
+                        Enable Cash Out
+                    </span>
+                </div>
                 <!--/EnableCashOut-->
-                <tr>
-                    <td style="width: 100px;" class="l">
-                        Special
-                    </td>
-                    <td width="24px" class="c">
-                        {specialCustomer}
-                    </td>
-                    <td style="width: 100px;" class="l">
-                        Closed
-                    </td>
-                    <td width="24px" class="l">
-                        {closedCustomer}
-                    </td>
-                </tr>
-                <tr><td><div></div></td></tr>
+
+                <div class="col">
+                    Special {specialCustomer}
+                </div>
+                <div class="col">
+                    Closed {closedCustomer}
+                </div>
                 {settingcontrol}
+            </div>
+
+            <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
+                   cellspacing="0">
             </table>
+
             <div class="tab_left_content hidden" id="box_05_content_2">
                 <div id="box_detail">
                     <div id="de_left">
