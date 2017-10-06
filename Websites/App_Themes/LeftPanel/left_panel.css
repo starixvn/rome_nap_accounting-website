@@ -176,6 +176,10 @@ body
 	display:block;
 	width:13px;
 	height:13px;
+    position: relative;
+    top: 4px;
+    float: right;
+    margin-right: 8px;
 	}
 .chkchecked:hover
 {

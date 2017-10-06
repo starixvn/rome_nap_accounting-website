@@ -1,19 +1,16 @@
 ﻿ <!--setting-->
-  <tr>
-      <td  width="100px" class="l" style="padding-left: 2px;">
-          <span>{lblL}</span>
-      </td>
-      <td width="22px" class="c">
-          <span id="{lblidL}" class="{classnameL}" onmouseover="{jsonmouseoverL}" onmouseout="{jsonmouseoutL}"
-              onclick="{jsonclickL}" name="{lblidL}">{L}</span>
-      </td>
-      <td width="100px" class="l" style="padding-left: 2px;">
-          <span>{lblR}</span>
-      </td>
-      <td width="22px" class="l">
-	<!--removeable--><span id="{lblidR}" class="{classnameR}" onmouseover="{jsonmouseoverR}" onmouseout="{jsonmouseoutR}" onclick="{jsonclickR}" name={lblidR}>{R}</span><!--/removeable-->
-	</td>
-  </tr>
+<div class="col">
+    {lblL}
+    <span id="{lblidL}" class="{classnameL}" onmouseover="{jsonmouseoverL}" onmouseout="{jsonmouseoutL}"
+          onclick="{jsonclickL}" name="{lblidL}">{L}</span>
+</div>
+  <!--removeable-->
+<div class="col">
+    {lblR}
+    <span id="{lblidR}" class="{classnameR}" onmouseover="{jsonmouseoverR}" onmouseout="{jsonmouseoutR}"
+          onclick="{jsonclickR}" name={lblidR}>{R}</span>
+</div>
+ <!--/removeable-->
  <!--/setting-->
  <!--popup-->
   <input type="hidden" id="{lblidL}chkhdf" value="{oldvalueL}"/>
