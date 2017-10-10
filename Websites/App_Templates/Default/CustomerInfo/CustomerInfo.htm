@@ -302,6 +302,57 @@
                 <!--/edit-Abnormal-->
                 <!--/AbnormalSession-->
 
+                <!--autosuspendstatus-->
+                <div class="col">
+                    <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">
+                        Auto Suspend
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
+                <!--/autosuspendstatus-->
+
+                <div class="col">
+                    Special {specialCustomer}
+                </div>
+
+                <!--internalControl-->
+                {internalControl}
+                <!--/internalControl-->
+                
+                <!--selectedBettingControl-->
+                {selectedBettingControl}
+                <!--/selectedBettingControl-->
+
+                {suspendedControl}
+
+                <div class="col">
+                    Closed {closedCustomer}
+                </div>
+
+                <!--allowAutoPTControl-->
+                {allowAutoPTControl}
+                <!--/allowAutoPTControl-->
+
+                <!--doubleCommControl-->
+                {doubleCommControl}
+                <!--/doubleCommControl-->
+
+                {outrightControl}
+               
+                <!--hRFixedOddsControl-->
+                {hRFixedOddsControl}
+                <!--/hRFixedOddsControl-->
+
+                <!--eSportsControl-->
+                {eSportsControl}
+                <!--/eSportsControl-->
+
+                {numberGameControl}
+
+                {casinoControl}
+
+                {liveCasinoControl}
+
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">
                         Enable Racing
@@ -350,14 +401,7 @@
                 <!--/GoldDeluxe-->
                 <!--/Row_Keno_GoldDeluxe-->
                 <!--Row_AutoSuspend_BetTrade-->
-                <!--autosuspendstatus-->
-                <div class="col">
-                    <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">
-                        Auto Suspend
-                        <span class="icon-list"></span>
-                    </span>
-                </div>
-                <!--/autosuspendstatus-->
+
                 <!--BetTrade-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
@@ -414,12 +458,6 @@
                 </div>
                 <!--/EnableCashOut-->
 
-                <div class="col">
-                    Special {specialCustomer}
-                </div>
-                <div class="col">
-                    Closed {closedCustomer}
-                </div>
                 {settingcontrol}
             </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"

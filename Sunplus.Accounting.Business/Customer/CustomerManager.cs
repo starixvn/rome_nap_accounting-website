@@ -1608,32 +1608,23 @@ namespace Sunplus.Accounting.Business.Customer
             //HuyNguyen
             SettingGroup sg = new SettingGroup();
             string userName = Converter.ToString2(row1["username"]);
-            //Get setting controll Suspended
-            sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
 
-            if (roleId == 4)
-            {
-                bool isAllDayBalTransfer = row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
-                sg.Add(GetSettingControlAllDayBalTransfer(roleId, isManageCustomerAccess, "AllDayBalTransfer", isAllDayBalTransfer));
-            }
-
-            #region Selected Betting
-
-            if (roleId > 1 && Functions.Settings.IsVisibleSelectedBetting)
-            {
-                bool SelectedBetting = Convert.IsDBNull(row1["SelectedBetting"]) ? false : Convert.ToBoolean(row1["SelectedBetting"]);
-                //bool SelectedBettingDL = Convert.IsDBNull(row1["DownlinesSelectedBetting"]) ? false : Convert.ToBoolean(row1["DownlinesSelectedBetting"]);
-                sg.Add(GetSettingControlSelectedBetting(roleId, CustParent.SelectedBetting, isManageCustomerAccess, "SelectedBetting", SelectedBetting, (roleId > 1)));
-            }
-
-            #endregion Selected Betting
+            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
+            false :
+            Convert.ToBoolean(row1["HasDownline"]);
 
             #region is Internal user
 
             if (!WebSettings.DisableInternal && Functions.Settings.IsVisibleInternal)
             {
                 bool isInternalUser = Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
-                sg.Add(GetSettingControlInternalUser(roleId, CustParent.IsInternalUser, isManageCustomerAccess, "internalUser", isInternalUser, CastAide.AsBoolean(row1["Enabled"])));
+                var internalControlSettingGroup = new SettingGroup();
+                internalControlSettingGroup.Add(GetSettingControlInternalUser(roleId, CustParent.IsInternalUser, isManageCustomerAccess, "internalUser", isInternalUser, CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{internalControl}", internalControlSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "internalControl");
             }
 
             ConfigureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
@@ -1655,6 +1646,38 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion is Internal user
 
+            //Get setting controll Suspended
+            var suspendedControlSettingGroup = new SettingGroup();
+            suspendedControlSettingGroup.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
+            TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
+
+            if (roleId == 4)
+            {
+                bool isAllDayBalTransfer = row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
+                var allDayBalTransferControlSettingGroup = new SettingGroup();
+                allDayBalTransferControlSettingGroup.Add(GetSettingControlAllDayBalTransfer(roleId, isManageCustomerAccess, "AllDayBalTransfer", isAllDayBalTransfer));
+                TemplateHandler.Assign(ref htmlcontent, "{allDayBalTransferControl}", allDayBalTransferControlSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "allDayBalTransferControl");
+            }
+
+            #region Selected Betting
+            if (roleId > 1 && Functions.Settings.IsVisibleSelectedBetting)
+            {
+                bool SelectedBetting = Convert.IsDBNull(row1["SelectedBetting"]) ? false : Convert.ToBoolean(row1["SelectedBetting"]);
+                var selectedBettingControlSettingGroup = new SettingGroup();
+                selectedBettingControlSettingGroup.Add(GetSettingControlSelectedBetting(roleId, CustParent.SelectedBetting, isManageCustomerAccess, "SelectedBetting", SelectedBetting, (roleId > 1)));
+                TemplateHandler.Assign(ref htmlcontent, "{selectedBettingControl}", selectedBettingControlSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "selectedBettingControl");
+            }
+
+            #endregion Selected Betting
+
             #region Auto Master
 
             if (roleId == 3)
@@ -1662,22 +1685,127 @@ namespace Sunplus.Accounting.Business.Customer
                 try
                 {
                     bool enableAutoMPT = Convert.IsDBNull(row3["DisableAutoMPT"]) ? false : !Convert.ToBoolean(row3["DisableAutoMPT"]);
-                    sg.Add(GetSettingControlEnableAutoMaster(roleId, isManageCustomerAccess, "Allow Auto PT", !enableAutoMPT, CastAide.AsBoolean(row1["Enabled"])));
+                    var allowAutoPTControlSettingGroup = new SettingGroup();
+                    allowAutoPTControlSettingGroup.Add(GetSettingControlEnableAutoMaster(roleId, isManageCustomerAccess, "Allow Auto PT", !enableAutoMPT, CastAide.AsBoolean(row1["Enabled"])));
+                    TemplateHandler.Assign(ref htmlcontent, "{allowAutoPTControl}", allowAutoPTControlSettingGroup.GetHTMLSettingControl());
                 }
                 catch (Exception ex)
                 {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                    LogExtensions.ExceptionHandler(ex);
                 }
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "allowAutoPTControl");
             }
 
             #endregion Auto Master
 
+            #region DoubleComm
+
+            if (WebSettings.OfferDoubleComm)
+            {
+                bool IsEnableDoubleCommLosing = Convert.IsDBNull(row1["DoubleCommLosing"]) ? false : Convert.ToBoolean(row1["DoubleCommLosing"]);
+                var doubleCommControlSettingGroup = new SettingGroup();
+                doubleCommControlSettingGroup.Add(GetSettingControlDoubleComm(roleId, CustParent.IsEnableDoubleCommLosing, isManageCustomerAccess, "doubleCommLosing", IsEnableDoubleCommLosing, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{doubleCommControl}", doubleCommControlSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "doubleCommControl");
+            }
+            #endregion DoubleComm
+
             #region Outright
 
             bool disabledOutright = Convert.IsDBNull(row1["DisableOutright"]) ? false : Convert.ToBoolean(row1["DisableOutright"]);
-            sg.Add(GetSettingControlOutright(roleId, CustParent.IsDisableOutright, isManageCustomerAccess, "disabledOutright", !disabledOutright, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
+            var outrightControlSettingGroup = new SettingGroup();
+            outrightControlSettingGroup.Add(GetSettingControlOutright(roleId, CustParent.IsDisableOutright, isManageCustomerAccess, "disabledOutright", !disabledOutright, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
+            TemplateHandler.Assign(ref htmlcontent, "{outrightControl}", outrightControlSettingGroup.GetHTMLSettingControl());
 
             #endregion Outright
+
+            #region HRFixedOdds
+
+            if (WebSettings.OfferHorseRacingFixedOdds)
+            {
+                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableHRFixedOdds"]) ?
+                    false :
+                    !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
+                bool disableDownlinesHorseRacingFixedOdds = !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
+                    Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]) :
+                    false;
+
+                var hRFixedOddsSettingGroup = new SettingGroup();
+                hRFixedOddsSettingGroup.Add(GetSettingControlEnableHorseRacingFixedOdds(
+                    roleId,
+                    CustParent.IsEnableHorseRacingFixedOdds,
+                    isManageCustomerAccess,
+                    "enableHorseRacingFixedOdds",
+                    isEnableHorseRacingFixedOdds,
+                    (roleId > 1),
+                    !disableDownlinesHorseRacingFixedOdds,
+                    CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
+
+                TemplateHandler.Assign(ref htmlcontent, "{hRFixedOddsControl}", hRFixedOddsSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "hRFixedOddsControl");
+            }
+            #endregion HRFixedOdds
+
+            #region Esports
+
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]) && (Permissions.HasPermission(Enumerations.Functions.Customer.EnableEsports)))
+            {
+                bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
+                bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
+                TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", disabledEsports ? 1 : 0);
+
+                var eSportsSettingGroup = new SettingGroup();
+                eSportsSettingGroup.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
+                                                       (roleId > 1), disabledEsports,
+                                                       CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
+                                                       !disabledEsportsDownline));
+
+                TemplateHandler.Assign(ref htmlcontent, "{eSportsControl}", eSportsSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "eSportsControl");
+            }
+
+            #endregion Esports
+
+            RenderLeftPanelManager.RenderOldProductEnableBoxLikeDCS(
+                row1,
+                sg,
+                ref htmlcontent,
+                isManageCustomerAccess,
+                false,
+                hasDownline,
+                "GoldDeluxe",
+                renderLeftPanelParameter.IsShowGoldDeluxe,
+                renderLeftPanelParameter,
+                "Update Gold Deluxe Status",
+                12);
+
+            #region Number Game
+
+            bool disabledNumberGame = Convert.IsDBNull(row1["DisableNumber"]) ? false : Convert.ToBoolean(row1["DisableNumber"]);
+            bool disabledNumberGameDL = Convert.IsDBNull(row1["DisableDownlinesNumber"]) ? false : Convert.ToBoolean(row1["DisableDownlinesNumber"]);
+            var numberGameSettingGroup = new SettingGroup();
+            numberGameSettingGroup.Add(GetSettingControlNumberGame(roleId, CustParent.IsDisabledNumberGame, isManageCustomerAccess,
+                                               "disabledNumberGame", !disabledNumberGame, (roleId > 1),
+                                               !disabledNumberGameDL, CastAide.AsBoolean(row1["Enabled"])));
+            TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", disabledNumberGame ? 1 : 0);
+
+            TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
+
+            #endregion Number Game
 
             #region HR
 
@@ -1708,9 +1836,11 @@ namespace Sunplus.Accounting.Business.Customer
             bool disabledCasino = Convert.IsDBNull(row1["disablecasino"]) ? false : Convert.ToBoolean(row1["disablecasino"]);
             bool syncCasino = Convert.IsDBNull(row1["synccasino"]) ? false : Convert.ToBoolean(row1["synccasino"]);
             bool disabledCSDL = Convert.IsDBNull(row1["DisableDownlinesCS"]) ? false : Convert.ToBoolean(row1["DisableDownlinesCS"]);
-            sg.Add(GetSettingControlCasino(roleId, parentID, isManageCustomerAccess, "disabledCS", !disabledCasino, (roleId > 1), syncCasino, isAllowEdit, CastAide.AsBoolean(row1["Enabled"].ToString()), disabledCSParent, !disabledCSDL));
             TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", disabledCasino ? 1 : 0);
 
+            var casinoSettingGroup = new SettingGroup();
+            casinoSettingGroup.Add(GetSettingControlCasino(roleId, parentID, isManageCustomerAccess, "disabledCS", !disabledCasino, (roleId > 1), syncCasino, isAllowEdit, CastAide.AsBoolean(row1["Enabled"].ToString()), disabledCSParent, !disabledCSDL));
+            TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             #endregion Enable Casino
 
             #region Bingo Game
@@ -1726,17 +1856,6 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion Bingo Game
 
-            #region Number Game
-
-            bool disabledNumberGame = Convert.IsDBNull(row1["DisableNumber"]) ? false : Convert.ToBoolean(row1["DisableNumber"]);
-            bool disabledNumberGameDL = Convert.IsDBNull(row1["DisableDownlinesNumber"]) ? false : Convert.ToBoolean(row1["DisableDownlinesNumber"]);
-            sg.Add(GetSettingControlNumberGame(roleId, CustParent.IsDisabledNumberGame, isManageCustomerAccess,
-                                               "disabledNumberGame", !disabledNumberGame, (roleId > 1),
-                                               !disabledNumberGameDL, CastAide.AsBoolean(row1["Enabled"])));
-            TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", disabledNumberGame ? 1 : 0);
-
-            #endregion Number Game
-
             #region live casino
 
             bool disabledLiveCasino = WebSettings.EnableLiveCasino ? Convert.IsDBNull(row1["disableLiveCasino"]) ? false : Convert.ToBoolean(row1["disableLiveCasino"]) : true;
@@ -1746,72 +1865,16 @@ namespace Sunplus.Accounting.Business.Customer
                                            ? false
                                            : Convert.ToBoolean(row1["DisableDownlinesLiveCS"])
                                      : true;
-            sg.Add(GetSettingControlLiveCasino(roleId, isManageCustomerAccess, "disabledLCS", !disabledLiveCasino,
+            TemplateHandler.Assign(ref htmlcontent, "{chkLiveCasino}", disabledLiveCasino ? 1 : 0);
+
+            var liveCasinoSettingGroup = new SettingGroup();
+            casinoSettingGroup.Add(GetSettingControlLiveCasino(roleId, isManageCustomerAccess, "disabledLCS", !disabledLiveCasino,
                                                (roleId > 1), syncLiveCasino, isAllowEditLCS,
                                                CastAide.AsBoolean(row1["Enabled"].ToString()), disableLiveCasinoParent,
                                                !disabledLCSDL));
-            TemplateHandler.Assign(ref htmlcontent, "{chkLiveCasino}", disabledLiveCasino ? 1 : 0);
+            TemplateHandler.Assign(ref htmlcontent, "{liveCasinoControl}", casinoSettingGroup.GetHTMLSettingControl());
 
             #endregion live casino
-
-            #region DoubleComm
-
-            if (WebSettings.OfferDoubleComm)
-            {
-                bool IsEnableDoubleCommLosing = Convert.IsDBNull(row1["DoubleCommLosing"]) ? false : Convert.ToBoolean(row1["DoubleCommLosing"]);
-                sg.Add(GetSettingControlDoubleComm(roleId, CustParent.IsEnableDoubleCommLosing, isManageCustomerAccess, "doubleCommLosing", IsEnableDoubleCommLosing, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
-            }
-
-            #endregion DoubleComm
-
-            #region HRFixedOdds
-
-            if (WebSettings.OfferHorseRacingFixedOdds)
-            {
-                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableHRFixedOdds"]) ?
-                    false :
-                    !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
-                bool disableDownlinesHorseRacingFixedOdds = !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
-                    Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]) :
-                    false;
-
-                sg.Add(GetSettingControlEnableHorseRacingFixedOdds(
-                    roleId,
-                    CustParent.IsEnableHorseRacingFixedOdds,
-                    isManageCustomerAccess,
-                    "enableHorseRacingFixedOdds",
-                    isEnableHorseRacingFixedOdds,
-                    (roleId > 1),
-                    !disableDownlinesHorseRacingFixedOdds,
-                    CastAide.AsBoolean(row1["Enabled"])));
-                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
-            }
-
-            #endregion HRFixedOdds
-
-            #region Esports
-
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]) && (Permissions.HasPermission(Enumerations.Functions.Customer.EnableEsports)))
-            {
-                bool disabledEsports = Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
-                bool disabledEsportsDownline = Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
-                sg.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
-                                                       (roleId > 1), disabledEsports,
-                                                       CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
-                                                       !disabledEsportsDownline));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", disabledEsports ? 1 : 0);
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
-            }
-
-            #endregion Esports
-
-            var hasDownline = Convert.IsDBNull(row1["HasDownline"]) ?
-                false :
-                Convert.ToBoolean(row1["HasDownline"]);
 
             RenderLeftPanelManager.RenderEnableProductBox(
                 row1,
@@ -1972,18 +2035,7 @@ namespace Sunplus.Accounting.Business.Customer
                 }
             }
 
-            RenderLeftPanelManager.RenderOldProductEnableBoxLikeDCS(
-                row1,
-                sg,
-                ref htmlcontent,
-                isManageCustomerAccess,
-                false, // ???
-                hasDownline,
-                "GoldDeluxe",
                 renderLeftPanelParameter.IsShowGoldDeluxeForCredit,
-                renderLeftPanelParameter,
-                "Update Gold Deluxe Status",
-                12);
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
@@ -3512,110 +3564,6 @@ namespace Sunplus.Accounting.Business.Customer
             });
 
             return !progressiveStatus.DisableUplinesCasinoBonus;
-        }
-
-        private void RenderEnableGoldDeluxeBox(
-            DataRow custInfoRow,
-            SettingGroup settingGroup,
-            ref string htmlcontent,
-            int roleId,
-            bool isManageCustomerAccess,
-            bool disabledGoldDeluxeParent,
-            bool hasDownline)
-        {
-            var productName = "GoldDeluxe";
-            var supportGoldDeluxe = ConfigurationManager.AppSettings["Enable" + productName] == "1";
-            if (supportGoldDeluxe)
-            {
-                var columnName = "Disable" + productName;
-                bool disableGoldDeluxe = Converter.ToBool(custInfoRow[columnName], false);
-
-                columnName = "DisableDownlines" + productName;
-                bool disableGoldDeluxeDownline = Converter.ToBool(custInfoRow[columnName], false);
-
-                settingGroup.Add(GetSettingControlGoldDeluxe(
-                    roleId,
-                    isManageCustomerAccess,
-                    "disabled" + productName,
-                    !disableGoldDeluxe,
-                    hasDownline,
-                    true,
-                    CastAide.AsBoolean(custInfoRow["Enabled"].ToString()),
-                    disabledGoldDeluxeParent,
-                    !disableGoldDeluxeDownline));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", disableGoldDeluxe ? 1 : 0);
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
-            }
-        }
-
-        private SettingControl GetSettingControlGoldDeluxe(
-            int roleId,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool hasDownLine,
-            bool isAllowEdit,
-            bool isEnabled,
-            bool disabledUpline,
-            bool disableDownLine)
-        {
-            string productName = "GoldDeluxe";
-            if (!WebSettings.EnableGoldDeluxe || !isAllowEdit)
-            {
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "disableGoldDeluxe"),
-                        false,
-                        true,
-                        "",
-                        "",
-                        "",
-                        "",
-                        statusName,
-                        roleId,
-                        disableDownLine,
-                        productName);
-            }
-            else
-            {
-                string classname = "";
-                string jsonclick = "";
-                string jsonmouseover = "";
-                string jsonmouseout = "";
-
-                if (isManageCustomerAccess)
-                {
-                    if (isEnabled)
-                    {
-                        if (4 == roleId || !disabledUpline)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return ShowDisablePopGoldDeluxe(this," + (hasDownLine ? "1" : "0") + ");";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledGoldDeluxeUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableGoldDeluxe"),
-                        currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
-                        disableDownLine, productName);
-            }
         }
 
         private bool IsHideAllBet(DataRow dataRow)
