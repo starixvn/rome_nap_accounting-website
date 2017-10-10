@@ -1,16 +1,18 @@
 namespace Sunplus.Accounting.Business.Customer
 {
+    using System.Data;
+    using Core.Configurations;
+    using DataAccess;
     using DNAide.Web;
+    using Entities;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Extensions;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.DataAccess;
-    using Sunplus.Accounting.Entities;
-    using System.Data;
-    using RemotingRef;    /// <summary>
-                          /// Render Left Panel Manager.
-                          /// </summary>
+    using RemotingRef;
+
+    /// <summary>
+    /// Render Left Panel Manager.
+    /// </summary>
     public static class RenderLeftPanelManager
     {
         public static void RenderEnableLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
