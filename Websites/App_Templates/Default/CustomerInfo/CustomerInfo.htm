@@ -350,6 +350,14 @@
                 <!--/GoldDeluxe-->
                 <!--/Row_Keno_GoldDeluxe-->
                 <!--Row_AutoSuspend_BetTrade-->
+                <!--autosuspendstatus-->
+                <div class="col">
+                    <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">
+                        Auto Suspend
+                        <span class="icon-list"></span>
+                    </span>
+                </div>
+                <!--/autosuspendstatus-->
                 <!--BetTrade-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
@@ -398,7 +406,6 @@
                     </span>
                 </div>
                 <!--/EnableAllbet-->
-
                 <!--EnableCashOut-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">
@@ -415,10 +422,8 @@
                 </div>
                 {settingcontrol}
             </div>
-
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
-                   cellspacing="0">
-            </table>
+                   cellspacing="0"></table>
 
             <div class="tab_left_content hidden" id="box_05_content_2">
                 <div id="box_detail">

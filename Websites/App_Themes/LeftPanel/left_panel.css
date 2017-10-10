@@ -472,6 +472,9 @@ body
     width: 140px;
     padding: 2px;
     border: solid 1px;
+    position: absolute;
+    right: 0;
+    z-index: 1000;
 }
 
 .col .icon-list {
