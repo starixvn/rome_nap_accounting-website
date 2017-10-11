@@ -9,12 +9,13 @@
 
 namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
 {
+    using Core.Common;
+    using Criteria;
+    using DataAccess;
     using DNAide.Web;
-    using Sunplus.Accounting.Business.Criteria;
-    using Sunplus.Accounting.Business.Resources;
-    using Sunplus.Accounting.Business.Security;
-    using Sunplus.Accounting.Core.Common;
-    using Sunplus.Accounting.Entities;
+    using Entities;
+    using Resources;
+    using Security;
 
     /// <summary>
     /// Configure Direct Account Service.
@@ -28,21 +29,20 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
         public static void AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria)
         {
             var hasPermission = Permissions.HasPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
-            if (!hasPermission)
-            {
-                return;
-            }
-
-            if (!criteria.DirectAccountStatusInfo.IsShowDirectStatus)
-            {
-                return;
-            }
-
-            var settingControl = GetSettingControlMarkDirectAccount(criteria);
             var htmlContent = criteria.Htmlcontent;
+            if (!hasPermission || !criteria.DirectAccountStatusInfo.IsShowDirectStatus)
+            {
+                TemplateHandler.RemoveBlock(ref htmlContent, "directAccountControl");
+                return;
+            }
+            
             TemplateHandler.Assign(ref htmlContent, criteria.ControlValueTag, criteria.DirectAccountStatusInfo.IsCheckedDirectStatus);
             criteria.Htmlcontent = htmlContent;
-            criteria.SettingGroup.Add(settingControl);
+
+            var directAccountControlSettingGroup = new SettingGroup();
+            directAccountControlSettingGroup.Add(GetSettingControlMarkDirectAccount(criteria));
+            var html = directAccountControlSettingGroup.GetHTMLSettingControl();
+            TemplateHandler.Assign(ref htmlContent, "{directAccountControl}", directAccountControlSettingGroup.GetHTMLSettingControl());
         }
 
         /// <summary>

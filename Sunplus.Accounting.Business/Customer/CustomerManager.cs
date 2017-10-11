@@ -976,11 +976,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                if (!isAllowProgressiveBonus && !canEditAGCasinoStatus)
-                                {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "Row_ProgressiveBonus_AGCasinoStatus");
-                                }
-
                                 bool isShowKenoStatus = KenoSection.Instance.Enable;
                                 if (!isShowKenoStatus)
                                 {
@@ -1100,7 +1095,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
 
                                 RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
-                                RenderLeftPanelManager.RemoveEmptyBlock(ref htmlcontent, renderLeftPanelParameter);
+
                                 RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
 
                                 #region Abnormal

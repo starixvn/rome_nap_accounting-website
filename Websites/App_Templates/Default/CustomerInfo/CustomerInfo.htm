@@ -265,6 +265,7 @@
                     Dangerous
                 </div>
                 <!--/dangerous-->
+
                 <!--edited-dangerous-->
                 <div class="col">
                     <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
@@ -319,6 +320,10 @@
                 {internalControl}
                 <!--/internalControl-->
                 
+                <!--directAccountControl-->
+                {directAccountControl}
+                <!--/directAccountControl-->
+
                 <!--selectedBettingControl-->
                 {selectedBettingControl}
                 <!--/selectedBettingControl-->
@@ -367,7 +372,7 @@
                     </span>
                 </div>
                 <!--/edit-p2p-->
-                <!--Row_ProgressiveBonus_AGCasinoStatus-->
+
                 <!--ProgressiveBonus-->
                 <div class="col">
                     <span class="canchange" onclick="showhideCasinoBonus({CustId}, {RoleId}, '{UserName}')">
@@ -375,6 +380,7 @@
                     </span>
                 </div>
                 <!--/ProgressiveBonus-->
+
                 <!--AGCasinoStatus-->
                 <div class="col">
                     <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
@@ -382,8 +388,7 @@
                     </span>
                 </div>
                 <!--/AGCasinoStatus-->
-                <!--/Row_ProgressiveBonus_AGCasinoStatus-->
-                <!--Row_Keno_GoldDeluxe-->
+
                 <!--EnableKeno-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">
@@ -392,6 +397,7 @@
                     </span>
                 </div>
                 <!--/EnableKeno-->
+
                 <!--GoldDeluxe-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId}, '{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status', 'GoldDeluxe', 0)">
@@ -399,8 +405,6 @@
                     </span>
                 </div>
                 <!--/GoldDeluxe-->
-                <!--/Row_Keno_GoldDeluxe-->
-                <!--Row_AutoSuspend_BetTrade-->
 
                 <!--BetTrade-->
                 <div class="col">
@@ -409,8 +413,7 @@
                     </span>
                 </div>
                 <!--/BetTrade-->
-                <!--/Row_AutoSuspend_BetTrade-->
-                <!--Row_Microgaming_Macau-->
+
                 <!--Microgaming-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusMicrogaming}, true, 'Update Microgaming Status' ,'MicroGaming', {microGamingId})">
@@ -418,6 +421,7 @@
                     </span>
                 </div>
                 <!--/Microgaming-->
+
                 <!--Macau-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
@@ -425,7 +429,7 @@
                     </span>
                 </div>
                 <!--/Macau-->
-                <!--/Row_Microgaming_Macau-->
+
                 <!--Sportsbook2-->
                 <div class="col">
                     <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">
