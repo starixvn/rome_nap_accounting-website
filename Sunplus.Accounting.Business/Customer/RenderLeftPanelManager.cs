@@ -56,24 +56,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{HasDownline}", customerDetail.HasDownline ? 1 : 0);
         }
 
-        public static void RemoveEmptyBlock(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
             if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxeForCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Keno_GoldDeluxe");
-            }
-
-            if (!renderLeftPanelParameter.IsShowAutoSuspend && !renderLeftPanelParameter.IsShowEnableBetTrade)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_AutoSuspend_BetTrade");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming && !renderLeftPanelParameter.IsShowMacau)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Microgaming_Macau");
-            }
-        }
-
         public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
             if (!WebSettings.EnableMicrogaming || !renderLeftPanelParameter.IsDeposit)
