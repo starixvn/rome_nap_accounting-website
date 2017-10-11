@@ -340,11 +340,12 @@
     <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
-    <Compile Include="Customer\CustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerRenderEnableLink.cs" />
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\CustomerUtils.cs" />
     <Compile Include="Customer\DangerousSetting.cs" />
-    <Compile Include="Customer\ICustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\ICustomerManager.cs" />
     <Compile Include="Customer\IServiceCustomerList.cs" />
     <Compile Include="Customer\MoveCustomer.cs" />
     <Compile Include="Customer\RenderLeftPanelManager.cs" />

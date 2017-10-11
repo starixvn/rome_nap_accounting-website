@@ -46,6 +46,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
+
+            if (renderLeftPanelParameter.IsShowAllBetForCredit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+            }
         }
 
         public static void AssignCustomerInfo(ref string htmlcontent, CustomerDetail customerDetail)
