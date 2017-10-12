@@ -56,7 +56,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         public static void RemoveEmptyBlock(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxe)
+            if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxeForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Keno_GoldDeluxe");
             }
