@@ -1394,7 +1394,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 #endregion MenuDetail
 
-                                if (!isShowGoldDeluxeForCredit || isDeposit || isShowGoldDeluxeForCredit)
+                                if (!isShowGoldDeluxeForCredit || isDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
