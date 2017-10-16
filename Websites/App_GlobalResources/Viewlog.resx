@@ -3774,4 +3774,10 @@
   <data name="autoSuspend2" xml:space="preserve">
     <value>Auto Suspend Other Sports</value>
   </data>
+  <data name="Disable160_1600" xml:space="preserve">
+    <value>Disabled Lucky 3</value>
+  </data>
+  <data name="Disable207_1004" xml:space="preserve">
+    <value>Disabled Bullfighting</value>
+  </data>
 </root>

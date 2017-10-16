@@ -1470,6 +1470,11 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
                                 }
 
+                                if (hideBullfighting)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
+                                }
+
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
                                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
