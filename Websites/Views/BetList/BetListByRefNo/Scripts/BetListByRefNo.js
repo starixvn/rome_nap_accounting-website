@@ -9,7 +9,7 @@ BetList.BetListByRefNo = (function ($) {
         fullWidth: true,
         fullHeight: true,
         gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 100,
+        gridHeight: 170,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     };
@@ -120,7 +120,7 @@ BetList.BetListByRefNo = (function ($) {
             showError("Either PlayerID or Username is required");
             return false;
         }
-        if ((selProductValue === "12" || selProductValue ==="21") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }

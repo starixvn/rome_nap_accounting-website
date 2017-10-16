@@ -1063,6 +1063,7 @@ var ViewPT = {
             case 217:
             case 218:
             case 220:
+            case 207:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer 

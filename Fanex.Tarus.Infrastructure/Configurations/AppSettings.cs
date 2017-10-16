@@ -137,6 +137,16 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        public static int ProductIdBullfighting
+        {
+            get
+            {
+                string productId = ConfigurationManager.AppSettings["ProductIdBullfighting"];
+
+                return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
+            }
+        }
+
         static AppSettings()
         {
             try
