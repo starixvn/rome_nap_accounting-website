@@ -1021,7 +1021,6 @@ namespace Sunplus.Accounting.Business.Customer
                                 var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || isHideLucky3;
                                 var isShowGoldDeluxeForCredit =
                                         WebSettings.EnableGoldDeluxe
-                                        && !Converter.ToBool(row1["HideGoldDeluxe"])
                                         && Converter.ToBool(row1["IsSyncUplineGoldDeluxe"])
                                         && !isDeposit
                                         && !string.Equals(currency, "Won", StringComparison.OrdinalIgnoreCase);
@@ -1029,7 +1028,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
-                                    IsShowGoldDeluxeForCredit = isShowGoldDeluxeForCredit,
+                                    IsShowGoldDeluxeForCredit = isShowGoldDeluxeForCredit && !Converter.ToBool(row1["HideGoldDeluxe"]),
                                     IsShowMacau = isShowMacau,
                                     IsShowEnableBetTrade = isShowEnableBetTrade,
                                     IsShowEnableCashOut = isShowEnableCashOut,
@@ -1394,7 +1393,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 #endregion MenuDetail
 
-                                if (!isShowGoldDeluxeForCredit || isDeposit)
+                                if (!isShowGoldDeluxeForCredit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
