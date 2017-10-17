@@ -304,5 +304,17 @@
         public bool Enabled => CastAide.AsBoolean(row1["Enabled"]);
 
         public string closedreason => row1["closedreason"].ToString();
+
+        public bool doublecommlosing => CastAide.AsBoolean(row1["doublecommlosing"]);
+
+        public bool NicknameLoginOnly => Convert.IsDBNull(row1["NicknameLoginOnly"]) ? false : Convert.ToBoolean(row1["NicknameLoginOnly"]);
+
+        public string lastChangeSecurityCodeDate => Convert.IsDBNull(row1["LastChangedSecurityCodeDate"]) ?
+                    string.Empty :
+                    Convert.ToString(row1["LastChangedSecurityCodeDate"]);
+
+        public string lastChangeOTPCodeDate => Convert.IsDBNull(row1["OTPCreateDate"]) ?
+                  string.Empty :
+                  Convert.ToString(row1["OTPCreateDate"]);
     }
 }

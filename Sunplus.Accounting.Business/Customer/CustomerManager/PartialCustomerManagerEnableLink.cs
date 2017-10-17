@@ -1,51 +1,322 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using DNAide.Core;
-using DNAide.Data;
-using DNAide.Utils;
-using DNAide.Web;
-using Fanex.Common;
-using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
-using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Module.NG2.Entities;
-using Fanex.Module.NG2.Services;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.Tarus.Security.Domain;
-using Fanex.Tarus.Security.Services;
-using IBCUtils.Objects;
-using RemotingRef;
-using Sunplus.Accounting.Business.Criteria;
-using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
-using Sunplus.Accounting.Business.CustSetting;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.AdoNet;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Entities.Customer;
-using Sunplus.Bingo.Core;
-using Result = Sunplus.Accounting.Entities.Result;
-
-namespace Sunplus.Accounting.Business.Customer
+﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Configuration;
+    using System.Data;
+    using System.Linq;
+    using DNAide.Core;
+    using DNAide.Web;
+    using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using RemotingRef;
+    using Criteria;
+    using ConfigureDirectAccount;
+    using Security;
+    using Core.Common;
+    using Core.Configurations;
+    using Core.Extensions;
+    using Core.Web;
+    using DataAccess;
+    using Entities;
+    using Bingo.Core;
+
     public partial class CustomerManager
     {
+        private RenderLeftPanelParameter RenderSettingMenu(string userName, ref string htmlcontent, DataRow row1, DataRow row3, DataTable dynamicSettingtable, CustomerInfoViewModel customerInfoViewModel, CustomerDetail _custparent, int parentId, bool isAllowEditCS, bool disabledCSParent, bool isAllowEditBI, bool disabledBIParent, bool isAllowEditLCS, bool disabledLCSParent, bool disalbedVSParent, bool disabledEsportsParent, int roleId, int custId, bool isManageCustomerAccess, bool isallowupdategivencredit)
+        {
+            var strCloseStatus = "";
+
+
+            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
+                && roleId == 4 &&
+                !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
+                && customerInfoViewModel.closed)
+            {
+                strCloseStatus = "<span class='chkchecked'></span>";
+            }
+
+            TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", strCloseStatus != "" ? strCloseStatus : GetClosedStatus(isManageCustomerAccess, "closed", customerInfoViewModel.closed, (roleId > 1), _custparent.IsClosed, isallowupdategivencredit));
+
+            //Limit per IP
+            if (roleId < 2) //Member
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", "");
+            }
+            else
+            {
+                int currentLimitPerIP = CastAide.AsInt16(row1["LimitPerIP"]); ;
+                int parentLimiPerIP = 0;
+
+                if (roleId > 1 && roleId < 4)
+                {
+                    parentLimiPerIP = _custparent.LimitPerIP;
+                }
+                int maxLimitPerIP = Sunplus.Accounting.Core.Common.Constants.MaxLimitPerIP;
+
+                string strLimitPerIP = WebUtils.LoadTemplate("LimitedPerIP.htm");
+                string optionLimitPerIP = "";
+                if (parentLimiPerIP == 0)
+                {
+                    for (int i = 0; i <= maxLimitPerIP; i++)
+                    {
+                        if (i == currentLimitPerIP)
+                        {
+                            optionLimitPerIP += "<option value='" + i.ToString() + "' selected='true'>" + i.ToString() + "</option>";
+                        }
+                        else
+                        {
+                            optionLimitPerIP += "<option value='" + i.ToString() + "' >" + i.ToString() + "</option>";
+                        }
+                    }
+                    TemplateHandler.Assign(ref strLimitPerIP, "{disabledLimit}", "");
+                    TemplateHandler.Assign(ref strLimitPerIP, "{LimitPerIPOption}", optionLimitPerIP);
+
+                    TemplateHandler.Assign(ref strLimitPerIP, "{lblUpdateDownline}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblApplyDownline"));
+                    TemplateHandler.Assign(ref strLimitPerIP, "{disabledDL}", currentLimitPerIP > 0 ? " disabled='true' " : "");
+                    if (Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+                    {
+                        TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "showhideLimitPerIP()");
+                        TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "canchange");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
+                        TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
+                    }
+                    if (roleId < 3)
+                    {
+                        TemplateHandler.Assign(ref strLimitPerIP, "{ishideapplydownline}", "style='display:none;'");
+                    }
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref strLimitPerIP, "IsUpdateDL");
+                    TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
+                    TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
+                }
+                TemplateHandler.Assign(ref strLimitPerIP, "{currValue}", currentLimitPerIP);
+                TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", strLimitPerIP);
+            }
+            //End limit per IP
+
+            //Enable P2P
+            var p2pStatus = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PStatus"];
+            bool visibleP2PStatus = CastAide.AsBoolean(p2pStatus.Value);
+            if (!visibleP2PStatus)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "p2pstatus");
+            }
+
+            // Louis: Auto suspend status
+            var hasReadPermission_AutoSuspend = Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
+            if (!hasReadPermission_AutoSuspend)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
+            }
+
+            if (!WebSettings.EnableAGCasino || roleId != 4 || !customerInfoViewModel.isDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+            }
+
+            var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && customerInfoViewModel.isDeposit;
+            if (!isShowGoldDeluxe)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
+            }
+
+            if (Functions.Settings.IsVisibleSpecial)
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", customerInfoViewModel.important, (roleId > 1)));
+            }
+
+            //HuyNguyen Dangerous
+            if (Functions.Settings.IsVisibleDangerous)
+            {
+                if (roleId > 2)
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "edited-dangerous");
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
+                    string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
+
+                    int dangerLevel = Convert.IsDBNull(row1["danger"]) ? 0 : Convert.ToInt32(row1["danger"]);
+                    int danger2Level = Convert.IsDBNull(row1["danger2"]) ? 0 : Convert.ToInt32(row1["danger2"]);
+                    int danger3Level = Convert.IsDBNull(row1["danger3"]) ? 0 : Convert.ToInt32(row1["danger3"]);
+
+                    int[] currentlevels = new int[] { dangerLevel, danger2Level, danger3Level };
+
+                    TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", GetSettingControlDangerous(roleId, isManageCustomerAccess, dangeruostype, currentlevels, customerInfoViewModel.isBA));
+                }
+            }
+
+            #region Progressive Bonus
+
+            bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, custId);
+            if (!isAllowProgressiveBonus)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
+            }
+
+            var canEditAGCasinoStatus = WebSettings.EnableAGCasino && customerInfoViewModel.isLicensee;
+            if (!canEditAGCasinoStatus)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+            }
+
+            bool isShowKenoStatus = KenoSection.Instance.Enable;
+            if (!isShowKenoStatus)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{CustId}", custId);
+                TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId);
+                TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
+            }
+
+            #endregion Progressive Bonus
+            var customerDetail = new CustomerDetail
+            {
+                CustID = custId,
+                RoleId = roleId,
+                AccId = AppSession.AccId,
+                HasDownline = Converter.ToBool(row1["HasDownline"])
+            };
+
+            var isShowEnableBetTrade = WebSettings.EnableBetTrade && roleId == 4 && customerInfoViewModel.isDeposit;
+            var isShowEnableCashOut = WebSettings.EnableCashOut && roleId == 4 && customerInfoViewModel.isDeposit;
+            var isShowEnableMicrogaming = WebSettings.EnableMicrogaming && customerInfoViewModel.isDeposit;
+            var isShowMacau = WebSettings.EnableMacau && roleId == 4 && customerInfoViewModel.isDeposit;
+            var isShowColossusBetsForCredit = !customerInfoViewModel.isHideColossusBets;
+            var isShowSportsbook2 = !customerInfoViewModel.isHideSportsbook2 && !customerInfoViewModel.isDeposit;
+            var isShowCockFighting = !customerInfoViewModel.isHideCockFighting && !customerInfoViewModel.isDeposit;
+            if (!isShowSportsbook2)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
+            }
+
+            if (!isShowCockFighting)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
+            }
+
+            if (customerInfoViewModel.isHideAllbetUpline || !customerInfoViewModel.isSyncAllbetUpline)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+            }
+
+            if (customerInfoViewModel.isHideCricketSettingLink)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
+
+            }
+
+            var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || (roleId < 4 && customerInfoViewModel.isHideAllbetUpline) || !customerInfoViewModel.isSyncAllbetUpline;
+            // !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
+            var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && customerInfoViewModel.isHideVoidbridgeUpline) || !customerInfoViewModel.isSyncVoidbridgeUpline;
+            // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
+
+            var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || customerInfoViewModel.isHideNG2Upline || !customerInfoViewModel.isSyncNG2Upline || !customerInfoViewModel.isSyncNG2 || customerInfoViewModel.isHideNG2;
+            var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || customerInfoViewModel.isHideLucky3Upline || customerInfoViewModel.isHideLucky3;
+
+            var renderLeftPanelParameter = new RenderLeftPanelParameter
+            {
+                IsShowKeno = isShowKenoStatus,
+                IsShowGoldDeluxe =
+                    WebSettings.EnableGoldDeluxe &&
+                    Converter.ToBool(row1["IsSyncUplineGoldDeluxe"])
+                    && !customerInfoViewModel.isDeposit
+                    && !string.Equals(customerInfoViewModel.currency, "Won", StringComparison.OrdinalIgnoreCase),
+                IsShowMacau = isShowMacau,
+                IsShowEnableBetTrade = isShowEnableBetTrade,
+                IsShowEnableCashOut = isShowEnableCashOut,
+                IsShowEnableMicrogaming = isShowEnableMicrogaming,
+                IsShowAutoSuspend = hasReadPermission_AutoSuspend,
+                IsShowColossusBetsForCredit = isShowColossusBetsForCredit,
+                IsShowAllBetForCredit = !hideCheckBoxAllbet,
+                IsShowVoidbridge = !hideCheckBoxVoidbridge,
+                IsShowFishingWorld = !customerInfoViewModel.hideEnableAndEditFishingWorld,
+                IsShowSportsbook2 = isShowSportsbook2,
+                IsShowCockFighting = isShowCockFighting,
+                IsHideCricket = customerInfoViewModel.isHideCricketSettingLink,
+                IsShowVirtualSport = !customerInfoViewModel.isHideVirtualSports,
+                IsShowVirtualSport2 = !customerInfoViewModel.isHideVirtualSports2,
+                ParentId = parentId,
+                RoleId = roleId,
+                CustId = custId,
+                IsDeposit = customerInfoViewModel.isDeposit,
+                Username = userName,
+                AccId = AppSession.AccId,
+                IsShowNG2 = !hideCheckBoxNG2,
+                IsShowKenoLottery = !customerInfoViewModel.hideKenoLottery,
+                IsShowLucky3 = !hideCheckBoxLucky3
+            };
+
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
+
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
+
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
+
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
+
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
+            TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
+
+            TemplateHandler.Assign(ref htmlcontent, "{CockFightingId}", "19");
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCockFighting}", "1");
+
+            TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
+
+            TemplateHandler.Assign(ref htmlcontent, "{AllbetId}", "21");
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
+
+            RenderLeftPanelManager.RenderEnableLink(ref htmlcontent, renderLeftPanelParameter);
+
+            RenderLeftPanelManager.AssignCustomerInfo(ref htmlcontent, customerDetail);
+
+            #region Abnormal
+
+            RenderAbnormalCustomer(roleId, ref htmlcontent, row1, isManageCustomerAccess);
+
+            #endregion Abnormal
+
+            GenSettingControl(
+                ref htmlcontent,
+                row1,
+                row3,
+                custId,
+                roleId,
+                parentId,
+                _custparent,
+                isManageCustomerAccess,
+                customerInfoViewModel.suspend,
+                customerInfoViewModel.autosuspend,
+                customerInfoViewModel.UplineAutoSuspend,
+                isAllowEditCS,
+                disabledCSParent,
+                isAllowEditBI,
+                disabledBIParent,
+                isAllowEditLCS,
+                disabledLCSParent,
+                disalbedVSParent,
+                disabledEsportsParent,
+                renderLeftPanelParameter,
+                dynamicSettingtable);
+            return renderLeftPanelParameter;
+        }
+
         private void GenSettingControl(
             ref string htmlcontent,
             DataRow row1,
