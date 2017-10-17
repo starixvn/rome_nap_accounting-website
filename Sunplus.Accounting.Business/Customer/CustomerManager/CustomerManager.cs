@@ -1456,7 +1456,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private void RenderAbnormalCustomer(int roleId, ref string htmlcontent, DataRow row1, bool isManageCustomerAccess)
+        private void RenderAbnormalCustomer(int roleId, ref string htmlcontent, int abnormal, bool isManageCustomerAccess)
         {
             if (WebSettings.EnableAbnormal)
             {
@@ -1467,9 +1467,8 @@ namespace Sunplus.Accounting.Business.Customer
                 else
                 {
                     TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
-                    int currentLevel = Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
                     TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}",
-                        GetSettingAbnormal(roleId, isManageCustomerAccess, currentLevel));
+                        GetSettingAbnormal(roleId, isManageCustomerAccess, abnormal));
                 }
             }
             else

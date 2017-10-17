@@ -8,6 +8,7 @@
     using DataAccess;
     using DNAide.Core;
     using Entities;
+    using Fanex.Common;
     using Security;
 
     public class CustomerInfoViewModel
@@ -268,7 +269,7 @@
 
         public bool closed => Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
 
-        public bool isBA => CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
+        public bool isBA => CastAide.AsInt32(row1["isba"]) == 1;
 
         public int parentId { get; set; }
 
@@ -314,7 +315,7 @@
 
         public string closedreason => row1["closedreason"].ToString();
 
-        public bool doublecommlosing => CastAide.AsBoolean(row1["doublecommlosing"]);
+        public bool doublecommlosing => Convert.IsDBNull(row1["DoubleCommLosing"]) ? false : Convert.ToBoolean(row1["DoubleCommLosing"]);
 
         public bool NicknameLoginOnly => Convert.IsDBNull(row1["NicknameLoginOnly"]) ? false : Convert.ToBoolean(row1["NicknameLoginOnly"]);
 
@@ -344,5 +345,67 @@
         public bool disalbedVSParent => !parentId.Equals(0) && _custparent.IsDisableVirtualSports;
 
         public bool disabledEsportsParent => !parentId.Equals(0) && _custparent.IsDisableEsports;
+
+        public bool disabledEsports => Convert.IsDBNull(row1["DisableEsports"]) ? false : Convert.ToBoolean(row1["DisableEsports"]);
+
+        public bool disabledEsportsDownline => Convert.IsDBNull(row1["disabledownlinesesports"]) ? false : Convert.ToBoolean(row1["disabledownlinesesports"]);
+
+        public int LimitPerIP => CastAide.AsInt16(row1["LimitPerIP"]);
+
+        public int danger => Convert.IsDBNull(row1["danger"]) ? 0 : Convert.ToInt32(row1["danger"]);
+        
+        public int danger2 => Convert.IsDBNull(row1["danger2"]) ? 0 : Convert.ToInt32(row1["danger2"]);
+
+        public int danger3 => Convert.IsDBNull(row1["danger3"]) ? 0 : Convert.ToInt32(row1["danger3"]);
+
+        public bool HasDownline => Converter.ToBool(row1["HasDownline"]);
+
+        public bool IsSyncUplineGoldDeluxe => Converter.ToBool(row1["IsSyncUplineGoldDeluxe"]);
+
+        public int abnormal => Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
+
+        public bool SelectedBetting => Convert.IsDBNull(row1["SelectedBetting"]) ? false : Convert.ToBoolean(row1["SelectedBetting"]);
+
+        public bool isInternalUser => Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
+
+        public bool IsHideDirectStatus => Converter.ToBool(row1["IsHideDirectStatus"]);
+
+        public bool IsCheckedDirectStatus => Converter.ToBool(row1["IsCheckDirectStatus"]);
+
+        public bool IsDisabledDirectStatus => Converter.ToBool(row1["IsDisabledDirectStatus"]);
+
+        public bool isAllDayBalTransfer => row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
+
+        public bool DisableAutoMPT => Convert.IsDBNull(row3["DisableAutoMPT"]) ? false : !Convert.ToBoolean(row3["DisableAutoMPT"]);
+
+        public bool DisableOutright => Convert.IsDBNull(row1["DisableOutright"]) ? false : Convert.ToBoolean(row1["DisableOutright"]);
+
+        public bool isEnableHorseRacingFixedOdds => Convert.IsDBNull(row1["DisableHRFixedOdds"]) ?
+                    false :
+                    !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
+
+        public bool disableDownlinesHorseRacingFixedOdds => !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
+                    Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]) :
+                    false;
+
+        public bool disabledNumberGame => Convert.IsDBNull(row1["DisableNumber"]) ? false : Convert.ToBoolean(row1["DisableNumber"]);
+
+        public bool disabledNumberGameDL => Convert.IsDBNull(row1["DisableDownlinesNumber"]) ? false : Convert.ToBoolean(row1["DisableDownlinesNumber"]);
+
+        public bool disabledCasino => Convert.IsDBNull(row1["disablecasino"]) ? false : Convert.ToBoolean(row1["disablecasino"]);
+
+        public bool syncCasino => Convert.IsDBNull(row1["synccasino"]) ? false : Convert.ToBoolean(row1["synccasino"]);
+
+        public bool disabledCSDL => Convert.IsDBNull(row1["DisableDownlinesCS"]) ? false : Convert.ToBoolean(row1["DisableDownlinesCS"]);
+
+        public bool disabledLiveCasino => WebSettings.EnableLiveCasino ? Convert.IsDBNull(row1["disableLiveCasino"]) ? false : Convert.ToBoolean(row1["disableLiveCasino"]) : true;
+
+        public bool syncLiveCasino => WebSettings.EnableLiveCasino ? (Convert.IsDBNull(row1["synclivecasino"]) ? false : Convert.ToBoolean(row1["synclivecasino"])) : false;
+
+        public bool disabledLCSDL => WebSettings.EnableLiveCasino
+                                     ? Convert.IsDBNull(row1["DisableDownlinesLiveCS"])
+                                           ? false
+                                           : Convert.ToBoolean(row1["DisableDownlinesLiveCS"])
+                                     : true;
     }
 }
