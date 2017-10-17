@@ -1,41 +1,50 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using DNAide.Core;
-using DNAide.Web;
-using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using RemotingRef;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Bingo.Core;
-
-namespace Sunplus.Accounting.Business.Customer
+﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Data;
+    using System.Linq;
+    using Bingo.Core;
+    using Core.Common;
+    using Core.Configurations;
+    using DNAide.Core;
+    using DNAide.Web;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using RemotingRef;
+    using Security;
+
     public partial class CustomerManager
     {
-        private void RenderDetailMenu(string userName, ref string htmlcontent, DataRow row1, DataRow row2, CustomerInfoViewModel customerInfoViewModel, ref int parentId, bool isAllowEditCS, bool isAllowEditBI, bool isAllowEditLCS, int roleId, int custId, RenderLeftPanelParameter renderLeftPanelParameter)
+        private void RenderDetailMenu(
+            string userName, 
+            ref string htmlcontent, 
+            DataRow row1, 
+            DataRow row2, 
+            CustomerInfoViewModel customerInfoViewModel, 
+            ref int parentId, 
+            int roleId, 
+            int custId, 
+            RenderLeftPanelParameter renderLeftPanelParameter)
         {
             GenMenuMinMaxPT(
-                                                ref htmlcontent,
-                                                row2,
-                                                custId,
-                                                roleId,
-                                                customerInfoViewModel.currency,
-                                                userName,
-                                                (isAllowEditBI && AppSession.IsSyncBingoCurrentCust),
-                                                customerInfoViewModel.isDeposit,
-                                                customerInfoViewModel.customerSite,
-                                                customerInfoViewModel.isHideSportsbook2,
-                                                customerInfoViewModel.isHideCockFighting,
-                                                customerInfoViewModel.isHideCricketSettingLink,
-                                                renderLeftPanelParameter.IsShowAllBetForCredit,
-                                                renderLeftPanelParameter.IsShowVoidbridge,
-                                                renderLeftPanelParameter.IsShowNG2,
-                                                renderLeftPanelParameter.IsShowFishingWorld,
-                                                customerInfoViewModel.isHideVirtualSports,
-                                                renderLeftPanelParameter.IsShowKenoLottery,
-                                                renderLeftPanelParameter.IsShowLucky3);
+                        ref htmlcontent,
+                        row2,
+                        custId,
+                        roleId,
+                        customerInfoViewModel.currency,
+                        userName,
+                        (customerInfoViewModel.isAllowEditBI && AppSession.IsSyncBingoCurrentCust),
+                        customerInfoViewModel.isDeposit,
+                        customerInfoViewModel.customerSite,
+                        customerInfoViewModel.isHideSportsbook2,
+                        customerInfoViewModel.isHideCockFighting,
+                        customerInfoViewModel.isHideCricketSettingLink,
+                        renderLeftPanelParameter.IsShowAllBetForCredit,
+                        renderLeftPanelParameter.IsShowVoidbridge,
+                        renderLeftPanelParameter.IsShowNG2,
+                        renderLeftPanelParameter.IsShowFishingWorld,
+                        customerInfoViewModel.isHideVirtualSports,
+                        renderLeftPanelParameter.IsShowKenoLottery,
+                        renderLeftPanelParameter.IsShowLucky3);
 
             string infoUrl = "";
             string detailUrl = "";
@@ -261,7 +270,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 if (WebSettings.disableCS)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-                if ((roleId < (int)Globals.AccountType.Super) && !isAllowEditCS)
+                if ((roleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.isAllowEditCS)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
             }
 
@@ -271,11 +280,11 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
             }
             //---------------------------------
-            if (!BingoSettings.BingoGame.Enabled || !isAllowEditBI)
+            if (!BingoSettings.BingoGame.Enabled || !customerInfoViewModel.isAllowEditBI)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
             }
-            if (!WebSettings.EnableLiveCasino || !isAllowEditLCS)
+            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.isAllowEditLCS)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }

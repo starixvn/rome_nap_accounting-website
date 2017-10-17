@@ -22,7 +22,19 @@
 
     public partial class CustomerManager
     {
-        private RenderLeftPanelParameter RenderSettingMenu(string userName, ref string htmlcontent, DataRow row1, DataRow row3, DataTable dynamicSettingtable, CustomerInfoViewModel customerInfoViewModel, CustomerDetail _custparent, int parentId, bool isAllowEditCS, bool disabledCSParent, bool isAllowEditBI, bool disabledBIParent, bool isAllowEditLCS, bool disabledLCSParent, bool disalbedVSParent, bool disabledEsportsParent, int roleId, int custId, bool isManageCustomerAccess, bool isallowupdategivencredit)
+        private RenderLeftPanelParameter RenderSettingMenu(
+            string userName, 
+            ref string htmlcontent, 
+            DataRow row1, 
+            DataRow row3, 
+            DataTable dynamicSettingtable, 
+            CustomerInfoViewModel customerInfoViewModel, 
+            CustomerDetail _custparent, 
+            int parentId, 
+            int roleId, 
+            int custId, 
+            bool isManageCustomerAccess, 
+            bool isallowupdategivencredit)
         {
             var strCloseStatus = "";
 
@@ -294,6 +306,7 @@
 
             GenSettingControl(
                 ref htmlcontent,
+                customerInfoViewModel,
                 row1,
                 row3,
                 custId,
@@ -304,14 +317,6 @@
                 customerInfoViewModel.suspend,
                 customerInfoViewModel.autosuspend,
                 customerInfoViewModel.UplineAutoSuspend,
-                isAllowEditCS,
-                disabledCSParent,
-                isAllowEditBI,
-                disabledBIParent,
-                isAllowEditLCS,
-                disabledLCSParent,
-                disalbedVSParent,
-                disabledEsportsParent,
                 renderLeftPanelParameter,
                 dynamicSettingtable);
             return renderLeftPanelParameter;
@@ -319,6 +324,7 @@
 
         private void GenSettingControl(
             ref string htmlcontent,
+            CustomerInfoViewModel customerInfoViewModel,
             DataRow row1,
             DataRow row3,
             int custId,
@@ -329,14 +335,6 @@
             bool isSuspended,
             bool autosuspend,
             bool UplineAutoSuspend,
-            bool isAllowEdit,
-            bool disabledCSParent,
-            bool isAllowEditBI,
-            bool disabledBIParent,
-            bool isAllowEditLCS,
-            bool disableLiveCasinoParent,
-            bool disabledVSParent,
-            bool disabledEsportsParent,
             RenderLeftPanelParameter renderLeftPanelParameter,
             DataTable dcsTable = null)
         {
@@ -504,7 +502,7 @@
                 var eSportsSettingGroup = new SettingGroup();
                 eSportsSettingGroup.Add(GetSettingControlEsports(roleId, isManageCustomerAccess, "disabledEsports", !disabledEsports,
                                                        (roleId > 1), disabledEsports,
-                                                       CastAide.AsBoolean(row1["Enabled"].ToString()), disabledEsportsParent,
+                                                       CastAide.AsBoolean(row1["Enabled"].ToString()), customerInfoViewModel.disabledEsportsParent,
                                                        !disabledEsportsDownline));
 
                 TemplateHandler.Assign(ref htmlcontent, "{eSportsControl}", eSportsSettingGroup.GetHTMLSettingControl());
@@ -576,7 +574,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", disabledCasino ? 1 : 0);
 
             var casinoSettingGroup = new SettingGroup();
-            casinoSettingGroup.Add(GetSettingControlCasino(roleId, parentID, isManageCustomerAccess, "disabledCS", !disabledCasino, (roleId > 1), syncCasino, isAllowEdit, CastAide.AsBoolean(row1["Enabled"].ToString()), disabledCSParent, !disabledCSDL));
+            casinoSettingGroup.Add(GetSettingControlCasino(roleId, parentID, isManageCustomerAccess, "disabledCS", !disabledCasino, (roleId > 1), syncCasino, customerInfoViewModel.isAllowEditCS, CastAide.AsBoolean(row1["Enabled"].ToString()), customerInfoViewModel.disabledCSParent, !disabledCSDL));
             TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             #endregion Enable Casino
 
@@ -586,8 +584,8 @@
             bool syncBingo = Convert.IsDBNull(row1["SyncBingo"]) ? false : Convert.ToBoolean(row1["SyncBingo"]);
             bool disabledBIDL = Convert.IsDBNull(row1["DisableDownlinesBI"]) ? false : Convert.ToBoolean(row1["DisableDownlinesBI"]);
             sg.Add(GetSettingControlBingoGame(roleId, parentID, isManageCustomerAccess, "disabledBingoGame",
-                                              !disabledBingo, (roleId > 1), syncBingo, isAllowEditBI,
-                                              CastAide.AsBoolean(row1["Enabled"].ToString()), disabledBIParent,
+                                              !disabledBingo, (roleId > 1), syncBingo, customerInfoViewModel.isAllowEditBI,
+                                              CastAide.AsBoolean(row1["Enabled"].ToString()), customerInfoViewModel.disabledBIParent,
                                               !disabledBIDL));
             TemplateHandler.Assign(ref htmlcontent, "{chkBingo}", disabledBingo ? 1 : 0);
 
@@ -606,8 +604,8 @@
 
             var liveCasinoSettingGroup = new SettingGroup();
             casinoSettingGroup.Add(GetSettingControlLiveCasino(roleId, isManageCustomerAccess, "disabledLCS", !disabledLiveCasino,
-                                               (roleId > 1), syncLiveCasino, isAllowEditLCS,
-                                               CastAide.AsBoolean(row1["Enabled"].ToString()), disableLiveCasinoParent,
+                                               (roleId > 1), syncLiveCasino, customerInfoViewModel.isAllowEditLCS,
+                                               CastAide.AsBoolean(row1["Enabled"].ToString()), customerInfoViewModel.disabledLCSParent,
                                                !disabledLCSDL));
             TemplateHandler.Assign(ref htmlcontent, "{liveCasinoControl}", casinoSettingGroup.GetHTMLSettingControl());
 
