@@ -1,46 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
 using DNAide.Core;
-using DNAide.Data;
-using DNAide.Utils;
 using DNAide.Web;
-using Fanex.Common;
 using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
-using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
-using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Module.NG2.Entities;
-using Fanex.Module.NG2.Services;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.Tarus.Security.Domain;
-using Fanex.Tarus.Security.Services;
-using IBCUtils.Objects;
 using RemotingRef;
-using Sunplus.Accounting.Business.Criteria;
-using Sunplus.Accounting.Business.Customer.ConfigureDirectAccount;
-using Sunplus.Accounting.Business.CustSetting;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.AdoNet;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
-using Result = Sunplus.Accounting.Entities.Result;
 
 namespace Sunplus.Accounting.Business.Customer
 {
