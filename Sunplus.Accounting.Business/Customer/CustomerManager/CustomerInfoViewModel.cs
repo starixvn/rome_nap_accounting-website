@@ -5,7 +5,10 @@
     using System.Data;
     using Core.Common;
     using Core.Configurations;
+    using DataAccess;
     using DNAide.Core;
+    using Entities;
+    using Security;
 
     public class CustomerInfoViewModel
     {
@@ -13,6 +16,7 @@
         private DataRow row2 { get; set; }
         private DataRow row3 { get; set; }
         private DataTable dynamicSettingtable { get; set; }
+        private CustomerDetail _custparent { get; set; }
 
         public CustomerInfoViewModel(DataRow row1, DataRow row2, DataRow row3, DataTable dynamicSettingtable)
         {
@@ -85,6 +89,11 @@
 
                 default:
                     break;
+            }
+
+            if (parentId > 0)
+            {
+                _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
             }
 
             foreach (DataRow row in dynamicSettingtable.Rows)
@@ -316,5 +325,24 @@
         public string lastChangeOTPCodeDate => Convert.IsDBNull(row1["OTPCreateDate"]) ?
                   string.Empty :
                   Convert.ToString(row1["OTPCreateDate"]);
+
+        public bool isAllowEditCS =>
+            parentId.Equals(0) || Permissions.IsAllowEditCasino(parentId, _custparent.IsCasinoSync);
+
+        public bool disabledCSParent => !parentId.Equals(0) && _custparent.IsDisableCasino;
+
+        public bool isAllowEditBI =>
+            parentId.Equals(0) || Permissions.IsAllowEditBingo(parentId, _custparent.IsBingoSync);
+
+        public bool disabledBIParent => !parentId.Equals(0) && _custparent.IsDisabledBingoGame;
+
+        public bool isAllowEditLCS =>
+            parentId.Equals(0) || Permissions.IsAllowEditLiveCasino(parentId, _custparent.IsLiveCasinoSync);
+
+        public bool disabledLCSParent => !parentId.Equals(0) && _custparent.IsDisableLiveCasino;
+
+        public bool disalbedVSParent => !parentId.Equals(0) && _custparent.IsDisableVirtualSports;
+
+        public bool disabledEsportsParent => !parentId.Equals(0) && _custparent.IsDisableEsports;
     }
 }
