@@ -4,21 +4,20 @@
     using System.Configuration;
     using System.Data;
     using System.Linq;
-    using DNAide.Core;
-    using DNAide.Web;
-    using Fanex.Common;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using RemotingRef;
-    using Criteria;
+    using Bingo.Core;
     using ConfigureDirectAccount;
-    using Security;
     using Core.Common;
     using Core.Configurations;
     using Core.Extensions;
     using Core.Web;
+    using Criteria;
     using DataAccess;
+    using DNAide.Core;
+    using DNAide.Web;
     using Entities;
-    using Bingo.Core;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using RemotingRef;
+    using Security;
 
     public partial class CustomerManager
     {
