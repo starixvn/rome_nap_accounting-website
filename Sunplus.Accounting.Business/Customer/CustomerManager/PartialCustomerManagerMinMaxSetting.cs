@@ -1,24 +1,48 @@
-﻿using System;
-using System.Data;
-using DNAide.Core;
-using DNAide.Web;
-using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using RemotingRef;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Bingo.Core;
-
-namespace Sunplus.Accounting.Business.Customer
+﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Data;
+    using DNAide.Core;
+    using DNAide.Web;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using RemotingRef;
+    using Core.Common;
+    using Core.Configurations;
+    using Bingo.Core;
+
+
     public partial class CustomerManager
     {
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery, bool isShowLucky3)
+        private static string GenMenuMinMaxPT(
+            string htmlcontent, 
+            DataRow row2,
+            CustomerInfoViewModel customerInfoViewModel,
+            RenderLeftPanelParameter renderLeftPanelParameter)
         {
+            int custId = customerInfoViewModel.custId;
+            int roleId = customerInfoViewModel.roleId;
+            string userName = customerInfoViewModel.userName;
+            bool isAllowEditBI = customerInfoViewModel.isAllowEditBI && AppSession.IsSyncBingoCurrentCust;
+            bool isDeposit = customerInfoViewModel.isDeposit;
+            string siteName = customerInfoViewModel.customerSite;
+            bool isHideSportsbook2 = customerInfoViewModel.isHideSportsbook2;
+            bool isHideCockFighting = customerInfoViewModel.isHideCockFighting;
+            bool isHideCricket = customerInfoViewModel.isHideCricketSettingLink;
+            bool isHideVirtualSports = customerInfoViewModel.isHideVirtualSports;
+
+            bool isShowAllBet = renderLeftPanelParameter.IsShowAllBetForCredit;
+            bool isShowVoidbridge = renderLeftPanelParameter.IsShowVoidbridge;
+            bool isShowNG2 = renderLeftPanelParameter.IsShowNG2;
+            bool isShowFishingWorld = renderLeftPanelParameter.IsShowFishingWorld;
+            bool isShowKenoLottery = renderLeftPanelParameter.IsShowKenoLottery;
+            bool isShowLucky3 = renderLeftPanelParameter.IsShowLucky3;
+
+
             int parentId;
-            string submenu1 = "";
-            string submenu2 = "";
-            string submenu3 = "";
-            string minMaxPtUrl = "";
+            string submenu1 = string.Empty;
+            string submenu2 = string.Empty;
+            string submenu3 = string.Empty;
+            string minMaxPtUrl = string.Empty;
             var minMaxPtRenovationUrl = string.Empty;
             string masterPtUrl = "";
             bool isShowSetting = KenoSection.Instance.ShowSetting;
@@ -277,6 +301,8 @@ namespace Sunplus.Accounting.Business.Customer
                 default:
                     break;
             }
+
+            return htmlcontent;
         }
     }
 }
