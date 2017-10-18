@@ -407,5 +407,34 @@
                                            ? false
                                            : Convert.ToBoolean(row1["DisableDownlinesLiveCS"])
                                      : true;
+
+        public int groupheadlineid => Convert.IsDBNull(row1["groupheadlineid"]) ? 0 : Convert.ToInt32(row1["groupheadlineid"]);
+
+        public string headline => row1["headline"].ToString();
+
+        public int SuperId => CastAide.AsInt32(row2["SuperID"]);
+
+        public string  SuperName => CastAide.AsString(row2["SuperName"]);
+
+        public int MasterId => CastAide.AsInt32(row2["MasterID"]);
+
+        public string MasterName => CastAide.AsString(row2["MasterName"]);
+
+
+        public int AgentId => CastAide.AsInt32(row2["AgentID"]);
+
+        public string AgentName => CastAide.AsString(row2["AgentName"]);
+
+        public int MemberId => CastAide.AsInt32(row2["MemberID"]);
+
+        public string MemberName => CastAide.AsString(row2["MemberName"]);
+
+        public bool SuperEnabled => Convert.ToBoolean(row2["SuperEnabled"]);
+
+        public bool MasterEnabled => Convert.ToBoolean(row2["MasterEnabled"]);
+
+        public bool AgentEnabled => Convert.ToBoolean(row2["AgentEnabled"]);
+
+        public bool EnableVirtualRate => Convert.ToBoolean(row2["EnableVirtualRate"]);
     }
 }

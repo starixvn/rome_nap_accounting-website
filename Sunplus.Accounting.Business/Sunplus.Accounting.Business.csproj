@@ -346,6 +346,8 @@
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMenuDetail.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMinMaxSetting.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerEnableLink.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerGenTransLinskBox.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerRenderBalanceInfo.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerOnlineList.cs" />
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\CustomerUtils.cs" />
