@@ -342,11 +342,13 @@
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager\CustomerInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\CustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerSettingControl.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerLoginTab.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMenuDetail.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMinMaxSetting.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerEnableLink.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerGenTransLinskBox.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerGenUplineBox.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerRenderBalanceInfo.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerOnlineList.cs" />
     <Compile Include="Customer\CustomerService.cs" />

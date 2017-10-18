@@ -9,6 +9,7 @@
     using DNAide.Core;
     using Entities;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Security;
 
     public class CustomerInfoViewModel
@@ -17,7 +18,6 @@
         private DataRow row2 { get; set; }
         private DataRow row3 { get; set; }
         private DataTable dynamicSettingtable { get; set; }
-        private CustomerDetail _custparent { get; set; }
 
         public CustomerInfoViewModel(DataRow row1, DataRow row2, DataRow row3, DataTable dynamicSettingtable)
         {
@@ -92,11 +92,6 @@
                     break;
             }
 
-            if (parentId > 0)
-            {
-                _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
-            }
-
             foreach (DataRow row in dynamicSettingtable.Rows)
             {
                 if (row["productID"] != null)
@@ -167,11 +162,13 @@
             }
         }
 
-        public string username => row1["username"].ToString();
+        public string userName => row1["username"].ToString();
 
         public string firstname => Convert.IsDBNull(row1["firstname"]) ? "" : row1["firstname"].ToString();
 
         public string lastname => Convert.IsDBNull(row1["lastname"]) ? "" : row1["lastname"].ToString();
+
+        public string fullname => firstname + " - " + lastname;
 
         public string downlinename { get; set; }
 
@@ -435,6 +432,38 @@
 
         public bool AgentEnabled => Convert.ToBoolean(row2["AgentEnabled"]);
 
-        public bool EnableVirtualRate => Convert.ToBoolean(row2["EnableVirtualRate"]);
+        public bool EnableVirtualRate => Convert.ToBoolean(row1["EnableVirtualRate"]);
+
+        public bool hasReadPermission_AutoSuspend => Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
+
+        public bool isManageCustomerAccess => Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust);
+
+        public bool isallowupdategivencredit => Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+
+        public bool isShowKenoStatus => KenoSection.Instance.Enable;
+
+        public bool  isShowEnableBetTrade => WebSettings.EnableBetTrade && roleId.Equals(4) && isDeposit;
+
+        public bool isShowEnableCashOut => WebSettings.EnableCashOut && roleId == 4 && isDeposit;
+
+        public bool isShowEnableMicrogaming => WebSettings.EnableMicrogaming && isDeposit;
+
+        public bool isShowMacau => WebSettings.EnableMacau && roleId == 4 && isDeposit;
+
+        public bool isShowColossusBetsForCredit => !isHideColossusBets;
+
+        public bool isShowSportsbook2 => !isHideSportsbook2 && !isDeposit;
+
+        public bool isShowCockFighting => !isHideCockFighting && !isDeposit;
+
+        public bool hideCheckBoxAllbet => !WebSettings.IsShowAllBet || (roleId < 4 && isHideAllbetUpline) || !isSyncAllbetUpline;
+
+        public bool hideCheckBoxVoidbridge => !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
+
+        public bool hideCheckBoxNG2 => !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
+
+        public bool hideCheckBoxLucky3 => !WebSettings.IsShowLucky3 || isHideLucky3Upline || isHideLucky3;
+
+        public CustomerDetail _custparent => parentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(parentId) : new CustomerDetail();
     }
 }

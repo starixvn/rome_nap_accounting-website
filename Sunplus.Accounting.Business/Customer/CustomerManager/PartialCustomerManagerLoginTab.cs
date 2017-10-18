@@ -17,7 +17,7 @@
 
             var site = new CustSettingMoveSite();
             AppSession.SiteName = customerInfoViewModel.customerSite;
-            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.custId, customerInfoViewModel.roleId, customerInfoViewModel.customerSite, customerInfoViewModel.username);
+            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.custId, customerInfoViewModel.roleId, customerInfoViewModel.customerSite, customerInfoViewModel.userName);
 
             TemplateHandler.Assign(ref tplLoginDetail, "{createdate}", customerInfoViewModel.createdate + " " + customerInfoViewModel.createtime);
             TemplateHandler.Assign(ref tplLoginDetail, "{LastLogin}", customerInfoViewModel.lastLoginDate + customerInfoViewModel.lastLoginTime);

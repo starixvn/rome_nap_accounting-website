@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Web;
-using DNAide.Data;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess;
-
-namespace Sunplus.Accounting.Business.Customer
+﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System.Collections;
+    using System.Configuration;
+    using System.Data;
+    using System.Web;
+    using Core.Web;
+    using Core.Web.Controls;
+    using DataAccess;
+    using DNAide.Data;
+    using DNAide.Web;
+
     public partial class CustomerManager
     {
         public string GenOnlineList(int custId)
@@ -17,7 +17,7 @@ namespace Sunplus.Accounting.Business.Customer
             string tplOnlineList = WebUtils.LoadTemplate("CustomerInfo/OnlineList.htm");
             string tplRowData = TemplateHandler.CopyBlock(tplOnlineList, "rowdata");
             string data = "";
-            DataRowCollection rows = DataAccess.IBCDLL.UserController.CustomerSelOnline(custId);
+            DataRowCollection rows = Accounting.DataAccess.IBCDLL.UserController.CustomerSelOnline(custId);
             if (rows != null && rows.Count > 0)
             {
                 for (int i = 0; i < rows.Count; ++i)
