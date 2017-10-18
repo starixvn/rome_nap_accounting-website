@@ -11,8 +11,7 @@
         private static string RenderBalanceInfo(
             string htmlcontent, 
             DbResult ds,
-            CustomerInfoViewModel customerInfoViewModel, 
-            bool isallowupdategivencredit)
+            CustomerInfoViewModel customerInfoViewModel)
         {
             bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
 
@@ -42,7 +41,7 @@
             }
 
             //Check Given Credit Permission
-            if (isallowupdategivencredit == true)
+            if (customerInfoViewModel.isallowupdategivencredit)
             {
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditOnclick}", "return ChangeGivenCredit(true);");
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditClass}", "canchange");
@@ -57,7 +56,7 @@
             var virtualRateText = customerInfoViewModel.EnableVirtualRate ? "Edit" : "Disabled";
             var virtualRateOnclick =
                 "return OpenEditVirtualExRate(" + customerInfoViewModel.custId + ",'" +
-                    customerInfoViewModel.username + "','" +
+                    customerInfoViewModel.userName + "','" +
                     AccCommon.GetRoleName(customerInfoViewModel.roleId) + "');";
             var virtualRateTitle = "Click to Edit";
             TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", virtualRateClass);

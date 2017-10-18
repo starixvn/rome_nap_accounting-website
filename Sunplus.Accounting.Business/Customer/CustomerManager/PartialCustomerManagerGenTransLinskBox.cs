@@ -53,7 +53,7 @@
                         downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.custId + "&roleid=4";
                     }
 
-                    customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.custId.ToString() + "&roleId=4&userName=" + customerInfoViewModel.username;
+                    customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.custId.ToString() + "&roleId=4&userName=" + customerInfoViewModel.userName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.isDeposit ? "balance" : null);
                     lblDownlineList = "Master List";
                     break;
@@ -75,7 +75,7 @@
                         downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.custId + "&roleid=3";
                     }
 
-                    customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.custId.ToString() + "&roleId=3&userName=" + customerInfoViewModel.username;
+                    customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.custId.ToString() + "&roleId=3&userName=" + customerInfoViewModel.userName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.isDeposit ? "balance" : null);
                     lblDownlineList = "Agent List";
                     break;
@@ -98,7 +98,7 @@
                         downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.custId + "&roleid=2";
                     }
 
-                    customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + customerInfoViewModel.custId.ToString() + "&userName=" + customerInfoViewModel.username;
+                    customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + customerInfoViewModel.custId.ToString() + "&userName=" + customerInfoViewModel.userName;
                     lblDownlineList = "Member List";
                     break;
 
@@ -111,7 +111,7 @@
 
             TemplateHandler.Assign(ref tplTransLink, "{IsInternal}", customerInfoViewModel.isInternalUser.ToString().ToLower());
 
-            TemplateHandler.Assign(ref tplTransLink, "{custname}", HttpUtility.UrlEncode(customerInfoViewModel.username));
+            TemplateHandler.Assign(ref tplTransLink, "{custname}", HttpUtility.UrlEncode(customerInfoViewModel.userName));
             if (Permissions.HasPermission(Enumerations.Functions.Customer.CustomerBalance))
             {
                 TemplateHandler.Assign(ref tplTransLink, "{CustomerBalanceURL}", customerBalanceURL);

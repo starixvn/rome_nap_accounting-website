@@ -14,37 +14,23 @@
 
     public partial class CustomerManager
     {
-        private void RenderDetailMenu(
-            string userName, 
-            ref string htmlcontent, 
+        private static string RenderDetailMenu(
+            string htmlcontent, 
             DataRow row1, 
             DataRow row2, 
             CustomerInfoViewModel customerInfoViewModel, 
-            ref int parentId, 
-            int roleId, 
-            int custId, 
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            GenMenuMinMaxPT(
-                        ref htmlcontent,
+            string userName = customerInfoViewModel.userName;
+            int parentId = customerInfoViewModel.parentId;
+            int roleId = customerInfoViewModel.roleId;
+            int custId = customerInfoViewModel.custId;
+
+            htmlcontent = GenMenuMinMaxPT(
+                        htmlcontent,
                         row2,
-                        custId,
-                        roleId,
-                        customerInfoViewModel.currency,
-                        userName,
-                        (customerInfoViewModel.isAllowEditBI && AppSession.IsSyncBingoCurrentCust),
-                        customerInfoViewModel.isDeposit,
-                        customerInfoViewModel.customerSite,
-                        customerInfoViewModel.isHideSportsbook2,
-                        customerInfoViewModel.isHideCockFighting,
-                        customerInfoViewModel.isHideCricketSettingLink,
-                        renderLeftPanelParameter.IsShowAllBetForCredit,
-                        renderLeftPanelParameter.IsShowVoidbridge,
-                        renderLeftPanelParameter.IsShowNG2,
-                        renderLeftPanelParameter.IsShowFishingWorld,
-                        customerInfoViewModel.isHideVirtualSports,
-                        renderLeftPanelParameter.IsShowKenoLottery,
-                        renderLeftPanelParameter.IsShowLucky3);
+                        customerInfoViewModel,
+                        renderLeftPanelParameter);
 
             string infoUrl = "";
             string detailUrl = "";
@@ -128,7 +114,6 @@
                     break;
 
                 case 4: // super
-                    parentId = 0;
                     RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                     bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
@@ -253,7 +238,7 @@
 
 
             //---- for menu details -----------
-            AssignEditFinance(ref htmlcontent, roleId);
+            htmlcontent = AssignEditFinance(htmlcontent, roleId);
             TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
@@ -363,7 +348,8 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
             }
-        }
 
+            return htmlcontent;
+        }
     }
 }

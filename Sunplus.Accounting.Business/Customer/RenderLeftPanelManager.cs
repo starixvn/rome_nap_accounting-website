@@ -15,51 +15,10 @@ namespace Sunplus.Accounting.Business.Customer
     /// </summary>
     public static class RenderLeftPanelManager
     {
-        public static void RenderEnableLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
-            if (!renderLeftPanelParameter.IsShowEnableBetTrade)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableCashOut)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
-            }
-
             if (!renderLeftPanelParameter.IsShowAllBetForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
-
-            if (!renderLeftPanelParameter.IsShowMacau)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
-            }
-
-            if (renderLeftPanelParameter.IsHideCricket)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-            }
-
-            if (renderLeftPanelParameter.IsShowAllBetForCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
-            }
-        }
-
-        public static void AssignCustomerInfo(ref string htmlcontent, CustomerDetail customerDetail)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerDetail.CustID);
-            TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerDetail.RoleId);
-            TemplateHandler.Assign(ref htmlcontent, "{userId}", customerDetail.AccId);
-            TemplateHandler.Assign(ref htmlcontent, "{HasDownline}", customerDetail.HasDownline ? 1 : 0);
-        }
 
             if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxeForCredit)
         public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
