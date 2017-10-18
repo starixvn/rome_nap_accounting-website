@@ -346,6 +346,8 @@
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMenuDetail.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerMinMaxSetting.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerEnableLink.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerGenTransLinskBox.cs" />
+    <Compile Include="Customer\CustomerManager\PartialCustomerManagerRenderBalanceInfo.cs" />
     <Compile Include="Customer\CustomerManager\PartialCustomerManagerOnlineList.cs" />
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\CustomerUtils.cs" />
@@ -721,7 +723,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
