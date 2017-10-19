@@ -19,16 +19,16 @@
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            int custId = customerInfoViewModel.custId;
-            int roleId = customerInfoViewModel.roleId;
-            string userName = customerInfoViewModel.userName;
-            bool isAllowEditBI = customerInfoViewModel.isAllowEditBI && AppSession.IsSyncBingoCurrentCust;
-            bool isDeposit = customerInfoViewModel.isDeposit;
-            string siteName = customerInfoViewModel.customerSite;
-            bool isHideSportsbook2 = customerInfoViewModel.isHideSportsbook2;
-            bool isHideCockFighting = customerInfoViewModel.isHideCockFighting;
-            bool isHideCricket = customerInfoViewModel.isHideCricketSettingLink;
-            bool isHideVirtualSports = customerInfoViewModel.isHideVirtualSports;
+            int custId = customerInfoViewModel.CustId;
+            int roleId = customerInfoViewModel.RoleId;
+            string userName = customerInfoViewModel.UserName;
+            bool isAllowEditBI = customerInfoViewModel.IsAllowEditBI && AppSession.IsSyncBingoCurrentCust;
+            bool isDeposit = customerInfoViewModel.IsDeposit;
+            string siteName = customerInfoViewModel.CustomerSite;
+            bool isHideSportsbook2 = customerInfoViewModel.IsHideSportsbook2;
+            bool isHideCockFighting = customerInfoViewModel.IsHideCockFighting;
+            bool isHideCricket = customerInfoViewModel.IsHideCricketSettingLink;
+            bool isHideVirtualSports = customerInfoViewModel.IsHideVirtualSports;
 
             bool isShowAllBet = renderLeftPanelParameter.IsShowAllBetForCredit;
             bool isShowVoidbridge = renderLeftPanelParameter.IsShowVoidbridge;
