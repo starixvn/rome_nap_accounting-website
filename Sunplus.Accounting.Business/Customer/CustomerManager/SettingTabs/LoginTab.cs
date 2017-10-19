@@ -13,24 +13,24 @@
             CustomerInfoViewModel customerInfoViewModel)
         {
             string tplLoginDetail = WebUtils.LoadTemplate("CustomerInfo/LoginDetail.htm");
-            string lastIp = customerInfoViewModel.lastIp;
+            string lastIp = customerInfoViewModel.LastIp;
 
             var site = new CustSettingMoveSite();
-            AppSession.SiteName = customerInfoViewModel.customerSite;
-            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.custId, customerInfoViewModel.roleId, customerInfoViewModel.customerSite, customerInfoViewModel.userName);
+            AppSession.SiteName = customerInfoViewModel.CustomerSite;
+            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.CustId, customerInfoViewModel.RoleId, customerInfoViewModel.CustomerSite, customerInfoViewModel.UserName);
 
-            TemplateHandler.Assign(ref tplLoginDetail, "{createdate}", customerInfoViewModel.createdate + " " + customerInfoViewModel.createtime);
-            TemplateHandler.Assign(ref tplLoginDetail, "{LastLogin}", customerInfoViewModel.lastLoginDate + customerInfoViewModel.lastLoginTime);
-            TemplateHandler.Assign(ref tplLoginDetail, "{LastTxn}", customerInfoViewModel.lastTxnDate + customerInfoViewModel.lastTxnTime + "&nbsp;");
-            TemplateHandler.Assign(ref tplLoginDetail, "{PasswordExpiry}", customerInfoViewModel.pwdExpiryDate + customerInfoViewModel.pwdExpiryTime);
+            TemplateHandler.Assign(ref tplLoginDetail, "{createdate}", customerInfoViewModel.Createdate + " " + customerInfoViewModel.Createtime);
+            TemplateHandler.Assign(ref tplLoginDetail, "{LastLogin}", customerInfoViewModel.LastLoginDate + customerInfoViewModel.LastLoginTime);
+            TemplateHandler.Assign(ref tplLoginDetail, "{LastTxn}", customerInfoViewModel.LastTxnDate + customerInfoViewModel.LastTxnTime + "&nbsp;");
+            TemplateHandler.Assign(ref tplLoginDetail, "{PasswordExpiry}", customerInfoViewModel.PwdExpiryDate + customerInfoViewModel.PwdExpiryTime);
             TemplateHandler.Assign(ref tplLoginDetail, "{customersite}", siteName);
             TemplateHandler.Assign(ref tplLoginDetail, "{LastLoginIP}", "<a href=\"" + ConfigurationManager.AppSettings["iplocation"].Replace("{ip}", IpManagement.ReplaceVNIP(lastIp)) + "\" target=\"_blank\" style='font-weight:bold'>" + IpManagement.ReplaceVNIP(lastIp) + "</a>");
-            TemplateHandler.Assign(ref tplLoginDetail, "{custid}", customerInfoViewModel.custId);
-            TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", customerInfoViewModel.lastChangeSecurityCodeDate);
+            TemplateHandler.Assign(ref tplLoginDetail, "{custid}", customerInfoViewModel.CustId);
+            TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", customerInfoViewModel.LastChangeSecurityCodeDate);
             TemplateHandler.Assign(ref htmlcontent, "{logindetail}", tplLoginDetail);
-            TemplateHandler.Assign(ref htmlcontent, "{last_change_OTP_date}", customerInfoViewModel.lastChangeOTPCodeDate);
+            TemplateHandler.Assign(ref htmlcontent, "{last_change_OTP_date}", customerInfoViewModel.LastChangeOTPCodeDate);
 
-            if (customerInfoViewModel.roleId > 1)
+            if (customerInfoViewModel.RoleId > 1)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{loginoptions}", customerInfoViewModel.NicknameLoginOnly ? "Nickname Only" : "Username/Nickname");
             }
