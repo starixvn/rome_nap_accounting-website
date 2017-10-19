@@ -10,7 +10,7 @@
         {
             string uplineboxhtml = "";
             uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
-            if (customerInfoViewModel.roleId <= UserInfo.ROLE_SUPER)
+            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_SUPER)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperId}", customerInfoViewModel.SuperId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperName}", customerInfoViewModel.SuperName);
@@ -25,7 +25,7 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden1}", "hidden");
             }
 
-            if (customerInfoViewModel.roleId <= UserInfo.ROLE_MASTER)
+            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_MASTER)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterId}", customerInfoViewModel.MasterId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterName}", customerInfoViewModel.MasterName);
@@ -40,7 +40,7 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden2}", "hidden");
             }
 
-            if (customerInfoViewModel.roleId <= UserInfo.ROLE_AGENT)
+            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_AGENT)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentId}", customerInfoViewModel.AgentId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentName}", customerInfoViewModel.AgentName);

@@ -21,10 +21,10 @@
             CustomerInfoViewModel customerInfoViewModel, 
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            string userName = customerInfoViewModel.userName;
-            int parentId = customerInfoViewModel.parentId;
-            int roleId = customerInfoViewModel.roleId;
-            int custId = customerInfoViewModel.custId;
+            string userName = customerInfoViewModel.UserName;
+            int parentId = customerInfoViewModel.ParentId;
+            int roleId = customerInfoViewModel.RoleId;
+            int custId = customerInfoViewModel.CustId;
 
             htmlcontent = GenMenuMinMaxPT(
                         htmlcontent,
@@ -55,8 +55,8 @@
                     parentId = Convert.ToInt32(row2["agentId"]);
                     bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
-                    detailUrl = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
-                    detailUrlNew = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
+                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
+                    detailUrlNew = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=2&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=1", parentId, parentId, AppSession.AccId, AppSession.AccUserName, custId);
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
@@ -76,10 +76,10 @@
                     bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
                     downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-                    addDownlineURL_New = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
-                    addDownlineURL = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
-                    detailUrl = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
-                    detailUrlNew = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
+                    addDownlineURL_New = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
+                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
+                    detailUrlNew = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                     liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&parentId={1}&uplineLevel=3&actorId={2}&actorUsername={3}&customerId={4}&customerLevel=2", _masterID, _masterID, AppSession.AccId, AppSession.AccUserName, custId);
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _masterID, roleId);
@@ -97,11 +97,11 @@
                     RacingUpdateURL = string.Format("EditMasterPTRacing/Index?custid={0}&uplineid={1}", custId, _superID);
                     bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
-                    detailUrl = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
-                    detailUrlNew = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
+                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
+                    detailUrlNew = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-                    addDownlineURL_New = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
-                    addDownlineURL = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
+                    addDownlineURL_New = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
                     downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                     liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId={0}&uplineLevel=4&actorId={2}&customerId={4}&customerLevel=3", _superID, _superID, AppSession.AccId, AppSession.AccUserName, custId);
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, _superID, roleId);
@@ -117,11 +117,11 @@
                     RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                     bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
-                    addDownlineURL_New = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
-                    addDownlineURL = customerInfoViewModel.isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
+                    addDownlineURL_New = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
                     downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
-                    detailUrl = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
-                    detailUrlNew = customerInfoViewModel.isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.customerSite;
+                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
+                    detailUrlNew = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     liveCasinoSetting = string.Format("LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId={0}&actorUsername={1}&customerId={2}&customerLevel=4", AppSession.AccId, AppSession.AccUserName, custId);
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, CastAide.AsInt32(row1["exchangeid"]));
@@ -162,7 +162,7 @@
                     break;
             }
 
-            if (customerInfoViewModel.isDeposit)
+            if (customerInfoViewModel.IsDeposit)
             {
                 //TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-finance");
@@ -200,7 +200,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
 
-            if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !customerInfoViewModel.isLicensee)
+            if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !customerInfoViewModel.IsLicensee)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
             }
@@ -255,7 +255,7 @@
             {
                 if (WebSettings.disableCS)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-                if ((roleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.isAllowEditCS)
+                if ((roleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.IsAllowEditCS)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
             }
 
@@ -265,15 +265,15 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
             }
             //---------------------------------
-            if (!BingoSettings.BingoGame.Enabled || !customerInfoViewModel.isAllowEditBI)
+            if (!BingoSettings.BingoGame.Enabled || !customerInfoViewModel.IsAllowEditBI)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
             }
-            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.isAllowEditLCS)
+            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.IsAllowEditLCS)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }
-            if (customerInfoViewModel.isHideVirtualSports)
+            if (customerInfoViewModel.IsHideVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
@@ -285,62 +285,62 @@
             }
 
 
-            if (!WebSettings.IsShowGoldDeluxeSettingForCredit || customerInfoViewModel.isDeposit)
+            if (!WebSettings.IsShowGoldDeluxeSettingForCredit || customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
             }
 
-            if (customerInfoViewModel.isHideColossusBets || customerInfoViewModel.isDeposit)
+            if (customerInfoViewModel.IsHideColossusBets || customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
             }
 
-            if (customerInfoViewModel.isHideSportsbook2 || customerInfoViewModel.isDeposit)
+            if (customerInfoViewModel.IsHideSportsbook2 || customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
             }
 
-            if (customerInfoViewModel.isHideCockFighting)
+            if (customerInfoViewModel.IsHideCockFighting)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
             }
 
-            if (customerInfoViewModel.isHideCricketSettingLink)
+            if (customerInfoViewModel.IsHideCricketSettingLink)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
             }
 
-            if (customerInfoViewModel.isHideAllbetUpline || !customerInfoViewModel.isSyncAllbetUpline)
+            if (customerInfoViewModel.IsHideAllbetUpline || !customerInfoViewModel.IsSyncAllbetUpline)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
             }
 
-            if (customerInfoViewModel.isHideVoidbridgeUpline || !customerInfoViewModel.isSyncVoidbridgeUpline)
+            if (customerInfoViewModel.IsHideVoidbridgeUpline || !customerInfoViewModel.IsSyncVoidbridgeUpline)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
             }
 
-            if (customerInfoViewModel.isHideNG2Upline || customerInfoViewModel.isHideNG2 || !customerInfoViewModel.isSyncNG2Upline)
+            if (customerInfoViewModel.IsHideNG2Upline || customerInfoViewModel.IsHideNG2 || !customerInfoViewModel.IsSyncNG2Upline)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-NG2");
             }
 
-            if (customerInfoViewModel.hideEnableAndEditFishingWorld)
+            if (customerInfoViewModel.HideEnableAndEditFishingWorld)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-FishingWorld");
             }
 
-            if (customerInfoViewModel.hideKenoLottery)
+            if (customerInfoViewModel.HideKenoLottery)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
             }
 
-            if (customerInfoViewModel.isHideLucky3Upline || customerInfoViewModel.isHideLucky3)
+            if (customerInfoViewModel.IsHideLucky3Upline || customerInfoViewModel.IsHideLucky3)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
             }
 
-            TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.jsparam));
+            TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.JsParam));
 
             var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
             bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
