@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="Virtual Rate">
+    <Setting Key="Customer_VirtualRate_InsertTemp" SpName="Acc_VirtualRateMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_CheckImport" SpName="Acc_VirtualRateMulSelCheck" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_DeleteTemp" SpName="Acc_VirtualRateMulDelTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+  </Function>
+  <Function Name="Admin - Mailing List">
+    <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+  </Function>
+  <Function Name="ConfigureDirectAccount">
+    <Setting Key="Customer_ConfigureDirectAccount_CheckImportDirectAccount" SpName="Acc_CustDirectMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage Extra PT for External Groups">	
+	
+	<Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+	<Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />	  
+  </Function>
+</Functions>
