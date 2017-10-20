@@ -26,14 +26,13 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
         /// Adds the mark direct account setting control.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        public static void AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria)
+        public static string AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria, string htmlContent)
         {
             var hasPermission = Permissions.HasPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
-            var htmlContent = criteria.Htmlcontent;
             if (!hasPermission || !criteria.DirectAccountStatusInfo.IsShowDirectStatus)
             {
                 TemplateHandler.RemoveBlock(ref htmlContent, "directAccountControl");
-                return;
+                return htmlContent;
             }
             
             TemplateHandler.Assign(ref htmlContent, criteria.ControlValueTag, criteria.DirectAccountStatusInfo.IsCheckedDirectStatus);
@@ -41,8 +40,9 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
 
             var directAccountControlSettingGroup = new SettingGroup();
             directAccountControlSettingGroup.Add(GetSettingControlMarkDirectAccount(criteria));
-            var html = directAccountControlSettingGroup.GetHTMLSettingControl();
             TemplateHandler.Assign(ref htmlContent, "{directAccountControl}", directAccountControlSettingGroup.GetHTMLSettingControl());
+
+            return htmlContent;
         }
 
         /// <summary>
