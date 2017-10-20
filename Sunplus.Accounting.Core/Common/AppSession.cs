@@ -66,12 +66,6 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["ReportMenu"] = value; }
         }
 
-        public static bool IsSyncBingoCurrentCust
-        {
-            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsSyncBingoCurrentCust"], false); }
-            set { HttpContext.Current.Session["IsSyncBingoCurrentCust"] = value; }
-        }
-
         public static int CustID
         {
             get { return CastAide.AsInt32(HttpContext.Current.Session["custid"], 0); }

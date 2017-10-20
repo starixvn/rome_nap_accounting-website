@@ -2,13 +2,12 @@
 {
     using System;
     using System.Data;
+    using Core.Common;
+    using Core.Configurations;
     using DNAide.Core;
     using DNAide.Web;
     using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using RemotingRef;
-    using Core.Common;
-    using Core.Configurations;
-    using Bingo.Core;
 
 
     public partial class CustomerManager
@@ -22,9 +21,9 @@
             int custId = customerInfoViewModel.CustId;
             int roleId = customerInfoViewModel.RoleId;
             string userName = customerInfoViewModel.UserName;
-            bool isAllowEditBI = customerInfoViewModel.IsAllowEditBI && AppSession.IsSyncBingoCurrentCust;
             bool isDeposit = customerInfoViewModel.IsDeposit;
             string siteName = customerInfoViewModel.CustomerSite;
+
             bool isHideSportsbook2 = customerInfoViewModel.IsHideSportsbook2;
             bool isHideCockFighting = customerInfoViewModel.IsHideCockFighting;
             bool isHideCricket = customerInfoViewModel.IsHideCricketSettingLink;
@@ -36,7 +35,7 @@
             bool isShowFishingWorld = renderLeftPanelParameter.IsShowFishingWorld;
             bool isShowKenoLottery = renderLeftPanelParameter.IsShowKenoLottery;
             bool isShowLucky3 = renderLeftPanelParameter.IsShowLucky3;
-
+            bool isShowKenoSetting = KenoSection.Instance.ShowSetting;
 
             int parentId;
             string submenu1 = string.Empty;
@@ -44,8 +43,8 @@
             string submenu3 = string.Empty;
             string minMaxPtUrl = string.Empty;
             var minMaxPtRenovationUrl = string.Empty;
-            string masterPtUrl = "";
-            bool isShowSetting = KenoSection.Instance.ShowSetting;
+            string masterPtUrl = string.Empty;
+            
             switch (roleId)
             {
                 case 1: // member
@@ -71,11 +70,6 @@
                         submenu1 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"SuperEditMemberPTRacing/Index?custid={0}&superid={1}\");' target='centerFr'>Racing</a>", custId, superId);
                     }
 
-                    if (BingoSettings.BingoGame.Enabled && isAllowEditBI)
-                    {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/PT/Bingo/SuperOnMemberUpdate.aspx?custId=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Bingo</a>";
-                    }
-
                     if (WebSettings.EnableLiveCasino)
                     {
                         if (AppSession.IsSyncLCSCurrentCust)
@@ -89,7 +83,7 @@
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Virtual Sports</a>";
                     }
 
-                    if (isShowSetting)
+                    if (isShowKenoSetting)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
                     }
@@ -161,10 +155,6 @@
                         submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
                     }
 
-                    if (BingoSettings.BingoGame.Enabled && isAllowEditBI)
-                    {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/PT/Bingo/MasterOnMemberUpdate.aspx?custId=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Bingo</a>";
-                    }
                     if (WebSettings.EnableLiveCasino)
                     {
                         if (AppSession.IsSyncLCSCurrentCust)
@@ -178,7 +168,7 @@
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Virtual Sports</a>";
                     }
 
-                    if (isShowSetting)
+                    if (isShowKenoSetting)
                     {
                         submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
                     }

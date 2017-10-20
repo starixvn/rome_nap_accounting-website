@@ -27,7 +27,7 @@
             var renderLeftPanelParameter = new RenderLeftPanelParameter
             {
                 IsShowKeno = customerInfoViewModel.IsShowKenoStatus,
-                IsShowGoldDeluxe =
+                IsShowGoldDeluxeForCredit =
                     WebSettings.EnableGoldDeluxe &&
                     customerInfoViewModel.IsSyncUplineGoldDeluxe
                     && !customerInfoViewModel.IsDeposit
@@ -59,20 +59,18 @@
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderLimitedPerIP(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderAutoSuspendControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForDepositControl(htmlcontent, customerInfoViewModel);
+            htmlcontent = RenderStatus(htmlcontent, customerInfoViewModel);
+
             htmlcontent = RenderDangerousControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderAGCasinoControl(htmlcontent, customerInfoViewModel);
-
             htmlcontent = RenderKenoControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RemoveProductHtmlBlock(htmlcontent, customerInfoViewModel);
 
             htmlcontent = AssignTemplateValue(htmlcontent);
-
-            htmlcontent = RemoveEnableLinks(htmlcontent, renderLeftPanelParameter);
-
             htmlcontent = AssignCustomerInfo(htmlcontent, customerInfoViewModel);
+
+            htmlcontent = RemoveEnableLinks(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
 
             htmlcontent = RenderAbnormalCustomer(htmlcontent, customerInfoViewModel);
             htmlcontent = GenSettingControl(
@@ -85,6 +83,7 @@
             return renderLeftPanelParameter;
         }
 
+      
         private static string GenSettingControl(
            string htmlcontent,
            DataRow row1,
@@ -97,7 +96,7 @@
             #region is Internal user
 
             htmlcontent = RenderInternalControl(htmlcontent, customerInfoViewModel);
-            RenderAddMarkDirectAccountControl(htmlcontent, customerInfoViewModel, sg);
+            htmlcontent = RenderAddMarkDirectAccountControl(htmlcontent, customerInfoViewModel, sg);
 
             #endregion is Internal user
 
@@ -200,7 +199,7 @@
             return htmlcontent;
         }
 
-        private static string RemoveProductHtmlBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private static string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
             if (!customerInfoViewModel.IsShowSportsbook2)
             {
@@ -221,6 +220,46 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
 
+            }
+
+            if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
+            }
+
+            if (!WebSettings.EnableAGCasino || customerInfoViewModel.RoleId != 4 || !customerInfoViewModel.IsDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+            }
+
+            if (!renderLeftPanelParameter.IsShowEnableBetTrade)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
+            }
+
+            if (!renderLeftPanelParameter.IsShowEnableCashOut)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
+            }
+
+            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
+            }
+
+            if (!renderLeftPanelParameter.IsShowMacau)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
+            }
+
+            if (renderLeftPanelParameter.IsHideCricket)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
+            }
+
+            if (renderLeftPanelParameter.IsShowAllBetForCredit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
 
             return htmlcontent;
@@ -290,28 +329,18 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
             }
 
-            if (Functions.Settings.IsVisibleSpecial)
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", 
-                    StatusSpan(customerInfoViewModel.IsManageCustomerAccess, 
-                                "special", 
-                                customerInfoViewModel.Important, 
-                                customerInfoViewModel.RoleId > 1));
-            }
-
             return htmlcontent;
         }
 
-        private static string RenderAutoSuspendControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderStatus(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
+            if (Functions.Settings.IsVisibleSpecial)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
-            }
-
-            if (!WebSettings.EnableAGCasino || customerInfoViewModel.RoleId != 4 || !customerInfoViewModel.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
+                TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}",
+                    StatusSpan(customerInfoViewModel.IsManageCustomerAccess,
+                                "special",
+                                customerInfoViewModel.Important,
+                                customerInfoViewModel.RoleId > 1));
             }
 
             return htmlcontent;
@@ -578,16 +607,16 @@
                 false,
                 hasDownline,
                 "GoldDeluxe",
-                renderLeftPanelParameter.IsShowGoldDeluxe,
+                renderLeftPanelParameter.IsShowGoldDeluxeForCredit,
                 renderLeftPanelParameter,
                 "Update Gold Deluxe Status",
                 12);
             return htmlcontent;
         }
 
-        private static void RenderAddMarkDirectAccountControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, SettingGroup sg)
+        private static string RenderAddMarkDirectAccountControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, SettingGroup sg)
         {
-            ConfigureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
+            htmlcontent = ConfigureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
             {
                 SettingGroup = sg,
                 UserId = customerInfoViewModel.CustId.ToString(),
@@ -602,7 +631,9 @@
                 RoleId = customerInfoViewModel.RoleId,
                 Htmlcontent = htmlcontent,
                 IsManageCustomerAccess = customerInfoViewModel.IsManageCustomerAccess
-            });
+            }, htmlcontent);
+
+            return htmlcontent;
         }
 
         private static string RenderInternalControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
@@ -681,10 +712,10 @@
                     "disabledLCS",
                     !customerInfoViewModel.DisabledLiveCasino,
                     customerInfoViewModel.SyncLiveCasino,
-                    customerInfoViewModel.IsAllowEditLCS,
+                    customerInfoViewModel.IsAllowEditLiveCasino,
                     customerInfoViewModel.Enabled,
-                    customerInfoViewModel.DisabledLCSParent,
-                    !customerInfoViewModel.DisabledLCSDL));
+                    customerInfoViewModel.DisabledLiveCasinoParent,
+                    !customerInfoViewModel.DisabledDownlinesLiveCasino));
 
             TemplateHandler.Assign(ref htmlcontent, "{liveCasinoControl}", liveCasinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
@@ -701,10 +732,10 @@
                                     "disabledCS",
                                     !customerInfoViewModel.DisabledCasino,
                                     customerInfoViewModel.SyncCasino,
-                                    customerInfoViewModel.IsAllowEditCS,
+                                    customerInfoViewModel.IsAllowEditCasino,
                                     customerInfoViewModel.Enabled,
-                                    customerInfoViewModel.DisabledCSParent,
-                                    !customerInfoViewModel.DisabledCSDL));
+                                    customerInfoViewModel.DisabledCasinoParent,
+                                    !customerInfoViewModel.DisabledDownlinesCasino));
 
             TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
@@ -721,7 +752,7 @@
                     customerInfoViewModel.IsManageCustomerAccess,
                     "disabledNumberGame",
                     !customerInfoViewModel.DisabledNumberGame,
-                    !customerInfoViewModel.DisabledNumberGameDL,
+                    !customerInfoViewModel.DisabledDownlinesNumberGame,
                     customerInfoViewModel.Enabled));
 
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
@@ -870,41 +901,6 @@
             else
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "selectedBettingControl");
-            }
-
-            return htmlcontent;
-        }
-
-        public static string RemoveEnableLinks(string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
-            if (!renderLeftPanelParameter.IsShowEnableBetTrade)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableCashOut)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
-            }
-
-            if (!renderLeftPanelParameter.IsShowMacau)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
-            }
-
-            if (renderLeftPanelParameter.IsHideCricket)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-            }
-
-            if (renderLeftPanelParameter.IsShowAllBetForCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
 
             return htmlcontent;
