@@ -3,7 +3,6 @@
     using System;
     using System.Data;
     using System.Linq;
-    using Bingo.Core;
     using Core.Common;
     using Core.Configurations;
     using DNAide.Core;
@@ -255,7 +254,7 @@
             {
                 if (WebSettings.disableCS)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-                if ((roleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.IsAllowEditCS)
+                if ((roleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.IsAllowEditCasino)
                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
             }
 
@@ -265,11 +264,8 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
             }
             //---------------------------------
-            if (!BingoSettings.BingoGame.Enabled || !customerInfoViewModel.IsAllowEditBI)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
-            }
-            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.IsAllowEditLCS)
+          
+            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.IsAllowEditLiveCasino)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }
