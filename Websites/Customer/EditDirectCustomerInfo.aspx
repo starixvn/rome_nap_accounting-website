@@ -19,17 +19,27 @@
     </style>
     <script type="text/javascript">
         function CheckInputValue() {
-            if (isEmpty("txtMaxLoss") || isString("txtMaxLoss")) {
+            if (isString("txtMaxLoss")) {
                 showAlertMessage("errMsg", "Invalid Max Loss.", 1);
                 $("txtMaxLoss").focus();
                 return false;
-            }
-            else if (isNumeric("txtMaxLoss")>0)
-            {
+            } else if (isNumeric("txtMaxLoss") > 0) {
                 showAlertMessage("errMsg", "Max Loss should be negative!", 1);
                 $("txtMaxLoss").focus();
                 return false;
-            }         
+            }
+
+            if ($("#txtGroupHeadlineMaxLoss").length) {
+                if (isString("txtGroupHeadlineMaxLoss")) {
+                    showAlertMessage("errMsg", "Invalid Group Max Loss.", 1);
+                    $("txtGroupHeadlineMaxLoss").focus();
+                    return false;
+                } else if (isNumeric("txtGroupHeadlineMaxLoss") > 0) {
+                    showAlertMessage("errMsg", "Group Max Loss should be negative!", 1);
+                    $("txtGroupHeadlineMaxLoss").focus();
+                    return false;
+                }
+            }
             return true;
         }
         function On_KeyPress(e) {

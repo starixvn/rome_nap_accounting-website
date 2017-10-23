@@ -47,6 +47,9 @@ public class UpdateDirectCustInfo : BaseHandler
                     if (context.Request["custId"] == null) return;
 
                     int custId = CastAide.AsInt32(context.Request["custId"]);
+                    string maxloss = context.Request["txtMaxLoss"];
+                    string groupMaxLoss = context.Request["txtGroupHeadlineMaxLoss"];
+
                     var exInfo = getExtraInfo(context);
                     exInfo = EncodingUtil.HtmlEncode(exInfo);
 
@@ -57,7 +60,8 @@ public class UpdateDirectCustInfo : BaseHandler
                     ht.Add("requestedby", exInfo.requestedby);
                     ht.Add("approvedby", exInfo.approvedby);
                     ht.Add("mobilephone", exInfo.mobilephone);
-                    ht.Add("maxloss", context.Request["txtMaxLoss"]);
+                    ht.Add("maxloss", string.IsNullOrWhiteSpace(maxloss) ? null : maxloss);
+                    ht.Add("maxlossheadline", string.IsNullOrWhiteSpace(groupMaxLoss) ? null : groupMaxLoss);
                     ht.Add("ip", context.Request.UserHostAddress);
                     ht.Add("creator", context.Session["AccId"]);
                     IbcError error = UpdateCustomer.CustomerUpdDirectInfomation(ht);

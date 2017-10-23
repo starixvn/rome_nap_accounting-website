@@ -41,7 +41,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
             creditManager.ExportExcelMemberByGroupId(groupId);
         }
 
-
         public int GetGroupIdByUsername(string username)
         {
             var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();

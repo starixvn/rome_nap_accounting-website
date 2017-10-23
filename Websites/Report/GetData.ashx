@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using IBCUtils;
+using System.Linq;
 public class GetData : IHttpHandler, IRequiresSessionState  {
 
     JObject o = new JObject();
@@ -78,8 +79,9 @@ public class GetData : IHttpHandler, IRequiresSessionState  {
                 context.Response.Write(JsonConvert.SerializeObject(o)); 
                 break;
             case "9":// Credit Term
-                o.Add(new JProperty("CreditTermFilter", CreditTermHTML.GetContentCreditTermFilter(context))); // fix bug 1791
-                o.Add(new JProperty("CreditTerm", CreditTermHTML.GetContentCreditTerm(context)));
+                string groupMaxLoss = "N/A";
+                o.Add(new JProperty("CreditTerm", CreditTermHTML.GetContentCreditTerm(context, ref groupMaxLoss)));
+                o.Add(new JProperty("CreditTermFilter", CreditTermHTML.GetContentCreditTermFilter(context, groupMaxLoss))); // fix bug 1791
                 context.Response.Write(JsonConvert.SerializeObject(o)); 
                 break;
             case "10":// GROUP HORSE RACING REPORT
