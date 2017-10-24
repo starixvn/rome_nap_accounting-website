@@ -31,7 +31,7 @@ var BetDetailsManager = function () {
             numberFreezeCol: 0,
             pagerOpts: {
                 callback: pagerOptsCallback,
-                item_per_page_arr: [50, 100, 150, 200]
+                item_per_page_arr: [100, 200, 300, 500, 1000]
             }
         };
     }
@@ -82,7 +82,7 @@ var BetDetailsManager = function () {
             custId: custId,
             transType: transType,
             pageIndex: 0,
-            pageSize: 100
+            pageSize: pageSize
         };
 
         gridContainer = $("#betlist-details");
@@ -95,6 +95,17 @@ var BetDetailsManager = function () {
 
             $("#pagination").pagination(totalRows, gridOpts.pagerOpts);
         }
+
+        $("#btnExport").click(function () {
+            var exportData = {
+                sportType: sportType,
+                refNo: formData.transId,
+                custId: formData.custId,
+                transType: formData.transType
+            };
+            var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
+            $("#frmExportExcel").attr("src", url);
+        });
     };
 };
 
