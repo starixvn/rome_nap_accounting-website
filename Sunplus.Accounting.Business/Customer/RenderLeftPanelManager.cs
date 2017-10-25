@@ -15,12 +15,6 @@ namespace Sunplus.Accounting.Business.Customer
     /// </summary>
     public static class RenderLeftPanelManager
     {
-            if (!renderLeftPanelParameter.IsShowAllBetForCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
-            }
-
-            if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxeForCredit)
         public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
             if (!WebSettings.EnableMicrogaming || !renderLeftPanelParameter.IsDeposit)

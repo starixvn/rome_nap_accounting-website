@@ -82,7 +82,6 @@
 
             return renderLeftPanelParameter;
         }
-
       
         private static string GenSettingControl(
            string htmlcontent,
@@ -138,7 +137,8 @@
                 customerInfoViewModel.CustParent,
                 customerInfoViewModel.IsManageCustomerAccess,
                 renderLeftPanelParameter,
-                sg, customerInfoViewModel.HasDownline);
+                sg, 
+                customerInfoViewModel.HasDownline);
 
             htmlcontent = RenderDCSControl(
                 htmlcontent,
