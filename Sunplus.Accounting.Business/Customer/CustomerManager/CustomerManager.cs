@@ -2019,6 +2019,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
+
         private static bool IsAllowEditProgressiveBonus(int parentId, int custId)
         {
             bool webSetting = ProgressiveSection.Instance.Active;

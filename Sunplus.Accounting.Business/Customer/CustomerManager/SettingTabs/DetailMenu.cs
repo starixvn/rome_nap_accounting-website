@@ -51,7 +51,6 @@
             switch (roleId)
             {
                 case 1: // member
-                    parentId = Convert.ToInt32(row2["agentId"]);
                     bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
                     pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
                     detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
@@ -274,8 +273,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
 
-            bool isShowSetting = KenoSection.Instance.ShowSetting;
-            if (!isShowSetting)
+            if (!KenoSection.Instance.ShowSetting)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
             }
@@ -337,13 +335,6 @@
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.JsParam));
-
-            var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-            bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
-            if (!visibleP2PSetting)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
-            }
 
             return htmlcontent;
         }
