@@ -1,0 +1,58 @@
+﻿.row {
+    clear:both;
+}
+
+.table-cell {
+    float: left;
+    padding-right: 10px;
+}
+
+.errorMessage {
+    font-weight: bold;
+    background-color: #ffedc1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: url("../../../../Areas/CustomerSetting/Images/warning-icn.png");
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle; /*color: #ff5411;*/
+    font-size: 13px;
+    clear: both;
+    white-space: pre-line;
+    margin-bottom: 5px;
+    border: 2px solid #d2a243;
+    min-height: 25px;
+    padding-top: 5px;
+    max-height: 180px;
+    overflow: auto;
+    color: #ff1414;
+    padding: 5px 5px 5px 30px;
+}
+
+.successMessage {
+    font-weight: bold;
+    background-color: #c7e8ca;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: url("../../../../Areas/CustomerSetting/Images/success.gif");
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle; /*color: #ff5411;*/
+    font-size: 13px;
+    clear: both;
+    white-space: pre-line;
+    margin-bottom: 5px;
+    border: 2px solid #0ba018;
+    min-height: 25px;
+    padding-top: 5px;
+    max-height: 180px;
+    overflow: auto;
+    color: #066825;
+    padding: 5px 5px 5px 30px;
+}

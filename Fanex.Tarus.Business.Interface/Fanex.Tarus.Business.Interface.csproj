@@ -107,6 +107,7 @@
     <Compile Include="Admin\ITicketToHeadlineService.cs" />
     <Compile Include="Customer\ICustomerBalanceService.cs" />
     <Compile Include="Customer\IDepositCustomerService.cs" />
+    <Compile Include="Customer\ISportbookCommissionService.cs" />
     <Compile Include="Customer\IThirdPartyProductStatusService.cs" />
     <Compile Include="IAdminService.cs" />
     <Compile Include="ICommonService.cs" />

@@ -149,6 +149,7 @@
     <Compile Include="CommonService.cs" />
     <Compile Include="Customer\CustomerBalanceService.cs" />
     <Compile Include="Customer\DepositCustomerService.cs" />
+    <Compile Include="Customer\SportbookCommissionService.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

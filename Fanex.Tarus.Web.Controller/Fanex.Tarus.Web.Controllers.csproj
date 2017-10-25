@@ -265,6 +265,7 @@
     <Compile Include="CommonController.cs" />
     <Compile Include="Customer\CustomerBalanceController.cs" />
     <Compile Include="Customer\DepositCustomerController.cs" />
+    <Compile Include="Customer\EditSportbookCommissionController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="ErrorController.cs" />
     <Compile Include="Filters\AuthenticateHost.cs" />
