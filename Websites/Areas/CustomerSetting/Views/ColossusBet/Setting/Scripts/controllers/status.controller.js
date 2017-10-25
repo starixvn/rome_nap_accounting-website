@@ -30,10 +30,9 @@ ColossusBetModule.controller('statusController', function ($scope, colossusBetRe
         }, true);
 
         $scope.$watch('statusPartial.IsDownlinesEnabled', function (newValue, oldValue) {
-            if (newValue == $scope.originalstatusPartial.IsDownlinesEnabled) {
-                $scope.statusPartial.IsStatusUpdated = false;
-            } else {
-                $scope.statusPartial.IsStatusUpdated = true;
+            if ($scope.originalstatusPartial.IsHasDownlines)
+            {
+                $scope.statusPartial.IsStatusUpdated = newValue == $scope.originalstatusPartial.IsDownlinesEnabled ? false : true;
             }
         }, true);
     }, function (reason) { }, function (update) { });

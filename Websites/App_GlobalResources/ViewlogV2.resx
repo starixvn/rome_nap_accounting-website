@@ -1653,4 +1653,7 @@
   <data name="Disable220_1021" xml:space="preserve">
     <value>Disabled Lottery</value>
   </data>
+  <data name="Hidegd" xml:space="preserve">
+    <value>Hide Gold Deluxe</value>
+  </data>
 </root>

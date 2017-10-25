@@ -30,6 +30,11 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
             }
 
+            if (!renderLeftPanelParameter.IsShowAllBetForCredit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+            }
+
             if (!renderLeftPanelParameter.IsShowMacau)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
@@ -51,7 +56,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         public static void RemoveEmptyBlock(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxe)
+            if (!renderLeftPanelParameter.IsShowKeno && !renderLeftPanelParameter.IsShowGoldDeluxeForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Row_Keno_GoldDeluxe");
             }

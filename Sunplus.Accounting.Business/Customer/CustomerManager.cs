@@ -909,8 +909,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                var isShowGoldDeluxe = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit;
-                                if (!isShowGoldDeluxe)
+                                var isShowGoldDeluxeForDeposit = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit && !Converter.ToBool(row1["HideGoldDeluxe"]);
+                                if (!isShowGoldDeluxeForDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
                                 }
@@ -1011,22 +1011,24 @@ namespace Sunplus.Accounting.Business.Customer
 
                                 }
 
-                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || (roleId < 4 && isHideAllbetUpline) || !isSyncAllbetUpline;
-                                // !this.IsShowDCSStatusLink(isHideAllbetUpline, isSyncAllbet, isSyncAllbetUpline, isSyncAllbetDownline);
-                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || (roleId < 4 && isHideVoidbridgeUpline) || !isSyncVoidbridgeUpline;
-                                // !this.IsShowDCSStatusLink(isHideVoidbridgeUpline, isSyncVoidbridge, isSyncVoidbridgeUpline, isSyncVoidbridgeDownline);
+                                var hideCheckBoxAllbet = !WebSettings.IsShowAllBet || !isSyncAllbetUpline 
+                                                        || (roleId < 4 && (isHideAllbetUpline || !isSyncAllbet));
 
+                                var hideCheckBoxVoidbridge = !WebSettings.IsShowVoidbridge || !isSyncVoidbridgeUpline 
+                                                        || (roleId < 4 && (isHideVoidbridgeUpline || !isSyncVoidbridge));
+                                
                                 var hideCheckBoxNG2 = !WebSettings.IsShowNG2 || isHideNG2Upline || !isSyncNG2Upline || !isSyncNG2 || isHideNG2;
                                 var hideCheckBoxLucky3 = !WebSettings.IsShowLucky3 || isHideLucky3Upline || isHideLucky3;
+                                var isShowGoldDeluxeForCredit =
+                                        WebSettings.EnableGoldDeluxe
+                                        && Converter.ToBool(row1["IsSyncUplineGoldDeluxe"])
+                                        && !isDeposit
+                                        && !string.Equals(currency, "Won", StringComparison.OrdinalIgnoreCase);
 
                                 var renderLeftPanelParameter = new RenderLeftPanelParameter
                                 {
                                     IsShowKeno = isShowKenoStatus,
-                                    IsShowGoldDeluxe =
-                                        WebSettings.EnableGoldDeluxe &&
-                                        Converter.ToBool(row1["IsSyncUplineGoldDeluxe"])
-                                        && !isDeposit
-                                        && !string.Equals(currency, "Won", StringComparison.OrdinalIgnoreCase),
+                                    IsShowGoldDeluxeForCredit = isShowGoldDeluxeForCredit && !Converter.ToBool(row1["HideGoldDeluxe"]),
                                     IsShowMacau = isShowMacau,
                                     IsShowEnableBetTrade = isShowEnableBetTrade,
                                     IsShowEnableCashOut = isShowEnableCashOut,
@@ -1391,7 +1393,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                                 #endregion MenuDetail
 
-                                if (!WebSettings.IsShowGoldDeluxeSettingForCredit || isDeposit)
+                                if (!isShowGoldDeluxeForCredit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
                                 }
@@ -1937,7 +1939,7 @@ namespace Sunplus.Accounting.Business.Customer
                 false, // ???
                 hasDownline,
                 "GoldDeluxe",
-                renderLeftPanelParameter.IsShowGoldDeluxe,
+                renderLeftPanelParameter.IsShowGoldDeluxeForCredit,
                 renderLeftPanelParameter,
                 "Update Gold Deluxe Status",
                 12);
