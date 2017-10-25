@@ -124,6 +124,6 @@
 
         public bool Closed => CastAide.AsBoolean(row1["closed"], false);
 
-        public bool IsBA => CastAide.AsInt32(row1["isba"]).Equals(1);
+        public bool IsBA => CastAide.AsBoolean(row1["isba"]);
     }
 }
