@@ -248,13 +248,6 @@ public class UpdateCustomerStatus : BaseHandler
                     //s = "parent.document.getElementById('internalUser').innerHTML ='" + ((status) ? Resources.Language.userInternal : Resources.Language.userBetting) + "';";
                     s = "parent.changeDisplayStatus();";
                     break;
-                case "disabledBingoGame"://BingoGame
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddownline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline, AppSession.IsSyncBingoCurrentCust);
-                    s = "parent.changeDisplayStatus();";
-                    break;
                 case "disabledNumberGame"://NumberGame
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
