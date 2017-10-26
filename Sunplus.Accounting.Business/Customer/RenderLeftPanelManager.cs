@@ -15,24 +15,6 @@ namespace Sunplus.Accounting.Business.Customer
     /// </summary>
     public static class RenderLeftPanelManager
     {
-        public static void RenderEditMicroGamingLink(ref string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
-            if (!WebSettings.EnableMicrogaming || !renderLeftPanelParameter.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
-                return;
-            }
-
-            var editSettingLink = "MicroGaming/EditSettingView?" +
-                "parentId={0}&custId={1}&roleId={2}";
-            editSettingLink = string.Format(
-                editSettingLink,
-                renderLeftPanelParameter.ParentId,
-                renderLeftPanelParameter.CustId,
-                renderLeftPanelParameter.RoleId);
-            TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
-        }
-
         public static void RenderEnableProductBox(
             DataRow custInfoRow,
             SettingGroup settingGroup,

@@ -132,13 +132,11 @@ namespace Sunplus.Accounting.Core.Configurations
                 _IsApplySplitingDepositeCustomer = ConfigurationManager.AppSettings["IsApplySplitingDepositeCustomer"] == "1";
 
                 _isShowCustomerSettingRenovation = CastAide.AsInt32(ConfigurationManager.AppSettings["IsShowCustomerSettingRenovation"]);
-
-                EnableProgressiveBonus = (ConfigurationManager.AppSettings["EnableProgressiveBonus"] == "1");
             }
             catch (Exception ex)
             {
                 {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                    Extensions.LogExtensions.ExceptionHandler(ex);
                 }
 
                 _templateFolder = "Templates";
@@ -409,16 +407,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
-            }
-        }
-
-        public static bool EnableProgressiveBonus { get; set; }
-
-        public static string ExternalBettingLimitConfig
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["ExternalBettingLimitConfig"].ToString());
             }
         }
 
