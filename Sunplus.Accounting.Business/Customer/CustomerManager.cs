@@ -909,7 +909,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");
                                 }
 
-                                var isShowGoldDeluxeForDeposit = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit && !Converter.ToBool(row1["HideGoldDeluxe"]);
+                                var isShowGoldDeluxeForDeposit = WebSettings.EnableGoldDeluxe && roleId == 4 && isDeposit;
                                 if (!isShowGoldDeluxeForDeposit)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
