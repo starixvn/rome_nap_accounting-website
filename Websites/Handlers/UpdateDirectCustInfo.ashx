@@ -45,16 +45,18 @@ public class UpdateDirectCustInfo : BaseHandler
                 try
                 {
                     if (context.Request["custId"] == null) return;
-                   
+
                     int custId = CastAide.AsInt32(context.Request["custId"]);
+                    var exInfo = getExtraInfo(context);
+                    exInfo = EncodingUtil.HtmlEncode(exInfo);
 
                     Hashtable ht = new Hashtable();
                     ht.Add("custid", custId);
-                    ht.Add("processedby", context.Request["txtPersonInCharge"]);
-                    ht.Add("boss", context.Request["txtBoss"]);
-                    ht.Add("requestedby", context.Request["txtRequestor"]);
-                    ht.Add("approvedby", context.Request["txtApprover"]);
-                    ht.Add("mobilephone", context.Request["txtPhone"]);
+                    ht.Add("processedby", exInfo.processedby);
+                    ht.Add("boss", exInfo.boss);
+                    ht.Add("requestedby", exInfo.requestedby);
+                    ht.Add("approvedby", exInfo.approvedby);
+                    ht.Add("mobilephone", exInfo.mobilephone);
                     ht.Add("maxloss", context.Request["txtMaxLoss"]);
                     ht.Add("ip", context.Request.UserHostAddress);
                     ht.Add("creator", context.Session["AccId"]);
@@ -95,6 +97,26 @@ public class UpdateDirectCustInfo : BaseHandler
         {
             return false;
         }
+    }
+
+    private ExtraInfo getExtraInfo(HttpContext context)
+    {
+        var extraInfo = new ExtraInfo();
+        extraInfo.processedby = context.Request["txtPersonInCharge"];
+        extraInfo.boss = context.Request["txtBoss"];
+        extraInfo.requestedby = context.Request["txtRequestor"];
+        extraInfo.approvedby = context.Request["txtApprover"];
+        extraInfo.mobilephone = context.Request["txtPhone"];
+        return extraInfo;
+    }
+
+    public class ExtraInfo
+    {
+        public string processedby { get; set; }
+        public string boss { get; set; }
+        public string requestedby { get; set; }
+        public string approvedby { get; set; }
+        public string mobilephone { get; set; }
     }
 
 }
