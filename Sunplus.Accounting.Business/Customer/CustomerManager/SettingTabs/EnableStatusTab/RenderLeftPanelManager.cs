@@ -190,74 +190,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private static SettingControl GetProductSettingControl(
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool hasDownLine,
-            bool isAllowEdit,
-            bool isEnabled,
-            bool disabledUpline,
-            bool disableDownLine,
-            string productName,
-            string title,
-            int productId = 0,
-            int settingType = 0)
-        {
-            string classname = string.Empty;
-            string jsonclick = string.Empty;
-            string jsonmouseover = string.Empty;
-            string jsonmouseout = string.Empty;
-            if (isAllowEdit && isManageCustomerAccess)
-            {
-                var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
-                classname = canChange ? "canchange" : "cannotchange";
-
-                var parameters = new string[]
-                {
-                    renderLeftPanelParameter.CustId.ToString(),
-                    "'" + renderLeftPanelParameter.Username + "'",
-                    renderLeftPanelParameter.RoleId.ToString(),
-                    hasDownLine ? "1" : "0",
-                    renderLeftPanelParameter.AccId.ToString(),
-                    currStatus ? "1" : "0",
-                    disabledUpline ? "0" : "1",
-                    disableDownLine ? "0" : "1",
-                    "'" + title + "'",
-                    "'" + productName + "'",
-                    productId.ToString(),
-                    settingType.ToString()
-                };
-
-                jsonclick = canChange ?
-                    string.Format("return leftPanelManager.updateStatus({0});", string.Join(",", parameters)) :
-                    string.Empty;
-                jsonmouseout = canChange ? string.Empty : "UnTip()";
-                jsonmouseover = canChange ? string.Empty :
-                     string.Format(
-                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        productId == 23 ? isEnabled ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
-                        isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
-            }
-
-            return
-                new SettingControl(
-                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
-                    isAllowEdit ? currStatus : false,
-                    !isAllowEdit,
-                    jsonclick,
-                    jsonmouseout,
-                    jsonmouseover,
-                    classname,
-                    statusName,
-                    renderLeftPanelParameter.RoleId,
-                    disableDownLine,
-                    productName);
-        }
-
         public static void RenderEnableProductBoxDCS2(
             DataRow custInfoRow,
             DataRow productInfo,
@@ -335,6 +267,74 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
             }
+        }
+
+        private static SettingControl GetProductSettingControl(
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
+            bool isAllowEdit,
+            bool isEnabled,
+            bool disabledUpline,
+            bool disableDownLine,
+            string productName,
+            string title,
+            int productId = 0,
+            int settingType = 0)
+        {
+            string classname = string.Empty;
+            string jsonclick = string.Empty;
+            string jsonmouseover = string.Empty;
+            string jsonmouseout = string.Empty;
+            if (isAllowEdit && isManageCustomerAccess)
+            {
+                var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
+                classname = canChange ? "canchange" : "cannotchange";
+
+                var parameters = new string[]
+                {
+                    renderLeftPanelParameter.CustId.ToString(),
+                    "'" + renderLeftPanelParameter.Username + "'",
+                    renderLeftPanelParameter.RoleId.ToString(),
+                    hasDownLine ? "1" : "0",
+                    renderLeftPanelParameter.AccId.ToString(),
+                    currStatus ? "1" : "0",
+                    disabledUpline ? "0" : "1",
+                    disableDownLine ? "0" : "1",
+                    "'" + title + "'",
+                    "'" + productName + "'",
+                    productId.ToString(),
+                    settingType.ToString()
+                };
+
+                jsonclick = canChange ?
+                    string.Format("return leftPanelManager.updateStatus({0});", string.Join(",", parameters)) :
+                    string.Empty;
+                jsonmouseout = canChange ? string.Empty : "UnTip()";
+                jsonmouseover = canChange ? string.Empty :
+                     string.Format(
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
+                        productId == 23 ? isEnabled ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
+                        isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+            }
+
+            return
+                new SettingControl(
+                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
+                    isAllowEdit ? currStatus : false,
+                    !isAllowEdit,
+                    jsonclick,
+                    jsonmouseout,
+                    jsonmouseover,
+                    classname,
+                    statusName,
+                    renderLeftPanelParameter.RoleId,
+                    disableDownLine,
+                    productName);
         }
 
         private static SettingControl GetProductSettingControl2(

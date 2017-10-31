@@ -14,26 +14,26 @@
 
     public partial class CustomerInfoViewModel
     {
-        private DataRow row1 { get; set; }
+        private DataRow customerInfoRow { get; set; }
 
-        private DataRow row2 { get; set; }
+        private DataRow lineInfoRow { get; set; }
 
-        private DataRow row3 { get; set; }
+        private DataRow cashRow { get; set; }
 
         private DataRow downlineStatusInfoRow { get; set; }
 
         private DataTable dynamicSettingtable { get; set; }
 
         public CustomerInfoViewModel(
-            DataRow row1, 
-            DataRow row2, 
-            DataRow row3, 
+            DataRow customerInfoRow, 
+            DataRow lineInfoRow, 
+            DataRow cashRow, 
             DataRow downlineStatusInfoRow, 
             DataTable dynamicSettingtable)
         {
-            this.row1 = row1;
-            this.row2 = row2;
-            this.row3 = row3;
+            this.customerInfoRow = customerInfoRow;
+            this.lineInfoRow = lineInfoRow;
+            this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
 
@@ -41,7 +41,7 @@
             JsParam.Add("custid", CustId);
             JsParam.Add("roleid", RoleId);
 
-            GetExtraCustomerInfo(row1, row2, row3);
+            GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow);
             GetShowedHiddenProduct(dynamicSettingtable);
         }
 
@@ -55,17 +55,17 @@
 
         public bool IsViewFiAcc => Permissions.FinancePermission.IsViewFiAcc(IsInternalUser);
 
-        public bool IsHideDirectStatus => Converter.ToBool(row1["IsHideDirectStatus"]);
+        public bool IsHideDirectStatus => Converter.ToBool(customerInfoRow["IsHideDirectStatus"]);
 
-        public bool IsCheckedDirectStatus => Converter.ToBool(row1["IsCheckDirectStatus"]);
+        public bool IsCheckedDirectStatus => Converter.ToBool(customerInfoRow["IsCheckDirectStatus"]);
 
-        public bool IsDisabledDirectStatus => Converter.ToBool(row1["IsDisabledDirectStatus"]);
+        public bool IsDisabledDirectStatus => Converter.ToBool(customerInfoRow["IsDisabledDirectStatus"]);
 
-        public bool IsAllDayBalTransfer => row1.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(row1["isalldaybaltransfer"]);
+        public bool IsAllDayBalTransfer => customerInfoRow.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(customerInfoRow["isalldaybaltransfer"]);
 
-        public bool DisableAutoMPT => !Convert.IsDBNull(row3["DisableAutoMPT"]) && !Convert.ToBoolean(row3["DisableAutoMPT"]);
+        public bool DisableAutoMPT => !Convert.IsDBNull(cashRow["DisableAutoMPT"]) && !Convert.ToBoolean(cashRow["DisableAutoMPT"]);
 
-        public bool DisableOutright => !Convert.IsDBNull(row1["DisableOutright"]) && Convert.ToBoolean(row1["DisableOutright"]);
+        public bool DisableOutright => !Convert.IsDBNull(customerInfoRow["DisableOutright"]) && Convert.ToBoolean(customerInfoRow["DisableOutright"]);
 
         public bool IsHideCricketSettingLink { get; private set; } = true;
 
@@ -75,11 +75,11 @@
 
         public bool IsHideVirtualSports2 { get; private set; } = true;
 
-        public bool IsSyncUplineGoldDeluxe => Converter.ToBool(row1["IsSyncUplineGoldDeluxe"]);
+        public bool IsSyncUplineGoldDeluxe => Converter.ToBool(customerInfoRow["IsSyncUplineGoldDeluxe"]);
 
-        public bool IsEnableHorseRacingFixedOdds => !Convert.IsDBNull(row1["DisableHRFixedOdds"]) && !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
+        public bool IsEnableHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableHRFixedOdds"]) && !Convert.ToBoolean(customerInfoRow["DisableHRFixedOdds"]);
 
-        public bool DisableDownlinesHorseRacingFixedOdds => !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) && Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]);
+        public bool DisableDownlinesHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableDownlinesHRFixedOdds"]) && Convert.ToBoolean(customerInfoRow["DisableDownlinesHRFixedOdds"]);
 
         public bool IsShowKenoStatus => KenoSection.Instance.Enable;
 
