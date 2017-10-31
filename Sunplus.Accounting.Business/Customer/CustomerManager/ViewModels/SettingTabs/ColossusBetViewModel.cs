@@ -5,7 +5,7 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideColossusBets => (CastAide.AsBoolean(row1["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
+        public bool IsHideColossusBets => (CastAide.AsBoolean(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
 
         public bool IsShowColossusBetsForCredit => !IsHideColossusBets;
     }

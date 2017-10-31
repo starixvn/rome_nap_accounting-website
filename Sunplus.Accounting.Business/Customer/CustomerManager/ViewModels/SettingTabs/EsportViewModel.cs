@@ -6,8 +6,8 @@
     {
         public bool DisabledEsportsParent => !ParentId.Equals(0) && CustParent.IsDisableEsports;
 
-        public bool DisabledEsports => !Convert.IsDBNull(row1["DisableEsports"]) && Convert.ToBoolean(row1["DisableEsports"]);
+        public bool DisabledEsports => !Convert.IsDBNull(customerInfoRow["DisableEsports"]) && Convert.ToBoolean(customerInfoRow["DisableEsports"]);
 
-        public bool DisabledEsportsDownline => !Convert.IsDBNull(row1["disabledownlinesesports"]) && Convert.ToBoolean(row1["disabledownlinesesports"]);
+        public bool DisabledEsportsDownline => !Convert.IsDBNull(customerInfoRow["disabledownlinesesports"]) && Convert.ToBoolean(customerInfoRow["disabledownlinesesports"]);
     }
 }
