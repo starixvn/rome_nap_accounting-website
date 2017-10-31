@@ -6,6 +6,6 @@
     {
         public bool DisalbedVSParent => !ParentId.Equals(0) && CustParent.IsDisableVirtualSports;
 
-        public bool IsHideVirtualSports { get; set; } = true;
+        public bool IsHideVirtualSports { get; private set; } = true;
     }
 }

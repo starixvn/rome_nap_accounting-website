@@ -4,13 +4,13 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideAllBet { get; set; } = true;
+        public bool IsHideAllBet { get; private set; } = true;
 
-        public bool IsHideAllbetUpline { get; set; } = true;
+        public bool IsHideAllbetUpline { get; private set; } = true;
 
-        public bool IsSyncAllbet { get; set; } = true;
+        public bool IsSyncAllbet { get; private set; } = true;
 
-        public bool IsSyncAllbetUpline { get; set; } = true;
+        public bool IsSyncAllbetUpline { get; private set; } = true;
 
         public bool HideCheckBoxAllbet => !WebSettings.IsShowAllBet ||IsHideAllbetUpline || !IsSyncAllbetUpline;
     }

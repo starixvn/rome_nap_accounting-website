@@ -14,6 +14,7 @@
             string statusClass = string.Empty;
             string statusTip = string.Empty;
             bool isOpenStatus = true;
+
             if (!customerInfoViewModel.Enabled)
             {
                 statusClass = "memberDisabled ";

@@ -7,13 +7,13 @@
 
     public partial class CustomerInfoViewModel
     {
-        public int ParentId { get; set; }
-
         public int CustId => CastAide.AsInt32(row1["custid"]);
 
         public int RoleId => CastAide.AsInt32(row1["roleid"]);
 
         public string UserName => CastAide.AsString(row1["username"]);
+
+        public int ParentId { get; private set; }
 
         public string Firstname => CastAide.AsString(row1["firstname"], string.Empty);
 
@@ -21,7 +21,7 @@
 
         public string Fullname => $"{Firstname} - {Lastname}";
 
-        public string DownlineName { get; set; }
+        public string DownlineName { get; private set; }
 
         public string SiteName => string.IsNullOrWhiteSpace(CastAide.AsString(row1["site"]))? CastAide.AsString(row1["membersite"]) : CastAide.AsString(row1["site"]);
 
@@ -34,8 +34,6 @@
         public bool UplineAutoSuspend => CastAide.AsBoolean(row2["uplineautosuspend"]);
 
         public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && CastAide.AsBoolean(row1["IsDeposit"]);
-
-        public bool IsLicensee => IsDeposit;
 
         public bool IsIMBC => SiteName.ToString().ToUpper().Equals("IMBC");
 
@@ -125,5 +123,7 @@
         public bool Closed => CastAide.AsBoolean(row1["closed"], false);
 
         public bool IsBA => CastAide.AsBoolean(row1["isba"]);
+
+        public int ExchangeId => CastAide.AsInt32(row1["exchangeid"]);
     }
 }
