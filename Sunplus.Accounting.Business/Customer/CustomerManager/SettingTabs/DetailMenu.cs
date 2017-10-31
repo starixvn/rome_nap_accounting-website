@@ -19,11 +19,7 @@
             CustomerInfoViewModel customerInfoViewModel, 
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            htmlcontent = GenMenuMinMaxPT(
-                     htmlcontent,
-                     row2,
-                     customerInfoViewModel,
-                     renderLeftPanelParameter);
+            htmlcontent = GenMenuMinMaxPT(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
 
             htmlcontent = AssignSettingBlock(htmlcontent, row1, row2, customerInfoViewModel, renderLeftPanelParameter);
 
