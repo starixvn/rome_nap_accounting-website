@@ -15,15 +15,26 @@
     public partial class CustomerInfoViewModel
     {
         private DataRow row1 { get; set; }
+
         private DataRow row2 { get; set; }
+
         private DataRow row3 { get; set; }
+
+        private DataRow downlineStatusInfoRow { get; set; }
+
         private DataTable dynamicSettingtable { get; set; }
 
-        public CustomerInfoViewModel(DataRow row1, DataRow row2, DataRow row3, DataTable dynamicSettingtable)
+        public CustomerInfoViewModel(
+            DataRow row1, 
+            DataRow row2, 
+            DataRow row3, 
+            DataRow downlineStatusInfoRow, 
+            DataTable dynamicSettingtable)
         {
             this.row1 = row1;
             this.row2 = row2;
             this.row3 = row3;
+            this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
 
             JsParam = new Hashtable();
@@ -56,13 +67,13 @@
 
         public bool DisableOutright => !Convert.IsDBNull(row1["DisableOutright"]) && Convert.ToBoolean(row1["DisableOutright"]);
 
-        public bool IsHideCricketSettingLink { get; set; } = true;
+        public bool IsHideCricketSettingLink { get; private set; } = true;
 
-        public bool HideEnableAndEditFishingWorld { get; set; } = true;
+        public bool HideEnableAndEditFishingWorld { get; private set; } = true;
 
-        public bool HideKenoLottery { get; set; } = true;
+        public bool HideKenoLottery { get; private set; } = true;
 
-        public bool IsHideVirtualSports2 { get; set; } = true;
+        public bool IsHideVirtualSports2 { get; private set; } = true;
 
         public bool IsSyncUplineGoldDeluxe => Converter.ToBool(row1["IsSyncUplineGoldDeluxe"]);
 

@@ -277,7 +277,7 @@
 
         private static string RenderAGCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            var canEditAGCasinoStatus = WebSettings.EnableAGCasino && customerInfoViewModel.IsLicensee;
+            var canEditAGCasinoStatus = WebSettings.EnableAGCasino && customerInfoViewModel.IsDeposit;
             if (!canEditAGCasinoStatus)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "AGCasinoStatus");

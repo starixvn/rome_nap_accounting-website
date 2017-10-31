@@ -8,8 +8,8 @@
     {
         private static string GenUplineBox(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            string uplineboxhtml = "";
-            uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
+            var uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
+
             if (customerInfoViewModel.RoleId <= UserInfo.ROLE_SUPER)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperId}", customerInfoViewModel.SuperId);

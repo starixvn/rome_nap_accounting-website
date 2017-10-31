@@ -336,11 +336,12 @@
     <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
     <Compile Include="Criteria\WinLossByLicenseeCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\PartialCustomerInfoViewModelDownlineStatus.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VirtualSportViewModel.cs" />
@@ -359,11 +360,11 @@
     <Compile Include="Customer\CustomerManager\CustomerManager.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DirectInfoTab.cs" />
     <Compile Include="Customer\CustomerManager\CustomerInfoTabs\CustomerDetail.cs" />
-    <Compile Include="Customer\CustomerManager\SettingTabs\GetSettingControls.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\SettingControls.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\LoginTab.cs" />
-    <Compile Include="Customer\CustomerManager\SettingTabs\DetailMenu.cs" />
-    <Compile Include="Customer\CustomerManager\SettingTabs\MinMaxSetting.cs" />
-    <Compile Include="Customer\CustomerManager\SettingTabs\EnableLinks.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\DetailTab\SettingTab.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\DetailTab\MinMaxSettingTab.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\EnableStatusTab.cs" />
     <Compile Include="Customer\CustomerManager\CustomerInfoTabs\TransLinskBox.cs" />
     <Compile Include="Customer\CustomerManager\CustomerInfoTabs\UplineBox.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\BalanceInfo.cs" />
@@ -742,7 +743,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
