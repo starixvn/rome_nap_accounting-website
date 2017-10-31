@@ -12,8 +12,6 @@
 
         public bool IsSyncVoidbridgeUpline { get; set; } = true;
 
-        public bool IsSyncVoidbridgeDownline { get; set; } = true;
-
         public bool HideCheckBoxVoidbridge => !WebSettings.IsShowVoidbridge || (RoleId < 4 && IsHideVoidbridgeUpline) || !IsSyncVoidbridgeUpline;
     }
 }
