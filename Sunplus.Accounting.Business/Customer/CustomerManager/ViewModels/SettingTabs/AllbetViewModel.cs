@@ -12,8 +12,6 @@
 
         public bool IsSyncAllbetUpline { get; set; } = true;
 
-        public bool IsSyncAllbetDownline { get; set; } = true;
-
-        public bool HideCheckBoxAllbet => !WebSettings.IsShowAllBet || (RoleId < 4 && IsHideAllbetUpline) || !IsSyncAllbetUpline;
+        public bool HideCheckBoxAllbet => !WebSettings.IsShowAllBet ||IsHideAllbetUpline || !IsSyncAllbetUpline;
     }
 }

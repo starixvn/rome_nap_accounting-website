@@ -211,15 +211,9 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
             }
 
-            if (customerInfoViewModel.IsHideAllbetUpline || !customerInfoViewModel.IsSyncAllbetUpline)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
-            }
-
             if (customerInfoViewModel.IsHideCricketSettingLink)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-
             }
 
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
@@ -257,7 +251,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
 
-            if (renderLeftPanelParameter.IsShowAllBetForCredit)
+            if (!renderLeftPanelParameter.IsShowAllBetForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
