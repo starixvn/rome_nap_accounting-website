@@ -1,0 +1,20 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+@model PTViewModel
+@{
+    Layout = null;
+}
+<table class="tblcollapse pt_table">
+    <tbody>
+        <tr class="title">
+            <td colspan="2">@LicenseeDcsSettingLabels.PositionTaking <span>(@Model.SuperName)</span></td>
+        </tr>
+        <tr>
+            <td class="halfwidth">@Model.ProductName</td>
+            <td>
+                @Html.DropDownList("ptDropDown", Model.PositionTakingList, new { @class = "halfwidth" })
+            </td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" class="update-setting-button mT5" id="btnUpdatePT" disabled="disabled">@LicenseeDcsSettingLabels.Update</button>

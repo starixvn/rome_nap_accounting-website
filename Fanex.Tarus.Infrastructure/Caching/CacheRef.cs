@@ -27,6 +27,7 @@ namespace Fanex.Tarus.Infrastructure.Caching
                 default: return "en";
             }
         }
+
         public static string GetBettype(object bettypeID)
         {
             return RefData.GetBetTypeName(bettypeID.ToString(), TWLang("en-US"), string.Empty);
@@ -105,6 +106,11 @@ namespace Fanex.Tarus.Infrastructure.Caching
         public static string[] GetCombinationTypeCombo(string betTeam, string betCheck, decimal hdp1, decimal hdp2)
         {
             return RefData.GetCombinationTypeCombo(betTeam, betCheck, (int)hdp1, (int)hdp2, TWLang("en-US"));
+        }
+
+        public static string GetProductName(int productId)
+        {
+            return RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), ("en-US"), string.Empty);
         }
     }
 }
