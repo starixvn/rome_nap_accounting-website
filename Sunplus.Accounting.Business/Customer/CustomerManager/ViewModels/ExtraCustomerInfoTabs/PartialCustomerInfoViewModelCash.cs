@@ -5,23 +5,23 @@
 
     public partial class CustomerInfoViewModel
     {
-        public decimal OutStanding { get; set; }
+        public decimal OutStanding { get; private set; }
 
-        public decimal AccOutstanding { get; set; }
+        public decimal AccOutstanding { get; private set; }
 
-        public decimal Cash { get; set; }
+        public decimal Cash { get; private set; }
 
-        public decimal TotalBal { get; set; }
+        public decimal TotalBal { get; private set; }
 
-        public decimal YesterdayCash { get; set; }
+        public decimal YesterdayCash { get; private set; }
 
-        public decimal YesterdayBal { get; set; }
+        public decimal YesterdayBal { get; private set; }
 
-        public decimal BetCredit { get; set; }
+        public decimal BetCredit { get; private set; }
 
-        public decimal UsedCredit { get; set; }
+        public decimal UsedCredit { get; private set; }
 
-        public decimal NetPosition { get; set; }
+        public decimal NetPosition { get; private set; }
 
         public decimal Credit => CastAide.AsDecimal(row1["credit"]);
 

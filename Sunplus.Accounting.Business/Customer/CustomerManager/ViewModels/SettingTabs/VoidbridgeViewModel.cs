@@ -4,13 +4,13 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideVoidbridge { get; set; } = true;
+        public bool IsHideVoidbridge { get; private set; } = true;
 
-        public bool IsHideVoidbridgeUpline { get; set; } = true;
+        public bool IsHideVoidbridgeUpline { get; private set; } = true;
 
-        public bool IsSyncVoidbridge { get; set; } = true;
+        public bool IsSyncVoidbridge { get; private set; } = true;
 
-        public bool IsSyncVoidbridgeUpline { get; set; } = true;
+        public bool IsSyncVoidbridgeUpline { get; private set; } = true;
 
         public bool HideCheckBoxVoidbridge => !WebSettings.IsShowVoidbridge || (RoleId < 4 && IsHideVoidbridgeUpline) || !IsSyncVoidbridgeUpline;
     }

@@ -2,7 +2,6 @@
 {
     using Core.Common;
     using Core.Web;
-    using DNAide.Data;
     using DNAide.Web;
     using Security;
 
@@ -10,7 +9,6 @@
     {
         private static string RenderBalanceInfo(
             string htmlcontent, 
-            DbResult ds,
             CustomerInfoViewModel customerInfoViewModel)
         {
             bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
@@ -19,8 +17,6 @@
             TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.Cash >= 0) ? " b" : " hilight"));
 
             TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayCash >= 0) ? " b" : " hilight"));
-            if (string.IsNullOrEmpty(customerInfoViewModel.Cash.ToString())) customerInfoViewModel.Cash = 0;
-            if (string.IsNullOrEmpty(customerInfoViewModel.YesterdayCash.ToString())) customerInfoViewModel.YesterdayCash = 0;
             TemplateHandler.Assign(ref balanceinfo, "{TotalCashBal}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.Cash));
 
             TemplateHandler.Assign(ref balanceinfo, "{TotalCashBalCur}", string.Format("{0:n}", customerInfoViewModel.Cash));
@@ -86,7 +82,7 @@
                 TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                 TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
 
-                GetDownlineCountingInfo(ref balanceinfo, ds, customerInfoViewModel.RoleId);
+                balanceinfo = GetDownlineCountingInfo(balanceinfo, customerInfoViewModel);
             }
             else
             {
@@ -104,5 +100,25 @@
             return htmlcontent;
         }
 
+        private static string GetDownlineCountingInfo(string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
+        {
+            TemplateHandler.Assign(ref balanceInfo, "{masteractive}",
+                                    string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
+                                                    customerInfoViewModel.MAgentActive, customerInfoViewModel.MAgentClosed, customerInfoViewModel.MAgentSuspended));
+
+            TemplateHandler.Assign(ref balanceInfo, "{agentavtive}",
+                                    string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
+                                                    customerInfoViewModel.AgentActive, customerInfoViewModel.AgentClosed, customerInfoViewModel.AgentSuspended));
+
+            TemplateHandler.Assign(ref balanceInfo, "{memberactive}",
+                                    string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
+                                                    customerInfoViewModel.MemberActive, customerInfoViewModel.MemberClosed, customerInfoViewModel.MemberSuspended));
+
+            TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 ? string.Empty : "hidden");
+
+            return balanceInfo;
+        }
     }
 }
