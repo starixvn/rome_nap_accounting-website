@@ -39,7 +39,7 @@
                 case Globals.AccountType.Super:
                     if (!customerInfoViewModel.IsInternalUser)
                     {
-                        downlineListURL = "Customer/MasterAgentList.aspx?superId=" + customerInfoViewModel.CustId; 
+                        downlineListURL = "CustomerList/MasterAgentList?superId=" + customerInfoViewModel.CustId; 
                         if (WebSettings.OfferDoubleComm)
                         {
                             downlineListURL += "&doubleCommSuper=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
@@ -58,7 +58,7 @@
                 case Globals.AccountType.Master:
                     if (!customerInfoViewModel.IsInternalUser)
                     {
-                        downlineListURL = "Customer/AgentList.aspx?masterId=" + customerInfoViewModel.CustId;
+                        downlineListURL = "CustomerList/AgentList?masterId=" + customerInfoViewModel.CustId;
 
                         if (WebSettings.OfferDoubleComm)
                         {
@@ -79,7 +79,7 @@
                     if (!customerInfoViewModel.IsInternalUser)
                     {
                         bool allowHR = !WebSettings.disabledHR;
-                        downlineListURL = "Customer/MemberList.aspx?agentId=" + customerInfoViewModel.CustId + "&hr=" + allowHR.ToString().ToLower() + "&internal=" + customerInfoViewModel.IsInternalUser.ToString().ToLower();
+                        downlineListURL = "CustomerList/MemberList?agentId=" + customerInfoViewModel.CustId + "&hr=" + allowHR.ToString().ToLower() + "&internal=" + customerInfoViewModel.IsInternalUser.ToString().ToLower();
                         if (WebSettings.OfferDoubleComm)
                         {
                             downlineListURL += "&doubleCommAgent=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();

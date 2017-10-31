@@ -4,8 +4,8 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool DisabledNumberGame => CastAide.AsBoolean(row1["DisableNumber"], false);
+        public bool DisabledNumberGame => CastAide.AsBoolean(customerInfoRow["DisableNumber"], false);
 
-        public bool DisabledDownlinesNumberGame => CastAide.AsBoolean(row1["DisableDownlinesNumber"], false);
+        public bool DisabledDownlinesNumberGame => CastAide.AsBoolean(customerInfoRow["DisableDownlinesNumber"], false);
     }
 }
