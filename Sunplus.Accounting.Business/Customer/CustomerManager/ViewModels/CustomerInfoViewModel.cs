@@ -6,7 +6,6 @@
     using Core.Common;
     using Core.Configurations;
     using DataAccess;
-    using DNAide.Core;
     using Entities;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
@@ -61,11 +60,11 @@
 
         public bool IsDisabledDirectStatus => Converter.ToBool(customerInfoRow["IsDisabledDirectStatus"]);
 
-        public bool IsAllDayBalTransfer => customerInfoRow.Table.Columns.Contains("isalldaybaltransfer") && Convert.ToBoolean(customerInfoRow["isalldaybaltransfer"]);
+        public bool IsAllDayBalTransfer => customerInfoRow.Table.Columns.Contains("isalldaybaltransfer") && Converter.ToBool(customerInfoRow["isalldaybaltransfer"]);
 
-        public bool DisableAutoMPT => !Convert.IsDBNull(cashRow["DisableAutoMPT"]) && !Convert.ToBoolean(cashRow["DisableAutoMPT"]);
+        public bool DisableAutoMPT => !Convert.IsDBNull(cashRow["DisableAutoMPT"]) && !Converter.ToBool(cashRow["DisableAutoMPT"]);
 
-        public bool DisableOutright => !Convert.IsDBNull(customerInfoRow["DisableOutright"]) && Convert.ToBoolean(customerInfoRow["DisableOutright"]);
+        public bool DisableOutright => !Convert.IsDBNull(customerInfoRow["DisableOutright"]) && Converter.ToBool(customerInfoRow["DisableOutright"]);
 
         public bool IsHideCricketSettingLink { get; private set; } = true;
 
@@ -77,9 +76,9 @@
 
         public bool IsSyncUplineGoldDeluxe => Converter.ToBool(customerInfoRow["IsSyncUplineGoldDeluxe"]);
 
-        public bool IsEnableHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableHRFixedOdds"]) && !Convert.ToBoolean(customerInfoRow["DisableHRFixedOdds"]);
+        public bool IsEnableHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableHRFixedOdds"]) && !Converter.ToBool(customerInfoRow["DisableHRFixedOdds"]);
 
-        public bool DisableDownlinesHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableDownlinesHRFixedOdds"]) && Convert.ToBoolean(customerInfoRow["DisableDownlinesHRFixedOdds"]);
+        public bool DisableDownlinesHorseRacingFixedOdds => !Convert.IsDBNull(customerInfoRow["DisableDownlinesHRFixedOdds"]) && Converter.ToBool(customerInfoRow["DisableDownlinesHRFixedOdds"]);
 
         public bool IsShowKenoStatus => KenoSection.Instance.Enable;
 
@@ -103,52 +102,52 @@
                     switch (productId)
                     {
                         case "5":
-                            IsHideVirtualSports = (CastAide.AsBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            IsHideVirtualSports = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
                             break;
                         case "16":
-                            IsHideSportsbook2 = (CastAide.AsBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
+                            IsHideSportsbook2 = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
                             break;
                         case "19":
-                            IsHideCockFighting = (CastAide.AsBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCockFighting || IsDeposit;
+                            IsHideCockFighting = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCockFighting || IsDeposit;
                             break;
                         case "20":
-                            IsHideCricketSettingLink = (CastAide.AsBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
+                            IsHideCricketSettingLink = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
                             break;
                         case "21":
-                            IsHideAllBet = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowAllBet || IsDeposit;
-                            IsSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
-                            IsHideAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                            IsHideAllBet = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowAllBet || IsDeposit;
+                            IsSyncAllbet = Converter.ToBool(row["IsSync"]);
+                            IsHideAllbetUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            IsSyncAllbetUpline = Converter.ToBool(row["IsSyncedUpline"]);
                             break;
 
                         case "22":
-                            IsHideVoidbridge = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowVoidbridge;
-                            IsSyncVoidbridge = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
-                            IsHideVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                            IsHideVoidbridge = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowVoidbridge;
+                            IsSyncVoidbridge = Converter.ToBool(row["IsSync"]);
+                            IsHideVoidbridgeUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            IsSyncVoidbridgeUpline = Converter.ToBool(row["IsSyncedUpline"]);
                             break;
 
                         case "23":
-                            IsHideNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowNG2;
-                            IsSyncNG2 = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
-                            IsHideNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncNG2Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                            IsHideNG2 = Converter.ToBool(row["IsHidden"]) || !WebSettings.IsShowNG2;
+                            IsSyncNG2 = Converter.ToBool(row["IsSync"]);
+                            IsHideNG2Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            IsSyncNG2Upline = Converter.ToBool(row["IsSyncedUpline"]);
 
                             break;
                         case "24":
-                            bool isHideUplineFishingWorld = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]);
-                            bool isSyncUplineFishingWorld = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
+                            bool isHideUplineFishingWorld = Converter.ToBool(row["IsHiddenUpline"]);
+                            bool isSyncUplineFishingWorld = Converter.ToBool(row["IsSyncedUpline"]);
 
                             HideEnableAndEditFishingWorld = (RoleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
 
                             break;
                         case "27":
-                            IsHideVirtualSports2 = (CastAide.AsBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            IsHideVirtualSports2 = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
                             break;
 
                         case "28": // We do NOT have Unsync case for Keno Lottery.
-                            bool isHideKenoLottery = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]);
-                            bool isHideUplineKenoLottery = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]);
+                            bool isHideKenoLottery = Converter.ToBool(row["IsHidden"]);
+                            bool isHideUplineKenoLottery = Converter.ToBool(row["IsHiddenUpline"]);
 
                             HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                 IsDeposit ||
@@ -156,8 +155,8 @@
                             break;
 
                         case "26":
-                            IsHideLucky3 = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3;
-                            IsHideLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
+                            IsHideLucky3 = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3;
+                            IsHideLucky3Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
                             break;
                     }
                 }
