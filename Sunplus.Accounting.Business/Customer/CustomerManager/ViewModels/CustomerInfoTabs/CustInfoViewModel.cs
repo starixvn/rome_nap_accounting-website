@@ -52,6 +52,7 @@
         public string PwdExpiryDate => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : Convert.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortDateString();
 
         public string PwdExpiryTime => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : " " + Convert.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortTimeString();
+
         public string LastTxnDate
             => cashRow != null && RoleId <= 4 ? Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : Convert.ToDateTime(cashRow["lastTxn"]).ToShortDateString() : string.Empty;
 
