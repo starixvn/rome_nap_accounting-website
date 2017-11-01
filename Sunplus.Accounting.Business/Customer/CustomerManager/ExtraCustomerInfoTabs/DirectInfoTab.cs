@@ -38,6 +38,11 @@
                 TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", customerInfoViewModel.RoleId, customerInfoViewModel.CustId, customerInfoViewModel.UserName));
             }
 
+            if (customerInfoViewModel.RoleId == 1)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
+            }
+
             return htmlcontent;
         }
     }

@@ -1,7 +1,6 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System;
-    using System.Data;
     using Core.Common;
     using Core.Configurations;
     using DNAide.Web;
@@ -12,9 +11,7 @@
     public partial class CustomerManager
     {
         private static string RenderDetailMenu(
-            string htmlcontent, 
-            DataRow row1, 
-            DataRow row2, 
+            string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel, 
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
