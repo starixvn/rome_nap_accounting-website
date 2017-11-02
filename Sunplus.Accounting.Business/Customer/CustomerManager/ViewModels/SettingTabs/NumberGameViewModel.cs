@@ -1,11 +1,11 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
 
     public partial class CustomerInfoViewModel
     {
-        public bool DisabledNumberGame => Converter.ToBool(customerInfoRow["DisableNumber"]);
+        public bool DisabledNumberGame => Utils.ToBoolean(customerInfoRow["DisableNumber"]);
 
-        public bool DisabledDownlinesNumberGame => Converter.ToBool(customerInfoRow["DisableDownlinesNumber"]);
+        public bool DisabledDownlinesNumberGame => Utils.ToBoolean(customerInfoRow["DisableDownlinesNumber"]);
     }
 }

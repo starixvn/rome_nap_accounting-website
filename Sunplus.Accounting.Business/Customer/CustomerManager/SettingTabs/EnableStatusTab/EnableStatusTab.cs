@@ -26,7 +26,7 @@
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
             {
-                IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKenoCredit,
+                IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKeno,
                 IsShowGoldDeluxeForCredit =
                     WebSettings.EnableGoldDeluxe &&
                     customerInfoViewModel.SyncUplineGoldDeluxe
@@ -38,11 +38,11 @@
                 IsShowEnableMicrogaming = customerInfoViewModel.ShowEnableMicrogamingDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsShowColossusBetsForCredit = customerInfoViewModel.ShowEnabledCheckboxColossusBets,
-                IsShowAllBetForCredit = !customerInfoViewModel.RemoveEnabledCheckBoxAllbet,
-                IsShowVoidbridge = !customerInfoViewModel.RemoveEnabledCheckBoxVoidbridge,
+                IsShowAllBetForCredit = !customerInfoViewModel.HideEnabledCheckBoxAllbet,
+                IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
-                IsHideCricket = customerInfoViewModel.HideCricketSettingLinkCredit,
-                IsShowVirtualSport = !customerInfoViewModel.HideVirtualSportsCredit,
+                IsHideCricket = customerInfoViewModel.HideCricketCredit,
+                IsShowVirtualSport = !customerInfoViewModel.HideVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
                 RoleId = customerInfoViewModel.RoleId,
@@ -50,9 +50,9 @@
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
-                IsShowNG2 = !customerInfoViewModel.RemoveEnabledCheckBoxNG2,
+                IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
-                IsShowLucky3 = !customerInfoViewModel.RemoveEnabledCheckBoxLucky3Credit
+                IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -199,17 +199,12 @@
 
         private static string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (customerInfoViewModel.HideSportsbook2Credit)
+            if (customerInfoViewModel.HideSportsbook2)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
             }
 
-            if (customerInfoViewModel.HideCockFightingCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
-            }
-
-            if (customerInfoViewModel.HideCricketSettingLinkCredit)
+            if (customerInfoViewModel.HideCricketCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
@@ -244,7 +239,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (!renderLeftPanelParameter.IsShowAllBetForCredit)
+            if (customerInfoViewModel.HideEnabledCheckBoxAllbet)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
@@ -254,7 +249,7 @@
 
         private static string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!customerInfoViewModel.ShowEnableCheckBoxKenoCredit)
+            if (!customerInfoViewModel.ShowEnableCheckBoxKeno)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
             }

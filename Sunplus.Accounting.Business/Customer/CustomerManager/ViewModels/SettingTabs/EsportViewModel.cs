@@ -1,19 +1,13 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using Core.Common;
-    using Core.Configurations;
-    using Fanex.Common;
-    using Security;
+    using Fanex.CustomerSetting.Module.Core;
 
     public partial class CustomerInfoViewModel
     {
         public bool DisabledEsportsParent => !ParentId.Equals(0) && CustParent.IsDisableEsports;
 
-        public bool DisabledEsports => Converter.ToBool(customerInfoRow["DisableEsports"]);
+        public bool DisabledEsports => Utils.ToBoolean(customerInfoRow["DisableEsports"]);
 
-        public bool DisabledEsportsDownline => Converter.ToBool(customerInfoRow["disabledownlinesesports"]);
-
-        public bool RemoveRnGCasinoLink
-           => !Permissions.IsAllowCasino() && (WebSettings.disableCS || ((RoleId < (int)Globals.AccountType.Super) && !AllowEditRnGCasino));
+        public bool DisabledEsportsDownline => Utils.ToBoolean(customerInfoRow["disabledownlinesesports"]);
     }
 }

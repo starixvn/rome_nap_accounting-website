@@ -3,6 +3,7 @@
     using System;
     using Core.Configurations;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
 
     public partial class CustomerInfoViewModel
     {
@@ -22,15 +23,15 @@
 
         public string DownlineName { get; private set; }
 
-        public bool Important => Converter.ToBool(customerInfoRow["important"]);
+        public bool Important => Utils.ToBoolean(customerInfoRow["important"]);
 
-        public bool Suspend => Converter.ToBool(customerInfoRow["suspended"]);
+        public bool Suspend => Utils.ToBoolean(customerInfoRow["suspended"]);
 
-        public bool Autosuspend => Converter.ToBool(customerInfoRow["suspended"]);
+        public bool Autosuspend => Utils.ToBoolean(customerInfoRow["suspended"]);
 
-        public bool UplineAutoSuspend => Converter.ToBool(lineInfoRow["uplineautosuspend"]);
+        public bool UplineAutoSuspend => Utils.ToBoolean(lineInfoRow["uplineautosuspend"]);
 
-        public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Converter.ToBool(customerInfoRow["IsDeposit"]);
+        public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Utils.ToBoolean(customerInfoRow["IsDeposit"]);
 
         public bool IsIMBC
         {
@@ -71,13 +72,13 @@
 
         public string Nickname => Converter.ToString2(customerInfoRow["username2"]);
 
-        public bool Enabled => Converter.ToBool(customerInfoRow["Enabled"]);
+        public bool Enabled => Utils.ToBoolean(customerInfoRow["Enabled"]);
 
         public string ClosedReason => Converter.ToString2(customerInfoRow["closedreason"]);
 
-        public bool Doublecommlosing => Converter.ToBool(customerInfoRow["DoubleCommLosing"]);
+        public bool Doublecommlosing => Utils.ToBoolean(customerInfoRow["DoubleCommLosing"]);
 
-        public bool NicknameLoginOnly => Converter.ToBool(customerInfoRow["NicknameLoginOnly"]);
+        public bool NicknameLoginOnly => Utils.ToBoolean(customerInfoRow["NicknameLoginOnly"]);
 
         public string LastChangeSecurityCodeDate => Converter.ToString2(customerInfoRow["LastChangedSecurityCodeDate"]);
 
@@ -95,17 +96,17 @@
 
         public int Danger3 => Converter.ToInt(customerInfoRow["danger3"]);
 
-        public bool HasDownline => Converter.ToBool(customerInfoRow["HasDownline"]);
+        public bool HasDownline => Utils.ToBoolean(customerInfoRow["HasDownline"]);
 
         public int Abnormal => Converter.ToInt(customerInfoRow["abnormal"]);
 
-        public bool SelectedBetting => Converter.ToBool(customerInfoRow["SelectedBetting"]);
+        public bool SelectedBetting => Utils.ToBoolean(customerInfoRow["SelectedBetting"]);
 
-        public bool IsInternalUser => Converter.ToBool(customerInfoRow["IsInternal"]);
+        public bool IsInternalUser => Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
-        public bool Closed => Converter.ToBool(customerInfoRow["closed"]);
+        public bool Closed => Utils.ToBoolean(customerInfoRow["closed"]);
 
-        public bool IsBA => Converter.ToBool(customerInfoRow["isba"]);
+        public bool IsBA => Utils.ToBoolean(customerInfoRow["isba"]);
 
         public int ExchangeId => Converter.ToInt(customerInfoRow["exchangeid"]);
 
@@ -125,10 +126,10 @@
 
         public string MemberName => Converter.ToString2(lineInfoRow["MemberName"]);
 
-        public bool SuperEnabled => Converter.ToBool(lineInfoRow["SuperEnabled"]);
+        public bool SuperEnabled => Utils.ToBoolean(lineInfoRow["SuperEnabled"]);
 
-        public bool MasterEnabled => Converter.ToBool(lineInfoRow["MasterEnabled"]);
+        public bool MasterEnabled => Utils.ToBoolean(lineInfoRow["MasterEnabled"]);
 
-        public bool AgentEnabled => Converter.ToBool(lineInfoRow["AgentEnabled"]);
+        public bool AgentEnabled => Utils.ToBoolean(lineInfoRow["AgentEnabled"]);
     }
 }
