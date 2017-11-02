@@ -2,6 +2,7 @@
 {
     using System.Data;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
 
     public partial class CustomerInfoViewModel
     {
@@ -29,7 +30,7 @@
 
         public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
-        public bool EnableVirtualRate => Converter.ToBool(customerInfoRow["EnableVirtualRate"]);
+        public bool EnableVirtualRate => Utils.ToBoolean(customerInfoRow["EnableVirtualRate"]);
 
         private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
         {

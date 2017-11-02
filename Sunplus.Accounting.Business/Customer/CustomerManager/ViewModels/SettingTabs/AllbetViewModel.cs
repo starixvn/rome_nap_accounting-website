@@ -10,10 +10,10 @@
 
         public bool SyncAllbetUpline { get; private set; } = true;
 
-        public bool RemoveEnabledCheckBoxAllbet 
+        public bool HideEnabledCheckBoxAllbet
             => !WebSettings.IsShowAllBet || !SyncAllbetUpline || (RoleId < 4 && (HideAllbetUpline || !SyncAllbet));
 
-        public bool RemoveSettingLinkAllbet
+        public bool HideSettingLinkAllbet
             => !WebSettings.IsShowAllBet || HideAllbetUpline || !SyncAllbetUpline;
     }
 }

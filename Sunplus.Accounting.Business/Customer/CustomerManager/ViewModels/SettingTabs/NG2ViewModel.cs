@@ -12,8 +12,8 @@
 
         public bool SyncNG2Upline { get; private set; } = true;
 
-        public bool RemoveEnabledCheckBoxNG2 => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2 || !SyncNG2;
+        public bool HideSettingLinkNG2Credit => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2 || IsDeposit;
 
-        public bool RemoveSettingLinkNG2 => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2;
+        public bool HideEnabledCheckBoxNG2Credit => HideSettingLinkNG2Credit || !SyncNG2;
     }
 }

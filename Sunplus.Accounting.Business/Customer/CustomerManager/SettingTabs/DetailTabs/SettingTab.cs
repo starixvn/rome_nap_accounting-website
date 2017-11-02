@@ -165,7 +165,7 @@
 
         private static string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.RemoveRnGCasinoLink)
+            if (customerInfoViewModel.HideSettingLinkRnGCasino)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
             }
@@ -180,17 +180,17 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
             }
 
-            if (!customerInfoViewModel.ShowLiveCasinoSettingLink)
+            if (!customerInfoViewModel.ShowSettingLinkLiveCasino)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }
 
-            if (customerInfoViewModel.HideVirtualSportsCredit)
+            if (customerInfoViewModel.HideVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
 
-            if (!customerInfoViewModel.ShowSettingLinkKenoCredit)
+            if (!customerInfoViewModel.ShowSettingLinkKeno)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
             }
@@ -200,7 +200,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
             }
 
-            if (customerInfoViewModel.RemoveSettingLinkColossusBets)
+            if (customerInfoViewModel.HideSettingLinkColossusBetsCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
             }
@@ -210,32 +210,27 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
             }
 
-            if (customerInfoViewModel.HideSportsbook2Credit)
+            if (customerInfoViewModel.HideSportsbook2)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
             }
 
-            if (customerInfoViewModel.HideCockFightingCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
-            }
-
-            if (customerInfoViewModel.HideCricketSettingLinkCredit)
+            if (customerInfoViewModel.HideCricketCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
             }
 
-            if (customerInfoViewModel.RemoveSettingLinkAllbet)
+            if (customerInfoViewModel.HideSettingLinkAllbet)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
             }
 
-            if (customerInfoViewModel.RemoveSettingLinkVoidbridge)
+            if (customerInfoViewModel.HideSettingLinkVoidbridge)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
             }
 
-            if (customerInfoViewModel.RemoveSettingLinkNG2)
+            if (customerInfoViewModel.HideSettingLinkNG2Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-NG2");
             }
@@ -250,7 +245,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
             }
 
-            if (customerInfoViewModel.RemoveSettingLinkLucky3Credit)
+            if (customerInfoViewModel.HideSettingLinkLucky3Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
             }
