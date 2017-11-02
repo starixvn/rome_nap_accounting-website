@@ -26,33 +26,33 @@
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
             {
-                IsShowKeno = customerInfoViewModel.IsShowKenoStatus,
+                IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKenoCredit,
                 IsShowGoldDeluxeForCredit =
                     WebSettings.EnableGoldDeluxe &&
-                    customerInfoViewModel.IsSyncUplineGoldDeluxe
+                    customerInfoViewModel.SyncUplineGoldDeluxe
                     && !customerInfoViewModel.IsDeposit
                     && !string.Equals(customerInfoViewModel.Currency, "Won", StringComparison.OrdinalIgnoreCase),
-                IsShowMacau = customerInfoViewModel.IsShowMacauForDeposit,
-                IsShowEnableBetTrade = customerInfoViewModel.IsShowEnableBetTradeForDeposit,
-                IsShowEnableCashOut = customerInfoViewModel.IsShowEnableCashOutForDeposit,
-                IsShowEnableMicrogaming = customerInfoViewModel.IsShowEnableMicrogamingForDeposit,
+                IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
+                IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
+                IsShowEnableCashOut = customerInfoViewModel.ShowEnableCashOutDeposit,
+                IsShowEnableMicrogaming = customerInfoViewModel.ShowEnableMicrogamingDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
-                IsShowColossusBetsForCredit = customerInfoViewModel.IsShowColossusBetsForCredit,
-                IsShowAllBetForCredit = !customerInfoViewModel.HideCheckBoxAllbet,
-                IsShowVoidbridge = !customerInfoViewModel.HideCheckBoxVoidbridge,
+                IsShowColossusBetsForCredit = customerInfoViewModel.ShowEnabledCheckboxColossusBets,
+                IsShowAllBetForCredit = !customerInfoViewModel.RemoveEnabledCheckBoxAllbet,
+                IsShowVoidbridge = !customerInfoViewModel.RemoveEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
-                IsHideCricket = customerInfoViewModel.IsHideCricketSettingLinkForCredit,
-                IsShowVirtualSport = !customerInfoViewModel.IsHideVirtualSports,
-                IsShowVirtualSport2 = !customerInfoViewModel.IsHideVirtualSports2,
+                IsHideCricket = customerInfoViewModel.HideCricketSettingLinkCredit,
+                IsShowVirtualSport = !customerInfoViewModel.HideVirtualSportsCredit,
+                IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
                 RoleId = customerInfoViewModel.RoleId,
                 CustId = customerInfoViewModel.CustId,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
-                IsShowNG2 = !customerInfoViewModel.HideCheckBoxNG2,
+                IsShowNG2 = !customerInfoViewModel.RemoveEnabledCheckBoxNG2,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
-                IsShowLucky3 = !customerInfoViewModel.HideCheckBoxLucky3
+                IsShowLucky3 = !customerInfoViewModel.RemoveEnabledCheckBoxLucky3Credit
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -111,7 +111,7 @@
             htmlcontent = RenderGoldDeluxeForCreditControl(
                 htmlcontent,
                 row1,
-                customerInfoViewModel.IsManageCustomerAccess,
+                customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
                 sg,
                 customerInfoViewModel.HasDownline);
@@ -124,7 +124,7 @@
                 htmlcontent,
                 row1,
                 customerInfoViewModel.CustParent,
-                customerInfoViewModel.IsManageCustomerAccess,
+                customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
                 sg,
                 customerInfoViewModel.HasDownline);
@@ -133,7 +133,7 @@
                 htmlcontent,
                 row1,
                 customerInfoViewModel.CustParent,
-                customerInfoViewModel.IsManageCustomerAccess,
+                customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
                 sg, 
                 customerInfoViewModel.HasDownline);
@@ -142,7 +142,7 @@
                 htmlcontent,
                 row1,
                 customerInfoViewModel.CustParent,
-                customerInfoViewModel.IsManageCustomerAccess,
+                customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
                 dcsTable,
                 sg,
@@ -156,12 +156,12 @@
         private string RenderClosedStatus(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             var closedStatusBlock = GetClosedStatus(
-                                        customerInfoViewModel.IsManageCustomerAccess,
+                                        customerInfoViewModel.ManageCustomerAccess,
                                         "closed", 
                                         customerInfoViewModel.Closed,
                                         customerInfoViewModel.RoleId > 1,
                                         customerInfoViewModel.CustParent.IsClosed,
-                                        customerInfoViewModel.IsAllowUpdateGivenCredit);
+                                        customerInfoViewModel.AllowUpdateGivenCredit);
 
             TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", closedStatusBlock);
 
@@ -199,17 +199,17 @@
 
         private static string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (customerInfoViewModel.IsHideSportsbook2ForCredit)
+            if (customerInfoViewModel.HideSportsbook2Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
             }
 
-            if (customerInfoViewModel.IsHideCockFightingForCredit)
+            if (customerInfoViewModel.HideCockFightingCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
             }
 
-            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
+            if (customerInfoViewModel.HideCricketSettingLinkCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
@@ -244,11 +244,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-            }
-
             if (!renderLeftPanelParameter.IsShowAllBetForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
@@ -259,7 +254,7 @@
 
         private static string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!customerInfoViewModel.IsShowKenoStatus)
+            if (!customerInfoViewModel.ShowEnableCheckBoxKenoCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
             }
@@ -303,7 +298,7 @@
                     TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", 
                         GetSettingControlDangerous(
                             customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.IsManageCustomerAccess, 
+                            customerInfoViewModel.ManageCustomerAccess, 
                             dangeruostype, 
                             currentlevels, 
                             customerInfoViewModel.IsBA));
@@ -329,7 +324,7 @@
             if (Functions.Settings.IsVisibleSpecial)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}",
-                    StatusSpan(customerInfoViewModel.IsManageCustomerAccess,
+                    StatusSpan(customerInfoViewModel.ManageCustomerAccess,
                                 "special",
                                 customerInfoViewModel.Important,
                                 customerInfoViewModel.RoleId > 1));
@@ -615,14 +610,14 @@
                 Username = customerInfoViewModel.UserName,
                 DirectAccountStatusInfo = new DirectAccountStatusInfo
                 {
-                    IsShowDirectStatus = !customerInfoViewModel.IsHideDirectStatus,
-                    IsCheckedDirectStatus = customerInfoViewModel.IsCheckedDirectStatus,
-                    CanEditDirectStatus = !customerInfoViewModel.IsDisabledDirectStatus && Permissions.GetHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount)
+                    IsShowDirectStatus = !customerInfoViewModel.HideDirectStatus,
+                    IsCheckedDirectStatus = customerInfoViewModel.CheckedDirectStatus,
+                    CanEditDirectStatus = !customerInfoViewModel.DisabledDirectStatus && Permissions.GetHostPermission(Enumerations.Functions.Customer.ConfigureDirectAccount)
                 },
 
                 RoleId = customerInfoViewModel.RoleId,
                 Htmlcontent = htmlcontent,
-                IsManageCustomerAccess = customerInfoViewModel.IsManageCustomerAccess
+                IsManageCustomerAccess = customerInfoViewModel.ManageCustomerAccess
             }, htmlcontent);
 
             return htmlcontent;
@@ -638,7 +633,7 @@
                     GetSettingControlInternalUser(
                         customerInfoViewModel.RoleId,
                         customerInfoViewModel.CustParent.IsInternalUser,
-                        customerInfoViewModel.IsManageCustomerAccess,
+                        customerInfoViewModel.ManageCustomerAccess,
                         "internalUser",
                         customerInfoViewModel.IsInternalUser));
 
@@ -661,9 +656,9 @@
                 allDayBalTransferControlSettingGroup.Add(
                     GetSettingControlAllDayBalTransfer(
                         customerInfoViewModel.RoleId,
-                        customerInfoViewModel.IsManageCustomerAccess,
+                        customerInfoViewModel.ManageCustomerAccess,
                         "AllDayBalTransfer",
-                        customerInfoViewModel.IsAllDayBalTransfer));
+                        customerInfoViewModel.AllDayBalTransfer));
 
                 TemplateHandler.Assign(ref htmlcontent, "{allDayBalTransferControl}", allDayBalTransferControlSettingGroup.GetHTMLSettingControl());
             }
@@ -681,7 +676,7 @@
 
             suspendedControlSettingGroup.Add(
                 GetSettingControlSuspended(
-                    customerInfoViewModel.IsManageCustomerAccess,
+                    customerInfoViewModel.ManageCustomerAccess,
                     "suspended",
                     customerInfoViewModel.Suspend,
                     customerInfoViewModel.RoleId > 1,
@@ -700,11 +695,11 @@
             liveCasinoSettingGroup.Add(
                 GetSettingControlLiveCasino(
                     customerInfoViewModel.RoleId,
-                    customerInfoViewModel.IsManageCustomerAccess,
+                    customerInfoViewModel.ManageCustomerAccess,
                     "disabledLCS",
                     !customerInfoViewModel.DisabledLiveCasino,
                     customerInfoViewModel.SyncLiveCasino,
-                    customerInfoViewModel.IsAllowEditLiveCasino,
+                    customerInfoViewModel.AllowEditLiveCasino,
                     customerInfoViewModel.Enabled,
                     customerInfoViewModel.DisabledLiveCasinoParent,
                     !customerInfoViewModel.DisabledDownlinesLiveCasino));
@@ -715,19 +710,19 @@
 
         private static string RenderEnableCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", customerInfoViewModel.DisabledCasino ? 1 : 0);
+            TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", customerInfoViewModel.DisabledRnGCasino ? 1 : 0);
 
             var casinoSettingGroup = new SettingGroup();
             casinoSettingGroup.Add(GetSettingControlCasino(
                                     customerInfoViewModel.RoleId,
-                                    customerInfoViewModel.IsManageCustomerAccess,
+                                    customerInfoViewModel.ManageCustomerAccess,
                                     "disabledCS",
-                                    !customerInfoViewModel.DisabledCasino,
-                                    customerInfoViewModel.SyncCasino,
-                                    customerInfoViewModel.IsAllowEditCasino,
+                                    !customerInfoViewModel.DisabledRnGCasino,
+                                    customerInfoViewModel.SyncRnGCasino,
+                                    customerInfoViewModel.AllowEditRnGCasino,
                                     customerInfoViewModel.Enabled,
-                                    customerInfoViewModel.DisabledCasinoParent,
-                                    !customerInfoViewModel.DisabledDownlinesCasino));
+                                    customerInfoViewModel.DisabledRnGCasinoParent,
+                                    !customerInfoViewModel.DisabledDownlinesRnGCasino));
 
             TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
@@ -741,7 +736,7 @@
                 GetSettingControlNumberGame(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.CustParent.IsDisabledNumberGame,
-                    customerInfoViewModel.IsManageCustomerAccess,
+                    customerInfoViewModel.ManageCustomerAccess,
                     "disabledNumberGame",
                     !customerInfoViewModel.DisabledNumberGame,
                     !customerInfoViewModel.DisabledDownlinesNumberGame,
@@ -763,7 +758,7 @@
                 eSportsSettingGroup.Add(
                     GetSettingControlEsports(
                         customerInfoViewModel.RoleId,
-                        customerInfoViewModel.IsManageCustomerAccess,
+                        customerInfoViewModel.ManageCustomerAccess,
                         "disabledEsports",
                         !customerInfoViewModel.DisabledEsports,
                         CastAide.AsBoolean(customerInfoViewModel.Enabled.ToString()),
@@ -790,13 +785,13 @@
                 hRFixedOddsSettingGroup.Add(GetSettingControlEnableHorseRacingFixedOdds(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.CustParent.IsEnableHorseRacingFixedOdds,
-                    customerInfoViewModel.IsManageCustomerAccess,
+                    customerInfoViewModel.ManageCustomerAccess,
                     "enableHorseRacingFixedOdds",
-                    customerInfoViewModel.IsEnableHorseRacingFixedOdds,
+                    customerInfoViewModel.EnableHorseRacingFixedOdds,
                     !customerInfoViewModel.DisableDownlinesHorseRacingFixedOdds,
                     CastAide.AsBoolean(customerInfoViewModel.Enabled)));
 
-                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", customerInfoViewModel.IsEnableHorseRacingFixedOdds ? 1 : 0);
+                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", customerInfoViewModel.EnableHorseRacingFixedOdds ? 1 : 0);
                 TemplateHandler.Assign(ref htmlcontent, "{hRFixedOddsControl}", hRFixedOddsSettingGroup.GetHTMLSettingControl());
             }
             else
@@ -815,7 +810,7 @@
                 GetSettingControlOutright(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.CustParent.IsDisableOutright,
-                    customerInfoViewModel.IsManageCustomerAccess, 
+                    customerInfoViewModel.ManageCustomerAccess, 
                     "disabledOutright",
                     !customerInfoViewModel.DisableOutright,
                     customerInfoViewModel.RoleId > 1,
@@ -835,7 +830,7 @@
                     GetSettingControlDoubleComm(
                         customerInfoViewModel.RoleId,
                         customerInfoViewModel.CustParent.IsEnableDoubleCommLosing,
-                        customerInfoViewModel.IsManageCustomerAccess, "doubleCommLosing",
+                        customerInfoViewModel.ManageCustomerAccess, "doubleCommLosing",
                         customerInfoViewModel.Doublecommlosing,
                         customerInfoViewModel.RoleId > 1,
                         customerInfoViewModel.Enabled));
@@ -859,7 +854,7 @@
                 allowAutoPTControlSettingGroup.Add(
                     GetSettingControlEnableAutoMaster(
                         customerInfoViewModel.RoleId,
-                        customerInfoViewModel.IsManageCustomerAccess,
+                        customerInfoViewModel.ManageCustomerAccess,
                         "Allow Auto PT",
                         customerInfoViewModel.DisableAutoMPT,
                         customerInfoViewModel.Enabled));
@@ -884,7 +879,7 @@
                     GetSettingControlSelectedBetting(
                         customerInfoViewModel.RoleId,
                         customerInfoViewModel.CustParent.SelectedBetting,
-                        customerInfoViewModel.IsManageCustomerAccess,
+                        customerInfoViewModel.ManageCustomerAccess,
                         "SelectedBetting",
                         customerInfoViewModel.SelectedBetting));
 
@@ -922,7 +917,7 @@
                     TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}",
                         GetSettingAbnormal(
                             customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.IsManageCustomerAccess, 
+                            customerInfoViewModel.ManageCustomerAccess, 
                             customerInfoViewModel.Abnormal));
                 }
             }
