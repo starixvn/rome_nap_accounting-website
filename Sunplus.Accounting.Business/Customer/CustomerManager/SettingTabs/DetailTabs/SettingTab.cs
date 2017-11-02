@@ -2,11 +2,8 @@
 {
     using System;
     using Core.Common;
-    using Core.Configurations;
     using DNAide.Web;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using RemotingRef;
-    using Security;
 
     public partial class CustomerManager
     {
@@ -129,8 +126,6 @@
                     break;
             }
 
-            htmlcontent = RenderEditMicroGamingLink(htmlcontent, renderLeftPanelParameter);
-
             TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting);
@@ -151,6 +146,9 @@
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
 
+            var editSettingLink = $"MicroGaming/EditSettingView?parentId={renderLeftPanelParameter.ParentId}&custId={renderLeftPanelParameter.CustId}&roleId={renderLeftPanelParameter.RoleId}";
+            TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
+
             //---- for menu details -----------
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
@@ -165,97 +163,79 @@
             return htmlcontent;
         }
 
-        private static string RenderEditMicroGamingLink(string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
-            if (!WebSettings.EnableMicrogaming || !renderLeftPanelParameter.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
-                return htmlcontent;
-            }
-
-            var editSettingLink = "MicroGaming/EditSettingView?" +
-                "parentId={0}&custId={1}&roleId={2}";
-
-            editSettingLink = string.Format(
-                editSettingLink,
-                renderLeftPanelParameter.ParentId,
-                renderLeftPanelParameter.CustId,
-                renderLeftPanelParameter.RoleId);
-            TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
-
-            return htmlcontent;
-        }
-
         private static string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!Permissions.IsAllowCasino())
+            if (customerInfoViewModel.RemoveRnGCasinoLink)
             {
-                if (WebSettings.disableCS)
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-                if ((customerInfoViewModel.RoleId < (int)Globals.AccountType.Super) && !customerInfoViewModel.IsAllowEditCasino)
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
             }
 
-            if (WebSettings.disabledHR)
+            if (!customerInfoViewModel.ShowHorseRacingLinkCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
             }
 
-            if (!WebSettings.EnableLiveCasino || !customerInfoViewModel.IsAllowEditLiveCasino)
+            if (!customerInfoViewModel.ShowMicrogamingSettingLinkDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
+            }
+
+            if (!customerInfoViewModel.ShowLiveCasinoSettingLink)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }
-            if (customerInfoViewModel.IsHideVirtualSports)
+
+            if (customerInfoViewModel.HideVirtualSportsCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
 
-            if (!KenoSection.Instance.ShowSetting)
+            if (!customerInfoViewModel.ShowSettingLinkKenoCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
             }
 
-            if (!WebSettings.IsShowGoldDeluxeSettingForCredit || customerInfoViewModel.IsDeposit)
+            if (!customerInfoViewModel.ShowSettingLinkGoldDeluxeCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
             }
 
-            if (customerInfoViewModel.IsHideColossusBets || customerInfoViewModel.IsDeposit)
+            if (customerInfoViewModel.RemoveSettingLinkColossusBets)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
             }
 
-            if (!WebSettings.EnableAGCasino || !customerInfoViewModel.IsDeposit)
+            if (!customerInfoViewModel.ShowSettingLinkAGCasinoDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
             }
 
-            if (customerInfoViewModel.IsHideSportsbook2ForCredit)
+            if (customerInfoViewModel.HideSportsbook2Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
             }
 
-            if (customerInfoViewModel.IsHideCockFightingForCredit)
+            if (customerInfoViewModel.HideCockFightingCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
             }
 
-            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
+            if (customerInfoViewModel.HideCricketSettingLinkCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
             }
 
-            if (customerInfoViewModel.IsHideAllbetUpline || !customerInfoViewModel.IsSyncAllbetUpline)
+            if (customerInfoViewModel.RemoveSettingLinkAllbet)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Allbet");
             }
 
-            if (customerInfoViewModel.IsHideVoidbridgeUpline || !customerInfoViewModel.IsSyncVoidbridgeUpline)
+            if (customerInfoViewModel.RemoveSettingLinkVoidbridge)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
             }
 
-            if (customerInfoViewModel.IsHideNG2Upline || customerInfoViewModel.IsHideNG2 || !customerInfoViewModel.IsSyncNG2Upline)
+            if (customerInfoViewModel.RemoveSettingLinkNG2)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-NG2");
             }
@@ -270,7 +250,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
             }
 
-            if (customerInfoViewModel.IsHideLucky3Upline || customerInfoViewModel.IsHideLucky3)
+            if (customerInfoViewModel.RemoveSettingLinkLucky3Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
             }
@@ -282,12 +262,7 @@
         {
             TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
             TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");
-            TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
             TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
-            TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
-            TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
-            TemplateHandler.RemoveBlock(ref htmlcontent, "edit-KenoLottery");
-            TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
             return htmlcontent;
         }
     }

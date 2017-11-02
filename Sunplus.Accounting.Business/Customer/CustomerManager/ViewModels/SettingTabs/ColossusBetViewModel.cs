@@ -5,8 +5,10 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideColossusBets => (Converter.ToBool(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
+        public bool HideColossusBets => (Converter.ToBool(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
 
-        public bool IsShowColossusBetsForCredit => !IsHideColossusBets;
+        public bool ShowEnabledCheckboxColossusBets => !HideColossusBets;
+
+        public bool RemoveSettingLinkColossusBets => HideColossusBets || IsDeposit;
     }
 }

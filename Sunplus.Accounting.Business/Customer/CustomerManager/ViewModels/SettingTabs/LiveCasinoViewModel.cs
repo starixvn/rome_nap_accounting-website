@@ -12,8 +12,10 @@
 
         public bool DisabledDownlinesLiveCasino => !WebSettings.EnableLiveCasino || Converter.ToBool(customerInfoRow["DisableDownlinesLiveCS"]);
 
-        public bool IsAllowEditLiveCasino => ParentId.Equals(0) || Permissions.IsAllowEditLiveCasino(ParentId, CustParent.IsLiveCasinoSync);
+        public bool AllowEditLiveCasino => ParentId.Equals(0) || Permissions.IsAllowEditLiveCasino(ParentId, CustParent.IsLiveCasinoSync);
 
         public bool DisabledLiveCasinoParent => !ParentId.Equals(0) && CustParent.IsDisableLiveCasino;
+
+        public bool ShowLiveCasinoSettingLink => WebSettings.EnableLiveCasino && AllowEditLiveCasino;
     }
 }

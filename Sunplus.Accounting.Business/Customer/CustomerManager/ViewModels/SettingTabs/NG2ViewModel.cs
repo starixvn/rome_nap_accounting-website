@@ -4,14 +4,16 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideNG2 { get; private set; } = true;
+        public bool HideNG2 { get; private set; } = true;
 
-        public bool IsHideNG2Upline { get; private set; } = true;
+        public bool HideNG2Upline { get; private set; } = true;
 
-        public bool IsSyncNG2 { get; private set; } = true;
+        public bool SyncNG2 { get; private set; } = true;
 
-        public bool IsSyncNG2Upline { get; private set; } = true;
+        public bool SyncNG2Upline { get; private set; } = true;
 
-        public bool HideCheckBoxNG2 => !WebSettings.IsShowNG2 || IsHideNG2Upline || !IsSyncNG2Upline || !IsSyncNG2 || IsHideNG2;
+        public bool RemoveEnabledCheckBoxNG2 => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2 || !SyncNG2;
+
+        public bool RemoveSettingLinkNG2 => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2;
     }
 }
