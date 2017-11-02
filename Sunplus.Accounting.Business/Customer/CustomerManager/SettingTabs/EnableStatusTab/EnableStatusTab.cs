@@ -32,18 +32,16 @@
                     customerInfoViewModel.IsSyncUplineGoldDeluxe
                     && !customerInfoViewModel.IsDeposit
                     && !string.Equals(customerInfoViewModel.Currency, "Won", StringComparison.OrdinalIgnoreCase),
-                IsShowMacau = customerInfoViewModel.IsShowMacau,
-                IsShowEnableBetTrade = customerInfoViewModel.IsShowEnableBetTrade,
-                IsShowEnableCashOut = customerInfoViewModel.IsShowEnableCashOut,
-                IsShowEnableMicrogaming = customerInfoViewModel.IsShowEnableMicrogaming,
+                IsShowMacau = customerInfoViewModel.IsShowMacauForDeposit,
+                IsShowEnableBetTrade = customerInfoViewModel.IsShowEnableBetTradeForDeposit,
+                IsShowEnableCashOut = customerInfoViewModel.IsShowEnableCashOutForDeposit,
+                IsShowEnableMicrogaming = customerInfoViewModel.IsShowEnableMicrogamingForDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsShowColossusBetsForCredit = customerInfoViewModel.IsShowColossusBetsForCredit,
                 IsShowAllBetForCredit = !customerInfoViewModel.HideCheckBoxAllbet,
                 IsShowVoidbridge = !customerInfoViewModel.HideCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
-                IsShowSportsbook2 = customerInfoViewModel.IsShowSportsbook2,
-                IsShowCockFighting = customerInfoViewModel.IsShowCockFighting,
-                IsHideCricket = customerInfoViewModel.IsHideCricketSettingLink,
+                IsHideCricket = customerInfoViewModel.IsHideCricketSettingLinkForCredit,
                 IsShowVirtualSport = !customerInfoViewModel.IsHideVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.IsHideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
@@ -201,17 +199,17 @@
 
         private static string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (!customerInfoViewModel.IsShowSportsbook2)
+            if (customerInfoViewModel.IsHideSportsbook2ForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
             }
 
-            if (!customerInfoViewModel.IsShowCockFighting)
+            if (customerInfoViewModel.IsHideCockFightingForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCockFighting");
             }
 
-            if (customerInfoViewModel.IsHideCricketSettingLink)
+            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
@@ -246,7 +244,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (renderLeftPanelParameter.IsHideCricket)
+            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
             }
@@ -863,7 +861,7 @@
                         customerInfoViewModel.RoleId,
                         customerInfoViewModel.IsManageCustomerAccess,
                         "Allow Auto PT",
-                        !customerInfoViewModel.DisableAutoMPT,
+                        customerInfoViewModel.DisableAutoMPT,
                         customerInfoViewModel.Enabled));
 
                 TemplateHandler.Assign(ref htmlcontent, "{allowAutoPTControl}", allowAutoPTControlSettingGroup.GetHTMLSettingControl());

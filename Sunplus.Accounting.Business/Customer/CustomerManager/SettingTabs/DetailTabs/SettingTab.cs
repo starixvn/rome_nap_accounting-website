@@ -230,17 +230,17 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
             }
 
-            if (customerInfoViewModel.IsHideSportsbook2 || customerInfoViewModel.IsDeposit)
+            if (customerInfoViewModel.IsHideSportsbook2ForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
             }
 
-            if (customerInfoViewModel.IsHideCockFighting)
+            if (customerInfoViewModel.IsHideCockFightingForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-CockFighting");
             }
 
-            if (customerInfoViewModel.IsHideCricketSettingLink)
+            if (customerInfoViewModel.IsHideCricketSettingLinkForCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
             }

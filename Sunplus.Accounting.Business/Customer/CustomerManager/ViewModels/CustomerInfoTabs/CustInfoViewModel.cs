@@ -1,130 +1,134 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System;
-    using Core.Common;
     using Core.Configurations;
-    using DNAide.Core;
+    using Fanex.Common;
 
     public partial class CustomerInfoViewModel
     {
-        public int CustId => CastAide.AsInt32(customerInfoRow["custid"]);
+        public int CustId => Converter.ToInt(customerInfoRow["custid"]);
 
-        public int RoleId => CastAide.AsInt32(customerInfoRow["roleid"]);
+        public int RoleId => Converter.ToInt(customerInfoRow["roleid"]);
 
-        public string UserName => CastAide.AsString(customerInfoRow["username"]);
+        public string UserName => Converter.ToString2(customerInfoRow["username"]);
 
         public int ParentId { get; private set; }
 
-        public string Firstname => CastAide.AsString(customerInfoRow["firstname"], string.Empty);
+        public string Firstname => Converter.ToString2(customerInfoRow["firstname"]);
 
-        public string Lastname => CastAide.AsString(customerInfoRow["lastname"], string.Empty);
+        public string Lastname => Converter.ToString2(customerInfoRow["lastname"]);
 
         public string Fullname => $"{Firstname} - {Lastname}";
 
         public string DownlineName { get; private set; }
 
-        public string SiteName => string.IsNullOrWhiteSpace(CastAide.AsString(customerInfoRow["site"]))? CastAide.AsString(customerInfoRow["membersite"]) : CastAide.AsString(customerInfoRow["site"]);
+        public bool Important => Converter.ToBool(customerInfoRow["important"]);
 
-        public bool Important => CastAide.AsBoolean(customerInfoRow["important"], false);
+        public bool Suspend => Converter.ToBool(customerInfoRow["suspended"]);
 
-        public bool Suspend => CastAide.AsBoolean(customerInfoRow["suspended"], false);
+        public bool Autosuspend => Converter.ToBool(customerInfoRow["suspended"]);
 
-        public bool Autosuspend => CastAide.AsBoolean(customerInfoRow["suspended"], false);
+        public bool UplineAutoSuspend => Converter.ToBool(lineInfoRow["uplineautosuspend"]);
 
-        public bool UplineAutoSuspend => CastAide.AsBoolean(lineInfoRow["uplineautosuspend"]);
+        public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Converter.ToBool(customerInfoRow["IsDeposit"]);
 
-        public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && CastAide.AsBoolean(customerInfoRow["IsDeposit"]);
+        public bool IsIMBC
+        {
+            get
+            {
+                var site = Converter.ToString2(customerInfoRow["site"]);
+                if (string.IsNullOrWhiteSpace(site))
+                    return Converter.ToString2(customerInfoRow["membersite"]).ToUpper().Equals("IMBC");
+                return site.ToUpper().Equals("IMBC");
+            }
+        }
 
-        public bool IsIMBC => SiteName.ToString().ToUpper().Equals("IMBC");
+        public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
 
-        public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Convert.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
+        public string LastLoginTime => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortTimeString()}";
 
-        public string LastLoginTime => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : " " + Convert.ToDateTime(customerInfoRow["lastlogged"]).ToShortTimeString();
+        public string LastIp => Converter.ToString2(customerInfoRow["lastloginip"]);
 
-        public string LastIp => Convert.IsDBNull(customerInfoRow["lastloginip"]) ? string.Empty : customerInfoRow["lastloginip"].ToString();
+        public string CustomerSite => RoleId.Equals(1) ? Converter.ToString2(customerInfoRow["membersite"]) : Converter.ToString2(customerInfoRow["site"]);
 
-        public string CustomerSite => (RoleId == (int)Globals.AccountType.Member) ? CastAide.AsString(customerInfoRow["membersite"], string.Empty) : CastAide.AsString(customerInfoRow["site"], string.Empty);
+        public string Createdate => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["createdate"]).ToShortDateString();
 
-        public string Createdate => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Convert.ToDateTime(customerInfoRow["createdate"]).ToShortDateString();
+        public string Createtime => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["createdate"]).ToShortTimeString();
 
-        public string Createtime => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Convert.ToDateTime(customerInfoRow["createdate"]).ToShortTimeString();
+        public string PwdExpiryDate => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortDateString();
 
-        public string PwdExpiryDate => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : Convert.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortDateString();
+        public string PwdExpiryTime => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortTimeString()}";
 
-        public string PwdExpiryTime => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : " " + Convert.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortTimeString();
+        public string LastTxnDate => Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : Converter.ToDateTime(cashRow["lastTxn"]).ToShortDateString();
 
-        public string LastTxnDate
-            => cashRow != null && RoleId <= 4 ? Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : Convert.ToDateTime(cashRow["lastTxn"]).ToShortDateString() : string.Empty;
+        public string LastTxnTime => Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : $" {Converter.ToDateTime(cashRow["lastTxn"]).ToShortTimeString()}";
 
-        public string LastTxnTime
-            => cashRow != null && RoleId <= 4 ? Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : " " + Convert.ToDateTime(cashRow["lastTxn"]).ToShortTimeString() : string.Empty;
+        public string Phone => Converter.ToString2(customerInfoRow["phone"]);
 
-        public string Phone => CastAide.AsString(customerInfoRow["phone"]);
+        public string Mobile => Converter.ToString2(customerInfoRow["mobilephone"]);
 
-        public string Mobile => CastAide.AsString(customerInfoRow["mobilephone"]);
+        public string Fax => Converter.ToString2(customerInfoRow["fax"]);
 
-        public string Fax => CastAide.AsString(customerInfoRow["fax"]);
+        public string Nickname => Converter.ToString2(customerInfoRow["username2"]);
 
-        public string Nickname => CastAide.AsString(customerInfoRow["username2"], string.Empty);
+        public bool Enabled => Converter.ToBool(customerInfoRow["Enabled"]);
 
-        public bool Enabled => CastAide.AsBoolean(customerInfoRow["Enabled"]);
+        public string ClosedReason => Converter.ToString2(customerInfoRow["closedreason"]);
 
-        public string ClosedReason => CastAide.AsString(customerInfoRow["closedreason"]);
+        public bool Doublecommlosing => Converter.ToBool(customerInfoRow["DoubleCommLosing"]);
 
-        public bool Doublecommlosing => CastAide.AsBoolean(customerInfoRow["DoubleCommLosing"], false);
+        public bool NicknameLoginOnly => Converter.ToBool(customerInfoRow["NicknameLoginOnly"]);
 
-        public bool NicknameLoginOnly => CastAide.AsBoolean(customerInfoRow["NicknameLoginOnly"], false);
+        public string LastChangeSecurityCodeDate => Converter.ToString2(customerInfoRow["LastChangedSecurityCodeDate"]);
 
-        public string LastChangeSecurityCodeDate => Convert.IsDBNull(customerInfoRow["LastChangedSecurityCodeDate"]) ? string.Empty : Convert.ToString(customerInfoRow["LastChangedSecurityCodeDate"]);
+        public string LastChangeOTPCodeDate => Converter.ToString2(customerInfoRow["OTPCreateDate"]);
 
-        public string LastChangeOTPCodeDate => Convert.IsDBNull(customerInfoRow["OTPCreateDate"]) ? string.Empty : Convert.ToString(customerInfoRow["OTPCreateDate"]);
+        public int Groupheadlineid => Converter.ToInt(customerInfoRow["groupheadlineid"]);
 
-        public int Groupheadlineid => CastAide.AsInt32(customerInfoRow["groupheadlineid"], 0);
+        public string Headline => Converter.ToString2(customerInfoRow["headline"]);
 
-        public string Headline => CastAide.AsString(customerInfoRow["headline"]);
+        public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);
 
-        public int LimitPerIP => CastAide.AsInt16(customerInfoRow["LimitPerIP"]);
+        public int Danger => Converter.ToInt(customerInfoRow["danger"]);
 
-        public int Danger => CastAide.AsInt32(customerInfoRow["danger"], 0);
+        public int Danger2 => Converter.ToInt(customerInfoRow["danger2"]);
 
-        public int Danger2 => CastAide.AsInt32(customerInfoRow["danger2"], 0);
+        public int Danger3 => Converter.ToInt(customerInfoRow["danger3"]);
 
-        public int Danger3 => CastAide.AsInt32(customerInfoRow["danger3"], 0);
+        public bool HasDownline => Converter.ToBool(customerInfoRow["HasDownline"]);
 
-        public bool HasDownline => CastAide.AsBoolean(customerInfoRow["HasDownline"]);
+        public int Abnormal => Converter.ToInt(customerInfoRow["abnormal"]);
 
-        public int Abnormal => CastAide.AsInt32(customerInfoRow["abnormal"], 0);
+        public bool SelectedBetting => Converter.ToBool(customerInfoRow["SelectedBetting"]);
 
-        public bool SelectedBetting => CastAide.AsBoolean(customerInfoRow["SelectedBetting"], false);
+        public bool IsInternalUser => Converter.ToBool(customerInfoRow["IsInternal"]);
 
-        public bool IsInternalUser => CastAide.AsBoolean(customerInfoRow["IsInternal"], false);
+        public bool Closed => Converter.ToBool(customerInfoRow["closed"]);
 
-        public bool Closed => CastAide.AsBoolean(customerInfoRow["closed"], false);
+        public bool IsBA => Converter.ToBool(customerInfoRow["isba"]);
 
-        public bool IsBA => CastAide.AsBoolean(customerInfoRow["isba"]);
+        public int ExchangeId => Converter.ToInt(customerInfoRow["exchangeid"]);
 
-        public int ExchangeId => CastAide.AsInt32(customerInfoRow["exchangeid"]);
+        public int SuperId => Converter.ToInt(lineInfoRow["SuperID"]);
 
-        public int SuperId => CastAide.AsInt32(lineInfoRow["SuperID"]);
+        public string SuperName => Converter.ToString2(lineInfoRow["SuperName"]);
 
-        public string SuperName => CastAide.AsString(lineInfoRow["SuperName"]);
+        public int MasterId => Converter.ToInt(lineInfoRow["MasterID"]);
 
-        public int MasterId => CastAide.AsInt32(lineInfoRow["MasterID"]);
+        public string MasterName => Converter.ToString2(lineInfoRow["MasterName"]);
 
-        public string MasterName => CastAide.AsString(lineInfoRow["MasterName"]);
+        public int AgentId => Converter.ToInt(lineInfoRow["AgentID"]);
 
-        public int AgentId => CastAide.AsInt32(lineInfoRow["AgentID"]);
+        public string AgentName => Converter.ToString2(lineInfoRow["AgentName"]);
 
-        public string AgentName => CastAide.AsString(lineInfoRow["AgentName"]);
+        public int MemberId => Converter.ToInt(lineInfoRow["MemberID"]);
 
-        public int MemberId => CastAide.AsInt32(lineInfoRow["MemberID"]);
+        public string MemberName => Converter.ToString2(lineInfoRow["MemberName"]);
 
-        public string MemberName => CastAide.AsString(lineInfoRow["MemberName"]);
+        public bool SuperEnabled => Converter.ToBool(lineInfoRow["SuperEnabled"]);
 
-        public bool SuperEnabled => Convert.ToBoolean(lineInfoRow["SuperEnabled"]);
+        public bool MasterEnabled => Converter.ToBool(lineInfoRow["MasterEnabled"]);
 
-        public bool MasterEnabled => Convert.ToBoolean(lineInfoRow["MasterEnabled"]);
-
-        public bool AgentEnabled => Convert.ToBoolean(lineInfoRow["AgentEnabled"]);
+        public bool AgentEnabled => Converter.ToBool(lineInfoRow["AgentEnabled"]);
     }
 }
