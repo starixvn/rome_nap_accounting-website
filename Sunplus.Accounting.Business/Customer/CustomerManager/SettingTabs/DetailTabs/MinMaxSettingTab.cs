@@ -64,9 +64,9 @@
             bool isDeposit = customerInfoViewModel.IsDeposit;
             string siteName = customerInfoViewModel.CustomerSite;
 
-            bool isHideSportsbook2 = customerInfoViewModel.IsHideSportsbook2;
-            bool isHideCockFighting = customerInfoViewModel.IsHideCockFighting;
-            bool isHideCricket = customerInfoViewModel.IsHideCricketSettingLink;
+            bool isHideSportsbook2 = customerInfoViewModel.IsHideSportsbook2ForCredit;
+            bool isHideCockFighting = customerInfoViewModel.IsHideCockFightingForCredit;
+            bool isHideCricket = customerInfoViewModel.IsHideCricketSettingLinkForCredit;
             bool isHideVirtualSports = customerInfoViewModel.IsHideVirtualSports;
 
             bool isShowAllBet = renderLeftPanelParameter.IsShowAllBetForCredit;

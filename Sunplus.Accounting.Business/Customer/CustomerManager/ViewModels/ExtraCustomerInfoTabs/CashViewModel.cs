@@ -1,7 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System.Data;
-    using DNAide.Core;
+    using Fanex.Common;
 
     public partial class CustomerInfoViewModel
     {
@@ -23,65 +23,65 @@
 
         public decimal NetPosition { get; private set; }
 
-        public decimal Credit => CastAide.AsDecimal(customerInfoRow["credit"]);
+        public decimal Credit => Converter.ToDecimal(customerInfoRow["credit"]);
 
-        public decimal ActualRate => CastAide.AsDecimal(customerInfoRow["actualrate"]);
+        public decimal ActualRate => Converter.ToDecimal(customerInfoRow["actualrate"]);
 
-        public string Currency => CastAide.AsString(customerInfoRow["currency"]);
+        public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
-        public bool EnableVirtualRate => CastAide.AsBoolean(customerInfoRow["EnableVirtualRate"]);
+        public bool EnableVirtualRate => Converter.ToBool(customerInfoRow["EnableVirtualRate"]);
 
         private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
         {
             switch (RoleId)
             {
                 case 1: // member
-                    ParentId = CastAide.AsInt32(lineInfoRow["agentId"]);
+                    ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     DownlineName = string.Empty;
-                    AccOutstanding = CastAide.AsDecimal(cashRow["outstanding"], 0);
-                    Cash = CastAide.AsDecimal(cashRow["cash"], 0);
-                    NetPosition = CastAide.AsDecimal(customerInfoRow["netPosition"], 0);
+                    AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
+                    Cash = Converter.ToDecimal(cashRow["cash"]);
+                    NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
                     BetCredit = Credit + Cash - AccOutstanding + NetPosition;
-                    YesterdayCash = CastAide.AsDecimal(cashRow["Yesterday_Cash"], 0);
+                    YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
                     break;
 
                 case 2: // agent
-                    ParentId = CastAide.AsInt32(lineInfoRow["masterid"]);
+                    ParentId = Converter.ToInt(lineInfoRow["masterid"]);
                     DownlineName = "Member";
-                    AccOutstanding = CastAide.AsDecimal(cashRow["agentPositionTaking"], 0);
-                    OutStanding = CastAide.AsDecimal(cashRow["customerOutstanding"], 0);
-                    Cash = CastAide.AsDecimal(cashRow["agentCash"], 0);
-                    TotalBal = Cash + CastAide.AsDecimal(cashRow["customerCash"], 0);
-                    YesterdayCash = CastAide.AsDecimal(cashRow["yesterday_agentCash"], 0);
-                    YesterdayBal = YesterdayCash + CastAide.AsDecimal(cashRow["Yesterday_CustomerCash"], 0);
+                    AccOutstanding = Converter.ToDecimal(cashRow["agentPositionTaking"]);
+                    OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);
+                    Cash = Converter.ToDecimal(cashRow["agentCash"]);
+                    TotalBal = Cash + Converter.ToDecimal(cashRow["customerCash"]);
+                    YesterdayCash = Converter.ToDecimal(cashRow["yesterday_agentCash"]);
+                    YesterdayBal = YesterdayCash + Converter.ToDecimal(cashRow["Yesterday_CustomerCash"]);
                     UsedCredit = IBCUtils.FormatHandler.GetDecimal(cashRow["agentUsedCredit"]);
                     break;
 
                 case 3: // master
-                    ParentId = CastAide.AsInt32(lineInfoRow["superId"]);
+                    ParentId = Converter.ToInt(lineInfoRow["superId"]);
                     DownlineName = "Agent";
-                    AccOutstanding = CastAide.AsDecimal(cashRow["masterPositionTaking"], 0);
-                    OutStanding = CastAide.AsDecimal(cashRow["customerOutstanding"], 0);
-                    Cash = CastAide.AsDecimal(cashRow["masterCash"], 0);
-                    TotalBal = Cash + CastAide.AsDecimal(cashRow["customerCash"], 0) + CastAide.AsDecimal(cashRow["agentCash"], 0);
-                    YesterdayCash = CastAide.AsDecimal(cashRow["yesterday_masterCash"], 0);
-                    YesterdayBal = YesterdayCash + CastAide.AsDecimal(cashRow["yesterday_customerCash"], 0) + CastAide.AsDecimal(cashRow["yesterday_agentCash"], 0);
+                    AccOutstanding = Converter.ToDecimal(cashRow["masterPositionTaking"]);
+                    OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);
+                    Cash = Converter.ToDecimal(cashRow["masterCash"]);
+                    TotalBal = Cash + Converter.ToDecimal(cashRow["customerCash"]) + Converter.ToDecimal(cashRow["agentCash"]);
+                    YesterdayCash = Converter.ToDecimal(cashRow["yesterday_masterCash"]);
+                    YesterdayBal = YesterdayCash + Converter.ToDecimal(cashRow["yesterday_customerCash"]) + Converter.ToDecimal(cashRow["yesterday_agentCash"]);
                     UsedCredit = IBCUtils.FormatHandler.GetDecimal(cashRow["masterUsedCredit"]);
                     break;
 
                 case 4: // super
                     ParentId = 0;
                     DownlineName = "Master";
-                    AccOutstanding = CastAide.AsDecimal(cashRow["superPositionTaking"], 0);
-                    OutStanding = CastAide.AsDecimal(cashRow["customerOutstanding"], 0);
-                    Cash = CastAide.AsDecimal(cashRow["superCash"], 0);
-                    TotalBal = Cash + CastAide.AsDecimal(cashRow["customerCash"], 0)
-                        + CastAide.AsDecimal(cashRow["agentCash"], 0)
-                        + CastAide.AsDecimal(cashRow["masterCash"], 0);
-                    YesterdayCash = CastAide.AsDecimal(cashRow["yesterday_superCash"], 0);
-                    YesterdayBal = YesterdayCash + CastAide.AsDecimal(cashRow["yesterday_customerCash"], 0)
-                        + CastAide.AsDecimal(cashRow["yesterday_agentCash"], 0)
-                        + CastAide.AsDecimal(cashRow["yesterday_masterCash"], 0);
+                    AccOutstanding = Converter.ToDecimal(cashRow["superPositionTaking"]);
+                    OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);
+                    Cash = Converter.ToDecimal(cashRow["superCash"]);
+                    TotalBal = Cash + Converter.ToDecimal(cashRow["customerCash"])
+                        + Converter.ToDecimal(cashRow["agentCash"])
+                        + Converter.ToDecimal(cashRow["masterCash"]);
+                    YesterdayCash = Converter.ToDecimal(cashRow["yesterday_superCash"]);
+                    YesterdayBal = YesterdayCash + Converter.ToDecimal(cashRow["yesterday_customerCash"])
+                        + Converter.ToDecimal(cashRow["yesterday_agentCash"])
+                        + Converter.ToDecimal(cashRow["yesterday_masterCash"]);
                     UsedCredit = IBCUtils.FormatHandler.GetDecimal(cashRow["superUsedCredit"]);
                     break;
 

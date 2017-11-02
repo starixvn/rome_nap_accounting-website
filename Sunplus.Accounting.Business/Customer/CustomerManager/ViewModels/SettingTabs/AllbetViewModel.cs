@@ -4,7 +4,7 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideAllBet { get; private set; } = true;
+        public bool IsHideAllBetForCredit { get; private set; } = true;
 
         public bool IsHideAllbetUpline { get; private set; } = true;
 
