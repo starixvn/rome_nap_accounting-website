@@ -47,53 +47,63 @@
 
         public bool HasReadPermission_AutoSuspend => Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
 
-        public bool IsManageCustomerAccess => Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust);
+        public bool ManageCustomerAccess => Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust);
 
-        public bool IsAllowUpdateGivenCredit => Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+        public bool AllowUpdateGivenCredit => Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
 
-        public bool IsViewFiAcc => Permissions.FinancePermission.IsViewFiAcc(IsInternalUser);
+        public bool ViewFiAcc => Permissions.FinancePermission.IsViewFiAcc(IsInternalUser);
 
-        public bool IsHideDirectStatus => Converter.ToBool(customerInfoRow["IsHideDirectStatus"]);
+        public bool HideDirectStatus => Converter.ToBool(customerInfoRow["IsHideDirectStatus"]);
 
-        public bool IsCheckedDirectStatus => Converter.ToBool(customerInfoRow["IsCheckDirectStatus"]);
+        public bool CheckedDirectStatus => Converter.ToBool(customerInfoRow["IsCheckDirectStatus"]);
 
-        public bool IsDisabledDirectStatus => Converter.ToBool(customerInfoRow["IsDisabledDirectStatus"]);
+        public bool DisabledDirectStatus => Converter.ToBool(customerInfoRow["IsDisabledDirectStatus"]);
 
-        public bool IsAllDayBalTransfer => Converter.ToBool(customerInfoRow["isalldaybaltransfer"]);
+        public bool AllDayBalTransfer => Converter.ToBool(customerInfoRow["isalldaybaltransfer"]);
 
         public bool DisableAutoMPT => Converter.ToBool(cashRow["DisableAutoMPT"]);
 
         public bool DisableOutright => Converter.ToBool(customerInfoRow["DisableOutright"]);
 
-        public bool IsHideCricketSettingLinkForCredit { get; private set; } = true;
+        public bool HideCricketSettingLinkCredit { get; private set; } = true;
 
         public bool HideEnableAndEditFishingWorld { get; private set; } = true;
 
         public bool HideKenoLottery { get; private set; } = true;
 
-        public bool IsHideVirtualSports2 { get; private set; } = true;
+        public bool HideVirtualSports2 { get; private set; } = true;
 
-        public bool IsSyncUplineGoldDeluxe => Converter.ToBool(customerInfoRow["IsSyncUplineGoldDeluxe"]);
+        public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
 
-        public bool IsEnableHorseRacingFixedOdds => !Converter.ToBool(customerInfoRow["DisableHRFixedOdds"]);
+        public bool ShowSettingLinkGoldDeluxeCredit => WebSettings.IsShowGoldDeluxeSettingForCredit && !IsDeposit;
+
+        public bool SyncUplineGoldDeluxe => Converter.ToBool(customerInfoRow["IsSyncUplineGoldDeluxe"]);
+
+        public bool EnableHorseRacingFixedOdds => !Converter.ToBool(customerInfoRow["DisableHRFixedOdds"]);
 
         public bool DisableDownlinesHorseRacingFixedOdds => Converter.ToBool(customerInfoRow["DisableDownlinesHRFixedOdds"]);
 
-        public bool IsShowKenoStatus => KenoSection.Instance.Enable;
+        public bool ShowEnableCheckBoxKenoCredit => KenoSection.Instance.Enable && !IsDeposit;
 
-        public bool IsShowEnableBetTradeForDeposit => WebSettings.EnableBetTrade && RoleId.Equals(4) && IsDeposit;
+        public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
-        public bool IsShowEnableCashOutForDeposit => WebSettings.EnableCashOut && RoleId.Equals(4) && IsDeposit;
+        public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
 
-        public bool IsShowEnableMicrogamingForDeposit => WebSettings.EnableMicrogaming && IsDeposit;
+        public bool ShowHorseRacingLinkCredit => !WebSettings.disabledHR && !IsDeposit;
 
-        public bool IsShowMacauForDeposit => WebSettings.EnableMacau && RoleId.Equals(4) && IsDeposit;
+        public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && RoleId.Equals(4) && IsDeposit;
 
-        public bool IsHideSportsbook2ForCredit { get; private set; } = true;
+        public bool ShowEnableCashOutDeposit => WebSettings.EnableCashOut && RoleId.Equals(4) && IsDeposit;
 
-        public bool IsHideCockFightingForCredit { get; private set; } = true;
+        public bool ShowEnableMicrogamingDeposit => WebSettings.EnableMicrogaming && IsDeposit;
 
-        public bool IsHideVirtualSports { get; private set; } = true;
+        public bool ShowMacauDeposit => WebSettings.EnableMacau && RoleId.Equals(4) && IsDeposit;
+
+        public bool HideSportsbook2Credit { get; private set; } = true;
+
+        public bool HideCockFightingCredit { get; private set; } = true;
+
+        public bool HideVirtualSportsCredit { get; private set; } = true;
 
         public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
 
@@ -107,36 +117,34 @@
                     switch (productId)
                     {
                         case "5":
-                            IsHideVirtualSports = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideVirtualSportsCredit = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
                             break;
                         case "16":
-                            IsHideSportsbook2ForCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
+                            HideSportsbook2Credit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
                             break;
                         case "19":
-                            IsHideCockFightingForCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCockFighting || IsDeposit;
+                            HideCockFightingCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCockFighting || IsDeposit;
                             break;
                         case "20":
-                            IsHideCricketSettingLinkForCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
+                            HideCricketSettingLinkCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
                             break;
                         case "21":
-                            IsHideAllBetForCredit = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowAllBet || IsDeposit;
-                            IsSyncAllbet = Converter.ToBool(row["IsSync"]);
-                            IsHideAllbetUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncAllbetUpline = Converter.ToBool(row["IsSyncedUpline"]);
+                            SyncAllbet = Converter.ToBool(row["IsSync"]);
+                            HideAllbetUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            SyncAllbetUpline = Converter.ToBool(row["IsSyncedUpline"]);
                             break;
 
                         case "22":
-                            IsHideVoidbridge = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowVoidbridge;
-                            IsSyncVoidbridge = Converter.ToBool(row["IsSync"]);
-                            IsHideVoidbridgeUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncVoidbridgeUpline = Converter.ToBool(row["IsSyncedUpline"]);
+                            SyncVoidbridge = Converter.ToBool(row["IsSync"]);
+                            HideVoidbridgeUpline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            SyncVoidbridgeUpline = Converter.ToBool(row["IsSyncedUpline"]);
                             break;
 
                         case "23":
-                            IsHideNG2 = Converter.ToBool(row["IsHidden"]) || !WebSettings.IsShowNG2;
-                            IsSyncNG2 = Converter.ToBool(row["IsSync"]);
-                            IsHideNG2Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
-                            IsSyncNG2Upline = Converter.ToBool(row["IsSyncedUpline"]);
+                            HideNG2 = Converter.ToBool(row["IsHidden"]) || !WebSettings.IsShowNG2;
+                            SyncNG2 = Converter.ToBool(row["IsSync"]);
+                            HideNG2Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            SyncNG2Upline = Converter.ToBool(row["IsSyncedUpline"]);
 
                             break;
                         case "24":
@@ -147,7 +155,7 @@
 
                             break;
                         case "27":
-                            IsHideVirtualSports2 = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideVirtualSports2 = (Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
                             break;
 
                         case "28": // We do NOT have Unsync case for Keno Lottery.
@@ -160,8 +168,8 @@
                             break;
 
                         case "26":
-                            IsHideLucky3 = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3;
-                            IsHideLucky3Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
+                            HideLucky3 = (Converter.ToBool(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3 || IsDeposit;
+                            HideLucky3Upline = Converter.ToBool(row["IsHiddenUpline"]) && RoleId < 4;
                             break;
                     }
                 }

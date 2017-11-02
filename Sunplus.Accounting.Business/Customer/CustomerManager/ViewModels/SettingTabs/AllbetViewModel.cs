@@ -4,14 +4,16 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool IsHideAllBetForCredit { get; private set; } = true;
+        public bool HideAllbetUpline { get; private set; } = true;
 
-        public bool IsHideAllbetUpline { get; private set; } = true;
+        public bool SyncAllbet { get; private set; } = true;
 
-        public bool IsSyncAllbet { get; private set; } = true;
+        public bool SyncAllbetUpline { get; private set; } = true;
 
-        public bool IsSyncAllbetUpline { get; private set; } = true;
+        public bool RemoveEnabledCheckBoxAllbet 
+            => !WebSettings.IsShowAllBet || !SyncAllbetUpline || (RoleId < 4 && (HideAllbetUpline || !SyncAllbet));
 
-        public bool HideCheckBoxAllbet => !WebSettings.IsShowAllBet ||IsHideAllbetUpline || !IsSyncAllbetUpline;
+        public bool RemoveSettingLinkAllbet
+            => !WebSettings.IsShowAllBet || HideAllbetUpline || !SyncAllbetUpline;
     }
 }
