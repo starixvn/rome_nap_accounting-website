@@ -10,10 +10,10 @@
 
         public bool SyncVoidbridgeUpline { get; private set; } = true;
 
-        public bool RemoveEnabledCheckBoxVoidbridge 
+        public bool HideEnabledCheckBoxVoidbridge 
             => !WebSettings.IsShowVoidbridge || !SyncVoidbridgeUpline || (RoleId < 4 && (HideVoidbridgeUpline || !SyncVoidbridge));
 
-        public bool RemoveSettingLinkVoidbridge 
+        public bool HideSettingLinkVoidbridge 
             => !WebSettings.IsShowVoidbridge || HideVoidbridgeUpline || !SyncVoidbridgeUpline;
     }
 }

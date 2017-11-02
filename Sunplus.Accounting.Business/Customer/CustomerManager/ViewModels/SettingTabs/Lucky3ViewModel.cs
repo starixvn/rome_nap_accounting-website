@@ -6,8 +6,8 @@
 
         public bool HideLucky3Upline { get; private set; } = true;
 
-        public bool RemoveEnabledCheckBoxLucky3Credit => HideLucky3Upline || HideLucky3;
+        public bool HideEnabledCheckBoxLucky3Credit => HideLucky3Upline || HideLucky3 || IsDeposit;
 
-        public bool RemoveSettingLinkLucky3Credit => RemoveEnabledCheckBoxLucky3Credit;
+        public bool HideSettingLinkLucky3Credit => HideEnabledCheckBoxLucky3Credit;
     }
 }
