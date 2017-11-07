@@ -28,18 +28,13 @@ BetList.BetListByRefNo = (function ($) {
                 $("#betListContent").html(result);
                 $("#BetlistByRefNo").initGrid(gridOpts);
                 $('#BetlistByRefNo').removeClass("display-none").gridScroller(gridOpts);
-                var divReplace;
-                var divOfferNameList = $("#choice_right").find(".offer-name-list").first();
-                if (divOfferNameList) {
-                    divOfferNameList.addClass("hidden");
-                }
+                var divReplace;                
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';
                     $('#choice_left a:first').replaceWith(divReplace);
                 }
 
                 $("a:[id^='hidden']").each(function () {
-                    this.click();
                     $(this).removeAttr("href");
                 });
                 $("#result").attr('style', 'cursor: pointer;cursor: hand;');
