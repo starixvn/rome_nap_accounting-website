@@ -87,11 +87,15 @@
     <Compile Include="Admin\QuickLink.cs" />
     <Compile Include="Criteria\Admin\GetTicketToHeadlineSupportedProductCriteria.cs" />
     <Compile Include="Criteria\Admin\TicketToHeadlineCriteria.cs" />
+    <Compile Include="Criteria\Customer\SportbookCommissionUpdateCriteria.cs" />
+    <Compile Include="Criteria\Customer\SportbookCommissionCheckUsersCriteria.cs" />
+    <Compile Include="Criteria\Customer\SportbookCommissionSporttypeBettypeSelectCriteria.cs" />
     <Compile Include="Customer\CustomerBalanceRequest.cs" />
     <Compile Include="Criteria\CustomerBalanceCriteria.cs" />
     <Compile Include="Customer\DepositCustomer\KenoBetTypesSettingInfo.cs" />
     <Compile Include="Customer\DepositCustomer\SettingInfo.cs" />
     <Compile Include="Customer\DepositCustomer\VirtualSportsSettingInfo.cs" />
+    <Compile Include="Customer\EditSportbookCommissionViewModel.cs" />
     <Compile Include="Report\FilterCommon.cs" />
     <Compile Include="Report\LiveCasinoWinLoss.cs" />
     <Compile Include="Result.cs" />

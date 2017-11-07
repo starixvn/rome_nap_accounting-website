@@ -110,10 +110,12 @@
     <Compile Include="AdminAccess.cs" />
     <Compile Include="Admin\TicketToHeadlineRepository.cs" />
     <Compile Include="BaseAccess.cs" />
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="Constants\DbTypeSize.cs" />
     <Compile Include="Constants\RoleConstants.cs" />
     <Compile Include="Customer\CustomerBalanceRepository.cs" />
     <Compile Include="Customer\DepositCustomerAccess.cs" />
+    <Compile Include="Customer\SportbookCommissionRepository.cs" />
     <Compile Include="HelperAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\Exchange.cs" />

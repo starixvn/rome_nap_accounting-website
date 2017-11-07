@@ -1,0 +1,119 @@
+﻿@using Sunplus.Accounting.Core.Common;
+@using Resources;
+@model Fanex.Tarus.Entities.Customer.EditSportbookCommissionViewModel
+@{
+    Page.Title = "Edit Sportbook Commission";
+}
+@section Styles{
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + AccCommon.Version())" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/EditSportbookCommission/Styles/Index.css?v=" + AccCommon.Version())" rel="stylesheet" type="text/css" />
+}
+@section Scripts{
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/EditSportbookCommission/Scripts/Index.js?v=" + AccCommon.Version())"></script>
+}
+
+<div class="main">
+    <div class="maincontent">
+        <!--PageTitle-->
+        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">
+                    Edit Sportbook Commission
+                </td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+
+        <div class="maincontent_box">
+            <div class="bg_table" style="padding-bottom: 20px;max-width: 800px;">
+                <div class="alertboxerr" style="display: none;">
+                    <div id="errorMessage"></div>
+                </div>
+                <div class="alertboxscc" style="display: none;">
+                    <div id="successMessage">@ErrorMsg._0</div>
+                </div>
+                <div style="padding: 1px; clear: both;"></div>
+                <div class="table-cell">
+                    <label for="Usernames" class="b">Username(s)</label>
+                </div>
+                <div class="table-cell">
+                    <div style="float: left"></div>@Html.TextArea("Usernames", new { id = "Usernames", style = "width: 650px; height=50px;" })
+                    <div style="clear: both"></div>
+                    <div style="float: left">Ex: member01, member02, member05</div>
+                    <div style="float: right; color: red;">Max: 10 Members</div>
+                </div>
+                <div style="padding: 1px; clear: both;"></div>
+                <div class="table-cell">
+                    <input type="button" id="btnCheckMembers" value=" Select " class="btn" />
+                </div>
+                <div style="padding: 1px; clear: both;"></div>
+                <div id="contentUpdateCommission" style="display: none;">
+                    <table id="tblUpdateComm" class="tblcollapse">
+                        <thead>
+                            <tr class="title">
+                                <th colspan="6">Member: <span id="txtListUserName"></span></th>
+                            </tr>
+                            <tr class="title">
+                                <th colspan="6">Commission</th>
+                            </tr>
+                            <tr>
+                                <th class="tdtitle2"><input type="checkbox" id="chkAll" /></th>
+                                <th class="tdtitle2">Bettype</th>
+                                <th class="tdtitle2">Comm for Super</th>
+                                <th class="tdtitle2">Comm for Master</th>
+                                <th class="tdtitle2">Comm for Agent</th>
+                                <th class="tdtitle2">Comm for member</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sporttypeBettype in Model.ListSporttypeBettype)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="@("chk_" + sporttypeBettype.SportType + "_" + sporttypeBettype.Bettype)"
+                                               sporttype="@sporttypeBettype.SportType" bettype="@sporttypeBettype.Bettype" />
+                                    </td>
+                                    <td>@sporttypeBettype.BettypeName</td>
+                                    <td>
+                                        <select id="@("selSComm_" + sporttypeBettype.SportType + "_" + sporttypeBettype.Bettype)" disabled>
+                                            @for (decimal i = 0m; i <= 0.01m; i += 0.0005m)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="@("selMComm_" + sporttypeBettype.SportType + "_" + sporttypeBettype.Bettype)" disabled>
+                                            @for (decimal i = 0m; i <= 0.01m; i += 0.0005m)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="@("selAComm_" + sporttypeBettype.SportType + "_" + sporttypeBettype.Bettype)" disabled>
+                                            @for (decimal i = 0m; i <= 0.01m; i += 0.0005m)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="@("selMemComm_" + sporttypeBettype.SportType + "_" + sporttypeBettype.Bettype)">
+                                            @for (decimal i = 0m; i <= 0.01m; i += 0.0005m)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button id="btnUpdate" type="button" class="update-setting-button mT5" disabled>Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

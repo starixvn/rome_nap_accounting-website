@@ -87,6 +87,7 @@
     <Compile Include="Admin\ITicketToHeadlineRepository.cs" />
     <Compile Include="Customer\ICustomerBalanceRepository.cs" />
     <Compile Include="Customer\IDepositCustomerAccess.cs" />
+    <Compile Include="Customer\ISportbookCommissionRepository.cs" />
     <Compile Include="IAdminAccess.cs" />
     <Compile Include="IHelperAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

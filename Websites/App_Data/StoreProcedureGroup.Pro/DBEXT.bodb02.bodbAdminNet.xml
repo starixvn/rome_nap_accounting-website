@@ -37,4 +37,7 @@
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Customer - Edit Sportbook Commission">
+    <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBEXT.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>
