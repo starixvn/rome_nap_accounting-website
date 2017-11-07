@@ -321,13 +321,11 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideAllbetUpline = true;
                             bool isSyncAllbet = true;
                             bool isSyncAllbetUpline = true;
-                            bool isSyncAllbetDownline = true;
 
                             bool isHideVoidbridge = roleId < 4;
                             bool isHideVoidbridgeUpline = true;
                             bool isSyncVoidbridge = true;
                             bool isSyncVoidbridgeUpline = true;
-                            bool isSyncVoidbridgeDownline = true;
 
                             bool isHideNG2 = true;
                             bool isHideNG2Upline = true;
@@ -368,7 +366,6 @@ namespace Sunplus.Accounting.Business.Customer
                                             isSyncAllbet = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncAllbetUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
-                                            isSyncAllbetDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
                                             break;
 
                                         case "22":
@@ -376,7 +373,6 @@ namespace Sunplus.Accounting.Business.Customer
                                             isSyncVoidbridge = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSync"]);
                                             isHideVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
                                             isSyncVoidbridgeUpline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedUpline"]);
-                                            isSyncVoidbridgeDownline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsSyncedDownline"]);
                                             break;
 
                                         case "23":
