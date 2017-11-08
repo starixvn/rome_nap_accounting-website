@@ -213,8 +213,7 @@
     <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
+    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -348,8 +347,7 @@
     <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="External - Admin">  
-   
+  <Function Name="External - Admin">
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -368,5 +366,10 @@
     <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />   
   </Function>
 </Functions>

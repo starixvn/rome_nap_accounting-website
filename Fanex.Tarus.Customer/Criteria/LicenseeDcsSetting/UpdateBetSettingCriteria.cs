@@ -8,7 +8,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public UpdateBetSettingCriteria(
             int superId,
             bool applyExistedMem,
-            BetSetting betSetting,
+            BetSettingEntity betSetting,
             int userId,
             string ip)
         {
@@ -21,7 +21,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 
         public bool ApplyExistedMem { get; }
 
-        public BetSetting BetSetting { get; }
+        public BetSettingEntity BetSetting { get; }
 
         public override string GetSettingKey()
         {

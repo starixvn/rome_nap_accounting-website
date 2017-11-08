@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
+﻿namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 {
     public abstract class BaseSettingViewModel
     {

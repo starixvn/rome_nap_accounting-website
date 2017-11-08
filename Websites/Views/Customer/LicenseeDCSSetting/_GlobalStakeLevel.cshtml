@@ -1,0 +1,39 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model GlobalStakeLevelViewModel
+@{
+    Layout = null;
+}
+<table class="tblcollapse globalStakeLevel_table" id="globalStakeLevel_table">
+    <thead>
+        <tr class="title">
+            <th colspan="5">@LicenseeDcsSettingLabels.GlobalBetLimit <span>(@Model.SuperName)</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model.GroupGlobalStakeLevels)
+        {
+            <tr class="title">
+                <td colspan="5">@group.GameTypeName</td>
+            </tr>
+            <tr class="title_1">
+                <td><input type="button" class="btnAdd" title="Add @LicenseeDcsSettingLabels.GlobalBetLimit" data-gametypeid="@group.GameTypeId"></td>
+                <td>@LicenseeDcsSettingLabels.MinBet</td>
+                <td>@LicenseeDcsSettingLabels.MaxBet</td>
+                <td>@LicenseeDcsSettingLabels.MinLabel</td>
+                <td>@LicenseeDcsSettingLabels.MaxLabel</td>
+            </tr>
+            foreach (var item in group.GlobalStakeLevels)
+            {
+                <tr data-gametypeid="@item.GameTypeId" data-stakelevelid="@item.StakeLevelId">
+                    <td></td>
+                    <td><input type="text" class="numeric minstake" data-oldvalue="@item.MinStake" value="@item.MinStake.ToString("N0")"></td>
+                    <td><input type="text" class="numeric maxstake" data-oldvalue="@item.MaxStake" value="@item.MaxStake.ToString("N0")"></td>
+                    <td><input type="text" class="numeric minlabel" data-oldvalue="@item.MinLabel" value="@item.MinLabel"></td>
+                    <td><input type="text" class="numeric maxlabel" data-oldvalue="@item.MaxLabel" value="@item.MaxLabel"></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<button type="button" class="update-setting-button mT5" id="btnUpdateGlobalStakeLevel">@LicenseeDcsSettingLabels.Update</button>

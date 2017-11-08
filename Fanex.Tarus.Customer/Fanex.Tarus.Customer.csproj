@@ -78,8 +78,8 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.8\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.10\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
@@ -398,15 +398,20 @@
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetGlobalStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetPositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetSiteCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelGroupCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetSuperCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\NonQueryCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateGlobalStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
@@ -537,9 +542,16 @@
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\BetSetting.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\ProductSettingType.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\ProductViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\GlobalStakeLevelViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\GameTypeGlobalStakeLevel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\ProductSettingTypeEntity.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\ProductViewModel.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\SportBetTypeStakeLevel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StatusEntity.cs" />
     <Compile Include="Entities\MicroGaming\GameTypeModel.cs" />
     <Compile Include="Entities\MicroGaming\MicroGamingCustomerInfo.cs" />
@@ -594,11 +606,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LicenseeDcsSettingLabels.resx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\LicenseeDcsSetting\BaseSettingViewModel.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\BetSettingViewModel.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\FilterViewModel.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\PTViewModel.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\StatusViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\FilterViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\PTViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\StatusViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
@@ -672,7 +684,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

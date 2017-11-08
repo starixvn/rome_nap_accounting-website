@@ -130,7 +130,7 @@
     <value>Enable Downline</value>
   </data>
   <data name="LicenseeDCSSetting_PageTitle" xml:space="preserve">
-    <value>Edit Bet Setting</value>
+    <value>Licensee DCS Setting</value>
   </data>
   <data name="MaxBet" xml:space="preserve">
     <value>Max Bet</value>
@@ -203,5 +203,29 @@
   </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated</value>
+  </data>
+  <data name="BetLimit" xml:space="preserve">
+    <value>Bet Limit</value>
+  </data>
+  <data name="ExtraBaccaratBetType" xml:space="preserve">
+    <value>Roulette, Sic Bo, Dragon Tiger</value>
+  </data>
+  <data name="ExtraVIPBaccaratBetType" xml:space="preserve">
+    <value>(min bet might vary from different tables)</value>
+  </data>
+  <data name="GlobalBetLimit" xml:space="preserve">
+    <value>Global Bet Limit</value>
+  </data>
+  <data name="MaxLabel" xml:space="preserve">
+    <value>Max Label</value>
+  </data>
+  <data name="MinLabel" xml:space="preserve">
+    <value>Min Label</value>
+  </data>
+  <data name="UpdateGlobalStakeLevelSuccessfully" xml:space="preserve">
+    <value>Update Global Bet Limit successfully</value>
+  </data>
+  <data name="UpdateStakeLevelSuccessfully" xml:space="preserve">
+    <value>Update Bet Limit successfully</value>
   </data>
 </root>
