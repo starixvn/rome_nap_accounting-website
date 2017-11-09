@@ -156,6 +156,16 @@
                     "Lucky 3");
             }
 
+            if (renderLeftPanelParameter.IsShowBullfighting)
+            {
+                superSettingTab += string.Format(
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
+                    custId,
+                    4, // Super Level.
+                    "Bullfighting");
+            }
+
             masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sport book</a>";
 
             if (customerInfoViewModel.ShowHorseRacingLinkCredit)
@@ -232,6 +242,16 @@
                     custId,
                     3, // Master Level.
                     "Lucky 3");
+            }
+
+            if (renderLeftPanelParameter.IsShowBullfighting)
+            {
+                masterSettingTab += string.Format(
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
+                    custId,
+                    3, // Master Level.
+                    "Bullfighting");
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", superSettingTab);

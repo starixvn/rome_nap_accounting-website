@@ -4,9 +4,9 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool HideAllbetUpline { get; private set; } = true;
+        private bool HideAllbetUpline { get; set; } = true;
 
-        public bool SyncAllbet { get; private set; } = true;
+        private bool SyncAllbet { get; set; } = true;
 
         public bool SyncAllbetUpline { get; private set; } = true;
 
