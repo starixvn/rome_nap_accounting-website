@@ -103,6 +103,8 @@
 
         public bool HideVirtualSports { get; private set; } = true;
 
+        public bool HideBullfighting { get; private set; } = true;
+
         public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
@@ -165,6 +167,14 @@
                         case "26":
                             HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3 || IsDeposit;
                             HideLucky3Upline = Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
+                            break;
+
+                        case "30":
+                            bool isHideBullfighting = Utils.ToBoolean(row["IsHidden"]);
+                            bool isHideUplineBullfighting = Utils.ToBoolean(row["IsHiddenUpline"]);
+                            HideBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
+                                IsDeposit ||
+                                (RoleId < 4 && (isHideBullfighting || isHideUplineBullfighting));
                             break;
                     }
                 }
