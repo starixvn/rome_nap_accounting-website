@@ -582,7 +582,9 @@ function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
         Refno: refno,
         WinLossDate: winlossDate,
         TransType: transType,
-        CustId: custId
+        CustId: custId,
+        SportType: 205,
+        PageSize: 500
     });
 
     parent.OpenNextPopup(
@@ -625,7 +627,9 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
     var params = $.param({
         TransId: transId,
         TransType: transType,
-        CustId: custId
+        CustId: custId,
+        SportType: 209, //[208,209,210]
+        PageSize: 500
     });
 
     parent.OpenNextPopup(
@@ -646,7 +650,9 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
     var params = $.param({
         TransId: transId,
         TransType: transType,
-        CustId: custId
+        CustId: custId,
+        SportType: 212,
+        PageSize: 500
     });
 
     parent.OpenNextPopup(
@@ -667,7 +673,9 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
     var params = $.param({
         TransId: transId,
         TransType: transType,
-        CustId: custId
+        CustId: custId,
+        SportType: 219,
+        PageSize: 500
     });
 
     parent.OpenNextPopup(
@@ -808,13 +816,15 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
         Refno: refno,
         WinLossDate: winlossDate,
         CustId: custId,
-        TransType: transType
+        TransType: transType,
+        SportType: 211,
+        PageSize: 500
     });
 
     parent.OpenNextPopup(
         'AllBetDetails',
         'AGCasinoBetList/BetDetails?' + params,
-        'AllBet - Detailed Bet list - ' + winlossDate.split(' ')[0],
+        'Allbet - Detailed Bet list - ' + winlossDate.split(' ')[0],
         1030,
         600,
         true,

@@ -16,6 +16,14 @@
 </head>
 <body>
     <div id="betlist-details" class="freegrid display-none">
+        <div class="grid-title r">
+            <div style="width: 100%;">
+                <div style="display: inline-block; float: left;" class="b"></div>
+                <div class="grid-toolbox">
+                    <input type="button" id="btnExport" class="btnExcel" title="Export to Excel" />
+                </div>
+            </div>
+        </div>
         <div class="col_header row-headers-background scroll-y">
             <div class="header-container">
                 <table class="grid-fixed-table col_header_content">
@@ -132,6 +140,7 @@
             </div>
         </div>
     </div>
+    <iframe id="frmExportExcel" width="0" height="0" frameborder="0" style="display:none"></iframe>
     <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
     <script type="text/javascript" src="~/js/json2.js"></script>
     <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
@@ -146,7 +155,8 @@
 		var refno = @Request.QueryString["Refno"];
 		var custId = @Request.QueryString["CustId"];
 		var transType = @Request.QueryString["TransType"];
-
+        var sportType = @Request.QueryString["SportType"];
+        var pageSize = @Request.QueryString["PageSize"];
         $(document).ready(function () {
             agCasinoBetDetailsManager.initPage();
         });

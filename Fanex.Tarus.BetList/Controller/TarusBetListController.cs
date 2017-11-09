@@ -5,22 +5,22 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Fanex.BetList.Accounting.Models;
-using Fanex.Tarus.Security.Authenticate;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.Tarus.Security.Domain;
-using Fanex.Tarus.Security.Services;
-using Sunplus.Accounting.Core.Helper;
-
 namespace Fanex.Tarus.BetList.Controller
 {
-    using CustomerSetting.Module.Core.Attributes;
-    using DNAide.Core;
-    using Fanex.BetList.Accounting.Services;
-    using Sunplus.Accounting.Core.Common;
     using System;
     using System.Collections;
     using System.Web.Mvc;
+    using Business.BetDetails;
+    using CustomerSetting.Module.Core.Attributes;
+    using DNAide.Core;
+    using Fanex.BetList.Accounting.Models;
+    using Fanex.BetList.Accounting.Services;
+    using Fanex.Tarus.Security.Authenticate;
+    using Fanex.Tarus.Security.Criteria;
+    using Fanex.Tarus.Security.Domain;
+    using Fanex.Tarus.Security.Services;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Helper;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     [SpecialSiteFilter]
@@ -116,6 +116,22 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.Ip = IP;
             ViewBag.IsLink = IsLink;
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
+        }
+
+        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType)
+        {
+            IBetDetailsExporter exporter = new BetDetailsExporter();
+            string fileName = exporter.GetFileNameWithoutExtension(sportType);
+
+            var response = System.Web.HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
+
+            var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType);
+            exporter.Export(ticketDetails, response.OutputStream, sportType);
+
+            return new EmptyResult();
         }
     }
 }
