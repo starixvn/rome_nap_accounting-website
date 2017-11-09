@@ -4,13 +4,13 @@
 
     public partial class CustomerInfoViewModel
     {
-        public bool HideNG2 { get; private set; } = true;
+        private bool HideNG2 { get; set; } = true;
 
-        public bool HideNG2Upline { get; private set; } = true;
+        private bool HideNG2Upline { get; set; } = true;
 
-        public bool SyncNG2 { get; private set; } = true;
+        private bool SyncNG2 { get; set; } = true;
 
-        public bool SyncNG2Upline { get; private set; } = true;
+        private bool SyncNG2Upline { get; set; } = true;
 
         public bool HideSettingLinkNG2Credit => !WebSettings.IsShowNG2 || HideNG2Upline || !SyncNG2Upline || HideNG2 || IsDeposit;
 
