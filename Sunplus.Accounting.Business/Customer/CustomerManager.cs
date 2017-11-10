@@ -204,7 +204,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public Hashtable GetHtmlCustInfoContent(string userName)
+        public Hashtable GetHtmlCustInfoContent(string userName, byte checkCustId = 0)
         {
             Hashtable arrcontent = new Hashtable();
             try
@@ -217,7 +217,7 @@ namespace Sunplus.Accounting.Business.Customer
                 else
                 {
                     var customerService = new CustomerService();
-                    var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM);
+                    var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM, checkCustId);
 
                     if (ds == null || ds.ResultSet.Tables.Count == 0)
                     {

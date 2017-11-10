@@ -10,32 +10,36 @@ using System;
 public partial class LogDisplay_SettingPT_Display : PageBase
 {
     public int custId;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        
         var custName = CastAide.AsString(Request.QueryString["custname"], string.Empty);
-        var permissionService = new ServiceBase();
-        var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-        {
-            UserID = AppSession.AccId,
-            CustName = custName
-        });
 
-        if (checkSpecialSite.ErrorCode > 0)
+        if (!string.IsNullOrWhiteSpace(custName))
         {
-            RedirectSpecialSiteDeny();
-        }
-
-        if (!string.IsNullOrEmpty(custName))
-        {
-            CustDetail customer = CustomerUtils.GetCustomer(custName);
-            if (customer != null)
+            var permissionService = new ServiceBase();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
             {
-                custId = CastAide.AsInt32(customer.CustId, 0);
+                UserID = AppSession.AccId,
+                CustName = custName
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                RedirectSpecialSiteDeny();
             }
-            else
+
+            if (!string.IsNullOrEmpty(custName))
             {
-                custId = -1;
+                CustDetail customer = CustomerUtils.GetCustomer(custName);
+                if (customer != null)
+                {
+                    custId = CastAide.AsInt32(customer.CustId, 0);
+                }
+                else
+                {
+                    custId = -1;
+                }
             }
         }
     }

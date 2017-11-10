@@ -53,14 +53,14 @@ namespace Sunplus.Accounting.Business.Customer
         /// <param name="userName">non-empty username</param>
         /// <param name="accountingSystem"></param>
         /// <returns>DbResult</returns>
-        public DbResult GetCustomerInfo(string userName, string accountingSystem)
+        public DbResult GetCustomerInfo(string userName, string accountingSystem, byte checkCustId = 0)
         {
             if (string.IsNullOrEmpty(userName))
                 return null;
 
             if (IsBelongSystem(userName, accountingSystem))
             {
-                return _customerDAO.GetAllCustInfo(userName);
+                return _customerDAO.GetAllCustInfo(userName, checkCustId);
             }
 
             return null;

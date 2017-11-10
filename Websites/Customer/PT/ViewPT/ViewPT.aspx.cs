@@ -8,19 +8,24 @@ using System;
 public partial class Customer_PT_ViewPT_ViewPT :PageBase
 {
     protected string TileText = "View Position Taking";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         var username = CastAide.AsString(Request.QueryString["username"], string.Empty);
-        var permissionService = new ServiceBase();
-        var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-        {
-            UserID = AppSession.AccId,
-            CustName = username
-        });
 
-        if (checkSpecialSite.ErrorCode > 0)
+        if (!string.IsNullOrWhiteSpace(username))
         {
-            RedirectSpecialSiteDeny();
+            var permissionService = new ServiceBase();
+            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            {
+                UserID = AppSession.AccId,
+                CustName = username
+            });
+
+            if (checkSpecialSite.ErrorCode > 0)
+            {
+                RedirectSpecialSiteDeny();
+            }
         }
     }
 }
