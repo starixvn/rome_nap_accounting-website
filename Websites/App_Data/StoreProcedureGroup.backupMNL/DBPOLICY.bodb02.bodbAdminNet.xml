@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="Login - Menu">
+    <Setting Key="Acc_MenuSelByCustID" SpName="Acc_MenuSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage Menu">
+    <Setting Key="Acc_MenuSelList" SpName="Acc_MenuSelList" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuUpd" SpName="Acc_MenuUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuSelGroupFunc" SpName="Acc_MenuSelGroupFunc" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuIns" SpName="Acc_MenuIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuDel" SpName="Acc_MenuDel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="User - Account Management">
+    <Setting Key="GroupInfoSel" SpName="Acc_Con_GroupInfoSel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="AdminSelByGroupID" SpName="Acc_Con_AdminSelByGroupID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="GroupPolicySel" SpName="Acc_Con_GroupPolicySel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="AdminPolicySelByCustID" SpName="Acc_Con_AdminPolicySelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Con_CustomerSelByUserName" SpName="Acc_Con_CustomerSelByUserName" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Policy">
+    <Setting Key="AdminSelByListGroupNameUserName" SpName="Acc_Con_AdminSelByListGroupNameUserName" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="AdminPolicySel" SpName="Acc_Con_Batch_AdminPolicySel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Con_CheckPermission" SpName="Acc_Con_CheckPermission" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="User Control">
+    <Setting Key="RemoveAccount" SpName="Acc_Con_AdminDel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Con_AdminInsFromExisted" SpName="Acc_Con_AdminInsFromExisted" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="AdminPolicy" SpName="Acc_Con_AdminPolicyUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="GroupInfoDel" SpName="Acc_Con_GroupInfoDel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOLICY.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Ex.rate">
+    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Special Site">
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+  </Function>
+</Functions>
