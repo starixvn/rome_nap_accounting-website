@@ -145,6 +145,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
+            TemplateHandler.Assign(ref htmlcontent, "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting));
 
             var editSettingLink = $"MicroGaming/EditSettingView?parentId={renderLeftPanelParameter.ParentId}&custId={renderLeftPanelParameter.CustId}&roleId={renderLeftPanelParameter.RoleId}";
             TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
@@ -248,6 +249,11 @@
             if (customerInfoViewModel.HideSettingLinkLucky3Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
+            }
+
+            if (customerInfoViewModel.HideSettingBullfighting)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
             }
 
             return htmlcontent;

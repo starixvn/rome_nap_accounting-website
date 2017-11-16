@@ -346,7 +346,6 @@
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\ColossusBetViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\BullfightingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NG2ViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\Lucky3ViewModel.cs" />
@@ -741,7 +740,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
