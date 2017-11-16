@@ -53,7 +53,7 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
                 IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit,
-                IsShowBullfighting = !customerInfoViewModel.HideBullfighting
+                IsShowBullfighting = !customerInfoViewModel.HideSettingBullfighting
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
