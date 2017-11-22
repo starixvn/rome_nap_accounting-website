@@ -2,10 +2,16 @@
 <!--Filter-->
 <table style="float:left;">
     <tr>
-        <td class="l b" style="width:120px;">GroupID:</td>
+        <td class="l b" style="width:130px;">GroupID:</td>
         <td>{groupid}</td>
         <td></td>
 		<td></td>
+    </tr>
+    <tr>
+        <td class="l b">Group Max Loss (RM):</td>
+        <td>{GroupHeadlineMaxLoss}</td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>    
         <td class="b">User Name:</td>
@@ -13,7 +19,7 @@
         <td><input class="btn" type="button" onclick="ExecuteCreditTerm('1');" value="Add to Group" name="btnadd"></input>  </td>
     </tr>
 </table>
-<div style="float:right;padding-top:24px;>
+<div style="float:right;padding-top:24px;">
 	<div class="btngroup"><input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel({groupid});" /></div>
 </div>
 <!--/Filter-->
@@ -31,8 +37,8 @@
     <tr align="center" class="{row-even}">
         <td class="{headlineclasstext}">{UserName}</td>
         <td class="c">{Currency}</td>
-        <td class="c">{TotalBalance}</td>
-        <td class="c">{MaxLoss}</td>
+        <td class="r">{TotalBalance}</td>
+        <td class="r">{MaxLoss}</td>
         <td class="c">
             <img src="{headline}" onclick="{jsaddheadline}" title="{title}" width="16px" height="14px" border="0" style="cursor:pointer;" />
        </td>
@@ -41,10 +47,10 @@
     <!--/UserRow-->
     {UserRowList}
     <tr class="title">
-        <td class="r b">Total (RM)</td>
+        <td class="r b"> Group Total Balance</td>
         <td class="c b">RM</td>
-        <td class="c b">{SumTotalBalance}</td>
-        <td class="c b">{SumMaxLoss}</td>
+        <td class="c r">{SumTotalBalance}</td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>

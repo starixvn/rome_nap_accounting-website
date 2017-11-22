@@ -43,17 +43,17 @@ namespace Sunplus.Accounting.Business.CreditTerm
                     listGroup.AddRange(from DataRow row in rows
                                        select
                                            new Group()
-                                               {
-                                                   GroupId = CastAide.AsInt32(row["groupid"]),
-                                                   CustId = CastAide.AsInt32(row["custid"]),
-                                                   HeadUsername = row["username"].ToString(),
-                                                   Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(row["currency"])),
-                                                   Members = CastAide.AsInt32(row["TotalMember"]),
-                                                   RoleId = CastAide.AsInt32(row["roleid"]),
-                                                   Checker = row["checkername"].ToString(),
-                                                   ConsolidationReport = CastAide.AsBoolean(row["IsRptConsol"]),
-                                                   Permisssion = false
-                                               });
+                                           {
+                                               GroupId = CastAide.AsInt32(row["groupid"]),
+                                               CustId = CastAide.AsInt32(row["custid"]),
+                                               HeadUsername = row["username"].ToString(),
+                                               Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(row["currency"])),
+                                               Members = CastAide.AsInt32(row["TotalMember"]),
+                                               RoleId = CastAide.AsInt32(row["roleid"]),
+                                               Checker = row["checkername"].ToString(),
+                                               ConsolidationReport = CastAide.AsBoolean(row["IsRptConsol"]),
+                                               Permisssion = false
+                                           });
 
                     listGroup = listGroup.OrderBy(m => m.Currency).ThenBy(m => m.HeadUsername).ToList();
 
@@ -288,13 +288,13 @@ namespace Sunplus.Accounting.Business.CreditTerm
         public List<GroupEditing> GetMemberByGroupId(int groupId)
         {
             List<GroupEditing> memberList = null;
-
             var dbResult = AccountCredit.Acc_CreditTermSelByGroupID(groupId);
+
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
             {
                 memberList = new List<GroupEditing>();
-
                 DataTable dt = dbResult.ResultSet.Tables[0];
+
                 foreach (DataRow drow in dt.Rows)
                 {
                     memberList.Add(new GroupEditing
@@ -303,26 +303,28 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         Username = CastAide.AsString(drow["username"]),
                         Currency = CastAide.AsString(drow["currency"]),
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
-                        MaxLoss = IBCUtils.FormatHandler.FormatNumber20(drow["maxloss"]),
+                        MaxLoss = GetMaxLossValue(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
                     });
                 }
 
-              
                 DataTable dttotal = dbResult.ResultSet.Tables[1];
+
                 if (dttotal.Rows.Count > 0)
                 {
                     var totalrow = dttotal.Rows[0];
+
                     memberList.Add(new GroupEditing
                     {
                         CustId = 0,
-                        Username = "Total (RM)",
+                        Username = "Group Total Balance",
                         Currency = "RM",
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
-                        MaxLoss = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalmaxloss_rm"]),
+                        MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
                         IsGroupHeadline = false
                     });
                 }
+
                 // add to Session
                 SessionExtension.AddSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY, memberList);
             }
@@ -333,16 +335,16 @@ namespace Sunplus.Accounting.Business.CreditTerm
         public void ExportExcelMemberByGroupId(int groupId)
         {
             List<GroupEditing> memberList = (List<GroupEditing>)SessionExtension.GetSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY);
+
             if (memberList == null)
             {
                 memberList = GetMemberByGroupId(groupId);
+
                 if (memberList == null)
                 {
                     return;
                 }
             }
-
-            // Export excel here ...
 
             #region ExcelTypes
 
@@ -363,11 +365,14 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             var excelUtils = new Core.Helper.ExcelGemboxUtils();
             var headerTextStyle = excelUtils.GetStyleTitle(Color.FromArgb(181, 196, 208));
+            var groupMaxLossStyle = excelUtils.GetStyleText(255, 255, 255, HorizontalAlignmentStyle.Left);
 
             // event/odd style
             var groupHeadlineTextStyle = excelUtils.GetStyleText(Color.FromArgb(162, 90, 16), 255, 255, 255, HorizontalAlignmentStyle.Center);
             var evenTextStyle = excelUtils.GetStyleText(223, 234, 255, HorizontalAlignmentStyle.Center);
             var oddTextStyle = excelUtils.GetStyleText(255, 255, 255, HorizontalAlignmentStyle.Center);
+            var redEvenTextStyle = excelUtils.GetStyleText(Color.Red, 223, 234, 255, HorizontalAlignmentStyle.Right);
+            var redOddTextStyle = excelUtils.GetStyleText(Color.Red, 255, 255, 255, HorizontalAlignmentStyle.Right);
 
             #region Header
 
@@ -390,6 +395,14 @@ namespace Sunplus.Accounting.Business.CreditTerm
             currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
             currentRow++;
 
+            // group max loss
+            currentColumn = startColumn;
+            currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Group Max Loss (RM): " + memberList.FirstOrDefault(m => m.CustId == 0).MaxLoss;
+            currentCellRange.Style = groupMaxLossStyle;
+            currentRow++;
+
             // empty row
             currentColumn = startColumn;
             currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
@@ -405,7 +418,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
             currentColumn++;
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Username";
+            currentCell.Value = "UserName";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
@@ -430,13 +443,17 @@ namespace Sunplus.Accounting.Business.CreditTerm
             string username = null;
             GroupEditing group = null;
             int groupLen = memberList.Count;
+            bool isTotalRow;
+
             for (int i = 0; i < groupLen; i++)
             {
                 currentRow++;
                 currentColumn = startColumn;
 
                 group = memberList[i];
+                isTotalRow = group.CustId == 0; // the last row.
                 CellStyle textStyle; // style
+
                 if (group.IsGroupHeadline)
                 {
                     textStyle = groupHeadlineTextStyle;
@@ -445,10 +462,20 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 else
                 {
                     textStyle = i % 2 == 0 ? oddTextStyle : evenTextStyle;
+
+                    if (isTotalRow)
+                    {
+                        textStyle.Font.Weight = ExcelFont.BoldWeight;
+                        redEvenTextStyle.Font.Weight = ExcelFont.BoldWeight;
+                        redOddTextStyle.Font.Weight = ExcelFont.BoldWeight;
+                    }
+
                     username = group.Username;
                 }
 
-                // #
+                // #, UserName & Currency.
+                textStyle.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = i + 1;
                 currentCell.Style = textStyle;
@@ -464,13 +491,23 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 currentCell.Style = textStyle;
                 currentColumn++;
 
+                // Total Balance & Max Loss.
+                textStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = group.TotalBalance;
-                currentCell.Style = textStyle;
+                if (group.TotalBalance.StartsWith("-"))
+                {
+                    currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
+                }
+                else
+                {
+                    currentCell.Style = textStyle;
+                }
                 currentColumn++;
 
                 currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = group.MaxLoss;
+                currentCell.Value = isTotalRow ? string.Empty : group.MaxLoss;
                 currentCell.Style = textStyle;
             }
 
@@ -482,16 +519,23 @@ namespace Sunplus.Accounting.Business.CreditTerm
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
-            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
+            response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", reportName.Replace(" ", string.Empty)));
 
             excelFile.SaveXls(response.OutputStream);
 
             #endregion Response file
         }
-        
+
         public int GetGroupIdByUsername(string username)
         {
             return _creditTermDAO.GetGroupIdByUsername(username);
+        }
+
+        private string GetMaxLossValue(object value)
+        {
+            return value == null || value == DBNull.Value ?
+                "N/A" :
+                IBCUtils.FormatHandler.FormatNumber20(value);
         }
     }
 }
