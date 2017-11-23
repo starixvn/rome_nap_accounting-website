@@ -12,12 +12,11 @@
         .Append(ng2Text)
         .Append("/Fishing World");
 
-    }
-
     int bullfightingId = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting;
     if (bullfightingId != 0)
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
+    }
 }
 <html>
 <head>
