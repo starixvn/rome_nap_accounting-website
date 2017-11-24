@@ -7,7 +7,7 @@
         OANDAExRate.fdate = $('#txtfromdate').val();
         OANDAExRate.tdate = $('#txttodate').val();
         var data = { fdate: $('#txtfromdate').val(), tdate: $('#txttodate').val() };
-        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
             url: "GetExchangeDailyOanda",
@@ -15,6 +15,8 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (rs) {
+                var width = 243 + (80 + 2) * baseCurrencyLength;
+                var height = 550;
                 if (rs.length > 0) {
                     for (var i = 0; i < rs.length; i++) {
                         if (i == rs.length - 1)
@@ -22,11 +24,11 @@
                         arr.push(OANDAExRate.renderRow(rs[i], endRow));
                     }
                     $("#tblOANDAExRate").html(arr.join(''));
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(238 + (80 + 2) * baseCurrencyLength, 550, true);
+                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(width, height, true);
                 }
                 else {
-                    $("#tblOANDAExRate").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:552px">There is no information available</div></td></tr>');
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(265 + (80 + 2) * baseCurrencyLength, 550, true);
+                    $("#tblOANDAExRate").html('<tr><td colspan="' + (baseCurrencyLength + 2) + '" style="border-right:0px none"><div class="c b" style="width:' + width + 'px">There is no information available</div></td></tr>');
+                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(width, height, true);
                 }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
