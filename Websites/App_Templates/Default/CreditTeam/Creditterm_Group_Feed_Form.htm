@@ -26,6 +26,7 @@
 <div id="dvcontent">
 <table class="tbllayout" cellspacing="1">
     <tr class="title">
+        <td>#</td>
         <td>UserName</td>
         <td style="width:100px;">Currency</td>
         <td style="width:100px;">Total Balance</td>
@@ -35,6 +36,7 @@
     </tr>
     <!--UserRow-->
     <tr align="center" class="{row-even}">
+        <td>{No}</td>
         <td class="{headlineclasstext}">{UserName}</td>
         <td class="c">{Currency}</td>
         <td class="r">{TotalBalance}</td>
@@ -47,7 +49,7 @@
     <!--/UserRow-->
     {UserRowList}
     <tr class="title">
-        <td class="r b"> Group Total Balance</td>
+        <td colspan="2" class="r b">Group Total Balance</td>
         <td class="c b">RM</td>
         <td class="c r">{SumTotalBalance}</td>
         <td></td>
@@ -55,6 +57,7 @@
         <td></td>
     </tr>
     <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
