@@ -73,7 +73,7 @@ function checkKeyPress(e) {
             var fr = self.frames['frmUpdate'];
             if (typeof fr != 'undefined' && fr) {
                 fr.location.href = 'Handlers/UpdateGivenCredit.ashx?amount=' + givencredit + '&custid=' + GetCustId();
-
+                ChangeGivenCredit();
                 return true;
             }
         }
