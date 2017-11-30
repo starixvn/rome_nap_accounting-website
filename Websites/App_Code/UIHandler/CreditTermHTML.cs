@@ -116,6 +116,7 @@ namespace Sunplus.Accounting.Presentation
                 string jsheadline = string.Empty;
                 string title = string.Empty;
                 string roweven = "evenrow";
+                int index = 0;
 
                 foreach (var member in memberList)
                 {
@@ -146,6 +147,7 @@ namespace Sunplus.Accounting.Presentation
                         roweven = roweven == string.Empty ? "evenrow" : string.Empty;
 
                         TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
+                        TemplateHandler.Assign(ref _userrow, "{No}", ++index);
                         TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
                         TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
                         TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
