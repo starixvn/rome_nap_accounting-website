@@ -38,7 +38,6 @@
 
         AreaRegistration.RegisterAllAreas();
 
-
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
@@ -46,12 +45,17 @@
         RegisterRoutes(RouteTable.Routes);
 
         AutoMapperConfiguration.Configure();
-    }
 
+        Fanex.Logging.Extensions.Web.ExceptionHandler
+            .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
+            .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
+            .GetHttpHeaderInfo()
+            .GetHttpSessionInfo())
+            .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
+    }
 
     public static void RegisterGlobalFilters(GlobalFilterCollection filters)
     {
-
         //filters.Add(new LogExceptionFilter());
         filters.Add(new HandleErrorAttribute());
     }
@@ -102,7 +106,6 @@
     void Application_End(object sender, EventArgs e)
     {
         //  Code that runs on application shutdown
-
     }
 
     void Application_Error(object sender, EventArgs e)
@@ -116,15 +119,15 @@
             var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
             Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
             if (!downTimeInfo.IsDowntime)
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            {
+                Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(Server.GetLastError());
+            }
         }
         else
         {
             if (((HttpException)ex).GetHttpCode() == 404)
             {
-
                 Response.Redirect("~/Index.aspx");
-
             }
         }
     }
@@ -151,7 +154,6 @@
             Application["UserOnlineNo"] = (int)Application["UserOnlineNo"] - 1;
         Application.UnLock();
         Response.Redirect("~/SignIn.aspx");
-
     }
 
     void Application_AcquireRequestState(object sender, EventArgs e)
@@ -178,7 +180,6 @@
                 }
                 else
                 {
-
                     if (!url.Contains(Constants.Page.SignIn.ToLower().Replace("~", "")) && !Request.IsAuthenticated)
                     {
                         Response.Redirect(Constants.Page.SignIn);
@@ -253,5 +254,19 @@
         string UnLimitPage = ";Others/Default.aspx;Settle/Index.aspx;Customer/default.aspx";
         UnLimitPage = UnLimitPage.ToLower();
         return (AppSession.Username.IndexOf("U3") == 0 && UnLimitPage.Contains(";" + url.ToLower()));
+    }
+
+    private static List<string> GetRegexToHideSensitiveInfo()
+    {
+        var result = new List<string>();
+        var sensitiveInfo = new[] { "pass", "pwd", "security" };
+
+        foreach (var info in sensitiveInfo)
+        {
+            result.Add(string.Format("(?:{0}=)(?<paramValue>[^&|^\\s]+)", info));
+            result.Add(string.Format("(\"{0}\":)(?<paramValue>[^,|^\r]+)", info));
+        }
+
+        return result;
     }
 </script>
