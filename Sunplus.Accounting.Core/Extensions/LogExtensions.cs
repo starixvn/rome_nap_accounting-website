@@ -3,10 +3,7 @@
 namespace Sunplus.Accounting.Core.Extensions
 {
     using System;
-    using System.Collections;
     using CasinoLibrary.Model.UserException;
-    using Fanex.Module.Logs;
-    using Fanex.Module.Logs.Services;
 
     /**
      * public class Log Extensions
@@ -18,12 +15,12 @@ namespace Sunplus.Accounting.Core.Extensions
     {
         public static void ExceptionHandler(Exception ex)
         {
-            ex.Write();
+            Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
         }
 
         public static void CasinoExceptionHandler(ErrorException ex)
         {
-            ex.WriteCasinoException();
+            Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
         }
     }
 }

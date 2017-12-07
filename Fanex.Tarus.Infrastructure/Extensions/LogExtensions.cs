@@ -8,16 +8,12 @@
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     using System;
-    using Fanex.Module.Logs.Services;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LogExtensions
     {
         public static void ExceptionHandler(Exception ex)
         {
-            ex.Write();
+            Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
         }
     }
 }

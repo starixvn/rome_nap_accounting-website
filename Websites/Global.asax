@@ -19,6 +19,8 @@
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
+<%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
+
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -120,7 +122,6 @@
             Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
             if (!downTimeInfo.IsDowntime)
             {
-                Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(Server.GetLastError());
             }
         }
         else
