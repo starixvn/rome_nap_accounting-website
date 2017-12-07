@@ -1,14 +1,14 @@
-﻿using CasinoLibrary.Model.UserException;
-using Fanex.Module.Logs;
-using Fanex.Module.Logs.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using CasinoLibrary.Model.UserException;
+using Fanex.Logging.Extensions.Web;
 using Fanex.Tarus.Business.Implement.Customer;
 using Fanex.Tarus.Web.Controllers.Filters;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 
@@ -71,11 +71,11 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                 }
                 catch (ErrorException casinoEx)
                 {
-                    casinoEx.WriteCasinoException(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(new Exception(casinoEx.Message), TraceEventType.Warning);
                 }
                 catch (Exception ex)
                 {
-                    ex.Write(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(ex, TraceEventType.Warning);
                 }
             }
 
