@@ -10,7 +10,7 @@
 namespace Fanex.BetList.Accounting.Core
 {
     using System;
-    using Fanex.Module.Logs.Services;
+    using Logging.Extensions.Web;
     using Sunplus.Accounting.Core.Extensions;
 
     public enum LogType : int
@@ -37,7 +37,7 @@ namespace Fanex.BetList.Accounting.Core
         /// <param name="ex">The exception.</param>
         public static void Log(Exception ex)
         {
-            ex.WriteLog();
+            ExceptionHandler.Handle(ex);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Fanex.BetList.Accounting.Core
         public static void Log(string message = "", LogType logType = LogType.Error)
         {
             var ex = new Exception(message);
-            ex.Write();
+            ExceptionHandler.Handle(ex);
         }
     }
 }

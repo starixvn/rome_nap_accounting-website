@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Data;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities.ExtraPtGroup;
 
@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -71,7 +71,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -102,7 +102,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -122,7 +122,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
                 result = new Result(999, ex.Message);
             }
 
@@ -143,7 +143,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
                 result = new Result(999, ex.Message);
             }
 
@@ -164,7 +164,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
                 result = new Result(999, ex.Message);
             }
 

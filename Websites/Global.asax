@@ -21,6 +21,8 @@
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <%@ Import Namespace="CasinoLibrary.Model.UserException" %>
 <%@ Import Namespace="Fanex.Module.Logs.Services" %>
+<%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
+
 <%@ Import Namespace="Fanex.Module.Logs" %>
 
 <script RunAt="server">

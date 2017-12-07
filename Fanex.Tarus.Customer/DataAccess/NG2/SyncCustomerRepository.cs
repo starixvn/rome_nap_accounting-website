@@ -4,7 +4,7 @@ using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Data;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 using Fanex.Tarus.Customer.Entities.NG2;
 
 namespace Fanex.Tarus.Customer.DataAccess.NG2
@@ -47,7 +47,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                 }
                 catch (Exception ex)
                 {
-                    ex.Write();   
+                    ExceptionHandler.Handle(ex);
                 }                                
             }
 
@@ -92,7 +92,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -123,7 +123,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
