@@ -351,6 +351,10 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.0\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.3-logging\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
@@ -538,6 +542,10 @@
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
       <Private>True</Private>
@@ -690,10 +698,6 @@
     <ProjectReference Include="..\Fanex.Tarus.DataAccess.Interface\Fanex.Tarus.DataAccess.Interface.csproj">
       <Project>{1ee1de7d-1d0d-4443-a82a-b1eade5e8f14}</Project>
       <Name>Fanex.Tarus.DataAccess.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Excels\Fanex.Tarus.Excels.csproj">
-      <Project>{4d443bd2-6287-4427-8afd-cabff55e2d6f}</Project>
-      <Name>Fanex.Tarus.Excels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.ExchangeRate\Fanex.Tarus.ExchangeRate.csproj">
       <Project>{acdac061-9c62-4c4b-a08c-2c810669e290}</Project>
