@@ -42,6 +42,10 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.AuthenticationFilter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.AuthenticationFilter.1.0.0.0\lib\net40\Fanex.AuthenticationFilter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -182,10 +186,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
-      <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
-      <Name>Fanex.AuthenticationFilter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
       <Name>Sunplus.Accounting.DataAccess</Name>

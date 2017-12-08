@@ -65,8 +65,12 @@
       <HintPath>..\packages\EasyNetQ.0.53.6.418\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
+    <Reference Include="Fanex.AuthenticationFilter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.AuthenticationFilter.1.0.0.0\lib\net40\Fanex.AuthenticationFilter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.0\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -81,7 +85,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.51.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.49.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Bullfighting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -100,8 +104,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.7\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.51.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.51.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.49.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.49.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -489,10 +493,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
-      <Project>{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}</Project>
-      <Name>Fanex.AuthenticationFilter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.BetList.Accounting\BetList.csproj">
       <Project>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</Project>
       <Name>BetList</Name>
