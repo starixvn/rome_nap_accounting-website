@@ -93,6 +93,10 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -124,10 +128,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
       <Project>{3ada1c70-fd55-4c89-bfef-1b695b1042cd}</Project>
       <Name>Fanex.Tarus.Web.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
-      <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>
-      <Name>Sunplus.Accounting.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
