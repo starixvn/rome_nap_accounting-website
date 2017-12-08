@@ -70,6 +70,10 @@
       <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Interface.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Interface.dll</HintPath>
       <Private>True</Private>
@@ -187,12 +191,6 @@
     <Compile Include="Report\MatchAnalysisService.cs" />
     <Compile Include="SpecialDelete\SpecialDeleteBase.cs" />
     <Compile Include="Utilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
-      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
-      <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

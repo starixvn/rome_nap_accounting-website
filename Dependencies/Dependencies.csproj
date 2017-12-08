@@ -356,6 +356,10 @@
       <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Interface.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Interface.dll</HintPath>
       <Private>True</Private>
@@ -711,10 +715,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
       <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
       <Name>Fanex.Tarus.Customer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
-      <Project>{9780010a-7eec-4726-959b-d2cffb1875ee}</Project>
-      <Name>Fanex.Tarus.DataAccess.Implement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.ExchangeRate\Fanex.Tarus.ExchangeRate.csproj">
       <Project>{acdac061-9c62-4c4b-a08c-2c810669e290}</Project>
