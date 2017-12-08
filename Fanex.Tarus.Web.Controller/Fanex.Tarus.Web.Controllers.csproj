@@ -327,10 +327,6 @@
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
-      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
-      <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
       <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
       <Name>Fanex.Tarus.Security</Name>
