@@ -647,10 +647,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
-      <Project>{9e60faef-0c05-4506-be45-8a1c8fdd0ad3}</Project>
-      <Name>Fanex.AuthenticationFilter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.BetList.Accounting\BetList.csproj">
       <Project>{dcea602c-2786-45b3-b3c4-1d3241f40f09}</Project>
       <Name>BetList</Name>
