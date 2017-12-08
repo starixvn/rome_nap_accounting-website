@@ -128,6 +128,10 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -188,10 +192,6 @@
     <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
-      <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>
-      <Name>Sunplus.Accounting.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
