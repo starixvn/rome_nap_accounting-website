@@ -75,6 +75,10 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.8\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -130,10 +134,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
-      <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
-      <Name>Sunplus.Accounting.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
