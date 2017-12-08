@@ -352,6 +352,10 @@
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.1.2\lib\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Interface.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Interface.dll</HintPath>
       <Private>True</Private>
@@ -699,10 +703,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{be4a5642-a3b6-4329-bb8f-4973446e7fa9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Business.Interface\Fanex.Tarus.Business.Interface.csproj">
-      <Project>{98993382-db96-4ef7-932b-0c384a31199f}</Project>
-      <Name>Fanex.Tarus.Business.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
       <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
