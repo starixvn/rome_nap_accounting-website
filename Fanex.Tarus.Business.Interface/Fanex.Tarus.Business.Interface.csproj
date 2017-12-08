@@ -61,6 +61,10 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.5\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
@@ -123,12 +127,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\ILiveCasinoWinLossService.cs" />
     <Compile Include="Report\IMatchAnalysisService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
-      <Project>{3ada1c70-fd55-4c89-bfef-1b695b1042cd}</Project>
-      <Name>Fanex.Tarus.Web.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
