@@ -767,10 +767,6 @@
       <Project>{27984fee-40dc-40dc-b3b9-3a8776c5511d}</Project>
       <Name>Sunplus.Accounting.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
-      <Project>{c2043b3c-af85-4334-8542-f9ac2b031d79}</Project>
-      <Name>Sunplus.Accounting.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.WcfServiceLibrary\Sunplus.Accounting.WcfServiceLibrary.csproj">
       <Project>{2426f40b-b40e-420e-bd14-80814b949055}</Project>
       <Name>Sunplus.Accounting.WcfServiceLibrary</Name>
