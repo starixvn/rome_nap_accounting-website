@@ -351,6 +351,10 @@
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.1.2\lib\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.DataAccess.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Interface.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
@@ -706,10 +710,6 @@
     <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
       <Project>{9780010a-7eec-4726-959b-d2cffb1875ee}</Project>
       <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Interface\Fanex.Tarus.DataAccess.Interface.csproj">
-      <Project>{1ee1de7d-1d0d-4443-a82a-b1eade5e8f14}</Project>
-      <Name>Fanex.Tarus.DataAccess.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.ExchangeRate\Fanex.Tarus.ExchangeRate.csproj">
       <Project>{acdac061-9c62-4c4b-a08c-2c810669e290}</Project>
