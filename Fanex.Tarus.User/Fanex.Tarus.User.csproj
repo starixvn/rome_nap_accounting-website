@@ -57,6 +57,10 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
@@ -136,10 +140,6 @@
     <Folder Include="DataAccess\NoSql\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
-      <Project>{0D0F3C0D-F85C-4B0D-B033-16424E1AE5E0}</Project>
-      <Name>Fanex.Tarus.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
       <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
       <Name>Fanex.Tarus.Security</Name>
