@@ -40,6 +40,10 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
@@ -111,10 +115,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>

@@ -60,6 +60,10 @@
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
@@ -174,10 +178,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
       <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>

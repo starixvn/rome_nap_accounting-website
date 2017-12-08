@@ -131,10 +131,6 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
       <Name>Sunplus.Accounting.DataAccess</Name>

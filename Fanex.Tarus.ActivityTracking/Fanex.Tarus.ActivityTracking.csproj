@@ -48,6 +48,10 @@
       <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
       <Private>True</Private>
@@ -119,10 +123,6 @@
     <Compile Include="Web\NapActivityTrackingHttpModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.User\Fanex.Tarus.User.csproj">
       <Project>{fa489626-9250-447a-b555-e621b43d3aff}</Project>
       <Name>Fanex.Tarus.User</Name>

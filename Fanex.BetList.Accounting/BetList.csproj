@@ -230,6 +230,10 @@
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.9.3\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
@@ -455,10 +459,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
       <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
       <Name>Fanex.Tarus.Security</Name>

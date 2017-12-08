@@ -367,6 +367,10 @@
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.0\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.5\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
@@ -718,10 +722,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Finance\Fanex.Tarus.Finance.csproj">
       <Project>{2da5f7c3-bb8b-45f2-9e38-dd8e23655da6}</Project>
       <Name>Fanex.Tarus.Finance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.LiveCasino\Fanex.Tarus.LiveCasino.csproj">
       <Project>{c7489ba0-a2d2-4414-997f-fd0eff4c2835}</Project>
