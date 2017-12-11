@@ -235,6 +235,10 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.3-logging\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
@@ -504,10 +508,6 @@
     <ProjectReference Include="..\Fanex.BetList.Accounting\BetList.csproj">
       <Project>{DCEA602C-2786-45B3-B3C4-1D3241F40F09}</Project>
       <Name>BetList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
-      <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
-      <Name>Fanex.Tarus.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

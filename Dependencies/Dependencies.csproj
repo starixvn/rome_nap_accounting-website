@@ -380,6 +380,10 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.5\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
@@ -739,10 +743,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Reports\Fanex.Tarus.Reports.csproj">
       <Project>{ec6dbe74-32ef-44a1-8a9d-279e6df28232}</Project>
       <Name>Fanex.Tarus.Reports</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
-      <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
-      <Name>Fanex.Tarus.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Settlement\Fanex.Tarus.Settlement.csproj">
       <Project>{ed61a61e-4805-405a-8a5f-44e933de874a}</Project>
