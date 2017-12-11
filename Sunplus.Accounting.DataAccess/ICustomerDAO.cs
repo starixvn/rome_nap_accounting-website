@@ -17,7 +17,7 @@ namespace Sunplus.Accounting.DataAccess
         Result UpdateLevelDangerous(int custId, int updateDownline, int dangerType, int dangerLevel, int userId,
                                     string ip);
 
-        DbResult GetAllCustInfo(string username);
+        DbResult GetAllCustInfo(string username, byte checkCustId = 0);
 
         BetSettingNG CheckEnableNGDownline(string username);
 

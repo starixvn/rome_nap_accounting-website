@@ -1,25 +1,26 @@
+using System;
+using System.Collections;
 using DNAide.Core;
 using Fanex.CustomerSetting.Module.Core.Criteria;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using System;
-using System.Collections;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.Tarus.Security.Domain;
-using Fanex.Tarus.Security.Services;
-using Sunplus.Accounting.Business.Security;
 
 public partial class CustInfo : PageBase
 {
+    private const byte IsAllowSearchByCustomerId = 1;
+
     public bool isBA, isEnabled;
-    public string arrAbnomalBet = "";
-    public string username = "";
+    public string arrAbnomalBet = string.Empty;
+    public string username = string.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         username = System.Web.HttpUtility.UrlDecode(Request.QueryString["username"]);
+
         if (string.IsNullOrEmpty(username))
         {
             HtmlHolder.Text = string.Empty;
@@ -27,22 +28,25 @@ public partial class CustInfo : PageBase
         }
 
         var serviceBase = new ServiceBase();
-        var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["username"] });
-        if (checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline)
+        var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria
         {
-            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                HtmlHolder.Text = AlertMessage.GetMsg(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission").ToString(), AlertMessage.MsgType.Error);
-                return;
-            }
+            UserName = username,
+            CheckCustId = IsAllowSearchByCustomerId
+        });
+
+        if (checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline &&
+            !Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+        {
+            HtmlHolder.Text = AlertMessage.GetMsg(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission").ToString(), AlertMessage.MsgType.Error);
+            return;
         }
 
-        var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
-                   new CheckSpecialSitePermissionCriteria()
-                   {
-                       UserID = AppSession.AccId,
-                       CustName = username
-                   });
+        var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
+        {
+            UserID = AppSession.AccId,
+            CustName = username,
+            CheckCustId = IsAllowSearchByCustomerId
+        });
 
         if (checkSpecialSitePermission.ErrorCode > 0)
         {
@@ -51,10 +55,10 @@ public partial class CustInfo : PageBase
         }
 
         CustomerManager customer = new CustomerManager();
+
         try
         {
-            Hashtable hash = customer.GetHtmlCustInfoContent(username.Trim());
-            //HtmlHolder.Text = customer.GetHtmlCustInfoContent(username.Trim());
+            Hashtable hash = customer.GetHtmlCustInfoContent(username.Trim(), IsAllowSearchByCustomerId);
             HtmlHolder.Text = CastAide.AsString(hash["strcontent"]);
             isBA = hash.ContainsKey("isba") ? CastAide.AsBoolean(hash["isba"]) : false;
         }

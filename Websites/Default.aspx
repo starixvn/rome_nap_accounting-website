@@ -6,8 +6,8 @@
 <head>
     <title></title>
     <link href="App_Themes/Main/main_content.css?v=1" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Main/menu.css?v=1" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Public/input.css?v=1" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Main/menu.css?v=<%=WebSettings.Version%>" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Public/input.css?v=<%=WebSettings.Version%>" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="Stylesheet" href="js/jQuery/autocomplete/styles.css?v=1" />
     <link href="js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Styles/EnableThirdPartyProductStatus.css?vs=<%=WebSettings.Version%>" rel="stylesheet" type="text/css" />
@@ -48,7 +48,7 @@
                     </div>
                     <div id="Search_box">
                         <input name="txtuserName" value="" onkeypress="return KeyPress(event);" class="form_top autocomp"
-                            type="text" id="txtuserName" value="" autocomplete="off" />
+                            type="text" id="txtuserName" value="" autocomplete="off" placeholder="Id, Username or Nickname" />
                         <input class="btn" id="btnSendMsg" onclick="submitSearch();" type="button" value="Search"
                             name="btnSendMsg" />
                         <input type="button" name="btnleftright" id="btnleftright" class="leftright" onclick="leftright();" />
