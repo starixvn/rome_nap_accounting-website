@@ -562,7 +562,7 @@
     <value>Max MoneyLine</value>
   </data>
   <data name="autoSuspend" xml:space="preserve">
-    <value>AutoSuspend</value>
+    <value>Auto Suspend Soccer</value>
   </data>
   <data name="isa_v11mpt_1" xml:space="preserve">
     <value>Handicap</value>
@@ -1702,7 +1702,7 @@
     <value>Currency</value>
   </data>
   <data name="danger" xml:space="preserve">
-    <value>Original (New)</value>
+    <value>Original</value>
   </data>
   <data name="custInfo" xml:space="preserve">
     <value>Customer Information</value>
@@ -2446,13 +2446,13 @@
     <value>Danger1</value>
   </data>
   <data name="Danger2" xml:space="preserve">
-    <value>ABT (New)</value>
+    <value>Non Live</value>
   </data>
   <data name="Danger3" xml:space="preserve">
-    <value>Other Sports (New)</value>
+    <value>Other Sports</value>
   </data>
   <data name="VirtualMultiplier" xml:space="preserve">
-    <value>Virtual Multiplier</value>
+    <value>Virtual Rate</value>
   </data>
   <data name="Swimming" xml:space="preserve">
     <value>Swimming</value>
@@ -3448,7 +3448,7 @@
     <value>Mix Sport Parlay</value>
   </data>
   <data name="Danger2Old" xml:space="preserve">
-    <value>ABT (Old)</value>
+    <value>Non Live (Old)</value>
   </data>
   <data name="Danger3Old" xml:space="preserve">
     <value>Other Sports (Old)</value>
@@ -3463,7 +3463,7 @@
     <value>Copied From Username</value>
   </data>
   <data name="newabnormal" xml:space="preserve">
-    <value>Abnormal (New)</value>
+    <value>Abnormal</value>
   </data>
   <data name="oldabnormal" xml:space="preserve">
     <value>Abnormal (Old)</value>
@@ -3770,5 +3770,8 @@
   </data>
   <data name="Disable160_1601" xml:space="preserve">
     <value>Disabled Lucky 3</value>
+  </data>
+  <data name="autoSuspend2" xml:space="preserve">
+    <value>Auto Suspend Other Sports</value>
   </data>
 </root>
