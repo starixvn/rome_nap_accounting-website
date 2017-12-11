@@ -147,6 +147,10 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.LiveCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.LiveCasino.1.0.0.3\lib\net40\Fanex.Tarus.LiveCasino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
@@ -678,10 +682,6 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.LiveCasino\Fanex.Tarus.LiveCasino.csproj">
-      <Project>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</Project>
-      <Name>Fanex.Tarus.LiveCasino</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
       <Project>{03f0b48d-0f0d-448c-a014-30fe5fde7f85}</Project>
       <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
