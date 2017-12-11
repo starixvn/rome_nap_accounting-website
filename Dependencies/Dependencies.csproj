@@ -395,6 +395,10 @@
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.5\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
@@ -754,10 +758,6 @@
     <ProjectReference Include="..\Fanex.Tarus.SpecialDelete\Fanex.Tarus.SpecialDelete.csproj">
       <Project>{6f5889ca-cc0e-4a4d-9824-c811aefcec4e}</Project>
       <Name>Fanex.Tarus.SpecialDelete</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Statements\Fanex.Tarus.Statements.csproj">
-      <Project>{5d529c91-cacf-4ecd-87fd-41bbec2d85bf}</Project>
-      <Name>Fanex.Tarus.Statements</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.User\Fanex.Tarus.User.csproj">
       <Project>{fa489626-9250-447a-b555-e621b43d3aff}</Project>
