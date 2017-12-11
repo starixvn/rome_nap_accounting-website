@@ -61,6 +61,10 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.8\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.8\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
@@ -115,10 +119,6 @@
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
       <Name>Fanex.Tarus.BetList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
-      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
-      <Name>Sunplus.Accounting.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

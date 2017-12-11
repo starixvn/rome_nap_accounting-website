@@ -575,6 +575,10 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.8\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.8\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
@@ -771,10 +775,6 @@
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
-      <Project>{27984fee-40dc-40dc-b3b9-3a8776c5511d}</Project>
-      <Name>Sunplus.Accounting.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.WcfServiceLibrary\Sunplus.Accounting.WcfServiceLibrary.csproj">
       <Project>{2426f40b-b40e-420e-bd14-80814b949055}</Project>
