@@ -391,8 +391,12 @@
       <HintPath>..\packages\Fanex.Tarus.LiveCasino.1.0.0.3\lib\net40\Fanex.Tarus.LiveCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.SpecialDelete.SendEmail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.SpecialDelete.SendEmail.1.0.0.0\lib\net40\Fanex.Tarus.SpecialDelete.SendEmail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -750,10 +754,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Settlement\Fanex.Tarus.Settlement.csproj">
       <Project>{ed61a61e-4805-405a-8a5f-44e933de874a}</Project>
       <Name>Fanex.Tarus.Settlement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
-      <Project>{03f0b48d-0f0d-448c-a014-30fe5fde7f85}</Project>
-      <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.SpecialDelete\Fanex.Tarus.SpecialDelete.csproj">
       <Project>{6f5889ca-cc0e-4a4d-9824-c811aefcec4e}</Project>
