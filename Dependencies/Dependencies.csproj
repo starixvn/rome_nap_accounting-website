@@ -387,6 +387,10 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.LiveCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.LiveCasino.1.0.0.3\lib\net40\Fanex.Tarus.LiveCasino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.0\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
@@ -734,10 +738,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Finance\Fanex.Tarus.Finance.csproj">
       <Project>{2da5f7c3-bb8b-45f2-9e38-dd8e23655da6}</Project>
       <Name>Fanex.Tarus.Finance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.LiveCasino\Fanex.Tarus.LiveCasino.csproj">
-      <Project>{c7489ba0-a2d2-4414-997f-fd0eff4c2835}</Project>
-      <Name>Fanex.Tarus.LiveCasino</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Reports\Fanex.Tarus.Reports.csproj">
       <Project>{ec6dbe74-32ef-44a1-8a9d-279e6df28232}</Project>
