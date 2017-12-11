@@ -110,6 +110,10 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.5\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
       <Private>True</Private>
@@ -323,10 +327,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
-      <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
-      <Name>Fanex.Tarus.Business.Implement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
       <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
       <Name>Fanex.Tarus.Security</Name>

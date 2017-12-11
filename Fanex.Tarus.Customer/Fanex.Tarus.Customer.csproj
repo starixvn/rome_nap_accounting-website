@@ -118,6 +118,10 @@
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.5\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
       <Private>True</Private>
@@ -633,10 +637,6 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
-      <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
-      <Name>Fanex.Tarus.Business.Implement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
       <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
       <Name>Fanex.Tarus.Security</Name>
@@ -686,7 +686,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
