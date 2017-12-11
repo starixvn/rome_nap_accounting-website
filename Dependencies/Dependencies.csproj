@@ -595,6 +595,10 @@
     <Reference Include="Sunplus.Core.Common, Version=1.1.4505.19054, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.8\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
       <Private>True</Private>
@@ -775,10 +779,6 @@
     <ProjectReference Include="..\Sunplus.Accounting.WcfServiceLibrary\Sunplus.Accounting.WcfServiceLibrary.csproj">
       <Project>{2426f40b-b40e-420e-bd14-80814b949055}</Project>
       <Name>Sunplus.Accounting.WcfServiceLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1b2228c6-443e-48ff-90ef-a122810d77e7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

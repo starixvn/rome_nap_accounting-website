@@ -135,6 +135,10 @@
     <Reference Include="Sunplus.Bingo.Entities">
       <HintPath>..\Dependency\Sunplus.Bingo.Entities.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.8\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -264,10 +268,6 @@
       <Project>{C7EB1617-765A-44E2-9267-96865EB5C096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -295,7 +295,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
