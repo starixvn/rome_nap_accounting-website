@@ -136,9 +136,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
-      <Project>{C7EB1617-765A-44E2-9267-96865EB5C096}</Project>
-      <Name>Sunplus.Accounting.Business</Name>
+    <ProjectReference Include="..\..\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
+      <Project>{a09d69e5-924e-4ee6-b3cc-1b51762837f6}</Project>
+      <Name>Sunplus.Accounting.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
