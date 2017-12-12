@@ -243,6 +243,10 @@
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.0\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Bingo.Core">
       <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Core.dll</HintPath>
     </Reference>
@@ -645,10 +649,6 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
-      <Project>{a09d69e5-924e-4ee6-b3cc-1b51762837f6}</Project>
-      <Name>Sunplus.Accounting.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
       <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
       <Name>Fanex.Tarus.Web.Controllers</Name>
@@ -686,7 +686,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
