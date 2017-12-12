@@ -65,6 +65,10 @@
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
@@ -150,12 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\NoSql\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
-      <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
-      <Name>Fanex.Tarus.Web.Controllers</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

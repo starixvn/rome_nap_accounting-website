@@ -403,6 +403,10 @@
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.5\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
@@ -774,10 +778,6 @@
     <ProjectReference Include="..\Fanex.Tarus.VirtualSport\Fanex.Tarus.VirtualSport.csproj">
       <Project>{5775926b-ff15-4333-96ea-898d184dacbf}</Project>
       <Name>Fanex.Tarus.VirtualSport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
-      <Project>{f3fe623f-a32f-4db4-8306-64c166fc4488}</Project>
-      <Name>Fanex.Tarus.Web.Controllers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
