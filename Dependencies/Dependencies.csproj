@@ -572,6 +572,10 @@
       <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4-logging\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ONEbook.UM, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.2.0.2.7\lib\net40\ONEbook.UM.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
       <Private>True</Private>
@@ -604,6 +608,10 @@
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.0\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
@@ -719,10 +727,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
-      <Project>{a09d69e5-924e-4ee6-b3cc-1b51762837f6}</Project>
-      <Name>Sunplus.Accounting.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
       <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
       <Name>Fanex.Nap.SSO</Name>
