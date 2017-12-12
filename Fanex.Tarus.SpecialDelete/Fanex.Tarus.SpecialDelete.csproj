@@ -72,6 +72,10 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
@@ -183,10 +187,6 @@
     <Compile Include="Services\SpecialDeleteService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
-      <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
-      <Name>Fanex.Tarus.Web.Controllers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
       <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
       <Name>Sunplus.Accounting.DataAccess</Name>
