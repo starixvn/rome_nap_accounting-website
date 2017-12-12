@@ -51,7 +51,7 @@ namespace Sunplus.Accounting.Business.Customer
             string maxMatch, 
             string MaxBall);
 
-        Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip);
+        //Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip);
 
         string GetRNGSiteNameByCustId(int custId);
     }
