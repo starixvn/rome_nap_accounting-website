@@ -133,7 +133,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 
         public Result AutoInsertThirdPartyAccount(Entities.Casino.CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
         {
-            var customerService = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
+            var customerService = new Sunplus.Accounting.Business.Customer.CustomerService();
             return customerService.AutoInsertThridPartyAccount(custInfo, uplineInfo, userId, userName, ip);
         }
     }

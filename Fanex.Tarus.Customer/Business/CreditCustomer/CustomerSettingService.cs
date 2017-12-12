@@ -207,7 +207,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.IsSyncNG2 = custDetail.IsUplineSyncNG2;
                 csCustomerInfo.DisableAutoMasterPT = !customer.StatusSetting.DisableAutoMPT;
 
-                var custManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
+                var custManager = new Sunplus.Accounting.Business.Customer.CustomerService();
                 custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
             }
             catch (Exception ex)

@@ -719,6 +719,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
+      <Project>{a09d69e5-924e-4ee6-b3cc-1b51762837f6}</Project>
+      <Name>Sunplus.Accounting.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
       <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
       <Name>Fanex.Nap.SSO</Name>
