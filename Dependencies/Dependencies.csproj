@@ -411,6 +411,10 @@
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.User, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.User.1.0.0.3\lib\net40\Fanex.Tarus.User.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
@@ -770,10 +774,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Settlement\Fanex.Tarus.Settlement.csproj">
       <Project>{ed61a61e-4805-405a-8a5f-44e933de874a}</Project>
       <Name>Fanex.Tarus.Settlement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.User\Fanex.Tarus.User.csproj">
-      <Project>{fa489626-9250-447a-b555-e621b43d3aff}</Project>
-      <Name>Fanex.Tarus.User</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.VirtualSport\Fanex.Tarus.VirtualSport.csproj">
       <Project>{5775926b-ff15-4333-96ea-898d184dacbf}</Project>
