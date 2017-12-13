@@ -52,6 +52,10 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.0.4\lib\net40\Fanex.Tarus.Admin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -106,12 +110,6 @@
   <ItemGroup>
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="CodeAnalysis\FxCopDictionary.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
-      <Project>{B7FD958B-43DB-45EE-895E-2105971893E3}</Project>
-      <Name>Fanex.Tarus.Admin</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

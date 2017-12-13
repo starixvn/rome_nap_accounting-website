@@ -355,6 +355,10 @@
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.1.2\lib\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.0.4\lib\net40\Fanex.Tarus.Admin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.5\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
@@ -738,10 +742,6 @@
     <ProjectReference Include="..\Fanex.Tarus.ActivityTracking\Fanex.Tarus.ActivityTracking.csproj">
       <Project>{97df67f5-124c-448b-973c-05379e0a6404}</Project>
       <Name>Fanex.Tarus.ActivityTracking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
-      <Project>{b7fd958b-43db-45ee-895e-2105971893e3}</Project>
-      <Name>Fanex.Tarus.Admin</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Balance\Fanex.Tarus.Balance.csproj">
       <Project>{2dae27b1-6a14-41e6-8c36-7cc5621bf36b}</Project>
