@@ -423,6 +423,10 @@
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.Settlement, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Settlement.1.0.0.3\lib\net40\Fanex.Tarus.Settlement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.SpecialDelete, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.SpecialDelete.1.0.0.4\lib\net40\Fanex.Tarus.SpecialDelete.dll</HintPath>
       <Private>True</Private>
@@ -770,10 +774,6 @@
     <ProjectReference Include="..\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
       <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
       <Name>Fanex.Nap.SSO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Settlement\Fanex.Tarus.Settlement.csproj">
-      <Project>{ed61a61e-4805-405a-8a5f-44e933de874a}</Project>
-      <Name>Fanex.Tarus.Settlement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.VirtualSport\Fanex.Tarus.VirtualSport.csproj">
       <Project>{5775926b-ff15-4333-96ea-898d184dacbf}</Project>
