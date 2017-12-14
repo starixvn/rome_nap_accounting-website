@@ -20,7 +20,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         CustomerDetail GetCustomerStatus(int custId);
 
-        Hashtable GetHtmlCustInfoContent(string userName, byte checkCustId = 0);
+        Hashtable GetHtmlCustInfoContent(string userName);
 
         Result UpdateCustomerSite(int custId, string newSite);
 
