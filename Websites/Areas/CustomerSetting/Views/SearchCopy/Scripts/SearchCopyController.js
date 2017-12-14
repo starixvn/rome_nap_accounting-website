@@ -220,7 +220,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmRacingMinPT", url);
                 $scope.resize("#frmRacingMinPT");
                 break;
-            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper/" + $scope.existedUser.userid + "/0/true";
+            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper?id=" + $scope.existedUser.userid + "&uplineid=0&groupname=true";
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
                 break;

@@ -298,7 +298,7 @@
     },
     casino: function (custId, uplineId) {
         showPopup(""
-                , "CustomerSetting/Casino/Agent/EditAgent/" + custId + "/ " + uplineId, 0, 0, 1024, 700, false, 2000, null);
+                , "CustomerSetting/Casino/Agent/EditAgent?id=" + custId + "&uplineid= " + uplineId, 0, 0, 1024, 700, false, 2000, null);
     },
     goldDeluxeSetting: function (custId, uplineId) {
         showPopup("Gold Deluxe"

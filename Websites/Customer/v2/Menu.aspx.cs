@@ -86,7 +86,7 @@ public partial class Others_Menu : System.Web.UI.Page
             HRURL = string.Format("../../EditMemberPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=2&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=1");
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember/" + custID + "/" + uplineId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
@@ -97,7 +97,7 @@ public partial class Others_Menu : System.Web.UI.Page
             HRURL = string.Format("../../EditAgentPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=3&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=2");
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent/" + custID + "/" + uplineId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
             colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
@@ -108,7 +108,7 @@ public partial class Others_Menu : System.Web.UI.Page
             HRURL = string.Format("../../EditMasterPTRacing/Index?custid={0}&uplineid={1}", custID, uplineId);
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=" + uplineId + "&parentId=" + uplineId + "&uplineLevel=4&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=3");
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster/" + custID + "/" + uplineId);
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
             colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
@@ -120,7 +120,7 @@ public partial class Others_Menu : System.Web.UI.Page
             HRURL = string.Format("../../EditSuperPTRacing/Index?custid={0}", custID);
             liveCasinoPath = Page.ResolveUrl("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + AppSession.AccId + "&actorUsername=" + AppSession.AccUserName + "&customerId=" + custID + "&customerLevel=4");
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper/" + custID + "/0");
+            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper?id=" + custID + "&uplineid=0");
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
             colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
