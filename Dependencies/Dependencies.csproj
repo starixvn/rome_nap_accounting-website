@@ -280,8 +280,16 @@
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.3\lib\net40\Fanex.Module.Statement.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.NAP.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.NAP.Core.1.0.0.2\lib\net40\Fanex.NAP.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Nap.SSO, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.3-napframework1003\lib\net40\Fanex.Nap.SSO.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -779,10 +787,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
-      <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
-      <Name>Fanex.Nap.SSO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
