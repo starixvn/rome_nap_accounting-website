@@ -87,8 +87,8 @@
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.0\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.1\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.2\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -375,24 +375,24 @@
       <HintPath>..\packages\Fanex.Tarus.Balance.1.0.0.3\lib\net40\Fanex.Tarus.Balance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.5\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+    <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.6\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.5\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.6\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.5\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.6\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.7\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.8\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.5\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.6\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Interface, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -427,8 +427,8 @@
       <HintPath>..\packages\Fanex.Tarus.Reports.1.0.0.8\lib\net40\Fanex.Tarus.Reports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Settlement, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -455,8 +455,8 @@
       <HintPath>..\packages\Fanex.Tarus.VirtualSport.1.0.0.7\lib\net40\Fanex.Tarus.VirtualSport.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.6\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -658,16 +658,16 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.8\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.8\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.10\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.0\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
