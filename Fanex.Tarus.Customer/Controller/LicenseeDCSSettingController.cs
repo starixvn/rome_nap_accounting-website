@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Fanex.Tarus.Customer.Business.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Helper;
 using Fanex.Tarus.Web.Controllers;
@@ -28,11 +30,13 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult Index()
         {
             var sites = _settingService.GetSites();
-            var supers = sites.Any() ?
-                _settingService.GetSupers(sites.First()) :
-                Enumerable.Empty<BaseModel>();
-            var products = _settingService.GetProducts();
 
+            string firstSite = sites.FirstOrDefault();
+            var supers = firstSite == null ?
+                Enumerable.Empty<BaseModel>() :
+                _settingService.GetSupers(firstSite);
+
+            var products = _settingService.GetProducts();
             var model = new FilterViewModel(sites, supers, products);
 
             return View("~/Views/Customer/LicenseeDCSSetting/Index.cshtml", model);
@@ -91,13 +95,7 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost, AuthenticateRead]
         public ActionResult Status(StatusViewModel model)
         {
-            var status = _settingService.GetStatus(model.ProductId, model.SuperId);
-            model.SportType = status.SportType;
-            model.BetType = status.BetType;
-            model.BitmapOrder = status.BitmapOrder;
-            model.IsDisabled = status.IsDisabled;
-            model.IsDisabledDownline = status.IsDisabledDownline;
-            model.HasDownline = status.HasDownline;
+            model.Status = _settingService.GetStatus(model.ProductId, model.SuperId);
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_Status.cshtml", model);
         }
@@ -108,15 +106,70 @@ namespace Fanex.Tarus.Customer.Controller
             var result = _settingService.UpdateStatus(
                 model.ProductId,
                 model.SuperId,
-                model.IsDisabled,
-                model.IsDisabledDownline,
-                model.SportType,
-                model.BetType,
-                model.BitmapOrder,
+                model.Status,
                 AppSession.AccId,
                 Utils.GetClientIP());
 
             return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult GlobalStakeLevel(GlobalStakeLevelViewModel model)
+        {
+            model.GroupGlobalStakeLevels = _settingService.GetGameTypeGlobalStakeLevels(model.ProductId, model.SuperId);
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_GlobalStakeLevel.cshtml", model);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateGlobalStakeLevel(int superId, GlobalStakeLevelEntity[] globalStakeLevels)
+        {
+            var result = _settingService.UpdateGlobalStakeLevels(
+                superId,
+                globalStakeLevels,
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult StakeLevel(StakeLevelViewModel model)
+        {
+            var criteria = new GetStakeLevelCriteria(model.ProductId, model.SuperId);
+            var groupStakeLevels = _settingService.GetSportBetTypeStakeLevels(criteria);
+
+            model.GroupStakeLevels = groupStakeLevels;
+            model.ErrorCode = criteria.ErrCode;
+            model.ErrorMessage = criteria.ErrMsg;
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_StakeLevel.cshtml", model);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateStakeLevel(int productId, int superId, StakeLevelEntity[] stakeLevels)
+        {
+            var result = _settingService.UpdateStakeLevels(
+                productId,
+                superId,
+                stakeLevels,
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult StakeLevelGroup(StakeLevelViewModel model)
+        {
+            var criteria = new GetStakeLevelGroupCriteria(model.ProductId, model.SuperId);
+            var groupStakeLevelGroups = _settingService.GetSportBetTypeStakeLevelGroups(criteria);
+
+            model.GroupStakeLevels = groupStakeLevelGroups;
+            model.ErrorCode = criteria.ErrCode;
+            model.ErrorMessage = criteria.ErrMsg;
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_StakeLevelGroup.cshtml", model);
         }
     }
 }

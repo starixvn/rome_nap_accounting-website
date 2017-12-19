@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Fanex.Tarus.Customer.Entities;
+using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Enums;
 using Fanex.Tarus.Customer.Resources;
 
-namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
+namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 {
     public sealed class ProductViewModel
     {
         public ProductViewModel(
             int productId,
             string productName,
-            IEnumerable<ProductSettingType> settings)
+            IEnumerable<ProductSettingTypeEntity> settings)
         {
             Id = productId;
             Name = productName;
@@ -33,12 +35,17 @@ namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
 
             switch (type)
             {
-                case SettingType.BetSetting:
-                    return LicenseeDcsSettingLabels.BetSetting;
+                case SettingType.GlobalBetLimit:
+                    return LicenseeDcsSettingLabels.GlobalBetLimit;
                 case SettingType.PositionTaking:
                     return LicenseeDcsSettingLabels.PT;
+                case SettingType.BetSetting:
+                    return LicenseeDcsSettingLabels.BetSetting;
                 case SettingType.ProductStatus:
                     return LicenseeDcsSettingLabels.Status;
+                case SettingType.StakeLevel:
+                case SettingType.StakeLevelGroup:
+                    return LicenseeDcsSettingLabels.BetLimit;
                 default:
                     return id.ToString();
             }

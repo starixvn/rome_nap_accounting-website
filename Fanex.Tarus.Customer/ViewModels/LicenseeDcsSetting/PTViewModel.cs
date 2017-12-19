@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
+namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 {
     public sealed class PTViewModel : BaseSettingViewModel
     {

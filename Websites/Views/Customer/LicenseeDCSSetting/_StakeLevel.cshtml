@@ -1,0 +1,70 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model StakeLevelViewModel
+@{
+    Layout = null;
+}
+@if (Model.ErrorCode == 0)
+{
+    int colspan = Model.MaxStakeLevel;
+    <form action="#" method="post"  id="formStakeLevel">
+        <table class="tblcollapse">
+            <thead>
+                <tr class="title">
+                    <th colspan="@(colspan + 1)">@LicenseeDcsSettingLabels.BetLimit <span>(@Model.SuperName)</span></th>
+                </tr>
+                <tr class="title_1">
+                    <th>
+                        <div class="l @(colspan <= 2 ? string.Empty : "w300")">
+                            <div style="float:left">@Model.ProductName</div>
+                            <div style="float:right"><input type="checkbox" id="allbettypes_checkbox" /></div>
+                        </div>
+                    </th>
+                    <th colspan="@colspan"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model.GroupStakeLevels)
+                {
+                    <tr>
+                        <td>
+                            <div class="l @(colspan <= 2 ? string.Empty : "w300")">
+                                <div style="float:left">@group.BetTypeName</div>
+                                <div style="float:right">
+                                    <input type="checkbox" class="bettype-checkbox"
+                                           data-sporttype="@group.SportType"
+                                           data-bettype="@group.BetType"
+                                           @(group.StakeLevels.Any(sl => !sl.IsChecked) ? string.Empty: "checked=checked")/>
+                                </div>
+                            </div>
+                        </td>
+                        @foreach (var item in group.StakeLevels)
+                        {
+                            <td class="data-checkbox l">
+                                <div class="checkbox_div w120">
+                                    <input type="checkbox" class="stakelevel-checkbox"
+                                           id="stakeLevel_@item.StakeLevelId"
+                                           data-sporttype="@group.SportType"
+                                           data-bettype="@group.BetType"
+                                           @(item.IsChecked ? "checked=checked" : string.Empty)
+                                           name="@item.StakeLevelId"/>
+                                    <label for="stakeLevel_@item.StakeLevelId">@item.StakeLevelName</label>
+                                </div>
+                            </td>
+                        }
+                        @{ int stakeLevelCount = group.StakeLevels.Count(); }
+                        @for (int i = stakeLevelCount; i < colspan; i++)
+                        {
+                            <td></td>
+                        }
+                    </tr>
+               }
+            </tbody>
+        </table>
+        <button type="submit" class="update-setting-button mT5">@LicenseeDcsSettingLabels.Update</button>
+    </form>
+}
+else
+{
+    <div class="alertboxerr"><div>@Model.ErrorMessage</div></div>
+}

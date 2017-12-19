@@ -1,0 +1,69 @@
+﻿@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model StakeLevelViewModel
+@{
+    Layout = null;
+}
+@if (Model.ErrorCode == 0)
+{
+    int colspan = Model.MaxStakeLevel;
+    var headerStakeLevels = (IEnumerable<StakeLevelGroupEntity>)Model.GroupStakeLevels.First().StakeLevels;
+    const int MaxShowBetType = 10;
+    int index = 0;
+    <form action="#" method="post" id="formStakeLevelGroup">
+        <table class="tblcollapse">
+            <thead>
+                <tr class="title">
+                    <th colspan="@(colspan + 1)">@LicenseeDcsSettingLabels.BetLimit <span>(@Model.SuperName)</span></th>
+                </tr>
+                <tr class="title_1">
+                    <th>
+                        <div class="l">
+                            <div style="float:left">@Model.ProductName</div>
+                            <div style="float:right"><input type="checkbox" id="allStakeLevel_checkbox" /></div>
+                        </div>
+                    </th>
+                    @foreach (var item in headerStakeLevels)
+                    {
+                        <th class="l">
+                            <div class="checkbox_div w100">
+                                <input type="checkbox" class="stakelevel-checkbox"
+                                       id="stakelevel_@item.StakeLevelId"
+                                       name="@item.StakeLevelId"
+                                       data-sporttype="@item.SportType"
+                                       data-bettyperef="@item.BetTypeRef"
+                                       @(item.IsChecked ? "checked=checked" : string.Empty) />
+                                <label for="stakelevel_@item.StakeLevelId">@item.StakeLevelGroupName</label>
+                            </div>
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model.GroupStakeLevels)
+                {
+                    <tr @(index++ < MaxShowBetType ? string.Empty : "class=hide")>
+                        <td class="l stakelevel-bettype">@group.BetTypeName</td>
+                        @foreach (var item in group.StakeLevels)
+                        {
+                            <td class="l">@item.StakeLevelName</td>
+                        }
+                    </tr>
+                }
+                @if (index > MaxShowBetType)
+                {
+                    <tr>
+                        <td class="l stakelevel-bettype"><a href="javascript:;" id="viewMoreAnchor">View More ...</a></td>
+                        <td colspan="@colspan"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="update-setting-button mT5">@LicenseeDcsSettingLabels.Update</button>
+    </form>
+}
+else
+{
+    <div class="alertboxerr"><div>@Model.ErrorMessage</div></div>
+}

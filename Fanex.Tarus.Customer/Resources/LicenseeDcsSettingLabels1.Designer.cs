@@ -97,6 +97,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Limit.
+        /// </summary>
+        public static string BetLimit {
+            get {
+                return ResourceManager.GetString("BetLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Setting.
         /// </summary>
         public static string BetSetting {
@@ -133,7 +142,34 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Bet Setting.
+        ///   Looks up a localized string similar to Roulette, Sic Bo, Dragon Tiger.
+        /// </summary>
+        public static string ExtraBaccaratBetType {
+            get {
+                return ResourceManager.GetString("ExtraBaccaratBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (min bet might vary from different tables).
+        /// </summary>
+        public static string ExtraVIPBaccaratBetType {
+            get {
+                return ResourceManager.GetString("ExtraVIPBaccaratBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Bet Limit.
+        /// </summary>
+        public static string GlobalBetLimit {
+            get {
+                return ResourceManager.GetString("GlobalBetLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensee DCS Setting.
         /// </summary>
         public static string LicenseeDCSSetting_PageTitle {
             get {
@@ -147,6 +183,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string MaxBet {
             get {
                 return ResourceManager.GetString("MaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Label.
+        /// </summary>
+        public static string MaxLabel {
+            get {
+                return ResourceManager.GetString("MaxLabel", resourceCulture);
             }
         }
         
@@ -174,6 +219,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string MinBet {
             get {
                 return ResourceManager.GetString("MinBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Label.
+        /// </summary>
+        public static string MinLabel {
+            get {
+                return ResourceManager.GetString("MinLabel", resourceCulture);
             }
         }
         
@@ -304,11 +358,29 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Global Bet Limit successfully.
+        /// </summary>
+        public static string UpdateGlobalStakeLevelSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateGlobalStakeLevelSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update PT successfully.
         /// </summary>
         public static string UpdatePTSuccessfully {
             get {
                 return ResourceManager.GetString("UpdatePTSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Bet Limit successfully.
+        /// </summary>
+        public static string UpdateStakeLevelSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateStakeLevelSuccessfully", resourceCulture);
             }
         }
         

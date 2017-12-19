@@ -1,25 +1,23 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
+﻿using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+
+namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
     public sealed class UpdateStatusCriteria : NonQueryCriteria
     {
         public UpdateStatusCriteria(
             int productId,
             int superId,
-            bool isDisabled,
-            bool isDisabledDownline,
-            int sportType,
-            int betType,
-            byte bitmapOrder,
+            StatusEntity status,
             int userId,
             string ip)
         {
             ProductId = productId;
             SuperId = superId;
-            IsDisabled = isDisabled;
-            IsDisabledDownline = isDisabledDownline;
-            SportType = sportType;
-            BetType = betType;
-            BitmapOrder = bitmapOrder;
+            IsDisabled = status.IsDisabled;
+            IsDisabledDownline = status.IsDisabledDownline;
+            SportType = status.SportType;
+            BetType = status.BetType;
+            BitmapOrder = status.BitmapOrder;
             UserId = userId;
             IP = ip;
         }
@@ -43,7 +41,7 @@
 
         public override bool IsValid()
         {
-            return base.IsValid() && SportType > 0 && BetType > 0;
+            return base.IsValid() && ProductId > 0;
         }
     }
 }
