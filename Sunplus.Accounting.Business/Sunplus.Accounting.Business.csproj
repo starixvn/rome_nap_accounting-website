@@ -141,8 +141,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.6\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+    <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.7\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -153,16 +153,16 @@
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.0\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.7\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.LiveCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.LiveCasino.1.0.0.3\lib\net40\Fanex.Tarus.LiveCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.SpecialDelete.SendEmail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -304,16 +304,16 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.8\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.10\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.11\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities">
@@ -714,7 +714,9 @@
     <None Include="Areas\Logs\APILoggerConnectionStrings.sit.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
     <None Include="Areas\ONEbook.NG2.API.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
