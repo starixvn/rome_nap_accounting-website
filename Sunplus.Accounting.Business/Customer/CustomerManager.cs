@@ -342,6 +342,8 @@ namespace Sunplus.Accounting.Business.Customer
                             bool isHideLucky3 = true;
                             bool isHideLucky3Upline = true;
 
+                            bool hideBullfighting = true;
+
                             foreach (DataRow row in dynamicSettingtable.Rows)
                             {
                                 if (row["productID"] != null)
@@ -404,6 +406,14 @@ namespace Sunplus.Accounting.Business.Customer
                                         case "26":
                                             isHideLucky3 = (Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]) && roleId < 4) || !WebSettings.IsShowLucky3;
                                             isHideLucky3Upline = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]) && roleId < 4;
+                                            break;
+
+                                        case "30":
+                                            bool isHideBullfighting = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHidden"]);
+                                            bool isHideUplineBullfighting = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(row["IsHiddenUpline"]);
+                                            hideBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
+                                                isDeposit ||
+                                                (roleId < 4 && (isHideBullfighting || isHideUplineBullfighting));
                                             break;
                                     }
                                 }
@@ -1060,7 +1070,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     AccId = AppSession.AccId,
                                     IsShowNG2 = !hideCheckBoxNG2,
                                     IsShowKenoLottery = !hideKenoLottery,
-                                    IsShowLucky3 = !hideCheckBoxLucky3
+                                    IsShowLucky3 = !hideCheckBoxLucky3,
+                                    IsShowBullfighting = !hideBullfighting
                                 };
 
                                 TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
@@ -1146,7 +1157,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     renderLeftPanelParameter.IsShowFishingWorld,
                                     isHideVirtualSports,
                                     renderLeftPanelParameter.IsShowKenoLottery,
-                                    renderLeftPanelParameter.IsShowLucky3);
+                                    renderLeftPanelParameter.IsShowLucky3,
+                                    renderLeftPanelParameter.IsShowBullfighting);
 
                                 string infoUrl = "";
                                 string detailUrl = "";
@@ -1316,6 +1328,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", "Edit " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
                                 TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
                                 TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
+                                TemplateHandler.Assign(ref htmlcontent, "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting));
 
                                 if (!WebSettings.EnableAGCasino /*|| roleId != 4*/ || !isLicensee)
                                 {
@@ -1455,6 +1468,11 @@ namespace Sunplus.Accounting.Business.Customer
                                 if (isHideLucky3Upline || isHideLucky3)
                                 {
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
+                                }
+
+                                if (hideBullfighting)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
                                 }
 
                                 TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
@@ -1936,6 +1954,20 @@ namespace Sunplus.Accounting.Business.Customer
                                                "Update Lucky 3 Status",
                                                26);
                             break;
+
+                        case "30":
+                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Bullfighting",
+                                               renderLeftPanelParameter.IsShowBullfighting,
+                                               renderLeftPanelParameter,
+                                               "Update Bullfighting Status",
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting);
+                            break;
                     }
                 }
             }
@@ -1955,7 +1987,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
 
-        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery, bool isShowLucky3)
+        private void GenMenuMinMaxPT(ref string htmlcontent, DataRow row2, int custId, int roleId, string currency, string userName, bool isAllowEditBI, bool isDeposit, string siteName, bool isHideSportsbook2, bool isHideCockFighting, bool isHideCricket, bool isShowAllBet, bool isShowVoidbridge, bool isShowNG2, bool isShowFishingWorld, bool isHideVirtualSports, bool isShowKenoLottery, bool isShowLucky3, bool isShowBullfighting)
         {
             int parentId;
             string submenu1 = "";
@@ -2073,6 +2105,16 @@ namespace Sunplus.Accounting.Business.Customer
                             "Lucky 3");
                     }
 
+                    if (isShowBullfighting)
+                    {
+                        submenu1 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
+                            custId,
+                            4, // Super Level.
+                            "Bullfighting");
+                    }
+
                     submenu2 = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterPtUrl + "\");' target='centerFr'>Sport book</a>";
 
                     if (!WebSettings.disabledHR)
@@ -2160,6 +2202,16 @@ namespace Sunplus.Accounting.Business.Customer
                             custId,
                             3, // Master Level.
                             "Lucky 3");
+                    }
+
+                    if (isShowBullfighting)
+                    {
+                        submenu2 += string.Format(
+                            "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                            Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
+                            custId,
+                            3, // Master Level.
+                            "Bullfighting");
                     }
 
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);

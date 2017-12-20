@@ -665,7 +665,7 @@ namespace Fanex.BetList.Accounting.Services
         {
             var criteria = new BetListByCustInfoByRefnoCriteria()
             {
-                TransId = transactionId,
+                RefNo = transactionId,
                 CustId = customerId,
                 MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                 BalanceUpDay = ReportService.BalanceUp.BalanceUpDay

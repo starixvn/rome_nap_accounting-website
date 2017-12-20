@@ -92,7 +92,8 @@ namespace Fanex.BetList.Accounting.Core
         {
             return sportType == SportContants.Keno ||
                 sportType == SportContants.CockFighting ||
-                sportType == SportContants.KenoLottery;
+                sportType == SportContants.KenoLottery ||
+                sportType == SportContants.Bullfighting;
         }
 
         public string IsNegative(decimal input)
@@ -927,13 +928,14 @@ namespace Fanex.BetList.Accounting.Core
                 case SportContants.Soccer:
                     return IsApplyStatusBuilderForSoccer(ticketDetail.Ticket.BetTypeId);
 
+                case SportContants.MuayThai:
+                    return IsMuayThaiBetType(ticketDetail.Ticket.BetTypeId);
+
                 case SportContants.VirtualTennis:
                 case SportContants.AllBet:
                 case SportContants.GoldDeluxe:
+                case SportContants.Bullfighting:
                     return true;
-
-                case SportContants.MuayThai:
-                    return IsMuayThaiBetType(ticketDetail.Ticket.BetTypeId);
 
                 default:
                     return false;

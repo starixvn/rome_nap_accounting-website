@@ -1,12 +1,22 @@
 ﻿@using Sunplus.Accounting.Business.Security;
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Infrastructure.Caching;
 @using RemotingRef;
 
 @{ 
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
-    var allowedProducts = "Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet" + ng2Text + "/Fishing World";
+    var allowedProducts = new System.Text.StringBuilder();
+    allowedProducts.Append("Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet")
+        .Append(ng2Text)
+        .Append("/Fishing World");
+
+    int bullfightingId = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting;
+    if (bullfightingId != 0)
+    {
+        allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
+    }
 }
 <html>
 <head>
@@ -95,7 +105,7 @@
                             <td></td>
                             <td class="text-left" colspan="8">
                                 <div id="ref-no-info-msg" class="info-msg"> 
-                                    @allowedProducts tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
+                                    @allowedProducts.ToString() tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
                                     <br/>
                                     For Allbet, the search result includes the related tickets with the same GameID.
                                 </div>
@@ -116,6 +126,10 @@
                                     <option value="22">Macau Games</option>
                                     <option value="21">Allbet</option>
                                     <option value="24">Fishing World</option>
+                                    @if (bullfightingId != 0)
+                                    {
+                                        <option value="@bullfightingId">@CacheRef.GetProductName(bullfightingId)</option>
+                                    }
                                 </select>
                             </td>
                             <td style="min-width: 65px">

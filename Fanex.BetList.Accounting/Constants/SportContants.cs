@@ -81,5 +81,7 @@ namespace Fanex.BetList.Accounting.Constants
         public const int KenoLottery = 220;
 
         public const int Lucky3 = 160;
+
+        public const int Bullfighting = 207;
     }
 }

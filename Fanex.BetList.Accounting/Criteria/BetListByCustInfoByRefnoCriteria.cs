@@ -17,16 +17,12 @@ namespace Fanex.BetList.Accounting.Criteria
     /// </summary>
     public class BetListByCustInfoByRefnoCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "CustID")]
         public int CustId { get; set; }
 
-        [SpParam(SqlParamName = "TransID")]
-        public string TransId { get; set; }
+        public string RefNo { get; set; }
 
-        [SpParam(SqlParamName = "MoveBetsDay")]
         public DateTime MoveBetsDay { get; set; }
 
-        [SpParam(SqlParamName = "BalanceUpDay")]
         public DateTime BalanceUpDay { get; set; }
 
         public override string GetSettingKey()
