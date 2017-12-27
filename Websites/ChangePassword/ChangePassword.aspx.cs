@@ -141,10 +141,11 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                     }
                     catch (ErrorException casinoEx)
                     {
-                        LogExtensions.CasinoExceptionHandler(casinoEx);
+                        LogExtensions.ExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        LogExtensions.ExceptionHandler(ex);
                     }
                 }
 
