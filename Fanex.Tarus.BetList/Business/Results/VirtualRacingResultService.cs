@@ -19,11 +19,11 @@ namespace Fanex.Tarus.BetList.Business.Results
     /// </summary>
     public class VirtualRacingResultService : IVirtualRacingResultService
     {
-        private IVirtualRacingResultDataAccess _virtualRacingResultDataAccess;
+        private readonly IVirtualRacingResultDataAccess _virtualRacingResultDataAccess;
 
         public VirtualRacingResultService(IVirtualRacingResultDataAccess virtualRacingResultDataAccess)
         {
-            this._virtualRacingResultDataAccess = virtualRacingResultDataAccess ?? new VirtualRacingResultDataAccess();
+            _virtualRacingResultDataAccess = virtualRacingResultDataAccess ?? new VirtualRacingResultDataAccess();
         }
 
         public VirtualRacingResultService()
@@ -31,21 +31,20 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
         }
 
-        public string GetResult(int matchId, int raceNumber, int sportType)
+        public string GetResult(int matchId, int sportType)
         {
-            var criteria = GetCriteria(matchId, raceNumber);
-            var results = this._virtualRacingResultDataAccess.GetRacingPopupResult(criteria);
+            var criteria = GetCriteria(matchId);
+            var results = _virtualRacingResultDataAccess.GetRacingPopupResult(criteria);
             ResultSetting resultSetting = GetFanexResultSetting(sportType);
 
             return ResultEngine.HtmlParser(results, resultSetting);
         }
 
-        private static GetVirtualRacingResultCriteria GetCriteria(int matchId, int? raceNumber)
+        private static GetVirtualRacingResultCriteria GetCriteria(int matchId)
         {
             return new GetVirtualRacingResultCriteria()
             {
-                MatchId = matchId,
-                RaceNo = raceNumber
+                MatchId = matchId
             };
         }
 

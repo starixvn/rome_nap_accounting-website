@@ -9,13 +9,11 @@
 
 namespace Fanex.Tarus.BetList.Business.Results
 {
-    using System;
-
     /// <summary>
     /// The interface IRacingResultService.
     /// </summary>
     public interface IRacingResultService
     {
-        string GetResult(DateTime fromDate, int leagueId, int raceNumber);
+        string GetResult(int matchId);
     }
 }

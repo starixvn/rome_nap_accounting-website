@@ -72,16 +72,14 @@ namespace Fanex.BetList.Accounting.Extensions
             ITicketHelper ticketHelper,
             List<ITicketData> ticketData)
         {
-            var htmlFactory = new BetListHTMLFactory();
-            var builder = htmlFactory.CreateBuilder();
+            var excelFactory = new BetListExcelFactory();
+            var builder = excelFactory.CreateBuilder();
+            ticketHelper.IsVnIp = (ip) => true;
 
-            var statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
-            var statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
+            IRichTextString rtfCreator = builder
+                .CreateStatusBuilder(ticket.BetTypeId)
+                .RenderRTF(ticket, ticketHelper, ticketData, false, builder.RTFHelper);
 
-            statusBlock.StatusResult = null;
-            statusBlock.ShowIP = null;
-
-            IRichTextString rtfCreator = new HSSFRichTextString(statusBlock.ToString());
             factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
             return factory;
         }

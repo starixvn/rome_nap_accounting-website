@@ -19,10 +19,6 @@ namespace Fanex.Tarus.BetList.Criteria.Results
         [SpParam(SqlParamName = "MatchID")]
         public int MatchId { get; set; }
 
-        public int? RaceNo { get; set; }
-
-        public int LeagueID { get; set; }
-
         public override string GetSettingKey()
         {
             return "Acc_BetList_HRSelMatchResult2";
