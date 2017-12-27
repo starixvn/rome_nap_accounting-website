@@ -78,13 +78,12 @@ public class UpdateCustomerStatus : BaseHandler
                     {
                         if (custcs.CasinoSync)
                         {
-                            bool success = CasinoManager.UpdateCustSuspend(_custid, status,
-                                                                               context.Request.UserHostAddress, customerRngSite);
+                            CasinoManager.UpdateCustSuspend(_custid, status, context.Request.UserHostAddress, customerRngSite);
                         }
                     }
                     catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
                     catch (Exception ex)
                     {
@@ -112,12 +111,12 @@ public class UpdateCustomerStatus : BaseHandler
                         }
                         catch (ErrorException casinoEx)
                         {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                             throw;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            throw;
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         }
                     }
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
@@ -173,7 +172,7 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
                     catch (Exception ex)
                     {
