@@ -351,6 +351,7 @@
     <Compile Include="Customer\RenderLeftPanelParameter.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
+    <Compile Include="LogDisplay\LoginLogType.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
     <Compile Include="PT\ViewPT\KenoPT.cs" />
