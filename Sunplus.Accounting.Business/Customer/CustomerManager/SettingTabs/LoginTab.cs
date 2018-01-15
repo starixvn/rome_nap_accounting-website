@@ -26,6 +26,7 @@
             TemplateHandler.Assign(ref tplLoginDetail, "{customersite}", siteName);
             TemplateHandler.Assign(ref tplLoginDetail, "{LastLoginIP}", "<a href=\"" + ConfigurationManager.AppSettings["iplocation"].Replace("{ip}", IpManagement.ReplaceVNIP(lastIp)) + "\" target=\"_blank\" style='font-weight:bold'>" + IpManagement.ReplaceVNIP(lastIp) + "</a>");
             TemplateHandler.Assign(ref tplLoginDetail, "{custid}", customerInfoViewModel.CustId);
+            TemplateHandler.Assign(ref tplLoginDetail, "{Username}", customerInfoViewModel.UserName);
             TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", customerInfoViewModel.LastChangeSecurityCodeDate);
             TemplateHandler.Assign(ref htmlcontent, "{logindetail}", tplLoginDetail);
             TemplateHandler.Assign(ref htmlcontent, "{last_change_OTP_date}", customerInfoViewModel.LastChangeOTPCodeDate);
