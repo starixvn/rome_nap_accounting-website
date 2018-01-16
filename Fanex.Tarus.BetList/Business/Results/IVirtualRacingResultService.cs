@@ -14,6 +14,6 @@ namespace Fanex.Tarus.BetList.Business.Results
     /// </summary>
     public interface IVirtualRacingResultService
     {
-        string GetResult(int matchId, int raceNumber, int sportType);
+        string GetResult(int matchId, int sportType);
     }
 }

@@ -23,11 +23,11 @@ namespace Fanex.Tarus.BetList.Business.Results
     /// </summary>
     public class RacingResultService : IRacingResultService
     {
-        private IRacingResultDataAccess _racingResultDataAccess;
+        private readonly IRacingResultDataAccess _racingResultDataAccess;
 
         public RacingResultService(IRacingResultDataAccess racingResultDataAccess)
         {
-            this._racingResultDataAccess = racingResultDataAccess ?? new RacingResultDataAccess();
+            _racingResultDataAccess = racingResultDataAccess ?? new RacingResultDataAccess();
         }
 
         public RacingResultService()
@@ -35,22 +35,20 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
         }
 
-        public string GetResult(DateTime fromDate, int leagueId, int raceNumber)
+        public string GetResult(int matchId)
         {
-            var criteria = GetCriteria(fromDate, leagueId, raceNumber);
-            IEnumerable<Racing> racings = this._racingResultDataAccess.GetRacingResult(ref criteria);
+            var criteria = GetCriteria(matchId);
+            IEnumerable<Racing> racings = _racingResultDataAccess.GetRacingResult(ref criteria);
             ResultSetting resultSetting = GetFanexResultSetting(criteria.SportType);
 
             return ResultEngine.HtmlParser<Racing>(racings.ToList(), resultSetting);
         }
 
-        private static GetRacingResultCriteria GetCriteria(DateTime fromDate, int leagueId, int raceNumber)
+        private static GetRacingResultCriteria GetCriteria(int matchId)
         {
             return new GetRacingResultCriteria()
             {
-                EventDate = fromDate,
-                RaceNo = raceNumber,
-                LeagueID = leagueId
+                MatchId = matchId
             };
         }
 

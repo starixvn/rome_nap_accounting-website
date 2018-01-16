@@ -435,7 +435,6 @@
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="Content\bullfighting.css" />
     <Content Include="Content\lucky3.css" />
-    <Content Include="fanex.result.css" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

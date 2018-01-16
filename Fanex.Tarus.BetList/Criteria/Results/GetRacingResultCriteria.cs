@@ -9,7 +9,6 @@
 
 namespace Fanex.Tarus.BetList.Criteria.Results
 {
-    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -17,11 +16,7 @@ namespace Fanex.Tarus.BetList.Criteria.Results
     /// </summary>
     public class GetRacingResultCriteria : CriteriaBase
     {
-        public DateTime EventDate { get; set; }
-
-        public int LeagueID { get; set; }
-
-        public int RaceNo { get; set; }
+        public int MatchId { get; set; }
 
         [SpParam(Ignored = true)]
         public int SportType { get; set; }
@@ -29,11 +24,6 @@ namespace Fanex.Tarus.BetList.Criteria.Results
         public override string GetSettingKey()
         {
             return "Acc_BetList_SelMatchResult2";
-        }
-
-        public override bool IsValid()
-        {
-            return EventDate > DateTime.MinValue && RaceNo > 0;
         }
     }
 }

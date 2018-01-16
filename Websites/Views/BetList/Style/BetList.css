@@ -151,19 +151,20 @@ div.match {
     text-align: center;
     margin-top: 5px;
 }
-
 /* Status */
-
 .status {
-    color: #606060;
-    font-size: 11px;
-    font-weight: bold;
 }
 
 .result {
-    cursor: pointer;
-    color: rgb(27, 164, 237);
+    color: #0066cc;
+    margin-top: 12px;
+    text-decoration: none;
 }
+
+    .result:hover {
+        color: #d66d35;
+        cursor: pointer;
+    }
 
 .ip {
     color: #434343;
@@ -175,8 +176,6 @@ div.match {
 .blue {
     color: #2673CE;
 }
-
-
 
 tr.r-o td {
     background: none repeat scroll 0 0 #F9F9F7;
@@ -190,7 +189,6 @@ tr.event-live td {
     background: none repeat scroll 0 0 #FFFFCC;
 }
 /*Agent Css*/
-
 html {
     color: #171717;
     cursor: default;
@@ -315,7 +313,6 @@ td, span, div, a {
     background: url(Images/loading.gif) no-repeat scroll 0 0 transparent;
 }
 
-
 .width100 {
     width: 100px;
 }
@@ -339,7 +336,6 @@ td, span, div, a {
 .width350 {
     width: 350px;
 }
-
 
 .width270 {
     width: 230px;
@@ -393,12 +389,10 @@ td, span, div, a {
     margin-top: 5px;
 }
 
-
 .exrate2 {
     color: #0066CC;
     font-size: 9px;
 }
-
 
 div.match {
     white-space: normal !important;
@@ -414,7 +408,6 @@ table#tbl-content {
     background: #fff;
     border-collapse: collapse;
 }
-
 
     table#tbl-content th {
         font-size: 11px;
@@ -458,7 +451,6 @@ div.ticketList div.void span, div.ticketList div.void div {
 .event-live {
     background: none repeat scroll 0 0 #FFFFCC;
 }
-
 
 span.ui-dialog-title-dialog-modal-TennisResult {
     margin-left: 25px;

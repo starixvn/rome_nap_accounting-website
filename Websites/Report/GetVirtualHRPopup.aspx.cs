@@ -10,12 +10,12 @@ public partial class Report_GetVirtualHRPopup : System.Web.UI.Page
     {
         try
         {
-            int matchID = CastAide.AsInt32(Request.QueryString["matchid"], 0);
-            int raceNumber = CastAide.AsInt32(Request.QueryString["raceNo"], 0);
+            int matchId = CastAide.AsInt32(Request.QueryString["matchid"], 0);
             int sportType = CastAide.AsInt32(Request.QueryString["sportType"], 0);
-            this.lResult.Text = sportType == 186 ?
-                new VirtualTennisResultService().GetResult(matchID, sportType) :
-                new VirtualRacingResultService().GetResult(matchID, raceNumber, sportType);
+
+            lResult.Text = sportType == 186 ?
+                new VirtualTennisResultService().GetResult(matchId, sportType) :
+                new VirtualRacingResultService().GetResult(matchId, sportType);
         }
         catch (Exception exception)
         {
