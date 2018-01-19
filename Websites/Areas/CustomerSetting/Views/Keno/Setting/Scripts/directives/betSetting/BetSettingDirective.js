@@ -78,40 +78,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
 
 
                 $scope.$watch('betSetting.isEnabled', function (newValue, oldValue) {
-                    if (newValue) {
-                        if ($scope.originalBetSetting.isDownlinesEnabled) {
-                            $scope.betSetting.isDownlinesEnabled = true;
-                            $scope.isDownlinechkDisabled = true;
-                        }
-                        else {
-                            $scope.betSetting.isDownlinesEnabled = false;
-                            $scope.isDownlinechkDisabled = false;
-                        }
-                    }
-                    else {
-                        $scope.betSetting.isDownlinesEnabled = false;
-                        $scope.isDownlinechkDisabled = true;
-                    }
-
-                    if (newValue == $scope.originalBetSetting.isEnabled) {
-                        $scope.betSetting.isStatusUpdated = false;
-                    }
-                    else {
-                        $scope.betSetting.isStatusUpdated = true;
-                    }
-
-                    $scope.$emit('totallyChecking');
-                }, true);
-
-
-
-                $scope.$watch('betSetting.isDownlinesEnabled', function (newValue, oldValue) {
-                    if (newValue == $scope.originalBetSetting.isDownlinesEnabled) {
-                        $scope.betSetting.isStatusUpdated = false;
-                    } else {
-                        $scope.betSetting.isStatusUpdated = true;
-                    }
-
+                    $scope.betSetting.isStatusUpdated = newValue != $scope.originalBetSetting.isEnabled;
                     $scope.$emit('totallyChecking');
                 }, true);
             }
