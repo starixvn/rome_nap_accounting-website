@@ -181,11 +181,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-MicroGaming");
             }
 
-            if (!customerInfoViewModel.ShowSettingLinkLiveCasino)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
-            }
-
             if (customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");

@@ -280,11 +280,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "bingo-edit");
                             }
-                            if (!WebSettings.EnableLiveCasino)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "edit-liveCasino");
-                                TemplateHandler.RemoveBlock(ref strRow2, "edit-liveCasino");
-                            }
+
                             if (!WebSettings.EnableVirtualSports)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
@@ -389,18 +385,15 @@ namespace Sunplus.Accounting.Business
 
                 bool allowCS = false;
                 bool allowFI = Permissions.IsAllowEditFI();
-                bool allowLiveCS = false;
 
                 if (CastAide.AsInt32(superId) == 0)
                 {
                     allowCS = true;
-                    allowLiveCS = true;
                 }
                 else
                 {
                     var thirdPartyStatus = Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(superId));
                     allowCS = CastAide.AsInt32(superId) == 0 ? true : thirdPartyStatus.CasinoSync;
-                    allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(superId, 0), thirdPartyStatus.LiveCasinoSync);
                 }
 
                 TemplateHandler.Assign(ref contentTpl, "{isAgent}", "0");
@@ -590,11 +583,7 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow2, "bingo-edit");
                             }
-                            if (!WebSettings.EnableLiveCasino | !allowLiveCS)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "edit-liveCasino");
-                                TemplateHandler.RemoveBlock(ref strRow2, "edit-liveCasino");
-                            }
+
                             if (!WebSettings.EnableVirtualSports)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
@@ -690,7 +679,6 @@ namespace Sunplus.Accounting.Business
 
                 var thirdPartyStatus = Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(masterId));
                 bool allowCS = CastAide.AsInt32(masterId) == 0 ? true : thirdPartyStatus.CasinoSync;
-                bool allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(masterId, 0), thirdPartyStatus.LiveCasinoSync);
                 bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
@@ -859,11 +847,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "bingo-edit");
                             }
-                            if (!WebSettings.EnableLiveCasino | !allowLiveCS)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "edit-liveCasino");
-                                TemplateHandler.RemoveBlock(ref strRow2, "edit-liveCasino");
-                            }
+
                             if (!WebSettings.EnableVirtualSports)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
@@ -957,7 +941,6 @@ namespace Sunplus.Accounting.Business
                 //add edit field for Horseracing
                 var thirdPartyStatus = Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(agentId));
                 bool allowCS = CastAide.AsInt32(agentId) == 0 ? true : thirdPartyStatus.CasinoSync;
-                bool allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(agentId, 0), thirdPartyStatus.LiveCasinoSync);
                 bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
@@ -1115,11 +1098,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.RemoveBlock(ref strRow, "bingo-edit");
                                 TemplateHandler.RemoveBlock(ref strRow2, "bingo-edit");
                             }
-                            if (!WebSettings.EnableLiveCasino | !allowLiveCS)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "edit-liveCasino");
-                                TemplateHandler.RemoveBlock(ref strRow2, "edit-liveCasino");
-                            }
+
                             if (!WebSettings.EnableVirtualSports)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");

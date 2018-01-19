@@ -56,8 +56,6 @@ using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing;
 using Sunplus.Accounting.Report.CombinationMixparlay;
 using Sunplus.Accounting.Report.Mixparlay;
-using Fanex.LiveCasino.CoreSetting.Services;
-using Fanex.Tarus.Security.Authenticate;
 
 namespace Sunplus.Accounting.Business.BootStrappers
 {

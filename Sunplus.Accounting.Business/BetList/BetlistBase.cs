@@ -18,8 +18,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 
-//using Fanex.Tarus.LiveCasino.Entities.Betlist;
-
 /// <summary>
 /// Summary description for ReportBase
 /// </summary>

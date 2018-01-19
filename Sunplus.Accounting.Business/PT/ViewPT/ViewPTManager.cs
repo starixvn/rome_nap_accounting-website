@@ -251,8 +251,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     case Constants.Sport.Casino:
                     case Constants.Sport.BingoGame:
                         return CasinoPositionTaking(userName, sportId, bettypeId);
-                    case Constants.Sport.LiveCasino:
-                        return LiveCasinoPositionTaking(userName, null, null);
                     case Constants.Sport.Keno:
                         var viewPTCriteria = new ViewKenoPTCriteria
                         {
@@ -462,15 +460,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                                                                "MyanmarOdds")
                     };
-
-                    var liveCasino = new AllowViewSport()
-                                         {
-                                             Status = WebSettings.EnableLiveCasino,
-                                             Name =
-                                                 ResourceExtension.GetResourceValue(
-                                                     ResourceExtension.Resources.Language,
-                                                     "liveCasinoTitle")
-                                         };
 
                     #endregion define group
 
@@ -687,15 +676,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                    Comm =
                                                        NumberFormat.DecFormat(
                                                            rComm[string.Format(_comP2PPrivateGame, 4)], 4)
-                                               },
-                                               LiveCasinoComm = new AllowViewSport()
-                                                                    {
-                                                                        Status = liveCasino.Status,
-                                                                        Name = liveCasino.Name,
-                                                                        Comm =
-                                                                            NumberFormat.DecFormat(
-                                                                                rComm[string.Format(_comGameComm, 4)], 4)
-                                                                    }
+                                               }
                                            };
                         result.Comm.Add(superCom);
 
@@ -911,15 +892,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                             Comm =
                                                                 NumberFormat.DecFormat(
                                                                     rComm[string.Format(_comGameComm, 3)], 4)
-                                                        },
-                                                LiveCasinoComm = new AllowViewSport()
-                                                                     {
-                                                                         Status = liveCasino.Status,
-                                                                         Name = liveCasino.Name,
-                                                                         Comm =
-                                                                             NumberFormat.DecFormat(
-                                                                                 rComm[string.Format(_comGameComm, 3)], 4)
-                                                                     }
+                                                        }
                                             };
                         result.Comm.Add(masterCom);
 
@@ -1134,15 +1107,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                            Comm =
                                                                NumberFormat.DecFormat(
                                                                    rComm[string.Format(_comGameComm, 2)], 4)
-                                                       },
-                                               LiveCasinoComm = new AllowViewSport()
-                                                                    {
-                                                                        Status = liveCasino.Status,
-                                                                        Name = liveCasino.Name,
-                                                                        Comm =
-                                                                            NumberFormat.DecFormat(
-                                                                                rComm[string.Format(_comGameComm, 2)], 4)
-                                                                    }
+                                                       }
                                            };
                         result.Comm.Add(agentCom);
 
@@ -1354,13 +1319,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                             Status = gameComm.Status,
                                                             Name = gameComm.Name,
                                                             Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
-                                                        },
-                                                LiveCasinoComm = new AllowViewSport()
-                                                                     {
-                                                                         Status = liveCasino.Status,
-                                                                         Name = liveCasino.Name,
-                                                                         Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
-                                                                     }
+                                                        }
                                             };
                         result.Comm.Add(memberCom);
 
@@ -1428,19 +1387,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             #endregion Parlay Mix Sport
 
             #region live casino
-
-            //ISettingManager liveCS = new SettingManager();
-
-            if (WebSettings.EnableLiveCasino)
-            {
-                var sport = new Sport()
-                {
-                    SportId = Constants.Sport.LiveCasino,
-                    SportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "liveCasinoTitle"),
-                    Bettype = new BettypeDTO()
-                };
-                sports.SportsList.Add(sport);
-            }
 
             if (KenoSection.Instance.ShowSetting)
             {

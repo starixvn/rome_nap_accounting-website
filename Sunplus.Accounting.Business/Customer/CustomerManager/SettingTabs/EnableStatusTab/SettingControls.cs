@@ -484,62 +484,6 @@
             }
         }
 
-        private static SettingControl GetSettingControlLiveCasino(
-            int roleId,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool syncLiveCasino,
-            bool isAllowEdit,
-            bool isenabled,
-            bool disabledUpline,
-            bool disableDownLine)
-        {
-            if (!WebSettings.EnableLiveCasino || !isAllowEdit || !syncLiveCasino)
-            {
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "disableLiveCasino"),
-                        false, true, string.Empty, string.Empty, string.Empty, string.Empty, statusName, roleId, disableDownLine, "LCS");
-            }
-            else
-            {
-                string classname = string.Empty;
-                string jsonclick = string.Empty;
-                string jsonmouseover = string.Empty;
-                string jsonmouseout = string.Empty;
-
-                if (isManageCustomerAccess)
-                {
-                    if (isenabled)
-                    {
-                        if (4 == roleId || !disabledUpline)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledLiveCasinoUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableLiveCasino"),
-                        currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
-                        disableDownLine, "LCS");
-            }
-        }
-
         private static SettingControl GetSettingControlAllDayBalTransfer(
             int roleId, 
             bool isManageCustomerAccess, 

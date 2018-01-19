@@ -137,59 +137,6 @@ namespace Sunplus.Accounting.Business.Customer
                 bool isMoveAgent = custType.Equals(MoveType.Agent);
                 bool IsExcutedMoveLiveCasino = false;
                 string errMsgMoveLiveCasino = string.Empty;
-               // IResult bingoResult = new Result();
-
-                /*if (WebSettings.IsAllowMoveToBingo)
-                {
-                    bingoResult = CheckMoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
-
-                    if (bingoResult.ErrorCode > 0)
-                        return bingoResult.ErrorMessage;
-                }*/
-
-                #region check for moving live casino
-
-                if (_downlineDetail.IsLiveCasinoSync)
-                {
-                    if (!_uplineDetail.IsLiveCasinoSync)
-                    {
-                        return StringUtils.ParseToJSMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblNotAllowToMoveCustLiveCasino"));
-                    }
-                    else
-                    {
-                        IMoverAccountManager moveLiveCS = new MoveAccountManager();
-                        MoveAccountInfo moveAccountInfo = new MoveAccountInfo()
-                        {
-                            ModifyUserName = AppSession.Username,
-                            MovedCustId = _downlineDetail.CustID,
-                            MovedUserName = downlineUser,
-                            RollbackCustId = _downlineDetail.CustID,
-
-                            OldSAgentId = _downlineDetail.SuperId,
-                            OldMAgentId = _downlineDetail.MasterId,
-
-                            NewSAgentId = _uplineDetail.SuperId,
-                            NewMAgentId = _uplineDetail.MasterId,
-
-                            SignupBy = accId,
-                            SignupFrom = 1,
-                            SignupIp = Utils.GetClientIP(),
-                            UplineUsername = uplineUser,
-                            UserId = accId,
-                        };
-                        var rs = moveLiveCS.Move(moveAccountInfo, isMoveAgent);
-
-                        IsExcutedMoveLiveCasino = true;
-
-                        if (!rs.IsSuccess)
-                        {
-                            return StringUtils.ParseToJSMsg(rs.Value);
-                        }
-                    }
-                }
-
-                #endregion check for moving live casino
-
                 var customerRngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_downlineDetail.CustID);
 
                 #region Didn't Synchronize Casino

@@ -119,8 +119,6 @@
 
             htmlcontent = RenderNumberGameControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderEnableCasinoControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderLiveCasinoControl(htmlcontent, customerInfoViewModel);
-
             htmlcontent = RenderSuperLiveControl(
                 htmlcontent,
                 row1,
@@ -693,28 +691,6 @@
                     customerInfoViewModel.CustParent.IsSuspended));
 
             TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
-            return htmlcontent;
-        }
-
-        private static string RenderLiveCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{chkLiveCasino}", customerInfoViewModel.DisabledLiveCasino ? 1 : 0);
-
-            var liveCasinoSettingGroup = new SettingGroup();
-
-            liveCasinoSettingGroup.Add(
-                GetSettingControlLiveCasino(
-                    customerInfoViewModel.RoleId,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    "disabledLCS",
-                    !customerInfoViewModel.DisabledLiveCasino,
-                    customerInfoViewModel.SyncLiveCasino,
-                    customerInfoViewModel.AllowEditLiveCasino,
-                    customerInfoViewModel.Enabled,
-                    customerInfoViewModel.DisabledLiveCasinoParent,
-                    !customerInfoViewModel.DisabledDownlinesLiveCasino));
-
-            TemplateHandler.Assign(ref htmlcontent, "{liveCasinoControl}", liveCasinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
         }
 
