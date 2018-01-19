@@ -21,9 +21,7 @@
     <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
     <script src="../js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
     <script src="../js/jQuery/Bubblepopup/jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script>
-    <script src="../js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js" type="text/javascript"></script>
-    <%-- <script src="../js/ToolTip/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>
-     <script type="text/javascript" src="../js/ToolTip/wz_tooltip/tip_balloon.js"></script>--%>
+    <script src="../js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js" type="text/javascript"></script>  
     <script type="text/javascript" src="../js/ExChangeRate.js?ver=<%=WebSettings.Version%>"></script>
     <script type="text/javascript" src="../js/common.js?ver=<%=WebSettings.Version%>"></script>
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
