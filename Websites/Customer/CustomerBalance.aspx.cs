@@ -197,9 +197,9 @@ public partial class CustomerBalance : PageBase
             {
                 strcontent.Append("isDisableAll=true;");
             }
-
+            
             //strcontent.Append("var cntSyncCasino=" + cntSyncCasino + ";" );
-            strcontent.Append("var SyncCasinoMsg='" + Resources.Casino.fullSettlement + "';");
+            strcontent.Append("var SyncCasinoMsg='Full multiple transfer will reset max transfer limit';");
             strcontent.Append(" RenderCustBalance(datarows, total, isDisableAll) ");
             strcontent.Append("</script>");
         }

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="HedgeRecordEdit.aspx.cs" Inherits="Report_HedgeRecordEdit" Title="Untitled Page" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="__HedgeRecordEdit.aspx.cs" Inherits="Report_HedgeRecordEdit" Title="Untitled Page" %>
 <html>
     <head runat="server">
         <link rel="stylesheet" type="text/css" href="../App_Themes/Public/common.css"/> 

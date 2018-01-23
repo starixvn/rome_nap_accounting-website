@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuperMovement.aspx.cs" Inherits="Report_SuperMovement"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="__SuperMovement.aspx.cs" Inherits="Report_SuperMovement"%>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
