@@ -121,8 +121,8 @@
       <HintPath>..\packages\Fanex.BetList.CashOut.1.0.0.6\lib\net40\Fanex.BetList.CashOut.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.CockFighting.1.0.0.4\lib\net40\Fanex.BetList.CockFighting.dll</HintPath>
+    <Reference Include="Fanex.BetList.CockFighting, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.CockFighting.1.0.0.5\lib\net40\Fanex.BetList.CockFighting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
@@ -153,8 +153,8 @@
       <HintPath>..\packages\Fanex.BetList.Lucky3.1.1.0\lib\net40\Fanex.BetList.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.4\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.MetricGaming, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.MetricGaming.1.0.4.5\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Microgaming, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
