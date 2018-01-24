@@ -1432,7 +1432,7 @@
     <value>Customer Information</value>
   </data>
   <data name="lblEnabledCasino" xml:space="preserve">
-    <value>Enable Casino</value>
+    <value>Casino</value>
   </data>
   <data name="lblMaxTransferCredit" xml:space="preserve">
     <value>Member Max Transfer Credit</value>
@@ -1471,7 +1471,7 @@
     <value>Min Position</value>
   </data>
   <data name="lblEnabledFI" xml:space="preserve">
-    <value>Enable Finance</value>
+    <value>Finance</value>
   </data>
   <data name="lblUpdatedSuccessfully" xml:space="preserve">
     <value>* Updated Successfully</value>
@@ -1867,13 +1867,13 @@
     <value>UK Tote status has been disabled at upline</value>
   </data>
   <data name="lblDisabledBingoGame" xml:space="preserve">
-    <value>Enable Bingo</value>
+    <value>Bingo</value>
   </data>
   <data name="lblDisabledBingoGameUpline" xml:space="preserve">
     <value>Bingo status has been disabled at upline</value>
   </data>
   <data name="lblDisabledNumberGame" xml:space="preserve">
-    <value>Enable Num Game</value>
+    <value>Num Game</value>
   </data>
   <data name="lblDisabledNumberGameUpline" xml:space="preserve">
     <value>Number Game status has been disabled at upline</value>
@@ -2243,7 +2243,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Disable Live Casino</value>
   </data>
   <data name="enableLiveCasino" xml:space="preserve">
-    <value>Enable Live Casino</value>
+    <value>Live Casino</value>
   </data>
   <data name="lblDisabledLCSUpline" xml:space="preserve">
     <value>Live Casino was disabled at upline</value>
@@ -2459,7 +2459,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Gold Deluxe status has been disabled at upline</value>
   </data>
   <data name="enableSuperLive" xml:space="preserve">
-    <value>Enable Super Live</value>
+    <value>Super Live</value>
   </data>
   <data name="lblDisabledSuperLiveUpline" xml:space="preserve">
     <value>Super Live status has been disabled at upline</value>
@@ -2471,22 +2471,22 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>MyanmarOdds</value>
   </data>
   <data name="lblDisabledColossusBet" xml:space="preserve">
-    <value>Enable Colossus Bets</value>
+    <value>Colossus Bets</value>
   </data>
   <data name="lblDisabledColossusBetUpline" xml:space="preserve">
     <value>Colossus Bets was disabled at upline</value>
   </data>
   <data name="enableSportsbook2" xml:space="preserve">
-    <value>Enable Sportsbook2</value>
+    <value>Sportsbook2</value>
   </data>
   <data name="lblDisabledSportsbook2Upline" xml:space="preserve">
     <value>Sportsbook2 status has been disabled at upline</value>
   </data>
   <data name="enableCricket" xml:space="preserve">
-    <value>Enable Cricket</value>
+    <value>Cricket</value>
   </data>
   <data name="enableAllBet" xml:space="preserve">
-    <value>Enable Allbet</value>
+    <value>Allbet</value>
   </data>
   <data name="lblDisabledAllBetUpline" xml:space="preserve">
     <value>AllBet status has been disabled at upline</value>
@@ -2498,7 +2498,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Macau Games</value>
   </data>
   <data name="enableNG2" xml:space="preserve">
-    <value>Enable NG2</value>
+    <value>NG2</value>
   </data>
   <data name="lblDisabledNG2Upline" xml:space="preserve">
     <value>NG2 has been disabled at upline</value>
