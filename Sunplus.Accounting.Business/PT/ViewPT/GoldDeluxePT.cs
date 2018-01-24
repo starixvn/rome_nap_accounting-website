@@ -1,8 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.PT.ViewPT
 {
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using DNAide.Core;
     using DNAide.Data;
     using DNAide.Utils;
@@ -12,6 +9,9 @@
     using Sunplus.Accounting.Entities.Criteria.ViewPT;
     using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
     using Sunplus.Accounting.Entities.PositionTaking.Racing;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
 
     public class GoldDeluxePT
     {
