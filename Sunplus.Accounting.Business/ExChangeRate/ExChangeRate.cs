@@ -183,21 +183,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (WebSettings.EnableLiveCasino)
-                    {
-                        var liveCs = new ExRateManager();
-                        ExRateBO exRateBo = new ExRateBO()
-                        {
-                            ExchangeId = exid,
-                            Currency = currency,
-                            Actualrate = actualrate,
-                            ModifyBy = AppSession.AccId,
-                            ModifyUserName = AppSession.AccUserName,
-                            FromIp = HttpContext.Current.Request.UserHostAddress,
-                        };
-                        liveCs.UpdateExchange(exRateBo);
-                    }
                 }
             }
             catch (ErrorException casinoEx)
@@ -405,22 +390,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (WebSettings.EnableLiveCasino)
-                    {
-                        var liveCs = new ExRateManager();
-                        ExRateBO exRateBo = new ExRateBO()
-                        {
-                            ExchangeId = exid,
-                            Currency = currency,
-                            Actualrate = actualrate,
-                            ModifyBy = AppSession.AccId,
-                            ModifyUserName = AppSession.AccUserName,
-                            FromIp = HttpContext.Current.Request.UserHostAddress,
-                        };
-                        liveCs.UpdateExchange(exRateBo);
-                    }
-
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)

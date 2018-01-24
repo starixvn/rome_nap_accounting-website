@@ -757,24 +757,16 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                 case Constants.Sport.NumberGame:
                     gameInfo = string.Format("{0} - Game No {1}", matchId, awayName);
                     break;
-
                 case Constants.Sport.Badminton:
                 case Constants.Sport.Golf:
                     gameInfo = string.Format("{0}", matchId);
                     break;
-
-                case Constants.Sport.LiveCasino:
-                    gameInfo = string.Format("{0} - Game Table - {1}", matchId, awayName);
-                    break;
-
                 case 1000://p2p
                     gameInfo = string.Format("{0}", matchId);
                     break;
-
                 case 29://system parlay
                     gameInfo = matchId;
                     break;
-
                 default:
                     gameInfo = string.Format("{0}        {1} -vs- {2}", matchId, homeName, awayName);
                     break;

@@ -45,7 +45,6 @@
             var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
             result.CustomerInfo = GetCustomerRelation(rawData);
             result.IsCasino = false;
-            result.IsLiveCasino = false;
             result.IsGoldDeluxe = true;
             result.PotionTakingDetail = PositionTakingDetail(rawData, roleId, criteria.SportId);
             return result;
