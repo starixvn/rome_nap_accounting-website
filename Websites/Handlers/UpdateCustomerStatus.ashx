@@ -272,14 +272,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledLCS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    new CustomerUpdateStatus().CustomerUpdateDisabledLiveCasino(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;               
                 case "disabledVS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
