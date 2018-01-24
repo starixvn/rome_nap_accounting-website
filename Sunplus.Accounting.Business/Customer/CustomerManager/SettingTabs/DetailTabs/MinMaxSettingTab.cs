@@ -79,7 +79,7 @@
             superOnMemberSettingUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
             masterOnMemberSettingUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
 
-            superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sport book</a>";
+            superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (customerInfoViewModel.ShowHorseRacingLinkCredit)
             {
@@ -166,7 +166,7 @@
                     "Bullfighting");
             }
 
-            masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sport book</a>";
+            masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (customerInfoViewModel.ShowHorseRacingLinkCredit)
             {
@@ -266,7 +266,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
 
             var minMaxPtUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + masterId + "&uname=" + userName;
-            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
+            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!WebSettings.disabledHR)
             {
@@ -284,7 +284,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
 
             var minMaxPtUrl = "EditMasterMinMaxPt/EditMasterMinMaxPtPage?&custId=" + custId + "&uplineId=" + superId + "&uname=" + userName;
-            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
+            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!WebSettings.disabledHR)
             {
@@ -302,7 +302,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
 
             var  minMaxPtUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
-            var submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sport book</a>";
+            var submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!WebSettings.disabledHR)
             {
