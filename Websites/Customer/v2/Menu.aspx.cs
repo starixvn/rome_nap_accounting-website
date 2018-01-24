@@ -36,7 +36,7 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         string defaultUrl = "UpdateFinancePT.aspx" + Request.UrlReferrer.Query;
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, allowEditLiveCs, hideVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting;
+        Boolean AllowedCS, AllowedBI, hideVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -56,7 +56,6 @@ public partial class Others_Menu : System.Web.UI.Page
         DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
         AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
-        allowEditLiveCs = CastAide.AsBoolean(db.Outputs["allowedlivecs"]);
 
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
@@ -140,7 +139,6 @@ public partial class Others_Menu : System.Web.UI.Page
 
         this.RenderSettingTab("Bingo", "{urlBingo}", bingopath, !BingoSettings.BingoGame.Enabled || !AllowedBI);
         this.RenderSettingTab("Casino", "{urlCasino}", casinoPath, WebSettings.disableCS || !AllowedCS);
-        this.RenderSettingTab("LiveCasino", "{urlLiveCasino}", liveCasinoPath, !allowEditLiveCs);
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);
         this.RenderSettingTab("GoldDeluxe", "{urlgolddeluxe}", goldDeluxePath, !WebSettings.IsShowGoldDeluxeSettingForCredit);

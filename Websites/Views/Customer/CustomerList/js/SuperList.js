@@ -308,11 +308,6 @@
                 , "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId + "&roleId=" + roleId
                 , 0, 0, 640, 480, false, 2000, null);
     },
-    liveCasinoSetting: function (custId, exchangeId, uplineId) {
-        showPopup("Live Casino"
-                , window.rootUrl + "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + _adminID + "&actorUsername=" + _adminUserName + "&customerId=" + custId + "&customerLevel=4"
-                , 0, 0, 880, 580, false, 2000, null);
-    },
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup(""
                 , "VirtualSportSuperPT/EditSuper?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
