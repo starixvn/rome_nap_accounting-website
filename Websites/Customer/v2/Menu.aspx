@@ -36,7 +36,7 @@
         }
 
         $(document).ready(function () {
-            parent.openPage($('#URL').val());
+            $('#menu-pt-after-insert-customer').find('li').eq(0).find('a').click();
         });
     </script>
 </body>

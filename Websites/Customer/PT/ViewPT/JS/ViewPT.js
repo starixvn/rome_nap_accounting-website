@@ -720,7 +720,7 @@ var ViewPT = {
             dataType: "json",
             success: function (rs) {
                 if (rs != null) {
-                    var products = '<option value="0">SB/RC/NG</option>';
+                    var products = '<option value="0">SB/NG</option>';
                     $.each(rs, function (i, product) {
                         products += '<option value="' + product.ProductId + '">' + product.ProductName + '</option>';
                     });
