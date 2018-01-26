@@ -126,13 +126,6 @@ public partial class Others_Menu : System.Web.UI.Page
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
-        if (WebSettings.disabledHR)
-        {
-            TemplateHandler.RemoveBlock(ref this.tplMenu, "HorceRacing");
-            if (!WebSettings.disableCS)
-                defaultUrl = "../PositionTakingCS.aspx" + Request.UrlReferrer.Query;
-        }
-
         TemplateHandler.Assign(ref this.tplMenu, "{strURL}", HRURL); // Link Default       
         TemplateHandler.Assign(ref this.tplMenu, "{urlHorse}", HRURL);
         TemplateHandler.Assign(ref this.tplMenu, "{NG2}", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));

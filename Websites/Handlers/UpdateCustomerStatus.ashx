@@ -294,24 +294,7 @@ public class UpdateCustomerStatus : BaseHandler
                         context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert("You are not authorized on this function.") +
                                    "</script>");
                     }
-                    break;
-
-                case "enableHorseRacingFixedOdds":
-                    // Louis.Nguyen: Enable Horse Racing Fixed Odds
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                    {
-                        throw new AccException("Invalid isupddonwline parameters");
-                    }
-
-                    new CustomerUpdateStatus().CustomerUpdateDisableHorseRacingFixedOdds(
-                        _accid,
-                        _custid,
-                        status,
-                        context.Request.UserHostAddress,
-                        isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;             
                 case "disabledGoldDeluxe":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
