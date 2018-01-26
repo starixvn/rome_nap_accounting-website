@@ -12,8 +12,7 @@
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
-
-    var disabledHR = WebSettings.disabledHR;
+    
     var enableBingo = BingoSettings.BingoGame.Enabled;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
@@ -86,7 +85,6 @@
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("enableNumberGame", enableNumberGame);
-    hash.Add("disabledHR", disabledHR);
     hash.Add("enableBingo", enableBingo);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
@@ -153,11 +151,6 @@
                     <li class="canchange" onclick="EditMinMaxPT(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName');">
                         Max PT </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@agentItem.ChildID','Agent');">Info</li>
-                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
-                    {
-                        <li class="canchange" onclick="EditHorseracingSetting(2, '@agentItem.ChildID','@Model.ParentId')">
-                            Racing </li>
-                    }
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : agentItem.IsSynCasinoUpline;

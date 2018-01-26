@@ -105,8 +105,7 @@
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
-
-            htmlcontent = RenderHRFixedOddsControl(htmlcontent, customerInfoViewModel);
+            
             htmlcontent = RenderEsportsControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForCreditControl(
@@ -757,32 +756,6 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
                 TemplateHandler.RemoveBlock(ref htmlcontent, "eSportsControl");
-            }
-
-            return htmlcontent;
-        }
-
-        private static string RenderHRFixedOddsControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (WebSettings.OfferHorseRacingFixedOdds)
-            {
-                var hRFixedOddsSettingGroup = new SettingGroup();
-
-                hRFixedOddsSettingGroup.Add(GetSettingControlEnableHorseRacingFixedOdds(
-                    customerInfoViewModel.RoleId,
-                    customerInfoViewModel.CustParent.IsEnableHorseRacingFixedOdds,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    "enableHorseRacingFixedOdds",
-                    customerInfoViewModel.EnableHorseRacingFixedOdds,
-                    !customerInfoViewModel.DisableDownlinesHorseRacingFixedOdds,
-                    CastAide.AsBoolean(customerInfoViewModel.Enabled)));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", customerInfoViewModel.EnableHorseRacingFixedOdds ? 1 : 0);
-                TemplateHandler.Assign(ref htmlcontent, "{hRFixedOddsControl}", hRFixedOddsSettingGroup.GetHTMLSettingControl());
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "hRFixedOddsControl");
             }
 
             return htmlcontent;

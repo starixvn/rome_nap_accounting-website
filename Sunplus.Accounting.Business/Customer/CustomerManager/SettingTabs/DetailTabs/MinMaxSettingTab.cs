@@ -8,7 +8,7 @@
     public partial class CustomerManager
     {
         private static string GenMenuMinMaxPT(
-            string htmlcontent, 
+            string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
@@ -23,7 +23,7 @@
                         htmlcontent,
                         customerInfoViewModel.CustId,
                         customerInfoViewModel.UserName,
-                        customerInfoViewModel.IsDeposit, 
+                        customerInfoViewModel.IsDeposit,
                         customerInfoViewModel.MasterId);
 
                     break;
@@ -31,17 +31,17 @@
                 case 3: // master
                     htmlcontent = AssignMasterMinMaxSetting(
                         htmlcontent,
-                        customerInfoViewModel.CustId, 
-                        customerInfoViewModel.UserName, 
-                        customerInfoViewModel.IsDeposit, 
+                        customerInfoViewModel.CustId,
+                        customerInfoViewModel.UserName,
+                        customerInfoViewModel.IsDeposit,
                         customerInfoViewModel.SuperId);
                     break;
 
                 case 4: // super
                     htmlcontent = AssignSuperMinSetting(
-                        htmlcontent, 
-                        customerInfoViewModel.CustId, 
-                        customerInfoViewModel.UserName, 
+                        htmlcontent,
+                        customerInfoViewModel.CustId,
+                        customerInfoViewModel.UserName,
                         customerInfoViewModel.IsDeposit);
                     break;
 
@@ -80,12 +80,6 @@
             masterOnMemberSettingUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
 
             superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
-
-            if (customerInfoViewModel.ShowHorseRacingLinkCredit)
-            {
-                superSettingTab += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"SuperEditMemberPTRacing/Index?custid={0}&superid={1}\");' target='centerFr'>Racing</a>", custId, superId);
-            }
-
             if (!customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Virtual Sports</a>";
@@ -162,12 +156,7 @@
             }
 
             masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
-
-            if (customerInfoViewModel.ShowHorseRacingLinkCredit)
-            {
-                masterSettingTab += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
-            }
-
+            
             if (!customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Virtual Sports</a>";
@@ -251,17 +240,10 @@
         private static string AssignAgentMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int masterId)
         {
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty  : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
+            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-
             var minMaxPtUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + masterId + "&uname=" + userName;
             var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-
-            if (!WebSettings.disabledHR)
-            {
-                minMaxPTtab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/AgentMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
-            }
-
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", minMaxPTtab);
             return htmlcontent;
         }
@@ -271,15 +253,8 @@
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? "" : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-
             var minMaxPtUrl = "EditMasterMinMaxPt/EditMasterMinMaxPtPage?&custId=" + custId + "&uplineId=" + superId + "&uname=" + userName;
             var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-
-            if (!WebSettings.disabledHR)
-            {
-                minMaxPTtab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterMinMaxUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
-            }
-
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", minMaxPTtab);
             return htmlcontent;
         }
@@ -289,15 +264,8 @@
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-
-            var  minMaxPtUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
+            var minMaxPtUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
             var submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-
-            if (!WebSettings.disabledHR)
-            {
-                submenu3 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperMinUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
-            }
-
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu3);
             return htmlcontent;
         }

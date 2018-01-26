@@ -342,22 +342,11 @@
                     <!--/doubleCommControl-->
                     {outrightControl}
 
-                    <!--hRFixedOddsControl-->
-                    {hRFixedOddsControl}
-                    <!--/hRFixedOddsControl-->
                     <!--eSportsControl-->
                     {eSportsControl}
                     <!--/eSportsControl-->
                     {numberGameControl}
                     {casinoControl}
-
-                    <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">
-                            Racing
-                            <span class="icon-list"></span>
-                        </span>
-                    </div>
-
                     <!--AGCasinoStatus-->
                     <div class="col">
                         <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
@@ -493,18 +482,6 @@
                                 </a><br />
                             </span>
                             <!--/maxexposure-->
-                            <!--Horseracing update link-->
-                            <!--horseracing-editlink-->
-                            <span class="{IsShow1}">
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                    Racing
-                                </a><br />
-                            </span><span class="{IsHidden1}">
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                    Racing
-                                </a><br />
-                            </span>
-                            <!--/horseracing-editlink-->
                             <!--edit-casino-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
@@ -623,13 +600,10 @@
     <input type="hidden" id="custName" name="custName" value="" />
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <!--checkbox-oldvalue-->
-    <input type="hidden" id="chkOldValueSATote" name="chkOldValueSATote" value="{chkSATote}" />
-    <input type="hidden" id="chkOldValueUKTote" name="chkOldValueUKTote" value="{chkUKTote}" />
     <input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />
     <input type="hidden" id="chkOldValueBingo" name="chkOldValueBingo" value="{chkBingo}" />
     <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
     <input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}" />
-    <input type="hidden" id="chkOldValueEnableHorseRacingFixedOdds" name="chkOldValueEnableHorseRacingFixedOdds" value="{chkEnableHorseRacingFixedOdds}" />
     <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}" />
     <input type="hidden" id="chkOldValueGoldDeluxe" name="chkOldValueGoldDeluxe" value="{chkGoldDeluxe}" />
     <input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}" />

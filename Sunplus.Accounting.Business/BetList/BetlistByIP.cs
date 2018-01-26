@@ -183,18 +183,10 @@ namespace Sunplus.Accounting.Business.BetList
                             i++;
                             index++;
                             _bettype = Convert.IsDBNull(row["bettype"]) ? 0 : Convert.ToInt32(row["bettype"]);
-                            if ((WebSettings.disabledHR) && IsHRBettype(_bettype))
+                            if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
                             {
                                 index--;
                                 continue;
-                            }
-                            else
-                            {
-                                if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
-                                {
-                                    index--;
-                                    continue;
-                                }
                             }
 
                             #region get values
@@ -727,11 +719,7 @@ namespace Sunplus.Accounting.Business.BetList
                             html.Append(rowHtml);
                         }
 
-                        if (index == 0 && WebSettings.disabledHR)
-                        {
-                            html.Append(AccCommon.GenNoInformation("9"));
-                        }
-                        else if (index == 0 && WebSettings.disabledFI)
+                        if (index == 0 && WebSettings.disabledFI)
                         {
                             html.Append(AccCommon.GenNoInformation("9"));
                         }

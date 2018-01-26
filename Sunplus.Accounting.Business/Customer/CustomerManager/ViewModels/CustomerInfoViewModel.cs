@@ -79,17 +79,11 @@
 
         public bool SyncUplineGoldDeluxe => Utils.ToBoolean(customerInfoRow["IsSyncUplineGoldDeluxe"]);
 
-        public bool EnableHorseRacingFixedOdds => !Utils.ToBoolean(customerInfoRow["DisableHRFixedOdds"]);
-
-        public bool DisableDownlinesHorseRacingFixedOdds => Utils.ToBoolean(customerInfoRow["DisableDownlinesHRFixedOdds"]);
-
         public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
         public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
-
-        public bool ShowHorseRacingLinkCredit => !WebSettings.disabledHR && !IsDeposit;
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && RoleId.Equals(4) && IsDeposit;
 

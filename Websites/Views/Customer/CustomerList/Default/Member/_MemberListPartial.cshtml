@@ -11,8 +11,7 @@
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
-
-    var disabledHR = WebSettings.disabledHR;
+    
     var disabledFI = WebSettings.disabledFI;
     var enableBingo = BingoSettings.BingoGame.Enabled;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
@@ -74,7 +73,6 @@
     hash.Add("visibleP2PSetting", visibleP2PSetting);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("enableNumberGame", enableNumberGame);
-    hash.Add("disabledHR", disabledHR);
     hash.Add("enableBingo", enableBingo);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("disabledFI", disabledFI);
@@ -138,11 +136,6 @@
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@memberItem.ChildID" style="display:none;">
-                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
-                    {
-                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')">
-                            Racing</li>
-                    }
                     @{
                         var IsOnclickCS = !string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"]);

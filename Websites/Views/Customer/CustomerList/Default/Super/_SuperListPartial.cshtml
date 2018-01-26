@@ -15,7 +15,6 @@
 
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-    var disabledHR = WebSettings.disabledHR;
     var disabledFI = WebSettings.disabledFI;
     var enableBingo = BingoSettings.BingoGame.Enabled;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
@@ -64,7 +63,6 @@
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("enableNumberGame", enableNumberGame);
-    hash.Add("disabledHR", disabledHR);
     hash.Add("enableBingo", enableBingo);
     hash.Add("disableCasino", disableCasino);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
@@ -134,10 +132,6 @@
                         Max PT </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');">
                         Info </li>
-                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
-                    {
-                        <li class="canchange" onclick="EditHorseracingSetting(4,'@superItem.ChildID')">Racing</li>
-                    }
                     @if (!CastAide.AsBoolean(hash["disableCasino"]))
                     {
                         <li class="canchange" onclick="SuperList.casino('@superItem.ChildID');">Casino</li>

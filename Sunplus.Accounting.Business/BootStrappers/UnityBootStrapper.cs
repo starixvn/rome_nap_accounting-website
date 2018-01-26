@@ -11,7 +11,6 @@ using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
 using Sunplus.Accounting.Business.ExChangeRate;
 using Sunplus.Accounting.Business.LogDisplay;
 using Sunplus.Accounting.Business.PT.Poker;
-using Sunplus.Accounting.Business.PT.Racing;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Business.Report.DailyTurnover;
@@ -102,12 +101,10 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<ICreditTermManager, CreditTermManager>()
                 .RegisterType<IExternalSiteDAO, ExternalSiteDAO>()
                 .RegisterType<IExternalSite, ExternalSite>()
-                .RegisterType<IRacingManager, RacingManager>()
                 .RegisterType<IViewPtManager, ViewPTManager>()
                 .RegisterType<IRacingDAO, RacingDAO>()
 
                 .RegisterType<IMeetingCommDAO, MeetingCommDAO>()
-                .RegisterType<IMeetingCommManager, MeetingCommManager>()
                 .RegisterType<IReportRacingDAO, ReportRacingDAO>()
                 .RegisterType<IReportRacing, ReportRacing>()
                 .RegisterType<IReportDailyWL, ReportDailyWL>()

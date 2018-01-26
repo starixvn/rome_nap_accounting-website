@@ -109,16 +109,7 @@ namespace Sunplus.Accounting.Business
                 if (!Functions.Customer.IsVisibleMaxExposure) { TemplateHandler.RemoveBlock(ref contentTpl, "maxExposure"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
                 if (!Functions.Customer.IsVisibleVirtualRate) { TemplateHandler.RemoveBlock(ref contentTpl, "virtualRate"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
                 if (!BingoSettings.NumberGame.Enabled) { TemplateHandler.RemoveBlock(ref contentTpl, "numbergame"); colComm--; colNo--; tblWidth = tblWidth - 50; }
-
-                if (!WebSettings.disabledHR)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
-                    Hashtable hCurrency = new Hashtable();
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, "horseracing-edit");
-                }
+                
                 //casino
                 if (!WebSettings.disableCS)
                 {
@@ -256,12 +247,7 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow2, "{currency}", currency);
 
                             #endregion assign template
-
-                            if (WebSettings.disabledHR)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "horseracing-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "horseracing-edit");
-                            }
+                            
                             //casino
                             if (!WebSettings.disableCS)
                             {
@@ -414,15 +400,6 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.Assign(ref contentTpl, "{minmaxPT}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMinMaxPT"));
 
                 #region start code
-
-                if (!WebSettings.disabledHR)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, "horseracing-edit");
-                }
                 //casino
                 if (allowCS)
                 {
@@ -558,11 +535,6 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
 
                             #endregion assign template
-
-                            if (WebSettings.disabledHR)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "horseracing-edit");
-                            }
                             //casino
                             var isSynCasinoUpline = !directMaster ? (!string.IsNullOrEmpty(synccasinoUpline) ?
                                 CastAide.AsBoolean(synccasinoUpline) : allowCS) :
@@ -682,16 +654,6 @@ namespace Sunplus.Accounting.Business
                 bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
-
-                if (!WebSettings.disabledHR)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, "horseracing-edit");
-                }
-
                 //casino
                 if (allowCS)
                 {
@@ -822,12 +784,6 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow2, "{link}", "MemberList.aspx?agentId=" + _custid + "&internal=" + isInternal.ToString().ToLower() + "&isSynccasino=" + dr["synccasino"]);
                             TemplateHandler.Assign(ref strRow2, "{username}", string.IsNullOrEmpty(_username) ? "&nbsp;" : _username);
                             TemplateHandler.Assign(ref strRow2, "{nickname}", dr.IsNull("username2") ? "&nbsp;" : Convert.ToString(dr["username2"]));
-                            if (WebSettings.disabledHR)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "horseracing-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "horseracing-edit");
-                            }
-
                             //casino
                             var isSyncCasinoUpline = !string.IsNullOrEmpty(syncCasinoUpline) ? CastAide.AsBoolean(syncCasinoUpline) : allowCS;
                             if (isSyncCasinoUpline)
@@ -944,16 +900,6 @@ namespace Sunplus.Accounting.Business
                 bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
-
-                if (!WebSettings.disabledHR)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, "horseracing-edit");
-                }
-
                 //casino
                 if (allowCS)
                 {
@@ -1074,11 +1020,7 @@ namespace Sunplus.Accounting.Business
 
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
                             TemplateHandler.Assign(ref strRow2, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
-                            if (WebSettings.disabledHR)
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "horseracing-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "horseracing-edit");
-                            }
+                            
                             //casino
                             var isSyncCasinoUpline = !string.IsNullOrEmpty(isSynccasino) ? CastAide.AsBoolean(isSynccasino) : allowCS;
                             if (isSyncCasinoUpline)

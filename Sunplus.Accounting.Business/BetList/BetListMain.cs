@@ -268,18 +268,10 @@ namespace Sunplus.Accounting.Business.BetList
                             DataRow row = ds.Rows[i];
 
                             _bettype = Convert.IsDBNull(row["bettype"]) ? 0 : CastAide.AsInt32(row["bettype"]);
-                            if ((WebSettings.disabledHR) && IsHRBettype(_bettype))
+                            if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
                             {
                                 index--;
                                 continue;
-                            }
-                            else
-                            {
-                                if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
-                                {
-                                    index--;
-                                    continue;
-                                }
                             }
 
                             //_bettypeName = CacheRef.GetBettype(_bettype);
@@ -980,12 +972,8 @@ namespace Sunplus.Accounting.Business.BetList
 
                             #endregion show delete button
                         }
-                        if (index == 0 && WebSettings.disabledHR)
-                        {
-                            html.Append(AccCommon.GenNoInformation("11"));
-                            html.Append("</table>");
-                        }
-                        else if (index == 0 && WebSettings.disabledFI)
+
+                        if (index == 0 && WebSettings.disabledFI)
                         {
                             html.Append(AccCommon.GenNoInformation("11"));
                             html.Append("</table>");
@@ -1081,18 +1069,10 @@ namespace Sunplus.Accounting.Business.BetList
                             DataRow row = ds.Rows[i];
 
                             _bettype = Convert.IsDBNull(row["bettype"]) ? 0 : CastAide.AsInt32(row["bettype"]);
-                            if ((WebSettings.disabledHR) && IsHRBettype(_bettype))
+                            if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
                             {
                                 index--;
                                 continue;
-                            }
-                            else
-                            {
-                                if ((WebSettings.disabledFI) && (IsFIBettype(_bettype)))
-                                {
-                                    index--;
-                                    continue;
-                                }
                             }
 
                             #region will be removed later
@@ -1817,12 +1797,8 @@ namespace Sunplus.Accounting.Business.BetList
 
                             #endregion show delete button
                         }
-                        if (index == 0 && WebSettings.disabledHR)
-                        {
-                            html.Append(AccCommon.GenNoInformation("11"));
-                            html.Append("</table>");
-                        }
-                        else if (index == 0 && WebSettings.disabledFI)
+
+                        if (index == 0 && WebSettings.disabledFI)
                         {
                             html.Append(AccCommon.GenNoInformation("11"));
                             html.Append("</table>");

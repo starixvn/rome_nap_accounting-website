@@ -1559,22 +1559,6 @@ namespace Sunplus.Accounting.Business.BetList
             return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
         }
 
-        protected bool IsHRBettype(int bettype)
-        {
-            switch (bettype)
-            {
-                case 31:
-                case 32:
-                case 33:
-                case 41:
-                case 42:
-                case 43:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
         //Kiet Mai
         protected bool IsNumberGame(int betType)
         {

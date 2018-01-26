@@ -346,62 +346,7 @@
             }
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
         }
-
-        private static SettingControl GetSettingControlEnableHorseRacingFixedOdds(
-            int roleId,
-            bool parentStatus,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currentStatus,
-            bool disableDownLine,
-            bool isEnabled)
-        {
-            string classname = string.Empty;
-            string jsonclick = string.Empty;
-            string jsonmouseover = string.Empty;
-            string jsonmouseout = string.Empty;
-            if (isManageCustomerAccess)
-            {
-                if (isEnabled)
-                {
-                    if (4 == roleId || parentStatus)
-                    {
-                        classname = "canchange";
-                        jsonclick = "return ShowDisablePop(this);";
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" +
-                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledHorseRacingFixedOddsUpline") +
-                            "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-                else
-                {
-                    classname = "cannotchange";
-                    jsonmouseout = "UnTip()";
-                    jsonmouseover = "Tip('" +
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") +
-                        "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                }
-            }
-
-            return new SettingControl(
-                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnableHorseRacingFixedOdds"),
-                currentStatus,
-                false,
-                jsonclick,
-                jsonmouseout,
-                jsonmouseover,
-                classname,
-                statusName,
-                roleId,
-                disableDownLine,
-                "EnableHorseRacingFixedOdds");
-        }
-
+        
         private static SettingControl GetSettingControlEnableAutoMaster(
             int roleID, 
             bool isManageCustomerAccess, 

@@ -13,12 +13,12 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Criteria.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
-using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Bingo.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using static Sunplus.Accounting.Core.Common.Enumerations;
 using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
 using Constants = Sunplus.Accounting.Core.Common.Constants;
 using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
@@ -269,11 +269,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MyanmarOdds")
                     };
 
-                    if (roleId <= (int)CustInfo.Roles.Super)
+                    if (roleId <= (int)Role.Super)
                     {
                         var superCom = new Commission()
                         {
-                            RoleName = CustInfo.Roles.Super.ToString(),
+                            RoleName = Role.Super.ToString(),
                             GroupA = new AllowViewSport()
                                                    {
                                                        Status = groupA.Status,
@@ -342,11 +342,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.Comm.Add(superCom);
                     }
 
-                    if (roleId <= (int)CustInfo.Roles.Master)
+                    if (roleId <= (int)Role.Master)
                     {
                         var masterCom = new Commission()
                         {
-                            RoleName = CustInfo.Roles.Master.ToString(),
+                            RoleName = Role.Master.ToString(),
                             GroupA = new AllowViewSport()
                                                     {
                                                         Status = groupA.Status,
@@ -410,11 +410,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.Comm.Add(masterCom);                        
                     }
 
-                    if (roleId <= (int)CustInfo.Roles.Agent)
+                    if (roleId <= (int)Role.Agent)
                     {                      
                         var agentCom = new Commission()
                         {
-                            RoleName = CustInfo.Roles.Agent.ToString(),
+                            RoleName = Role.Agent.ToString(),
                             GroupA = new AllowViewSport()
                                                    {
                                                        Status = groupA.Status,
@@ -473,7 +473,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.Comm.Add(agentCom);
                     }                  
 
-                    if (roleId == (int)CustInfo.Roles.Member)
+                    if (roleId == (int)Role.Member)
                     {
                         var group = rComm["ugroup"].ToString().ToLower();
                         if (group != "") group = group.Substring(group.Length - 1, 1);
@@ -481,7 +481,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         var memberCom = new Commission()
                         {
-                            RoleName = CustInfo.Roles.Member.ToString(),
+                            RoleName = Role.Member.ToString(),
                             GroupA = new AllowViewSport()
                                                     {
                                                         Status = groupA.Status,
@@ -736,7 +736,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     if (sportId == Constants.Sport.HorseRacing || sportId == Constants.Sport.Greyhound || sportId == Constants.Sport.Harness)
                     {
 
-                        if (roleId < (int)CustInfo.Roles.Agent)
+                        if (roleId < (int)Role.Agent)
                         {
                             var memberPt = new PositionTakingInfo()
                             {
@@ -757,7 +757,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }                       
 
-                        if (roleId < (int)CustInfo.Roles.Master)
+                        if (roleId < (int)Role.Master)
                         {
                             var agentPt = new PositionTakingInfo()
                             {
@@ -780,7 +780,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                        
 
-                        if (roleId < (int)CustInfo.Roles.Super)
+                        if (roleId < (int)Role.Super)
                         {
                             var masterPt = new PositionTakingInfo()
                             {
@@ -796,7 +796,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        if (roleId <= (int)CustInfo.Roles.Super)
+                        if (roleId <= (int)Role.Super)
                         {
                             var superPt = new PositionTakingInfo()
                             {
@@ -813,7 +813,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var numberOfDecimalDigits = (byte)(sportId == Constants.Sport.NumberGame ? 3 : 2);
 
-                        if (roleId < (int)CustInfo.Roles.Agent)
+                        if (roleId < (int)Role.Agent)
                         {
                             var memberPt = new PositionTakingInfo()
                             {
@@ -834,7 +834,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }
 
-                        if (roleId < (int)CustInfo.Roles.Master)
+                        if (roleId < (int)Role.Master)
                         {
                             var agentPt = new PositionTakingInfo()
                             {
@@ -856,7 +856,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }                       
 
-                        if (roleId < (int)CustInfo.Roles.Super)
+                        if (roleId < (int)Role.Super)
                         {
                             var masterPt = new PositionTakingInfo()
                             {
@@ -873,7 +873,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        if (roleId <= (int)CustInfo.Roles.Super)
+                        if (roleId <= (int)Role.Super)
                         {
                             var superPt = new PositionTakingInfo()
                             {
@@ -917,39 +917,39 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     result.CustomerInfo = new CustomerRelation { Upline = new List<CustomerInfo>() };
                     result.PotionTakingDetail = new List<PositionTakingDTO>();
 
-                    if (roleId < (int)CustInfo.Roles.Agent)
+                    if (roleId < (int)Role.Agent)
                     {
                         var agentInfo = new CustomerInfo()
                         {
                             CustId = CastAide.AsInt32(dtPt.Rows[2]["custid"].ToString()),
                             UserName = dtPt.Rows[2]["username"].ToString(),
-                            RoleId = (int)CustInfo.Roles.Agent,
+                            RoleId = (int)Role.Agent,
                             RoleName = ResourceExtension.GetResourceValue(
                                                     ResourceExtension.Resources.Language, "Agent")
                         };
                         result.CustomerInfo.Upline.Add(agentInfo);
                     }
 
-                    if (roleId < (int)CustInfo.Roles.Master)
+                    if (roleId < (int)Role.Master)
                     {
                         var masterInfo = new CustomerInfo()
                         {
                             CustId = CastAide.AsInt32(dtPt.Rows[1]["custid"].ToString()),
                             UserName = dtPt.Rows[1]["username"].ToString(),
-                            RoleId = (int)CustInfo.Roles.Master,
+                            RoleId = (int)Role.Master,
                             RoleName = ResourceExtension.GetResourceValue(
                                                      ResourceExtension.Resources.Language, "Master")
                         };
                         result.CustomerInfo.Upline.Add(masterInfo);
                     }
 
-                    if (roleId < (int)CustInfo.Roles.Super)
+                    if (roleId < (int)Role.Super)
                     {
                         var superInfo = new CustomerInfo()
                         {
                             CustId = CastAide.AsInt32(dtPt.Rows[0]["custid"].ToString()),
                             UserName = dtPt.Rows[0]["username"].ToString(),
-                            RoleId = (int)CustInfo.Roles.Super,
+                            RoleId = (int)Role.Super,
                             RoleName = ResourceExtension.GetResourceValue(
                                                     ResourceExtension.Resources.Language, "Super")
                         };
@@ -960,7 +960,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         CustId = CastAide.AsInt32(drInfo["custid"].ToString()),
                         UserName = drInfo["username"].ToString(),
-                        RoleId = (int)CustInfo.Roles.Member
+                        RoleId = (int)Role.Member
                     };                   
 
                     var ptCurrent = new PositionTakingDTO();
@@ -969,7 +969,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
 
-                        if (currentRoleId == (int)CustInfo.Roles.Master)
+                        if (currentRoleId == (int)Role.Master)
                         {
                             masterDisableAutoPt = CastAide.AsBoolean(dr["DisableAutoMPT"]);
                             ptCurrent.PermistionEnableAutoMaster =
@@ -979,7 +979,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
                         }
 
-                        if (currentRoleId == (int)CustInfo.Roles.Super)
+                        if (currentRoleId == (int)Role.Super)
                         {
                             ptCurrent.SportName = sportId == Constants.Sport.Casino ? "Casino" : "Bingo";
                             ptCurrent.SportType = dr["gamekind"].ToString();
@@ -1003,7 +1003,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Super = superPt;
                         }                       
 
-                        if (currentRoleId == (int)CustInfo.Roles.Master)
+                        if (currentRoleId == (int)Role.Master)
                         {
                             var masterPt = new PositionTakingInfo()
                             {
@@ -1023,7 +1023,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        if (currentRoleId == (int)CustInfo.Roles.Agent)
+                        if (currentRoleId == (int)Role.Agent)
                         {
                             var agentPt = new PositionTakingInfo()
                             {
@@ -1042,7 +1042,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }
 
-                        if (currentRoleId == (int)CustInfo.Roles.Member)
+                        if (currentRoleId == (int)Role.Member)
                         {
                             var memberPt = new PositionTakingInfo()
                             {
@@ -1086,39 +1086,39 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             var drCustInfo = data.ResultSet.Tables[0].Rows[0];
             var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);           
 
-            if (roleId < (int)CustInfo.Roles.Agent)
+            if (roleId < (int)Role.Agent)
             {
                 var agentInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(drCustInfo["AgID"].ToString()),
                     UserName = drCustInfo["Ag"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Agent,
+                    RoleId = (int)Role.Agent,
                     RoleName = ResourceExtension.GetResourceValue(
                      ResourceExtension.Resources.Language, "Agent")
                 };
                 customerRelation.Upline.Add(agentInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Master)
+            if (roleId < (int)Role.Master)
             {
                 var masterInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(drCustInfo["MAgID"].ToString()),
                     UserName = drCustInfo["MAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Master,
+                    RoleId = (int)Role.Master,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Master")
                 };
                 customerRelation.Upline.Add(masterInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Super)
+            if (roleId < (int)Role.Super)
             {
                 var superInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(drCustInfo["SAgID"].ToString()),
                     UserName = drCustInfo["SAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Super,
+                    RoleId = (int)Role.Super,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Super")
                 };
@@ -1129,7 +1129,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 CustId = CastAide.AsInt32(drCustInfo["custid"].ToString()),
                 UserName = drCustInfo["username"].ToString(),
-                RoleId = (int)CustInfo.Roles.Member
+                RoleId = (int)Role.Member
             };
 
             return customerRelation;
