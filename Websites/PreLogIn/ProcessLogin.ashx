@@ -6,22 +6,14 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
-using BLL;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Services;
 using IBCUtils;
-using System.Data;
-using System.Text;
-using System.Text.RegularExpressions;
 using Fanex.Nap.SSO.Repositories;
 using Fanex.Nap.SSO.Criteria;
-using log4net;
-
-
 
 public class ProcessLogin : IHttpHandler, IRequiresSessionState
 {

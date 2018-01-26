@@ -20,13 +20,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return reportMenu.GetMenuList(system);
         }
 
-        public MatchWL2aDTO SelMatchWL2a(string wldate, int currpage)
-        {
-            var report2a = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MatchWL.IMatchWL2aService>();
-            var rs = report2a.SelMatchWL2a(Convert.ToDateTime(wldate), currpage);
-            return rs;
-        }
-
         public MixparlayDataGridBO GetMixparlayReport(bool isSoccer, string date, int pageIndex, int pageSize, bool fromcache, int sortType)
         {
             var mixparlay = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Report.Mixparlay.IMixparlayWon>();
@@ -51,60 +44,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         {
             var mixparlay = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Report.CombinationMixparlay.ICombinationMixparlayWon>();
             mixparlay.CombinationMixparlayWonExportToExcel(isSoccer, date);
-        }
-
-        public Entities.Report.CheckBet.CheckBet GetCheckBet(string fromDate)
-        {
-            var report = CommonBootStrapper.Locator.GetInstance<Business.Report.IReportService>();
-            return report.GetCheckBet(fromDate);
-        }
-
-        public List<GamesActiveMembers> GetNumberOfActiveMembers(string fromDate, string toDate)
-        {
-            var gamesActiveMembers = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MemberStatistics.IGamesActiveMembersManager>();
-            var result = gamesActiveMembers.GetNumberOfActiveMembers(fromDate, toDate);
-            return result;
-        }
-
-        #region IReportService Members
-
-        public WLbyBettypeDTO SelWLbyBettype(string wldate)
-        {
-            var report2a = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MatchWL.IMatchWL2aServiceNEW>();
-            return report2a.SelWLbyBettype(CastAide.AsDateTime(wldate));
-        }
-
-        #endregion IReportService Members
-
-        #region IReportService Members
-
-        public MatchWLBySportDTO SelMatchWLBySport(string wldate, int currIndex, int currIndexBtype)
-        {
-            var report2a = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MatchWL.IMatchWL2aServiceNEW>();
-            return report2a.SelMatchWLBySport(CastAide.AsDateTime(wldate), currIndex, currIndexBtype);
-        }
-
-        #endregion IReportService Members
-
-        #region IReportService Members
-
-        public MatchWLFooterDTO SelMatchWl3RdFooter(string wldate)
-        {
-            var report2a = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MatchWL.IMatchWL2aServiceNEW>();
-            return report2a.SelMatchWl3RdFooter(CastAide.AsDateTime(wldate));
-        }
-
-        #endregion IReportService Members
-
-        #region IReportService Members
-
-        public MixParlayView GetMixParlayDetailDailyWl(string wldate, int bettype)
-        {
-            var reportDailyWL =
-                CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.DailyWL.IReportDailyWL>();
-            return reportDailyWL.DailyWLDirect_MixParlayAdvance(wldate, bettype);
-        }
-
-        #endregion IReportService Members
+        }      
     }
 }

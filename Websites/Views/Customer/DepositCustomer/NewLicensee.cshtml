@@ -1,5 +1,4 @@
-﻿@using Sunplus.Accounting.Business.BetAggregator
-@using Sunplus.Accounting.Business.BootStrappers
+﻿
 @using Fanex.Tarus.Customer.Controller.NewLicensee;
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="~/Views/Customer/DepositCustomer/Styles/NewLicensee.css" />
@@ -33,8 +32,7 @@
         }
 }
 @helper GetCurrency()
-    {
-        //var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
+    {     
         var newLicenseeController = new NewLicenseeController();
         var currencyList = newLicenseeController.GetCurrenciesBySystem();
         if (currencyList == null)
@@ -605,13 +603,7 @@ var arrRacing = [];
                         @GenerateBetSettingComPtRacing()
                     </tbody>
                 </table>
-            </div>
-            @*<!--Virtual Sports-->
-            @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableVirtualSports)
-            {
-                @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/AddNewSuper.cshtml")
-            }
-            <!--/Virtual Sports-->*@
+            </div>            
             <!--Keno-->
             @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
             {

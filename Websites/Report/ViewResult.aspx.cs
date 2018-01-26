@@ -3,7 +3,6 @@ using System;
 using DNAide.Core;
 using Fanex.Tarus.BetList.Business.Results;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.BetList;
 
 public partial class Report_ViewResult : System.Web.UI.Page
 {
@@ -23,8 +22,8 @@ public partial class Report_ViewResult : System.Web.UI.Page
             }
             else
             {
-                BetListMain betlist = new BetListMain();
-                lResult.Text = betlist.LoadCalHTML(matchID, bettype, betId.ToString());
+                //BetListMain betlist = new BetListMain();
+                //lResult.Text = betlist.LoadCalHTML(matchID, bettype, betId.ToString());
             }
         }
         catch (Exception exception)

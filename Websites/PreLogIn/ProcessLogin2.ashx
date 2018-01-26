@@ -13,10 +13,7 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL;
-using Sunplus.Accounting.Services;
-using Sunplus.Core.LoggingLib;
 
 public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {    
     public void ProcessRequest (HttpContext context) {

@@ -3,7 +3,6 @@ using System;
 using DNAide.Core;
 using Fanex.Tarus.BetList.Business.Results;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.BetList;
 
 public partial class Report_ViewResult : System.Web.UI.Page
 {

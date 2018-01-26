@@ -20,14 +20,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        MatchWL2aDTO SelMatchWL2a(string wldate, int currpage);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        WLbyBettypeDTO SelWLbyBettype(string wldate);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         MixparlayDataGridBO GetMixparlayReport(bool isSoccer, string date, int pageIndex, int pageSize, bool fromcache, int sortType);
 
         [OperationContract]
@@ -40,26 +32,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        void CombinationMixparlayWonExportToExcel(bool isSoccer, string date);
+        void CombinationMixparlayWonExportToExcel(bool isSoccer, string date);      
 
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        CheckBet GetCheckBet(string fromDate);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<GamesActiveMembers> GetNumberOfActiveMembers(string fromDate, string toDate);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        MatchWLBySportDTO SelMatchWLBySport(string wldate, int currIndex, int currIndexBtype);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        MatchWLFooterDTO SelMatchWl3RdFooter(string wldate);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        MixParlayView GetMixParlayDetailDailyWl(string wldate, int bettype);
     }
 }
