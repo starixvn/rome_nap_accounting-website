@@ -30,7 +30,7 @@ public partial class ExchangeRate : PageBase
         {
             ExChangeRate ex = new ExChangeRate();
             ExRateHeaderStr.Text = Resources.Language.ExRate;
-            //ExRateAddContentHtml.Text = ex.GenAddContent("InsertExChangeRate();");
+         
             ExRateAddContentHtml.Text = rate.GenHeader();
             ExRateListContentHtml.Text = ex.GenListContent();
         }

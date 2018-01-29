@@ -27,12 +27,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             string actualRate = CastAide.AsString(context.Request["BaseRate"]);
             string currency = context.Request["Currency"];
             string minbet = CastAide.AsString(context.Request["Minbet"]);
-            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);
-            string GBPRate = CastAide.AsString(context.Request["GBPRate"]);
-            string AUDRate = CastAide.AsString(context.Request["AUDRate"]);
-            string ZARRate = CastAide.AsString(context.Request["ZARRate"]);
-            string EURORate = CastAide.AsString(context.Request["EURORate"]);
-            string USDRate = CastAide.AsString(context.Request["USDRate"]);
+            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);           
             string Code = CastAide.AsString(context.Request["Code"]);
             string Description = CastAide.AsString(context.Request["Description"]);
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
@@ -43,7 +38,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             if (context.Request["type"] == "insert")
             {
 
-                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, GBPRate, EURORate, USDRate, Code, Description, MultipliedBy);
+                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, Code, Description, MultipliedBy);
                 if (errMsg.Length > 0)
                     context.Response.Write("no|" + errMsg);
                 else
@@ -67,7 +62,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
                     var currencies = syncCurrencyService.SyncCurrencies().Currencies;
 
-                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, GBPRate, EURORate, USDRate, Description, MultipliedBy, Code);
+                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy);
                     if (errMsg.Length == 0)
                     {
                         var allowedCurrency = false;

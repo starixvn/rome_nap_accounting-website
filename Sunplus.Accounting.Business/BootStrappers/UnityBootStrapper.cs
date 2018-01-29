@@ -47,8 +47,7 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IMenuManager, MenuManager>()
                 .RegisterType<IExchangeRateDAO, ExchangeRateDAO>()
                 .RegisterType<IExchangeRateService, ExchangeRateManager>()      
-                .RegisterType<IOthersDAO, OthersDAO>()
-                .RegisterType<IReportService, ReportService>()   
+                .RegisterType<IOthersDAO, OthersDAO>()                
                 .RegisterType<IHelperDAO, HelperDAO>()
                 .RegisterType<IHelper, Helper>()
                 .RegisterType<ICustomerDAO, CustomerDAO>()
@@ -61,9 +60,10 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<ISettingManager, SettingManager>()
                 .RegisterType<IServiceDailyTran, DailyTransManager>()
                 .RegisterType<ITicketsListingDAO, TicketsListingDAO>()
+                .RegisterType<IResetWinningDAO, ResetWinningDAO>()
+                .RegisterType<IResetWinningManager, ResetWinningManager>()
                 ;
-
-            RegisterReport(container);
+          
             RegisterPT(container);
             RegisterBetList(container);          
             RegisterAgencyGroup(container);           
@@ -72,14 +72,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
         private static void RegisterType<T1, T2>()
         {
             throw new System.NotImplementedException();
-        }
-
-        private static void RegisterReport(IUnityContainer container)
-        {
-            container    
-                .RegisterType<IResetWinningDAO, ResetWinningDAO>()
-                .RegisterType<IResetWinningManager, ResetWinningManager>()
-                ;
         }
 
         private static void RegisterPT(IUnityContainer container)
