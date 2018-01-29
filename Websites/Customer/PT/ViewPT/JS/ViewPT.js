@@ -785,14 +785,6 @@ var ViewPT = {
         try { parent.BlockUI(); } catch (e) { }
 
         switch (sportId) {
-            case 252: //Bingo 
-                ViewPT.getPTSetting(userName,
-                    sportId,
-                    betTypeId,
-                    isLive);
-                $("#frmSportsbook2").attr('src', "");
-                $("#frmSportsbook2").hide();
-                break;
             case 44: //Sportsbook 2 
             case 206: //Cockfighting
             case 50: //Cricket
@@ -882,34 +874,6 @@ var ViewPT = {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
-        });
-    },
-    getPTSetting: function (userName,
-        sportId,
-        betTypeId,
-        isLive) {
-        var requestParams = {
-            UserName: userName,
-            SportId: sportId,
-            BetTypeId: betTypeId,
-            IsLive: isLive
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "../../../ViewPT/GetPTSetting",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(requestParams),
-            success: function (result) {
-                ViewPT.renderPTSetting(requestParams, result);
-            },
-            error: function (jqXHR, event, ajaxSettings) {
-                ViewPT.renderPTSetting(requestParams, null);
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
         });
     },
     renderPTSetting: function (requestParams, result) {
