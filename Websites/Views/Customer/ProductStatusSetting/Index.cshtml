@@ -145,19 +145,19 @@
 @helper renderEnabledStatus(int sportType, int betType, bool isDisabled, byte roleId, int totalEnabled) {
     var spanClass = "enabled" + (isDisabled ? " gray" : string.Empty);
     var id = string.Format("enabled_{0}_{1}", roleId, betType);
-    <input type="radio" id="@id" name="@(roleId + "_" + betType)" />
-    <label for="@id" class="@spanClass"
+    @*<input type="radio" id="@id" name="@(roleId + "_" + betType)" />*@
+    <span id="@id" class="@spanClass"
           data-roleid="@roleId"
           data-sporttype="@sportType"
-          data-bettype="@betType">@totalEnabled.ToString("N0")</label>
+          data-bettype="@betType">@totalEnabled.ToString("N0")</span>
 }
 
 @helper renderDisabledStatus(int sportType, int betType, bool isDisabled, byte roleId, int totalDisabled) {
 var spanClass = "disabled" + (isDisabled ? " gray" : string.Empty);
 var id = string.Format("disabled_{0}_{1}", roleId, betType);
-    <input type="radio" id="@id" name="@(roleId + "_" + betType)" />
-    <label for="@id" class="@spanClass"
+    @*<input type="radio" id="@id" name="@(roleId + "_" + betType)" />*@
+    <span id="@id" class="@spanClass"
           data-roleid="@roleId"
           data-sporttype="@sportType"
-          data-bettype="@betType">@totalDisabled.ToString("N0")</label>
+          data-bettype="@betType">@totalDisabled.ToString("N0")</span>
 }
