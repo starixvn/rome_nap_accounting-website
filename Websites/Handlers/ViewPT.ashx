@@ -256,113 +256,7 @@ public class ViewPT : BaseHandler
         }
         TemplateHandler.ReplaceBlock(ref _s, "tbl", _mainTable.ToString());
         return _s;
-    }   
-
-    #region Generate HTML Bingo PT-Com
-    public static string GenerateHTMLBingoPTCom(string username, int BetType, DbResult dr)
-    {
-        DataRow rInfo = dr.ResultSet.Tables[0].Rows[0];
-        DataTable dtb = dr.ResultSet.Tables[1];
-        
-        if (dtb == null && dtb.Rows.Count == 0)         
-            return "<b><br/>There is no information available.</b>";
-        
-        string _s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/ViewPT_BingoPT.htm");
-
-        int roleID = CastAide.AsInt32(rInfo["roleid"], 1);
-
-        // information
-        string _sUpline = TemplateHandler.CopyBlock(_s, "upline");
-        string curUpline = string.Empty;
-        StringBuilder _sbUpline = new StringBuilder();
-        if (roleID < 2)
-        {
-            curUpline = _sUpline;
-            TemplateHandler.Assign(ref curUpline, "Role", "AGENT");
-            TemplateHandler.Assign(ref curUpline, "Name", rInfo["Ag"].ToString());
-            TemplateHandler.Assign(ref curUpline, "ID", rInfo["AgID"].ToString());
-            _sbUpline.Append(curUpline);
-        }
-        if (roleID < 3)
-        {
-            curUpline = _sUpline;
-            TemplateHandler.Assign(ref curUpline, "Role", "MASTER");
-            TemplateHandler.Assign(ref curUpline, "Name", rInfo["MAg"].ToString());
-            TemplateHandler.Assign(ref curUpline, "ID", rInfo["MAgID"].ToString());
-            _sbUpline.Append(curUpline);
-        }
-        if (roleID < 4)
-        {
-            curUpline = _sUpline;
-            TemplateHandler.Assign(ref curUpline, "Role", "SUPER");
-            TemplateHandler.Assign(ref curUpline, "Name", rInfo["SAg"].ToString());
-            TemplateHandler.Assign(ref curUpline, "ID", rInfo["SAgID"].ToString());
-            _sbUpline.Append(curUpline);
-        }
-        TemplateHandler.ReplaceBlock(ref _s, "upline", _sbUpline.ToString());
-        TemplateHandler.Assign(ref _s, "CustName", rInfo["username"].ToString());
-        TemplateHandler.Assign(ref _s, "CustID", rInfo["custid"].ToString());
-
-        // position taking
-        string sTable = TemplateHandler.CopyBlock(_s, "tbl");
-        for (int i = 1; i < 5; i++)
-        {
-            if (roleID > i) TemplateHandler.RemoveBlock(ref sTable, "r" + i.ToString());
-        }
-        string curRow = string.Empty, _sTable = string.Empty;
-        StringBuilder _mainTable = new StringBuilder();
-        int curRoleID;
-        foreach (DataRow r in dtb.Rows)
-        {
-            curRoleID = CastAide.AsInt16(rInfo["roleid"].ToString());
-            _sTable = sTable;
-            TemplateHandler.Assign(ref _sTable, "sportName", "Bingo");
-            TemplateHandler.Assign(ref _sTable, "GameKind", "Bingo");
-            TemplateHandler.Assign(ref _sTable, "GameType", "Bingo");
-
-            // super
-            TemplateHandler.Assign(ref _sTable, "s4", NumberFormat.DecFormat(r["s4"], 2));
-            TemplateHandler.Assign(ref _sTable, "m4", NumberFormat.DecFormat(r["m4"], 2));
-            TemplateHandler.Assign(ref _sTable, "a4", NumberFormat.DecFormat(r["a4"], 2));
-            TemplateHandler.Assign(ref _sTable, "MinPT4", NumberFormat.DecFormat(r["n4"], 2));            
-            TemplateHandler.Assign(ref _sTable, "isAutoPT4", " checked='checked'");
-            TemplateHandler.Assign(ref _sTable, "AutoPT4", NumberFormat.DecFormat(0, 2));
-            TemplateHandler.Assign(ref _sTable, "Com4", IBCUtils.FormatHandler.FormatNumber4(0));
-
-            // master
-            TemplateHandler.Assign(ref _sTable, "s3", NumberFormat.DecFormat(r["s3"], 2));
-            TemplateHandler.Assign(ref _sTable, "m3", NumberFormat.DecFormat(r["m3"], 2));
-            TemplateHandler.Assign(ref _sTable, "a3", NumberFormat.DecFormat(r["u3"], 2));
-            TemplateHandler.Assign(ref _sTable, "MinPT3", NumberFormat.DecFormat(r["n3"], 2));
-            TemplateHandler.Assign(ref _sTable, "isAutoPT3", (CastAide.AsBoolean(r["i3"], false)) ? " checked='checked'" : string.Empty);
-            TemplateHandler.Assign(ref _sTable, "AutoPT3", NumberFormat.DecFormat(0, 2));
-            TemplateHandler.Assign(ref _sTable, "Com3", IBCUtils.FormatHandler.FormatNumber4(0));
-
-            // agent                                                            
-            TemplateHandler.Assign(ref _sTable, "s2", NumberFormat.DecFormat(0, 2));
-            TemplateHandler.Assign(ref _sTable, "m2", NumberFormat.DecFormat(r["m2"], 2));
-            TemplateHandler.Assign(ref _sTable, "a2", NumberFormat.DecFormat(r["a2"], 2));
-            TemplateHandler.Assign(ref _sTable, "MinPT2", NumberFormat.DecFormat(r["n2"], 2));
-            TemplateHandler.Assign(ref _sTable, "isAutoPT2", (CastAide.AsBoolean(r["im2"], false)) ? " checked='checked'" : string.Empty);
-            TemplateHandler.Assign(ref _sTable, "AutoPT2", NumberFormat.DecFormat(r["im2"], 2));
-            TemplateHandler.Assign(ref _sTable, "Com2", IBCUtils.FormatHandler.FormatNumber4(0));
-
-            // member                                                           
-            TemplateHandler.Assign(ref _sTable, "s1", NumberFormat.DecFormat(r["s1"], 2));
-            TemplateHandler.Assign(ref _sTable, "m1", NumberFormat.DecFormat(r["m1"], 2));
-            TemplateHandler.Assign(ref _sTable, "a1", NumberFormat.DecFormat(r["a1"], 2));
-            TemplateHandler.Assign(ref _sTable, "MinPT1", NumberFormat.DecFormat(0, 2));
-            TemplateHandler.Assign(ref _sTable, "isAutoPT1", (CastAide.AsBoolean(r["i1"], false)) ? " checked='checked'" : string.Empty);
-            TemplateHandler.Assign(ref _sTable, "AutoPT1", NumberFormat.DecFormat(r["im1"], 2));
-            TemplateHandler.Assign(ref _sTable, "Com1", IBCUtils.FormatHandler.FormatNumber4(0));
-
-            if (roleID == curRoleID)
-                _mainTable.Append(_sTable);
-        }
-        TemplateHandler.ReplaceBlock(ref _s, "tbl", _mainTable.ToString());
-        return _s;
     }
-    #endregion
 
 
     public static string GenerateHTMLPosiontaking(DbResult dr)
@@ -499,14 +393,9 @@ public class ViewPT : BaseHandler
         if (!WebSettings.Disable1x2Comm)
             TemplateHandler.Assign(ref _s, "lbl1X2", Resources.Language.lbl1x2);
         else
-            TemplateHandler.RemoveBlock(ref _s, "1X2");  
-        
-        //Kiet Mai - add Game comm
-        if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-            TemplateHandler.Assign(ref _s, "{lblGameComm}", Resources.Language.lblGameComm);
-        else
-            TemplateHandler.RemoveBlock(ref _s, "numbergame");
-     
+            TemplateHandler.RemoveBlock(ref _s, "1X2");             
+       
+        TemplateHandler.Assign(ref _s, "{lblGameComm}", Resources.Language.lblGameComm);     
             
         int roleID = CastAide.AsInt32(rInfo["roleid"], 1);
                           
@@ -556,9 +445,8 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curRow, "gb", NumberFormat.DecFormat(rComm["gb4"], 4));
             TemplateHandler.Assign(ref curRow, "gc", NumberFormat.DecFormat(rComm["gc4"], 4));
             TemplateHandler.Assign(ref curRow, "gd", NumberFormat.DecFormat(rComm["gd4"], 4));
-            TemplateHandler.Assign(ref curRow, "#", NumberFormat.DecFormat(rComm["othercomm4"], 4));          
-            //Kiet Mai - add Game comm        
-            if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled) TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_4"], 4));
+            TemplateHandler.Assign(ref curRow, "#", NumberFormat.DecFormat(rComm["othercomm4"], 4));
+            TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_4"], 4));
             _sbRow.Append(curRow);
         }
         if (roleID <= 3)
@@ -572,8 +460,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curRow, "#", NumberFormat.DecFormat(rComm["othercomm3"], 4));
             if (!WebSettings.Disable1x2Comm) TemplateHandler.Assign(ref curRow, "1X2", NumberFormat.DecFormat(rComm["comm_5_3"], 4));          
            
-            //Kiet Mai - add Game comm        
-            if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled) TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_3"], 4));
+            TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_3"], 4));
             _sbRow.Append(curRow);
         }
         if (roleID <= 2)
@@ -586,8 +473,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curRow, "gd", NumberFormat.DecFormat(rComm["gd2"], 4));
             TemplateHandler.Assign(ref curRow, "#", NumberFormat.DecFormat(rComm["othercomm2"], 4));
             if (!WebSettings.Disable1x2Comm) TemplateHandler.Assign(ref curRow, "1X2", NumberFormat.DecFormat(rComm["comm_5_2"], 4));         
-            //Kiet Mai - add Game comm        
-            if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled) TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_2"], 4));
+            TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81_2"], 4));
             _sbRow.Append(curRow);
         }
         if (roleID == 1)
@@ -603,8 +489,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curRow, "gd", string.Empty);
             TemplateHandler.Assign(ref curRow, "#", NumberFormat.DecFormat(rComm["othercomm"], 4));
             if (!WebSettings.Disable1x2Comm) TemplateHandler.Assign(ref curRow, "1X2", NumberFormat.DecFormat(rComm["comm_5"], 4));         
-            //Kiet Mai - add Game comm    
-            if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled) TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81"], 4));
+            TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81"], 4));
             _sbRow.Append(curRow);
         }
         TemplateHandler.ReplaceBlock(ref _s, "row", _sbRow.ToString());           

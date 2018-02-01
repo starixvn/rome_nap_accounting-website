@@ -331,14 +331,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             var midfix2 = "";
 
             sporttype = Constants.Sport.NumberGame;
-
-            if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-            {
-                sporttype = 1;
-                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
-            }
-            else
-                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
+            param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
 
             param.Add("minbetv161", context.Request["txtMinbet" + sporttype]);//money
             param.Add("maxbetv161", context.Request["txtMaxbet" + sporttype]);//money
@@ -381,14 +374,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     s = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
                     m = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
                     a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "A")]);
-                }
-
-                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    s = CastAide.AsDouble(context.Request["listSHdpD1"]);
-                    m = CastAide.AsDouble(context.Request["listMHdpD1"]);
-                    a = CastAide.AsDouble(context.Request["listAHdpD1"]);
-                }
+                }             
 
                 if (CheckBettypeStatus(bettype, IsLive))
                 {
@@ -860,16 +846,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 double minb = 0, maxb = 0, maxpermatch = 0;
                 int sporttype = 0;
                 sporttype = Constants.Sport.NumberGame;
-
-                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    sporttype = 1;
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
-                }
-                else
-                {
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
-                }
+                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));                
 
                 minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
                 maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
@@ -940,15 +917,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         s = IsAuto ? 0 : CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
                         auto = IsAuto ? CastAide.AsDouble(context.Request["autoS" + strSub]) : 0;
                     }
-
-                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                    {
-                        IsAuto = context.Request["chkAuto1HdpD"] != null;
-                        m = CastAide.AsDouble(context.Request["listM1HdpD"]);
-                        s = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1HdpD"]);
-                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1HdpD"]) : 0;
-                    }
-
+                                     
                     if (CheckBettypeStatus(bettype, IsLive))
                     {
                         param.Add("v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, s);//Master Preset Position
@@ -1435,16 +1404,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 double minb = 0, maxb = 0, maxpermatch = 0;
                 int sporttype = 0;
                 sporttype = Constants.Sport.NumberGame;
-
-                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    sporttype = 1;
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
-                }
-                else
-                {
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
-                }
+                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
 
                 minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
                 maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
@@ -1509,14 +1469,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
                         m = IsAuto ? 0 : CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
                         auto = IsAuto ? CastAide.AsDouble(context.Request["autoS" + strSub]) : 0;
-                    }
-
-                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                    {
-                        IsAuto = context.Request["chkAuto1HdpD"] != null;
-                        a = CastAide.AsDouble(context.Request["listM1HdpD"]);
-                        m = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1HdpD"]);
-                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1HdpD"]) : 0;
                     }
 
                     if (CheckBettypeStatus(bettype, IsLive))
@@ -1712,16 +1664,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 isCopyAll = context.Request["chkCopyAll"] != null;
                 isCopyBasket = context.Request["chkCopyBasket"] != null;
                 sporttype = Constants.Sport.NumberGame;
-
-                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    sporttype = 1;
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
-                }
-                else
-                {
-                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
-                }
+                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
 
                 minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
                 maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
@@ -1777,10 +1720,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         //list{level}HLL
                         string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
                         a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
-                    }
-
-                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                        a = CastAide.AsDouble(context.Request["listM1HdpD"]);
+                    }                   
 
                     if (CheckBettypeStatus(bettype, IsLive))
                         param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, a);//Agent Position
@@ -2154,24 +2094,15 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         maxPt2 = CastAide.AsDouble(getPT(content.Request["listM161NBOULs"]));
                     }
                     else
-                    {
-                        if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                        {
-                            maxPt = CastAide.AsDouble(getPT(content.Request["listSHdpD1"]));
-                            minPt = CastAide.AsDouble(getPT(content.Request["listMHdpD1"]));
-                            maxPt2 = CastAide.AsDouble(getPT(content.Request["listMHdpD1_Max"]));
-                        }
-                        else
-                        {
-                            maxPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "S")]));
-                            minPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "M")]));
+                    {                       
+                        maxPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "S")]));
+                        minPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "M")]));
 
-                            var paramN = lstValue.Replace("{level}", "M" + sporttype) + prefix;
-                            maxPt2 = CastAide.AsDouble(getPT(content.Request[paramN]));
-                        }
+                        var paramN = lstValue.Replace("{level}", "M" + sporttype) + prefix;
+                        maxPt2 = CastAide.AsDouble(getPT(content.Request[paramN]));                       
                     }
 
-                    if (!CheckBettypeStatus(bettype, IsLive) && Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    if (!CheckBettypeStatus(bettype, IsLive))
                     {
                         maxPt = CastAide.AsDouble(getPT(content.Request[string.Format("hlistS{0}_{1}_{2}", sporttype, bettype, subfix)]));
                         minPt = CastAide.AsDouble(getPT(content.Request[string.Format("hlistM{0}_{1}_{2}", sporttype, bettype, subfix)]));
@@ -2372,14 +2303,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         s = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
                         auto = CastAide.AsDouble(context.Request["autoS" + strSub]);
                         IsAuto = context.Request["chkAuto" + strSub] != null;
-                    }
-
-                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                    {
-                        s = CastAide.AsDouble(context.Request["listS1HdpD"]);
-                        auto = CastAide.AsDouble(context.Request["autoS1HdpD"]);
-                        IsAuto = context.Request["chkAuto1HdpD"] != null;
-                    }
+                    }                  
 
                     if (CheckBettypeStatus(bettype, IsLive))
                     {
@@ -2421,17 +2345,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "discount", discount);
                 TemplateHandler.Assign(ref tpl, "playerdiscount", playerdiscount);
 
-                if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
-                    TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));
-                }
-                else
-                {
-                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", "");
-                    TemplateHandler.RemoveBlock(ref strAccInfo, "othersetting");
-                    TemplateHandler.RemoveBlock(ref strAccInfo, "numbergame");
-                }
+                
+                TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
+                TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));
+               
             }
             catch (Exception ex)
             {
@@ -2461,18 +2378,9 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
                 TemplateHandler.Assign(ref tpl, "discount", discount);
                 TemplateHandler.Assign(ref tpl, "playerdiscount", playerdiscount);
-
-                if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                {
-                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
-                    TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));
-                }
-                else
-                {
-                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", "");
-                    TemplateHandler.RemoveBlock(ref strAccInfo, "othersetting");
-                    TemplateHandler.RemoveBlock(ref strAccInfo, "numbergame");
-                }
+               
+                TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
+                TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));               
             }
             catch (Exception ex)
             {
@@ -2674,13 +2582,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         m = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
                         auto = CastAide.AsDouble(context.Request["autoM" + strSub]);
                         IsAuto = context.Request["chkAuto" + strSub] != null;
-                    }
-
-                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
-                    {
-                        m = CastAide.AsDouble(context.Request["listM1HdpD"]);
-                        auto = CastAide.AsDouble(context.Request["autoM1HdpD"]);
-                        IsAuto = context.Request["chkAuto1HdpD"] != null;
                     }
 
                     if (CheckBettypeStatus(bettype, IsLive))

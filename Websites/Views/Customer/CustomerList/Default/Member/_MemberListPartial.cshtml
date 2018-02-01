@@ -1,24 +1,21 @@
 ﻿@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
 @using DNAide.Core
 @using Sunplus.Accounting.Core.Configurations
-@using Sunplus.Bingo.Core
 @using System.Collections
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
 @using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
 @{
-    var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-    bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
+   
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
-    var enableNumberGame = BingoSettings.NumberGame.Enabled;
+    var enableNumberGame = true;
     
-    var disabledFI = WebSettings.disabledFI;
-    var enableBingo = BingoSettings.BingoGame.Enabled;
+  
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-    bool allowFI = Permissions.IsAllowEditFI();
+  
     int IsShowCustomerSettingRenovation = 0;
     var thirdPartyStatus = Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
     bool allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
@@ -69,13 +66,10 @@
     }
 
     Hashtable hash = new Hashtable();
-    hash.Add("p2pSetting", p2pSetting);
-    hash.Add("visibleP2PSetting", visibleP2PSetting);
+    
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("enableNumberGame", enableNumberGame);
-    hash.Add("enableBingo", enableBingo);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("disabledFI", disabledFI);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
@@ -142,11 +136,7 @@
                         var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS">Casino</li>
-                    @if (CastAide.AsBoolean(hash["enableBingo"]))
-                    {
-                        <li class="canchange" onclick="OpenEditBI('@memberItem.ChildID', '@Model.ParentId', '1')">
-                            Bingo </li>
-                    }
+                   
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
                         Password </li>
                     @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))

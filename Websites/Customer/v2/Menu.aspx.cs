@@ -10,7 +10,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Bingo.Core;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using System.Data;
 
@@ -35,7 +34,7 @@ public partial class Others_Menu : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, AllowedBI, hideVirtualSports, hideColossusbets, hideCockfighting, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting;
+        Boolean AllowedCS, hideVirtualSports, hideColossusbets, hideCricket, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -52,15 +51,14 @@ public partial class Others_Menu : System.Web.UI.Page
 
         Thread.Sleep(2000);
         DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));
-        AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
-        AllowedBI = CastAide.AsBoolean(db.Outputs["allowedbi"]);
+        AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);       
 
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
         hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
-        hideCockfighting = !CastAide.AsBoolean(db.Outputs["allowedcockfighting"]) || !WebSettings.IsShowCockFighting;
+      
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
         hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
@@ -117,7 +115,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("GoldDeluxe", "{urlgolddeluxe}", goldDeluxePath, !WebSettings.IsShowGoldDeluxeSettingForCredit);
         this.RenderSettingTab("ColossusBet", "{urlColossusBet}", colossusBetPath, hideColossusbets);
         this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
-        this.RenderSettingTab("cockFighting", "{cockFightingLinkSetting}", string.Format(creditDCSLink, (int)products.cockfighting), hideCockfighting);
+        
         this.RenderSettingTab("cricket", "{cricketLinkSetting}", string.Format(creditDCSLink, (int)products.cricket), hideCricket);
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", string.Format(creditDCSLink, (int)products.allbet), hideAllbet);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);

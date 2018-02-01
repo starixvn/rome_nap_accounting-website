@@ -7,19 +7,15 @@ using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
 using Sunplus.Accounting.Business.ExChangeRate;
 using Sunplus.Accounting.Business.LogDisplay;
 using Sunplus.Accounting.Business.PT.ViewPT;
-using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Business.Report.ResetWinning;
 using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO;
 using Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO;
-using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.DataAccess.ILogDisplay;
-using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report.ResetWinning;
-using Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing;
 
 namespace Sunplus.Accounting.Business.BootStrappers
 {
@@ -46,26 +42,22 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IUserService, UserService>()
                 .RegisterType<IMenuManager, MenuManager>()
                 .RegisterType<IExchangeRateDAO, ExchangeRateDAO>()
-                .RegisterType<IExchangeRateService, ExchangeRateManager>()      
-                .RegisterType<IOthersDAO, OthersDAO>()                
+                .RegisterType<IExchangeRateService, ExchangeRateManager>()     
                 .RegisterType<IHelperDAO, HelperDAO>()
                 .RegisterType<IHelper, Helper>()
                 .RegisterType<ICustomerDAO, CustomerDAO>()
                 .RegisterType<ICustomerManager, CustomerManager>()
                 .RegisterType<ICreditTermGroupDAO, CreditTermGroupDAO>()
                 .RegisterType<ICreditTermManager, CreditTermManager>() 
-                .RegisterType<IViewPtManager, ViewPTManager>()
-                .RegisterType<IReportMainDAO, ReportMainDAO>()              
+                .RegisterType<IViewPtManager, ViewPTManager>()            
                 .RegisterType<ILogDisplayDAO, LogDisplayDAO>()
                 .RegisterType<ISettingManager, SettingManager>()
                 .RegisterType<IServiceDailyTran, DailyTransManager>()
-                .RegisterType<ITicketsListingDAO, TicketsListingDAO>()
                 .RegisterType<IResetWinningDAO, ResetWinningDAO>()
                 .RegisterType<IResetWinningManager, ResetWinningManager>()
                 ;
           
-            RegisterPT(container);
-            RegisterBetList(container);          
+            RegisterPT(container);                  
             RegisterAgencyGroup(container);           
         }
 
@@ -77,11 +69,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
         private static void RegisterPT(IUnityContainer container)
         {
             container.RegisterType<PT.Casino.ICasinoManager, PT.Casino.CasinoManager>();
-        }
-
-        private static void RegisterBetList(IUnityContainer container)
-        {
-            container.RegisterType<IBetListDAO, BetListDAO>();           
         }
 
         private static void RegisterAgencyGroup(IUnityContainer container)

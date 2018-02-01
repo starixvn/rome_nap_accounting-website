@@ -47,7 +47,7 @@
     text-align: left;
 }
 
-#tabheader-sportsbook-numbergame .btnright, #table-racing-settings .btnright, #tab-virtualsports-settings .btnright
+#tabheader-sportsbook-numbergame .btnright, #tab-virtualsports-settings .btnright
 {
     width: 20px;
 }
@@ -130,46 +130,9 @@
 }
 
 #tabheader-sportsbook-numbergame #btntop,
-#table-racing-settings #btntop,
 #tab-virtualsports-settings #btntop
 {
     cursor: pointer;
-}
-
-#div-racing-container .table-settings
-{
-    width: 880px !important;
-    margin-left: 7px;
-}
-
-#div-racing-container .table-settings .header-title
-{
-    font-weight: bold;
-    text-align: center;
-}
-
-#div-racing-container .table-settings .bettypename
-{
-    padding-left: 4px;
-    text-align: left;
-}
-
-#div-racing-container .table-settings .totename
-{
-    padding-left: 4px;
-    text-align: left;
-}
-
-#div-racing-container .table-settings .dropdown-commission, #div-racing-container .table-settings .dropdown-position
-{
-    width: 60px;
-    text-align: left;
-}
-
-#div-racing-container .table-settings .betsetting
-{
-    width: 100%;
-    text-align: right;
 }
 
 #div-virtualsports-container .table-betsettings

@@ -41,47 +41,8 @@
                 @:window.sportsbookSports.push(sport);
             }
         }
-   })();
+   })();  
    
-    var racingToteTypes = [];
-   (function () { 
-        var racing;
-        var tote;
-        @{
-            var racings = RacingSection.Instance.Racings;
-            foreach (RacingElement racingElement in racings)
-            {
-                if (!racingElement.Active)
-                {
-                    continue;
-                }
-
-                @:racing = { Id: "@racingElement.Id" , Totes: [] };
-                foreach (ToteElement tote in racingElement.Totes)
-                {
-                    if (!tote.Active)
-                    {
-                        continue;
-                    }
-
-                    @:tote = {Id: @tote.Id, BetTypes: []};   
-                     if (!string.IsNullOrWhiteSpace(tote.BetType) &&
-                         tote.BetType != "NA")
-                     {
-                         var betTypes = tote.BetType.Split(new char[] { ',' });
-                         foreach (var betType in betTypes)
-                         {
-                             @:tote.BetTypes.push(@betType);
-                         }
-                     }
-                                          
-                    @:racing.Totes.push(tote);
-                }
-
-        @:window.racingToteTypes.push(racing);
-            }
-       }
-   })();
 
    var numberGameBetTypes = [];
    (function () { 
@@ -144,91 +105,7 @@
     </tr>
         }
 }
-@helper GenerateRacingSettings()
-    {
-        var racings = RacingSection.Instance.Racings;
-        foreach (RacingElement racing in racings)
-        {
-            if (!racing.Active)
-            {
-                continue;
-            }
 
-            var isFirst = true;
-            var activeCounter = 0;
-            foreach (ToteElement tote in racing.Totes)
-            {
-                if (tote.Active)
-                {
-                    activeCounter++;
-                }
-            }
-
-            foreach (ToteElement tote in racing.Totes)
-            {
-                var flat = "";
-                if (string.Equals(racing.Id, Sports.HorseRacing.ToString()) &&
-                    string.Equals(tote.Id, BetType.WinUKTote.ToString()))
-                {
-                    flat = "copyfrom";
-                }
-                else
-                {
-                    flat = "copyto";
-                }
-
-                var minBetId = "v" + racing.Id.ToLower() + "minbet_" + tote.Id;
-                var maxBetId = "v" + racing.Id.ToLower() + "maxbet_" + tote.Id;
-                var maxpermatchId = "v" + racing.Id.ToLower() + "maxpermatch_" + tote.Id;
-                var commId = "v" + racing.Id.ToLower() + "discount_" + tote.Id;
-                var winplaceId = "v" + racing.Id.ToLower() + "spositiontaking_" + tote.Id;
-                var horseAutoId = "v" + racing.Id.ToLower() + "ibcpositiontaking_" + tote.Id;
-                var disableId = "disable" + racing.Id.ToLower() + "_" + tote.Id;
-    <tr>
-        @if (isFirst && activeCounter != 0)
-        {
-            isFirst = false;
-            <td rowspan="@activeCounter" class="bettypename" align="left">
-                <span>@racing.Name</span>
-            </td>
-        }
-        @if (!tote.Active)
-        {
-            continue;
-        }
-        <td class="totename">
-            <span>@tote.Name</span>
-        </td>
-        <td>
-            <input id="@minBetId" @flat type="text" minbet="true" class="betsetting" value="@tote.Minbet" />
-        </td>
-        <td>
-            <input id="@maxBetId" @flat type="text" maxbet="true" class="betsetting" value="@tote.Maxbet" />
-        </td>
-        <td>
-            <input id="@maxpermatchId" @flat type="text" maxpermatch="true" class="betsetting" value="@tote.Maxpermatch" />
-        </td>
-        <td class="align-center">
-            <select id="@commId" @flat comm="true"  class="dropdown-commission">
-            </select>
-        </td>
-        <td class="align-center">
-            <select id="@winplaceId" @flat winplacept="true" class="dropdown-position">
-            </select>
-        </td>
-        <td class="align-center">
-            <select id="@horseAutoId" @flat houseautopt="true" class="dropdown-position">
-            </select>
-        </td>
-        <td class="align-center">
-            <input id="@disableId" @flat type="checkbox" />
-            <label class="label-for-checkbox" for="@disableId">
-                Enable</label>
-        </td>
-    </tr>
-            }
-        }
-}
 <div class="main">
     <div class="maincontent">
         <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
@@ -407,75 +284,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <table id="table-racing-settings" cellspacing="0" cellpadding="0" border="0" class="table-positiontaking-header">
-                <tbody>
-                    <tr id="btntop">
-                        <td class="btnleft">
-                        </td>
-                        <td class="btnmiddle">
-                            <span class="mp">Racing</span>
-                        </td>
-                        <td class="md2 btnright" arrow="true">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="div-racing-container">
-                <table border="0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input id="checkbox-copyall-racing" type="checkbox" />
-                            </td>
-                            <td>
-                                <label class="label-for-checkbox bold" for="checkbox-copyall-racing">
-                                    Copy all Bet Setting, Commission & Position Taking from Horse Racing UK/Irish Tote</label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="tblcollapse table-settings">
-                    <tbody>
-                        <tr class="title">
-                            <td colspan="2">
-                            </td>
-                            <td colspan="3" class="header-title">
-                                <span>Bet Setting</span>
-                            </td>
-                            <td colspan="3" class="header-title">
-                                <span>Comm & PT Setting</span>
-                            </td>
-                            <td rowspan="2" class="header-title col80">
-                                <span>Status</span>
-                            </td>
-                        </tr>
-                        <tr class="title">
-                            <td colspan="2">
-                            </td>
-                            <td class="header-title col100">
-                                <span>Min Bet</span>
-                            </td>
-                            <td class="header-title col100">
-                                <span>Max Bet</span>
-                            </td>
-                            <td class="header-title col100">
-                                <span style="font-weight: bold">Max Per Match</span>
-                            </td>
-                            <td class="header-title col100">
-                                <span>Comm</span>
-                            </td>
-                            <td class="header-title col100">
-                                <span>Win/ Place PT</span>
-                            </td>
-                            <td class="header-title col100">
-                                <span>House Auto PT</span>
-                            </td>
-                        </tr>
-                        @GenerateRacingSettings()
-                    </tbody>
-                </table>
-            </div>
+            </div>          
+          
             <!--Virtual Sports-->
             @if (WebSettings.EnableVirtualSports)
             {

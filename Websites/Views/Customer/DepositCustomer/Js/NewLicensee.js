@@ -191,65 +191,6 @@ newLic.assignNumberGamePT = function (params) {
     }
 };
 
-newLic.assignRacingBetSettingComPT = function (params) {
-    for (var j = 0; j < window.arrRacing.length; ++j) {
-        var racing = window.arrRacing[j];
-        for (var k = 0; k < racing.totes.length; ++k) {
-            var tote = { Id: racing.totes[k].Id, Bettype: racing.totes[k].Bettype };
-
-            //bet setting
-            params.push({
-                Name: "v" + racing.Id + "minbet_" + tote.Id
-                , Value: $("#v" + racing.Id + "minbet_" + tote.Id).getNumberValue()
-            });
-            params.push({
-                Name: "v" + racing.Id + "maxbet_" + tote.Id
-                , Value: $("#v" + racing.Id + "maxbet_" + tote.Id).getNumberValue()
-            });
-            params.push({
-                Name: "v" + racing.Id + "maxpermatch_" + tote.Id
-                , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
-            });
-
-            for (var i = 0; i < tote.Bettype.length; i++) {
-                //commision
-                params.push({
-                    Name: "v" + racing.Id + "discount_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "discount_" + tote.Id).val()
-                });
-
-                //win place pt
-                params.push({
-                    Name: "v" + racing.Id + "spositiontaking_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "spositiontaking_" + tote.Id).val()
-                });
-
-                params.push({
-                    Name: "v" + racing.Id + "mpositiontaking_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "spositiontaking_" + tote.Id).val()
-                });
-
-                params.push({
-                    Name: "v" + racing.Id + "apositiontaking_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "spositiontaking_" + tote.Id).val()
-                });
-
-                //house auto pt
-                params.push({
-                    Name: "v" + racing.Id + "ibcpositiontaking_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "ibcpositiontaking_" + tote.Id).val()
-                });
-            }
-
-            //enable
-            params.push({
-                Name: "disable" + racing.Id + "_" + tote.Id
-                , Value: !$("#" + "disable" + racing.Id + "_" + tote.Id).is(":checked")
-            });
-        }
-    }
-};
-
 newLic.getPostParam = function () {
     var params = [];
     params.push({
@@ -273,9 +214,6 @@ newLic.getPostParam = function () {
 
     //numbergame position taking
     this.assignNumberGamePT(params);
-
-    //racing bet setting, comm & PT setting
-    this.assignRacingBetSettingComPT(params);
 
     //enable number game
     params.push({

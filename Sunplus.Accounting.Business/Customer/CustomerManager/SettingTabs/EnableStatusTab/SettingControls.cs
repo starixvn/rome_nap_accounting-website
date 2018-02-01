@@ -1,7 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
-    using Bingo.Core;
     using Core.Common;
     using Core.Configurations;
     using Core.Extensions;
@@ -9,6 +7,7 @@
     using DNAide.Web;
     using Entities;
     using Security;
+    using System;
 
     public partial class CustomerManager
     {
@@ -181,42 +180,37 @@
             bool isdisableNumberGameDL, 
             bool isenabled)
         {
-            if (!BingoSettings.NumberGame.Enabled)
-            {
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), false, true, string.Empty, string.Empty, string.Empty, string.Empty, statusName, roleID, isdisableNumberGameDL, "NumberGame");
-            }
-            else
-            {
-                string classname = string.Empty;
-                string jsonclick = string.Empty;
-                string jsonmouseover = string.Empty;
-                string jsonmouseout = string.Empty;
+           
+            string classname = string.Empty;
+            string jsonclick = string.Empty;
+            string jsonmouseover = string.Empty;
+            string jsonmouseout = string.Empty;
 
-                if (isManageCustomerAccess)
+            if (isManageCustomerAccess)
+            {
+                if (isenabled)
                 {
-                    if (isenabled)
+                    if (4 == roleID || !parentstatus)
                     {
-                        if (4 == roleID || !parentstatus)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGameUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
+                        classname = "canchange";
+                        jsonclick = "return ShowDisablePop(this);";
                     }
                     else
                     {
                         classname = "cannotchange";
                         jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGameUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
                     }
                 }
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisableNumberGameDL, "NumberGame");
+                else
+                {
+                    classname = "cannotchange";
+                    jsonmouseout = "UnTip()";
+                    jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                }
             }
+            return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisableNumberGameDL, "NumberGame");
+            
         }
 
         private static SettingControl GetSettingControlCasino(

@@ -13,7 +13,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Criteria.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
-using Sunplus.Bingo.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -51,8 +50,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var sportId = CastAide.AsInt32(dr["sporttype"].ToString());
                         var bettype = GetPtBetType(sportId);
-
-                        if (sportId == Constants.Sport.NumberGame && !BingoSettings.NumberGame.Enabled) continue;
+                      
                         var sport = new Sport()
                         {
                             SportId = sportId,
@@ -252,7 +250,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     var gameComm = new AllowViewSport()
                     {
-                        Status = BingoSettings.NumberGame.Enabled,
+                        Status = true,
                         Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGameComm")
                     };
 
@@ -733,158 +731,81 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
                     ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
                                        
-                    if (sportId == Constants.Sport.HorseRacing || sportId == Constants.Sport.Greyhound || sportId == Constants.Sport.Harness)
+                    
+                   
+                    var numberOfDecimalDigits = (byte)(sportId == Constants.Sport.NumberGame ? 3 : 2);
+
+                    if (roleId < (int)Role.Agent)
                     {
-
-                        if (roleId < (int)Role.Agent)
+                        var memberPt = new PositionTakingInfo()
                         {
-                            var memberPt = new PositionTakingInfo()
-                            {
-                                Super = currencyAllowViewPt ? NumberFormat.DecFormat(dr["s1"], 2) : "N/A",
-                                Master = currencyAllowViewPt ? NumberFormat.DecFormat(dr["m1"], 2) : "N/A",
-                                Agent = currencyAllowViewPt ? NumberFormat.DecFormat(dr["a1"], 2) : "N/A",
-                                SuperAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["u1"], 2) : "N/A",
-                                SuperIsAuto =
-                                    (CastAide.AsBoolean(dr["i1"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MasterAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["um1"], 2) : "N/A",
-                                MasterIsAuto =
-                                    (CastAide.AsBoolean(dr["im1"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty
-                            };
-                            ptCurrent.Member = memberPt;
-                        }                       
-
-                        if (roleId < (int)Role.Master)
-                        {
-                            var agentPt = new PositionTakingInfo()
-                            {
-                                Master = currencyAllowViewPt ? NumberFormat.DecFormat(dr["m2"], 2) : "N/A",
-                                Agent = currencyAllowViewPt ? NumberFormat.DecFormat(dr["a2"], 2) : "N/A",
-                                SuperAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["um2"], 2) : "N/A",
-                                SuperIsAuto =
-                                    (CastAide.AsBoolean(dr["im2"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MasterAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["um2"], 2) : "N/A",
-                                MasterIsAuto =
-                                    (CastAide.AsBoolean(dr["im2"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MinPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["n2"], 2) : "N/A",
-                                MaxPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["l2"], 2) : "N/A"
-                            };
-                            ptCurrent.Agent = agentPt;
-                        }
-                       
-
-                        if (roleId < (int)Role.Super)
-                        {
-                            var masterPt = new PositionTakingInfo()
-                            {
-                                Super = currencyAllowViewPt ? NumberFormat.DecFormat(dr["s3"], 2) : "N/A",
-                                Master = currencyAllowViewPt ? NumberFormat.DecFormat(dr["m3"], 2) : "N/A",
-                                SuperAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["u3"], 2) : "N/A",
-                                SuperIsAuto = (CastAide.AsBoolean(dr["i3"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MinPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["n3"], 2) : "N/A",
-                                MaxPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["l3"], 2) : "N/A"
-                            };
-                            ptCurrent.Master = masterPt;
-                        }
-
-                        if (roleId <= (int)Role.Super)
-                        {
-                            var superPt = new PositionTakingInfo()
-                            {
-                                Super = currencyAllowViewPt ? NumberFormat.DecFormat(dr["s4"], 2) : "N/A",
-                                Master = currencyAllowViewPt ? NumberFormat.DecFormat(dr["m4"], 2) : "N/A",
-                                Agent = currencyAllowViewPt ? NumberFormat.DecFormat(dr["a4"], 2) : "N/A",
-                                MinPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["n4"], 2) : "N/A",
-                                MaxPt = currencyAllowViewPt ? NumberFormat.DecFormat(dr["l4"], 2) : "N/A"
-                            };
-                            ptCurrent.Super = superPt;
-                        }
+                            Super = NumberFormat.DecFormat(dr["s1"], numberOfDecimalDigits),
+                            Master = NumberFormat.DecFormat(dr["m1"], numberOfDecimalDigits),
+                            Agent = NumberFormat.DecFormat(dr["a1"], numberOfDecimalDigits),
+                            SuperAuto = NumberFormat.DecFormat(dr["u1"], numberOfDecimalDigits),
+                            SuperIsAuto =
+                                (CastAide.AsBoolean(dr["i1"], false))
+                                    ? " checked='checked'"
+                                    : string.Empty,
+                            MasterAuto = NumberFormat.DecFormat(dr["um1"], numberOfDecimalDigits),
+                            MasterIsAuto =
+                                (CastAide.AsBoolean(dr["im1"], false))
+                                    ? " checked='checked'"
+                                    : string.Empty
+                        };
+                        ptCurrent.Member = memberPt;
                     }
-                    else
+
+                    if (roleId < (int)Role.Master)
                     {
-                        var numberOfDecimalDigits = (byte)(sportId == Constants.Sport.NumberGame ? 3 : 2);
-
-                        if (roleId < (int)Role.Agent)
+                        var agentPt = new PositionTakingInfo()
                         {
-                            var memberPt = new PositionTakingInfo()
-                            {
-                                Super = NumberFormat.DecFormat(dr["s1"], numberOfDecimalDigits),
-                                Master = NumberFormat.DecFormat(dr["m1"], numberOfDecimalDigits),
-                                Agent = NumberFormat.DecFormat(dr["a1"], numberOfDecimalDigits),
-                                SuperAuto = NumberFormat.DecFormat(dr["u1"], numberOfDecimalDigits),
-                                SuperIsAuto =
-                                    (CastAide.AsBoolean(dr["i1"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["um1"], numberOfDecimalDigits),
-                                MasterIsAuto =
-                                    (CastAide.AsBoolean(dr["im1"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty
-                            };
-                            ptCurrent.Member = memberPt;
-                        }
+                            Master = NumberFormat.DecFormat(dr["m2"], numberOfDecimalDigits),
+                            Agent = NumberFormat.DecFormat(dr["a2"], numberOfDecimalDigits),
+                            SuperAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
+                            SuperIsAuto =
+                                (CastAide.AsBoolean(dr["im2"], false))
+                                    ? " checked='checked'"
+                                    : string.Empty,
+                            MasterAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
+                            MasterIsAuto =
+                                (CastAide.AsBoolean(dr["im2"], false))
+                                    ? " checked='checked'"
+                                    : string.Empty,
+                            MinPt = NumberFormat.DecFormat(dr["n2"], numberOfDecimalDigits),
+                            MaxPt = NumberFormat.DecFormat(dr["l2"], numberOfDecimalDigits)
+                        };
+                        ptCurrent.Agent = agentPt;
+                    }                       
 
-                        if (roleId < (int)Role.Master)
+                    if (roleId < (int)Role.Super)
+                    {
+                        var masterPt = new PositionTakingInfo()
                         {
-                            var agentPt = new PositionTakingInfo()
-                            {
-                                Master = NumberFormat.DecFormat(dr["m2"], numberOfDecimalDigits),
-                                Agent = NumberFormat.DecFormat(dr["a2"], numberOfDecimalDigits),
-                                SuperAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
-                                SuperIsAuto =
-                                    (CastAide.AsBoolean(dr["im2"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
-                                MasterIsAuto =
-                                    (CastAide.AsBoolean(dr["im2"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MinPt = NumberFormat.DecFormat(dr["n2"], numberOfDecimalDigits),
-                                MaxPt = NumberFormat.DecFormat(dr["l2"], numberOfDecimalDigits)
-                            };
-                            ptCurrent.Agent = agentPt;
-                        }                       
+                            Super = NumberFormat.DecFormat(dr["s3"], numberOfDecimalDigits),
+                            Master = NumberFormat.DecFormat(dr["m3"], numberOfDecimalDigits),
+                            SuperAuto = NumberFormat.DecFormat(dr["u3"], numberOfDecimalDigits),
+                            SuperIsAuto =
+                                (CastAide.AsBoolean(dr["i3"], false))
+                                    ? " checked='checked'"
+                                    : string.Empty,
+                            MinPt = NumberFormat.DecFormat(dr["n3"], numberOfDecimalDigits),
+                            MaxPt = NumberFormat.DecFormat(dr["l3"], numberOfDecimalDigits)
+                        };
+                        ptCurrent.Master = masterPt;
+                    }
 
-                        if (roleId < (int)Role.Super)
+                    if (roleId <= (int)Role.Super)
+                    {
+                        var superPt = new PositionTakingInfo()
                         {
-                            var masterPt = new PositionTakingInfo()
-                            {
-                                Super = NumberFormat.DecFormat(dr["s3"], numberOfDecimalDigits),
-                                Master = NumberFormat.DecFormat(dr["m3"], numberOfDecimalDigits),
-                                SuperAuto = NumberFormat.DecFormat(dr["u3"], numberOfDecimalDigits),
-                                SuperIsAuto =
-                                    (CastAide.AsBoolean(dr["i3"], false))
-                                        ? " checked='checked'"
-                                        : string.Empty,
-                                MinPt = NumberFormat.DecFormat(dr["n3"], numberOfDecimalDigits),
-                                MaxPt = NumberFormat.DecFormat(dr["l3"], numberOfDecimalDigits)
-                            };
-                            ptCurrent.Master = masterPt;
-                        }
-
-                        if (roleId <= (int)Role.Super)
-                        {
-                            var superPt = new PositionTakingInfo()
-                            {
-                                Super = NumberFormat.DecFormat(dr["s4"], numberOfDecimalDigits),
-                                Master = NumberFormat.DecFormat(dr["m4"], numberOfDecimalDigits),
-                                Agent = NumberFormat.DecFormat(dr["a4"], numberOfDecimalDigits),
-                                MinPt = NumberFormat.DecFormat(dr["n4"], numberOfDecimalDigits),
-                                MaxPt = NumberFormat.DecFormat(dr["l4"], numberOfDecimalDigits)
-                            };
-                            ptCurrent.Super = superPt;
-                        }
+                            Super = NumberFormat.DecFormat(dr["s4"], numberOfDecimalDigits),
+                            Master = NumberFormat.DecFormat(dr["m4"], numberOfDecimalDigits),
+                            Agent = NumberFormat.DecFormat(dr["a4"], numberOfDecimalDigits),
+                            MinPt = NumberFormat.DecFormat(dr["n4"], numberOfDecimalDigits),
+                            MaxPt = NumberFormat.DecFormat(dr["l4"], numberOfDecimalDigits)
+                        };
+                        ptCurrent.Super = superPt;
                     }
 
                     ptDetail.Add(ptCurrent);

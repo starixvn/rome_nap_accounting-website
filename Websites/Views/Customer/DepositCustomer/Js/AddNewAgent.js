@@ -223,130 +223,9 @@ addNewAgent.fillNumberGameSettingAndPT = function (dataJson) {
     }
 };
 
-addNewAgent.fillRacingSettingAndPT = function (dataJson) {
-    for (var j = 0; j < window.arrRacing.length; ++j) {
-        var racing = window.arrRacing[j];
-        for (var k = 0; k < racing.totes.length; ++k) {
-            var tote = { Id: racing.totes[k].Id };
-            //bet setting
-            var minBet = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id]);
-            var maxBet = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id]);
-            var maxPerMatch = parseFloat(dataJson["v" + racing.Id + "maxpermatch_" + tote.Id]);
-
-            if (minBet == 0) {
-                if (this.roleId == 2) {
-                    minBet = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id + "_min"]);
-                }
-                else {
-                    minBet = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id + "_max"]);
-                }
-            }
-
-            if (maxBet == 0) {
-                if (this.roleId == 2) {
-                    maxBet = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id + "_max"]);
-                }
-                else {
-                    maxBet = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id + "_min"]);
-                }
-            }
-
-            if (maxPerMatch == 0) {
-                maxPerMatch = parseFloat(dataJson["v" + racing.Id + "maxpermatch_" + tote.Id + "_max"]);
-            }
-
-            $("#v" + racing.Id + "minbet_" + tote.Id).val(minBet.formatMoneyFromVal());
-            $("#v" + racing.Id + "maxbet_" + tote.Id).val(maxBet.formatMoneyFromVal());
-            $("#v" + racing.Id + "maxpermatch_" + tote.Id).val(maxPerMatch.formatMoneyFromVal());
-
-            //set upline
-            if (this.roleId == 3) {
-                $("#v" + racing.Id + "minbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id]);
-                $("#v" + racing.Id + "maxbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id]);
-                $("#v" + racing.Id + "maxpermatch_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "maxpermatch_" + tote.Id]);
-            }
-            else {
-                if (this.roleId == 2) {
-                    $("#v" + racing.Id + "minbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id + "_min"]);
-                }
-                else {
-                    $("#v" + racing.Id + "minbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "minbet_" + tote.Id + "_max"]);
-                }
-
-                if (this.roleId == 2) {
-                    $("#v" + racing.Id + "maxbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id + "_max"]);
-                }
-                else {
-                    $("#v" + racing.Id + "maxbet_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "maxbet_" + tote.Id + "_min"]);
-                }
-
-                $("#v" + racing.Id + "maxpermatch_" + tote.Id).get(0).uplineVal = parseFloat(dataJson["v" + racing.Id + "maxpermatch_" + tote.Id + "_max"]);
-            }
-
-            if (minBet < $("#v" + racing.Id + "minbet_" + tote.Id).get(0).uplineVal) {
-                $("#v" + racing.Id + "minbet_" + tote.Id).val($("#v" + racing.Id + "minbet_" + tote.Id).get(0).uplineVal.formatMoneyFromVal());
-            }
-
-            if (maxBet > $("#v" + racing.Id + "maxbet_" + tote.Id).get(0).uplineVal) {
-                $("#v" + racing.Id + "maxbet_" + tote.Id).val($("#v" + racing.Id + "maxbet_" + tote.Id).get(0).uplineVal.formatMoneyFromVal());
-            }
-
-            if (maxPerMatch > $("#v" + racing.Id + "maxpermatch_" + tote.Id).get(0).uplineVal) {
-                $("#v" + racing.Id + "maxpermatch_" + tote.Id).val($("#v" + racing.Id + "maxpermatch_" + tote.Id).get(0).uplineVal.formatMoneyFromVal());
-            }
-
-            //commision
-            var uplineValMax;
-            uplineValMax = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]);
-            if (isNaN(uplineValMax)) uplineValMax = 0;
-
-            var maxRacingComm = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal();
-            $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
-                if (parseFloat($(this).val()) > maxRacingComm) $(this).remove();
-            });
-            $("#v" + racing.Id + "discount_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
-
-            //win place pt
-            if (this.roleId == 3) {
-                uplineValMax = parseFloat(dataJson["v" + racing.Id + "spositiontaking_" + tote.Id]);
-                if (isNaN(uplineValMax)) uplineValMax = 0;
-                $("#v" + racing.Id + "spositiontaking_" + tote.Id).find("option").each(function () {
-                    if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
-                });
-                $("#v" + racing.Id + "spositiontaking_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "spositiontaking_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
-            }
-            else if (this.roleId == 2) {
-                uplineValMax = parseFloat(dataJson["v" + racing.Id + "mpositiontaking_" + tote.Id]);
-                if (isNaN(uplineValMax)) uplineValMax = 0;
-                $("#v" + racing.Id + "mpositiontaking_" + tote.Id).find("option").each(function () {
-                    if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
-                });
-                $("#v" + racing.Id + "mpositiontaking_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "mpositiontaking_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
-            }
-            else {
-                uplineValMax = parseFloat(dataJson["v" + racing.Id + "apositiontaking_" + tote.Id]);
-                if (isNaN(uplineValMax)) uplineValMax = 0;
-                $("#v" + racing.Id + "apositiontaking_" + tote.Id).find("option").each(function () {
-                    if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
-                });
-                $("#v" + racing.Id + "apositiontaking_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "apositiontaking_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
-            }
-
-            //disable checkbox if upline is not enable
-            if (dataJson["disable" + racing.Id + "_" + tote.Id] == "True") {
-                $("#" + "disable" + racing.Id + "_" + tote.Id).attr("disabled", "disabled");
-            }
-            else {
-                $("#" + "disable" + racing.Id + "_" + tote.Id).attr("checked", "checked");
-            }
-        }
-    }
-};
-
 addNewAgent.fillData = function () {
     this.fillSportbookSettingAndPT(window.dataJson);
-    this.fillNumberGameSettingAndPT(window.dataJson);
-    this.fillRacingSettingAndPT(window.dataJson);
+    this.fillNumberGameSettingAndPT(window.dataJson);   
 };
 
 addNewAgent.assignSportbookSettingAndPT = function (params) {
@@ -448,63 +327,6 @@ addNewAgent.assignNumberGamePT = function (params) {
     }
 };
 
-addNewAgent.assignRacingBetSettingComPT = function (params) {
-    for (var j = 0; j < window.arrRacing.length; ++j) {
-        var racing = window.arrRacing[j];
-        for (var k = 0; k < racing.totes.length; ++k) {
-            var tote = { Id: racing.totes[k].Id, Bettype: racing.totes[k].Bettype };
-
-            //bet setting
-            params.push({
-                Name: "v" + racing.Id + "minbet_" + tote.Id
-                    , Value: $("#v" + racing.Id + "minbet_" + tote.Id).getNumberValue()
-            });
-            params.push({
-                Name: "v" + racing.Id + "maxbet_" + tote.Id
-                    , Value: $("#v" + racing.Id + "maxbet_" + tote.Id).getNumberValue()
-            });
-            params.push({
-                Name: "v" + racing.Id + "maxpermatch_" + tote.Id
-                    , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
-            });
-
-            for (var i = 0; i < tote.Bettype.length; i++) {
-                //commision
-                params.push({
-                    Name: "v" + racing.Id + (this.roleId == 1 ? "player" : "") + "discount_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "discount_" + tote.Id).val()
-                });
-
-                //win place pt
-                if (this.roleId == 3) {
-                    params.push({
-                        Name: "v" + racing.Id + "mpositiontaking_" + tote.Bettype[i]
-                    , Value: $("#v" + racing.Id + "spositiontaking_" + tote.Id).val()
-                    });
-                }
-                else if (this.roleId == 2) {
-                    params.push({
-                        Name: "v" + racing.Id + "apositiontaking_" + tote.Bettype[i]
-                        , Value: $("#v" + racing.Id + "mpositiontaking_" + tote.Id).val()
-                    });
-                }
-                else {
-                    params.push({
-                        Name: "v" + racing.Id + "apositiontaking_" + tote.Bettype[i]
-                        , Value: $("#v" + racing.Id + "apositiontaking_" + tote.Id).val()
-                    });
-                }
-            }
-
-            //enable
-            params.push({
-                Name: "disable" + racing.Id + "_" + tote.Id
-                , Value: !$("#" + "disable" + racing.Id + "_" + tote.Id).is(":checked")
-            });
-        }
-    }
-};
-
 addNewAgent.getPostParam = function () {
     var params = [];
     params.push({
@@ -519,10 +341,7 @@ addNewAgent.getPostParam = function () {
     this.assignNumberGameSetting(params);
 
     //numbergame position taking
-    this.assignNumberGamePT(params);
-
-    //racing bet setting, comm & PT setting
-    this.assignRacingBetSettingComPT(params);
+    this.assignNumberGamePT(params);   
 
     //virtual sports
     if (typeof vsDownlineSettings != 'undefined') {

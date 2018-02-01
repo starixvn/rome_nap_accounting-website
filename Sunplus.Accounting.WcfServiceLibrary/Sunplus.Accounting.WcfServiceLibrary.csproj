@@ -90,15 +90,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.13-HideInactiveProducts2\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.13-HideInactiveProducts3\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.4-HideInactiveProducts1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.4-HideInactiveProducts2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9-HideInactiveProducts1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9-HideInactiveProducts2\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -142,15 +142,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11-HideInactiveProducts3\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11-HideInactiveProducts4\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.9-HideInactiveProducts3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.9-HideInactiveProducts4\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6-HideInactiveProducts2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6-HideInactiveProducts3\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -55,7 +55,7 @@ public partial class Transfer : System.Web.UI.Page
                 bool isYesterday = CastAide.AsString(Request["IsYesterDay"], "0").Equals("1");
 
                 var superBalance = IBCProvider.ReportProvider.DownLineBalance().RptSABalance(db, isYesterday, hash);//super
-                if(superBalance != null && superBalance.ResultSet != null && superBalance.ResultSet.Tables.Count >0 && superBalance.ResultSet.Tables[0].Rows.Count >0)
+                if (superBalance != null && superBalance.ResultSet != null && superBalance.ResultSet.Tables.Count > 0 && superBalance.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     _amount = (-CastAide.AsDouble(superBalance.ResultSet.Tables[0].Rows[0]["balance"], 0)).ToString();
                     _amount = NumberFormat.DecFormat(_amount, 2);
