@@ -97,8 +97,8 @@
       <HintPath>..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.4\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.5-UpgradeNewtonjson45\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -147,10 +147,6 @@
     </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.10-UpgradeNewtonjson451\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.11-UpgradeNewtonjson45\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">

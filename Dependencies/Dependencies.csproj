@@ -309,6 +309,10 @@
       <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.3-napframework1003\lib\net40\Fanex.Nap.SSO.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta05\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
@@ -403,10 +407,6 @@
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Interface.1.0.0.6\lib\net40\Fanex.Tarus.Business.Interface.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.11-UpgradeNewtonjson45\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -862,6 +862,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
+      <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
+      <Name>Fanex.Tarus.Customer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
