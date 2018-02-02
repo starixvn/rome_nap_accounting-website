@@ -15,9 +15,47 @@
     </style>
 
     <script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../PT/Racing/JS/CommonPT.js"></script>
+
     <script type="text/javascript">
         var isDirectCustomer = <%=IsDirectCustomer%>;
+        function PTBlockUI() {
+
+            if (parent.BlockUI) {
+                try { parent.BlockUI(); } catch (e) { }
+            }
+                //Called inside a frame set (#centerFr)
+            else {
+                if (parent.parent.BlockUI) {
+                    parent.parent.BlockUI();
+                }
+            }
+            //Called from popup
+            if (opener) {
+                if (opener.BlockUI) {
+                    opener.BlockUI();
+                }
+                opener.parent.BlockUI();
+            }
+        }
+        function PTUnBlockUI() {
+    
+            if (parent.jQuery && parent.jQuery.unblockUI) {
+                parent.jQuery.unblockUI();
+            }
+            //Called inside a frame set (#centerFr)
+            if (parent.parent.jQuery && parent.parent.jQuery.unblockUI) {
+       
+                parent.parent.jQuery.unblockUI();
+            }
+            //Called from popup
+
+            if (opener) {
+                if (opener.parent.jQuery.unblockUI) {
+                    opener.parent.jQuery.unblockUI();
+                }
+                //parent.jQuery.unblockUI();
+            }
+        }
         function LinkOnClick(link, url) {
             PTBlockUI();
             $(".current").removeClass("current");

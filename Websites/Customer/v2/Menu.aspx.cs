@@ -21,7 +21,6 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         virtualsport = 5,
         sportsbook2 = 16,
-        cockfighting = 19,
         cricket = 20,
         allbet = 21,
         voidbridge = 22,

@@ -249,17 +249,6 @@ function changeDisable(obj, type) {
             $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
         }
 
-    if (type == "EnableHorseRacingFixedOdds") {
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueEnableHorseRacingFixedOdds').val() == '0') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueEnableHorseRacingFixedOdds').val() == '1')) {
-            $("#enableHorseRacingFixedOddsPop .btn:first").removeAttr("disabled");
-        }
-        else {
-
-            $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
-        }
-    }
-
     var productName = "GoldDeluxe";
     if (type == productName) {
         var oldCheckboxValue = $('#chkOldValue' + productName).val();

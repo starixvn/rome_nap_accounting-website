@@ -183,9 +183,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
-
-            TemplateHandler.Assign(ref htmlcontent, "{CockFightingId}", "19");
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCockFighting}", "1");
+           
 
             TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
