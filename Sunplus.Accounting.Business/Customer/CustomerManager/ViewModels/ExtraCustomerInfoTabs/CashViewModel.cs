@@ -1,6 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System.Data;
+    using DNAide.Core;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
 
@@ -30,7 +31,7 @@
 
         public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
-        public bool EnableVirtualRate => Utils.ToBoolean(customerInfoRow["EnableVirtualRate"]);
+        public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
 
         private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
         {

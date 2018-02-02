@@ -1591,7 +1591,7 @@
     <value>Search</value>
   </data>
   <data name="lblAllowOutright" xml:space="preserve">
-    <value>Allow Outright</value>
+    <value>Outright</value>
   </data>
   <data name="lblDisabledORUpline" xml:space="preserve">
     <value>Outright has been disallowed at upline</value>
@@ -1873,7 +1873,7 @@
     <value>Bingo status has been disabled at upline</value>
   </data>
   <data name="lblDisabledNumberGame" xml:space="preserve">
-    <value>Num Game</value>
+    <value>Number Game</value>
   </data>
   <data name="lblDisabledNumberGameUpline" xml:space="preserve">
     <value>Number Game status has been disabled at upline</value>
