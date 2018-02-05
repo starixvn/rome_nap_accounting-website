@@ -130,9 +130,8 @@ namespace Sunplus.Accounting.Business.Customer
             IbcError error;
             try
             {
-                bool isMoveAgent = custType.Equals(MoveType.Agent);
+                bool isMoveAgent = custType.Equals(MoveType.Agent);                
                 
-                string errMsgMoveLiveCasino = string.Empty;
                 var customerRngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_downlineDetail.CustID);
 
                 #region Didn't Synchronize Casino
@@ -146,13 +145,9 @@ namespace Sunplus.Accounting.Business.Customer
                     {
                         return MoveSuccessfully(downlineUser);
                     }
-                    else
-                    {
-                        return StringUtils.ParseToJSMsg(error.ErrorMsg + "<br/>" + errMsgMoveLiveCasino);
-                    }
 
-                  
                     return StringUtils.ParseToJSMsg(error.ErrorMsg);
+                  
                 }
 
                 #endregion Didn't Synchronize Casino
