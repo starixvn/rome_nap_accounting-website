@@ -153,10 +153,6 @@
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6-HideInactiveProducts3\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Bingo.Entities.1.0.0.0\lib\net40\Sunplus.Bingo.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.8\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
       <Private>True</Private>
