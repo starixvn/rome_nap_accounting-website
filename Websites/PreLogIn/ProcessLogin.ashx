@@ -156,8 +156,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                         ParentId = 0,
                         FunctionName = "",
                         Target = "_blank",
-                        IsHide = false,
-                        SubMenu= null
+                        IsHide = false
                     });
                 }
 				

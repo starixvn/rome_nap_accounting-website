@@ -82,8 +82,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
                             ParentId = 0,
                             FunctionName = "",
                             Target = "_blank",
-                            IsHide = false,
-                            SubMenu = null
+                            IsHide = false
                         });
                     }
 

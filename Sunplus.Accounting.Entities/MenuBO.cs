@@ -51,5 +51,10 @@ namespace Sunplus.Accounting.Entities
         public string System { get; set; }
 
         #endregion IMenuBO Members
+
+        public MenuBO()
+        {
+            SubMenu = new List<MenuBO>();
+        }
     }
 }

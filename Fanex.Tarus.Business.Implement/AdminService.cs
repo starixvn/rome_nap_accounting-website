@@ -90,11 +90,14 @@ namespace Fanex.Tarus.Business.Implement
                     });
                 }
             }
-            foreach (var item in menu.SubMenu)
-            {
-                ConvertMenu(item, listTemp, keyWord, menu.Name, serverPath, ancestorMenuId, isReportMenu);
-            }
 
+            if (menu != null && menu.SubMenu != null)
+            {
+                foreach (var item in menu.SubMenu)
+                {
+                    ConvertMenu(item, listTemp, keyWord, menu.Name, serverPath, ancestorMenuId, isReportMenu);
+                }
+            }
         }
         public List<QuickLink> GetSearchMenu(string keyWord, bool isSuggestion, List<MenuBO> listUserMenu, List<MenuBO> listReportMenu)
         {
