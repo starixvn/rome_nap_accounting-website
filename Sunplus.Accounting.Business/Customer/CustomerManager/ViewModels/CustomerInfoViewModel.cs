@@ -85,7 +85,7 @@
 
         public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
 
-        public bool ShowSettingLinkKeno => KenoSection.Instance.ShowSetting;
+        public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
         public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
 
@@ -117,7 +117,7 @@
                     switch (productId)
                     {
                         case "5":
-                            HideVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
                             break;
                         case "16":
                             HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;

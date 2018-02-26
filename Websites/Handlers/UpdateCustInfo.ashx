@@ -111,6 +111,10 @@ public class UpdateCustInfo : BaseHandler
                                                                    ht["postal"].ToString(), ht["state"].ToString(), ht["remark"].ToString(),
                                                                    context.Request.UserHostAddress, AppSession.CustID, AppSession.Username, 3);
                             }
+                            catch (CasinoLibrary.Model.UserException.ErrorException casinoEx)
+                            {
+                                Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                            }
                             catch (Exception ex)
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);

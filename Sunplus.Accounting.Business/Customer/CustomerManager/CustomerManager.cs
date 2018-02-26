@@ -14,6 +14,7 @@ namespace Sunplus.Accounting.Business.Customer
     using DataAccess.AdoNet;
     using DataAccess.IBCDLL.Customer;
     using DNAide.Core;
+    using DNAide.Web;
     using Entities;
     using Entities.Casino;
     using Entities.Customer;
