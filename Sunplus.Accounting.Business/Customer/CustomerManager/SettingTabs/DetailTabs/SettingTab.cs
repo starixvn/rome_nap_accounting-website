@@ -191,7 +191,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
 
-            if (!customerInfoViewModel.ShowSettingLinkKeno)
+            if (!customerInfoViewModel.ShowSettingLinkKenoCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
             }
