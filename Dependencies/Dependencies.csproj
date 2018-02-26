@@ -105,6 +105,10 @@
       <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.4\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetList.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Age.1.0.0.0\lib\net40\Fanex.BetList.Age.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.8\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
