@@ -15,7 +15,6 @@
     <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Live Casino">
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master_deleted" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Finance">
@@ -81,12 +80,6 @@
   <Function Name="User Info">
     <Setting Key="Acc_CustomerPwdUpd" SpName="Acc_CustomerPwdUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Customer - HR">
-    <Setting Key="Acc_CustomerUpdAgent_MinMaxBetHR" SpName="Acc_CustomerUpdAgent_MinMaxBetHR_deleted" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMaster_MinMaxBetHR" SpName="Acc_CustomerUpdMaster_MinMaxBetHR_deleted" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAllSettingHR" SpName="Acc_CustomerUpdAllSettingHR_deleted" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableHR" SpName="Acc_CustomerUpdDisableHR_deleted" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet" />
