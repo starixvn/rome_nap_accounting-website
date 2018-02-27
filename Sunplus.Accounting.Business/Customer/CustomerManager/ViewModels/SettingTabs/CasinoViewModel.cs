@@ -14,7 +14,7 @@
 
         public bool DisabledRnGCasino => Utils.ToBoolean(customerInfoRow["disablecasino"]);
 
-        public bool DisabledDownlinesRnGCasino => Utils.ToBoolean(customerInfoRow["DisableDownlinesCS"]);
+        public bool DisabledDownlinesRnGCasino => false;
 
         public bool HideSettingLinkRnGCasino
             => !Permissions.IsAllowCasino() && (WebSettings.disableCS || ((RoleId < 4) && !AllowEditRnGCasino));

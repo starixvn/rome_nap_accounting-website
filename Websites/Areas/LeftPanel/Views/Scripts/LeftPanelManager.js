@@ -45,22 +45,33 @@ var LeftPanelManager = function () {
         var param = {
             custId: custId,
             custName: custName,
-            custRoleId: roleId,
+            roleId: roleId,
+            //custRoleId: roleId,
             productId: productId,
             isDeposit: isDeposit
         };
 
-        var url = "ProductStatusSetting/Index?" + $.param(param);
-        var width = 680;
-        var height = 250;
-        if (productId === 8) {
-            height = 500;
-        } else if (productId === 21) {
-            height = 300;
-        }
+        parent.BlockUI();
+        $.post("ThirdPartyProductStatus/Index", param, function (data) { SuccessGetThirdPartyProductStatus(data, title); });
 
-        parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
+        //var url = "ProductStatusSetting/Index?" + $.param(param);
+        //var width = 680;
+        //var height = 250;
+        //if (productId === 8) {
+        //    height = 500;
+        //} else if (productId === 21) {
+        //    height = 300;
+        //}
+
+        //parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
+
+    function SuccessGetThirdPartyProductStatus(data, title) {
+        var dialoghtml = jQuery('<div id="dialog-modal" title="' + title + '">' + data + '</div>');
+        dialoghtml.appendTo(jQuery("body"));
+        parent.jQuery.unblockUI();
+        parent.OpenPopup2($("#dialog-modal"));
+    }
 };
 
 var leftPanelManager = new LeftPanelManager();

@@ -1,7 +1,6 @@
 namespace Sunplus.Accounting.Business.Customer
 {
     using System.Data;
-    using Core.Configurations;
     using DataAccess;
     using DNAide.Web;
     using Entities;
@@ -114,15 +113,8 @@ namespace Sunplus.Accounting.Business.Customer
                 }
 
                 columnName = "DisableDownlines" + productName;
-                bool disableDownlines;
-                try
-                {
-                    disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
-                }
-                catch
-                {
-                    disableDownlines = false;
-                }
+                bool disableDownlines = ContainColumn(custInfoRow.Table, columnName)
+                    && Converter.ToBool(custInfoRow[columnName], false);
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl2(
@@ -245,7 +237,8 @@ namespace Sunplus.Accounting.Business.Customer
             if (isSupport)
             {
                 bool isDisabled = Utils.ToBoolean(custInfoRow["Disable" + productName]);
-                bool disableDownlines = Utils.ToBoolean(custInfoRow["DisableDownlines" + productName]);
+                bool disableDownlines = ContainColumn(custInfoRow.Table, "DisableDownlines" + productName)
+                    && Utils.ToBoolean(custInfoRow["DisableDownlines" + productName]);
                 bool disableUplines = Utils.ToBoolean(custInfoRow["DisabledUpline" + productName]);
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl2(
@@ -384,6 +377,11 @@ namespace Sunplus.Accounting.Business.Customer
                     renderLeftPanelParameter.RoleId,
                     disableDownLine,
                     productName);
+        }
+
+        private static bool ContainColumn(DataTable table, string columnName)
+        {
+            return table.Columns.Contains(columnName);
         }
     }
 }

@@ -199,7 +199,7 @@
                         if (4 == roleID || !parentstatus)
                         {
                             classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
+                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus({CustId}, '{Username}', {RoleId}, 3, 'Update Number Game Status');";
                         }
                         else
                         {
