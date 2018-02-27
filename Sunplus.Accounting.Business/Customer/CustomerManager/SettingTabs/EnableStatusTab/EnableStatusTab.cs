@@ -81,7 +81,7 @@
 
             return renderLeftPanelParameter;
         }
-      
+
         private static string GenSettingControl(
            string htmlcontent,
            DataRow row1,
@@ -136,7 +136,7 @@
                 customerInfoViewModel.CustParent,
                 customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
-                sg, 
+                sg,
                 customerInfoViewModel.HasDownline);
 
             htmlcontent = RenderDCSControl(
@@ -158,7 +158,7 @@
         {
             var closedStatusBlock = GetClosedStatus(
                                         customerInfoViewModel.ManageCustomerAccess,
-                                        "closed", 
+                                        "closed",
                                         customerInfoViewModel.Closed,
                                         customerInfoViewModel.RoleId > 1,
                                         customerInfoViewModel.CustParent.IsClosed,
@@ -244,6 +244,16 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{AllbetOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    21,
+                    "Update Allbet Status"));
+            }
 
             return htmlcontent;
         }
@@ -256,9 +266,13 @@
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
-                TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.RoleId);
-                TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
+                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    8,
+                    "Update Keno Status"));
             }
 
             return htmlcontent;
@@ -291,12 +305,12 @@
                     int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
 
                     TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
-                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", 
+                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
                         GetSettingControlDangerous(
-                            customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.ManageCustomerAccess, 
-                            dangeruostype, 
-                            currentlevels, 
+                            customerInfoViewModel.RoleId,
+                            customerInfoViewModel.ManageCustomerAccess,
+                            dangeruostype,
+                            currentlevels,
                             customerInfoViewModel.IsBA));
                 }
             }
@@ -750,7 +764,8 @@
                     "disabledNumberGame",
                     !customerInfoViewModel.DisabledNumberGame,
                     !customerInfoViewModel.DisabledDownlinesNumberGame,
-                    customerInfoViewModel.Enabled));
+                    customerInfoViewModel.Enabled,
+                    customerInfoViewModel.IsDeposit));
 
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
             TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
@@ -820,7 +835,7 @@
                 GetSettingControlOutright(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.CustParent.IsDisableOutright,
-                    customerInfoViewModel.ManageCustomerAccess, 
+                    customerInfoViewModel.ManageCustomerAccess,
                     "disabledOutright",
                     !customerInfoViewModel.DisableOutright,
                     customerInfoViewModel.RoleId > 1,
@@ -926,8 +941,8 @@
                     TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
                     TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}",
                         GetSettingAbnormal(
-                            customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.ManageCustomerAccess, 
+                            customerInfoViewModel.RoleId,
+                            customerInfoViewModel.ManageCustomerAccess,
                             customerInfoViewModel.Abnormal));
                 }
             }

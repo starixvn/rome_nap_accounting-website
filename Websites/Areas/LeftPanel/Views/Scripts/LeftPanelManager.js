@@ -46,24 +46,12 @@ var LeftPanelManager = function () {
             custId: custId,
             custName: custName,
             roleId: roleId,
-            //custRoleId: roleId,
             productId: productId,
             isDeposit: isDeposit
         };
 
         parent.BlockUI();
         $.post("ThirdPartyProductStatus/Index", param, function (data) { SuccessGetThirdPartyProductStatus(data, title); });
-
-        //var url = "ProductStatusSetting/Index?" + $.param(param);
-        //var width = 680;
-        //var height = 250;
-        //if (productId === 8) {
-        //    height = 500;
-        //} else if (productId === 21) {
-        //    height = 300;
-        //}
-
-        //parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
 
     function SuccessGetThirdPartyProductStatus(data, title) {
@@ -72,6 +60,30 @@ var LeftPanelManager = function () {
         parent.jQuery.unblockUI();
         parent.OpenPopup2($("#dialog-modal"));
     }
+
+    self.viewProductStatusSetting = function (
+        custId,
+        custName,
+        custRoleId,
+        productId,
+        title) {
+        var param = {
+            custId: custId,
+            custName: custName,
+            custRoleId: custRoleId,
+            productId: productId
+        };
+        var url = "ProductStatusSetting/Index?" + $.param(param);
+        var width = 680;
+        var height = 250;
+        if (productId === 8) {
+            height = 500;
+        } else if (productId === 21) {
+            height = 300;
+        }
+
+        parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
+    };
 };
 
 var leftPanelManager = new LeftPanelManager();

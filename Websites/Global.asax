@@ -20,6 +20,8 @@
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
+<%@ Import Namespace="Fanex.ProductStatus.Setting.Configuration" %>
+<%@ Import Namespace="Fanex.Tarus.Security.Authenticate.ProductStatus" %>
 
 <script RunAt="server">
 
@@ -54,6 +56,12 @@
             .GetHttpHeaderInfo()
             .GetHttpSessionInfo())
             .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
+
+        var productStatusConfig = new ProductStatusConfiguration()
+            .UseAuthorizeService(new ProductStatusAuthorizeService())
+            .UseUserSession(new ProductStatusUser())
+            .SetUnAuthorizedUrl("~/AccessDenied.aspx");
+        ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
     }
 
     public static void RegisterGlobalFilters(GlobalFilterCollection filters)

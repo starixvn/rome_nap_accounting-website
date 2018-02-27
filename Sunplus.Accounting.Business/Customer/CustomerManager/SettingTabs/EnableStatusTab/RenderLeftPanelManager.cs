@@ -352,7 +352,7 @@ namespace Sunplus.Accounting.Business.Customer
                 var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
                 classname = canChange ? "canchange" : "cannotchange";
                 jsonclick = canChange ?
-                    string.Format("return leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', {5});", renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title, renderLeftPanelParameter.IsDeposit.ToString().ToLower()) :
+                    GetProductStatusJsFunction(renderLeftPanelParameter.IsDeposit, renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title) :
                     string.Empty;
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
@@ -382,6 +382,35 @@ namespace Sunplus.Accounting.Business.Customer
         private static bool ContainColumn(DataTable table, string columnName)
         {
             return table.Columns.Contains(columnName);
+        }
+
+        public static string GetProductStatusJsFunction(
+            bool isDeposit,
+            int custId,
+            string userName,
+            int roleId,
+            int productId,
+            string title)
+        {
+            var jsFunction = productId == 21
+                ? GetProductStatusJSFunctionForAllbet(isDeposit)
+                : GetProductStatusJSFunction(isDeposit);
+
+            return string.Format(jsFunction, custId, userName, roleId, productId, title);
+        }
+
+        private static string GetProductStatusJSFunction(bool isDeposit)
+        {
+            return isDeposit
+                ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', true)"
+                : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
+        }
+
+        private static string GetProductStatusJSFunctionForAllbet(bool isDeposit)
+        {
+            return isDeposit
+                ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}')"
+                : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
         }
     }
 }
