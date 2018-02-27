@@ -175,7 +175,6 @@ anmb.addNewMember = function () {
                         showAlertMessage("err", result.ErrorMessage, 1);
                     }
                     else {
-                        debugger;
                         showAlertMessage("err", "Inserted Member Successfully!", 0);
                         //redirect to update page and clear timeout
                         var redirectString = result.ErrorMessage;
