@@ -160,12 +160,11 @@
                             bool isHideUplineKenoLottery = Utils.ToBoolean(row["IsHiddenUpline"]);
 
                             HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
-                                IsDeposit ||
-                                (RoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
+                                IsDeposit || (RoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
                             break;
 
                         case "26":
-                            HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3 || IsDeposit;
+                            HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3;
                             HideLucky3Upline = Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
                             break;
 
@@ -173,8 +172,7 @@
                             bool HideBullfighting = Utils.ToBoolean(row["IsHidden"]);
                             bool HideUplineBullfighting = Utils.ToBoolean(row["IsHiddenUpline"]);
                             HideSettingBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
-                                IsDeposit ||
-                                (RoleId < 4 && (HideBullfighting || HideUplineBullfighting));
+                                IsDeposit || (RoleId < 4 && (HideBullfighting || HideUplineBullfighting));
                             break;
                     }
                 }
