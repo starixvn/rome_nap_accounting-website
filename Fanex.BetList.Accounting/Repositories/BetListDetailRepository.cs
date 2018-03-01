@@ -22,6 +22,10 @@ namespace Fanex.BetList.Accounting.Repositories
                     if (reader.Read())
                     {
                         ticketDetail = BuildTicketDetail(reader);
+
+                        ticketDetail.Ticket.OriginalBetType = Convert.ToInt32(reader["originalbettype"]);
+                        ticketDetail.Ticket.BetdaqId = Convert.ToInt64(reader["betdaqid"]);
+                        ticketDetail.Ticket.ExtraInfo = Convert.ToString(reader["extrainfo"]);
                     }
 
                     if (reader.NextResult())
@@ -39,6 +43,30 @@ namespace Fanex.BetList.Accounting.Repositories
                 TicketDetail = ticketDetail,
                 CashOutTickets = cashOutTickets
             };
+        }
+
+        public IEnumerable<ITicket> GetLicenseeBonusDetails(ICriteria criteria)
+        {
+            IList<ITicket> tickes = new List<ITicket>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    ITicket ticket;
+
+                    while (reader.Read())
+                    {
+                        ticket = BuildCoreTicket(reader);
+                        ticket.WalletType = Convert.ToByte(reader["wallettype"]);
+                        ticket.RefCode = Convert.ToInt64(reader["refcode"]);
+
+                        tickes.Add(ticket);
+                    }
+                }
+            }
+
+            return tickes;
         }
 
         private TicketDetail BuildTicketDetail(IDataReader reader, int custId = 0)
@@ -109,11 +137,7 @@ namespace Fanex.BetList.Accounting.Repositories
                 TransDesc = Convert.ToString(reader["transdesc"]),
 
                 BetCheck = Convert.ToString(reader["betcheck"]),
-                OddsSpread = Convert.ToDecimal(reader["OddsSpread"]),
-
-                OriginalBetType = Convert.ToInt32(reader["originalbettype"]),
-                BetdaqId = Convert.ToInt64(reader["betdaqid"]),
-                ExtraInfo = Convert.ToString(reader["extrainfo"])
+                OddsSpread = Convert.ToDecimal(reader["OddsSpread"])
             };
         }
 

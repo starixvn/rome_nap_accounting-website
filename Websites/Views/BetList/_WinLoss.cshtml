@@ -1,21 +1,22 @@
-﻿@using Fanex.BetList.Accounting.Models;
+﻿@using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
-@using Fanex.BetList.Core.TicketHelper;
 @{
-    TicketDetail betdetail = Model;
+    ITicket ticket = Model.Ticket;
     BetListHelper betlistHelper = new BetListHelper();
     string netWin = string.Empty;
     string chargeCommFormat = string.Empty;
-    if (betdetail.Ticket.BetTypeId.Equals(500))
+    if (ticket.BetTypeId.Equals(500))
     {
         netWin = "(NW) ";
-        betdetail.Ticket.Winlost = betdetail.Ticket.ActualStake;
-        chargeCommFormat = betdetail.Ticket.PlayerComm < 0 ? betlistHelper.IsNegative(betdetail.Ticket.PlayerComm) : string.Empty;
+        ticket.Winlost = ticket.ActualStake;
+        chargeCommFormat = ticket.PlayerComm < 0 ? betlistHelper.IsNegative(ticket.PlayerComm) : string.Empty;
     }
+
+    bool betListStatement = ViewData["BetListStatement"] != null && Convert.ToBoolean(ViewData["BetListStatement"]);
 }
 <div class="margin-top-5">
-    @switch (betdetail.Ticket.Status.ToLower())
+    @switch (ticket.Status.ToLower())
     {
         case "running":
         case "waiting":
@@ -25,7 +26,7 @@
             break;
         case "void":
             {
-                if (betdetail.Ticket.BetTypeId.Equals(500))
+                if (ticket.BetTypeId.Equals(500))
                 {
                     <div class="positive">@netWin 0.00</div>
                     <span> 0.00 </span>
@@ -38,18 +39,35 @@
             break;
         case "reject":
             {
-                <span> 0.00 </span>
+                if (!betListStatement &&
+                    ticket.RefCode != 0 &&
+                    (ticket.WalletType == 0 || ticket.WalletType == 1 || ticket.WalletType == 2))
+                {
+                    <div class="@betlistHelper.IsNegative(ticket.Winlost)">
+                        @netWin @ticket.Winlost.Format(2)
+                    </div>
+                    if (betlistHelper.IsShowCommission(Model))
+                    {
+                        <div class="@chargeCommFormat margin-top-5">
+                            @ticket.PlayerComm.Format(2)
+                        </div>
+                    }
+                }
+                else
+                {
+                    <span> 0.00 </span>
+                }
             }
             break;
         default:
             {
-                <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost)">
-                    @netWin @betdetail.Ticket.Winlost.Format(2)
+                <div class="@betlistHelper.IsNegative(ticket.Winlost)">
+                    @netWin @ticket.Winlost.Format(2)
                 </div>
-                if (betlistHelper.IsShowCommission(betdetail))
+                if (betlistHelper.IsShowCommission(Model))
                 {
                     <div class="@chargeCommFormat margin-top-5">
-                        @betdetail.Ticket.PlayerComm.Format(2)
+                        @ticket.PlayerComm.Format(2)
                     </div>
                 }
             }

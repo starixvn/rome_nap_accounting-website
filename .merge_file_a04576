@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<NumberGameSection>
+  <Bettype>
+    <add name="Deadball" id="1" active="true" displayname="" >
+      <Settings>
+        <add name="1stLastOU" id="81" active="true" displayname="1st ball Over/ Under" blockname="1stLastOU-Key" issetting="true" ></add>
+        <add name="LastOU" id="82" active="true" displayname="Last ball Over/ Under" blockname="LastOU-Key" issetting="false" ></add>
+        <add name="1stLastOE" id="83" active="true" displayname="1st ball Odd/ Even"  blockname="1stLastOE-Key" issetting="true" ></add>
+        <add name="LastOE" id="84" active="true" displayname="Last ball Odd/ Even" blockname="LastOU-Key" issetting="false" ></add>
+        <add name="Warriror" id="88" active="true" displayname="Warrior"  blockname="Warriror-Key" issetting="true" ></add>
+        <add name="DOddEven" id="86" active="true" displayname="FT. Odd/ Even"  blockname="DOE-Key" issetting="true" ></add>
+      </Settings>
+    </add>
+    <add name="Liveball" id="2" active="true" displayname=""  >
+      <Settings>
+        <add name="OverUnder" id="85" active="true" displayname="Next Over/ Under" blockname="OU-Key" issetting="true" ></add>
+        <add name="OddEven" id="86" active="true" displayname="Next Odd/ Even" blockname="OE-Key" issetting="true"></add>
+        <add name="HighLow" id="87" active="true" displayname="Next Hight/ Low" blockname="HL-Key" issetting="true" ></add>
+        <add name="NextCombo" id="89" active="true" displayname="Next Combo" blockname="NC-Key" issetting="true" ></add>
+        <add name="NumberGroup" id="90" active="true" displayname="Number Group" blockname="NG-Key" issetting="true" ></add>
+      </Settings>
+    </add>
+  </Bettype>
+
+  <PTSetting>    
+    <add name="Super">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" />
+        <add name="1stLastOE" id="83" liveball="false" key="83" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88" eidtkey="88^D" tagvalue="list{level}1stWarriorDValue" edittag="list{level}1stWarriorD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD" />
+        <add name="OverUnder" id="85" liveball="true" key="85" eidtkey="85^L" tagvalue="list{level}NBOULValue" edittag="list{level}NBOUL" />
+        <add name="OddEven" id="86" liveball="true" key="86" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL" />
+        <add name="NumberGroup" id="90" liveball="true" key="90" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>      
+    </add>
+    <add name="Master">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" />
+        <add name="1stLastOE" id="83" liveball="false" key="83" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88" eidtkey="88^D" tagvalue="list{level}1stWaFTDValue" edittag="list{level}1stWaFTD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD" />
+        <add name="OverUnder" id="85" liveball="true" key="85" eidtkey="85^L" tagvalue="list{level}NBOULValue" edittag="list{level}NBOUL" />
+        <add name="OddEven" id="86" liveball="true" key="86" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL"/>
+        <add name="NumberGroup" id="90" liveball="true" key="90" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+    <add name="Agent">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" />
+        <add name="1stLastOE" id="83" liveball="false" key="83" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88" eidtkey="88^D" tagvalue="list{level}1stWarriorDValue" edittag="list{level}1stWarriorD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD" />
+        <add name="OverUnder" id="85" liveball="true" key="85" eidtkey="85^L" tagvalue="list{level}NBOULValue" edittag="list{level}NBOUL" />
+        <add name="OddEven" id="86" liveball="true" key="86" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL" />
+        <add name="NumberGroup" id="90" liveball="true" key="90" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+    <add name="Member">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" />
+        <add name="1stLastOE" id="83" liveball="false" key="83" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88" eidtkey="88^D" tagvalue="list{level}1stWaFTDValue" edittag="list{level}1stWaFTD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD" />
+        <add name="OverUnder" id="85" liveball="true" key="85" eidtkey="85^L" tagvalue="list{level}NBOULValue" edittag="list{level}NBOUL" />
+        <add name="OddEven" id="86" liveball="true" key="86" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL" />
+        <add name="NumberGroup" id="90" liveball="true" key="90" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+    <add name="MinMaxPT">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81^D" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" isdefault="true" />
+        <add name="1stLastOE" id="83" liveball="false" key="83^D" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88^D" eidtkey="88^D" tagvalue="list{level}1stWaFTDValue" edittag="list{level}1stWaFTD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86^D" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD"/>
+        <add name="OverUnder" id="85" liveball="true" key="85^L" eidtkey="85^L" tagvalue="list{level}NBOULValue"  edittag="list{level}NBOUL" isdefault="true"/>
+        <add name="OddEven" id="86" liveball="true" key="86^L" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87^L" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89^L" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL"/>
+        <add name="NumberGroup" id="90" liveball="true" key="90^L" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+    <add name="SuperOnMember">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81^D" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" isdefault="true" />
+        <add name="1stLastOE" id="83" liveball="false" key="83^D" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88^D" eidtkey="88^D" tagvalue="list{level}1stWaFTDValue" edittag="list{level}1stWaFTD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86^D" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD"/>
+        <add name="OverUnder" id="85" liveball="true" key="85^L" eidtkey="85^L" tagvalue="list{level}NBOULValue"  edittag="list{level}NBOUL" isdefault="true"/>
+        <add name="OddEven" id="86" liveball="true" key="86^L" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87^L" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89^L" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL"/>
+        <add name="NumberGroup" id="90" liveball="true" key="90^L" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+    <add name="MasterOnMember">
+      <Settings>
+        <add name="1stLastOU" id="81" liveball="false" key="81^D" eidtkey="81^D" tagvalue="list{level}1stOUDValue" edittag="list{level}1stOUD" isdefault="true" />
+        <add name="1stLastOE" id="83" liveball="false" key="83^D" eidtkey="83^D" tagvalue="list{level}1stOEDValue" edittag="list{level}1stOED"/>
+        <add name="Warriror" id="88" liveball="false" key="88^D" eidtkey="88^D" tagvalue="list{level}1stWaFTDValue" edittag="list{level}1stWaFTD"/>
+        <add name="DOddEven" id="86" liveball="false" key="86^D" eidtkey="86^D" tagvalue="list{level}1stOEFTDValue" edittag="list{level}1stOEFTD"/>
+        <add name="OverUnder" id="85" liveball="true" key="85^L" eidtkey="85^L" tagvalue="list{level}NBOULValue"  edittag="list{level}NBOUL" isdefault="true"/>
+        <add name="OddEven" id="86" liveball="true" key="86^L" eidtkey="86^L" tagvalue="list{level}NBOELValue" edittag="list{level}NBOEL"/>
+        <add name="HighLow" id="87" liveball="true" key="87^L" eidtkey="87^L" tagvalue="list{level}HLLValue" edittag="list{level}HLL"/>
+        <add name="NextCombo" id="89" liveball="true" key="89^L" eidtkey="89^L" tagvalue="list{level}NCLValue" edittag="list{level}NCL"/>
+        <add name="NumberGroup" id="90" liveball="true" key="90^L" eidtkey="90^L" tagvalue="list{level}NGLValue" edittag="list{level}NGL" />
+      </Settings>
+    </add>
+  </PTSetting>
+</NumberGameSection>
+

@@ -214,13 +214,14 @@
         });
     },
     disabledFilter: function () {
+        var $infoMsg = $("#info-msg");
         if ($('input[name=type]:checked').val() == "-2") {
             $("#txtRefNo").attr("disabled", "disabled");
 
             $("#txttodate").removeAttr("disabled", "disabled");
             $("#txtfromdate").removeAttr("disabled", "disabled");
             $("#ddlBettype").removeAttr("disabled", "disabled");
-
+            $infoMsg.addClass("hide");
         }
         else {
             $("#txttodate").attr("disabled", "disabled");
@@ -228,6 +229,7 @@
             $("#ddlBettype").attr("disabled", "disabled");
 
             $("#txtRefNo").removeAttr("disabled", "disabled");
+            $infoMsg.removeClass("hide");
         }
     },
     initPager: function (total_items, items_per_page, current_page) {

@@ -329,7 +329,10 @@ namespace Fanex.BetList.Accounting.Services
                     BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Convert.ToInt64(r["BetdaqId"]) : DefaultBetdaqId,
                     ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
 
-                    Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
+                    Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
+                    
+                    WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -534,7 +537,10 @@ namespace Fanex.BetList.Accounting.Services
                     BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
-                    Currency = Converter.ToString2(r["Currency"])
+                    Currency = Converter.ToString2(r["Currency"]),
+                    
+                    WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -742,7 +748,10 @@ namespace Fanex.BetList.Accounting.Services
                     BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
-                    Currency = Converter.ToString2(r["Currency"])
+                    Currency = Converter.ToString2(r["Currency"]),
+
+                    WalletType = Convert.ToByte(r["wallettype"]),
+                    RefCode = Convert.ToInt64(r["refcode"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -1025,7 +1034,6 @@ namespace Fanex.BetList.Accounting.Services
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
                 IList<TicketDetail> betDetailsModel = new List<TicketDetail>();
-                StringBuilder content = new StringBuilder();
                 DataSet dataSet = new DataSet();
 
                 if (isSoccer)
@@ -1141,7 +1149,10 @@ namespace Fanex.BetList.Accounting.Services
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
-                                Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty
+                                Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
+                                WalletType = Convert.ToByte(r["wallettype"]),
+                                
+                                RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1244,8 +1255,6 @@ namespace Fanex.BetList.Accounting.Services
                 ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
-                IList<TicketDetail> betDetailsModel = new List<TicketDetail>();
-                StringBuilder content = new StringBuilder();
                 BetListHelper betListHelper = new BetListHelper();
                 DataSet dataSet = new DataSet();
 
@@ -1346,7 +1355,10 @@ namespace Fanex.BetList.Accounting.Services
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
-                                Currency = Converter.ToString2(r["Currency"])
+                                Currency = Converter.ToString2(r["Currency"]),
+                                
+                                WalletType = Convert.ToByte(r["wallettype"]),
+                                RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

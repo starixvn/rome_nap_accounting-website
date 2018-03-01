@@ -1,4 +1,8 @@
-﻿using Fanex.BetList.Accounting.Extensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Fanex.BetList.Accounting.Constants;
+using Fanex.BetList.Accounting.Core;
+using Fanex.BetList.Accounting.Extensions;
 using Fanex.BetList.Accounting.Models;
 using Fanex.BetList.Accounting.Repositories;
 using Fanex.BetList.Core.Entities;
@@ -64,6 +68,47 @@ namespace Fanex.BetList.Accounting.Services
             }
 
             return cashOutDetails;
+        }
+
+        public IEnumerable<TicketDetail> GetLicenseeBonusDetails(ICriteria criteria)
+        {
+            var ticketDetails = new List<TicketDetail>();
+
+            var tickets = _betListDetailRepository.GetLicenseeBonusDetails(criteria);
+
+            if (tickets.Any())
+            {
+                var betListHelper = new BetListHelper();
+
+                ITicketHelper ticketHelper = new TicketHelper();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+
+                foreach (ITicket ticket in tickets)
+                {
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(ticket.BetTypeId);
+
+                    TicketDetail ticketDetail = new TicketDetail
+                    {
+                        Ticket = ticket,
+                        TransDateHtml = builder.BuildTrans(ticket),
+                        ChoiceHtml = builder.BuildChoice(ticket, ticketHelper, null, false),
+                        OddHtml = builder.BuildOdds(ticket, null, CacheRef.GetOddsTypeName)
+                    };
+
+                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                    ticketDetail.StatusHtml = betListHelper.BuildStatus(ticketDetail.Ticket, ticketHelper, new List<ITicketData>(), factory, builder);
+
+                    ticketDetails.Add(ticketDetail);
+                }
+            }
+
+            return ticketDetails;
+        }
+
+        private bool IsShowOddsWithChoice(int betTypeId)
+        {
+            return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
         }
     }
 }

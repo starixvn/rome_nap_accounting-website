@@ -14,30 +14,41 @@
             <div id="boxheader">
                 <div class="left_tab">
                     <ul>
-                        <li class="current" id="Li1" onclick="BetListByCustInfo.viewBetListTab();"><a href="javascript:;">
-                            <span>Bet list</span></a></li>
-                        <li class="" id="Li2" onclick="BetListByCustInfo.viewSystemParlayTab();"><a href="javascript:;">
-                            <span>System parlay</span></a></li>
+                        <li class="current" id="Li1" onclick="BetListByCustInfo.viewBetListTab();">
+                            <a href="javascript:;">
+                                <span>Bet list</span>
+                            </a>
+                        </li>
+                        <li class="" id="Li2" onclick="BetListByCustInfo.viewSystemParlayTab();">
+                            <a href="javascript:;">
+                                <span>System parlay</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div id="maincontent_betlist" class="maincontent_box" style="width: 100%;">
                 <div>
                     <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByRef" value="-1" name="type" />
-                    <span style="font-weight: bold">By Ref No:</span>
-                    <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;" autocomplete="off" onkeypress="return KeyPress(event);"/>
+                    <label style="font-weight: bold" for="rdByRef">By Ref No:</label>
+                    <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;" autocomplete="off" onkeypress="return KeyPress(event);" />
+                    <div id="info-msg" class="info-msg hide">For Sportbook, the search result includes the related Bonus/Cash tickets.</div>
                 </div>
                 <div>
-                    <span style="font-weight: bold">
-                        <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2"
-                            name="type" checked="checked" />
-                        Advance (Event Date):</span> <span style="font-weight: bold">From </span><span style="padding-left: 5px">
-                            <input id="txtfromdate" class="txtdate" readonly="readonly" /></span> <span class="b"
-                                style="padding-left: 5px">To</span> <span style="padding-left: 5px">
-                                    <input id="txttodate" class="txtdate" readonly="readonly" /></span>
-                    <span id="divBettype" class="hidden" style="padding-left: 5px"><span>Bettypes </span>
-                        <select id="ddlBettype" name="FilterBy">
-                        </select></span>
+                    <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2" name="type" checked="checked" />
+                    <label style="font-weight: bold" for="rdByUser">Advance (Event Date):</label>
+                    <span style="font-weight: bold">From </span>
+                    <span style="padding-left: 5px">
+                        <input id="txtfromdate" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span class="b" style="padding-left: 5px">To</span>
+                    <span style="padding-left: 5px">
+                        <input id="txttodate" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span id="divBettype" class="hidden" style="padding-left: 5px">
+                        <span>Bettypes </span>
+                        <select id="ddlBettype" name="FilterBy"></select>
+                    </span>
                 </div>
                 <div>
                     <input class="btn" type="button" id="btnReport" value="Submit" onclick="BetListByCustInfo.getBetListByCustInfo(false);" />
@@ -70,29 +81,30 @@
             <div id="Popup" style="display: none;">
             </div>
         </div>
-        <script type="text/javascript">
-            window.rootUrl = '@Url.Content("~")';
-  var _today = '@DateTime.Today.ToShortDateString()';
-  var _custID = '@ViewBag.CustID';
-  var _fromDate = '@ViewBag.FromDate';
-  var _toDate = '@ViewBag.ToDate';
-  var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
-    head.js("@Url.Content("~/js/jQuery/jquery.js")",
-            "@Url.Content("~/js/json2.js")", 
-            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js")",
-            "@Url.Content("~/js/jQuery/gridscroller.js")",
-            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
-            "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
-            "@Url.Content("~/js/dialogbox.js")",
-            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
-            "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
-            "@Url.Content("~/js/BlockUI.js")", 
-            "@Url.Content("~/js/common.js")", 
-            "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
-        </script>
+    </div>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var _today = '@DateTime.Today.ToShortDateString()';
+        var _custID = '@ViewBag.CustID';
+        var _fromDate = '@ViewBag.FromDate';
+        var _toDate = '@ViewBag.ToDate';
+        var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
+        head.js("@Url.Content("~/js/jQuery/jquery.js")",
+                "@Url.Content("~/js/json2.js")",
+                "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js")",
+                "@Url.Content("~/js/jQuery/gridscroller.js")",
+                "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+                "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
+                "@Url.Content("~/js/dialogbox.js")",
+                "@Url.Content("~/js/jQuery/Pager/jpager.js")",
+                "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
+                "@Url.Content("~/js/BlockUI.js")",
+                "@Url.Content("~/js/common.js")",
+                "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
+    </script>
 </body>
 </html>
