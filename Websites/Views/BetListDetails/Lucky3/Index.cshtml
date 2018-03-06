@@ -1,5 +1,6 @@
 ﻿@using Resources = Fanex.BetDetails.Lucky3.Resources.Resource
 @using Fanex.BetDetails.Lucky3.ViewModels
+@using Sunplus.Accounting.Core.Configurations;
 @model Lucky3DetailViewModel
 @{ Layout = null; }
 <!DOCTYPE html>
@@ -7,8 +8,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/BetListDetails/Lucky3/Styles/bet-list-detail.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/BetListDetails/Lucky3/Styles/bet-list-detail.css?v=" + WebSettings.Version)" />
 </head>
 <body>
     <table class="lucky3">
