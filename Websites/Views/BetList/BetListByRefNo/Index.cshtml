@@ -4,7 +4,7 @@
 @using Fanex.Tarus.Infrastructure.Caching;
 @using RemotingRef;
 
-@{ 
+@{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
@@ -17,7 +17,6 @@
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
     }
-        allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
 }
 <html>
 <head>
@@ -78,7 +77,7 @@
                 <div id="bet-list-ref-no" class="filterContent">
                     <table>
                         <colgroup>
-                            @* Im not able to set min-width!!! https://bugs.chromium.org/p/chromium/issues/detail?id=50169 *@ 
+                            @* Im not able to set min-width!!! https://bugs.chromium.org/p/chromium/issues/detail?id=50169 *@
                             <col style="width: 20px">
                             <col style="width: 100px;">
                             <col style="width: 120px">
@@ -105,7 +104,7 @@
                         <tr>
                             <td></td>
                             <td class="text-left" colspan="8">
-                                <div id="ref-no-info-msg" class="info-msg"> 
+                                <div id="ref-no-info-msg" class="info-msg">
                                     @allowedProducts.ToString() tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
                                     For Allbet, the search result includes the related tickets with the same GameID.<br />
                                     For Sportbook, the search result includes the related Bonus/Cash tickets.
