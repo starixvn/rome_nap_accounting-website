@@ -20,10 +20,8 @@
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <%@ Import Namespace="CasinoLibrary.Model.UserException" %>
-<%@ Import Namespace="Fanex.Module.Logs.Services" %>
 <%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
-
-<%@ Import Namespace="Fanex.Module.Logs" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Extensions" %>
 
 <script RunAt="server">
 
@@ -128,11 +126,11 @@
             {
                 if (ex.GetType() == typeof(ErrorException))
                 {
-                    ((ErrorException)ex).WriteCasinoException(Formater.LogType.Warning);
+                    LogExtensions.CasinoExceptionHandler(ex);
                 }
                 else
                 {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                    LogExtensions.ExceptionHandler(ex);
                 }
             }
         }

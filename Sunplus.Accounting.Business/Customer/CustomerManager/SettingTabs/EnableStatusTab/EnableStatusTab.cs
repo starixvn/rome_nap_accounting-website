@@ -42,7 +42,7 @@
                 IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
                 IsHideCricket = customerInfoViewModel.HideCricketCredit,
-                IsShowVirtualSport = !customerInfoViewModel.HideVirtualSports,
+                IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
                 RoleId = customerInfoViewModel.RoleId,

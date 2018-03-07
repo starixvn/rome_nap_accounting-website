@@ -101,7 +101,9 @@
 
         public bool HideSportsbook2 { get; private set; } = true;
 
-        public bool HideVirtualSports { get; private set; } = true;
+        public bool HideSettingLinkVirtualSports { get; private set; } = true;
+
+        public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
         public bool HideSettingBullfighting { get; private set; } = true;
 
@@ -117,7 +119,8 @@
                     switch (productId)
                     {
                         case "5":
-                            HideVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
                             break;
                         case "16":
                             HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;

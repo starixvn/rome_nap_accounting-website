@@ -186,7 +186,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
             }
 
-            if (customerInfoViewModel.HideVirtualSports)
+            if (customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
             }
