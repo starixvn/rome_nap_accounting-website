@@ -7,27 +7,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Customer Info</title>
-    <link href="App_Themes/LeftPanel/left_panel.css?ver=11" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
-    <link href="js/jQuery/scrollbar/jScrollPane.css" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Public/Pagination.css" rel="stylesheet" type="text/css" />
-    <link href="App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-    <link href="js/jQuery/message/jquery.msg.css" rel="stylesheet" type="text/css" />
-    <script src="js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
-    <script src="js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js"></script>
+    <link href="App_Themes/LeftPanel/left_panel.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Public/common.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Public/input.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="js/jQuery/scrollbar/jScrollPane.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Public/Pagination.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="App_Themes/Public/Message.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <link href="js/jQuery/message/jquery.msg.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
+    <script src="js/jQuery/jquery.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
+    <script src="js/jQuery/jquery.json-1.3.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
+    <script src="js/jQuery/jquery.blockUI.1.33.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js?v=<%=AccCommon.Version() %>"></script>
+    <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js?v=<%=AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/common.js?v=<%=AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/CustomerInfo.js?v=<%=AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/CustSetting.js?v=<%=AccCommon.Version() %>"></script>
     <script src="js/jscookies.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
-    <script src="js/showhidepopup.js" type="text/javascript"></script>
+    <script src="js/showhidepopup.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <script type="text/javascript" src="js/Menu/Dropdown/menu.js?v=<%=AccCommon.Version() %>"></script>
-    <script src="js/pager_v2.js" type="text/javascript"></script>
-    <script src="js/jQuery/message/jquery.center.min.js" type="text/javascript"></script>
-    <script src="js/jQuery/message/jquery.msg.js" type="text/javascript"></script>
+    <script src="js/pager_v2.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
+    <script src="js/jQuery/message/jquery.center.min.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
+    <script src="js/jQuery/message/jquery.msg.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <script src="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js?v=<%=AccCommon.Version() %>" type="text/javascript"></script>
     <style type="text/css">
         
@@ -290,8 +290,8 @@
        
         
     </script>
-    <script type="text/javascript" src="js/ToolTip/wz_tooltip/wz_tooltip.js"></script>
-    <script type="text/javascript" src="js/ToolTip/wz_tooltip/tip_balloon.js"></script>
+    <script type="text/javascript" src="js/ToolTip/wz_tooltip/wz_tooltip.js?v=<%=AccCommon.Version() %>"></script>
+    <script type="text/javascript" src="js/ToolTip/wz_tooltip/tip_balloon.js?v=<%=AccCommon.Version() %>"></script>
     <div style="width: 100%; text-align: center;">
         <asp:Literal EnableViewState="false" ID="HtmlHolder" runat="server"></asp:Literal>
     </div>
