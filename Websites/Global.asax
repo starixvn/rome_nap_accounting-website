@@ -19,6 +19,10 @@
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
+<%@ Import Namespace="CasinoLibrary.Model.UserException" %>
+<%@ Import Namespace="Fanex.Module.Logs.Services" %>
+<%@ Import Namespace="Fanex.Module.Logs" %>
+
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -116,7 +120,16 @@
             var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
             Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
             if (!downTimeInfo.IsDowntime)
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            {
+                if (ex.GetType() == typeof(ErrorException))
+                {
+                    ((ErrorException)ex).WriteCasinoException(Formater.LogType.Warning);
+                }
+                else
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
         }
         else
         {
