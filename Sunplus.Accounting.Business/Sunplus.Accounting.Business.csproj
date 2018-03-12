@@ -61,6 +61,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
@@ -73,21 +77,29 @@
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Couchbase">
-      <HintPath>..\Dependency\Cache\Memcached\Couchbase.dll</HintPath>
+    <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Couchbase.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DNAide">
-      <HintPath>..\Dependency\DNAide.dll</HintPath>
+    <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EasyNetQ, Version=0.53.6.418, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyNetQ.0.53.6.418\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Enyim.Caching">
-      <HintPath>..\Dependency\Cache\Memcached\Enyim.Caching.dll</HintPath>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Enyim.Caching.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="ExcelUtil">
-      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
+    <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.8\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.51.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
@@ -105,11 +117,13 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.10\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
-      <HintPath>..\Dependency\Keno\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.NAP.1.0.0.10\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
-      <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
@@ -119,48 +133,97 @@
       <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.4\lib\net40\Fanex.Module.Logs.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Module.NG2, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.2\lib\net40\Fanex.Module.NG2.dll</HintPath>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.BetList, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.12\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.12\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.6\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.0\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.7\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.LiveCasino, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.LiveCasino.1.0.0.3\lib\net40\Fanex.Tarus.LiveCasino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.SpecialDelete.SendEmail, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.SpecialDelete.SendEmail.1.0.0.0\lib\net40\Fanex.Tarus.SpecialDelete.SendEmail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.8\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IBCCrypt">
-      <HintPath>..\Dependency\IBCCrypt.dll</HintPath>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
     </Reference>
-    <Reference Include="IBCUtils">
-      <HintPath>..\Dependency\IBCUtils.dll</HintPath>
+    <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.IBCUtils.1.0.0.0\lib\net40\IBCUtils.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LiveCasinoLibrary">
-      <HintPath>..\Dependency\LiveCasinoLibrary.dll</HintPath>
+    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel">
+    <Reference Include="LiveCasinoLibrary, Version=1.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCasinoLibrary.1.0.0.18\lib\net40\LiveCasinoLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <HintPath>..\packages\log4net.1.2.9.0\lib\net11\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\Dependency\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.1.0.0.0\lib\net40\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
-      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Practices.EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -207,19 +270,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI.OOXML, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OOXML.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ONEbook.NG2.API, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.3\lib\net40\ONEbook.NG2.API.dll</HintPath>
+    <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -238,33 +301,79 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RSACryptoPad">
-      <HintPath>..\Dependency\RSACryptoPad.dll</HintPath>
+    <Reference Include="RSACryptoPad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RSACryptoPad.1.0.0.0\lib\net40\RSACryptoPad.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SharedCache.WinServiceCommon">
-      <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
+    <Reference Include="SharedCache.WinServiceCommon, Version=3.0.5.1, Culture=neutral, PublicKeyToken=19f944f08f2af8b7, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharedCache.WinServiceCommon.3.0.5.1\lib\net40\SharedCache.WinServiceCommon.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.9\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.11\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.5\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Core">
-      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Core.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Data">
-      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Data.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Entities">
-      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Data.Entlib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Data.Entlib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Core.CachingLib">
-      <HintPath>..\Dependency\Sunplus.Core.CachingLib.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Data.LinqToSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.DataServices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.DataServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Bingo.Library.1.0.0.0\lib\net40\Sunplus.Bingo.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Core.CachingLib, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Core.CachingLib.1.2.0.1\lib\net40\Sunplus.Core.CachingLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Core.Common, Version=1.1.4505.19054, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Core.LoggingLib, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Core.LoggingLib.1.0.0.1\lib\net40\Sunplus.Core.LoggingLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.8\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
@@ -275,8 +384,9 @@
       <HintPath>..\packages\Sunplus.Libraries.APILogger.2.0.0.1\lib\net40\Sunplus.Libraries.APILogger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Shared.ViewLogLib">
-      <HintPath>..\Dependency\Sunplus.Shared.ViewLogLib.dll</HintPath>
+    <Reference Include="Sunplus.Shared.ViewLogLib, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Shared.ViewLogLib.1.3.0.1\lib\net40\Sunplus.Shared.ViewLogLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -308,6 +418,10 @@
       <HintPath>..\packages\TplCore.1.0.4854.17254\lib\net40\TplCore.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.0.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountingCoreAppSession.cs" />
@@ -327,28 +441,48 @@
     <Compile Include="BetList\IBetListManager.cs" />
     <Compile Include="BetList\IBetListNumberGameManager.cs" />
     <Compile Include="BetList\TeamId.cs" />
-    <Compile Include="BootStrappers\BootStrapperManager.cs" />
-    <Compile Include="BootStrappers\CommonBootStrapper.cs" />
     <Compile Include="BootStrappers\UnityBootStrapper.cs" />
-    <Compile Include="CacheManager\CacheUtils.cs" />
     <Compile Include="CreditTerm\CreditTermManager.cs" />
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
     <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
     <Compile Include="Criteria\WinLossByLicenseeCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
-    <Compile Include="Customer\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
     <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
-    <Compile Include="Customer\CustomerManager.cs" />
-    <Compile Include="Customer\CustomerService.cs" />
-    <Compile Include="Customer\CustomerUtils.cs" />
+    <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\DownlineStatusViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\ColossusBetViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NG2ViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\Lucky3ViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\LiveCasinoViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\ExtraCustomerInfoTabs\CashViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\CustInfoViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\CasinoViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DirectInfoTab.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerInfoTabs\CustomerDetail.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\SettingControls.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\LoginTab.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\DetailTabs\SettingTab.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\DetailTabs\MinMaxSettingTab.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\EnableStatusTab.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerInfoTabs\TransLinskBox.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerInfoTabs\UplineBox.cs" />
+    <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\BalanceInfo.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\OnlineList.cs" />
     <Compile Include="Customer\DangerousSetting.cs" />
-    <Compile Include="Customer\ICustomerManager.cs" />
+    <Compile Include="Customer\CustomerManager\ICustomerManager.cs" />
     <Compile Include="Customer\IServiceCustomerList.cs" />
     <Compile Include="Customer\MoveCustomer.cs" />
-    <Compile Include="Customer\RenderLeftPanelManager.cs" />
-    <Compile Include="Customer\RenderLeftPanelParameter.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
+    <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="LogDisplay\LoginLogType.cs" />
@@ -356,7 +490,6 @@
     <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
     <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="PT\ViewPT\MicroGamingPTService.cs" />
-    <Compile Include="Report\Common\RMReportUtils.cs" />
     <Compile Include="Report\DailyTurnover\DailyTurnoverManager.cs" />
     <Compile Include="Report\DailyTurnover\IDailyTurnoverManager.cs" />
     <Compile Include="Report\LeagueWL\LeagueWLService.cs" />
@@ -367,8 +500,6 @@
     <Compile Include="Report\External\IExternalReport.cs" />
     <Compile Include="Report\Licensee\NegativeBalanceMember.cs" />
     <Compile Include="Report\Licensee\ReportWLBySiteExport.cs" />
-    <Compile Include="PT\Casino\CasinoManager.cs" />
-    <Compile Include="PT\Casino\ICasinoManager.cs" />
     <Compile Include="Report\MatchAnalysis\IMatchAnalysisService.cs" />
     <Compile Include="Report\MatchAnalysis\MatchAnalysisService.cs" />
     <Compile Include="Report\MatchWL\MatchWL2aServiceNEW.cs" />
@@ -427,8 +558,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
-    <Compile Include="Security\LoginFailedHandler.cs" />
-    <Compile Include="Security\Permissions.cs" />
     <Compile Include="Settle\ISettlement.cs" />
     <Compile Include="Settle\IViewLogManager.cs" />
     <Compile Include="Settle\Settlement.cs" />
@@ -444,7 +573,6 @@
     <Compile Include="IServiceCustomerInfo.cs" />
     <Compile Include="IServiceSuspend.cs" />
     <Compile Include="Report\Reports.cs" />
-    <Compile Include="Security\AuthManager.cs" />
     <Compile Include="BaseManager.cs" />
     <Compile Include="BetList\Betlist12BET.cs" />
     <Compile Include="BetList\BetlistAB88.cs" />
@@ -459,9 +587,6 @@
     <Compile Include="BetList\BetListNumberGameManager.cs" />
     <Compile Include="BetList\BetlistRow.cs" />
     <Compile Include="BetList\DeleteBet.cs" />
-    <Compile Include="CacheManager\Report.cs" />
-    <Compile Include="CasinoAPILogger.cs" />
-    <Compile Include="CasinoManager.cs" />
     <Compile Include="CustSetting\CustSettingMoveSite.cs" />
     <Compile Include="ExChangeRate\ExChangeRate.cs" />
     <Compile Include="ExChangeRate\ExChangeRateBase.cs" />
@@ -471,24 +596,10 @@
     <Compile Include="ExportStatement\IServiceExportStatement.cs" />
     <Compile Include="ExportStatement\ServiceExportStatement.cs" />
     <Compile Include="IMenuManager.cs" />
-    <Compile Include="IpManagement.cs" />
-    <Compile Include="IUserService.cs" />
     <Compile Include="LogDisplay\LogAction.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="LogDisplay\Others\MeetingComm.cs" />
     <Compile Include="LogDisplay\Others\News.cs" />
-    <Compile Include="PositionTaking\HRParamHandle.cs" />
-    <Compile Include="PositionTaking\HRPositionTakingManager.cs" />
-    <Compile Include="PositionTaking\HRUtilities.cs" />
-    <Compile Include="PositionTaking\SportBook\AgentPT.cs" />
-    <Compile Include="PositionTaking\SportBook\BasePT.cs" />
-    <Compile Include="PositionTaking\SportBook\BettypeDetail.cs" />
-    <Compile Include="PositionTaking\SportBook\IPtService.cs" />
-    <Compile Include="PositionTaking\SportBook\MasterPT.cs" />
-    <Compile Include="PositionTaking\SportBook\MemberPT.cs" />
-    <Compile Include="PositionTaking\SportBook\PtManager.cs" />
-    <Compile Include="PositionTaking\SportBook\SportDetail.cs" />
-    <Compile Include="PositionTaking\SportBook\SuperPT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
     <Compile Include="PT\SportBooks\NumberGameManager.cs" />
@@ -604,7 +715,6 @@
     <Compile Include="Transaction\IServiceDailyTran.cs" />
     <Compile Include="UserControl\GenerateHtml.cs" />
     <Compile Include="UserControl\UserControlManager.cs" />
-    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -617,63 +727,10 @@
     <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
     <None Include="Areas\Logs\LogsConfiguration.config" />
     <None Include="Areas\ONEbook.NG2.API.config" />
-    <None Include="packages.config" />
-    <None Include="PositionTaking\SportBook\PT.cd" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
-      <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
-      <Name>Fanex.Tarus.BetList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
-      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
-      <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Interface\Fanex.Tarus.DataAccess.Interface.csproj">
-      <Project>{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}</Project>
-      <Name>Fanex.Tarus.DataAccess.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Excels\Fanex.Tarus.Excels.csproj">
-      <Project>{4d443bd2-6287-4427-8afd-cabff55e2d6f}</Project>
-      <Name>Fanex.Tarus.Excels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.LiveCasino\Fanex.Tarus.LiveCasino.csproj">
-      <Project>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</Project>
-      <Name>Fanex.Tarus.LiveCasino</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
-      <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
-      <Name>Fanex.Tarus.Security</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
-      <Project>{03f0b48d-0f0d-448c-a014-30fe5fde7f85}</Project>
-      <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Statements\Fanex.Tarus.Statements.csproj">
-      <Project>{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF}</Project>
-      <Name>Fanex.Tarus.Statements</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
-      <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
-      <Name>Sunplus.Accounting.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
-      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
-      <Name>Sunplus.Accounting.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
-      <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>
-      <Name>Sunplus.Accounting.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
-      <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
-      <Name>Sunplus.Data.DataAbstract</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -713,19 +770,6 @@
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
-    </VisualStudio>
-  </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

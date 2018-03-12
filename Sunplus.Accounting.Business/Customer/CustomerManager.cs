@@ -3452,35 +3452,35 @@ namespace Sunplus.Accounting.Business.Customer
 
         #endregion Enable Number game for Downline
 
-        public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
-        {
-            // Delay 3 sec to allow system do replication.
-            System.Threading.Thread.Sleep(3000);
+        //public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
+        //{
+        //    // Delay 3 sec to allow system do replication.
+        //    System.Threading.Thread.Sleep(3000);
 
-            var result = new Result();
-            if (uplineInfo.IsUplineSyncCasino)
-            {
-                System.Threading.Thread.Sleep(3000);
-                var csService = new PT.Casino.CasinoManager();
-                //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
+        //    var result = new Result();
+        //    if (uplineInfo.IsUplineSyncCasino)
+        //    {
+        //        System.Threading.Thread.Sleep(3000);
+        //        var csService = new PT.Casino.CasinoManager();
+        //        //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
 
-                csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
-            }
+        //        csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
+        //    }
 
-            if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
-            {
-                SettingService liveCasinoSettingService = new SettingService();
-                var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
-            }
+        //    if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
+        //    {
+        //        SettingService liveCasinoSettingService = new SettingService();
+        //        var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
+        //    }
 
-            if (uplineInfo.IsUplineSyncNG2)
-            {
-                ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP, custInfo.Currency, AppSession.AccId, AccCommon.SystemId);
-            }
+        //    if (uplineInfo.IsUplineSyncNG2)
+        //    {
+        //        ING2StatusService syncService = new NG2StatusService();
+        //        syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP, custInfo.Currency, AppSession.AccId, AccCommon.SystemId);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public string GetRNGSiteNameByCustId(int custId)
         {

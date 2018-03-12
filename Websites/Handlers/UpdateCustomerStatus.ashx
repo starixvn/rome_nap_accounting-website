@@ -78,13 +78,12 @@ public class UpdateCustomerStatus : BaseHandler
                     {
                         if (custcs.CasinoSync)
                         {
-                            bool success = CasinoManager.UpdateCustSuspend(_custid, status,
-                                                                               context.Request.UserHostAddress, customerRngSite);
+                            CasinoManager.UpdateCustSuspend(_custid, status, context.Request.UserHostAddress, customerRngSite);
                         }
                     }
                     catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
                     catch (Exception ex)
                     {
@@ -112,12 +111,11 @@ public class UpdateCustomerStatus : BaseHandler
                         }
                         catch (ErrorException casinoEx)
                         {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
-                            throw;
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            throw;
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         }
                     }
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
@@ -173,7 +171,7 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     catch (ErrorException casinoEx)
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
                     catch (Exception ex)
                     {
@@ -246,13 +244,6 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
                     //s = "parent.document.getElementById('internalUser').innerHTML ='" + ((status) ? Resources.Language.userInternal : Resources.Language.userBetting) + "';";
-                    s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledBingoGame"://BingoGame
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddownline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline, AppSession.IsSyncBingoCurrentCust);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "disabledNumberGame"://NumberGame

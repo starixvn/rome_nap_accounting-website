@@ -150,6 +150,7 @@ body
 	font-weight:bold;
 	text-decoration:none;
 }
+
 .checkbox:hover{
 	color:#FF6600;
 }
@@ -160,7 +161,11 @@ body
 	width:13px;
 	height:13px;
 	display:block;
-	}
+    position: relative;
+    top: 4px;
+    float: right;
+    margin-right: 8px;
+}
 .chkuncheck:hover
 {
 	background:url(../Images/Buttons/uncheck_hover.jpg);
@@ -171,6 +176,10 @@ body
 	display:block;
 	width:13px;
 	height:13px;
+    position: relative;
+    top: 4px;
+    float: right;
+    margin-right: 8px;
 	}
 .chkchecked:hover
 {
@@ -418,3 +427,63 @@ body
 {
 	color:#E7731E;
 	}
+
+/* Customize UI for setting tab */
+
+.container {
+    width: 100%;
+    float: left;
+}
+
+.container .col {
+    float: left;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.icon-list {
+    background: url(../Images/list.png) no-repeat;
+    height: 14px;
+    width: 13px;
+    display: inline-block;
+    
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.limit-per-ip span + div {
+    float: right;
+    padding-right: 8px;
+}
+
+#popLimitPerIP {
+    display: none;
+    background: #fff;
+    width: 140px;
+    padding: 2px;
+    border: solid 1px;
+    position: absolute;
+    right: 0;
+    z-index: 1000;
+}
+
+.col .icon-list {
+    float: right;
+    margin-right: 7px;
+    position: relative;
+    top: 4px;
+}
+
+span.canchange {
+    width: 100%;
+}

@@ -80,7 +80,6 @@
                     <td class="dot_left">
                         <span id="vMaxLoss">{CurrencyInfo} {MaxLoss}&nbsp;</span>
                     </td>
-                </tr>
                 <tr>
                     <td class="dot_left">
                         Gr Max Loss:
@@ -88,6 +87,7 @@
                     <td class="dot_left">
                         <span id="vGroupHeadlineMaxLoss">{GroupHeadlineCurrency} {GroupHeadlineMaxLoss}&nbsp;</span>
                     </td>
+                </tr>
                 </tr>
                 <!--/directinfo-->
                 <!--headline-->
@@ -259,17 +259,15 @@
             </div>
         </div>
         <div class="box_05_contents" id="box_05_contents">
-            <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
-                   cellspacing="0">
-                <tr>
+            <div id="box_05_content_1">
+                <div class="container">
                     <!--dangerous-->
-                    <td class="l bot " style="width: 100px;">
+                    <div class="col">
                         Dangerous
-                    </td>
-                    <td width="24px" class="r bot b"></td>
+                    </div>
                     <!--/dangerous-->
                     <!--edited-dangerous-->
-                    <td class="l bot" style="width: 124px;" colspan="2">
+                    <div class="col">
                         <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
                             Dangerous
                             <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
@@ -279,26 +277,19 @@
                             color: #4D4E4E;">
                             {dangerousCustomer}
                         </div>
-                    </td>
+                    </div>
                     <!--/edited-dangerous-->
 
-                    <td style="width: 100px;" class="l">
-                        Limit Per IP
-                    </td>
-                    <td width="24px" class="l">
-                        {LimitPerIP}
-                    </td>
-                </tr>
-                <!--AbnormalSession-->
-                <tr>
+                    <div class="col limit-per-ip"><span class="pull-left">Limit Per IP</span>{LimitPerIP}</div>
+
+                    <!--AbnormalSession-->
                     <!--Abnormal-->
-                    <td class="l bot " style="width: 100px;">
+                    <div class="col">
                         Abnormal
-                    </td>
-                    <td width="24px" class="r bot b"></td>
+                    </div>
                     <!--/Abnormal-->
                     <!--edit-Abnormal-->
-                    <td class="l bot" style="width: 124px;" colspan="2">
+                    <div class="col">
                         <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuAbnormal()">
                             Abnormal
                             <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" />
@@ -308,117 +299,144 @@
                             color: #4D4E4E;">
                             {AbnormalCustomer}
                         </div>
-                    </td>
+                    </div>
                     <!--/edit-Abnormal-->
-                </tr>
-                <!--/AbnormalSession-->
-                <tr>
-                    <td class="l" colspan="2"><span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">Enable Racing</span></td>
-                    <td class="l" colspan="2"><!--edit-p2p--><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span><!--/edit-p2p--></td>
-                </tr>
-                <!--Row_ProgressiveBonus_AGCasinoStatus-->
-                <tr>
-                    <!--ProgressiveBonus-->
-                    <td class="l" colspan="2"><span class="canchange" onclick="showhideCasinoBonus({CustId},{RoleId},'{UserName}')">Enable Bonus</span></td>
-                    <!--/ProgressiveBonus-->
-                    <td class="l" colspan="2">
-                        <!--AGCasinoStatus-->
-                        <span class="canchange" onclick="updateAGCasinoStatus({CustId},{RoleId})">Enable AG Casino</span>
-                        <!--/AGCasinoStatus-->
-                    </td>
-                </tr>
-                <!--/Row_ProgressiveBonus_AGCasinoStatus-->
-                <!--/Row_Keno_GoldDeluxe-->
-                <tr>
-                    <!--EnableKeno-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">Enable Keno</span>
-                    </td>
-                    <!--/EnableKeno-->
-                    <td class="l" colspan="2">
-                        <!--GoldDeluxe-->
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status','GoldDeluxe', 0)">Enable Gold Deluxe</span>
-                        <!--/GoldDeluxe-->
-                    </td>
-                </tr>
-                <!--/Row_Keno_GoldDeluxe-->
-                <!--/Row_AutoSuspend_BetTrade-->
-                <tr>
+                    <!--/AbnormalSession-->
                     <!--autosuspendstatus-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span>
-                    </td>
+                    <div class="col">
+                        <span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">
+                            Auto Suspend
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
                     <!--/autosuspendstatus-->
-                    <td class="l" colspan="2">
-                        <!--BetTrade-->
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status','BetTrade', {betTradeId})">Enable BetTrade</span>
-                        <!--/BetTrade-->
-                    </td>
-                </tr>
-                <!--/Row_AutoSuspend_BetTrade-->
-                <!--/Row_Microgaming_Macau-->
-                <tr>
+
+                    <div class="col">
+                        Special {specialCustomer}
+                    </div>
+
+                    <!--internalControl-->
+                    {internalControl}
+                    <!--/internalControl-->
+                    <!--directAccountControl-->
+                    {directAccountControl}
+                    <!--/directAccountControl-->
+                    <!--selectedBettingControl-->
+                    {selectedBettingControl}
+                    <!--/selectedBettingControl-->
+                    {suspendedControl}
+
+                    <div class="col">
+                        Closed {closedCustomer}
+                    </div>
+
+                    <!--allDayBalTransferControl-->
+                    {allDayBalTransferControl}
+                    <!--/allDayBalTransferControl-->
+                    <!--allowAutoPTControl-->
+                    {allowAutoPTControl}
+                    <!--/allowAutoPTControl-->
+                    <!--doubleCommControl-->
+                    {doubleCommControl}
+                    <!--/doubleCommControl-->
+                    {outrightControl}
+
+                    <!--hRFixedOddsControl-->
+                    {hRFixedOddsControl}
+                    <!--/hRFixedOddsControl-->
+                    <!--eSportsControl-->
+                    {eSportsControl}
+                    <!--/eSportsControl-->
+                    {numberGameControl}
+                    {casinoControl}
+                    {liveCasinoControl}
+
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 2, 'Update Racing Status')">
+                            Racing
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+
+                    <!--AGCasinoStatus-->
+                    <div class="col">
+                        <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
+                            AG Casino
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/AGCasinoStatus-->
+                    <!--EnableKeno-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 8, 'Update Keno Status')">
+                            Keno
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/EnableKeno-->
+                    <!--GoldDeluxe-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId}, '{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status', 'GoldDeluxe', 0)">
+                            Gold Deluxe
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/GoldDeluxe-->
+                    <!--BetTrade-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
+                            BetTrade
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/BetTrade-->
                     <!--Microgaming-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMicrogaming}, true, 'Update Microgaming Status','MicroGaming', {microGamingId})">Enable Microgaming</span>
-                    </td>
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusMicrogaming}, true, 'Update Microgaming Status' ,'MicroGaming', {microGamingId})">
+                            Microgaming
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
                     <!--/Microgaming-->
                     <!--Macau-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">Enable Macau</span>
-                    </td>
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
+                            Macau
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
                     <!--/Macau-->
-                </tr>
-                <!--/Row_Microgaming_Macau-->
-                <tr>
                     <!--Sportsbook2-->
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">Enable Sportsbook 2</span>
-                    </td>
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusSportsbook2}, true, 'Update Sportsbook2 Status','Sportsbook2', {Sportsbook2Id}, {settingType})">
+                            Sportsbook 2
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
                     <!--/Sportsbook2-->
-                    <td class="l" colspan="2"></td>
-                </tr>
-                <!--EnableCockFighting-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusCockFighting}, true, 'Update Cockfighting Status','CockFighting', {CockFightingId}, {settingType})">Enable Cockfighting</span>
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
-                <!--/EnableCockFighting-->
-                <!--EnableAllbet-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">Enable Allbet</span>
+                    <!--EnableAllbet-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateThirdPartyProductStatus({CustId}, '{UserName}', {RoleId}, 21, 'Update Allbet Status')">
+                            Allbet
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/EnableAllbet-->
+                    <!--EnableCashOut-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">
+                            Cash Out
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/EnableCashOut-->
+                    {settingcontrol}
+                </div>
+            </div>
 
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
-                <!--/EnableAllbet-->
-                <!--EnableCashOut-->
-                <tr>
-                    <td class="l" colspan="2">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">Enable Cash Out</span>
-                    </td>
-                    <td class="l" colspan="2"></td>
-                </tr>
-                <!--/EnableCashOut-->
-                <tr>
-                    <td style="width: 100px;" class="l">
-                        Special
-                    </td>
-                    <td width="24px" class="c">
-                        {specialCustomer}
-                    </td>
-                    <td style="width: 100px;" class="l">
-                        Closed
-                    </td>
-                    <td width="24px" class="l">
-                        {closedCustomer}
-                    </td>
-                </tr>
-                {settingcontrol}
-            </table>
+            <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
+                   cellspacing="0"></table>
+
             <div class="tab_left_content hidden" id="box_05_content_2">
                 <div id="box_detail">
                     <div id="de_left">
@@ -450,11 +468,11 @@
                             </a><br />
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
-                                    Edit Position Taking
+                                    Sportsbook
                                 </a><br />
                             </span><span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
-                                    Edit Position Taking
+                                    Sportsbook
                                 </a><br />
                             </span><span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkAddnewDownline}');">
@@ -464,7 +482,7 @@
                             <!--editTransferTime-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
-                                    Edit Transfer Condition
+                                    Transfer Condition
                                 </a><br />
                             </span>
                             <!--/editTransferTime-->
@@ -479,94 +497,79 @@
                             <!--horseracing-editlink-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                    Edit Racing
+                                    Racing
                                 </a><br />
                             </span><span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
-                                    Edit Racing
+                                    Racing
                                 </a><br />
                             </span>
                             <!--/horseracing-editlink-->
                             <!--edit-casino-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                    Edit Casino
+                                    Casino
                                 </a><br />
                             </span>
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                    Edit Casino
+                                    Casino
                                 </a><br />
                             </span>
                             <!--/edit-casino-->
-                            <!--edit-bingo-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{bingoLinkSetting}');">
-                                Edit Bingo
-                            </a><br />
-                            <!--/edit-bingo-->
-                            <!--edit-p2p-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{pokerLinkSetting}');">
-                                Edit Poker
-                            </a><br />
-                            <!--/edit-p2p-->
                             <!--edit-LiveCasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{livecasinoLinkSetting}');">
-                                Edit Live Casino
+                                Live Casino
                             </a><br />
                             <!--/edit-LiveCasino-->
                             <!--edit-agcasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{agcasinoLinkSetting}');">
-                                Edit AG Casino
+                                AG Casino
                             </a><br />
                             <!--/edit-agcasino-->
                             <!--edit-VirtualSport-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualSportLinkSetting}');">
-                                Edit Virtual Sports
+                                Virtual Sports
                             </a><br />
                             <!--/edit-VirtualSport-->
                             <!--edit-Keno-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{kenoLinkSetting}');">
-                                Edit Keno
+                                Keno
                             </a><br />
                             <!--/edit-Keno-->
                             <!--edit-GoldDeluxe-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{goldDeluxeLinkSetting}');">
-                                Edit Gold Deluxe
+                                Gold Deluxe
                             </a><br />
                             <!--/edit-GoldDeluxe-->
                             <!--edit-MicroGaming-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{microgamingLinkSetting}');">
-                                Edit Microgaming
+                                Microgaming
                             </a><br />
                             <!--/edit-MicroGaming-->
                             <!--edit-ColossusBet-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{colossusBetLinkSetting}');">
-                                Edit Colossus Bets
+                                Colossus Bets
                             </a><br />
                             <!--/edit-ColossusBet-->
                             <!--edit-sportsbook2-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sportsbook2LinkSetting}');">
-                                Edit Sportsbook 2
+                                Sportsbook 2
                             </a><br />
                             <!--/edit-sportsbook2-->
-                            <!--edit-CockFighting-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{cockFightingSettingLink}');">
-                                Edit Cockfighting
-                            </a><br />
-                            <!--/edit-CockFighting-->
                             <!--edit-Cricket-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{cricketSettingLink}');">
-                                Edit Cricket
+                                Cricket
                             </a><br />
                             <!--/edit-Cricket-->
                             <!--edit-Allbet-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{allbetLinkSetting}');">
-                                Edit Allbet
+                                Allbet
                             </a><br />
                             <!--/edit-Allbet-->
                             <!--edit-Voidbridge-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{voidbridgeLinkSetting}');">
-                                Edit Macau Games
+                                Macau Games
                             </a><br />
                             <!--/edit-Voidbridge-->
                             <!--edit-NG2-->
@@ -576,21 +579,21 @@
                             <!--/edit-NG2-->
                             <!--edit-FishingWorld-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{fishingWorldLinkSetting}');">
-                                Edit Fishing World
+                                Fishing World
                             </a><br />
                             <!--edit-KenoLottery-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{kenoLotteryLinkSetting}');">
-                                Edit Lottery
+                                Lottery
                             </a><br />
                             <!--/edit-KenoLottery-->
                             <!--edit-Lucky3-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{lucky3LinkSetting}');">
-                                Edit Lucky 3
+                                Lucky 3
                             </a><br />
                             <!--/edit-Lucky3-->
                             <!--edit-Bullfighting-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{bullfightingLinkSetting}');">
-                                Edit Bullfighting
+                                Bullfighting
                             </a><br />
                             <!--/edit-Bullfighting-->
                             <!-- Detail menu -->

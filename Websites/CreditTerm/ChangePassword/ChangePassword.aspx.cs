@@ -134,10 +134,11 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
                     }
                     catch (ErrorException casinoEx)
                     {
-                        LogExtensions.CasinoExceptionHandler(casinoEx);
+                        LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        LogExtensions.ExceptionHandler(ex);
                     }
                 }
 
