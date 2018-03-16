@@ -124,7 +124,14 @@
             Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
             if (!downTimeInfo.IsDowntime)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                if (ex.GetType() == typeof(ErrorException))
+                {
+                    LogExtensions.CasinoExceptionHandler(ex);
+                }
+                else
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
             }
         }
         else
