@@ -64,22 +64,22 @@ var LeftPanelManager = function () {
     self.viewProductStatusSetting = function (
         custId,
         custName,
-        custRoleId,
+        custRole,
         productId,
         title) {
         var param = {
             custId: custId,
             custName: custName,
-            custRoleId: custRoleId,
+            custRole: custRole,
             productId: productId
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
         var width = 680;
-        var height = 250;
+        var height = 270;
         if (productId === 8) {
-            height = 500;
+            height = 520;
         } else if (productId === 21) {
-            height = 300;
+            height = 320;
         }
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);

@@ -376,4 +376,16 @@
     <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Product Status Setting">
+    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdDisableKeno" SpName="Acc_AdminUpdDisableKeno_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

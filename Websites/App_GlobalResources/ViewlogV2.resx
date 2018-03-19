@@ -1656,4 +1656,19 @@
   <data name="Hidegd" xml:space="preserve">
     <value>Hide Gold Deluxe</value>
   </data>
+  <data name="Disableallagents" xml:space="preserve">
+    <value>Is Disabled - All Agents</value>
+  </data>
+  <data name="Disableallmasters" xml:space="preserve">
+    <value>Is Disabled - All Masters</value>
+  </data>
+  <data name="Disableallmembers" xml:space="preserve">
+    <value>Is Disabled - All Members</value>
+  </data>
+  <data name="Updateallagents" xml:space="preserve">
+    <value>Update All Agents</value>
+  </data>
+  <data name="Updateallmasters" xml:space="preserve">
+    <value>Update All Masters</value>
+  </data>
 </root>
