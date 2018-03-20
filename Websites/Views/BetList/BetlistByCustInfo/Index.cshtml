@@ -1,4 +1,7 @@
-﻿<html>
+﻿@{
+    var isCredit = (bool)ViewBag.IsCredit;
+}
+<html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
@@ -24,6 +27,14 @@
                                 <span>System parlay</span>
                             </a>
                         </li>
+                        @if (isCredit)
+                        {
+                            <li class="" id="Li3" onclick="BetListByCustInfo.viewExchangeTab();">
+                                <a href="javascript:;">
+                                    <span>Exchange</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -74,9 +85,28 @@
                 <div id="errMsg2">
                 </div>
             </div>
+
+            <div class="maincontent_box hidden" id="maincontent_exchange">
+                <span style="font-weight: bold">From </span>
+                <span style="padding-left: 5px">
+                    <input id="exchange_fromdate" class="txtdate" readonly="readonly" />
+                </span>
+                <span class="b" style="padding-left: 5px">To</span>
+                <span style="padding-left: 5px">
+                    <input id="exchange_todate" class="txtdate" readonly="readonly" />
+                </span>
+                <input class="btn" type="button" id="btnReport" value="Submit" onclick="ExchangeBetlist.getData();" />
+                <div id="errMsg2">
+                </div>
+            </div>
+
+
             <div id="betListContent" style="margin-top: 10px;">
             </div>
             <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
+            </div>
+
+            <div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
             </div>
             <div id="Popup" style="display: none;">
             </div>
@@ -85,6 +115,7 @@
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var _today = '@DateTime.Today.ToShortDateString()';
+        var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
         var _custID = '@ViewBag.CustID';
         var _fromDate = '@ViewBag.FromDate';
         var _toDate = '@ViewBag.ToDate';
@@ -104,6 +135,7 @@
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/ExchangeBetlist.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
     </script>
 </body>
