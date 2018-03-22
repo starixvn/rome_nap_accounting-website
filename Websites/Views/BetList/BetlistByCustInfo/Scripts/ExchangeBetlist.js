@@ -4,7 +4,7 @@
         toDate: null,
         custId: null,
         pageIndex: 1,
-        pageSize: 100
+        pageSize: 10
     },
 
     URL: null,
@@ -33,9 +33,9 @@
         callback: null,
         start_per_page: 10,
         step_per_page: 10,
-        item_per_page_arr: [50, 100, 150, 200],
+        item_per_page_arr: [10, 20, 30, 40],
         max_items_per_page: 200,
-        items_per_page: 50,
+        items_per_page: 10,
         current_page: 1
     },
 
@@ -53,11 +53,13 @@
     },
 
     getData: function () {
+        try { parent.BlockUI(); } catch (e) { }
+
         var fromDateTmp = $('#exchange_fromdate').val();
         var toDateTmp = $('#exchange_todate').val();
         if (ExchangeBetlist.param.fromDate != fromDateTmp
-            && ExchangeBetlist.param.toDate != toDateTmp) {
-            ExchangeBetlist.param.pageSize = 100;
+            || ExchangeBetlist.param.toDate != toDateTmp) {
+            ExchangeBetlist.param.pageSize = 10;
             ExchangeBetlist.param.pageIndex = 1;
         }
 
@@ -77,7 +79,7 @@
                 $("#betListExchangeContent").html(result);
 
                 if (typeof _length != "undefined") {
-                    ExchangeBetlist.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
+                    ExchangeBetlist.gridOpts.isShowPager = !(_length == 0 || _length == 1);
                     $("#ExchangeBetlist").initGrid(ExchangeBetlist.gridOpts);
                     $('#ExchangeBetlist').removeClass("display-none").gridScroller(ExchangeBetlist.gridOpts);
 

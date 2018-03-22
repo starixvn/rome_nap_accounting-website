@@ -1,12 +1,10 @@
 ﻿@using Fanex.BetList.Accounting.ViewModels.Exchange
 @using System.Linq;
-@using Fanex.BetList.Accounting.Core;
 @using Fanex.BetList.Accounting.Extensions;
 
 @model ExchangeViewModel
 @{
-    var index = 0;
-    BetListHelper betlistHelper = new BetListHelper();
+    var index = Model.Index - 1;
 }
 
 <div id="ExchangeBetlist" class="freegrid display-none">
@@ -57,7 +55,7 @@
                         </th>
                         <th>
                             <div class="width80 height34 table-cell">
-                                Winloss
+                                Win Loss
                             </div>
                         </th>
                         <th>
@@ -117,7 +115,7 @@
                         </th>
                         <th>
                             <div class="width80 height34 table-cell">
-                                Winloss
+                                Win Loss
                             </div>
                         </th>
                         <th>
@@ -136,7 +134,7 @@
                             var details = Model.Details
                                 .Where(i => i.EventId == summary.EventId && i.MarketId == summary.MarketId)
                                 .OrderByDescending(i => i.BetId);
-                            var firstDetail = details.First();
+                            var firstDetail = details.FirstOrDefault();
                             <tr>
                                 <td class="c" rowspan="@details.Count()">
                                     <div class="width30 table-cell">
@@ -180,15 +178,19 @@
                                         @firstDetail.Stake.Format(2)
                                     </div>
                                 </td>
-                                <td class="r @betlistHelper.IsNegative(firstDetail.Winlost)">
+                                <td class="r">
                                     <div class="width80 table-cell">
                                         @firstDetail.Winlost.Format(2)
                                     </div>
                                 </td>
                                 <td class="r" rowspan="@details.Count()">
                                     <div class="width80 table-cell">
-                                        <span style="display:block" class="@betlistHelper.IsNegative(summary.WinLost)">@summary.WinLost.Format(2) </span>
-                                        <span class="@betlistHelper.IsNegative(summary.Commission)">@summary.Commission.Format(2)</span>
+                                        <span style="display:block" class="@GetCSSForWinLoss(summary.WinLost)">
+                                            @summary.WinLost.Format(2)
+                                        </span>
+                                        <span class="@GetCSSForWinLoss(summary.Commission)">
+                                            @summary.Commission.Format(2)
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
@@ -205,7 +207,7 @@
                                                 @detail.SelectionName
                                             </div>
                                         </td>
-                                        <td class="c @firstDetail.Type">
+                                        <td class="c @detail.Type">
                                             <div class="width50 table-cell">
                                                 @detail.Type
                                             </div>
@@ -225,7 +227,7 @@
                                                 @detail.Stake.Format(2)
                                             </div>
                                         </td>
-                                        <td class="r @betlistHelper.IsNegative(detail.Winlost)">
+                                        <td class="r">
                                             <div class="width80 table-cell">
                                                 @detail.Winlost.Format(2)
                                             </div>
@@ -240,7 +242,7 @@
                             <td class="b" colspan="9" align="right">
                                 Grand Total
                             </td>
-                            <td class="@betlistHelper.IsNegative(Model.TotalCommission)">
+                            <td class="@GetCSSForWinLoss(Model.TotalCommission)">
                                 @Model.TotalCommission.Format(2)
                             </td>
                         </tr>
@@ -256,6 +258,13 @@
         </div>
     </div>
 </div>
+@functions{
+    public string GetCSSForWinLoss(decimal winloss)
+    {
+        return winloss < 0 ? "negative" : string.Empty;
+    }
+
+}
 <script type="text/javascript">
     var _length = @Model.TotalSummaryRows;
 </script>

@@ -294,8 +294,7 @@
 
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
-        $('#divcontainer_systemparlay').addClass('hidden');
-
+        $('#betListSystemParlayContent').addClass('hidden');
         //betlist display
         $('#maincontent_betlist').addClass('hidden');
         $('#betListContent').addClass('allhidden');
@@ -312,8 +311,7 @@ var Helper = {
     renderExchangeCalendarFromTo: function () {
         var defaults = {
             showOtherMonths: true,
-            selectOtherMonths: true,
-            setDate: yesterday,
+            selectOtherMonths: true,            
             onSelect: function (selectedDate) {
                 var option = this.id == "exchange_fromdate" ? "minDate" : "maxDate",
                      instance = $(this).data("datepicker"),
@@ -326,13 +324,13 @@ var Helper = {
         };
 
         var dates = $("#exchange_fromdate").datepicker(defaults);
-        var yesterday = new Date(_yesterday);
+        var today = new Date(_today);
         var fdate = $("#exchange_fromdate");
         var tdate = $("#exchange_todate");
         fdate.datepicker(defaults);
         tdate.datepicker(defaults);
-        fdate.datepicker("setDate", yesterday);
-        tdate.datepicker("setDate", yesterday);
+        fdate.datepicker("setDate", today);
+        tdate.datepicker("setDate", today);
     },
 
     renderCalendarFromTo: function (ids) {
