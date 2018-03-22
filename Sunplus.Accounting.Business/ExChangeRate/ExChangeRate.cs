@@ -12,8 +12,6 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
-using Fanex.Tarus.LiveCasino.Business.ExRate;
-using Fanex.Tarus.LiveCasino.Entities.ExRate;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
@@ -39,10 +37,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             ex.Currency = string.Empty;
             ex.BaseRate = string.Empty;
             ex.Minbet = string.Empty;
-            ex.MinbetLive = string.Empty;
-            ex.GBPRate = string.Empty;
-            ex.EURORate = string.Empty;
-            ex.USDRate = string.Empty;
+            ex.MinbetLive = string.Empty;           
             ex.function = FunctionName;
             ex.exrateId = string.Empty;
             ex.Function_Reset = "ResetValue();";
@@ -60,34 +55,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-            /* ex.Content.Clear();
-             string odd_even = "";
-             foreach (DataRow dr in Rows)
-             {
-                 int exid = CastAide.AsInt32(dr["exchangeid"]);
-                 bool f = IsHideCurrencies(exid);
-                 if (f) continue;
-                 odd_even = (odd_even == "") ? "evenrow" : "";
-                 ExRateList_Content_Block exRow = new ExRateList_Content_Block();
-                 exRow.currency = CastAide.AsString(dr["currency"]);
-                 exRow.BaseRate = CastAide.AsString(dr["actualrate"]);
-                 exRow.MinBet = NumberFormat.DecFormat(dr["MinBet"],0);
-                 exRow.MinBetLive = NumberFormat.DecFormat(dr["MinBetLive"], 0);
-                 exRow.GBPRate = (Convert.IsDBNull(dr["GBPRate"]) ? "-" : dr["GBPRate"].ToString());
-                 exRow.AUDRate = (Convert.IsDBNull(dr["AUDRate"]) ? "-" : dr["AUDRate"].ToString());
-                 exRow.ZARRate = (Convert.IsDBNull(dr["ZARRate"]) ? "-" : dr["ZARRate"].ToString());
-                 exRow.EURORate = (Convert.IsDBNull(dr["EURORate"]) ? "-" : dr["EURORate"].ToString());
-                 exRow.USDRate = (Convert.IsDBNull(dr["US$Rate"]) ? "-" : dr["US$Rate"].ToString());
-                 exRow.exrateId = exid.ToString();
-                 if(!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
-                 {
-                     exRow.edit_none = "none";
-                 }
-                 exRow.odd_even = odd_even;
-
-                 ex.Content.Append(exRow);
-             }
-             return ex.Content.ToString();*/
+            
 
             StringBuilder html = new StringBuilder();
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateList1.htm");
@@ -106,10 +74,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "standardCode", CastAide.AsString(dr["currencyCode"]));
                 TemplateHandler.Assign(ref exRow, "BaseRate", CastAide.AsString(dr["actualrate"]));
                 TemplateHandler.Assign(ref exRow, "MinBet", NumberFormat.DecFormat(dr["MinBet"], 0));
-                TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
-                TemplateHandler.Assign(ref exRow, "GBPRate", (Convert.IsDBNull(dr["GBPRate"]) ? "-" : dr["GBPRate"].ToString()));
-                TemplateHandler.Assign(ref exRow, "EURORate", (Convert.IsDBNull(dr["EURORate"]) ? "-" : dr["EURORate"].ToString()));
-                TemplateHandler.Assign(ref exRow, "USDRate", (Convert.IsDBNull(dr["US$Rate"]) ? "-" : dr["US$Rate"].ToString()));
+                TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));               
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
 
@@ -140,8 +105,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region InsertExChangeRate
 
-        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive,
-            string GBPRate, string EURORate, string USDRate, string Code, string Description, string MultipliedBy)
+        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy)
         {
             string msg = "";
             try
@@ -153,14 +117,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("minbet", minbet);
                 hash.Add("minbetlive", minbetlive);
 
-                if (GBPRate.Length != 0)
-                    hash.Add("gbprate", GBPRate);
-
-                if (EURORate.Length != 0)
-                    hash.Add("eurorate", EURORate);
-
-                if (USDRate.Length != 0)
-                    hash.Add("us$rate", USDRate);
+              
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);
@@ -183,21 +140,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (WebSettings.EnableLiveCasino)
-                    {
-                        var liveCs = new ExRateManager();
-                        ExRateBO exRateBo = new ExRateBO()
-                        {
-                            ExchangeId = exid,
-                            Currency = currency,
-                            Actualrate = actualrate,
-                            ModifyBy = AppSession.AccId,
-                            ModifyUserName = AppSession.AccUserName,
-                            FromIp = HttpContext.Current.Request.UserHostAddress,
-                        };
-                        liveCs.UpdateExchange(exRateBo);
-                    }
                 }
             }
             catch (ErrorException casinoEx)
@@ -220,40 +162,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         public string EditExchangeRate(int exid)
         {
-            /* ExRateAdd_Template ex = new ExRateAdd_Template();
-             ex.function = "UpdateEditExChangeRate();";
-             ex.Function_Reset = "ResetValueWhenEdit();";
-             ex.ReadOnly = "readonly='true'";
-             DbResult rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);
-
-             DataTable dt = rs.ResultSet.Tables[0];
-             string html = "";
-             if (dt.Rows.Count == 0)
-             {
-                 html = GenAddContent("UpdateEditExChangeRate();");
-             }
-             else
-             {
-                 foreach (DataRow dr in dt.Rows)
-                 {
-                     ex.submit = "Submit";
-                     ex.reset = "Reset";
-                     ex.Currency = CastAide.AsString(dr["currency"]);
-                     ex.BaseRate = CastAide.AsString(dr["actualrate"]);
-                     ex.Minbet = CastAide.AsString(dr["minbet"]);
-                     ex.MinbetLive = CastAide.AsString(dr["minbetlive"]);
-                     ex.GBPRate = CastAide.AsString(dr["GBPRate"]);
-                     ex.AUDRate = CastAide.AsString(dr["AUDRate"]);
-                     ex.ZARRate = CastAide.AsString(dr["ZARRate"]);
-                     ex.EURORate = CastAide.AsString(dr["EURORate"]);
-                     ex.USDRate = CastAide.AsString(dr["US$Rate"]);
-                   //  ex.Code = CastAide.AsString(dr["Code"]);
-                     ex.exrateId = exid.ToString();
-                 }
-                 html = ex.ToString();
-             }
-
-             return html;*/
 
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateAdd.htm");
             TemplateHandler.Assign(ref tpl, "function", "UpdateEditExChangeRate();");
@@ -275,12 +183,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Currency", CastAide.AsString(dr["currency"]));
                     TemplateHandler.Assign(ref tpl, "BaseRate", CastAide.AsString(dr["actualrate"]));
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
-                    TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
-                    TemplateHandler.Assign(ref tpl, "GBPRate", CastAide.AsString(dr["GBPRate"]));
-                    TemplateHandler.Assign(ref tpl, "AUDRate", CastAide.AsString(dr["AUDRate"]));
-                    TemplateHandler.Assign(ref tpl, "ZARRate", CastAide.AsString(dr["ZARRate"]));
-                    TemplateHandler.Assign(ref tpl, "EURORate", CastAide.AsString(dr["EURORate"]));
-                    TemplateHandler.Assign(ref tpl, "USDRate", CastAide.AsString(dr["US$Rate"]));
+                    TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));                    
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     TemplateHandler.Assign(ref tpl, "Code", CastAide.AsString(dr["Code"]));
                 }
@@ -316,12 +219,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     ex.Minbet = CastAide.AsString(dr["minbet"]);
                     list.Add(ex.Minbet);
                     ex.MinbetLive = CastAide.AsString(dr["minbetlive"]);
-                    list.Add(ex.MinbetLive);
-                    ex.GBPRate = CastAide.AsString(dr["GBPRate"]);
-                    list.Add(ex.GBPRate);
-                    ex.EURORate = CastAide.AsString(dr["EURORate"]);
-                    list.Add(ex.EURORate);
-                    ex.USDRate = CastAide.AsString(dr["US$Rate"]);
+                    list.Add(ex.MinbetLive);                  
                     list.Add(ex.USDRate);
                     ex.Code = CastAide.AsString(dr["Code"]);
                     list.Add(ex.Code);
@@ -349,10 +247,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 html = CastAide.AsString(dr["actualrate"]) + "|";
                 html += CastAide.AsString(dr["currency"]) + "|";
                 html += CastAide.AsString(dr["minbet"]) + "|";
-                html += CastAide.AsString(dr["minbetlive"]) + "|";
-                html += CastAide.AsString(dr["GBPRate"]) + "|";
-                html += CastAide.AsString(dr["EURORate"]) + "|";
-                html += CastAide.AsString(dr["US$Rate"]) + "|";
+                html += CastAide.AsString(dr["minbetlive"]) + "|";              
                 html += CastAide.AsString(dr["Description"]) + "|";
                 html += CastAide.AsString(dr["MultipliedBy"]);
             }
@@ -363,7 +258,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region UpdateEditExChangeRate
 
-        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string GBPRate, string EURORate, string USDRate, string Description, string MultipliedBy, string Code)
+        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy)
         {
             string msg = "";
             try
@@ -374,16 +269,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("actualrate", actualrate);
                 hash.Add("currency", currency);
                 hash.Add("minbet", minbet);
-                hash.Add("minbetlive", minbetlive);
-
-                if (GBPRate.Length != 0)
-                    hash.Add("gbprate", GBPRate);
-
-                if (EURORate.Length != 0)
-                    hash.Add("eurorate", EURORate);
-
-                if (USDRate.Length != 0)
-                    hash.Add("us$rate", USDRate);
+                hash.Add("minbetlive", minbetlive);               
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);
@@ -405,22 +291,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     BasicInfo info = new BasicInfo();
                     bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
-
-                    if (WebSettings.EnableLiveCasino)
-                    {
-                        var liveCs = new ExRateManager();
-                        ExRateBO exRateBo = new ExRateBO()
-                        {
-                            ExchangeId = exid,
-                            Currency = currency,
-                            Actualrate = actualrate,
-                            ModifyBy = AppSession.AccId,
-                            ModifyUserName = AppSession.AccUserName,
-                            FromIp = HttpContext.Current.Request.UserHostAddress,
-                        };
-                        liveCs.UpdateExchange(exRateBo);
-                    }
-
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
@@ -436,42 +306,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             mail.BaseRate = changeColor(actualrate.ToString());
 
                         mail.minbet = dr["minbet"].ToString();
-                        mail.minbetlive = dr["minbetlive"].ToString();
-                        if (Convert.IsDBNull(dr["GBPRate"]) && GBPRate.Length == 0)
-                            mail.GBPRate.Clear();
-                        else
-                        {
-                            mail.GBPRate.newGBPRate = GBPRate;
-                            mail.GBPRate.oldGBPRate = dr["GBPRate"].ToString();
-                            if (GBPRate != dr["GBPRate"].ToString())
-                                mail.GBPRate.newGBPRate = changeColor(GBPRate);
-                        }
-
-                        if (Convert.IsDBNull(dr["EURORate"]) && EURORate.Length == 0)
-                            mail.EURORate.Clear();
-                        else
-                        {
-                            mail.EURORate.newEURORate = EURORate;
-                            mail.EURORate.oldEURORate = dr["EURORate"].ToString();
-                            if (EURORate != dr["EURORate"].ToString())
-                                mail.EURORate.newEURORate = changeColor(EURORate);
-                        }
-
-                        if (Convert.IsDBNull(dr["US$Rate"]) && USDRate.Length == 0)
-                            mail.USDRate.Clear();
-                        else
-                        {
-                            mail.USDRate.newUSDRate = USDRate;
-                            mail.USDRate.oldUSDRate = dr["US$Rate"].ToString();
-                            if (USDRate != dr["US$Rate"].ToString())
-                                mail.USDRate.newUSDRate = changeColor(USDRate);
-                        }
+                        mail.minbetlive = dr["minbetlive"].ToString();   
 
                         mail.IP = HttpContext.Current.Request.UserHostAddress;
                         mail.date = DateTime.Now.ToString();
                     }
 
-                    //bool f = DNAide.Utils.SendMailService.SendMail2(MailSection.MailServer, MailSection.ToMailExchangeRate, MailSection.FromMail, MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate, tplSubject, mail.ToString(), MailSection.MailPwd);
+                   
                     SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
                                                   MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
                                                   tplSubject, mail.ToString());
@@ -484,8 +325,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             catch (Exception ex)
             {
-                msg = ex.Message;
-                //bool f = DNAide.Utils.SendMailService.SendMail2(MailSetting.MailServer, MailSetting.ToMailExchangeRate, MailSetting.FromMail, MailSetting.CCMailExchangeRate, MailSetting.BCCMailExchangeRate, "Have a problem when updating exchange rate", ex.ToString(), MailSetting.MailPwd);
+                msg = ex.Message;              
                 LogExtensions.ExceptionHandler(ex);
             }
             return msg;

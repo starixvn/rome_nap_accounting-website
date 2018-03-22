@@ -77,8 +77,8 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.10\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
@@ -89,16 +89,16 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.12\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.13\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.8\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -141,20 +141,16 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.9\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.12\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.5\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Bingo.Entities.1.0.0.0\lib\net40\Sunplus.Bingo.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
@@ -197,13 +193,6 @@
   <ItemGroup>
     <Compile Include="Admin\ExternalSiteService.cs" />
     <Compile Include="Admin\IExternalSiteService.cs" />
-    <Compile Include="BetAggregator\LicenseeConfigService.cs" />
-    <Compile Include="BetAggregator\ILicenseeConfigService.cs" />
-    <Compile Include="BetAggregator\IReportLicenseeWL.cs" />
-    <Compile Include="BetAggregator\ReportLicenseeWL.cs" />
-    <Compile Include="BetList\BetListNumberGameManager.cs" />
-    <Compile Include="BetList\BetListService.cs" />
-    <Compile Include="BetList\IBetListService.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="CreditTerm\CreditTermService.cs" />
     <Compile Include="CreditTerm\ICreditTermService.cs" />
@@ -215,7 +204,6 @@
     <Compile Include="Customer\ServiceCustomerInfo.cs" />
     <Compile Include="Customer\ServiceCustomerList.cs" />
     <Compile Include="Customer\ServiceSuspend.cs" />
-    <Compile Include="BetList\IBetListNumberGameManager.cs" />
     <Compile Include="DailyTranService.cs" />
     <Compile Include="ExRate\ExRateService.cs" />
     <Compile Include="ExRate\IExRateService.cs" />
@@ -232,52 +220,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\Casino\CasinoService.cs" />
     <Compile Include="PT\Casino\ICasinoService.cs" />
-    <Compile Include="PT\Poker\IPokerService.cs" />
-    <Compile Include="PT\Poker\PokerService.cs" />
-    <Compile Include="Report\DailyTurnover\IDailyTurnover.cs" />
-    <Compile Include="Report\DailyTurnover\DailyTurnover.cs" />
-    <Compile Include="Report\DownLineBalance\DownLineBalanceService.cs" />
-    <Compile Include="Report\DownLineBalance\IDownLineBalanceService.cs" />
-    <Compile Include="Report\External\ExternalReportService.cs" />
-    <Compile Include="Report\External\IExternalReportService.cs" />
-    <Compile Include="Report\IMonitorService.cs" />
-    <Compile Include="Report\LeagueWL\ILeagueWinLossService.cs" />
-    <Compile Include="Report\LeagueWL\LeagueWinLossService.cs" />
-    <Compile Include="Report\Licensee\IReportLicenseeWL.cs" />
-    <Compile Include="Report\Licensee\ReportLicenseeWL.cs" />
-    <Compile Include="Report\MatchAnalysis\IMatchAnalysisService.cs" />
-    <Compile Include="Report\MatchAnalysis\MatchAnalysisService.cs" />
-    <Compile Include="Report\MonitorService.cs" />
-    <Compile Include="Report\OthersReportServices.cs" />
-    <Compile Include="Report\IOthersReportServices.cs" />
-    <Compile Include="Report\ILicenseeService.cs" />
-    <Compile Include="PT\Racing\IRacingService.cs" />
-    <Compile Include="PT\Racing\RacingService.cs" />
-    <Compile Include="Report\DailyWL\IReportDailyWL.cs" />
-    <Compile Include="Report\DailyWL\ReportDailyWL.cs" />
     <Compile Include="PT\ViewPT\IViewPTService.cs" />
     <Compile Include="PT\ViewPT\ViewPTService.cs" />
-    <Compile Include="Report\IReportNumberGame.cs" />
-    <Compile Include="Report\IReportService.cs" />
-    <Compile Include="Report\IReportWL.cs" />
-    <Compile Include="Report\IServiceNonePT.cs" />
-    <Compile Include="Report\ITraderPerformanceService.cs" />
-    <Compile Include="Report\LicenseeService.cs" />
-    <Compile Include="Report\Poker\IPokerService.cs" />
-    <Compile Include="Report\Poker\PokerService.cs" />
-    <Compile Include="Report\Racing\IReportRacing.cs" />
-    <Compile Include="Report\Racing\ReportRacing.cs" />
-    <Compile Include="Report\ReportNumberGame.cs" />
-    <Compile Include="Report\ReportService.cs" />
-    <Compile Include="Report\ReportWL.cs" />
     <Compile Include="ResetWinning\IResetWinning.cs" />
     <Compile Include="ResetWinning\ResetWinning.cs" />
-    <Compile Include="Report\ServiceNonePT.cs" />
-    <Compile Include="Report\TraderPerformanceService.cs" />
-    <Compile Include="Settle\ISettlementService.cs" />
-    <Compile Include="Settle\SettlementService.cs" />
-    <Compile Include="SpecialDelete\ISpecialDeleteService.cs" />
-    <Compile Include="SpecialDelete\SpecialDeleteService.cs" />
     <Compile Include="SystemInfo.cs" />
     <Compile Include="UserControlService.cs" />
   </ItemGroup>

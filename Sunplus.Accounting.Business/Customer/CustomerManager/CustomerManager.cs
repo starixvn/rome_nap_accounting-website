@@ -1,12 +1,6 @@
 namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using Core.Common;
-    using Core.Configurations;
     using Core.Extensions;
     using Core.Helper;
     using Core.Web;
@@ -14,17 +8,20 @@ namespace Sunplus.Accounting.Business.Customer
     using DataAccess.AdoNet;
     using DataAccess.IBCDLL.Customer;
     using DNAide.Core;
-    using DNAide.Web;
     using Entities;
     using Entities.Casino;
     using Entities.Customer;
-    using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
     using Fanex.Tarus.Security.Criteria;
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
     using Security;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
     using Result = Entities.Result;
 
     public partial class CustomerManager : ICustomerManager
@@ -291,12 +288,6 @@ namespace Sunplus.Accounting.Business.Customer
                 csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
             }
 
-            if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
-            {
-                SettingService liveCasinoSettingService = new SettingService();
-                liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
-            }
-
             if (uplineInfo.IsUplineSyncNG2)
             {
                 ING2StatusService syncService = new NG2StatusService();
@@ -363,7 +354,6 @@ namespace Sunplus.Accounting.Business.Customer
             AppSession.SusperUserName = customerInfoViewModel.SuperName;
 
             AppSession.IsSyncCSCurrentCust = customerInfoViewModel.SyncRnGCasino;
-            AppSession.IsSyncLCSCurrentCust = customerInfoViewModel.SyncLiveCasino;
             AppSession.IsInternal = customerInfoViewModel.IsInternalUser;
         }
 

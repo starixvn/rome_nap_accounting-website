@@ -15,6 +15,7 @@ using DNAide.Data;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
+using System.Text;
 
 public partial class UploadVirtualRate : PageBase
 {
@@ -30,5 +31,5 @@ public partial class UploadVirtualRate : PageBase
         calendar = calendar.Replace("REPORT", "Review");
         TemplateHandler.RemoveBlock(ref calendar, "export");
         
-    }
+    }   
 }

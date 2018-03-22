@@ -1323,9 +1323,6 @@
   <data name="NoOthers" xml:space="preserve">
     <value>th</value>
   </data>
-  <data name="lblDisabledFIUplineTT" xml:space="preserve">
-    <value>The Finance has been disabled at upline</value>
-  </data>
   <data name="lblDisabledHRUplineTT" xml:space="preserve">
     <value>SA Tote status has been disabled at upline</value>
   </data>
@@ -1352,9 +1349,6 @@
   </data>
   <data name="strNotAccessPage" xml:space="preserve">
     <value>Sorry, You don't have permission to access this page.</value>
-  </data>
-  <data name="lblDisabledFI" xml:space="preserve">
-    <value>Disabled Finance</value>
   </data>
   <data name="lblSCR" xml:space="preserve">
     <value>SCR</value>

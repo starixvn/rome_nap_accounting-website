@@ -78,8 +78,7 @@
                 case Globals.AccountType.Agent:
                     if (!customerInfoViewModel.IsInternalUser)
                     {
-                        bool allowHR = !WebSettings.disabledHR;
-                        downlineListURL = "CustomerList/MemberList?agentId=" + customerInfoViewModel.CustId + "&hr=" + allowHR.ToString().ToLower() + "&internal=" + customerInfoViewModel.IsInternalUser.ToString().ToLower();
+                        downlineListURL = "CustomerList/MemberList?agentId=" + customerInfoViewModel.CustId;
                         if (WebSettings.OfferDoubleComm)
                         {
                             downlineListURL += "&doubleCommAgent=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();

@@ -46,84 +46,6 @@
     </tr>
         }
 }
-@helper GenerateBetSettingComPtRacing()
-    {
-        var racings = Sunplus.Accounting.Core.Configurations.RacingSection.Instance.Racings;
-        foreach (Sunplus.Accounting.Core.Configurations.RacingElement racing in racings)
-        {
-            if (!racing.Active)
-            {
-                continue;
-            }
-            var isFirst = true;
-            var activeCounter = 0;
-            foreach (Sunplus.Accounting.Core.Configurations.ToteElement tote in racing.Totes)
-            {
-                if (tote.Active)
-                {
-                    activeCounter++;
-                }
-            }
-            foreach (Sunplus.Accounting.Core.Configurations.ToteElement tote in racing.Totes)
-            {
-                var flat = "";
-                if (racing.Id == "151" && tote.Id == "41")
-                {
-                    flat = "copyfrom";
-                }
-                else
-                {
-                    flat = "copyto";
-                }
-
-                var minBetId = "v" + racing.Id.ToLower() + "minbet_" + tote.Id;
-                var maxBetId = "v" + racing.Id.ToLower() + "maxbet_" + tote.Id;
-                var maxpermatchId = "v" + racing.Id.ToLower() + "maxpermatch_" + tote.Id;
-                var commId = "v" + racing.Id.ToLower() + "discount_" + tote.Id;
-                var winplaceId = "v" + racing.Id.ToLower() + (ViewData["roleId"].ToString() == "3" ? "s" : (ViewData["roleId"].ToString() == "2" ? "m" : "a")) + "positiontaking_" + tote.Id;
-                var disableId = "disable" + racing.Id.ToLower() + "_" + tote.Id;
-    <tr>
-        @if (isFirst && activeCounter != 0)
-        {
-            isFirst = false;
-            <td rowspan="@activeCounter" align="left" style="padding-left: 4px">
-                <span>@racing.Name</span>
-            </td>
-        }
-        @if (!tote.Active)
-        {
-            continue;
-        }
-        <td align="left" style="padding-left: 4px">
-            <span>@tote.Name</span>
-        </td>
-        <td align="left" style="padding-right: 4px">
-            <input id="@minBetId" @flat type="text" minbet="true" style="width: 80px; text-align: right" value="@tote.Minbet" />
-            <span></span>
-        </td>
-        <td align="left" style="padding-right: 4px">
-            <input id="@maxBetId" @flat type="text" maxbet="true" style="width: 80px; text-align: right" value="@tote.Maxbet" />
-            <span></span>
-        </td>
-        <td align="left" style="padding-right: 4px">
-            <input id="@maxpermatchId" @flat type="text" maxpermatch="true" style="width: 80px; text-align: right" value="@tote.Maxpermatch" />
-            <span></span>
-        </td>
-        <td align="center">
-            <select id="@commId" @flat comm="true" style="width: 60px; text-align:left">
-            </select>
-        </td>
-        <td align="center">
-            <select id="@winplaceId" @flat winplacept="true" style="width: 60px; text-align:left">
-            </select>
-        </td>
-        <td align="center">
-            <input id="@disableId" @flat type="checkbox" /><span>Enable</span>
-        </td>
-    </tr>
-            }
-        }
-}
 @{
     var sports = Sunplus.Accounting.Core.Configurations.SportsSection.Instance.Sports;
 }
@@ -179,53 +101,9 @@
     })();
 </script>
 <script type="text/javascript">
-var arrRacing = [];
-(function () {
-    var racing;
-    var tote;
-@{
-    var racings = Sunplus.Accounting.Core.Configurations.RacingSection.Instance.Racings;
-    foreach (Sunplus.Accounting.Core.Configurations.RacingElement racing in racings)
-    {
-        if (!racing.Active)
-        {
-            continue;
-        }
-        @:racing = { Id: "" , totes: [] };
-        @:racing.Id = @racing.Id;
-        foreach (Sunplus.Accounting.Core.Configurations.ToteElement tote in racing.Totes)
-        {
-            if (!tote.Active)
-            {
-                continue;
-            }
-            @:tote = {Id: @tote.Id};
-            if (tote.BetType == null || tote.BetType == "NA" || tote.BetType == string.Empty || string.IsNullOrWhiteSpace(tote.BetType.Trim()))
-            {
-                @:tote.Bettype = [];
-            }
-            else
-            {
-                var _bettypes = tote.BetType.Split(new char[] { ',' });
-                @:tote.Bettype = [];
-                foreach (var bettype in _bettypes)
-                {
-                   @:tote.Bettype.push(@bettype);
-                }
-            }
-            @:racing.totes.push(tote);
-        }
-        @:window.arrRacing.push(racing);
-    }
-}
-})();
-</script>
-<script type="text/javascript">
     var dataJsonStr = '@Model.DataJson';
     dataJsonStr = dataJsonStr.replace(/&quot;&quot;/g, '"');
-    var dataJson = jQuery.parseJSON(dataJsonStr);
-    //dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
-    //dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
+    var dataJson = jQuery.parseJSON(dataJsonStr);   
 
     dataJson.KenoBetTypesSettingInfo = dataJson.KenoBetTypesSettingInfo.replace(/&quot;/g, '"');
     dataJson.KenoBetTypesSettingInfo = jQuery.parseJSON(dataJson.KenoBetTypesSettingInfo);
@@ -385,75 +263,7 @@ var arrRacing = [];
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <table id="tblTabRacing" cellspacing="0" cellpadding="0" border="0" class="tblPTheader"
-                style="margin-top: 15px">
-                <tbody>
-                    <tr id="btntop" style="cursor: pointer;">
-                        <td class="btnleft">
-                        </td>
-                        <td width="80" align="left" class="btnmiddle">
-                            <span class="mp">Racing</span>
-                        </td>
-                        <td width="20" class="md2 r" arrow="true">
-                        </td>
-                        <td class="btnright">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="divRacingContainer">
-                <table border="0">
-                    <tbody>
-                        <tr>
-                            <td align="left">
-                                <input id="cbxCopyRacing" type="checkbox" />
-                            </td>
-                            <td>
-                                <label style="font-weight: bold" for="cbxCopyRacing">
-                                    Copy all Bet Setting, Commission & Position Taking from Horse Racing UK/Irish Tote</label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="tblcollapse" style="width: 970px; margin-left: 7px">
-                    <tbody>
-                        <tr class="title">
-                            <td colspan="2">
-                            </td>
-                            <td colspan="3" align="center">
-                                <span style="font-weight: bold">Bet Setting</span>
-                            </td>
-                            <td colspan="2" align="center">
-                                <span style="font-weight: bold">Comm & PT Setting</span>
-                            </td>
-                            <td align="center" rowspan="2" style="width: 60px">
-                                <span style="font-weight: bold">Status</span>
-                            </td>
-                        </tr>
-                        <tr class="title">
-                            <td colspan="2">
-                            </td>
-                            <td align="center" style="width: 180px">
-                                <span style="font-weight: bold">Min Bet</span>
-                            </td>
-                            <td align="center" style="width: 180px">
-                                <span style="font-weight: bold">Max Bet</span>
-                            </td>
-                            <td align="center" style="width: 180px">
-                                <span style="font-weight: bold">Max Per Match</span>
-                            </td>
-                            <td align="center" style="width: 80px">
-                                <span style="font-weight: bold">Comm</span>
-                            </td>
-                            <td align="center" style="width: 100px">
-                                <span style="font-weight: bold">Win/ Place PT</span>
-                            </td>
-                        </tr>
-                        @GenerateBetSettingComPtRacing()
-                    </tbody>
-                </table>
-            </div>
+            </div>              
             @*<!--Virtual Sports-->
             @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableVirtualSports)
             {

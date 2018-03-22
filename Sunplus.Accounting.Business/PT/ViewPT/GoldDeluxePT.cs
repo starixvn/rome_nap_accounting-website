@@ -1,8 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.PT.ViewPT
 {
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using DNAide.Core;
     using DNAide.Data;
     using DNAide.Utils;
@@ -11,7 +8,10 @@
     using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
     using Sunplus.Accounting.Entities.Criteria.ViewPT;
     using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
-    using Sunplus.Accounting.Entities.PositionTaking.Racing;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using static Core.Common.Enumerations;
 
     public class GoldDeluxePT
     {
@@ -45,7 +45,6 @@
             var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
             result.CustomerInfo = GetCustomerRelation(rawData);
             result.IsCasino = false;
-            result.IsLiveCasino = false;
             result.IsGoldDeluxe = true;
             result.PotionTakingDetail = PositionTakingDetail(rawData, roleId, criteria.SportId);
             return result;
@@ -68,13 +67,13 @@
 
             var dataRowCustInfo = data.ResultSet.Tables[0].Rows[0];
             var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
-            if (roleId < (int)CustInfo.Roles.Agent)
+            if (roleId < (int)Role.Agent)
             {
                 var agentInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["AgID"].ToString()),
                     UserName = dataRowCustInfo["Ag"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Agent,
+                    RoleId = (int)Role.Agent,
                     RoleName = ResourceExtension.GetResourceValue(
                      ResourceExtension.Resources.Language, "Agent")
                 };
@@ -82,13 +81,13 @@
                 customerRelation.Upline.Add(agentInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Master)
+            if (roleId < (int)Role.Master)
             {
                 var masterInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["MAgID"].ToString()),
                     UserName = dataRowCustInfo["MAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Master,
+                    RoleId = (int)Role.Master,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Master")
                 };
@@ -96,13 +95,13 @@
                 customerRelation.Upline.Add(masterInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Super)
+            if (roleId < (int)Role.Super)
             {
                 var superInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["SAgID"].ToString()),
                     UserName = dataRowCustInfo["SAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Super,
+                    RoleId = (int)Role.Super,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Super")
                 };
@@ -113,7 +112,7 @@
             {
                 CustId = CastAide.AsInt32(dataRowCustInfo["custid"].ToString()),
                 UserName = dataRowCustInfo["username"].ToString(),
-                RoleId = (int)CustInfo.Roles.Member
+                RoleId = (int)Role.Member
             };
 
             return customerRelation;
@@ -191,7 +190,7 @@
             DataRow dr,
             int roleId)
         {
-            if (roleId < (int)CustInfo.Roles.Agent)
+            if (roleId < (int)Role.Agent)
             {
                 var memberPt = new PositionTakingInfo()
                 {
@@ -209,7 +208,7 @@
                 positionTakingDTO.Member = memberPt;
             }
 
-            if (roleId < (int)CustInfo.Roles.Master)
+            if (roleId < (int)Role.Master)
             {
                 var agentPt = new PositionTakingInfo()
                 {
@@ -227,7 +226,7 @@
                 positionTakingDTO.Agent = agentPt;
             }
 
-            if (roleId < (int)CustInfo.Roles.Super)
+            if (roleId < (int)Role.Super)
             {
                 var masterPt = new PositionTakingInfo()
                 {
@@ -243,7 +242,7 @@
                 positionTakingDTO.Master = masterPt;
             }
 
-            if (roleId <= (int)CustInfo.Roles.Super)
+            if (roleId <= (int)Role.Super)
             {
                 var superPt = new PositionTakingInfo()
                 {

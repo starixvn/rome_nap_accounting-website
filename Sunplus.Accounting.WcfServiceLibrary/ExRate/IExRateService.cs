@@ -10,17 +10,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
 {
     [ServiceContract]
     public interface IExRateService
-    {
-        ResultBO ReadExRateFromExcel();
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<ExchangeRate> LoadExchangeRateOpenTote();
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList);
-
+    {       
         string GenHeader();
 
         string GenNewRate();

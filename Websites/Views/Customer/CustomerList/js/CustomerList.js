@@ -101,25 +101,6 @@ $('.maincontent').delegate('.freegrid tr', 'hover', function (event) {
         })
 });
 
-function EditHorseracingSetting(roleid, custid, uplineid) {
-        var url = "";
-        switch (roleid) {
-            case 4:
-                url = "EditSuperPTRacing/Index?custid=" + custid;
-                break;
-            case 3:
-                url = "EditMasterPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
-                break;
-            case 2:
-                url = "EditAgentPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
-                break;
-            default:
-                url = "EditMemberPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
-                break;
-        }
-        showPopup("Update Racing Setting", url, "", "", 1050, 700, false, 2000, null);
-    }
-
     function EditSportsBookSetting(roleid, custid, uplineid, username, siteName) {
         var url = "";
         var title = "";

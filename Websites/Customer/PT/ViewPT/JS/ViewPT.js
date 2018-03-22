@@ -48,72 +48,6 @@ var ViewPT = {
                         {{/each}}\
                     {{/if}}\
                 </table>',
-    TplHrIBCAutoPt: '{{if (IbcPtForRacebook != null && IbcPtForRacebook.length > 0)}}\
-                    <table class="layout_table ViewPTTable c">\
-                    <tr class="ViewPTHeader b">\
-                        <th width="70"></th>\
-                        {{each(i, tote) IbcPtForRacebook}}\
-                              <th width="80">${ToteName}</th>\
-                        {{/each}}\
-                    </tr>\
-                  <!--r4-->\
-                  <tr class="trbgov" >\
-                    <td class="ViewPTHeader l">IBC Auto PT</td>\
-                    {{each(i, tote) IbcPtForRacebook}}\
-                        <td>${IbcAutoPt}</td>\
-                    {{/each}}\
-                  </tr>\
-                </table>\
-                {{/if}}',
-    TplHrActualIBCPtOnMember: '{{if (IbcPtForRacebook != null && IbcPtForRacebook.length > 0 && IbcPtForRacebook[0].ActualIbcPtOnMember != null)}}\
-                                <font color="#0000FF">Actual IBC PT on Member:</font>\
-                                <table class="layout_table ViewPTTable c" border="1">\
-                                    <tr class="ViewPTHeader">\
-                                        <th width="70" colspan="2" style="width: 70px"></th>\
-                                        {{each(i, tote) IbcPtForRacebook}}\
-                                            <th width="80">${ToteName}</th>\
-                                        {{/each}}\
-                                   </tr>\
-                                   <!--Win-->\
-                                   {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Win != null)}}\
-                                       <tr class="trbgov" >\
-                                            <td class="ViewPTHeader l" colspan="2">Win</td>\
-                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
-                                                <td>${ActualIbcPtOnMember.Win}</td>\
-                                            {{/each}}\
-                                        </tr>\
-                                    {{/if}}\
-                                    <!--/Win-->\
-                                    <!--Place-->\
-                                    {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Place != null)}}\
-                                       <tr class="trbgov" >\
-                                            <td class="ViewPTHeader l" colspan="2">Place</td>\
-                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
-                                                <td>${ActualIbcPtOnMember.Place}</td>\
-                                            {{/each}}\
-                                        </tr>\
-                                    {{/if}}\
-                                    <!--/Place-->\
-                                    {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Win != null && IbcPtForRacebook[0].ActualIbcPtOnMember.Place != null)}}\
-                                        <!--EW-->\
-                                        <tr class="trbgov" >\
-                                            <td class="ViewPTHeader l" rowspan="2">E/W</td>\
-                                            <td class="ViewPTHeader l">Win</td>\
-                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
-                                                <td>${ActualIbcPtOnMember.EWin}</td>\
-                                            {{/each}}\
-                                        </tr>\
-                                        <tr class="trbgov" >\
-                                            <td class="ViewPTHeader l">Place</td>\
-                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
-                                                <td>${ActualIbcPtOnMember.EPlace}</td>\
-                                            {{/each}}\
-                                        </tr>\
-                                        <!--/EW-->\
-                                    {{/if}}\
-                                </table>\
-                                <br/>\
-                            {{/if}}',
     TplPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
                     <table class="layout_table ViewPTTable c">\
@@ -393,114 +327,6 @@ var ViewPT = {
                     <br />\
                     <!--/tbl-->\
                     </div>\
-                {{/each}}',
-    TplLiveCsPtInfo: '{{each(i, pt) PotionTakingDetail}}\
-                    <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
-                    <table class="layout_table ViewPTTable c">\
-	                    <tr class="ViewPTHeader b">\
-		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                    <th width="40">s</th>\
-		                    <th width="40">m</th>\
-		                    <th width="40">a</th>\
-		                    <th width="40">us</th>\
-		                    <th width="40">is</th>\
-		                    <!--AutoMPT-->\
-                            {{if (EnableAutoMaster)}}\
-		                        <th width="40">um</th>\
-		                        <th width="40">im</th>\
-                            {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <th width="40">n</th>\
-		                    <th width="40">comm</th>\
-	                    </tr>\
-	                    <!--r4-->\
-                        {{if (Super != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Super [4]</td>\
-		                    <td>${Super.Super}</td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <!--AutoMPT-->\
-                            {{if (EnableAutoMaster)}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
-                            {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Super.MinPt}</td>\
-		                    <td>${Super.Com}</td>\
-	                    </tr>\
-                        {{/if}}\
-	                    <!--/r4-->\
-	                    <!--r3-->\
-                        {{if (Master != null)}}\
-	                    <tr  class="trbgov" >\
-		                    <td class="ViewPTHeader l">Master [3]</td>\
-		                    <td>${Master.Super}</td>\
-		                    <td>${Master.Master}</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Master.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
-                            {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableFlagCss}"></td>\
-		                        <td class="${DisableFlagCss}"></td>\
-                            {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Master.MinPt}</td>\
-		                    <td>${Master.Com}</td>\
-	                    </tr>\
-                        {{/if}}\
-	                    <!--/r3-->\
-	                    <!--r2-->\
-                        {{if (Agent != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Agent [2]</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Agent.Master}</td>\
-		                    <td>${Agent.Agent}</td>\
-		                    <!--DisableAutoMPT-->\
-                            {{if (!EnableAutoMaster)}}\
-		                        <td>${Agent.SuperAuto}</td>\
-		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-		                    <!--/DisableAutoMPT-->\
-		                    <!--AutoMPT-->\
-                            {{else}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
-		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
-                            {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Agent.MinPt}</td>\
-		                    <td>${Agent.Com}</td>\
-	                    </tr>\
-                        {{/if}}\
-	                    <!--/r2-->\
-	                    <!--r1-->\
-                        {{if (Member != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Member [1]</td>\
-		                    <td>${Member.Super}</td>\
-		                    <td>${Member.Master}</td>\
-		                    <td>${Member.Agent}</td>\
-		                    <td>${Member.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
-                            {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
-                            {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td class="disable"></td>\
-		                    <td>${Member.Com}</td>\
-	                    </tr>\
-                        {{/if}}\
-	                    <!--/r1-->\
-                    </table>\
-                    <br />\
-                    <!--/tbl-->\
                 {{/each}}',
     TplAGCasinoPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
@@ -784,34 +610,20 @@ var ViewPT = {
     TplPt: '<div style="padding-left: 20px;">\
             {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
             <div style="padding-left: 20px;">\
-            {{if ($data.IBCPt != null)}}\
-                <!--IBC_PT_HR-->\
-                {{tmpl($data.IBCPt) ViewPT.TplHrIBCAutoPt}}\
-                <br/>\
-                <!--Member_PT_HR-->\
-                {{tmpl($data.IBCPt) ViewPT.TplHrActualIBCPtOnMember}}\
-                <!--/Member_PT_HR-->\
-                <!--/IBC_PT_HR-->\
-                <!--tbl-->\
-            {{/if}}\
             {{if ($data.PotionTakingDetail != null)}}\
                 {{if ($data.IsCasino)}}\
                     {{tmpl($data) ViewPT.TplCasinoPt}}\
                 {{else}}\
-                    {{if ($data.IsLiveCasino)}}\
-                        {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
+                    {{if ($data.IsGoldDeluxe)}}\
+                        {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
                     {{else}}\
-                        {{if ($data.IsGoldDeluxe)}}\
-                            {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
+                        {{if ($data.IsMicroGaming)}}\
+                            {{tmpl($data) ViewPT.TplMicroGamingPtInfo}}\
                         {{else}}\
-                            {{if ($data.IsMicroGaming)}}\
-                                {{tmpl($data) ViewPT.TplMicroGamingPtInfo}}\
+                            {{if ($data.IsAGCasino)}}\
+                                {{tmpl($data) ViewPT.TplAGCasinoPtInfo}}\
                             {{else}}\
-                                {{if ($data.IsAGCasino)}}\
-                                    {{tmpl($data) ViewPT.TplAGCasinoPtInfo}}\
-                                {{else}}\
-                                    {{tmpl($data) ViewPT.TplPtInfo}}\
-                                {{/if}}\
+                                {{tmpl($data) ViewPT.TplPtInfo}}\
                             {{/if}}\
                         {{/if}}\
                     {{/if}}\
@@ -824,71 +636,27 @@ var ViewPT = {
             {{if ($data.Comm != null && $data.Comm.length > 0)}}\
                 <table class="layout_table ViewPTTable c" style="width: 968px;">\
                     <tr class="ViewPTHeader b">\
-                        <td rowspan="2" width="60">&nbsp;</td>\
-                        <td rowspan="2">Group A</td>\
+                        <td width="60">&nbsp;</td>\
+                        <td >Group A</td>\
                         {{if ($data.Comm[0].MyanmarOdds != null && !$data.Comm[0].MyanmarOdds.Status)}}\
-                            <td rowspan="2">Group B</td>\
-                            <td rowspan="2">Group C</td>\
-                            <td rowspan="2">Group D</td>\
+                            <td>Group B</td>\
+                            <td>Group C</td>\
+                            <td>Group D</td>\
                         {{/if}}\
-                        <td rowspan="2">Other</td>\
+                        <td>Other</td>\
                         <!--1X2-->\
-                            <td rowspan="2">1x2</td>\
+                            <td>1x2</td>\
                         <!--/1X2-->\
-                         <!--hrFixedOdds-->\
-                            <td rowspan="2">HR Fixed Odds</td>\
-                        <!--/hrFixedOdds-->\
-                        <!--racing-->\
-                        {{if ($data.Comm[0].HorseRacing != null && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
-                            <td colspan="${$data.Comm[0].HorseRacing.AllowViewTotes.length}">Horse Racing</td>\
-                        {{/if}}\
-                        <!--/racing-->\
-                        <!--greyhound-->\
-                        {{if ($data.Comm[0].Greyhound != null && $data.Comm[0].Greyhound.AllowViewTotes != null)}}\
-                            <td colspan="${$data.Comm[0].Greyhound.AllowViewTotes.length}">Greyhound</td>\
-                        {{/if}}\
-                        <!--/greyhound-->\
-                        <!--harness-->\
-                        {{if ($data.Comm[0].Harness != null && $data.Comm[0].Harness.AllowViewTotes != null)}}\
-                            <td colspan="${$data.Comm[0].Harness.AllowViewTotes.length}">Harness</td>\
-                        {{/if}}\
-                        <!--/harness-->\
-                        <!--P2P-->\
-                        {{if ($data.Comm[0].P2PGameComm.Status && $data.Comm[0].P2PPrivateGameComm.Status)}}\
-                            <td colspan="2">P2P Comm</td>\
-                         {{/if}}\
-                        <!--/P2P-->\
                         <!--numbergame-->\
                         {{if ($data.Comm[0].GameComm != null)}}\
-                            <td rowspan="2">Number Game </br> Comm</td>\
+                            <td>Number Game </br> Comm</td>\
                         {{/if}}\
                         <!--/numbergame-->\
                          <!--myanmarodds-->\
                         {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
-                            <td rowspan="2">% Odds</td>\
+                            <td>% Odds</td>\
                         {{/if}}\
                         <!--/myanmarodds-->\
-                    </tr>\
-                    <tr class="ViewPTHeader b">\
-                        {{if ($data.Comm[0].HorseRacing != null  && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
-                            {{each(ihr, hr) $data.Comm[0].HorseRacing.AllowViewTotes}}\
-                                <td>${Name}</td>\
-                            {{/each}}\
-                        {{/if}}\
-                        {{if ($data.Comm[0].Greyhound != null  && $data.Comm[0].Greyhound.AllowViewTotes != null)}}\
-                            {{each(ihr, hr) $data.Comm[0].Greyhound.AllowViewTotes}}\
-                                <td>${Name}</td>\
-                            {{/each}}\
-                        {{/if}}\
-                        {{if ($data.Comm[0].Harness != null  && $data.Comm[0].Harness.AllowViewTotes != null)}}\
-                            {{each(ihr, hr) $data.Comm[0].Harness.AllowViewTotes}}\
-                                <td>${Name}</td>\
-                            {{/each}}\
-                        {{/if}}\
-                        {{if ($data.Comm[0].P2PGameComm.Status && $data.Comm[0].P2PPrivateGameComm.Status)}}\
-                           <td>${$data.Comm[0].P2PGameComm.Name}</td>\
-                           <td>${$data.Comm[0].P2PPrivateGameComm.Name}</td>\
-                        {{/if}}\
                     </tr>\
                     <!--row-->\
                     {{each(i, current) $data.Comm}}\
@@ -906,32 +674,6 @@ var ViewPT = {
 				                <td>${OneXTwo.Comm}</td>\
 			                {{/if}}\
 			                <!--/1X2-->\
-                              <!--hrFixedOdds-->\
-			                {{if (HRFixedOdds != null && HRFixedOdds.Status)}}\
-				                <td>${HRFixedOdds.Comm}</td>\
-			                {{/if}}\
-			                <!--/hrFixedOdds-->\
-                            {{if (HorseRacing != null)}}\
-                                {{each(ihr, hr) HorseRacing.AllowViewTotes}}\
-                                    <td>${Comm}</td>\
-                                {{/each}}\
-                            {{/if}}\
-                            {{if (Greyhound != null)}}\
-                                {{each(ihr, hr) Greyhound.AllowViewTotes}}\
-                                    <td>${Comm}</td>\
-                                {{/each}}\
-                            {{/if}}\
-                            {{if (Harness != null)}}\
-                                {{each(ihr, hr) Harness.AllowViewTotes}}\
-                                    <td>${Comm}</td>\
-                                {{/each}}\
-                            {{/if}}\
-			                <!--P2P-->\
-                            {{if (P2PGameComm.Status && P2PPrivateGameComm.Status)}}\
-			                <td>${P2PGameComm.Comm}</td>\
-                            <td>${P2PPrivateGameComm.Comm}</td>\
-                            {{/if}}\
-			                <!--/P2P-->\
 			                <!--numbergame-->\
 			                {{if (GameComm != null && GameComm.Status)}}\
 				                <td>${GameComm.Comm}</td>\
@@ -978,7 +720,7 @@ var ViewPT = {
             dataType: "json",
             success: function (rs) {
                 if (rs != null) {
-                    var products = '<option value="0">SB/RC/NG</option>';
+                    var products = '<option value="0">SB/NG</option>';
                     $.each(rs, function (i, product) {
                         products += '<option value="' + product.ProductId + '">' + product.ProductName + '</option>';
                     });
@@ -1043,16 +785,7 @@ var ViewPT = {
         try { parent.BlockUI(); } catch (e) { }
 
         switch (sportId) {
-            case 252: //Bingo 
-                ViewPT.getPTSetting(userName,
-                    sportId,
-                    betTypeId,
-                    isLive);
-                $("#frmSportsbook2").attr('src', "");
-                $("#frmSportsbook2").hide();
-                break;
-            case 44: //Sportsbook 2 
-            case 206: //Cockfighting
+            case 44: //Sportsbook 2           
             case 50: //Cricket
             case 211: // Allbet
             case 212: // Voidbridge
@@ -1140,34 +873,6 @@ var ViewPT = {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
-        });
-    },
-    getPTSetting: function (userName,
-        sportId,
-        betTypeId,
-        isLive) {
-        var requestParams = {
-            UserName: userName,
-            SportId: sportId,
-            BetTypeId: betTypeId,
-            IsLive: isLive
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "../../../ViewPT/GetPTSetting",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(requestParams),
-            success: function (result) {
-                ViewPT.renderPTSetting(requestParams, result);
-            },
-            error: function (jqXHR, event, ajaxSettings) {
-                ViewPT.renderPTSetting(requestParams, null);
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
         });
     },
     renderPTSetting: function (requestParams, result) {

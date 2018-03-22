@@ -2274,9 +2274,6 @@
   <data name="Size" xml:space="preserve">
     <value>Size</value>
   </data>
-  <data name="disabledfi" xml:space="preserve">
-    <value>Disabled Finance</value>
-  </data>
   <data name="disabledCS" xml:space="preserve">
     <value>DisabledCS</value>
   </data>

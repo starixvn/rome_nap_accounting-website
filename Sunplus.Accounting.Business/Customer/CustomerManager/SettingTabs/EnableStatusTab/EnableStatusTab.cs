@@ -105,8 +105,7 @@
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
-
-            htmlcontent = RenderHRFixedOddsControl(htmlcontent, customerInfoViewModel);
+            
             htmlcontent = RenderEsportsControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForCreditControl(
@@ -119,8 +118,6 @@
 
             htmlcontent = RenderNumberGameControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderEnableCasinoControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderLiveCasinoControl(htmlcontent, customerInfoViewModel);
-
             htmlcontent = RenderSuperLiveControl(
                 htmlcontent,
                 row1,
@@ -186,9 +183,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
-
-            TemplateHandler.Assign(ref htmlcontent, "{CockFightingId}", "19");
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCockFighting}", "1");
+           
 
             TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
@@ -696,28 +691,6 @@
             return htmlcontent;
         }
 
-        private static string RenderLiveCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{chkLiveCasino}", customerInfoViewModel.DisabledLiveCasino ? 1 : 0);
-
-            var liveCasinoSettingGroup = new SettingGroup();
-
-            liveCasinoSettingGroup.Add(
-                GetSettingControlLiveCasino(
-                    customerInfoViewModel.RoleId,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    "disabledLCS",
-                    !customerInfoViewModel.DisabledLiveCasino,
-                    customerInfoViewModel.SyncLiveCasino,
-                    customerInfoViewModel.AllowEditLiveCasino,
-                    customerInfoViewModel.Enabled,
-                    customerInfoViewModel.DisabledLiveCasinoParent,
-                    !customerInfoViewModel.DisabledDownlinesLiveCasino));
-
-            TemplateHandler.Assign(ref htmlcontent, "{liveCasinoControl}", liveCasinoSettingGroup.GetHTMLSettingControl());
-            return htmlcontent;
-        }
-
         private static string RenderEnableCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", customerInfoViewModel.DisabledRnGCasino ? 1 : 0);
@@ -781,32 +754,6 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
                 TemplateHandler.RemoveBlock(ref htmlcontent, "eSportsControl");
-            }
-
-            return htmlcontent;
-        }
-
-        private static string RenderHRFixedOddsControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (WebSettings.OfferHorseRacingFixedOdds)
-            {
-                var hRFixedOddsSettingGroup = new SettingGroup();
-
-                hRFixedOddsSettingGroup.Add(GetSettingControlEnableHorseRacingFixedOdds(
-                    customerInfoViewModel.RoleId,
-                    customerInfoViewModel.CustParent.IsEnableHorseRacingFixedOdds,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    "enableHorseRacingFixedOdds",
-                    customerInfoViewModel.EnableHorseRacingFixedOdds,
-                    !customerInfoViewModel.DisableDownlinesHorseRacingFixedOdds,
-                    CastAide.AsBoolean(customerInfoViewModel.Enabled)));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", customerInfoViewModel.EnableHorseRacingFixedOdds ? 1 : 0);
-                TemplateHandler.Assign(ref htmlcontent, "{hRFixedOddsControl}", hRFixedOddsSettingGroup.GetHTMLSettingControl());
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "hRFixedOddsControl");
             }
 
             return htmlcontent;

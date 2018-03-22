@@ -20,7 +20,6 @@
                 </td>
 
                 <td class="colW1">
-                  {lbl:disabledfi}
                 </td>
                 <td class="colW2">
                   <xsl:value-of select="@disablefinancial" />

@@ -127,8 +127,7 @@
     <script src="../../../js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
     <script src="../../../js/BlockUI.js" type="text/javascript"></script>
     <script src="../../../js/common.js" type="text/javascript"></script>
-    <script src="../../../js/Controls/StyledCheckbox/custom-form-elements.js" type="text/javascript"></script>
-    <script type="text/javascript" src="JS/ViewPT_Bingo.js?ver=<%=WebSettings.Version%>"></script>
+    <script src="../../../js/Controls/StyledCheckbox/custom-form-elements.js" type="text/javascript"></script> 
     <script type="text/javascript" src="JS/ViewPT.js?ver=<%=WebSettings.Version%>"></script>
 </body>
 </html>

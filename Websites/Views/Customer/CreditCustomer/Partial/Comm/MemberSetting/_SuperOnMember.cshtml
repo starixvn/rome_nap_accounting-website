@@ -2,7 +2,6 @@
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
 @{
-    bool isOfferHRFixedOdds = WebSettings.OfferHorseRacingFixedOdds;
     bool isShowMyanmarOdds = false;
     if (Model.IsSuperSetting && Model.IsInsertPage)
     {
@@ -90,28 +89,6 @@
         </td>
     </tr>
     <!--/game-comm-->
-    @if (isOfferHRFixedOdds)
-    {
-        <!--hr-fixed-odds-->
-        <tr>
-            <td class="r" style="width: 25%;">
-                HR Fixed Odds
-            </td>
-            <td>
-                <span data-bind="text: customer.commissionSetting2.playerDiscountHRFixedOdds"></span>
-            </td>
-            <td>
-                <span data-bind="text: customer.commissionSetting.discountHRFixedOdds"></span>
-            </td>
-            <td>
-                <span data-bind="text: customer.commissionSetting.playerDiscountHRFixedOdds"></span>
-            </td>
-        </tr>
-        <!--/hr-fixed-odds-->
-    }
-    @if (Model.IsInsertPage)
-    {
-    }
     @if (isShowMyanmarOdds)
     {
         <!--MyanmarOdds-->

@@ -1,23 +1,7 @@
 ﻿$(window).load(
     function () {
         PTBlockUI();
-        var arrTrs = $("#tblmixparlay").find("tbody tr");
-        /*for (var i = 0; i < arrTrs.length; ++i) {
-        var tds = $(arrTrs[i]).find("td");
-        $(tds[0]).find("div").width(66);
-        $(tds[0]).find("div")[0].style.overflow = "hidden";
-        $(tds[0]).find("div").attr("title", $(tds[0]).find("div").html());
-
-        $(tds[1]).find("div").width(72);
-        $(tds[2]).find("div").width(73);
-        $(tds[3]).find("div").width(73);
-        $(tds[4]).find("div").width(65);
-        $(tds[5]).find("div").width(64);
-        $(tds[6]).find("div").width(64);
-        $(tds[7]).find("div").width(64);
-        $(tds[8]).find("div").width(63);
-        //$(tds[9]).html("<div style='width:48px; text-align:center'>" + $(tds[9]).html() + "</div>");
-        }*/
+        var arrTrs = $("#tblmixparlay").find("tbody tr");   
 
         $("#tblmixparlay").find("tbody tr").each
         (
