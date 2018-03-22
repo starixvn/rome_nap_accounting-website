@@ -98,7 +98,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.9-HideInactiveProduct\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.9\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -114,7 +114,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1-RemoveInactiveProducts-01\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -146,11 +146,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.13-HideInactiveProducts4\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Customer.1.0.0.13\lib\net40\Fanex.Tarus.Customer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.7-HideInactiveProducts1\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -158,11 +158,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.8-HideInactiveProducts3\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.8\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.4-HideInactiveProducts2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -170,7 +170,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9-HideInactiveProducts2\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -293,19 +293,19 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11-HideInactiveProducts6\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.12-HideInactiveProducts6\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.12\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.12-HideInactiveProducts\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.12\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6-HideInactiveProducts3\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
