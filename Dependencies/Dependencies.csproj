@@ -46,12 +46,8 @@
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.1.34888, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.4\lib\net40\CasinoLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoSetting.1.0.0.0\lib\net40\CasinoSetting.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.19754, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.19-Jackpot-04\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoUtility, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -97,8 +93,8 @@
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.1.3\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.7-OneRNGJackpot1\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -114,7 +110,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.60.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.53.0-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Bullfighting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -129,8 +125,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.60.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+  <Reference Include="Fanex.BetList.Core, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.53.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -174,7 +170,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.5\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.5-beta3\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualSports, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -210,7 +206,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.2-Jackpot\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.CloneSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -293,6 +289,8 @@
       <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.3\lib\net40\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.3-OneRNGJackpot2\lib\Fanex.Module.RNGCasino.dll</HintPath>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.3\lib\net40\Fanex.Module.Statement.dll</HintPath>
       <Private>True</Private>
@@ -389,8 +387,8 @@
       <HintPath>..\packages\Fanex.Tarus.Balance.1.0.0.4\lib\net40\Fanex.Tarus.Balance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.3\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+    <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.0-OneRNGJackpot1\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
@@ -414,7 +412,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.ExchangeRate, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.5\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.5-PJUnitPrice-3\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -455,10 +453,6 @@
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FanexOneyed.RobotTrap.1.0.0.0\lib\net40\FanexOneyed.RobotTrap.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HandHistoryLibrary.2015.6.11.1141\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">

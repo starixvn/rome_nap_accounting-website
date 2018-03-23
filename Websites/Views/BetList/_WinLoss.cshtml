@@ -6,7 +6,7 @@
     BetListHelper betlistHelper = new BetListHelper();
     string netWin = string.Empty;
     string chargeCommFormat = string.Empty;
-    var betTypeId = ticket.BetTypeId;
+    var betTypeId = betdetail.Ticket.BetTypeId;
     if (betTypeId.Equals(500))
     {
         netWin = "(NW) ";
@@ -23,7 +23,7 @@
     }
     else
     {
-        switch (ticket.Status.ToLower())
+        switch (betdetail.Ticket.Status.ToLower())
         {
             case "running":
             case "waiting":
@@ -33,7 +33,7 @@
                 break;
             case "void":
                 {
-                    if (betTypeId.Equals(500))
+                    if (betdetail.Ticket.BetTypeId.Equals(500))
                     {
                         <div class="positive">@netWin 0.00</div>
                         <span> 0.00 </span>
@@ -68,13 +68,13 @@
                 break;
             default:
                 {
-                    <div class="@betlistHelper.IsNegative(ticket.Winlost)">
-                        @netWin @ticket.Winlost.Format(2)
+                    <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost)">
+                        @netWin @betdetail.Ticket.Winlost.Format(2)
                     </div>
-                    if (betlistHelper.IsShowCommission(Model))
+                    if (betlistHelper.IsShowCommission(betdetail))
                     {
                         <div class="@chargeCommFormat margin-top-5">
-                            @ticket.PlayerComm.Format(2)
+                            @betdetail.Ticket.PlayerComm.Format(2)
                         </div>
                     }
                 }
