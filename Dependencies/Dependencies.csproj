@@ -390,7 +390,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.0-OneRNGJackpot2\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.0-OneRNGJackpot3\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
