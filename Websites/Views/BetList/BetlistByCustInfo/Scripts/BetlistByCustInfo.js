@@ -243,7 +243,7 @@
         BetListByCustInfo.pagerOpts.items_per_page = items_per_page;
         BetListByCustInfo.pagerOpts.current_page = current_page;
 
-        $("#pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
+        $("#betlistMain #pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
     },
     pageSelectCallback: function (page_index, _items_per_page, jq) {
         var max_page = Math.ceil(_length / _items_per_page);
@@ -301,7 +301,7 @@
 
         //Exchange
         $('#maincontent_exchange').removeClass('hidden');
-        $('#betListExchangeContent').removeClass('hidden');
+        $('#betListExchangeContent').removeClass('hidden');        
     }
 
 };

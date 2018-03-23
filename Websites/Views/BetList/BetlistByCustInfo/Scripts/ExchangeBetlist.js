@@ -18,19 +18,10 @@
         gridHeight: 120,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
-    },
-    eventGridOpts: {
-        tblContentId: 'tblContent',
-        manualCopyHeader: true,
-        fullWidth: true,
-        fullHeight: true,
-        gridWidth: 675, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 550,
-        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 0
-    },
+    },    
     pagerOpts: {
         callback: null,
+        link_to: 'abc',
         start_per_page: 10,
         step_per_page: 10,
         item_per_page_arr: [10, 20, 30, 40],
@@ -78,13 +69,13 @@
             success: function (result) {
                 $("#betListExchangeContent").html(result);
 
-                if (typeof _length != "undefined") {
-                    ExchangeBetlist.gridOpts.isShowPager = !(_length == 0 || _length == 1);
+                if (typeof _totalSummaryRowsExchange != "undefined") {
+                    ExchangeBetlist.gridOpts.isShowPager = !(_totalSummaryRowsExchange == 0 || _totalSummaryRowsExchange == 1);
                     $("#ExchangeBetlist").initGrid(ExchangeBetlist.gridOpts);
                     $('#ExchangeBetlist').removeClass("display-none").gridScroller(ExchangeBetlist.gridOpts);
 
 
-                    ExchangeBetlist.initPager(_length,
+                    ExchangeBetlist.initPager(_totalSummaryRowsExchange,
                     ExchangeBetlist.param.pageSize,
                     ExchangeBetlist.param.pageIndex - 1);
                 }
@@ -102,10 +93,10 @@
         ExchangeBetlist.pagerOpts.items_per_page = items_per_page;
         ExchangeBetlist.pagerOpts.current_page = current_page;
 
-        $("#pagination").pagination(total_items, ExchangeBetlist.pagerOpts);
+        $("#ExchangeBetlist #pagination").pagination(total_items, ExchangeBetlist.pagerOpts);
     },
     pageSelectCallback: function (page_index, _items_per_page, jq) {
-        var max_page = Math.ceil(_length / _items_per_page);
+        var max_page = Math.ceil(_totalSummaryRowsExchange / _items_per_page);
         page_index = page_index < max_page ? page_index : max_page - 1;
 
         ExchangeBetlist.param.pageIndex = page_index + 1;
