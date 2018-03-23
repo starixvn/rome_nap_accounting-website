@@ -97,8 +97,8 @@
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.1.0\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.1.1-FM2-01\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -114,7 +114,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.54.0-beta1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.54.0-beta2\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Bullfighting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -130,7 +130,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.54.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.54.0-beta1\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.54.0-beta2\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -374,7 +374,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.11.0-beta\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.11.0-beta1\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
@@ -394,7 +394,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.1\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.1-FM2-01\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
