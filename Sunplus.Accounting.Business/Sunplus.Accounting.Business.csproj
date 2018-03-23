@@ -65,8 +65,8 @@
       <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.1.19754, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.2.19-Jackpot-04\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.16464, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.19-Jackpot-05\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoUtility, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -93,8 +93,8 @@
       <HintPath>..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.7-OneRNGJackpot1\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+    <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.7-OneRNGJackpot2\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -142,7 +142,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.0-OneRNGJackpot1\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.0-OneRNGJackpot2\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Customer, Version=1.0.0.13, Culture=neutral, processorArchitecture=MSIL">
