@@ -182,29 +182,8 @@ public class UpdateCSSetting : BaseHandler
             csCustomer.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custid);
 
             //var custSetting = csCustomer.GetCustSetting(custInfo.IBCCustID);   
-            if (!bInserting)
-            {
-                status = csCustomer.UpdateMaxTransferMisc(
-                      custid,
-                      isEnableCasino,
-                      (!isEnableCasino) ? true : DNAide.Core.CastAide.AsBoolean(request[Globals.HIDDEN_UPDDOWNLLINE]),
-                      isMaxTransfer,
-                      intMaxTransfer, // max transfer credit
-                      bAutoReset,
-                      bPTByGameType,
-                    //!bGameKindGroup,                             
-                      request.UserHostAddress,
-                      AppSession.CustID,
-                      AppSession.Username,
-                      3);
-                if (!status)
-                {
-                    context.Response.Write("<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.updCustSettingFailed, AlertMessage.MsgType.Error) + "', 0); parent.ResetBtnState(); </script>");
-                    return;
-                }
-            }
-            else
-            {
+            if (bInserting)
+            {               
                 CSCustomerDetail parentCustInfo = null;
                 Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider pCustInfo = new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider();
                 if (custInfo.RoleId.ToString() == "3")

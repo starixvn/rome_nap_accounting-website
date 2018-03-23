@@ -6,7 +6,8 @@
     BetListHelper betlistHelper = new BetListHelper();
     string netWin = string.Empty;
     string chargeCommFormat = string.Empty;
-    if (ticket.BetTypeId.Equals(500))
+    var betTypeId = betdetail.Ticket.BetTypeId;
+    if (betTypeId.Equals(500))
     {
         netWin = "(NW) ";
         ticket.Winlost = ticket.ActualStake;
@@ -16,29 +17,35 @@
     bool betListStatement = ViewData["BetListStatement"] != null && Convert.ToBoolean(ViewData["BetListStatement"]);
 }
 <div class="margin-top-5">
-    @switch (ticket.Status.ToLower())
+    @if (betTypeId.Equals(2198) || betTypeId.Equals(2398) || betTypeId.Equals(2998))
     {
-        case "running":
-        case "waiting":
-            {
-                <span> - </span>
-            }
-            break;
-        case "void":
-            {
-                if (ticket.BetTypeId.Equals(500))
+        <span> - </span>
+    }
+    else
+    {
+        switch (betdetail.Ticket.Status.ToLower())
+        {
+            case "running":
+            case "waiting":
                 {
-                    <div class="positive">@netWin 0.00</div>
-                    <span> 0.00 </span>
+                    <span> - </span>
                 }
-                else
+                break;
+            case "void":
                 {
-                    <span> 0.00 </span>
+                    if (betdetail.Ticket.BetTypeId.Equals(500))
+                    {
+                        <div class="positive">@netWin 0.00</div>
+                        <span> 0.00 </span>
+                    }
+                    else
+                    {
+                        <span> 0.00 </span>
+                    }
                 }
-            }
-            break;
-        case "reject":
-            {
+                break;
+            case "reject":
+                {
                 if (!betListStatement &&
                     ticket.RefCode != 0 &&
                     (ticket.WalletType == 0 || ticket.WalletType == 1 || ticket.WalletType == 2))
@@ -58,19 +65,20 @@
                     <span> 0.00 </span>
                 }
             }
-            break;
-        default:
-            {
-                <div class="@betlistHelper.IsNegative(ticket.Winlost)">
-                    @netWin @ticket.Winlost.Format(2)
-                </div>
-                if (betlistHelper.IsShowCommission(Model))
+                break;
+            default:
                 {
-                    <div class="@chargeCommFormat margin-top-5">
-                        @ticket.PlayerComm.Format(2)
+                    <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost)">
+                        @netWin @betdetail.Ticket.Winlost.Format(2)
                     </div>
+                    if (betlistHelper.IsShowCommission(betdetail))
+                    {
+                        <div class="@chargeCommFormat margin-top-5">
+                            @betdetail.Ticket.PlayerComm.Format(2)
+                        </div>
+                    }
                 }
-            }
-            break;
+                break;
+        }
     }
 </div>

@@ -1,0 +1,122 @@
+﻿@using Fanex.Tarus.ExchangeRate.Entities
+@model IEnumerable<PJUnitPrice>
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
+    <link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="err">
+    </div>
+    <div class="main">
+        <div class="maincontent">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL"></td>
+                    <td class="maincontent_headerC">
+                        JPUnitPrice
+                    </td>
+                    <td class="maincontent_headerR"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="mainreport" style="padding-top: 2px">
+            <div id="PJUnitPrice" class="content-warper hidden">
+                <div class="content-toolbox bgtitle">
+                    <div id="gridTitle" class="gridtitle">JPUnitPrice</div>
+                    <div class="btngroup">
+                        <input type="button" name="btnExport" id="exportExcel" class="btnExcel" title="Export to Excel" />
+                    </div>
+                </div>
+                <div class="content-header clearfix">
+                    <div class="header-scroll">
+                        <table class="tbl-header-scroll">
+                            <tr>
+                                <td style="border-bottom: none 0px">
+                                    <div class="col100 c">Currency</div>
+                                </td>
+                                <td style="border-bottom: none 0px">
+                                    <div class="col60 c">Standard Code</div>
+                                </td>
+                                <td style="border-bottom: none 0px">
+                                    <div class="col120 c">JPUnitPrice</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col80 c">Edit</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-body clearfix">
+                    <div class="body-scroll">
+                        <table class="tbl-body-scroll">
+                            @if (Model.Any())
+                            {
+                                var isEvenRow = true;
+                                foreach (var item in Model)
+                                {
+                                    var hasPJUnitPrice = item.UnitPrice != null;
+                                    <tr class="@(isEvenRow?"evenrow":string.Empty)" align="center">
+                                        <td><div class="col100">@item.Currency</div></td>
+                                        <td><div class="col60">@item.StandardCode</div></td>
+                                        <td class="r @(isEvenRow?"new-rate-evenrow":string.Empty)">
+                                            <div class="col120" pjunitprice="true">
+                                                @if (hasPJUnitPrice)
+                                                {
+                                                    @FormatNumber8(item.UnitPrice.Value)
+                                                }
+                                                else
+                                                {
+                                                    @Html.Raw("n/a");
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @if (hasPJUnitPrice)
+                                            {
+                                                <div onclick="" title="Edit" class="divEdit col80">
+                                                    <img src="../App_Themes/Images/icn_edit.png" alt="Edit" style="cursor:pointer;" onclick="javascript: PJUnitPrice.editClick(event);" />
+                                                    <img alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.saveClick(event,@item.CurrencyId);" />
+                                                    <img alt="Cancel" title="Cancel" border="0" src="../App_Themes/Images/undo.png" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.cancelClick(event);" />
+                                                </div>
+                                            }
+                                        </td>
+                                    </tr>
+                                    isEvenRow = !isEvenRow;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td class="cellborder" style="width:360px" align="center" colspan="4">
+                                        <span style="font-weight:bold">There is no information</span>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="frmExportExcel" width="0" height="0" frameborder="0" style="display:none"></iframe>
+    <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")"></script>
+    <script src="@Url.Content("~/js/jQuery/jquery-ui-1.8.20.custom.min.js")"></script>
+    <script src="@Url.Content("~/js/common.js")"></script>
+    <script src="@Url.Content("~/js/Message/message.js")"></script>
+    <script src="@Url.Content("~/js/jQuery/gridscroller.js?version=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script src="@Url.Content("~/Views/ExchangeRate/Scripts/PJUnitPrice.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+</body>
+</html>
+@helper FormatNumber8(decimal value)
+{
+    @value.ToString("#,##0.########")
+}

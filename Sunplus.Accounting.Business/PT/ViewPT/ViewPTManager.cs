@@ -5,6 +5,7 @@ using DNAide.Data;
 using DNAide.Utils;
 using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
 using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
+using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Resources;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
@@ -552,7 +553,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 if (!WebSettings.disableCS)
                 {
-                    bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM);
+                    var custInfo = new CustomerManager().GetCustomerDetail(userName);
+                    bettype = GetListCasinoGameKindGameType(AccountingCoreAppSession.SYSTEM, custInfo.CustID, custInfo.Currency);
                     var sport = new Sport()
                     {
                         SportId = Constants.Sport.Casino,
@@ -639,7 +641,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         }
 
-        private static BettypeDTO GetListCasinoGameKindGameType(string rngSiteName)
+        private static BettypeDTO GetListCasinoGameKindGameType(string rngSiteName, int custId, int exchangeId)
         {
             var bettypes = new BettypeDTO();
             bettypes.BettypeList = new List<Bettype>();
@@ -651,7 +653,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 foreach (DataRow dr in tblGameKind.Rows)
                 {
-                    var tblGameType = bi.GetGameType(CastAide.AsInt32(dr["CodeID"]));
+                    var tblGameType = bi.GetGameType(CastAide.AsInt32(dr["CodeID"]), custId, exchangeId);
                     if (tblGameType != null && tblGameType.Rows.Count != 0)
                     {
                         var gameKind = new Bettype()

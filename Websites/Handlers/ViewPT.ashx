@@ -13,7 +13,7 @@ using CasinoLibrary.SBAgent;
 
 
 public class ViewPT : BaseHandler
-{    
+{
     public override void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/html";
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -21,12 +21,12 @@ public class ViewPT : BaseHandler
         try
         {
             string _type = context.Request["type"];
-            int _sportID = CastAide.AsInt32(context.Request["sid"], 0);            
+            int _sportID = CastAide.AsInt32(context.Request["sid"], 0);
             switch (_type.ToLowerInvariant())
             {
                 case "changesport": _s = GetBettypeList(context, _sportID); break;
-                case "pt": 
-                case "comm": 
+                case "pt":
+                case "comm":
                     string username = context.Request["username"].Trim();
                     int _bettype = CastAide.AsInt32(context.Request["bid"], 0);
                     bool _isLive = (context.Request["isLive"] == "1");
@@ -43,7 +43,7 @@ public class ViewPT : BaseHandler
                         {
                             if (_sportID == 999 || _sportID == Sunplus.Accounting.Core.Common.Constants.Sport.OtherSports)
                                 _s = GenerateHTMLParlayMixedSportsPT(dr, _sportID);
-                            
+
                             else
                                 _s = (_hasComm) ? GenerateHTMLCommission(dr) : GenerateHTMLPosiontaking(dr);
                         }
@@ -61,12 +61,12 @@ public class ViewPT : BaseHandler
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             GotoErroPage(context);
-            
+
         }
         context.Response.Write(_s);
     }
 
-    public static string GetGameTypeCasino(string rngSiteName)
+    public static string GetGameTypeCasino(string rngSiteName, int custId, int exchangeId)
     {
         string ListGameKind = string.Empty;
         string ListGameType = string.Empty;
@@ -78,10 +78,10 @@ public class ViewPT : BaseHandler
             //Load Game Type
             foreach (DataRow dr in tblGameKind.Rows)
             {
-                DataTable tblGameType = bi.GetGameType(CastAide.AsInt32(dr["CodeID"]));
+                DataTable tblGameType = bi.GetGameType(CastAide.AsInt32(dr["CodeID"]), custId, exchangeId);
                 if (tblGameType != null && tblGameType.Rows.Count != 0)
                 {
-                    ListGameKind += "<option value='-" + dr["CodeID"].ToString() + "'>Group - " + dr["CodeName"].ToString() + "</option>";              
+                    ListGameKind += "<option value='-" + dr["CodeID"].ToString() + "'>Group - " + dr["CodeName"].ToString() + "</option>";
                     foreach (DataRow dr2 in tblGameType.Rows)
                     {
                         ListGameType+="<option value='" + dr2["GameTypeID"].ToString() + "'>" + dr2["GameTypeName"].ToString() + "</option>";
@@ -93,7 +93,7 @@ public class ViewPT : BaseHandler
                     + "<option value='0'>.: ALL - Game Type :.</option></select>";
         return ListGameType + ListGameKind + ALL;
     }
-    
+
     public static string GetBettypeList(HttpContext hc, int sportID)
     {
         StringBuilder _s = new StringBuilder();
@@ -103,13 +103,14 @@ public class ViewPT : BaseHandler
             if (sportID == 251) // For Casino
             {
                 var custInfo = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetCustomerInfo(hc.Request["username"].Trim());
+                var customer = new Sunplus.Accounting.Business.Customer.CustomerManager().GetCustomerDetail(hc.Request["username"].Trim());
                 if (custInfo != null && custInfo.Rows.Count > 0)
                 {
                     var rngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(CastAide.AsInt32(custInfo.Rows[0]["custid"]));
-                    _s.Append(GetGameTypeCasino(rngSiteName));
-                }                
+                    _s.Append(GetGameTypeCasino(rngSiteName, customer.CustID, customer.Currency));
+                }
             }
-          
+
             using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetPTBetType(sportID))
             {
                 while (dr.Read())
@@ -125,12 +126,12 @@ public class ViewPT : BaseHandler
                 }
             }
             _s.Append("<option value='0'>..:: ALL ::..</option></select>");
-            
+
         }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            
+
         }
         return _s.ToString();
     }
@@ -139,13 +140,13 @@ public class ViewPT : BaseHandler
     {
         DataTable dtb = null;
         if (BetType < 0)
-            dtb = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetCSPT(username, BetType*(-1), 0);        
+            dtb = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetCSPT(username, BetType*(-1), 0);
         else
             dtb = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.GetCSPT(username, 0, BetType);
 
         if (dtb == null) return "<b><br/>There is no information available.</b>";
         if (dtb.Rows.Count == 0) return "<b><br/>There is no information available.</b>";
-        
+
         string _s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/ViewPT_CSPT.htm");
         DataRow rInfo = dtb.Rows[dtb.Rows.Count-1];
 
@@ -202,7 +203,7 @@ public class ViewPT : BaseHandler
                 TemplateHandler.Assign(ref _sTable, "GameKind", r["gamekind"].ToString());
                 TemplateHandler.Assign(ref _sTable, "GameType", r["gametype"].ToString());
             }
-            
+
             // super
             if (curRoleID == 4)
             {
@@ -213,8 +214,8 @@ public class ViewPT : BaseHandler
                 TemplateHandler.Assign(ref _sTable, "isAutoPT4", (CastAide.AsBoolean(r["isAutoPT"], false)) ? " checked='checked'" : string.Empty);
                 TemplateHandler.Assign(ref _sTable, "AutoPT4", NumberFormat.DecFormat(r["AutoPT"], 2));
                 TemplateHandler.Assign(ref _sTable, "Com4", IBCUtils.FormatHandler.FormatNumber4(r["RollingRate"]));
-            }            
-                
+            }
+
             // master
             if (curRoleID == 3)
             {
@@ -225,7 +226,7 @@ public class ViewPT : BaseHandler
                 TemplateHandler.Assign(ref _sTable, "isAutoPT3", (CastAide.AsBoolean(r["isAutoPT"], false)) ? " checked='checked'" : string.Empty);
                 TemplateHandler.Assign(ref _sTable, "AutoPT3", NumberFormat.DecFormat(r["AutoPT"], 2));
                 TemplateHandler.Assign(ref _sTable, "Com3", IBCUtils.FormatHandler.FormatNumber4(r["RollingRate"]));
-            }  
+            }
 
             // agent                                                            
             if (curRoleID == 2)
@@ -237,7 +238,7 @@ public class ViewPT : BaseHandler
                 TemplateHandler.Assign(ref _sTable, "isAutoPT2", (CastAide.AsBoolean(r["isAutoPT"], false)) ? " checked='checked'" : string.Empty);
                 TemplateHandler.Assign(ref _sTable, "AutoPT2", NumberFormat.DecFormat(r["AutoPT"], 2));
                 TemplateHandler.Assign(ref _sTable, "Com2", IBCUtils.FormatHandler.FormatNumber4(r["RollingRate"]));
-            } 
+            }
 
             // member                                                           
             if (curRoleID == 1)
@@ -264,8 +265,8 @@ public class ViewPT : BaseHandler
         string _s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/ViewPT_PT.htm");
         DataRow rInfo = dr.ResultSet.Tables[0].Rows[0];
         DataTable tblContent = dr.ResultSet.Tables[1];
-        
-        int roleID = CastAide.AsInt32(rInfo["roleid"], 1);        
+
+        int roleID = CastAide.AsInt32(rInfo["roleid"], 1);
 
         // information
         string _sUpline = TemplateHandler.CopyBlock(_s, "upline");
@@ -304,7 +305,7 @@ public class ViewPT : BaseHandler
         int _sportID = CastAide.AsInt32(HttpContext.Current.Request["sid"], 0); 
         
         // position taking
-        string sTable = TemplateHandler.CopyBlock(_s, "tbl");        
+        string sTable = TemplateHandler.CopyBlock(_s, "tbl");
         // Compare WebConfig before
         if (WebSettings.disableAutoM)
             TemplateHandler.RemoveBlock(ref sTable, "AutoMPT");
@@ -324,7 +325,7 @@ public class ViewPT : BaseHandler
         for (int i = 1; i <5; i++)
         {
             if (roleID > i) TemplateHandler.RemoveBlock(ref sTable, "r" + i.ToString());
-        }        
+        }
         string curRow = string.Empty;
         StringBuilder _sbTable = new StringBuilder();
         foreach (DataRow r in tblContent.Rows)
@@ -337,10 +338,10 @@ public class ViewPT : BaseHandler
                                      CastAide.AsInt32(r["betType"]) == Sunplus.Accounting.Core.Common.Constants.BetType.MixParlay)
                                         ? Resources.Language.lblMixedSports
                                         : r["sportname"].ToString()));
-            
+
             TemplateHandler.Assign(ref _sTable, "sportType", r["sporttype"].ToString());
             TemplateHandler.Assign(ref _sTable, "betType", r["bettype"].ToString());
-            
+
             // super
             TemplateHandler.Assign(ref _sTable, "livegame", (CastAide.AsBoolean(r["islive"])) ? "LIVE" : string.Empty);
             TemplateHandler.Assign(ref _sTable, "s4", NumberFormat.DecFormat(r["s4"], 2));
@@ -348,7 +349,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref _sTable, "a4", NumberFormat.DecFormat(r["a4"], 2));
             TemplateHandler.Assign(ref _sTable, "n4", NumberFormat.DecFormat(r["n4"], 2));
             TemplateHandler.Assign(ref _sTable, "l4", NumberFormat.DecFormat(r["l4"], 2));
-            
+
             // master
             TemplateHandler.Assign(ref _sTable, "s3", NumberFormat.DecFormat(r["s3"], 2));
             TemplateHandler.Assign(ref _sTable, "m3", NumberFormat.DecFormat(r["m3"], 2));
@@ -356,7 +357,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref _sTable, "i3", (CastAide.AsBoolean(r["i3"],false)) ? " checked='checked'" :string.Empty);
             TemplateHandler.Assign(ref _sTable, "n3", NumberFormat.DecFormat(r["n3"], 2));
             TemplateHandler.Assign(ref _sTable, "l3", NumberFormat.DecFormat(r["l3"], 2));
-                                                                                
+
             // agent                                                            
             TemplateHandler.Assign(ref _sTable, "m2", NumberFormat.DecFormat(r["m2"], 2));
             TemplateHandler.Assign(ref _sTable, "a2", NumberFormat.DecFormat(r["a2"], 2));
@@ -366,7 +367,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref _sTable, "im2", (CastAide.AsBoolean(r["im2"], false)) ? " checked='checked'" : string.Empty);
             TemplateHandler.Assign(ref _sTable, "n2", NumberFormat.DecFormat(r["n2"], 2));
             TemplateHandler.Assign(ref _sTable, "l2", NumberFormat.DecFormat(r["l2"], 2));
-                                                                                
+
             // member                                                           
             TemplateHandler.Assign(ref _sTable, "s1", NumberFormat.DecFormat(r["s1"], 2));
             TemplateHandler.Assign(ref _sTable, "m1", NumberFormat.DecFormat(r["m1"], 2));
@@ -374,12 +375,12 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref _sTable, "u1", NumberFormat.DecFormat(r["u1"], 2));
             TemplateHandler.Assign(ref _sTable, "i1", (CastAide.AsBoolean(r["i1"], false)) ? " checked='checked'" : string.Empty);
             TemplateHandler.Assign(ref _sTable, "um1", NumberFormat.DecFormat(r["um1"], 2));
-            TemplateHandler.Assign(ref _sTable, "im1", (CastAide.AsBoolean(r["im1"], false)) ? " checked='checked'" : string.Empty);            
+            TemplateHandler.Assign(ref _sTable, "im1", (CastAide.AsBoolean(r["im1"], false)) ? " checked='checked'" : string.Empty);
             _sbTable.Append(_sTable);        
             continue;
-        }        
+        }
         TemplateHandler.ReplaceBlock(ref _s, "tbl", _sbTable.ToString());
-        
+
         return _s;
     }
 
@@ -387,7 +388,7 @@ public class ViewPT : BaseHandler
     {
         string _s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/ViewPT_Comm.htm");
         DataRow rInfo = dr.ResultSet.Tables[0].Rows[0];
-        DataRow rComm = dr.ResultSet.Tables[2].Rows[0];                
+        DataRow rComm = dr.ResultSet.Tables[2].Rows[0];
         //Phuong.Nguyen <2008-12-23>
         //Assign header 
         if (!WebSettings.Disable1x2Comm)
@@ -396,9 +397,9 @@ public class ViewPT : BaseHandler
             TemplateHandler.RemoveBlock(ref _s, "1X2");             
        
         TemplateHandler.Assign(ref _s, "{lblGameComm}", Resources.Language.lblGameComm);     
-            
+
         int roleID = CastAide.AsInt32(rInfo["roleid"], 1);
-                          
+
         // information
         string _sUpline = TemplateHandler.CopyBlock(_s, "upline");
         string curUpline = string.Empty;
@@ -410,7 +411,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curUpline, "Name", rInfo["Ag"].ToString());
             TemplateHandler.Assign(ref curUpline, "ID", rInfo["AgID"].ToString());
             _sbUpline.Append(curUpline);
-            
+
         }
         if (roleID < 3)
         {
@@ -427,12 +428,12 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curUpline, "Role", "SUPER");
             TemplateHandler.Assign(ref curUpline, "Name", rInfo["SAg"].ToString());
             TemplateHandler.Assign(ref curUpline, "ID", rInfo["SAgID"].ToString());
-            _sbUpline.Append(curUpline);            
+            _sbUpline.Append(curUpline);
         }
         TemplateHandler.ReplaceBlock(ref _s, "upline", _sbUpline.ToString());
         TemplateHandler.Assign(ref _s, "CustName", rInfo["username"].ToString());
         TemplateHandler.Assign(ref _s, "CustID", rInfo["custid"].ToString());
-        
+
         // commission
         string _sRow = TemplateHandler.CopyBlock(_s, "row");
         string curRow = string.Empty;
@@ -492,7 +493,7 @@ public class ViewPT : BaseHandler
             TemplateHandler.Assign(ref curRow, "gamecomm", NumberFormat.DecFormat(rComm["v161_comm_81"], 4));
             _sbRow.Append(curRow);
         }
-        TemplateHandler.ReplaceBlock(ref _s, "row", _sbRow.ToString());           
+        TemplateHandler.ReplaceBlock(ref _s, "row", _sbRow.ToString());
         return _s;
     }
    
@@ -612,15 +613,15 @@ public class ViewPT : BaseHandler
                 TemplateHandler.Assign(ref _sTable, "um1", NumberFormat.DecFormat(r["um1"], 2));
                 TemplateHandler.Assign(ref _sTable, "im1",
                                        (CastAide.AsBoolean(r["im1"], false)) ? " checked='checked'" : string.Empty);
-                sbTable.Append(_sTable);    
+                sbTable.Append(_sTable);
             }
-            
+
         }
         TemplateHandler.ReplaceBlock(ref s, "tbl", sbTable.ToString());
 
         return s;
     }
-    
+
     public bool IsReusable {
         get {
             return false;
