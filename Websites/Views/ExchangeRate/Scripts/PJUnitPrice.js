@@ -60,7 +60,7 @@
     },
 
     editSuccess: function (data, row, value) {
-        if (parseInt(data.ErrorCode != 0)) {
+        if (data.ErrorCode !== 0) {
             this.showErr(data.ErrorMessage);
         }
         else {
