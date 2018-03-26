@@ -414,7 +414,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.ExchangeRate, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.5-PJUnitPrice-4\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.5-PJUnitPrice-5\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
