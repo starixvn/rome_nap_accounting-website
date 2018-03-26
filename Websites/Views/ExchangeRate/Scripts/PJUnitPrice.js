@@ -74,8 +74,8 @@
             row.find("img[alt='Cancel']").hide();
 
             this.showSuccess("Update successfully!");
-            this.unBlockUI();
         }
+        this.unBlockUI();
     },
 
     isNumeric: function (n) {
