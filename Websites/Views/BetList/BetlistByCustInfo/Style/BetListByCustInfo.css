@@ -6,71 +6,79 @@
     margin: 5px 0 0 5px;
     width: 246px;
 }
-.left_tab ul {
-    font-size: 11px;
-    list-style-type: none;
-    margin: 1px auto 0;
-    padding: 0;
-}
-.left_tab li {
-    display: inline;
-    font-size: 11px;
-}
-.left_tab a {
-    background: url("../../../../App_Themes/Images/L_banner/L_tab_left.png") no-repeat scroll left top transparent;
-    float: left;
-    font-size: 11px;
-    margin-right: 3px;
-    padding-left: 3px;
-    text-decoration: none;
-}
-.left_tab a span {
-    background: url("../../../../App_Themes/Images/L_banner/R_tab_left-1.png") no-repeat scroll right top transparent;
-    color: #FFFFFF;
-    display: block;
-    float: left;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 1px 8px 2px 6px;
-}
-.left_tab a span {
-    float: none;
-}
-.left_tab a:hover span {
-    color: #D66D35;
-}
-.left_tab .current a {
-    background-position: 0 -21px !important;
-}
-.left_tab .current a span {
-    background-position: 100% -21px !important;
-    color: #2678C5;
-}
-.left_tab a:hover {
-    background-position: 0 -42px;
-}
-.left_tab a:hover span {
-    background-position: 100% -42px;
-}
+
+    .left_tab ul {
+        font-size: 11px;
+        list-style-type: none;
+        margin: 1px auto 0;
+        padding: 0;
+    }
+
+    .left_tab li {
+        display: inline;
+        font-size: 11px;
+    }
+
+    .left_tab a {
+        background: url("../../../../App_Themes/Images/L_banner/L_tab_left.png") no-repeat scroll left top transparent;
+        float: left;
+        font-size: 11px;
+        margin-right: 3px;
+        padding-left: 3px;
+        text-decoration: none;
+    }
+
+        .left_tab a span {
+            background: url("../../../../App_Themes/Images/L_banner/R_tab_left-1.png") no-repeat scroll right top transparent;
+            color: #FFFFFF;
+            display: block;
+            float: left;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 1px 8px 2px 6px;
+        }
+
+        .left_tab a span {
+            float: none;
+        }
+
+        .left_tab a:hover span {
+            color: #D66D35;
+        }
+
+    .left_tab .current a {
+        background-position: 0 -21px !important;
+    }
+
+        .left_tab .current a span {
+            background-position: 100% -21px !important;
+            color: #2678C5;
+        }
+
+    .left_tab a:hover {
+        background-position: 0 -42px;
+    }
+
+        .left_tab a:hover span {
+            background-position: 100% -42px;
+        }
 
 .scoremapIcon {
     background: none !important;
 }
 
-.width275
-{
-    width: 275px; 
+.width275 {
+    width: 275px;
 }
 
-.width55
-{
+.width55 {
     width: 55px;
 }
 
 .delete_button {
     background: url(../../../../App_Themes/Images/icon_del.gif) repeat scroll 0 0 transparent;
     display: block;
-    height : 14px;
+    height: 14px;
     width: 14px;
     margin-left: 10px;
 }
@@ -79,4 +87,9 @@
     color: #979797;
     font-weight: bold;
     padding: 5px 25px;
+}
+
+.Lay {
+    color: #B50000;
+    font-weight: 700;
 }

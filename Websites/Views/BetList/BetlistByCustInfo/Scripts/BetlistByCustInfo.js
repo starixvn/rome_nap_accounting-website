@@ -1,4 +1,11 @@
 ﻿var BetListByCustInfo = {
+    paramGetExchangeBetlist: {
+        fromDate: null,
+        toDate: null,
+        custId: null,
+        pageIndex: 1,
+        pageSize: 100
+    },
     paramGetBetBetlist: {
         fromDate: null,
         toDate: null,
@@ -57,13 +64,13 @@
             url: window.rootUrl + "BetList/GetBetListByCustInfo_SystemParLayTab",
             data: BetListByCustInfo.paramGetBetlistSystemParlay,
             success: function (result) {
-            	BetListByCustInfo.gridOpts.isShowPager = false;
-            	var divSystemParlayContent = $("#betListSystemParlayContent");
-            	divSystemParlayContent.html(result);
+                BetListByCustInfo.gridOpts.isShowPager = false;
+                var divSystemParlayContent = $("#betListSystemParlayContent");
+                divSystemParlayContent.html(result);
 
-            	var gridSystemParlay = $("#BetlistSystemParlay");
-            	gridSystemParlay.initGrid(BetListByCustInfo.gridOpts);
-            	gridSystemParlay.removeClass("display-none").gridScroller({
+                var gridSystemParlay = $("#BetlistSystemParlay");
+                gridSystemParlay.initGrid(BetListByCustInfo.gridOpts);
+                gridSystemParlay.removeClass("display-none").gridScroller({
                     tblContentId: 'tblContent',
                     manualCopyHeader: true,
                     isShowPager: true,
@@ -85,8 +92,8 @@
                     // Combo Parlay.
                     var combinationTypeComboNames = gridSystemParlay.find("#combinationTypeComboNames");
                     if (combinationTypeComboNames) {
-                    	gridSystemParlay.find(".combinationLink .offer-name-list").html(combinationTypeComboNames.html());
-                    	combinationTypeComboNames.remove();
+                        gridSystemParlay.find(".combinationLink .offer-name-list").html(combinationTypeComboNames.html());
+                        combinationTypeComboNames.remove();
                     }
 
                     BetListByCustInfo.eventGridOpts.gridHeight = divSystemParlayContent.height() + 55;
@@ -97,8 +104,8 @@
                     downloadLink
 						.unbind("click")
 						.bind("click", function () {
-							var url = window.rootUrl + "BetList/ExportBetListByCustInfo_SystemParLayTab?" + $.param(BetListByCustInfo.paramGetBetlistSystemParlay);
-							window.location.href = url
+						    var url = window.rootUrl + "BetList/ExportBetListByCustInfo_SystemParLayTab?" + $.param(BetListByCustInfo.paramGetBetlistSystemParlay);
+						    window.location.href = url
 						});
                 }
             },
@@ -110,8 +117,7 @@
             }
         });
     },
-
-
+    
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
         var isByDateRange = $('input[name=type]:checked').val() == "-2";
@@ -147,6 +153,7 @@
             }
         });
     },
+
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-2") {
             var fromDateTmp = $('#txtfromdate').val();
@@ -155,8 +162,7 @@
 
             if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
                 BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
-                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp)
-            {
+                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp) {
                 BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
                 BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
             }
@@ -237,7 +243,7 @@
         BetListByCustInfo.pagerOpts.items_per_page = items_per_page;
         BetListByCustInfo.pagerOpts.current_page = current_page;
 
-        $("#pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
+        $("#betlistMain #pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
     },
     pageSelectCallback: function (page_index, _items_per_page, jq) {
         var max_page = Math.ceil(_length / _items_per_page);
@@ -252,6 +258,7 @@
         //change tab
         $('#Li1').removeClass('current');
         $('#Li2').addClass('current');
+        $('#Li3').removeClass('current');
         //system parlay display
         $('#maincontent_systemparlay').removeClass('hidden');
         $('#betListSystemParlayContent').removeClass('hidden');
@@ -259,23 +266,73 @@
         $('#maincontent_betlist').addClass('hidden');
         $('#betListContent').addClass('allhidden');
 
-
+        //Exchange
+        $('#maincontent_exchange').addClass('hidden');
+        $('#betListExchangeContent').addClass('hidden');
     },
     viewBetListTab: function () {
         //change tab
         $('#Li1').addClass('current');
         $('#Li2').removeClass('current');
+        $('#Li3').removeClass('current');
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
         $('#betListSystemParlayContent').addClass('hidden');
         //betlist display
         $('#maincontent_betlist').removeClass('hidden');
         $('#betListContent').removeClass('allhidden');
+        //Exchange
+        $('#maincontent_exchange').addClass('hidden');
+        $('#betListExchangeContent').addClass('hidden');
+    },
+
+    viewExchangeTab: function () {
+        //change tab
+        $('#Li1').removeClass('current');
+        $('#Li2').removeClass('current');
+        $('#Li3').addClass('current');
+
+        //system parlay hidden
+        $('#maincontent_systemparlay').addClass('hidden');
+        $('#betListSystemParlayContent').addClass('hidden');
+        //betlist display
+        $('#maincontent_betlist').addClass('hidden');
+        $('#betListContent').addClass('allhidden');
+
+        //Exchange
+        $('#maincontent_exchange').removeClass('hidden');
+        $('#betListExchangeContent').removeClass('hidden');        
     }
+
 };
 
 
 var Helper = {
+    renderExchangeCalendarFromTo: function () {
+        var defaults = {
+            showOtherMonths: true,
+            selectOtherMonths: true,            
+            onSelect: function (selectedDate) {
+                var option = this.id == "exchange_fromdate" ? "minDate" : "maxDate",
+                     instance = $(this).data("datepicker"),
+                     date = $.datepicker.parseDate(
+                         instance.settings.dateFormat ||
+                             $.datepicker._defaults.dateFormat,
+                         selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        };
+
+        var dates = $("#exchange_fromdate").datepicker(defaults);
+        var today = new Date(_today);
+        var fdate = $("#exchange_fromdate");
+        var tdate = $("#exchange_todate");
+        fdate.datepicker(defaults);
+        tdate.datepicker(defaults);
+        fdate.datepicker("setDate", today);
+        tdate.datepicker("setDate", today);
+    },
+
     renderCalendarFromTo: function (ids) {
         var defaults = {
             showOtherMonths: true,
@@ -298,7 +355,6 @@ var Helper = {
         var tdate = $(ids.split(',')[1]);
         fdate.datepicker("setDate", dt);
         tdate.datepicker("setDate", dt);
-
     },
     reset_date: function () {
         var dayNoReset = 7;
@@ -318,14 +374,14 @@ var Helper = {
 
 
 function showCombMPDetail(tranid, date, refno, betid, matchid) {
-	var title = "System Parlay";
-	var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
+    var title = "System Parlay";
+    var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
 
-	if (combinationOfferNameContainer.is("span")) {
-		title += combinationOfferNameContainer.html();
-	}
+    if (combinationOfferNameContainer.is("span")) {
+        title += combinationOfferNameContainer.html();
+    }
 
-	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
+    showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
 }
 
 function showDetail(id) {
@@ -375,53 +431,54 @@ function showMP(transid, refno) {
 }
 
 function showCombMP(transId, transIndex, refNo) {
-	showMP(transId, refNo);
+    showMP(transId, refNo);
 }
 
 function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
-	var divChoiceRight = $("#choice_right_" + transId);
-	var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
-	var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
+    var divChoiceRight = $("#choice_right_" + transId);
+    var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
+    var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
 
-	if (divParlay.css("display") === "none") {
-	    if ($.trim(divParlay.html()) === "") {
-	        try { parent.BlockUI(); } catch (e) { }
-	        var params = [
+    if (divParlay.css("display") === "none") {
+        if ($.trim(divParlay.html()) === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            var params = [
                 "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
-	        ];
+            ];
 
-	        $.ajax({
-	            type: "POST",
-	            url: window.rootUrl + "BetList/GetMixParlayDetail",
-	            data: params.join(""),
-	            success: function (result) {
-	                divParlay.html(result).css("display", "block");
-	                divCombinationOfferName.addClass("hide");
-	                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-	            },
-	            error: function () {
-	                try { parent.jQuery.unblockUI(); } catch (e) { }
-	            },
-	            complete: function () {
-	                try { parent.jQuery.unblockUI(); } catch (e) { }
-	            }
-	        });
-	    }
-	    else {
-	        divParlay.css("display", "block");
-	        divCombinationOfferName.toggleClass("hide");
-	        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-	    }
-	}
-	else {
-	    divParlay.css("display", "none");
-		divCombinationOfferName.toggleClass("hide");
-		$("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-	}
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetList/GetMixParlayDetail",
+                data: params.join(""),
+                success: function (result) {
+                    divParlay.html(result).css("display", "block");
+                    divCombinationOfferName.addClass("hide");
+                    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divParlay.css("display", "block");
+            divCombinationOfferName.toggleClass("hide");
+            $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+        }
+    }
+    else {
+        divParlay.css("display", "none");
+        divCombinationOfferName.toggleClass("hide");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    }
 }
 
 head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
+    Helper.renderExchangeCalendarFromTo();
     Helper.range_date();
     BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();

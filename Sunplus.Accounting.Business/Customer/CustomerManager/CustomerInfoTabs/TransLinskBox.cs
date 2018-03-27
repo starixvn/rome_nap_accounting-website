@@ -39,7 +39,7 @@
                 case Globals.AccountType.Super:
                     if (!customerInfoViewModel.IsInternalUser)
                     {
-                        downlineListURL = "CustomerList/MasterAgentList?superId=" + customerInfoViewModel.CustId; 
+                        downlineListURL = "CustomerList/MasterAgentList?superId=" + customerInfoViewModel.CustId;
                         if (WebSettings.OfferDoubleComm)
                         {
                             downlineListURL += "&doubleCommSuper=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
@@ -94,7 +94,7 @@
                     break;
 
                 case Globals.AccountType.Member:
-                    downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + customerInfoViewModel.CustId;
+                    downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + customerInfoViewModel.CustId + "&isDeposit=" + customerInfoViewModel.IsDeposit;
                     lblDownlineList = "Bet List";
                     TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                     break;
