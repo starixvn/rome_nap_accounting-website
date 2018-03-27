@@ -652,45 +652,15 @@ function OpenEditCustInfo(id, type) {
 //this function is used to Min Max Position Taking
 function OpenEditMinMaxPT(id, type) {
     var url = "Customer/v2/EditMinMaxPT.aspx?custId=" + id + "&type=" + type;
-    showPopup("Edit Min/max PT", url, "", "", 970, 700, false, 2000, null)
-}
+    showPopup("Edit Min/max PT", url, "", "", 970, 700, false, 2000, null)}
 
-//open edit Horseracing window
-function OpenEditHR(id, roleid) {
 
-    var type = "";
-    switch (roleid) {
-        case 4:
-            type = "SuperUpdate";
-            break;
-        case 3:
-            type = "MasterUpdate";
-            break;
-        case 2:
-            type = "AgentUpdate";
-            break;
-        default:
-            type = "MemberUpdate";
-            break;
-    }
-    var url = "Customer/pt/racing/" + type + ".aspx?custId=" + id;
-    showPopup("Update Racing Setting", url, "", "", 950, 700, false, 2000, null);
-}
 
 //open edit Casino window
 function OpenEditCS(id) {
     var url = "Customer/PositionTakingCS.aspx?set=2&custId=" + id;
     //showPopup("Update Casino Setting", url, "", "" , 900, 520);
     showPopup("Update Casino Setting", url, "", "", 900, 520, false, 2000, null);
-}
-
-//open edit Finance window
-function OpenEditFI(id, uplineid, roleid) {
-    uplineid = (uplineid == null || uplineid == "") ? "0" : uplineid;
-    roleid = (roleid == null || roleid == "") ? "4" : roleid;
-    uplineid = uplineid.replace(",", "");
-    var url = "Customer/v2/UpdateFinancePT.aspx?type=1&custid=" + id + "&uplineid=" + uplineid + "&roleid=" + roleid;
-    showPopup("Update Finance Setting", url, "", "", 760, 520, false, 2000, null);
 }
 
 

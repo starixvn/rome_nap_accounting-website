@@ -15,23 +15,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExRateService : IExRateService
     {
-        public ResultBO ReadExRateFromExcel()
-        {
-            var exRateMng = new ExchangeRateManager();
-            return exRateMng.ReadExRateFromExcel();
-        }
-
-        public List<ExchangeRate> LoadExchangeRateOpenTote()
-        {
-            var exRateMng = new ExchangeRateManager();
-            return exRateMng.LoadExchangeRateOpenTote();
-        }
-
-        public ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList)
-        {
-            var exRateMng = new ExchangeRateManager();
-            return exRateMng.UpdateExRateOpenTote(ExRateList);
-        }
 
         public string GenHeader()
         {

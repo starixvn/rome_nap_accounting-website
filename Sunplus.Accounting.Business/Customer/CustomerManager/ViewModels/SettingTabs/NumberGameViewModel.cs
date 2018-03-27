@@ -6,6 +6,6 @@
     {
         public bool DisabledNumberGame => Utils.ToBoolean(customerInfoRow["DisableNumber"]);
 
-        public bool DisabledDownlinesNumberGame => false;
+        public bool DisabledDownlinesNumberGame => Utils.ToBoolean(customerInfoRow["DisableDownlinesNumber"]);
     }
 }

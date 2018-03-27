@@ -87,10 +87,6 @@ anmb.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOtherBettypes'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('list1X2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountNumber);
-   if(parseBool2(_isOfferHRFixedOdds))
-    {
-        Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
-    }
     if (parseBool2(_isShowMyanmarOdds)) {
         Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, Math.max(commissionSetting.discountMyanmarOddsMax, commissionSetting.discountMyanmarOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
     }
@@ -144,10 +140,6 @@ anmb.checkValidInput = function () {
     commissionSetting.playerDiscount1x2 = $('#list1X2').val();
     commissionSetting.playerDiscountCs = $('#listOtherBettypes').val();
     commissionSetting.playerDiscountNumber = $('#listGameComm').val();
-    if(parseBool2(_isOfferHRFixedOdds))
-    {
-        commissionSetting.playerDiscountHRFixedOdds = $('#listHRFixOddsComm').val();
-    }
     if (parseBool2(_isShowMyanmarOdds)) {
         commissionSetting.playerDiscountMyanmarOdds = $('#listMyanmarOdds').val();
     }
@@ -183,7 +175,6 @@ anmb.addNewMember = function () {
                         showAlertMessage("err", result.ErrorMessage, 1);
                     }
                     else {
-                        debugger;
                         showAlertMessage("err", "Inserted Member Successfully!", 0);
                         //redirect to update page and clear timeout
                         var redirectString = result.ErrorMessage;

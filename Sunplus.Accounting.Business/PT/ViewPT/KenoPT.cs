@@ -22,8 +22,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
     using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
     using Sunplus.Accounting.Entities.Criteria.ViewPT;
     using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
-    using Sunplus.Accounting.Entities.PositionTaking.Racing;
     using Bettype = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Bettype;
+    using static Core.Common.Enumerations;
 
     /// <summary>
     /// Keno Position Taking.
@@ -146,13 +146,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
             var dataRowCustInfo = data.ResultSet.Tables[0].Rows[0];
             var roleId = CastAide.AsInt32(dataRowCustInfo["roleid"], 1);
-            if (roleId < (int)CustInfo.Roles.Agent)
+            if (roleId < (int)Role.Agent)
             {
                 var agentInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["AgID"].ToString()),
                     UserName = dataRowCustInfo["Ag"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Agent,
+                    RoleId = (int)Role.Agent,
                     RoleName = ResourceExtension.GetResourceValue(
                      ResourceExtension.Resources.Language, "Agent")
                 };
@@ -160,13 +160,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 customerRelation.Upline.Add(agentInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Master)
+            if (roleId < (int)Role.Master)
             {
                 var masterInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["MAgID"].ToString()),
                     UserName = dataRowCustInfo["MAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Master,
+                    RoleId = (int)Role.Master,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Master")
                 };
@@ -174,13 +174,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 customerRelation.Upline.Add(masterInfo);
             }
 
-            if (roleId < (int)CustInfo.Roles.Super)
+            if (roleId < (int)Role.Super)
             {
                 var superInfo = new CustomerInfo()
                 {
                     CustId = CastAide.AsInt32(dataRowCustInfo["SAgID"].ToString()),
                     UserName = dataRowCustInfo["SAg"].ToString(),
-                    RoleId = (int)CustInfo.Roles.Super,
+                    RoleId = (int)Role.Super,
                     RoleName = ResourceExtension.GetResourceValue(
                                          ResourceExtension.Resources.Language, "Super")
                 };
@@ -191,7 +191,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 CustId = CastAide.AsInt32(dataRowCustInfo["custid"].ToString()),
                 UserName = dataRowCustInfo["username"].ToString(),
-                RoleId = (int)CustInfo.Roles.Member
+                RoleId = (int)Role.Member
             };
 
             return customerRelation;
@@ -269,7 +269,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             DataRow dr,
             int roleId)
         {
-            if (roleId < (int)CustInfo.Roles.Agent)
+            if (roleId < (int)Role.Agent)
             {
                 var memberPt = new PositionTakingInfo()
                 {
@@ -286,7 +286,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 positionTakingDTO.Member = memberPt;
             }
 
-            if (roleId < (int)CustInfo.Roles.Master)
+            if (roleId < (int)Role.Master)
             {
                 var agentPt = new PositionTakingInfo()
                 {
@@ -303,7 +303,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 positionTakingDTO.Agent = agentPt;
             }
 
-            if (roleId < (int)CustInfo.Roles.Super)
+            if (roleId < (int)Role.Super)
             {
                 var masterPt = new PositionTakingInfo()
                 {
@@ -318,7 +318,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 positionTakingDTO.Master = masterPt;
             }
 
-            if (roleId <= (int)CustInfo.Roles.Super)
+            if (roleId <= (int)Role.Super)
             {
                 var superPt = new PositionTakingInfo()
                 {

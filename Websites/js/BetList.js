@@ -549,6 +549,11 @@ function showLucky3Details(transId, custId) {
     parent.OpenNextPopup("Lucky3Details", 'Lucky3/ViewDetail?TransactionId=' + transId + '&CustomerId=' + custId, '', width, 500, true, false, window, 0, null, null);
 }
 
+function ShowBonusDetails(refCode, transId) {
+    var url = "BetList/ViewBonusDetails?refCode=" + refCode + "&transId=" + transId;
+    parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
+}
+
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({

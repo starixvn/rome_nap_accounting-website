@@ -3,20 +3,15 @@
 <form id="fExRate">
 <table id="ex" class="tbllayout" cellspacing="1px" style="width:auto">
     <tr class="title">
-        <td rowspan="2">Currency</td>
-        <td rowspan="2">Standard Currency</td>
-        <td rowspan="2">Description</td>
-        <td rowspan="2">Multiplied By</td>
-        <td rowspan="2">Base Rate</td>
-        <td rowspan="2">Min Bet</td>
-        <td rowspan="2">Min Bet Live</td>  
-        <td colspan="5"><b>Open Tote Rate</b></td>
+        <td>Currency</td>
+        <td>Standard Currency</td>
+        <td>Description</td>
+        <td>Multiplied By</td>
+        <td>Base Rate</td>
+        <td>Min Bet</td>
+        <td>Min Bet Live</td> 
     </tr>
-    <tr class="title">
-      <td>GBP</td>
-      <td>EURO</td>
-      <td>US$</td>
-    </tr>
+   
     <tr bgcolor='white'>
       <td>
         <input type="text" class="w70" {ReadOnly}  name="txtEx" id="txtCurrency" value="{Currency}"/>
@@ -37,16 +32,7 @@
       </td>
       <td>
 	    <input type="text" class="w70" name="txtEx"  id="txtMinbetLive" value="{MinbetLive}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>
-      <td>
-	    <input type="text" class="w70" name="txtEx"  id="txtGBPRate" value="{GBPRate}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>
-      <td>
-	    <input type="text" class="w70" name="txtEx"  id="txtEURORate" value="{EURORate}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>    
-      <td>
-	    <input type="text" class="w70" name="txtEx"  id="txtUSDRate" value="{USDRate}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>    
+      </td>     
     </tr>
     <tr>
         <td colspan="12" style="border-right:0px none; text-align:right">

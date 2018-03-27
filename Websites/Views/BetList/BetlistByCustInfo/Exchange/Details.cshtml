@@ -1,0 +1,104 @@
+﻿@using Fanex.BetList.Accounting.Models.Exchange
+@using Fanex.BetList.Accounting.Extensions
+@using Sunplus.Accounting.Core.Common;
+@model IEnumerable<ExchangeTicket>
+@{
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=" + @Sunplus.Accounting.Core.Configurations.WebSettings.Version />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css?ver=" + @Sunplus.Accounting.Core.Configurations.WebSettings.Version />
+</head>
+<body>
+    <div class="container">
+        <div class="grid-container content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Bet Taken
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34table-cell">
+                                Odds Req
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Liability
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Odds matched
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                   
+                    @foreach (var ticket in Model)
+                    {
+                        <tr>
+                            <td class="c">
+                                <div class="width150 table-cell">
+                                    @ticket.BetTaken
+                                </div>
+                            </td>
+                            <td class="r">
+                                <div class="width100 table-cell">
+                                    @ticket.OddsRequest.Format(2)
+                                </div>
+                            </td>
+                            <td class="r">
+                                <div class="width100 table-cell">
+                                    @ticket.Stake.Format(2)
+                                </div>
+                            </td>
+                            <td class="r">
+                                <div class="width100 table-cell">
+                                    @if (ticket.HasLiability)
+                                    {
+                                        @ticket.Liability.Format(2)
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+
+                                </div>
+                            </td>
+                            <td class="r">
+                                <div class="width100 table-cell">
+                                    @ticket.OddsMatched.Format(2)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+

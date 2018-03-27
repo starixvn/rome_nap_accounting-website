@@ -22,6 +22,9 @@
 <%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
 <%@ Import Namespace="Fanex.ProductStatus.Setting.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate.ProductStatus" %>
+<%@ Import Namespace="CasinoLibrary.Model.UserException" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Extensions" %>
+
 
 <script RunAt="server">
 
@@ -130,6 +133,14 @@
             Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
             if (!downTimeInfo.IsDowntime)
             {
+                if (ex.GetType() == typeof(ErrorException))
+                {
+                    LogExtensions.CasinoExceptionHandler(ex);
+                }
+                else
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
             }
         }
         else

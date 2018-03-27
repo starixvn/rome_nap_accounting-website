@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Service="Sunplus.Accounting.WcfServiceLibrary.PT.Poker.PokerService" %>

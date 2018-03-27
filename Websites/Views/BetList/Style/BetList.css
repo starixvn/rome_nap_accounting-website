@@ -514,38 +514,23 @@ span.ui-dialog-title-dialog-modal-TennisResult {
         color: #d66d35;
     }
 
-.allbet-bet-id {
-    color: #bbb;
-}
+.allbet-bet-id { color: #bbb; }
+.allbet-bet-type-name { color: #696969; }
+.allbet-game-id { color: #01122b; }
+.offer-name-list { font-weight: bold; }
+.unit-stake { color: #003399; }
+.voidbridge-sporttypename { color: #0000FF; }
+.gamegroupname { color: #008000; }
+.gametypename { color: #696969; }
 
-.allbet-bet-type-name {
-    color: #696969;
+.bonus-icon {
+    background: url(Images/bonus.png) no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
 }
-
-.allbet-game-id {
-    color: #01122b;
-}
-
-.offer-name-list {
-    font-weight: bold;
-}
-
-.unit-stake {
-    color: #003399;
-}
-
-.voidbridge-sporttypename {
-    color: #0000FF;
-}
-
-.gamegroupname {
-    color: #008000;
-}
-
-.gametypename {
-    color: #696969;
-}
-
+.bonus-icon:hover { cursor: pointer }
+.stake { display: block; }
 .lucky3 {
     color: #b50000;
     font-weight: bold !important;

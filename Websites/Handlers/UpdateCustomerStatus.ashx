@@ -2,10 +2,8 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
@@ -13,7 +11,6 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
-using IBCUtils.Web;
 using System.Text;
 using CasinoLibrary.SBAgent;
 using CasinoLibrary.Model.UserException;
@@ -205,20 +202,6 @@ public class UpdateCustomerStatus : BaseHandler
                  *Add new case for HR request changing status
                  */
                 //Start
-                case "disabledHR":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledHR(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledHROpenTote":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledHROpenTote(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
                 case "disabledCS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -272,14 +255,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledLCS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    new CustomerUpdateStatus().CustomerUpdateDisabledLiveCasino(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;               
                 case "disabledVS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -301,24 +277,7 @@ public class UpdateCustomerStatus : BaseHandler
                         context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert("You are not authorized on this function.") +
                                    "</script>");
                     }
-                    break;
-
-                case "enableHorseRacingFixedOdds":
-                    // Louis.Nguyen: Enable Horse Racing Fixed Odds
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                    {
-                        throw new AccException("Invalid isupddonwline parameters");
-                    }
-
-                    new CustomerUpdateStatus().CustomerUpdateDisableHorseRacingFixedOdds(
-                        _accid,
-                        _custid,
-                        status,
-                        context.Request.UserHostAddress,
-                        isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;             
                 case "disabledGoldDeluxe":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))

@@ -79,17 +79,11 @@
 
         public bool SyncUplineGoldDeluxe => Utils.ToBoolean(customerInfoRow["IsSyncUplineGoldDeluxe"]);
 
-        public bool EnableHorseRacingFixedOdds => !Utils.ToBoolean(customerInfoRow["DisableHRFixedOdds"]);
-
-        public bool DisableDownlinesHorseRacingFixedOdds => Utils.ToBoolean(customerInfoRow["DisableDownlinesHRFixedOdds"]);
-
         public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
         public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
-
-        public bool ShowHorseRacingLinkCredit => !WebSettings.disabledHR && !IsDeposit;
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && RoleId.Equals(4) && IsDeposit;
 
@@ -101,7 +95,9 @@
 
         public bool HideSportsbook2 { get; private set; } = true;
 
-        public bool HideVirtualSports { get; private set; } = true;
+        public bool HideSettingLinkVirtualSports { get; private set; } = true;
+
+        public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
         public bool HideSettingBullfighting { get; private set; } = true;
 
@@ -117,7 +113,8 @@
                     switch (productId)
                     {
                         case "5":
-                            HideVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
+                            HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
+                            HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
                             break;
                         case "16":
                             HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
@@ -160,12 +157,11 @@
                             bool isHideUplineKenoLottery = Utils.ToBoolean(row["IsHiddenUpline"]);
 
                             HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
-                                IsDeposit ||
-                                (RoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
+                                IsDeposit || (RoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
                             break;
 
                         case "26":
-                            HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3 || IsDeposit;
+                            HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowLucky3;
                             HideLucky3Upline = Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
                             break;
 
@@ -173,8 +169,7 @@
                             bool HideBullfighting = Utils.ToBoolean(row["IsHidden"]);
                             bool HideUplineBullfighting = Utils.ToBoolean(row["IsHiddenUpline"]);
                             HideSettingBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
-                                IsDeposit ||
-                                (RoleId < 4 && (HideBullfighting || HideUplineBullfighting));
+                                IsDeposit || (RoleId < 4 && (HideBullfighting || HideUplineBullfighting));
                             break;
                     }
                 }

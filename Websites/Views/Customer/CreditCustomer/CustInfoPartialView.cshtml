@@ -1,8 +1,7 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
-@{
-    bool isOfferHRFixedOdds = WebSettings.OfferHorseRacingFixedOdds;
+@{  
     bool isShowMyanmarOdds = false;
     if (Model.IsSuperSetting && Model.IsInsertPage)
     {
@@ -466,8 +465,7 @@ else
 </table>
 }
 @Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
-<script language="javascript" type="text/javascript">
-    var _isOfferHRFixedOdds = "@isOfferHRFixedOdds";
+<script language="javascript" type="text/javascript">  
     var _isShowMyanmarOdds = "@isShowMyanmarOdds";
 </script>
 <script src="~/js/encode.js"></script>

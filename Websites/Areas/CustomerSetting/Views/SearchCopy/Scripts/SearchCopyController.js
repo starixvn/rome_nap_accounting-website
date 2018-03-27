@@ -168,8 +168,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmLiveCasino").attr('src', "");
         $("#frmGoldDleluxe").attr('src', "");
         $("#frmColossusBets").attr('src', "");
-        $("#frmSportsbook2").attr('src', "");
-        $("#frmCockFighting").attr('src', "");
+        $("#frmSportsbook2").attr('src', "");       
         $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
@@ -212,15 +211,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabSportsbookMinPT': url += "EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbookMinPT", url);
                 $scope.resize("#frmSportbookMinPT");
-                break;
-            case 'tabRacing': url += "EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid;
-                $scope.loadData("#frmRacing", url);
-                $scope.resize("#frmRacing");
-                break;
-            case 'tabRacingMinPT': url += "customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmRacingMinPT", url);
-                $scope.resize("#frmRacingMinPT");
-                break;
+                break;           
             case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper?id=" + $scope.existedUser.userid + "&uplineid=0&groupname=true";
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
@@ -228,15 +219,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabVirtualSports': url += "DCS/ViewCustomerSetting?productId=5&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
-                break;
-            case 'tabBingo': url += "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmBingo", url);
-                $scope.resize("#frmBingo");
-                break;
-            case 'tabLiveCasino': url += "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=" + adminId + "&actorUsername=" + adminUsername + "&customerId=" + $scope.existedUser.userid + "&customerLevel=4&formType=2";
-                $scope.loadData("#frmLiveCasino", url);
-                $scope.resize("#frmLiveCasino");
-                break;
+                break;        
+           
             case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
                 $scope.loadData("#frmGoldDleluxe", url);
                 $scope.resize("#frmGoldDleluxe");
@@ -248,11 +232,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabSportsbook2': url += "DCS/ViewCustomerSetting?productId=16&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmSportsbook2", url);
                 $scope.resize("#frmSportsbook2");
-                break;
-            case 'tabCockFighting': url += "DCS/ViewCustomerSetting?productId=19&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmCockFighting", url);
-                $scope.resize("#frmCockFighting");
-                break;
+                break;           
             case 'tabAllbet': url += "DCS/ViewCustomerSetting?productId=21&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmAllbet", url);
                 $scope.resize("#frmAllbet");
@@ -305,19 +285,14 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $scope.sports.push({ sportname: 'Sportsbook', sportvalue: 'tabSportsbook' });
             $scope.sports.push({ sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' });
         }
-        if (!statusSports.HideRacing) {
-            $scope.sports.push({ sportname: 'Racing', sportvalue: 'tabRacing' });
-            $scope.sports.push({ sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' });
-        }
+       
         if (!statusSports.HideCasino) {
             $scope.sports.push({ sportname: 'Casino', sportvalue: 'tabCasino' });
         }
         if (!statusSports.HideVirtualSports) {
             $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
         }      
-        if (!statusSports.HideLiveCasino) {
-            $scope.sports.push({ sportname: 'Live Casino', sportvalue: 'tabLiveCasino' });
-        }
+      
         if (!statusSports.HideGoldDeluxe) {
             $scope.sports.push({ sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' });
         }
@@ -326,10 +301,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
         if (!statusSports.HideSportsbook2) {
             $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
-        }
-        if (!statusSports.HideCockFighting) {
-            $scope.sports.push({ sportname: 'Cockfighting', sportvalue: 'tabCockFighting' });
-        }
+        }       
         if (!statusSports.HideCricket) {
             $scope.sports.push({ sportname: 'Cricket', sportvalue: 'tabCricket' });
         }

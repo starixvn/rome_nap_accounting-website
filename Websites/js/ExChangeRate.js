@@ -35,14 +35,10 @@ function InitFixedHeaderEx() {
 }
 
 function Validator() {
-    /*if ($("#selectStandardCurrency").val() == "" && $("#txtCurrency").val() != "UUS")
-    {
-        showAlertMessage('errMsg', 'Please select "Standard Currency"', 1);
-        return false;
-    }*/
+   
     document.getElementById('errMsg').innerHTML = '';
-    var arrIDs = ['txtCurrency', 'txtBaseRate', 'txtMinbet', 'txtMinbetLive', 'txtGBPRate', 'txtEURORate', 'txtUSDRate', 'tbxMultipliedBy'];
-    var arrNames = ['Currency', 'Base Rate', 'Min Bet', 'Min Bet Live', 'GBP', 'EURO', 'US$', 'MultipliedBy'];
+    var arrIDs = ['txtCurrency', 'txtBaseRate', 'txtMinbet', 'txtMinbetLive', 'tbxMultipliedBy'];
+    var arrNames = ['Currency', 'Base Rate', 'Min Bet', 'Min Bet Live', 'MultipliedBy'];
     for (i = 0; i < arrIDs.length; i++) {
         if ($('#' + arrIDs[i]).val().length == 0) {
             showAlertMessage('errMsg', 'Please input ' + arrNames[i] + '.', 1);
@@ -74,10 +70,7 @@ function InsertExChangeRate() {
         param += '&BaseRate=' + $('#txtBaseRate').val();
         param += '&Currency=' + $('#txtCurrency').val();
         param += '&Minbet=' + $('#txtMinbet').val();
-        param += '&MinbetLive=' + $('#txtMinbetLive').val();
-        param += '&GBPRate=' + $('#txtGBPRate').val();
-        param += '&EURORate=' + $('#txtEURORate').val();
-        param += '&USDRate=' + $('#txtUSDRate').val();
+        param += '&MinbetLive=' + $('#txtMinbetLive').val();       
         param += '&Code=' + $('#tbxStandardCurrency').val();
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
@@ -115,10 +108,7 @@ function UpdateEditExChangeRate() {
         param += '&BaseRate=' + $('#txtBaseRate').val();
         param += '&Currency=' + $('#txtCurrency').val();
         param += '&Minbet=' + $('#txtMinbet').val();
-        param += '&MinbetLive=' + $('#txtMinbetLive').val();
-        param += '&GBPRate=' + $('#txtGBPRate').val();
-        param += '&EURORate=' + $('#txtEURORate').val();
-        param += '&USDRate=' + $('#txtUSDRate').val();
+        param += '&MinbetLive=' + $('#txtMinbetLive').val();      
         param += '&Code=' + $('#tbxStandardCurrency').val();
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
@@ -154,15 +144,11 @@ function UpdateEditExChangeRate() {
 
 function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
-    //showPopup('Edit Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
-    //OpenPopup(url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose)
-    parent.OpenPopup(url, "Edit Exchange Rate", 950, 220, true, true, window, 2000, null, null);
+  
+    parent.OpenPopup(url, "Edit Exchange Rate", 750, 220, true, true, window, 2000, null, null);
 }
 
 
-//function CloseDiv() {
-//    ibcWnd.close();
-//}
 
 function CheckDecNumber_ExRate(e) {
     
@@ -204,17 +190,12 @@ function ResetValueWhenEdit()
         data: param,
         success: function(rs) {
             if (rs.length > 0) {
-                var BaseRate = 0, Currency = 1, Minbet = 2, MinbetLive = 3, GBPRate = 4, AUDRate = 5, ZARRate = 6, EURORate = 7, USDRate = 8, Description = 9, MultipliedBy = 10, Code = 11;
+                var BaseRate = 0, Currency = 1, Minbet = 2, MinbetLive = 3, Description = 9, MultipliedBy = 10, Code = 11;
                 var arr = rs.split('|');
                 $('#txtBaseRate').val(arr[BaseRate]);
                 $('#txtCurrency').val(arr[Currency]);
                 $('#txtMinbet').val(arr[Minbet]);
-                $('#txtMinbetLive').val(arr[MinbetLive]);
-                $('#txtGBPRate').val(arr[GBPRate]);
-                $('#txtAUDRate').val(arr[AUDRate]);
-                $('#txtZARRate').val(arr[ZARRate]);
-                $('#txtEURORate').val(arr[EURORate]);
-                $('#txtUSDRate').val(arr[USDRate]);
+                $('#txtMinbetLive').val(arr[MinbetLive]);              
                 $('#tbxDescription').val(arr[Description]);
                 $('#tbxMultipliedBy').val(arr[MultipliedBy]);
                 //$('#tbxStandardCurrency').val(arr[Code]);
@@ -250,65 +231,5 @@ function loadwindow() {
 function AddNewExChangeRate() {
     var url = 'ExRate/AddNewExRate.aspx';
     //showPopup('Add New Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
-    parent.OpenPopup(url, "Add New Exchange Rate", 950, 220, true, true, window, 2000, null, null);
-}
-
-
-function IsValidFileExtension() {
-    
-    var filename = $('#txtfile').val();
-    $('#FileName').val(filename);
-    $('#msgError').html('');
-    var isOK = false;
-    
-    if (filename != "") {
-        var ext = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
-        isOK = (ext == "xls");
-        if (!isOK) {
-            showAlertMessage("msgError", 'Sorry, You chose invalid file extension. Please choose an excel file.', 1);
-            $('#btnUpload').attr('disabled', true);
-        }
-        else {
-            $('#msgError').html('');
-            $('#btnUpload').attr('disabled', false);
-            isOK = true;
-        }
-    }
-    return isOK;
-}
-
-
-
-function UploadFile() {
-    if (IsValidFileExtension()) {
-        //try { parent.BlockUI(); } catch (e) { };
-        $.ajaxFileUpload
-                (
-                    {
-                        //url: 'Services/ServiceExchangeRate.svc/ReadExRateFromExcel',
-                        url:'ReadExRateFromExcel.ashx',
-                        secureuri: false,
-                        fileElementId: 'txtfile',
-                        dataType: 'html',
-                        complete: function() { }, // Disable image pending.
-                        success: GetInfoJSON
-
-                    }
-                )
-    }
-
-}
-function GetInfoJSON(s) {
-    if (s != null) { 
-       var result=s.split('|');
-       if (result[0]==0) {
-             var url = 'ExRate/ExRateOpenTote.aspx';
-             showPopup('Exchange Rate Open Tote', url, 0, 0, 550, 600, true, 2000, null);
-           
-       }
-       else
-       {
-            showAlertMessage("ErrMsg",result[1],1);
-       }
-   }
+    parent.OpenPopup(url, "Add New Exchange Rate", 750, 220, true, true, window, 2000, null, null);
 }

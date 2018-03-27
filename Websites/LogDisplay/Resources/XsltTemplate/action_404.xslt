@@ -22,11 +22,9 @@
             </td>
           </tr>
           <tr>
-            <td class="colW1">{lbl:disabledfi}</td>
-            <td class="colW2">
-              <xsl:value-of select="@disabledfi" />
+            <td class="colW1"></td>
+            <td class="colW2">            
             </td>
-
             <td class="colW1">{lbl:subaccid}</td>
             <td class="colW2">
               <xsl:value-of select="@subaccid" />

@@ -1,0 +1,270 @@
+﻿@using Fanex.BetList.Accounting.ViewModels.Exchange
+@using System.Linq;
+@using Fanex.BetList.Accounting.Extensions;
+
+@model ExchangeViewModel
+@{
+    var index = Model.Index - 1;
+}
+
+<div id="ExchangeBetlist" class="freegrid display-none">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width300 height34 table-cell">
+                                Market
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet ID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Selection
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet Placed
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Odds Avg
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                WL/Comm
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width300 height34 table-cell">
+                                Market
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet ID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Selection
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet Placed
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Odds Avg
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                WL/Comm
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                @if (Model.Summaries.Any())
+                {
+                    <tbody>
+                        @foreach (var summary in Model.Summaries)
+                        {
+                            index = index + 1;
+                            var details = Model.Details
+                                .Where(i => i.EventId == summary.EventId && i.MarketId == summary.MarketId)
+                                .OrderByDescending(i => i.BetId);
+                            var firstDetail = details.FirstOrDefault();
+                            <tr>
+                                <td class="c" rowspan="@details.Count()">
+                                    <div class="width30 table-cell">
+                                        @index
+                                    </div>
+                                </td>
+                                <td rowspan="@details.Count()">
+                                    <div class="width300 table-cell">
+                                        @summary.EventTypeName >
+                                        <span style="font-weight:bold">@summary.EventName </span> >
+                                        @summary.MarketName
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width80 table-cell">
+                                        <a href="#" onclick="ExchangeBetlist.getDetails(@firstDetail.BetId,'@firstDetail.Type');">@firstDetail.BetId</a>
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width150 table-cell">
+                                        @firstDetail.SelectionName
+                                    </div>
+                                </td>
+                                <td class="c @firstDetail.Type">
+                                    <div class="width50 table-cell">
+                                        @firstDetail.Type
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width80 table-cell">
+                                        @firstDetail.BetPlaced
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width50 table-cell">
+                                        @firstDetail.OddsAvg.Format(2)
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width80 table-cell">
+                                        @firstDetail.Stake.Format(2)
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width80 table-cell">
+                                        @firstDetail.Winlost.Format(2)
+                                    </div>
+                                </td>
+                                <td class="r" rowspan="@details.Count()">
+                                    <div class="width80 table-cell">
+                                        <span style="display:block" class="@GetCSSForWinLoss(summary.WinLost)">
+                                            @summary.WinLost.Format(2)
+                                        </span>
+                                        <span class="@GetCSSForWinLoss(summary.Commission)">
+                                            @summary.Commission.Format(2)
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            foreach (var detail in details)
+                            {
+                                if (detail != firstDetail)
+                                {
+                                    <tr>
+                                        <td class="c">
+                                            <a href="#" onclick="ExchangeBetlist.getDetails(@detail.BetId,'@detail.Type');">@detail.BetId</a>
+                                        </td>
+                                        <td class="c">
+                                            <div class="width150 table-cell">
+                                                @detail.SelectionName
+                                            </div>
+                                        </td>
+                                        <td class="c @detail.Type">
+                                            <div class="width50 table-cell">
+                                                @detail.Type
+                                            </div>
+                                        </td>
+                                        <td class="c">
+                                            <div class="width80 table-cell">
+                                                @detail.BetPlaced
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="width50 table-cell">
+                                                @detail.OddsAvg.Format(2)
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="width80 table-cell">
+                                                @detail.Stake.Format(2)
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="width80 table-cell">
+                                                @detail.Winlost.Format(2)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="r">
+                            <td class="b" colspan="9" align="right">
+                                Grand Total
+                            </td>
+                            <td class="@GetCSSForWinLoss(Model.TotalCommission)">
+                                @Model.TotalCommission.Format(2)
+                            </td>
+                        </tr>
+                    </tfoot>
+                }
+                else
+                {
+                    <tr>
+                        <td class="c b" colspan="10">There is no data</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@functions{
+    public string GetCSSForWinLoss(decimal winloss)
+    {
+        return winloss < 0 ? "negative" : string.Empty;
+    }
+
+}
+<script type="text/javascript">
+    var _totalSummaryRowsExchange = @Model.TotalSummaryRows;
+</script>

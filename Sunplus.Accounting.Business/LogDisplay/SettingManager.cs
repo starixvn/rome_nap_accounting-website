@@ -169,12 +169,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("fromdate", fromDate);
                 param.Add("todate", toDate);
 
-                param.Add("actiontypeid", 5);
+                param.Add("actiontypeid", null);
 
                 // hard code
                 param.Add("isinternal", 1);
-                param.Add("loweractionid", null);
-                param.Add("upperactionid", null);
+                param.Add("loweractionid", 1100);
+                param.Add("upperactionid", 1199);
 
                 param.Add("pageindex", page > 0 ? page - 1 : 0);
                 param.Add("pagesize", pageSize);

@@ -43,29 +43,6 @@ public partial class ReportHTML
 
     #endregion Order by Currency
 
-    #region ValidDate
-
-    /// <summary>
-    /// date must be between balance up date and today
-    /// </summary>
-    /// <param name="date"></param>
-    /// <returns></returns>
-    public static string ValidDate(string date)
-    {
-        if (date == null || date.Length == 0)
-            date = DateTime.Today.ToShortDateString();
-        if (CastAide.AsDateTime(date) < ReportUtils.BalanceUp.BalanceUpDay || CastAide.AsDateTime(date) > DateTime.Today)
-            date = DateTime.Today.ToShortDateString();
-        return date;
-    }
-
-    #endregion ValidDate
-
-    public static string Report2A_Excel
-    {
-        get { return "AccReport2A_Excel_" + AppSession.Username; }
-    }
-
     public static string CSSExcelReport()
     {
         var content = new StringBuilder();

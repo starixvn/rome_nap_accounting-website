@@ -40,4 +40,10 @@
   <Function Name="Customer - Edit Sportbook Commission">
     <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
+
+  <Function Name="Exchange">
+    <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBEXT.bodb02.bodbAdminNet" />
+  </Function>
+ 
 </Functions>

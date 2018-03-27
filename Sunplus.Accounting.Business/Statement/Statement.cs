@@ -186,10 +186,11 @@ namespace Sunplus.Accounting.Business.Statement
                         string strAccDate = string.Empty;
                         string type = CastAide.AsString(row["transtype"]);
                         decimal totalamt = CastAide.AsDecimal(row["totalamt"]);
+                        bool hasDetail = CastAide.AsBoolean(row["hasdetail"]);
                         sumAmount += totalamt;
 
                         //just provide hyperlink for non-bet transaction
-                        if (string.Compare(type.ToLower(), "bet", true) == 0)
+                        if (!hasDetail)
                         {
                             //TemplateHandler.RemoveBlock(ref rowHtml,"link");
                             TemplateHandler.Assign(ref rowHtml, "link", string.Empty);

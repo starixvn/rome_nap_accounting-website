@@ -1,40 +1,29 @@
 ﻿@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
 @using DNAide.Core
 @using Sunplus.Accounting.Core.Configurations
-@using Sunplus.Bingo.Core
 @using System.Collections
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
 @using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
-@{
-    var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-    bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
+@{ 
+ 
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
-    var enableNumberGame = BingoSettings.NumberGame.Enabled;
-
-    var disabledHR = WebSettings.disabledHR;
-    var enableBingo = BingoSettings.BingoGame.Enabled;
-    var EnableLiveCasino = WebSettings.EnableLiveCasino;
+    var enableNumberGame = true; 
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
-
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-    bool allowCS = false;
-    bool allowFI = Permissions.IsAllowEditFI();
-    bool allowLiveCS = false;
+    bool allowCS = false;  
     int IsShowCustomerSettingRenovation = 0;
     bool directMaster = (Model.ParentId == 0 ? true : false);
     if (Model.ParentId == 0)
     {
         allowCS = true;
-        allowLiveCS = true;
     }
     else
     {
         var thirdPartyStatus = Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
         allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
-        allowLiveCS = Permissions.IsAllowEditLiveCasino(Model.ParentId, thirdPartyStatus.LiveCasinoSync);
     }
     if (IsPost)
     {
@@ -84,19 +73,13 @@
         colspanCom++;
     }
 
-    Hashtable hash = new Hashtable();
-    hash.Add("p2pSetting", p2pSetting);
-    hash.Add("visibleP2PSetting", visibleP2PSetting);
+    Hashtable hash = new Hashtable(); 
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("enableNumberGame", enableNumberGame);
-    hash.Add("disabledHR", disabledHR);
-    hash.Add("enableBingo", enableBingo);
-    hash.Add("EnableLiveCasino", EnableLiveCasino);
+    hash.Add("enableNumberGame", enableNumberGame);  
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
-    hash.Add("allowLiveCS", allowLiveCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
@@ -159,35 +142,18 @@
                     <li class="canchange" onclick="EditMinMaxPT(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName');">
                         Max PT </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@agentItem.ChildID','Agent');">Info</li>
-                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
-                    {
-                        <li class="canchange" onclick="EditHorseracingSetting(2, '@agentItem.ChildID','@Model.ParentId')">
-                            Racing </li>
-                    }
                     @{
                         var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
                             CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : agentItem.IsSynCasinoUpline;
                         var onclickCS = (IsOnclickCS == true ? "AgentList.casino('" + agentItem.ChildID + "','" + Model.ParentId + "');" : "");
                     }
                     <li class="canchange" onclick="@onclickCS">Casino</li>
-                    @if (CastAide.AsBoolean(hash["enableBingo"]))
-                    {
-                        <li class="canchange" onclick="OpenEditBI('@agentItem.ChildID', '@Model.ParentId', '2')">
-                            Bingo </li>
-                    }
+                 
                     <li class="canchange" onclick="OpenEditTransferTime('@agentItem.ChildID',0);">Transfer
                         Condition </li>
                     <li class="canchange" onclick="OpenChangePwd('@agentItem.ChildID','@agentItem.UserName');">
                         Password </li>
-                    @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
-                    {
-                        <li class="canchange" onclick="AgentList.editSetting('@agentItem.ChildID', '2');">Poker</li>
-                    }
-                    @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
-                    {
-                        <li class="canchange" onclick="AgentList.liveCasinoSetting('@agentItem.ChildID', '0', '@Model.ParentId');">
-                            Live Casino </li>
-                    }
+                  
                     @if (!agentItem.IsHideVirtualSports)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 5, 'Virtual Sports');">
@@ -212,11 +178,7 @@
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 16, 'Sportsbook 2');">
                             Sportsbook 2 </li>
                     }
-                    @if (!agentItem.IsHideCockFighting)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 19,  'Cockfighting');">
-                            Cockfighting</li>
-                    }
+                  
                     @if (!agentItem.IsHideCricket)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 20, 'Cricket');">Cricket</li>

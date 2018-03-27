@@ -15,11 +15,6 @@
     <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Live Casino">
-    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02.bodbAdminNet">
-      <Mapping DataField="LCSWinPercent" ObjectProperty="WinPercent">
-      </Mapping>
-    </Setting>
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Finance">
@@ -85,15 +80,6 @@
   <Function Name="User Info">
     <Setting Key="Acc_CustomerPwdUpd" SpName="Acc_CustomerPwdUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Customer - HR">
-    <Setting Key="Acc_CustomerUpdMember_MinMaxBetHR" SpName="Acc_CustomerUpdMember_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAgent_MinMaxBetHR" SpName="Acc_CustomerUpdAgent_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMaster_MinMaxBetHR" SpName="Acc_CustomerUpdMaster_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuper_MinMaxBetHR" SpName="Acc_CustomerUpdSuper_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAllSettingHR" SpName="Acc_CustomerUpdAllSettingHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableHR" SpName="Acc_CustomerUpdDisableHR" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableOpenTote" SpName="Acc_CustomerUpdDisableOpenTote" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet" />

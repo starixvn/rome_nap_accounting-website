@@ -1,0 +1,168 @@
+﻿@using Fanex.BetList.Accounting.App_GlobalResources;
+@using Fanex.BetList.Accounting.Constants;
+@using Fanex.BetList.Accounting.Models
+@using Fanex.BetList.Accounting.Resources;
+@{ Layout = null; }
+@model IEnumerable<TicketDetail>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <title>Transaction Details</title>
+    <style>
+        .time { font-size: 11px; }
+        .display-none { display: none; }
+    </style>
+</head>
+<body>
+    <div id="licenseeBonusDetails" class="freegrid display-none">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th><div class="table-cell height34 width30">@Labels.No</div></th>
+                            <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
+                            <th><div class="table-cell height34 width300">@Labels.Choice</div></th>
+                            <th><div class="table-cell height34 width50">@Labels.Odds</div></th>
+                            <th><div class="table-cell height34 width50">@Labels.Stake</div></th>
+                            <th><div class="table-cell height34 width60">@Labels.Win_Loss</div></th>
+                            <th><div class="table-cell height34 width80">@Labels.Status</div></th>
+                            <th><div class="table-cell height34 width60">Super<br/>PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Master<br/>PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Agent<br/>PT/Comm</div></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="tblContent" class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th><div class="table-cell height34 width30">@Labels.No</div></th>
+                            <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
+                            <th><div class="table-cell height34 width300">@Labels.Choice</div></th>
+                            <th><div class="table-cell height34 width50">@Labels.Odds</div></th>
+                            <th><div class="table-cell height34 width50">@Labels.Stake</div></th>
+                            <th><div class="table-cell height34 width60">@Labels.Win_Loss</div></th>
+                            <th><div class="table-cell height34 width80">@Labels.Status</div></th>
+                            <th><div class="table-cell height34 width60">Super<br />PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Master<br />PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Agent<br />PT/Comm</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="10" class="c">@BetList.noInfo</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int index = 0;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="table-cell c width30">
+                                            @(++index)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell c b width120">
+                                            @Html.Raw(item.TransDateHtml)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width300">
+                                            @Html.Raw(item.ChoiceHtml)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width50">
+                                            @{ Html.RenderPartial("~/Views/BetList/_Odds.cshtml", item); }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width50">
+                                            @Html.Raw(item.StakeHtml)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width60">
+                                            @{ Html.RenderPartial("~/Views/BetList/_WinLoss.cshtml", item); }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell c width80">
+                                            @Html.Raw(item.StatusHtml)
+                                            @{
+                                                var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(item.Ticket.IP);
+                                            }
+                                            @if (ip != "-" && !item.Ticket.BetTypeId.Equals(500))
+                                            {
+                                                <br />
+                                                <a href="javascript:;" onclick="viewBetListByIP('@item.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@item.Ticket.IP');">@ip</a>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width60">
+                                            @{ Html.RenderPartial("~/Views/BetList/_SuperPTCom.cshtml", item); }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width60">
+                                            @{ Html.RenderPartial("~/Views/BetList/_MasterPTCom.cshtml", item); }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width60">
+                                            @{ Html.RenderPartial("~/Views/BetList/_AgentPTCom.cshtml", item); }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript" src="~/js/BetList.js"></script>
+    <script type="text/javascript">
+        function viewBetListByIP(fromDate, ip) {
+            var parentIndex = 1;
+            parent[parentIndex].location = "@Url.Content("~")" + "TarusBetList/BetListByIP?IsLink=true&FromDate=" + fromDate + "&IP=" + ip;
+            parent.$(".ui-dialog .ui-dialog-content").each(function (index) {
+                var $this = parent.$(this);
+                $this.dialog("close");
+                $this.remove();
+            });
+        }
+        function initGridOpts() {
+            return {
+                tblContentId: "tblContent",
+                manualCopyHeader: true,
+                fullWidth: true,
+                fullHeight: true,
+                gridHeight: 180,
+                freezeWidth: 0,
+                numberFreezeCol: 0
+            };
+        }
+        $(function () {
+            var gridOpts = initGridOpts();
+            var $licenseeBonusDetails = $("#licenseeBonusDetails");
+            $licenseeBonusDetails.initGrid(gridOpts).removeClass("display-none").gridScroller(gridOpts);
+        });
+    </script>
+</body>
+</html>

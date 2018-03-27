@@ -8,27 +8,14 @@ var EditLicenseeManager = function () {
         TabHeaderSportsbookNumberGame: null,
         DivSportsbookNumberGameContainer: null,
 
-        TableRacingSettings: null,
-        DivRacingContainer: null,
-
         TabVirtualSportsSettings: null,
         DivVirtualSportsContainer: null,
 
-        CheckboxCopyAllSportsbook: null,
-        CheckboxCopyAllRacing: null,
+        CheckboxCopyAllSportsbook: null,    
 
         arrInputsRemainSportMinBet_SB: null,
         arrInputsRemainSportMaxBet_SB: null,
-        arrInputsRemainSportMaxperMatch_SB: null,
-
-        arrInputCopyToMinBet_Racing: null,
-        arrInputCopyToMaxBet_Racing: null,
-        arrInputCopyToMaxperMatch_Racing: null,
-
-        arrSelectCopyToComm_Racing: null,
-        arrSelectCopyToWinplacept_Racing: null,
-        arrSelectCopyToHouseautopt_Racing: null,
-        arrCheckBoxEnable_Racing: null,
+        arrInputsRemainSportMaxperMatch_SB: null,      
 
         DropdownSportsbookPositionTaking_SbNG: null,
         DropdownNumbergamePositiontaking_SbNG: null,
@@ -133,18 +120,13 @@ var EditLicenseeManager = function () {
         self.bindingEvent();
 
         self.PositionTakingRenderManager.renderSportbookPTOptions(self.Tables.DropdownSportsbookPositionTaking_SbNG);
-        self.PositionTakingRenderManager.renderNumberGamePTOptions(self.Tables.DropdownNumbergamePositiontaking_SbNG);
-        self.RenderRacingCommissionOptions();
-        self.RenderRacingPTOptions();
+        self.PositionTakingRenderManager.renderNumberGamePTOptions(self.Tables.DropdownNumbergamePositiontaking_SbNG);       
         self.PositionTakingRenderManager.renderSportbookPTOptions(self.Tables.DropdownSportsbookPositionTaking_VS);
     };
 
     self.cachedDOMElements = function () {
         self.Tables.TabHeaderSportsbookNumberGame = $("#tabheader-sportsbook-numbergame");
         self.Tables.DivSportsbookNumberGameContainer = $("#div-sportsbook-numbergame-container");
-
-        self.Tables.TableRacingSettings = $("#table-racing-settings");
-        self.Tables.DivRacingContainer = $("#div-racing-container");
 
         self.Tables.TabVirtualSportsSettings = $("#tab-virtualsports-settings");
         self.Tables.DivVirtualSportsContainer = $("#div-virtualsports-container");
@@ -156,14 +138,7 @@ var EditLicenseeManager = function () {
         self.Tables.arrInputsRemainSportMaxBet_SB = self.Tables.DivSportsbookNumberGameContainer.find("input[type='text'][remainsport][maxbet]");
         self.Tables.arrInputsRemainSportMaxperMatch_SB = self.Tables.DivSportsbookNumberGameContainer.find("input[type='text'][remainsport][maxpermatch]");
 
-        self.Tables.arrInputCopyToMinBet_Racing = self.Tables.DivRacingContainer.find("input[type='text'][copyto][minbet]");
-        self.Tables.arrInputCopyToMaxBet_Racing = self.Tables.DivRacingContainer.find("input[type='text'][copyto][maxbet]");
-        self.Tables.arrInputCopyToMaxperMatch_Racing = self.Tables.DivRacingContainer.find("input[type='text'][copyto][maxpermatch]");
-
-        self.Tables.arrSelectCopyToComm_Racing = self.Tables.DivRacingContainer.find("select[copyto][comm]");
-        self.Tables.arrSelectCopyToWinplacept_Racing = self.Tables.DivRacingContainer.find("select[copyto][winplacept]");
-        self.Tables.arrSelectCopyToHouseautopt_Racing = self.Tables.DivRacingContainer.find("select[copyto][houseautopt]");
-        self.Tables.arrCheckBoxEnable_Racing = self.Tables.DivRacingContainer.find("input[type='checkbox'][copyto]");
+       
 
         self.Tables.DropdownSportsbookPositionTaking_SbNG = self.Tables.DivSportsbookNumberGameContainer.find("#dropdown-sportsbook-positiontaking");
         self.Tables.DropdownNumbergamePositiontaking_SbNG = self.Tables.DivSportsbookNumberGameContainer.find("#dropdown-numbergame-positiontaking");
@@ -183,9 +158,7 @@ var EditLicenseeManager = function () {
     };
 
     self.bindingEvent = function () {
-        self.bindingEvent_SportsbookNumberGame();
-        self.bindingEvent_Racing();
-        self.bindingEvent_VirtualSport();
+        self.bindingEvent_SportsbookNumberGame();     
 
         self.Tables.buttonSearch.unbind("click");
         self.Tables.buttonSearch.click(function () {
@@ -232,64 +205,7 @@ var EditLicenseeManager = function () {
             self.CheckboxCopyAllSportsbookChange();
         });
     };
-    self.bindingEvent_Racing = function () {
-        self.Tables.TableRacingSettings.unbind("click");
-        self.Tables.TableRacingSettings.click(function () {
-            self.ShowHide_DivRacingContainer();
-        });
-
-        self.Tables.DivRacingContainer.find("input[type='text']")
-                                      .ForceDecimalOnly()
-                                      .ForceCurrencyOnly();
-        self.Tables.DivRacingContainer.find("input[type='text'][copyfrom][minbet]").keyup(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrInputCopyToMinBet_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("input[type='text'][copyfrom][maxbet]").keyup(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrInputCopyToMaxBet_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("input[type='text'][copyfrom][maxpermatch]").keyup(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrInputCopyToMaxperMatch_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("select[copyfrom][comm]").change(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrSelectCopyToComm_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("select[copyfrom][winplacept]").change(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrSelectCopyToWinplacept_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("select[copyfrom][houseautopt]").change(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                self.Tables.arrSelectCopyToHouseautopt_Racing.val($(this).val());
-            }
-        });
-
-        self.Tables.DivRacingContainer.find("input[type='checkbox'][copyfrom]").change(function () {
-            if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-                var checked = this.checked;
-                self.Tables.arrCheckBoxEnable_Racing.each(function () {
-                    this.checked = checked;
-                });
-            }
-        });
-
-        self.Tables.CheckboxCopyAllRacing.change(function () {
-            self.CheckboxCopyAllRacingChange();
-        });
-    };
+   
     self.bindingEvent_VirtualSport = function () {
         self.Tables.TabVirtualSportsSettings.unbind("click");
         self.Tables.TabVirtualSportsSettings.click(function () {
@@ -317,20 +233,7 @@ var EditLicenseeManager = function () {
             }
         });
     };
-    self.ShowHide_DivRacingContainer = function () {
-        self.Tables.DivRacingContainer.slideToggle("fast", function () {
-            if (!self.Tables.DivRacingContainer.is(":visible")) {
-                self.Tables.TableRacingSettings.find("td[arrow]")
-                                               .removeClass("md2")
-                                               .addClass("md3");
-            }
-            else {
-                self.Tables.TableRacingSettings.find("td[arrow]")
-                                               .removeClass("md3")
-                                               .addClass("md2");
-            }
-        });
-    };
+   
     self.ShowHide_DivVirtualSportsContainer = function () {
         if (!self.Tables.DivVirtualSportsContainer.is(":visible")) {
             self.Tables.TabVirtualSportsSettings.find("td[arrow]")
@@ -342,44 +245,8 @@ var EditLicenseeManager = function () {
                                                         .removeClass("md3")
                                                         .addClass("md2");
         }
-    };
-    self.RenderRacingCommissionOptions = function () {
-        var pt = 0.04;
-        while (pt > 0) {
-            val = parseFloat(pt.toFixed(3));
-            self.Tables.DivRacingContainer.find("select[comm]")
-                                          .append("<option value='" + val + "'>" + val + "</option>");
-            pt = pt - 0.005;
-        }
-
-        self.Tables.DivRacingContainer.find("select[comm]")
-                                      .append("<option selected='selected' value='0'>0</option>");
-    };
-    self.RenderRacingPTOptions = function () {
-        //init Win/Place PT
-        var pt = 0.5;
-        while (pt > 0.1) {
-            val = parseFloat(pt.toFixed(3));
-            self.Tables.DivRacingContainer.find("select[winplacept]")
-                                          .append("<option value='" + val + "'>" + val + "</option>");
-            pt = pt - 0.1;
-        }
-
-        self.Tables.DivRacingContainer.find("select[winplacept]")
-                                      .append("<option selected='selected' value='0'>0</option>");
-
-        //init House Auto PT
-        pt = 0.7;
-        while (pt > 0.1) {
-            val = parseFloat(pt.toFixed(3));
-            self.Tables.DivRacingContainer.find("select[houseautopt]")
-                                          .append("<option value='" + val + "'>" + val + "</option>");
-            pt = pt - 0.1;
-        }
-
-        self.Tables.DivRacingContainer.find("select[houseautopt]")
-                                      .append("<option selected='selected' value='0'>0</option>");
-    };
+    };   
+  
     self.CheckboxCopyAllSportsbookChange = function () {
         if (self.Tables.CheckboxCopyAllSportsbook.is(":checked")) {
             self.Tables.DivSportsbookNumberGameContainer.find("input[remainsport]")
@@ -395,34 +262,7 @@ var EditLicenseeManager = function () {
             self.Tables.DivSportsbookNumberGameContainer.find("input[remainsport]").removeAttr("disabled");
         }
     };
-    self.CheckboxCopyAllRacingChange = function () {
-        if (self.Tables.CheckboxCopyAllRacing.is(":checked")) {
-            self.Tables.DivRacingContainer.find("input[copyto]").attr("disabled", "disabled");
-            self.Tables.DivRacingContainer.find("select[copyto]").attr("disabled", "disabled");
-            var minbet = self.Tables.DivRacingContainer.find("input[minbet]").val();
-            var maxbet = self.Tables.DivRacingContainer.find("input[maxbet]").val();
-            var maxpermatch = self.Tables.DivRacingContainer.find("input[maxpermatch]").val();
-            var comm = self.Tables.DivRacingContainer.find("select[comm]").val();
-            var winplacept = self.Tables.DivRacingContainer.find("select[winplacept]").val();
-            var houseautopt = self.Tables.DivRacingContainer.find("select[houseautopt]").val();
-            self.Tables.DivRacingContainer.find("input[copyto][minbet]").val(minbet);
-            self.Tables.DivRacingContainer.find("input[copyto][maxbet]").val(maxbet);
-            self.Tables.DivRacingContainer.find("input[copyto][maxpermatch]").val(maxpermatch);
-            self.Tables.DivRacingContainer.find("select[copyto][comm]").val(comm);
-            self.Tables.DivRacingContainer.find("select[copyto][winplacept]").val(winplacept);
-            self.Tables.DivRacingContainer.find("select[copyto][houseautopt]").val(houseautopt);
-            self.Tables.DivRacingContainer.find("input[copyto][type='checkbox']").each(function () {
-                var arr = self.Tables.DivRacingContainer.find("input[copyfrom][type='checkbox']");
-                if (arr.length > 0) {
-                    this.checked = arr.get(0).checked;
-                }
-            });
-        }
-        else {
-            self.Tables.DivRacingContainer.find("input[copyto]").removeAttr("disabled");
-            self.Tables.DivRacingContainer.find("select[copyto]").removeAttr("disabled");
-        }
-    };
+
     self.GetLicenseeInfo = function () {
         self.blockUI();
         self.Params.getLicenseeInfoParams.LicenseeName = self.Tables.textboxUsername.val();
@@ -467,9 +307,7 @@ var EditLicenseeManager = function () {
         var sportsbookSettings = self.GetUpdateParams_Sportsbook();
         $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, sportsbookSettings);
         var numberGameSettings = self.GetUpdateParams_NumberGame();
-        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, numberGameSettings);
-        var racingSettings = self.GetUpdateParams_Racing();
-        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, racingSettings);
+        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, numberGameSettings);     
 
         self.Params.updateLicenseeInfoParams.EnableVirtualSports = self.Tables.checkboxEnableVirtualSports.prop("checked");
         self.Params.updateLicenseeInfoParams.VirtualSportsSettingInfo = self.GetUpdateParams_VirtualSports();
@@ -606,75 +444,7 @@ var EditLicenseeManager = function () {
 
         return settingInfoList;
     };
-    self.GetUpdateParams_Racing = function () {
-        var settingInfoList = [];
-        var settingName;
-        var racingToteTypesLength = racingToteTypes.length;
-        for (var i = 0; i < racingToteTypesLength; i++) {
-            var racing = racingToteTypes[i];
-            var totesLength = racing.Totes.length;
-            for (var j = 0; j < totesLength; j++) {
-                var tote = racing.Totes[j];
-                settingName = "v" + racing.Id + "minbet_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: $("#" + settingName).getNumberValue()
-                });
-
-                settingName = "v" + racing.Id + "maxbet_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: $("#" + settingName).getNumberValue()
-                });
-
-                settingName = "v" + racing.Id + "maxpermatch_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: $("#" + settingName).getNumberValue()
-                });
-
-                settingName = "v" + racing.Id + "discount_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: $("#" + settingName).getNumberValue()
-                });
-
-                var winPlacePositionTaking = $("#v" + racing.Id + "spositiontaking_" + tote.Id).val();
-                settingName = "v" + racing.Id + "spositiontaking_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: winPlacePositionTaking
-                });
-
-                settingName = "v" + racing.Id + "mpositiontaking_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: winPlacePositionTaking
-                });
-
-                settingName = "v" + racing.Id + "apositiontaking_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: winPlacePositionTaking
-                });
-
-                var houseAutoPositionTaking = $("#v" + racing.Id + "ibcpositiontaking_" + tote.Id).val();
-                settingName = "v" + racing.Id + "ibcpositiontaking_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: houseAutoPositionTaking
-                });
-
-                settingName = "disable" + racing.Id + "_" + tote.Id;
-                settingInfoList.push({
-                    Name: settingName,
-                    Value: !($("#" + settingName).is(":checked"))
-                });
-            }
-        }
-
-        return settingInfoList;
-    };
+    
     self.GetUpdateParams_VirtualSports = function () {
         var settingInfoList = [];
         var sportId;
@@ -770,8 +540,7 @@ var EditLicenseeManager = function () {
 
         var settingInfoDictionary = self.GetSettingInfoDictionary(licenseeInfo);
         self.RenderLicenseeInfo_Sportsbook(licenseeInfo, settingInfoDictionary);
-        self.RenderLicenseeInfo_NumberGame(licenseeInfo, settingInfoDictionary);
-        self.RenderLicenseeInfo_Racing(licenseeInfo, settingInfoDictionary);
+        self.RenderLicenseeInfo_NumberGame(licenseeInfo, settingInfoDictionary);      
         self.RenderLicenseeInfo_VirtualSport(licenseeInfo, settingInfoDictionary);
         self.Tables.divLicenseeInfo.removeClass("display-none");
     };
@@ -827,30 +596,7 @@ var EditLicenseeManager = function () {
         var settingName = "maxperballv" + sportId;
         $("#" + settingName).val(settingInfoDictionary[settingName]);
     };
-    self.RenderLicenseeInfo_Racing = function (licenseeInfo, settingInfoDictionary) {
-        var sportId;
-        var settingName;
-        var racingToteTypesLength = racingToteTypes.length;
-        for (var i = 0; i < racingToteTypesLength; i++) {
-            var racing = racingToteTypes[i];
-            var racingLength = racing.Totes.length;
-            for (var j = 0; j < racingLength; j++) {
-                var racingToteType = racing.Totes[j];
-                settingName = "v" + racing.Id + "minbet_" + racingToteType.Id;
-                $("#" + settingName).val(settingInfoDictionary[settingName]);
-                settingName = "v" + racing.Id + "maxbet_" + racingToteType.Id;
-                $("#" + settingName).val(settingInfoDictionary[settingName]);
-                settingName = "v" + racing.Id + "maxpermatch_" + racingToteType.Id;
-                $("#" + settingName).val(settingInfoDictionary[settingName]);
-
-                settingName = "disable" + racing.Id + "_" + racingToteType.Id;
-                $("#" + settingName).attr("checked", settingInfoDictionary[settingName] ?
-                    "checked" :
-                    null);
-
-            }
-        }
-    };
+   
     self.RenderLicenseeInfo_VirtualSport = function (licenseeInfo, settingInfoDictionary) {
         var sportId;
         var settingName;

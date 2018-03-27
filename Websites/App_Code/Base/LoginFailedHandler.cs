@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using DNAide.Core;
-using Fanex.Tarus.Business.Implement;
 using Fanex.Tarus.Infrastructure.Caching;
 
 /// <summary>
