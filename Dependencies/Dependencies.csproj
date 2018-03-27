@@ -98,7 +98,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Accounting, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.1.0-Exchange-08\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Accounting.1.1.1.0\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -390,7 +390,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.BetList, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.1-Exchange-01\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.BetList.1.0.1.1\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
