@@ -95,7 +95,7 @@
     </Reference>
     <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Accounting.1.1.0.5-UpgradeNewtonjson45\lib\net40\Fanex.BetList.Accounting.dll</HintPath>
-       <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
@@ -405,11 +405,10 @@
       <HintPath>..\packages\Fanex.Tarus.BetList.1.0.0.10-UpgradeNewtonjson451\lib\net40\Fanex.Tarus.BetList.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.7-UpgradeNewtonjson45\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.11\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
       <Private>True</Private>
@@ -450,16 +449,12 @@
       <HintPath>..\packages\Fanex.Tarus.VirtualSport.1.0.0.7\lib\net40\Fanex.Tarus.VirtualSport.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.6\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Voidbridge.BetDetail, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.1.0.0.3\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+    <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.1-UpgradeNewtonjson45\lib\net40\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -858,19 +853,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Data\activitytracking.json" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.mnl.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.sit.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
-    <None Include="Areas\ONEbook.NG2.API.config" />
     <None Include="NumberGame2Section.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
+      <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
+      <Name>Fanex.Tarus.Customer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
@@ -879,10 +871,6 @@
       <Project>{2426f40b-b40e-420e-bd14-80814b949055}</Project>
       <Name>Sunplus.Accounting.WcfServiceLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Logs\APILoggerSpNames.xml" />
-    <Content Include="Content\bullfighting.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
