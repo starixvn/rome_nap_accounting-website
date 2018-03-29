@@ -229,9 +229,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             customer.Suspend = uplineDetail.Suspend;
             customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
             customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
-            customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
-            customer.IsUplineSyncLiveCasino = uplineDetail.LiveCasinoSync;
-            customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
             customer.CurrencyId = uplineDetail.Currency;
             customer.CurrencyName = uplineDetail.CurrencyName;
             customer.IsUplineSyncNG2 = uplineDetail.IsSyncNG2;

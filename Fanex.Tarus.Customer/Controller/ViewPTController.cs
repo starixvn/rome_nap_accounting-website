@@ -39,16 +39,6 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost]
-        public JsonResult GetPTSetting(GetPTSettingCriteria criteria)
-        {
-            var result = this._serviceManager.GetPTSetting(criteria);
-
-            var jsonResult = Json(result);
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            return jsonResult;
-        }
-
-        [HttpPost]
         public JsonResult CheckDepositCustomer(string username)
         {
             var isDepositCustomer = this._serviceManager.CheckDepositCustomer(username);

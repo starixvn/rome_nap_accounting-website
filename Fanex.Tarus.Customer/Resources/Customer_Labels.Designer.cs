@@ -160,15 +160,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bingo.
-        /// </summary>
-        public static string Bingo {
-            get {
-                return ResourceManager.GetString("Bingo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {

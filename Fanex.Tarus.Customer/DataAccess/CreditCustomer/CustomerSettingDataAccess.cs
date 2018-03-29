@@ -111,6 +111,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                         }
                     }
                 }
+
                 sites.Add(creditSites);
                 // Because integrate of Deposit customer, so remove licensee customer in future
                 if (!WebSettings.IsApplySplitingDepositeCustomer) sites.Add(licenseeSites);

@@ -94,20 +94,20 @@
       <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.4\lib\net40\Fanex.Module.Logs.dll</HintPath>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.NG2, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.2\lib\net40\Fanex.Module.NG2.dll</HintPath>
+    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta14\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -126,16 +126,16 @@
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.11\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.7\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.8\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.5-ProductStatus06\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.7-UpgradeNewtonjson45\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.0.9\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -197,8 +197,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.Alpha.4.5.0.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.NAP.3.5.0\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI">
@@ -216,8 +216,8 @@
       <HintPath>..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ONEbook.NG2.API, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.3\lib\net40\ONEbook.NG2.API.dll</HintPath>
+    <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -240,28 +240,20 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.10-UpgradeNewtonjson45\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.11\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.0.12\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.0.12\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.4-UpgradeNewtonjson45\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Core">
-      <HintPath>..\packages\Sunplus.Bingo.Core.1.0.0.2\lib\net40\Sunplus.Bingo.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Services">
-      <HintPath>..\packages\Sunplus.Bingo.Services.1.0.0.1\lib\net40\Sunplus.Bingo.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.6\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
@@ -378,8 +370,6 @@
     <Compile Include="Business\ReplicateLicenseeSettings\ReplicateLicenseeSettingsService.cs" />
     <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\SettingCustomer\AbnormalBetService.cs" />
-    <Compile Include="Business\SettingCustomer\CasinoComm\CasinoCommissionService.cs" />
-    <Compile Include="Business\SettingCustomer\CasinoComm\ICasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
@@ -469,7 +459,6 @@
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
-    <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
@@ -524,15 +513,7 @@
     <Compile Include="Controller\Credit\EditSuperController.cs" />
     <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
-    <Compile Include="Controller\Racing\EditAgentPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditMasterPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditMemberPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditSuperPTRacingController.cs" />
-    <Compile Include="Controller\Racing\MasterEditMemberPTRacingController.cs" />
-    <Compile Include="Controller\Racing\PTRacingSettingBaseController.cs" />
-    <Compile Include="Controller\Racing\SuperEditMemberPTRacingController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
-    <Compile Include="Controller\Setting\CasinoCommissionController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
     <Compile Include="Controller\Setting\SMATurnoverController.cs" />
     <Compile Include="Criteria\CustomerLogin\ResetSecurityCodeCriteria.cs" />
@@ -544,8 +525,6 @@
     <Compile Include="DataAccess\CustomerLogin\CustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\ICustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />
-    <Compile Include="DataAccess\SettingCustomer\CasinoComm\CasinoCommAccess.cs" />
-    <Compile Include="DataAccess\SettingCustomer\CasinoComm\ICasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
@@ -591,11 +570,6 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
-    <Compile Include="Resources\Common.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Common.resx</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />
@@ -663,7 +637,6 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\PTViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StatusViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
-    <Compile Include="ViewModels\ProductStatus\ProductStatusViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
@@ -672,10 +645,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Common.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Common.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Customer_Labels.Designer.cs</LastGenOutput>
@@ -705,7 +674,6 @@
   <ItemGroup>
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

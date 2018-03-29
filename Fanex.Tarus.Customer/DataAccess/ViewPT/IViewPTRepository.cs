@@ -16,7 +16,6 @@ namespace Fanex.Tarus.Customer.DataAccess.ViewPT
    
     public interface IViewPTRepository
     {
-        List<dynamic> GetPTSetting_Bingo(GetPTSettingCriteria criteria);
         bool CheckDepositCustomer(string username);
     }
 }

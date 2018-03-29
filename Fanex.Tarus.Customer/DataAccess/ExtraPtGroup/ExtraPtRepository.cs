@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Data;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities.ExtraPtGroup;
 
@@ -14,64 +15,52 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
         public IList<GroupByProduct> GetGroupsByProduct(CriteriaBase criteria)
         {
             var result = new List<GroupByProduct>();
-            try
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new GroupByProduct
                             {
-                                result.Add(new GroupByProduct
-                                {
-                                    EffectiveDate = reader.ToDateTime("EffectiveDate"),
-                                    EndDate = reader.ToDateTime("EndDate"),
-                                    ExtraPt = reader.ToDecimal("ExtraPT"),
-                                    Group = new Group { GroupId = reader.ToByte("GroupId"), GroupName = reader.ToString("GroupName") },
-                                    Product = new Product { ProductId = reader.ToByte("ProductId"), ProductName = reader.ToString("ProductName") },
-                                    IsAllowDeleted = reader.ToBoolean("IsAllowDeleted")
-                                });
-                            }
+                                EffectiveDate = reader.ToDateTime("EffectiveDate"),
+                                EndDate = reader.ToDateTime("EndDate"),
+                                ExtraPt = reader.ToDecimal("ExtraPT"),
+                                Group = new Group { GroupId = reader.ToByte("GroupId"), GroupName = reader.ToString("GroupName") },
+                                Product = new Product { ProductId = reader.ToByte("ProductId"), ProductName = reader.ToString("ProductName") },
+                                IsAllowDeleted = reader.ToBoolean("IsAllowDeleted")
+                            });
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Write();
-            }
-
+            
             return result;
         }
 
         public IList<Group> GetGroups(CriteriaBase criteria)
         {
             var result = new List<Group>();
-            try
+ 
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new Group
                             {
-                                result.Add(new Group
-                                {
-                                    GroupId = reader.ToByte("GroupId"),
-                                    GroupName = reader.ToString("GroupName")
-                                });
-                            }
+                                GroupId = reader.ToByte("GroupId"),
+                                GroupName = reader.ToString("GroupName")
+                            });
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                ex.Write();
             }
 
             return result;
@@ -80,29 +69,22 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
         public IList<Product> GetProducts(CriteriaBase criteria)
         {
             var result = new List<Product>();
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new Product
                             {
-                                result.Add(new Product
-                                {
-                                    ProductId = reader.ToByte("ProductId"),
-                                    ProductName = reader.ToString("ProductName")
-                                });
-                            }
+                                ProductId = reader.ToByte("ProductId"),
+                                ProductName = reader.ToString("ProductName")
+                            });
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                ex.Write();
             }
 
             return result;
@@ -122,7 +104,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
                 result = new Result(999, ex.Message);
             }
 
@@ -143,7 +125,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
                 result = new Result(999, ex.Message);
             }
 
@@ -164,7 +146,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ExtraPtGroup
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
                 result = new Result(999, ex.Message);
             }
 

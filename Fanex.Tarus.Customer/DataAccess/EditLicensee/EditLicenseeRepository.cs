@@ -75,12 +75,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             GetLicenseeInfo_NumberGame(
                 criteria,
                 outputParams,
-                ref settingInfo);
-
-            GetLicenseeInfo_Racing(
-                criteria,
-                outputParams,
-                ref settingInfo);
+                ref settingInfo);           
 
             licenseeInfo.SettingInfo = settingInfo;
             licenseeInfo.VirtualSportsSettingInfo = GetLicenseeInfo_VirtualSports(
@@ -280,113 +275,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 }
             }
         }
-
-        /// <summary>
-        /// Gets the licensee info racing.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="outputParams">The output parameters.</param>
-        /// <param name="settingInfo">The setting information.</param>
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public void GetLicenseeInfo_Racing(
-            GetLicenseeInfoCriteria criteria,
-            Hashtable outputParams,
-            ref List<SettingInfo> settingInfo)
-        {
-            var fakeSettingValue = 0.3;
-            string paramName;
-            var racings = RacingSection.Instance.Racings;
-            foreach (RacingElement racing in racings)
-            {
-                if (!racing.Active)
-                {
-                    continue;
-                }
-
-                foreach (ToteElement tote in racing.Totes)
-                {
-                    if (!tote.Active)
-                    {
-                        continue;
-                    }
-
-                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
-                    settingInfo.Add(new SettingInfo
-                    {
-                        Name = paramName,
-                        Value = fakeSettingValue
-                    });
-
-                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
-                    settingInfo.Add(new SettingInfo
-                    {
-                        Name = paramName,
-                        Value = fakeSettingValue
-                    });
-
-                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
-                    settingInfo.Add(new SettingInfo
-                    {
-                        Name = paramName,
-                        Value = fakeSettingValue
-                    });
-
-                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
-                        tote.BetType == NotApplyBetType)
-                    {
-                        continue;
-                    }
-
-                    var betTypes = tote.BetType.Split(new char[] { ',' });
-                    foreach (var betType in betTypes)
-                    {
-                        paramName = "v" + racing.Id + "discount_" + betType;
-                        settingInfo.Add(new SettingInfo
-                        {
-                            Name = paramName,
-                            Value = fakeSettingValue
-                        });
-
-                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
-                        settingInfo.Add(new SettingInfo
-                        {
-                            Name = paramName,
-                            Value = fakeSettingValue
-                        });
-
-                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
-                        settingInfo.Add(new SettingInfo
-                        {
-                            Name = paramName,
-                            Value = fakeSettingValue
-                        });
-
-                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
-                        settingInfo.Add(new SettingInfo
-                        {
-                            Name = paramName,
-                            Value = fakeSettingValue
-                        });
-
-                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
-                        settingInfo.Add(new SettingInfo
-                        {
-                            Name = paramName,
-                            Value = fakeSettingValue
-                        });
-                    }
-
-                    paramName = "disable" + racing.Id + "_" + tote.Id;
-                    settingInfo.Add(new SettingInfo
-                    {
-                        Name = paramName,
-                        Value = true
-                    });
-                }
-            }
-        }
+      
 
         /// <summary>
         /// Gets the licensee info virtual sports.
@@ -669,62 +558,6 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
         }
 
         /// <summary>
-        /// Gets the update settings hash table parameters racing.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
-        /// <param name="hashtableParams">The hash table parameters.</param>
-        private void GetUpdateSettingsHashTableParams_Racing(
-            UpdateLicenseeInfoCriteria criteria,
-            Dictionary<string, object> updateSettingsDictionary,
-            ref Hashtable hashtableParams)
-        {
-            string settingName;
-            var racings = RacingSection.Instance.Racings;
-            foreach (RacingElement racing in racings)
-            {
-                if (!racing.Active)
-                {
-                    continue;
-                }
-
-                foreach (ToteElement tote in racing.Totes)
-                {
-                    if (!tote.Active)
-                    {
-                        continue;
-                    }
-
-                    settingName = "v" + racing.Id + "minbet_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "maxbet_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "maxpermatch_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
-                        tote.BetType == NotApplyBetType)
-                    {
-                        continue;
-                    }
-
-                    settingName = "v" + racing.Id + "discount_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "spositiontaking_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "mpositiontaking_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "apositiontaking_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                    settingName = "v" + racing.Id + "ibcpositiontaking_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-
-                    settingName = "disable" + racing.Id + "_" + tote.Id;
-                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the update settings hash table parameters virtual sports.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
@@ -788,17 +621,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             GetUpdateSettingsHashTableParams_NumberGame(
                 criteria,
                 updateSettingsDictionary,
-                ref hashtableParams);
-
-            GetUpdateSettingsHashTableParams_Racing(
-                criteria,
-                updateSettingsDictionary,
-                ref hashtableParams);
-
-            //GetUpdateSettingsHashTableParams_VirtualSports(
-            //    criteria,
-            //    updateSettingsDictionary,
-            //    ref hashtableParams);
+                ref hashtableParams);            
 
             return hashtableParams;
         }

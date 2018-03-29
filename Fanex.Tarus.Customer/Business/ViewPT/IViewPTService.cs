@@ -18,7 +18,6 @@ namespace Fanex.Tarus.Customer.Business.ViewPT
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IViewPTService
     {
-        List<PostionTakingInfo> GetPTSetting(GetPTSettingCriteria criteria);
         bool CheckDepositCustomer(string username);
     }
 }
