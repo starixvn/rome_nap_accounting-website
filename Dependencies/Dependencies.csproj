@@ -302,7 +302,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta13\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta15\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -418,7 +418,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.5-ProductStatus06\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.0.5-ProductStatus07\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
