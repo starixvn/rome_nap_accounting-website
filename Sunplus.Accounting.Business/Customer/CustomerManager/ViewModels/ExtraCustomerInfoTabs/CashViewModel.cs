@@ -3,7 +3,6 @@
     using System.Data;
     using DNAide.Core;
     using Fanex.Common;
-    using Fanex.CustomerSetting.Module.Core;
 
     public partial class CustomerInfoViewModel
     {
