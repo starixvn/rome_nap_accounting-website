@@ -41,15 +41,8 @@ namespace Sunplus.Accounting.Business.Customer
                 }
 
                 columnName = "DisableDownlines" + productName;
-                bool disableDownlines;
-                try
-                {
-                    disableDownlines = Converter.ToBool(custInfoRow[columnName], false);
-                }
-                catch
-                {
-                    disableDownlines = false;
-                }
+                bool disableDownlines = ContainColumn(custInfoRow.Table, columnName)
+                    && Converter.ToBool(custInfoRow[columnName], false);
 
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl(
@@ -245,7 +238,8 @@ namespace Sunplus.Accounting.Business.Customer
             if (isSupport)
             {
                 bool isDisabled = Utils.ToBoolean(custInfoRow["Disable" + productName]);
-                bool disableDownlines = Utils.ToBoolean(custInfoRow["DisableDownlines" + productName]);
+                bool disableDownlines = ContainColumn(custInfoRow.Table, "DisableDownlines" + productName)
+                    && Utils.ToBoolean(custInfoRow["DisableDownlines" + productName]);
                 bool disableUplines = Utils.ToBoolean(custInfoRow["DisabledUpline" + productName]);
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl2(
@@ -323,7 +317,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             return
                 new SettingControl(
-                    productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
+                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
@@ -359,8 +353,8 @@ namespace Sunplus.Accounting.Business.Customer
                 var canChange = isEnabled && (4 == renderLeftPanelParameter.RoleId || !disabledUpline);
                 classname = canChange ? "canchange" : "cannotchange";
                 jsonclick = canChange ?
-                    string.Format("return leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', {5});", renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title, renderLeftPanelParameter.IsDeposit.ToString().ToLower()) :
-                    string.Empty;
+                     GetProductStatusJsFunction(renderLeftPanelParameter.IsDeposit, renderLeftPanelParameter.CustId, renderLeftPanelParameter.Username, renderLeftPanelParameter.RoleId, productId, title) :
+                     string.Empty;
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
@@ -372,7 +366,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             return
                 new SettingControl(
-                    productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
+                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
@@ -384,6 +378,41 @@ namespace Sunplus.Accounting.Business.Customer
                     renderLeftPanelParameter.RoleId,
                     disableDownLine,
                     productName);
+        }
+
+
+        private static bool ContainColumn(DataTable table, string columnName)
+        {
+            return table.Columns.Contains(columnName);
+        }
+
+        public static string GetProductStatusJsFunction(
+            bool isDeposit,
+            int custId,
+            string userName,
+            int roleId,
+            int productId,
+            string title)
+        {
+            var jsFunction = productId == 21
+                ? GetProductStatusJSFunctionForAllbet(isDeposit)
+                : GetProductStatusJSFunction(isDeposit);
+
+            return string.Format(jsFunction, custId, userName, roleId, productId, title);
+        }
+
+        private static string GetProductStatusJSFunction(bool isDeposit)
+        {
+            return isDeposit
+                ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', true)"
+                : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
+        }
+
+        private static string GetProductStatusJSFunctionForAllbet(bool isDeposit)
+        {
+            return isDeposit
+                ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}')"
+                : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
         }
     }
 }

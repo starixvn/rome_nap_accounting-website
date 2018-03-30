@@ -239,6 +239,16 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
             }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{AllbetOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    21,
+                    "Update Allbet Status"));
+            }
 
             return htmlcontent;
         }
@@ -251,9 +261,13 @@
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
-                TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.RoleId);
-                TemplateHandler.Assign(ref htmlcontent, "{userId}", AppSession.AccId);
+                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    8,
+                    "Update Keno Status"));
             }
 
             return htmlcontent;
@@ -723,7 +737,8 @@
                     "disabledNumberGame",
                     !customerInfoViewModel.DisabledNumberGame,
                     !customerInfoViewModel.DisabledDownlinesNumberGame,
-                    customerInfoViewModel.Enabled));
+                    customerInfoViewModel.Enabled,
+                    customerInfoViewModel.IsDeposit));
 
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
             TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());

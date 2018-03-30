@@ -178,7 +178,8 @@
             string statusName, 
             bool currStatus, 
             bool isdisableNumberGameDL, 
-            bool isenabled)
+            bool isenabled,
+            bool isDeposit)
         {
            
             string classname = string.Empty;
@@ -193,7 +194,9 @@
                     if (4 == roleID || !parentstatus)
                     {
                         classname = "canchange";
-                        jsonclick = "return ShowDisablePop(this);";
+                        jsonclick = isDeposit
+                                ? "return ShowDisablePop(this);"
+                                : "return leftPanelManager.viewProductStatusSetting({CustId}, '{Username}', {RoleId}, 3, 'Update Number Game Status');";
                     }
                     else
                     {
@@ -242,7 +245,7 @@
                         if (4 == roleID || !disabledCSParent)
                         {
                             classname = "canchange";
-                            jsonclick = "return leftPanelManager.updateThirdPartyProductStatus({CustId}, '{Username}', {RoleId}, 6, 'Update Casino Status');";
+                            jsonclick = "return leftPanelManager.viewProductStatusSetting({CustId}, '{Username}', {RoleId}, 6, 'Update Casino Status');";
                         }
                         else
                         {
