@@ -86,4 +86,11 @@ var LeftPanelManager = function () {
     };
 };
 
+window.top.reloadLeftPanel = function () {
+    window.top.content.$("#dialog-modalProductStatusSetting").dialog('close');
+    var iframe = parent.document.getElementById("leftPanel");
+    iframe.src = iframe.src;
+    this.$.unblockUI();
+}
+
 var leftPanelManager = new LeftPanelManager();
