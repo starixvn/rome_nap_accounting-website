@@ -23,7 +23,7 @@ function EnableStatusController($scope) {
     $scope.Init = function () {
         //$(document).bind('ajaxComplete', function (event, response) {
         //    if (response.status == 0)
-        //        location.href = resolveClientUrl('Areas/NG2/UM.aspx');
+        //        location.href = resolveClientUrl('UM.aspx');
         //});
 
         $.ajaxSetup({
