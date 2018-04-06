@@ -653,7 +653,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             {
                 foreach (DataRow dr in tblGameKind.Rows)
                 {
-                    var tblGameType = bi.GetGameType(CastAide.AsInt32(dr["CodeID"]), custId, exchangeId);
+                    var tblGameType = bi.GetGameTypeByGameGroup(CastAide.AsInt32(dr["CodeID"]));
                     if (tblGameType != null && tblGameType.Rows.Count != 0)
                     {
                         var gameKind = new Bettype()
