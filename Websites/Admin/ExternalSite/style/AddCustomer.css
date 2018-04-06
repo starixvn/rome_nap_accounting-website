@@ -1,121 +1,163 @@
 ﻿.w40 { width: 40px; }
+.w50 { width: 50px; }
 .w60 { width: 60px; }
+.w105 { width: 105px; }
 .w120 { width: 120px; }
 .w150 { width: 150px; }
 .w160 { width: 160px; }
 .w180 { width: 180px; }
 
 .blue {
-    color: Blue;
-    cursor: pointer;
+  color: Blue;
+  cursor: pointer;
 }
 
-    .blue:hover {
-        color: #C16605;
-        text-decoration: underline;
-    }
+  .blue:hover {
+    color: #C16605;
+    text-decoration: underline;
+  }
 
-.red {
-    color: red;
-}
+.red { color: red; }
 
-#gridExAccControl {
-    margin-top: 5px;
-}
+#gridExAccControl { margin-top: 5px; }
 
 .gridtitleAdd {
-    float: left;
-    font-weight: bold;
-    margin-left: 2px;
-    padding-left: 5px;
-    width: 427px;
+  float: left;
+  font-weight: bold;
+  margin-left: 2px;
+  padding-left: 5px;
+  width: 427px;
 }
 
 .imageAdd {
-    float: left;
-    margin-left: 2px;
-    padding-left: 10px;
-    width: 16px;
+  float: left;
+  margin-left: 2px;
+  padding-left: 10px;
+  width: 16px;
 }
 
 .gridtitleRefresh {
-    float: left;
-    padding-right: 5px;
-    font-weight: bold;
+  float: left;
+  padding-right: 5px;
+  font-weight: bold;
 }
 
 .imageRefresh {
-    float: left;
-    font-weight: bold;
-    padding-left: 10px;
-    width: 300px;
+  float: left;
+  font-weight: bold;
+  padding-left: 10px;
+  width: 300px;
 }
 
-.b {
-    font-weight: bold;
-}
+.b { font-weight: bold; }
 
 .div_search {
-    width: 500px;
-    background: url("../images/white-top-bottom.gif") repeat-x scroll 0 -3px transparent;
-    margin-bottom: 2px;
-    text-align: left !important;
-    padding: 0px 0px;
-    float: left;
+  width: 500px;
+  background: url("../images/white-top-bottom.gif") repeat-x scroll 0 -3px transparent;
+  margin-bottom: 2px;
+  text-align: left !important;
+  padding: 0px 0px;
+  float: left;
 }
 
 span#search input.btn_search {
-    background-image: url(../../../App_Themes/images/view_ico.gif);
-    background-repeat: no-repeat !important;
-    background-position: left center !important;
-    background-color: #FFF;
-    width: 20px !important;
-    height: 20px;
-    cursor: pointer;
-    border: 1px solid black;
-    border-left: none;
+  background-image: url(../../../App_Themes/images/view_ico.gif);
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  background-color: #FFF;
+  width: 20px !important;
+  height: 20px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-left: none;
 }
 
 span#search input.btn_clear {
-    background-image: url(../../../App_Themes/images/reset.png);
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    border: 0 none !important;
-    width: 24px !important;
-    height: 20px !important;
-    cursor: pointer;
+  background-image: url(../../../App_Themes/images/reset.png);
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  border: 0 none !important;
+  width: 24px !important;
+  height: 20px !important;
+  cursor: pointer;
 }
 
 span#search input.text {
-    height: 14px;
-    padding: 2px 2px;
-    width: 118px;
-    border: 1px solid black;
-    border-right: none;
+  height: 14px;
+  padding: 2px 2px;
+  width: 118px;
+  border: 1px solid black;
+  border-right: none;
 }
 
-.content-toolbox {
-    height: 21px;
-}
+.content-toolbox { height: 21px; }
 
 .extra-pt-group {
-    display: table;
-    width: 160px;
+  display: table;
+  width: 160px;
 }
 
 .extra-pt-group-text {
-    display: table-cell;
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .extra-pt-group-img {
-    cursor: pointer;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: right;
+  cursor: pointer;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
 }
 
 .noExtraPT {
-    color: #666;
-    font-style: italic;
+  color: #666;
+  font-style: italic;
+}
+
+#tblexternalsite tr:hover { background-color: #ffddfe; }
+
+#addSuperToGroupDialog .alertboxerr, #addSuperToGroupDialog .alertboxscc  { width: 99%; }
+
+#addSuperToGroupDialog .alertboxerr div, #addSuperToGroupDialog .alertboxscc div { padding: 4px 4px 4px 21px; }
+
+#addSuperToGroupDialog textarea {
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 4px;
+  outline: none;
+  resize: vertical;
+  width: 98%;
+}
+
+#addSuperToGroupDialog .btn { margin: 0; }
+
+.select2-container--default.select2-container--focus .select2-selection--multiple { border-color: #aaa; }
+.select2-container--default .select2-selection--multiple {
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 2px 5px;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+    margin: 5px 5px 5px 0;
+    padding: 2px 5px;
+  }
+.select2-container .select2-search--inline .select2-search__field {
+  margin: 0;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #ffddfe;
+  color: black;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #fff;
+  color: #aaa;
+  cursor: no-drop;
 }
