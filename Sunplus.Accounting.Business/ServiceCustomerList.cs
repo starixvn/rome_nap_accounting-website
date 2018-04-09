@@ -620,7 +620,6 @@ namespace Sunplus.Accounting.Business
 
                 var thirdPartyStatus = Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(masterId));
                 bool allowCS = CastAide.AsInt32(masterId) == 0 ? true : thirdPartyStatus.CasinoSync;
-                bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
                 //casino
@@ -855,7 +854,6 @@ namespace Sunplus.Accounting.Business
                 //add edit field for Horseracing
                 var thirdPartyStatus = Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(agentId));
                 bool allowCS = CastAide.AsInt32(agentId) == 0 ? true : thirdPartyStatus.CasinoSync;
-                bool allowFI = Permissions.IsAllowEditFI();
 
                 #region start code
                 //casino
