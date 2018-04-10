@@ -150,7 +150,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.8-Jackpot-01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.0.8-Jackpot-02\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
