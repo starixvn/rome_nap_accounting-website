@@ -32,6 +32,8 @@ public partial class Statement_CustomerStatement : PageBase
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
             rootUrl = Request.Url.GetLeftPart(UriPartial.Scheme) + Request.Headers["Host"] + Request.ApplicationPath + "/";
+            var uri = new Uri("https://nap.oneops.net/Accounting/");
+
 
             WebUtils.SetNoCache();
 

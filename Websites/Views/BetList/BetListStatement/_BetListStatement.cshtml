@@ -1,4 +1,8 @@
-﻿@using Fanex.BetList.Accounting.Services;
+﻿@using Fanex.BetList.Core.Entities
+@using Fanex.Tarus.BetList.Models
+@using Fanex.Tarus.BetList.Core
+@using Fanex.Tarus.BetList.Constants
+@using Fanex.Tarus.BetList.Extensions
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
 <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
@@ -17,11 +21,6 @@
     margin-top: -2px !important;
     padding-right: 2px !important;
     padding-top: 0 !important;*@
-@using Fanex.BetList.Accounting.Models
-@using Fanex.BetList.Accounting.Core
-@using Fanex.BetList.Accounting.Extensions;
-@using Fanex.BetList.Core.Entities;
-@using Fanex.BetList.Accounting.Constants;
 @{
     ViewData["BetListStatement"] = true;
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
