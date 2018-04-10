@@ -13,8 +13,9 @@ public partial class Report_ViewResult : System.Web.UI.Page
             int matchID = CastAide.AsInt32(Request.QueryString["matchid"], 0);
             int bettype = CastAide.AsInt32(Request.QueryString["bettype"], 0);
             long betId = CastAide.AsInt64(Request.QueryString["betid"], 0);
+            int handicap2 = CastAide.AsInt32(Request.QueryString["handicap2"], 0);
             bool isSupportFromFanexResult = false;
-            string result = new ScoreInformationService().GetResult(matchID, bettype, betId, out isSupportFromFanexResult);
+            string result = new ScoreInformationService().GetResult(matchID, bettype, betId, out isSupportFromFanexResult,handicap2 );
 
             if (isSupportFromFanexResult)
             {
