@@ -219,7 +219,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.3\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -270,20 +270,20 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.3\lib\net40\NPOI.dll</HintPath>
+    <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.3\lib\net40\NPOI.OOXML.dll</HintPath>
+    <Reference Include="NPOI.OOXML, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OOXML.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.3\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.3\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
@@ -561,13 +561,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.mnl.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.sit.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
-    <None Include="Areas\Logs\LogsConfiguration.config" />
-    <None Include="Areas\ONEbook.NG2.API.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -585,120 +578,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BetListResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Allbet.css" />
-    <Content Include="Areas\Logs\APILoggerSpNames.xml" />
-    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\btn_UI04.png" />
-    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\icon_UI02.png" />
-    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\oddsTable_th.png" />
-    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\images\layout\popup.png" />
-    <Content Include="Content\Fanex.Result.3rdLiveCasino\css\table_w.css" />
-    <Content Include="Content\Fanex.Result\Allbet\css\button.css" />
-    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\btn_UI04.png" />
-    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\icon_UI02.png" />
-    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\oddsTable_th.png" />
-    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\popup.png" />
-    <Content Include="Content\Fanex.Result\Allbet\css\menu.css" />
-    <Content Include="Content\Fanex.Result\Allbet\css\oddsFamily.css" />
-    <Content Include="Content\Fanex.Result\Allbet\css\table_w.css" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C6.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C7.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C8.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C9.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CA.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CJ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CK.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CQ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D6.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D7.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D8.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D9.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DA.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DJ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DK.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DQ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H6.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H7.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H8.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H9.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HA.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HJ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HK.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HQ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S6.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S7.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S8.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S9.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SA.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SJ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SK.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SQ.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\0.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\10.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\11.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\12.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\13.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\14.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\15.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\16.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\17.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\18.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\19.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\20.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\21.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\22.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\23.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\24.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\25.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\26.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\27.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\28.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\29.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\30.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\31.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\32.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\33.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\34.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\35.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\36.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\6.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\7.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\8.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\9.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d1.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d2.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d3.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d4.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d5.png" />
-    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d6.png" />
-    <Content Include="Content\lucky3.css" />
-    <Content Include="fanex.result.css" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
