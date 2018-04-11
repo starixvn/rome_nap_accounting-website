@@ -1,5 +1,5 @@
-﻿@using Fanex.Tarus.ExchangeRate.Entities
-@model IEnumerable<PJUnitPrice>
+﻿@using Fanex.Tarus.ExchangeRate.ViewModels
+@model PJUnitPriceViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,10 +58,10 @@
                 <div class="content-body clearfix">
                     <div class="body-scroll">
                         <table class="tbl-body-scroll">
-                            @if (Model.Any())
+                            @if (Model.PJUnitPrices.Any())
                             {
                                 var isEvenRow = true;
-                                foreach (var item in Model)
+                                foreach (var item in Model.PJUnitPrices)
                                 {
                                     var hasPJUnitPrice = item.UnitPrice != null;
                                     <tr class="@(isEvenRow?"evenrow":string.Empty)" align="center">
@@ -83,7 +83,7 @@
                                             @if (hasPJUnitPrice)
                                             {
                                                 <div onclick="" title="Edit" class="divEdit col80">
-                                                    <img src="../App_Themes/Images/icn_edit.png" alt="Edit" style="cursor:pointer;" onclick="javascript: PJUnitPrice.editClick(event);" />
+                                                    <img src="../App_Themes/Images/icn_edit.png" alt="Edit" onclick="javascript: PJUnitPrice.editClick(event,@item.UnitPrice.Value);" @(Model.HasHostPermission ? string.Empty : "disabled") />
                                                     <img alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.saveClick(event,@item.CurrencyId);" />
                                                     <img alt="Cancel" title="Cancel" border="0" src="../App_Themes/Images/undo.png" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.cancelClick(event);" />
                                                 </div>
