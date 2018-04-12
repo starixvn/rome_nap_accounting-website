@@ -785,11 +785,10 @@ var ViewPT = {
         try { parent.BlockUI(); } catch (e) { }
 
         switch (sportId) {
-            case 44: //Sportsbook 2           
-            case 50: //Cricket
+            case 44: // Sportsbook 2           
+            case 50: // Cricket
             case 211: // Allbet
-            case 212: // Voidbridge
-            case 213: //NG2            
+            case 213: // NG2            
             case 214:
             case 215:
             case 216:
@@ -813,7 +812,10 @@ var ViewPT = {
             case 23:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
                 break;
-            case 219:
+            case 212: // Voidbridge
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 22);
+                break;
+            case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
                 break;
             default:
