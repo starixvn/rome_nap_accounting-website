@@ -6,13 +6,15 @@
         $("#exportExcel").click(this.exportExcel)
     },
 
-    editClick: function (e, value) {
+    editClick: function (e) {
         var target = e.target || e.srcElement;
         var row = $(target).parents("tr:first");
         if (row.find("input[editor]").length > 0) return;
 
-        var pjUnitPrice = row.find("div[pjunitprice]").hide();
-        pjUnitPrice.parent().append("<input type='text' class='col120' editor='true' pjunitprice='true' style='text-align:right' value='" + value + "' />");
+        var pjUnitPrice = row.find("div[pjunitprice]");
+        pjUnitPrice.hide();
+        var value = pjUnitPrice.html();
+        pjUnitPrice.parent().append("<input type='text' class='col120' editor='true' pjunitprice='true' style='text-align:right' value='" + value.trim() + "' />");
 
         var divEdit = $(target).parent();
         divEdit.find("img[alt='Edit']").hide();

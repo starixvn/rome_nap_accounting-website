@@ -83,7 +83,7 @@
                                             @if (hasPJUnitPrice)
                                             {
                                                 <div onclick="" title="Edit" class="divEdit col80">
-                                                    <img src="../App_Themes/Images/icn_edit.png" alt="Edit" onclick="javascript: PJUnitPrice.editClick(event,@item.UnitPrice.Value);" @(Model.HasHostPermission ? string.Empty : "disabled") />
+                                                    <img src="../App_Themes/Images/icn_edit.png" alt="Edit" onclick="javascript: PJUnitPrice.editClick(event);" @(Model.HasHostPermission ? string.Empty : "disabled") />
                                                     <img alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.saveClick(event,@item.CurrencyId);" />
                                                     <img alt="Cancel" title="Cancel" border="0" src="../App_Themes/Images/undo.png" style="cursor: pointer; display:none" onclick="javascript: PJUnitPrice.cancelClick(event);" />
                                                 </div>
