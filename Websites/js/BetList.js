@@ -686,9 +686,14 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
 
     resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid);
 
+    var handicap2 = 0
+    if (isFM2(bettype)) {
+        handicap2 = matchcode;
+    }
+
     var defaultResultParam = {
         url: "Report/ViewResult.aspx",
-        jsonParam: { matchid: matchid, bettype: bettype, betid: betid, sporttype: sporttype },
+        jsonParam: { matchid: matchid, bettype: bettype, betid: betid, sporttype: sporttype, handicap2: handicap2 },
         title: "Result",
         width: 750,
         height: 300
@@ -704,6 +709,11 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
     //}
 
     openResultsPopUp(defaultResultParam);
+}
+
+function isFM2(betttype)
+{
+    return (betttype >= 221 && betttype <= 227)
 }
 
 function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {

@@ -59,7 +59,6 @@
             .GetHttpHeaderInfo()
             .GetHttpSessionInfo())
             .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
-
         var productStatusConfig = new ProductStatusConfiguration()
             .UseAuthorizeService(new ProductStatusAuthorizeService())
             .UseUserSession(new ProductStatusUser())

@@ -81,7 +81,7 @@
 
             return renderLeftPanelParameter;
         }
-      
+
         private static string GenSettingControl(
            string htmlcontent,
            DataRow row1,
@@ -105,7 +105,7 @@
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
-            
+
             htmlcontent = RenderEsportsControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForCreditControl(
@@ -133,7 +133,7 @@
                 customerInfoViewModel.CustParent,
                 customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
-                sg, 
+                sg,
                 customerInfoViewModel.HasDownline);
 
             htmlcontent = RenderDCSControl(
@@ -155,7 +155,7 @@
         {
             var closedStatusBlock = GetClosedStatus(
                                         customerInfoViewModel.ManageCustomerAccess,
-                                        "closed", 
+                                        "closed",
                                         customerInfoViewModel.Closed,
                                         customerInfoViewModel.RoleId > 1,
                                         customerInfoViewModel.CustParent.IsClosed,
@@ -183,7 +183,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
-           
+
 
             TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
@@ -300,12 +300,12 @@
                     int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
 
                     TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
-                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", 
+                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
                         GetSettingControlDangerous(
-                            customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.ManageCustomerAccess, 
-                            dangeruostype, 
-                            currentlevels, 
+                            customerInfoViewModel.RoleId,
+                            customerInfoViewModel.ManageCustomerAccess,
+                            dangeruostype,
+                            currentlevels,
                             customerInfoViewModel.IsBA));
                 }
             }
@@ -782,7 +782,7 @@
                 GetSettingControlOutright(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.CustParent.IsDisableOutright,
-                    customerInfoViewModel.ManageCustomerAccess, 
+                    customerInfoViewModel.ManageCustomerAccess,
                     "disabledOutright",
                     !customerInfoViewModel.DisableOutright,
                     customerInfoViewModel.RoleId > 1,
@@ -888,8 +888,8 @@
                     TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
                     TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}",
                         GetSettingAbnormal(
-                            customerInfoViewModel.RoleId, 
-                            customerInfoViewModel.ManageCustomerAccess, 
+                            customerInfoViewModel.RoleId,
+                            customerInfoViewModel.ManageCustomerAccess,
                             customerInfoViewModel.Abnormal));
                 }
             }

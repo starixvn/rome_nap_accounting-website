@@ -12,9 +12,9 @@
     public partial class CustomerManager
     {
         private string StatusSpan(
-            bool isManageCustomerAccess, 
-            string name, 
-            bool currStatus, 
+            bool isManageCustomerAccess,
+            string name,
+            bool currStatus,
             bool hasDownLine)
         {
 
@@ -38,11 +38,11 @@
         }
 
         private string GetClosedStatus(
-            bool isManageCustomerAccess, 
-            string name, 
-            bool currStatus, 
-            bool hasDownLine, 
-            bool uplineclosed, 
+            bool isManageCustomerAccess,
+            string name,
+            bool currStatus,
+            bool hasDownLine,
+            bool uplineclosed,
             bool hasClearCreditPermission)
         {
             string template = WebUtils.LoadTemplate("SettingClosed.htm");
@@ -89,10 +89,10 @@
         }
 
         private static SettingControl GetSettingControlSelectedBetting(
-            int roleID, 
-            bool parentstatus, 
-            bool isManageCustomerAccess, 
-            string statusName, 
+            int roleID,
+            bool parentstatus,
+            bool isManageCustomerAccess,
+            string statusName,
             bool currStatus)
         {
             string classname = string.Empty;
@@ -119,10 +119,10 @@
         }
 
         private string GetSettingControlDangerous(
-            int roleId, 
-            bool isManageCustomerAccess, 
-            string[] dangeroustype, 
-            int[] levels, 
+            int roleId,
+            bool isManageCustomerAccess,
+            string[] dangeroustype,
+            int[] levels,
             bool isBA)
         {
             try
@@ -138,10 +138,10 @@
         }
 
         private static SettingControl GetSettingControlSuspended(
-            bool isManageCustomerAccess, 
-            string name, 
-            bool currStatus, 
-            bool hasDownLine, 
+            bool isManageCustomerAccess,
+            string name,
+            bool currStatus,
+            bool hasDownLine,
             bool UpLineStatus)
         {
             string classname = string.Empty;
@@ -172,16 +172,16 @@
         }
 
         private static SettingControl GetSettingControlNumberGame(
-            int roleID, 
-            bool parentstatus, 
-            bool isManageCustomerAccess, 
-            string statusName, 
-            bool currStatus, 
-            bool isdisableNumberGameDL, 
+            int roleID,
+            bool parentstatus,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool isdisableNumberGameDL,
             bool isenabled,
             bool isDeposit)
         {
-           
+
             string classname = string.Empty;
             string jsonclick = string.Empty;
             string jsonmouseover = string.Empty;
@@ -213,18 +213,18 @@
                 }
             }
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisableNumberGameDL, "NumberGame");
-            
+
         }
 
         private static SettingControl GetSettingControlCasino(
-            int roleID, 
-            bool isManageCustomerAccess, 
-            string statusName, 
-            bool currStatus, 
-            bool syncCasino, 
-            bool isAllowEdit, 
-            bool isenabled, 
-            bool disabledCSParent, 
+            int roleID,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool syncCasino,
+            bool isAllowEdit,
+            bool isenabled,
+            bool disabledCSParent,
             bool disableDownLine)
         {
             if (WebSettings.disableCS || !isAllowEdit || !syncCasino)
@@ -267,11 +267,11 @@
         }
 
         private static SettingControl GetSettingControlOutright(
-            int roleID, 
-            bool parentstatus, 
-            bool isManageCustomerAccess, 
-            string statusName, 
-            bool currStatus, 
+            int roleID,
+            bool parentstatus,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
             bool hasDownLine,
             bool isenalbed)
         {
@@ -306,12 +306,12 @@
         }
 
         private static SettingControl GetSettingControlDoubleComm(
-            int roleID, 
-            bool parentstatus, 
-            bool isManageCustomerAccess, 
-            string statusName, 
-            bool currStatus, 
-            bool hasDownLine, 
+            int roleID,
+            bool parentstatus,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
             bool isenalbed)
         {
             string classname = string.Empty;
@@ -343,12 +343,12 @@
             }
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
         }
-        
+
         private static SettingControl GetSettingControlEnableAutoMaster(
-            int roleID, 
-            bool isManageCustomerAccess, 
-            string statusName, 
-            bool currStatus, 
+            int roleID,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
             bool isenabled)
         {
             if (!Permissions.IsEnabledAutoMaster(true) || roleID != 3)
@@ -382,10 +382,10 @@
         }
 
         private static SettingControl GetSettingControlInternalUser(
-            int roleID, 
-            bool parentIsInternal, 
-            bool isManageCustomerAccess, 
-            string statusName, 
+            int roleID,
+            bool parentIsInternal,
+            bool isManageCustomerAccess,
+            string statusName,
             bool isInternalUser)
         {
             if (WebSettings.DisableInternal)
@@ -427,9 +427,9 @@
         }
 
         private static SettingControl GetSettingControlAllDayBalTransfer(
-            int roleId, 
-            bool isManageCustomerAccess, 
-            string statusName, bool 
+            int roleId,
+            bool isManageCustomerAccess,
+            string statusName, bool
             currentStatus)
         {
             string classname = string.Empty;
@@ -456,12 +456,12 @@
         }
 
         private static SettingControl GetSettingControlEsports(
-            int roleId, 
-            bool isManageCustomerAccess, 
-            string statusName, 
+            int roleId,
+            bool isManageCustomerAccess,
+            string statusName,
             bool currStatus,
-            bool isenabled, 
-            bool disabledUpline, 
+            bool isenabled,
+            bool disabledUpline,
             bool disableDownLine)
         {
             if (!WebSettings.EnableVirtualSports)
