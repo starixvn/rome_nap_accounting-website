@@ -107,7 +107,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PP.1.0.0-beta3\lib\net40\Fanex.BetList.PP.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PP.1.0.0-beta4\lib\net40\Fanex.BetList.PP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
@@ -190,12 +190,24 @@
       <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.1.0\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0-beta1\lib\Fanex.Result.Core.PP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.0.0.9\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.0.11.0\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.1.2\lib\Fanex.Result.Core.Voidbridge.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Result.ThirdParty, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.ThirdParty.1.0.4-PP\lib\net40\Fanex.Result.ThirdParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -216,6 +228,10 @@
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -272,6 +288,10 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
@@ -335,6 +355,7 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -389,6 +410,7 @@
     <Compile Include="Business\IpService.cs" />
     <Compile Include="Business\IResultService.cs" />
     <Compile Include="Business\ISystemParlayExcel.cs" />
+    <Compile Include="Business\JsonConverterImpl.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
@@ -434,6 +456,7 @@
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Controller\ThirdPartyController.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Core\LoggingHandler.cs" />
     <Compile Include="Core\NpoiExcelUtils.cs" />
