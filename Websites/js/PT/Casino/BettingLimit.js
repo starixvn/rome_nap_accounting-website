@@ -41,39 +41,6 @@ function CancelCS(confirmMsg) {
     }
 }
 
-function ResetMaxTransfer(id) {
-    var arrayCustID = document.getElementById('arrayCustID');
-
-    if(arrayCustID && arrayCustID.value != '') 
-    {
-        id = arrayCustID.value.replace('^', ',');
-        while(id.indexOf('^') != -1)
-        {
-            id = id.replace('^', ',');
-        }
-        id = id.substr(0, id.length - 1);
-    }
-
-    $.ajax(
-     {
-         type: "POST",
-         url: "../Handlers/ResetMaxTransfer.ashx",
-         async: true,
-         data: "custid=" + id,
-         success: function(res) {
-             if (res != 'Failed') {
-
-                 document.getElementById('lblAccumulatedWL').innerHTML = document.getElementById('hidTransferCredit').value;
-                 ShowMessage(res);
-             }
-             else {
-                 ShowMessage(res);
-             }
-         }
-     }
-     );
-} 
-
 function CopyMultData()
 {
     if(obj('bIsMult').value == '1')

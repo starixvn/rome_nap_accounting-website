@@ -807,6 +807,8 @@ var ViewPT = {
             case 186: // Virtual Tennis
             case 190: // Virtual Soccer League
             case 191: // Virtual Soccer Nation
+			case 192: // Virtual Soccer World Cup
+            case 193: // Virtual Basketball
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
                 break;
             case 23:

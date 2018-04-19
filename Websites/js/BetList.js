@@ -21,7 +21,6 @@ function showMP(refno, listType) {
                     $.unblockUI();
                 }
             });
-
         }
         else {
             spEvent.className = '';
@@ -60,7 +59,6 @@ function showCMP(event, refno, listType) {
                     $.unblockUI();
                 }
             });
-
         }
         else {
             spEvent.className = '';
@@ -187,7 +185,6 @@ function IsNumeric(sText) {
     var IsNumber = true;
     var Char;
 
-
     for (i = 0; i < sText.length && IsNumber == true; i++) {
         Char = sText.charAt(i);
         if (ValidChars.indexOf(Char) == -1) {
@@ -195,7 +192,6 @@ function IsNumeric(sText) {
         }
     }
     return IsNumber;
-
 }
 
 function ViewMainReport2(page) {
@@ -393,7 +389,6 @@ function GetBetListFromCheckBet(transId, custId) {
     $('#maincontent_betlist').addClass('hidden');
     $('#maincontent_systemparlay').addClass('hidden');
     ViewMainReportByTransIDFromCheckBet(transId, custId);
-
 }
 
 function ExportBetListToExcel() {
@@ -552,6 +547,18 @@ function showLucky3Details(transId, custId) {
 function ShowBonusDetails(refCode, transId) {
     var url = "BetList/ViewBonusDetails?refCode=" + refCode + "&transId=" + transId;
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
+}
+
+function showProgressiveJackpotWonDetails(transId, custId, betType) {
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: "Progressive Jackpot Won Details",
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
 }
 
 // -------------------- Functions whose name must name by Fanex.Toco

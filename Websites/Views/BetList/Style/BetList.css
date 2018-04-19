@@ -1,4 +1,4 @@
-a {
+﻿a {
     text-decoration: none;
     cursor: pointer;
 }
@@ -99,24 +99,24 @@ div.match {
 }
 
 .detail {
-    background: url("Images/q_Icon2_1.png") no-repeat scroll center center transparent;
+    background: url("Images/q_Icon2_1.png") no-repeat scroll left center transparent;
     color: #755200;
     display: inline;
     font-weight: bold;
     height: 10px;
     line-height: 20px;
-    padding: 0 1px 0 65px;
+    padding: 0 1px 0 18px;
     width: 14px;
 }
 
     .detail:hover {
-        background: url("Images/q_Icon_2.png") no-repeat scroll center center transparent;
+        background: url("Images/q_Icon_2.png") no-repeat scroll left center transparent;
         color: #755200;
         cursor: pointer;
         display: inline;
         font-weight: bold;
         height: 10px;
-        padding: 0 1px 0 65px;
+        padding: 0 1px 0 18px;
         width: 14px;
     }
 

@@ -1,0 +1,219 @@
+﻿﻿@using Fanex.Tarus.BetList.Helper;
+@using Fanex.BetList.Accounting.Core;
+@using Fanex.BetList.Accounting.Extensions;
+@model Fanex.Module.RNGCasino.ViewModels.JackpotDetailsViewModel
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Areas/RNGCasino/Views/BetDetails/Styles/BetDetails.less")" />
+    <title>Progressive Jackpot Won Details</title>
+</head>
+<body>
+    <div id="jackpot-details" class="freegrid display-none">
+        <div class="grid-title r">
+            <div style="width: 100%;">
+                <div style="display: inline-block; float: left;" class="b"></div>
+                <div class="grid-toolbox">
+                    <input type="button" id="btnExport" class="btnExcel" title="Export to Excel" />
+                </div>
+            </div>
+        </div>
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="tblContent" class="grid-fixed-table col_header_content ">
+                    <thead>
+                        @Html.Raw(BetListRenderHelper.GetCommonHeaderRows())
+                    </thead>
+                    <tbody>
+                        @{
+                            var betlistHelper = new BetListHelper();
+                            if (Model.TotalRows > 0)
+                            {
+                                for (var i = 0; i < Model.TotalRows; i++)
+                                {
+                                    var betDetail = Model.TicketDetails.ElementAt(i);
+                                    var status = betDetail.Ticket.Status.ToLowerInvariant();
+                                    var ip = Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betDetail.Ticket.IP);
+
+                                    string doubleCom = betDetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
+
+                                    decimal superPT = betDetail.Ticket.SuperPositionTaking;
+                                    decimal superDiscount = betDetail.Ticket.SuperDiscount;
+                                    decimal superComm = betDetail.Ticket.SuperComm;
+                                    decimal superWinlost = betDetail.Ticket.SuperWinlost;
+
+                                    var masterPT = betDetail.Ticket.MasterPositionTaking;
+                                    var masterWinlost = betDetail.Ticket.MasterWinlost;
+                                    decimal masterDiscount = betDetail.Ticket.MasterDiscount;
+                                    decimal masterComm = betDetail.Ticket.AgentComm;
+
+                                    decimal agentPT = betDetail.Ticket.AgentPositionTaking;
+                                    decimal agentComm = betDetail.Ticket.Comm;
+                                    decimal agentWinlost = betDetail.Ticket.AgentWinlost;
+                                    decimal agentDiscount = betDetail.Ticket.AgentDiscount;
+
+                                    <tr class="c">
+                                        <td>
+                                            <div class="C width30 table-cell">@(i + 1)</div>
+                                        </td>
+                                        <td class="c column-transdate">
+                                            <div class="width120 table-cell">
+                                                @Html.Raw(betDetail.TransDateHtml)
+                                            </div>
+                                        </td>
+                                        <td id="td_right_@betDetail.Ticket.TransId" class='r bl_evt'>
+                                            <div id="choice_right_@betDetail.Ticket.TransId" class="column-choice table-cell">
+                                                @Html.Raw(betDetail.ChoiceHtml)
+                                            </div>
+                                        </td>
+                                        <td class='r bl_underdog'>
+                                            <div class="width60 table-cell">
+                                                @Html.Raw(betDetail.OddHtml)
+                                            </div>
+                                        </td>
+                                        <td class='r bl_underdog'>
+                                            <div class="width50 table-cell">
+                                                @Html.Raw(betDetail.StakeHtml)
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="column-winloss table-cell">
+                                                @if (status == "running" || status == "waiting")
+                                                {
+                                                    <div class="margin-top-5">
+                                                        -
+                                                    </div>
+                                                }
+                                                else if (status == "void" || status == "reject")
+                                                {
+                                                    <div class="margin-top-5">
+                                                        0.00
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        <div class="@betlistHelper.IsNegative(betDetail.Ticket.Winlost) margin-top-5">
+                                                            @betDetail.Ticket.Winlost.Format(2)
+                                                        </div>
+                                                        <div class="margin-top-5">
+                                                            @betDetail.Ticket.PlayerComm.Format(2)
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="c">
+                                            <div id="stautus_@betDetail.Ticket.TransId" class="width100 table-cell">
+                                                @Html.Raw(betDetail.StatusHtml)
+                                                @if (ip != "-")
+                                                {
+                                                    <br />
+                                                    <a onclick="viewBetListByIP('@betDetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betDetail.Ticket.IP');"
+                                                       href="">@ip</a>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div id="comm_@betDetail.Ticket.TransId" class="width60 table-cell">
+                                                <div class="@betlistHelper.IsNegative(superPT)">
+                                                    <span>@betlistHelper.PercentFormat(superPT)</span>
+                                                </div>
+                                                <div class="@betlistHelper.IsNegative(superWinlost) margin-top-5">
+                                                    @superWinlost.Format(2)
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    <span>@doubleCom @betlistHelper.PercentFormat(superDiscount)</span>
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    @superComm.Format(2)
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="width60 table-cell">
+                                                <div class="@betlistHelper.IsNegative(masterPT)">
+                                                    <span>@betlistHelper.PercentFormat(masterPT)</span>
+                                                </div>
+                                                <div class="@betlistHelper.IsNegative(masterWinlost) margin-top-5">
+                                                    @masterWinlost.Format(2)
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    <span>@doubleCom @betlistHelper.PercentFormat(masterDiscount)</span>
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    @masterComm.Format(2)
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="r">
+                                            <div class="width60 table-cell">
+                                                <div class="@betlistHelper.IsNegative(agentPT)">
+                                                    <span>@betlistHelper.PercentFormat(agentPT)</span>
+                                                </div>
+                                                <div class="@betlistHelper.IsNegative(agentWinlost) margin-top-5">
+                                                    @agentWinlost.Format(2)
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    <span>@doubleCom @betlistHelper.PercentFormat(agentDiscount)</span>
+                                                </div>
+                                                <div class="margin-top-5">
+                                                    @agentComm.Format(2)
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="c">
+                                    <td colspan="10" class="r column-no-data">
+                                        <div class="c b">
+                                            There is no data
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <iframe id="frmExportExcel" width="0" height="0" frameborder="0" style="display:none"></iframe>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/json2.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/gridscroller.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
+    <script type="text/javascript" src="~/js/BetList.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="~/Areas/RNGCasino/Views/BetDetails/Scripts/JackpotDetails.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var transId = @Request.QueryString["TransId"];
+        var custId = @Request.QueryString["CustId"];
+        var betType = @Request.QueryString["BetType"];
+        $(document).ready(function () {
+            jackpotDetailsManager.initPage();
+        });
+    </script>
+</body>
+</html>

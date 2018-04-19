@@ -1,11 +1,10 @@
 ﻿@using Fanex.BetList.Accounting.Core;
 @using Fanex.BetList.Accounting.Extensions;
 @using Fanex.Module.RNGCasino.Models;
-
 @{
     int numberBeginning = 1;
 
-    string[] renderResult = Render(ref numberBeginning);    
+    string[] renderResult = Render(ref numberBeginning);
 }
 @functions {
     public string[] Render(ref int numberBeginning)
@@ -49,6 +48,7 @@ decimal agentPT2 = betdetail.AgentPositionTaking2;
 decimal agentDiscount = betdetail.Ticket.AgentDiscount;
 decimal agentComm = betdetail.Ticket.Comm;
 decimal agentWinlost = betdetail.Ticket.AgentWinlost;
+var betTypeId = betdetail.Ticket.BetTypeId;
 
 var isShowWinLoss = statusTemp != "running";
     <tr class="c">
@@ -79,28 +79,37 @@ var isShowWinLoss = statusTemp != "running";
         </td>
         <td class="r">
             <div class="column-winloss table-cell">
-                @if (statusTemp == "running" || statusTemp == "waiting")
+                @if (betTypeId.Equals(2198) || betTypeId.Equals(2398) || betTypeId.Equals(2998))
                 {
                     <div class="margin-top-5">
                         -
                     </div>
                 }
-                else if (statusTemp == "void" || statusTemp == "reject")
-                {
-                    <div class="margin-top-5">
-                        0.00
-                    </div>
-                }
                 else
                 {
-                    <div>
-                        <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
-                            @winlost.Format(2)
-                        </div>
+                    if (statusTemp == "running" || statusTemp == "waiting")
+                    {
                         <div class="margin-top-5">
-                            @playerComm.Format(2)
+                            -
                         </div>
-                    </div>
+                    }
+                    else if (statusTemp == "void" || statusTemp == "reject")
+                    {
+                        <div class="margin-top-5">
+                            0.00
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
+                                @winlost.Format(2)
+                            </div>
+                            <div class="margin-top-5">
+                                @playerComm.Format(2)
+                            </div>
+                        </div>
+                    }
                 }
             </div>
         </td>
@@ -120,11 +129,10 @@ var isShowWinLoss = statusTemp != "running";
                 <div class="@betlistHelper.IsNegative(superPT)">
                     <span>@betlistHelper.PercentFormat(superPT)</span>
                 </div>
-
                 @if (isShowWinLoss)
                 {
                     <div class="@betlistHelper.IsNegative(superWinlost) margin-top-5">
-                        @superWinlost.Format(2)
+                        @FormatWinLoss(betTypeId, superWinlost)
                     </div>
                 }
                 <div class="margin-top-5">
@@ -143,11 +151,10 @@ var isShowWinLoss = statusTemp != "running";
                 <div class="@betlistHelper.IsNegative(masterPT)">
                     <span>@betlistHelper.PercentFormat(masterPT)</span>
                 </div>
-
                 @if (isShowWinLoss)
                 {
                     <div class="@betlistHelper.IsNegative(masterWinlost) margin-top-5">
-                        @masterWinlost.Format(2)
+                        @FormatWinLoss(betTypeId, masterWinlost)
                     </div>
                 }
                 <div class="margin-top-5">
@@ -166,11 +173,10 @@ var isShowWinLoss = statusTemp != "running";
                 <div class="@betlistHelper.IsNegative(agentPT)">
                     <span>@betlistHelper.PercentFormat(agentPT)</span>
                 </div>
-
                 @if (isShowWinLoss)
                 {
                     <div class="@betlistHelper.IsNegative(agentWinlost) margin-top-5">
-                        @agentWinlost.Format(2)
+                        @FormatWinLoss(betTypeId, agentWinlost)
                     </div>
                 }
                 <div class="margin-top-5">
@@ -186,7 +192,20 @@ var isShowWinLoss = statusTemp != "running";
         </td>
     </tr>
 }
-
+@helper FormatWinLoss(int betType, decimal value)
+{
+switch (betType)
+{
+    case 2198:
+    case 2398:
+    case 2998:
+            @value.Format(4)
+        break;
+    default:
+            @value.Format(2)
+        break;
+}
+}
 @if (Model.TotalRows > 0)
 {
     @MvcHtmlString.Create(renderResult[1])
