@@ -21,9 +21,9 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
     {
         try
         {
-            var robotHandler = FanexOneyed.RobotTrap.HandlerFactory.CreateHandler(context.Session);
-            robotHandler.CalculateSessionVariable()
-                   .Log(context.Request["TxtUsername"], context.Request["guid"]);
+            //var robotHandler = FanexOneyed.RobotTrap.HandlerFactory.CreateHandler(context.Session);
+            //robotHandler.CalculateSessionVariable()
+            //       .Log(context.Request["TxtUsername"], context.Request["guid"]);
             
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);

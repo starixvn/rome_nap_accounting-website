@@ -185,7 +185,7 @@ span.cannotchangeinternal {
 }
 
 .maincontent_header {
-    height: 23px; /*display:inline; 	width:360px;*/
+    height: 23px; /*display:inline;     width:360px;*/
 }
 
 .maincontent_headerL {
@@ -314,3 +314,11 @@ span.cannotchangeinternal {
     background-color: #86c5e4 !important;
 }
 
+.divEdit img {
+    cursor: pointer;
+}
+
+    .divEdit img[disabled] {
+        opacity: 0.7;
+        pointer-events: none;
+    }

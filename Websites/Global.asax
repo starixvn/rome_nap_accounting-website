@@ -1,4 +1,4 @@
-<%@ Import Namespace="System.Diagnostics" %>
+﻿<%@ Import Namespace="System.Diagnostics" %>
 <%@ Import Namespace="Sunplus.Accounting.Business" %>
 <%@ Import Namespace="Sunplus.Accounting.Business.BootStrappers" %>
 <%@ Import Namespace="Microsoft.Practices.EnterpriseLibrary.Logging" %>
@@ -37,7 +37,7 @@
 
         var logger = new CasinoAPILogger();
         var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
-        string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
+        string pattern = "AutoInsert*|Update*|Insert*|Move*|UpdatePJExchange|Rollback*";
         manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
         manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 

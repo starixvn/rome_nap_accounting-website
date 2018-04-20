@@ -102,6 +102,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="OANDAExRateSel" SpName="Acc_Rpt_ExchangeDailyOanda_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="PJUnitPriceSel" SpName="Acc_Exchange_PJUnitPrice_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="BetList - Cashout">
     <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -111,5 +112,8 @@
   </Function>
   <Function Name="External - Admin">
     <Setting Key="Acc_CustGroupSelExtraPTGroupByCustID" SpName="Acc_CustGroupSelExtraPTGroupByCustID" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Jackpot Details">
+    <Setting Key="Acc_BetList_Jackpot_Detail" SpName="Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>
