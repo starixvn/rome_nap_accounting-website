@@ -62,10 +62,6 @@
       <HintPath>..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <HintPath>..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -209,10 +205,6 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.1.5\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.BetSetting.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.3-UpgradeNewtonjson45\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
@@ -293,12 +285,8 @@
       <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.3\lib\net40\Fanex.Module.RNGCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.4-UpgradeNewtonjson45\lib\Fanex.Module.RNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.4-UpgradeNewtonjson4501\lib\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -421,16 +409,16 @@
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.0\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.ExchangeRate, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.4\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
+    <Reference Include="Fanex.Tarus.ExchangeRate, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.5\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Finance.1.0.0.5\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.8\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.0.9\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -716,8 +704,8 @@
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.11\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.12-UpgradeNewtonjson45\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
@@ -851,6 +839,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
+      <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
+      <Name>Fanex.Tarus.Customer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
