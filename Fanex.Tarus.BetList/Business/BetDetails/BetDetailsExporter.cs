@@ -1,7 +1,10 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Builders.ExcelBuilders;
     using Constants;
-    using Fanex.BetList.Age.BetListExcelBuilderExt;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -17,9 +20,6 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using Resources;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -87,6 +87,20 @@
             return Enumerable.Empty<TicketDetail>();
         }
 
+        public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType)
+        {
+            var criteria = new GetJackpotDetailsCriteria
+            {
+                TransId = transId,
+                CustId = custId,
+                BetType = betType
+            };
+
+            var repository = new RNGCasinoRepository();
+
+            return repository.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t });
+        }
+
         public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
         {
             short excelColumns = 10;
@@ -118,9 +132,9 @@
                         .AddStake(ticket)
                         .AddWinLoss(ticket)
                         .AddStatus(ticket, ticketHelper, ticketData, true)
-                        .AddSuperPT(ticket, ticketData)
-                        .AddMasterPT(ticket, ticketData)
-                        .AddAgentPT(ticket, ticketData);
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
                 }
             }
             else
@@ -258,6 +272,8 @@
 
             return repository.BetDetails(criteria);
         }
+
+
 
         #endregion
     }

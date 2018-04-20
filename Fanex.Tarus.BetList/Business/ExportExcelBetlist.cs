@@ -1,9 +1,15 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Text;
+    using Builders.ExcelBuilders;
     using Constants;
     using Criteria;
     using Extensions;
-    using Fanex.BetList.Age.BetListExcelBuilderExt;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -13,12 +19,6 @@
     using Models;
     using NPOI.SS.UserModel;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Text;
     using AccBetListCore = Fanex.Tarus.BetList.Core;
 
     /// <summary>
@@ -222,7 +222,8 @@
 
                     if (tickets.Count > 0)
                     {
-                        builder.AddFooter(tickets, false, 8);
+                        builder.AddFooterHeader(isShowMember: false);
+                        builder.AddFooter(new Footer(tickets), false, 8);
                     }
 
                     MemoryStream ms = new MemoryStream();
@@ -237,6 +238,6 @@
             }
 
             return null;
-        }     
+        }
     }
 }

@@ -303,4 +303,16 @@
   <data name="WinSlashLoss" xml:space="preserve">
     <value>Win/Loss</value>
   </data>
+  <data name="subtotalWinlost" xml:space="preserve">
+    <value>Subtotal(winlost)</value>
+  </data>
+  <data name="subtotalCom" xml:space="preserve">
+    <value>Subtotal(Com.)</value>
+  </data>
+  <data name="place" xml:space="preserve">
+    <value>Place</value>
+  </data>
+  <data name="win" xml:space="preserve">
+    <value>Win</value>
+  </data>
 </root>

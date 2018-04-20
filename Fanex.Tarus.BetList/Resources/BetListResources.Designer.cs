@@ -358,6 +358,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place.
+        /// </summary>
+        public static string place {
+            get {
+                return ResourceManager.GetString("place", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RNG Casino.
         /// </summary>
         public static string Product_6 {
@@ -435,6 +444,24 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtotal(Com.).
+        /// </summary>
+        public static string subtotalCom {
+            get {
+                return ResourceManager.GetString("subtotalCom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtotal(winlost).
+        /// </summary>
+        public static string subtotalWinlost {
+            get {
+                return ResourceManager.GetString("subtotalWinlost", resourceCulture);
             }
         }
         
@@ -552,6 +579,15 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string Virtual_Sports {
             get {
                 return ResourceManager.GetString("Virtual_Sports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win.
+        /// </summary>
+        public static string win {
+            get {
+                return ResourceManager.GetString("win", resourceCulture);
             }
         }
         
