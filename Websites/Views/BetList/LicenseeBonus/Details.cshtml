@@ -9,11 +9,16 @@
 <head>
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
     <title>Transaction Details</title>
     <style>
-        .time { font-size: 11px; }
-        .display-none { display: none; }
+        .time {
+            font-size: 11px;
+        }
+
+        .display-none {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -30,9 +35,9 @@
                             <th><div class="table-cell height34 width50">@Labels.Stake</div></th>
                             <th><div class="table-cell height34 width60">@Labels.Win_Loss</div></th>
                             <th><div class="table-cell height34 width80">@Labels.Status</div></th>
-                            <th><div class="table-cell height34 width60">Super<br/>PT/Comm</div></th>
-                            <th><div class="table-cell height34 width60">Master<br/>PT/Comm</div></th>
-                            <th><div class="table-cell height34 width60">Agent<br/>PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Super<br />PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Master<br />PT/Comm</div></th>
+                            <th><div class="table-cell height34 width60">Agent<br />PT/Comm</div></th>
                         </tr>
                     </thead>
                 </table>
@@ -127,8 +132,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                            }
-                        }
+                                                    }
+                                                }
                     </tbody>
                 </table>
             </div>

@@ -2,113 +2,128 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
-@using Fanex.BetList.Accounting.Models
-@using Fanex.BetList.Accounting.Extensions;
-@using Fanex.BetList.Accounting.Core;
+    @using Fanex.BetList.Accounting.Models
+    @using Fanex.BetList.Accounting.Extensions;
+    @using Fanex.BetList.Accounting.Core;
 
-@{
-    VirtualHRPopupModel virtualPopupModel = new VirtualHRPopupModel();
-    var isSpeedway = !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "183";
-}
-
-@functions {
-    public string Placing(int number)
-    {
-        string result = string.Empty;
-        switch (number)
-        {
-            case 1: result = "1st";
-                break;
-            case 2: result = "2nd";
-                break;
-            case 3: result = "3rd";
-                break;
-        }
-        return result;
+    @{
+        VirtualHRPopupModel virtualPopupModel = new VirtualHRPopupModel();
+        var isSpeedway = !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "183";
     }
 
-}
-<div>
-    <table id="tbl-content" >
-    <thead>
-        <tr>
-            <th  colspan="3">
-                <div>
-                    Race</div>
-            </th>
-            <th>
-                <div>
-                    Result</div>
-            </th>
-            <th>
-                <div>
-                    Win</div>
-            </th>
-            @if (!isSpeedway)
-            {
-            <th>
-                <div>
-                    Place</div>
-            </th>
-            }
-            <th>
-                <div>
-                    Status</div>
-            </th>
-        </tr>
-        </thead>
-        <tbody>        
-        @for (int i = 0; i < Model.Count; i++)
+    @functions {
+        public string Placing(int number)
         {
-            virtualPopupModel = Model[i];
-            var win = i != 0 && !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "185" ? string.Empty : virtualPopupModel.WinOdds.Format(2);
-            var rowSpan = isSpeedway ? string.Empty : "rowspan=" + Model.Count;
-            <tr>
-                @if (i == 0)
-                {
-                    <td @rowSpan class="c" >
-                        <div class="width120">
-                            @virtualPopupModel.EventTime</div>
-                    </td>
-                }
-                <td  class="c">
-                    <div class="width60">
-                        @Placing(virtualPopupModel.Place)</div>
-                </td>
-                <td  class="c">
-                    <div class="width60">
-                        @virtualPopupModel.HorseNumber</div>
-                </td>
-                <td  class="l">
-                    <div class="width200">
-                       @virtualPopupModel.HorseName</div>
-                </td>
-                <td  class="c">
-                    <div class="width60">
-                        @win</div>
-                </td>
-                @if (!isSpeedway)
-                {
-                <td  class="c">
-                    <div class="width60">
-                        @virtualPopupModel.PlaceOdds.Format(2)</div>
-                </td>
-                }
-                <td  class="c">
-                    <div class="width60">
-                        @virtualPopupModel.Status</div>
-                </td>
-            </tr>
-            if (isSpeedway)
+            string result = string.Empty;
+            switch (number)
             {
-                break;
+                case 1:
+                    result = "1st";
+                    break;
+                case 2:
+                    result = "2nd";
+                    break;
+                case 3:
+                    result = "3rd";
+                    break;
             }
+            return result;
         }
-        </tbody>
-    </table>
-</div>
+
+    }
+    <div>
+        <table id="tbl-content">
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        <div>
+                            Race
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Result
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Win
+                        </div>
+                    </th>
+                    @if (!isSpeedway)
+            {
+                        <th>
+                            <div>
+                                Place
+                            </div>
+                        </th>
+                    }
+                    <th>
+                        <div>
+                            Status
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    virtualPopupModel = Model[i];
+                    var win = i != 0 && !string.IsNullOrWhiteSpace(Request.QueryString["sport"]) && Request.QueryString["sport"] == "185" ? string.Empty : virtualPopupModel.WinOdds.Format(2);
+                    var rowSpan = isSpeedway ? string.Empty : "rowspan=" + Model.Count;
+                    <tr>
+                        @if (i == 0)
+                {
+                            <td @rowSpan=rowSpan class="c">
+                                <div class="width120">
+                                    @virtualPopupModel.EventTime
+                                </div>
+                            </td>
+                        }
+                        <td class="c">
+                            <div class="width60">
+                                @Placing(virtualPopupModel.Place)
+                            </div>
+                        </td>
+                        <td class="c">
+                            <div class="width60">
+                                @virtualPopupModel.HorseNumber
+                            </div>
+                        </td>
+                        <td class="l">
+                            <div class="width200">
+                                @virtualPopupModel.HorseName
+                            </div>
+                        </td>
+                        <td class="c">
+                            <div class="width60">
+                                @win
+                            </div>
+                        </td>
+                        @if (!isSpeedway)
+                {
+                            <td class="c">
+                                <div class="width60">
+                                    @virtualPopupModel.PlaceOdds.Format(2)
+                                </div>
+                            </td>
+                        }
+                        <td class="c">
+                            <div class="width60">
+                                @virtualPopupModel.Status
+                            </div>
+                        </td>
+                    </tr>
+                    if (isSpeedway)
+                    {
+                        break;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
