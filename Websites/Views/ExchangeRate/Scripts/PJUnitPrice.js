@@ -11,8 +11,10 @@
         var row = $(target).parents("tr:first");
         if (row.find("input[editor]").length > 0) return;
 
-        var pjUnitPrice = row.find("div[pjunitprice]").hide();
-        pjUnitPrice.parent().append("<input type='text' class='col120' editor='true' pjunitprice='true'/>");
+        var pjUnitPrice = row.find("div[pjunitprice]");
+        pjUnitPrice.hide();
+        var value = pjUnitPrice.html();
+        pjUnitPrice.parent().append("<input type='text' class='col120' editor='true' pjunitprice='true' style='text-align:right' value='" + value.trim() + "' />");
 
         var divEdit = $(target).parent();
         divEdit.find("img[alt='Edit']").hide();
@@ -60,7 +62,7 @@
     },
 
     editSuccess: function (data, row, value) {
-        if (parseInt(data.ErrorCode != 0)) {
+        if (data.ErrorCode !== 0) {
             this.showErr(data.ErrorMessage);
         }
         else {
@@ -74,8 +76,8 @@
             row.find("img[alt='Cancel']").hide();
 
             this.showSuccess("Update successfully!");
-            this.unBlockUI();
         }
+        this.unBlockUI();
     },
 
     isNumeric: function (n) {
