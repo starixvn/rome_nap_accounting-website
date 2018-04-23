@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------
 // <copyright file="BetListService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
@@ -10,6 +10,13 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     using Constants;
     using Core;
     using Criteria;
@@ -25,13 +32,6 @@ namespace Fanex.Tarus.BetList.Business
     using Models;
     using Resources;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
@@ -45,7 +45,7 @@ namespace Fanex.Tarus.BetList.Business
         public BetListService()
         {
             _betListRepository = new BetListRepository();
-        }       
+        }
 
         /// <summary>
         /// Get Detail Mix Parlay ticket.
@@ -199,18 +199,18 @@ namespace Fanex.Tarus.BetList.Business
                     ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
 
                     Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
-                    
+
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
                     RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
                 StakeHtml = string.Empty,
-                IsShowOtExRate = r.Table.Columns.Contains("isShowOTExRate") ? Converter.To<bool>(r["isShowOTExRate"]): false,
-                VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]):0,
-                AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]):0,
-                MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]):0,
-                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]):0
+                IsShowOtExRate = r.Table.Columns.Contains("isShowOTExRate") ? Converter.To<bool>(r["isShowOTExRate"]) : false,
+                VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]) : 0,
+                AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]) : 0,
+                MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
+                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0
             };
 
             try
@@ -407,7 +407,7 @@ namespace Fanex.Tarus.BetList.Business
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                     Currency = Converter.ToString2(r["Currency"]),
-                    
+
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
                     RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
                 },
@@ -467,25 +467,25 @@ namespace Fanex.Tarus.BetList.Business
                 IList<TicketDetail> betDetailsOld = new List<TicketDetail>();
                 IList<TicketDetail> betDetailsMerge = new List<TicketDetail>();
 
-                    if (toDate >= ReportService.BalanceUp.BalanceUpDay)
-                    {
-                        betDetails = isLimitForU3 ?
-                            _betListRepository.Fetch<TicketDetail>(betListByCustInfoU3Criteria, mapTicketObjectFunction, ref outputLiveCasino) :
-                            _betListRepository.Fetch<TicketDetail>(betListByCustInfoCriteria, mapTicketObjectFunction, ref outputLiveCasino);
-                    }
+                if (toDate >= ReportService.BalanceUp.BalanceUpDay)
+                {
+                    betDetails = isLimitForU3 ?
+                        _betListRepository.Fetch<TicketDetail>(betListByCustInfoU3Criteria, mapTicketObjectFunction, ref outputLiveCasino) :
+                        _betListRepository.Fetch<TicketDetail>(betListByCustInfoCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+                }
 
-                    if (fromDate < ReportService.BalanceUp.BalanceUpDay)
-                    {
-                        betDetailsOld = isLimitForU3 ?
-                            _betListRepository.Fetch<TicketDetail>(betListByCustInfoU3Criteria_Old, mapTicketObjectFunction, ref outputLiveCasino_Old) :
-                            _betListRepository.Fetch<TicketDetail>(betListByCustInfoCriteria_Old, mapTicketObjectFunction, ref outputLiveCasino_Old);
-                    }
+                if (fromDate < ReportService.BalanceUp.BalanceUpDay)
+                {
+                    betDetailsOld = isLimitForU3 ?
+                        _betListRepository.Fetch<TicketDetail>(betListByCustInfoU3Criteria_Old, mapTicketObjectFunction, ref outputLiveCasino_Old) :
+                        _betListRepository.Fetch<TicketDetail>(betListByCustInfoCriteria_Old, mapTicketObjectFunction, ref outputLiveCasino_Old);
+                }
 
-                    betDetailsMerge = betDetails.Concat(betDetailsOld).ToList();
-                    betDetailsMerge = betDetailsMerge.OrderBy(x => x.Ticket.TransDate).ToList();
-                    outputLiveCasino_Merge = outputLiveCasino.Concat(outputLiveCasino_Old).ToList();
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByCustomerInfoSessionKey, betDetailsMerge);
-                    SessionManager.Set<List<ITicketData>>(BetListConstants.BetListOutputLiveCasinoSessionKey, outputLiveCasino_Merge);
+                betDetailsMerge = betDetails.Concat(betDetailsOld).ToList();
+                betDetailsMerge = betDetailsMerge.OrderBy(x => x.Ticket.TransDate).ToList();
+                outputLiveCasino_Merge = outputLiveCasino.Concat(outputLiveCasino_Old).ToList();
+                SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByCustomerInfoSessionKey, betDetailsMerge);
+                SessionManager.Set<List<ITicketData>>(BetListConstants.BetListOutputLiveCasinoSessionKey, outputLiveCasino_Merge);
 
                 quantity = betDetailsMerge.Count;
                 BetListHelper betlistHelper = new BetListHelper();
@@ -644,7 +644,7 @@ namespace Fanex.Tarus.BetList.Business
                 IList<TicketDetail> betDetails = isLimitForU3 ?
                     _betListRepository.Fetch<TicketDetail>(criteriaForU3, mapTicketObjectFunction, ref outputLiveCasino) :
                     _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref outputLiveCasino);
-            
+
                 BetListHelper betListHelper = new BetListHelper();
 
                 if (betDetails != null)
@@ -802,38 +802,38 @@ namespace Fanex.Tarus.BetList.Business
                 int soccerBetsTotalTmp = 0;
                 int othersBetsTotalTmp = 0;
                 int totalBetsTmp = 0;
-                    using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    DataSet dataSet = db.ExecuteDataSet(criteria);
+                    if (dataSet != null &&
+                        dataSet.Tables.Count > 0)
                     {
-                        DataSet dataSet = db.ExecuteDataSet(criteria);
-                        if (dataSet != null &&
-                            dataSet.Tables.Count > 0)
+                        foreach (DataRow r in dataSet.Tables[0].Rows)
                         {
-                            foreach (DataRow r in dataSet.Tables[0].Rows)
+                            usernameList.Add(new BetListByIP_Username
                             {
-                                usernameList.Add(new BetListByIP_Username
-                                {
-                                    CustID = Converter.To<int>(r["custid"]),
-                                    Username = r["username"].ToString(),
-                                    SoccerBets = Converter.To<int>(r["soccerBet"]),
-                                    OtherBets = Converter.To<int>(r["otherBet"]),
-                                    TotalBets = Converter.To<int>(r["totalBet"])
-                                });
+                                CustID = Converter.To<int>(r["custid"]),
+                                Username = r["username"].ToString(),
+                                SoccerBets = Converter.To<int>(r["soccerBet"]),
+                                OtherBets = Converter.To<int>(r["otherBet"]),
+                                TotalBets = Converter.To<int>(r["totalBet"])
+                            });
 
-                                soccerBetsTotalTmp += Converter.To<int>(r["soccerBet"]);
-                                othersBetsTotalTmp += Converter.To<int>(r["otherBet"]);
-                                totalBetsTmp += Converter.To<int>(r["totalBet"]);
-                            }
+                            soccerBetsTotalTmp += Converter.To<int>(r["soccerBet"]);
+                            othersBetsTotalTmp += Converter.To<int>(r["otherBet"]);
+                            totalBetsTmp += Converter.To<int>(r["totalBet"]);
                         }
                     }
+                }
 
-                    usernameList.Add(new BetListByIP_Username
-                    {
-                        CustID = 0,
-                        Username = BetListResources.Total,
-                        SoccerBets = soccerBetsTotalTmp,
-                        OtherBets = othersBetsTotalTmp,
-                        TotalBets = totalBetsTmp
-                    });
+                usernameList.Add(new BetListByIP_Username
+                {
+                    CustID = 0,
+                    Username = BetListResources.Total,
+                    SoccerBets = soccerBetsTotalTmp,
+                    OtherBets = othersBetsTotalTmp,
+                    TotalBets = totalBetsTmp
+                });
 
                 if (pageIndex > 0)
                 {
@@ -1020,7 +1020,7 @@ namespace Fanex.Tarus.BetList.Business
 
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
                                 WalletType = Convert.ToByte(r["wallettype"]),
-                                
+
                                 RefCode = Convert.ToInt64(r["refcode"])
                             },
                             ChoiceHtml = string.Empty,
@@ -1225,7 +1225,7 @@ namespace Fanex.Tarus.BetList.Business
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = Converter.ToString2(r["Currency"]),
-                                
+
                                 WalletType = Convert.ToByte(r["wallettype"]),
                                 RefCode = Convert.ToInt64(r["refcode"])
                             },
@@ -1447,6 +1447,10 @@ namespace Fanex.Tarus.BetList.Business
             else if (ReportService.IsVoidbridge(betTypeId))
             {
                 sportName += CacheRef.GetSportName(SportContants.Voidbridge);
+            }
+            else if (ReportService.IsPP(betTypeId))
+            {
+                sportName += CacheRef.GetSportName(SportContants.PP);
             }
             else if (ReportService.IsNG2NeedSuffix(betTypeId))
             {

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
     using Constants;
     using Core;
     using Fanex.Common.Extensions;
@@ -7,8 +9,6 @@
     using Fanex.Tarus.Infrastructure.Caching;
     using Models;
     using Resources;
-    using System;
-    using System.Collections.Generic;
 
     public static class ReportService
     {
@@ -167,7 +167,12 @@
 
         public static bool IsVoidbridge(int betTypeId)
         {
-            return 4001 <= betTypeId && betTypeId <= 7999;
+            return 4001 <= betTypeId && betTypeId <= 4100;
+        }
+
+        public static bool IsPP(int betTypeId)
+        {
+            return 4101 <= betTypeId && betTypeId <= 4300;
         }
 
         public static bool IsNG2NeedSuffix(int betTypeId)
