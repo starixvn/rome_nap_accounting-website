@@ -1,4 +1,4 @@
-﻿var BetList = BetList || {}; 
+﻿var BetList = BetList || {};
 
 BetList.BetListByRefNo = (function ($) {
 
@@ -28,7 +28,7 @@ BetList.BetListByRefNo = (function ($) {
                 $("#betListContent").html(result);
                 $("#BetlistByRefNo").initGrid(gridOpts);
                 $('#BetlistByRefNo').removeClass("display-none").gridScroller(gridOpts);
-                var divReplace;                
+                var divReplace;
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';
                     $('#choice_left a:first').replaceWith(divReplace);
@@ -91,7 +91,7 @@ BetList.BetListByRefNo = (function ($) {
             $gameId.attr("disabled", "disabled");
             $betId.attr("disabled", "disabled");
         }
-        else if (selProductValue === "22" || selProductValue === "24") {
+        else if (selProductValue === "22" || selProductValue === "24" || selProductValue === "32") {
             $gameId.attr("disabled", "disabled");
         }
     };
@@ -231,11 +231,11 @@ function showCombMPDetail(tranid, date, refno, betid, matchid) {
     var title = "System Parlay";
     var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
 
-	if (combinationOfferNameContainer.is("span")) {
-		title += combinationOfferNameContainer.html();
-	}
+    if (combinationOfferNameContainer.is("span")) {
+        title += combinationOfferNameContainer.html();
+    }
 
-	showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid)
+    showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid)
 }
 
 function showDetail(id) {
