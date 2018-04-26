@@ -1,16 +1,17 @@
-﻿﻿@using Fanex.Tarus.BetList.Helper;
+﻿@using Fanex.Tarus.BetList.Helper;
 @using Fanex.BetList.Accounting.Core;
 @using Fanex.BetList.Accounting.Extensions;
+@using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Module.RNGCasino.ViewModels.JackpotDetailsViewModel
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
-    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
-    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
-    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
-    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
-    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css?ver=@WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@WebSettings.Version" />
     <link type="text/css" rel="Stylesheet"
           href="@Url.Content("~/Areas/RNGCasino/Views/BetDetails/Styles/BetDetails.less")" />
     <title>Progressive Jackpot Won Details</title>
@@ -198,14 +199,14 @@
         </div>
     </div>
     <iframe id="frmExportExcel" width="0" height="0" frameborder="0" style="display:none"></iframe>
-    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
-    <script type="text/javascript" src="~/js/json2.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/gridscroller.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
-    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
-    <script type="text/javascript" src="~/js/BetList.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script type="text/javascript" src="~/Areas/RNGCasino/Views/BetDetails/Scripts/JackpotDetails.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/jQuery/jquery.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/json2.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/jQuery/gridscroller.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/js/BetList.js?ver=@WebSettings.Version"></script>
+    <script type="text/javascript" src="~/Areas/RNGCasino/Views/BetDetails/Scripts/JackpotDetails.js?ver=@WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var transId = @Request.QueryString["TransId"];

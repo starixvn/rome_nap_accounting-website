@@ -4,8 +4,8 @@
         Dear All,<br /><br />
         Please be informed that Balance of @Model.WinLossDate was reset by @Model.UserReset with following information:
     </div>
-    <br/>
-   <table cellspacing="0" rules="all" border="1" id="display" style="border-color:#c5c5c5; border-style:Solid;border-collapse:collapse;font-size:9pt; font-family:Tahoma, Arial, Verdana, Sans-Serif;">
+    <br />
+    <table cellspacing="0" rules="all" border="1" id="display" style="border-color:#c5c5c5; border-style:Solid;border-collapse:collapse;font-size:9pt; font-family:Tahoma, Arial, Verdana, Sans-Serif;">
         <caption style="line-height:28px; text-align: left; font-weight: bold; background-color:#8DB4E2; color:#FFFFFF;"><div>@Model.WinLossDate</div></caption>
         <thead>
             <tr style="height: 25px;background-color:#CDDEF3; color: #000000; font-weight: bold;">
@@ -30,8 +30,10 @@
                 {
                     bgClass = "background-color: #cddef3";
                 }
-                
-                if (item.Product.ToLower() == "racing (due to partners)" || item.Product.ToLower() == "poker (due to partners)")
+
+                if (item.Product.ToLower() == "racing (due to partners)"
+                    || item.Product.ToLower() == "poker (due to partners)"
+                    || item.Product.ToLower() == "casino (amount due to jackpot pool)")
                 {
                     bgClass = "background-color: #DADADA";
                 }
@@ -39,7 +41,7 @@
                 {
                     bgClass = "background-color: #D8E4BB";
                 }
-                
+
                 <tr style="height: 25px; color: #000000; @bgClass">
                     <td style="text-align:left; font-weight: bold">@item.Product</td>
                     <td style="text-align:right;">@item.WinLoss_Str</td>
@@ -61,8 +63,9 @@
                 </tr>
             }
         </tbody>
-   </table>
-   <br />
+
+    </table>
+    <br />
     <div style="color: #000000; font-style:italic">
         This is an auto-generated email, please do not reply.<br /><br />
         Thanks & Regards,<br /><br />

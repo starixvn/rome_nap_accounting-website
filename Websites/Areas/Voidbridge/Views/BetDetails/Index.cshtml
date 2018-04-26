@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
     <link type="text/css" rel="Stylesheet"
           href="@Url.Content("~/Areas/Voidbridge/Views/BetDetails/Styles/BetDetails.less")" />
     <title>Macau Games Details</title>
@@ -65,7 +65,7 @@
     <script type="text/javascript" src="~/Areas/Voidbridge/Views/BetDetails/Scripts/BetDetails.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-		var totalRows = @Model.TotalRows;
+        var totalRows = @Model.TotalRows;
         var transId = @Request.QueryString["TransId"];
         var custId = @Request.QueryString["CustId"];
         var transType = @Request.QueryString["TransType"];
