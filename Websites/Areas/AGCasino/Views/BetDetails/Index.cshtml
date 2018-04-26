@@ -7,11 +7,11 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
-    <link type="text/css" rel="Stylesheet" 
-        href="@Url.Content("~/Areas/AGCasino/Views/BetDetails/Styles/BetDetails.less")" />
-    <link type="text/css" rel="Stylesheet"  
-        href="@Url.Content("~/Areas/AGCasino/Views/BetDetails/Styles/AGCasino.css")" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Areas/AGCasino/Views/BetDetails/Styles/BetDetails.less")" />
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Areas/AGCasino/Views/BetDetails/Styles/AGCasino.css")" />
     <title>AG Casino</title>
 </head>
 <body>
@@ -31,49 +31,59 @@
                         <tr>
                             <th>
                                 <div class="width30 height34 table-cell">
-                                    No</div>
+                                    No
+                                </div>
                             </th>
                             <th>
                                 <div class="width120 height34 table-cell">
-                                    Trans.Time</div>
+                                    Trans.Time
+                                </div>
                             </th>
                             <th>
                                 <div class="column-choice height34 table-cell">
-                                    Choice</div>
+                                    Choice
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
-                                    Odds</div>
+                                    Odds
+                                </div>
                             </th>
                             <th>
                                 <div class="width50 height34 table-cell">
-                                    Stake</div>
+                                    Stake
+                                </div>
                             </th>
                             <th>
                                 <div class="column-winloss height34 table-cell">
-                                    Win Loss</div>
+                                    Win Loss
+                                </div>
                             </th>
                             <th>
                                 <div class="width100 height34 table-cell">
-                                    Status</div>
+                                    Status
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Super
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Master
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Agent
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -87,49 +97,59 @@
                         <tr>
                             <th>
                                 <div class="width30 height34 table-cell">
-                                    No</div>
+                                    No
+                                </div>
                             </th>
                             <th>
                                 <div class="width120 height34 table-cell">
-                                    Trans.Time</div>
+                                    Trans.Time
+                                </div>
                             </th>
                             <th>
                                 <div class="width275 height34 table-cell">
-                                    Choice</div>
+                                    Choice
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
-                                    Odds</div>
+                                    Odds
+                                </div>
                             </th>
                             <th>
                                 <div class="width50 height34 table-cell">
-                                    Stake</div>
+                                    Stake
+                                </div>
                             </th>
                             <th>
                                 <div class="column-winloss height34 table-cell">
-                                    Win Loss</div>
+                                    Win Loss
+                                </div>
                             </th>
                             <th>
                                 <div class="width100 height34 table-cell">
-                                    Status</div>
+                                    Status
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Super
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Master
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                             <th>
                                 <div class="width60 height34 table-cell">
                                     Agent
                                     <br />
-                                    PT/Comm</div>
+                                    PT/Comm
+                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -146,15 +166,15 @@
     <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
     <script type="text/javascript" src="~/js/jQuery/gridscroller.js"></script>
     <script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
-	<script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/Pager/jpager.js"></script>
     <script type="text/javascript" src="~/js/BetList.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript" src="~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript">
-		window.rootUrl = '@Url.Content("~")';
-		var totalRows = @Model.TotalRows;
-		var refno = @Request.QueryString["Refno"];
-		var custId = @Request.QueryString["CustId"];
-		var transType = @Request.QueryString["TransType"];
+        window.rootUrl = '@Url.Content("~")';
+        var totalRows = @Model.TotalRows;
+        var refno = @Request.QueryString["Refno"];
+        var custId = @Request.QueryString["CustId"];
+        var transType = @Request.QueryString["TransType"];
         var sportType = @Request.QueryString["SportType"];
         var pageSize = @Request.QueryString["PageSize"];
         $(document).ready(function () {

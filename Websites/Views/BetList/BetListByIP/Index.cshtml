@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
     <div class="main">
@@ -30,7 +30,8 @@
                                             <tr>
                                                 <td>
                                                     <div>
-                                                        <span style="width: 50px; font-weight: bold; text-align: right;">IP:</span></div>
+                                                        <span style="width: 50px; font-weight: bold; text-align: right;">IP:</span>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div>
@@ -39,7 +40,8 @@
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <span style="width: 50px; font-weight: bold; text-align: right;">Date:</span></div>
+                                                        <span style="width: 50px; font-weight: bold; text-align: right;">Date:</span>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div>
@@ -49,9 +51,9 @@
                                                 <td>
                                                     <div style="margin-left: 5px;">
                                                         <input class="btn" type="button" id="btnReport" value="Submit" onclick="BetListByIP.getBetListByIP_Username('False')" />
-                                                         <a id="viewIP" onclick="ViewIP('@ViewBag.Ip')" style="font-weight:bold; display:none;">View IP Info</a>
+                                                        <a id="viewIP" onclick="ViewIP('@ViewBag.Ip')" style="font-weight:bold; display:none;">View IP Info</a>
                                                     </div>
-                                                    
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -74,8 +76,8 @@
         window.rootUrl = '@Url.Content("~")';
         var _today = '@DateTime.Today.ToShortDateString()';
         var _isLink = '@ViewBag.IsLink';
-        var _ip  = '@ViewBag.Ip';
-        var _fromDate  ='@ViewBag.FromDate';
+        var _ip = '@ViewBag.Ip';
+        var _fromDate = '@ViewBag.FromDate';
         var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
 
         head.js("@Url.Content("~/js/jQuery/jquery.js")",

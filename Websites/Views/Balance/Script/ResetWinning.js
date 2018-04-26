@@ -35,6 +35,9 @@
                         if (records[i].Products == "Poker (Due to Partners)") {
                             bgClass = 'RacingAmountDue';
                         }
+                        if (records[i].Products == "Casino (Amount due to Jackpot Pool)") {
+                            bgClass = 'RacingAmountDue';
+                        }
                         if (i == records.length - 1)
                             bgClass = 'bgOthers';
                         arr.push(ResetWinning.renderRows(records[i], bgClass, colorVariance));
@@ -93,4 +96,3 @@
     }
 
 };
-

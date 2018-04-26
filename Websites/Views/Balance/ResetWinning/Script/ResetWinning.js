@@ -178,7 +178,9 @@
             }
         }
 
-        if (currentRow.Product == "Racing (Due to Partners)" || currentRow.Product == "Poker (Due to Partners)") {
+        if (currentRow.Product == "Racing (Due to Partners)"
+            || currentRow.Product == "Poker (Due to Partners)"
+            || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
             cssClass = 'dueToPartnerRow';
 
             if (currentRow.Variance != 0) {
@@ -252,7 +254,9 @@
                         cssClass = 'highlightRow';
                     }
 
-                    if (resetWinningByDay.Product == "Racing (Due to Partners)" || resetWinningByDay.Product == "Poker (Due to Partners)") {
+                    if (resetWinningByDay.Product == "Racing (Due to Partners)"
+                        || resetWinningByDay.Product == "Poker (Due to Partners)"
+                        || resetWinningByDay.Product == "Casino (Amount due to Jackpot Pool)") {
                         cssClass = 'dueToPartnerRow';
 
                         if (resetWinningByDay.Variance != 0) {
@@ -399,7 +403,9 @@
                 cssClass = 'highlightRow';
             }
 
-            if (currentRow.Product == "Racing (Due to Partners)" || currentRow.Product == "Poker (Due to Partners)") {
+            if (currentRow.Product == "Racing (Due to Partners)"
+                || currentRow.Product == "Poker (Due to Partners)"
+                || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
                 cssClass = 'dueToPartnerRow';
 
                 if (currentRow.Variance != 0) {
@@ -531,7 +537,7 @@
 
                     setTimeout(self.getResetWinningReport(), 2000);
                 }
-                else if (rs.ErrorCode == enums.statusResetWinningEnums.notReset) {                    
+                else if (rs.ErrorCode == enums.statusResetWinningEnums.notReset) {
                     showAlertMessage("errMsg", "No products need to reset winning!", 2);
                 }
                 else {
@@ -582,7 +588,9 @@
                 cssClass = 'highlightRow';
             }
 
-            if (currentRow.Product == "Racing (Due to Partners)" || currentRow.Product == "Poker (Due to Partners)") {
+            if (currentRow.Product == "Racing (Due to Partners)"
+                || currentRow.Product == "Poker (Due to Partners)"
+                || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
                 cssClass = 'dueToPartnerRow';
 
                 if (currentRow.Variance != 0) {
