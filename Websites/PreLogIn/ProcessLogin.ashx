@@ -24,7 +24,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
             //var robotHandler = FanexOneyed.RobotTrap.HandlerFactory.CreateHandler(context.Session);
             //robotHandler.CalculateSessionVariable()
             //       .Log(context.Request["TxtUsername"], context.Request["guid"]);
-            
+
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             string username = context.Request.Form["TxtUsername"];
@@ -37,7 +37,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 context.Response.Write("parent.signIn.loginError('Username and Password must not be empty!');\n");
-            
+
             string[] deniedUsersAccess = ConfigurationManager.AppSettings["DeniedUsersAccess"].Split(',');
             bool deniedAccess = false;
 
@@ -56,12 +56,12 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 context.Response.Write("parent.signIn.loginError('" + Resources.ErrorMsg.DenyLoginAccount + "');\n");
                 goto end;
             }
-                
+
             if (LoginFailedHandler.IsLocked(username))
             {
                 context.Response.Write(LoginFailedHandler.WriteJS(username));
                 goto end;
-            }          
+            }
 
             AppSession.CurrentSystemName = "accounting";
 
@@ -92,12 +92,12 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 if (deniedGroups != null && deniedGroups.Length > 0)
                 {
                     if(((IList<string>)deniedGroups).Contains(system.ToLower()))
-                    {  
-                            context.Session.Clear();
-                            FormsAuthentication.SignOut();
-                            context.Response.Write("parent.signIn.loginError('" + Resources.ErrorMsg.DenyLoginAccount + "');\n");
-                            goto end;
-                        
+                    {
+                        context.Session.Clear();
+                        FormsAuthentication.SignOut();
+                        context.Response.Write("parent.signIn.loginError('" + Resources.ErrorMsg.DenyLoginAccount + "');\n");
+                        goto end;
+
                     }
                 }
                 #endregion checking - denied systems
@@ -107,9 +107,9 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     system = "EXTERNAL";
                     context.Session.Clear();
                     FormsAuthentication.SignOut();
-					context.Response.Clear();
+                    context.Response.Clear();
                     context.Response.Write("<script type='text/javascript'>top.location.href='https://www.726872.com';</script>");
-					return;
+                    return;
                 }
 
                 AppSession.CurrentSystemNAME = Enumerations.ToAccountingSystem(system);
@@ -136,11 +136,11 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl.Replace("https", "http") + "';\n");
                 IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                 menuService.GetUserMenu();
-                
+
                 bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
                 if (isShowNap)
                 {
-                    AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO { 
+                    AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO {
                         Id=0,
                         Name="Nap",
                         Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
@@ -151,10 +151,10 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                         IsHide = false
                     });
                 }
-				
-				// Progressive Bonus
-				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
-				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
+
+                // Progressive Bonus
+                Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
+                Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
             }
             else
             {
@@ -178,7 +178,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     }
                 }
             }
-        end:
+            end:
             context.Response.Write("\n</script></head><body></body>");
         }
         catch (Exception ex)
@@ -193,5 +193,5 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
         {
             return false;
         }
-    }    
+    }
 }
