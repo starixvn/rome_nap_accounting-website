@@ -45,6 +45,11 @@
                 return "FishingWorld_Details";
             }
 
+            if (sportType == SportContants.PP)
+            {
+                return "PP_Details";
+            }
+
             if (sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile)
@@ -71,7 +76,8 @@
                 return GetAllBetTickets(refNo, custId, transType);
             }
 
-            if (sportType == SportContants.Voidbridge)
+            if (sportType == SportContants.Voidbridge ||
+                sportType == SportContants.PP)
             {
                 return GetMacauGamesTickets(refNo, custId, transType);
             }
