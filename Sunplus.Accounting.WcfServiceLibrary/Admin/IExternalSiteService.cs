@@ -20,7 +20,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result AddSuperToGroup(string username, string groupName);
+        IEnumerable<Result> AddSuperToGroup(string username, string groupName);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

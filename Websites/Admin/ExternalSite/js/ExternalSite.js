@@ -34,12 +34,12 @@
         });
     };
 
-    self.addSuperToGroup = function (groupName, superName, successCallback) {
+    self.addSuperToGroup = function (groupNames, superName, successCallback) {
         $.ajax({
             type: "POST",
             url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddSuperToGroup",
             contentType: "application/json; charset=utf-8",
-            data: $.toJSON({ groupName: groupName, username: superName }),
+            data: $.toJSON({ groupName: groupNames.join(","), username: superName }),
             beforeSend: function () {
                 try { parent.BlockUI(); } catch (e) { }
             },
@@ -108,18 +108,22 @@ var addSuperService = (function ($, ajaxService) {
     var self = {};
 
     var $addSuperDialog = $("#addSuperToGroupDialog").dialog({
-            title: "Add Existing Super",
-            autoOpen: false,
-            height: 100,
-            width: 350,
-            modal: true,
-            open: function (event, ui) {
-                $errMsg.empty();
-                $superName.val("");
-            }
-        }),
+        title: "Add Existing Super",
+        autoOpen: false,
+        height: 260,
+        width: 560,
+        modal: true,
+        open: resetFormData
+    }),
         $errMsg = $("#errMsg"),
+        $dropDownGroupName,
         $superName = $("#txtSuper");
+
+    function resetFormData() {
+        $errMsg.empty();
+        $dropDownGroupName.val(null).trigger("change");
+        $superName.val("");
+    }
 
     function showDialog() {
         $addSuperDialog.removeClass("hidden").dialog("open");
@@ -129,40 +133,66 @@ var addSuperService = (function ($, ajaxService) {
         $addSuperDialog.addClass("hidden").dialog("close");
     }
 
-    function addSuperToGroup(groupName, reloadSuperListHandler) {
-        var superName = $.trim($superName.val());
+    function addSuperToGroup(reloadSuperListHandler) {
+        var groupNames = $dropDownGroupName.val();
 
-        if (superName.length === 0) {
-            showAlertMessage("errMsg", "Please input username!", 1);
+        if (groupNames === null || groupNames.length === 0) {
+            showAlertMessage("errMsg", "At least 1 group must be selected.", 1);
             return;
         }
 
-        var addSuper = function (result) {
-            if (result.ErrorCode === 0) {
-                showAlertMessage("errMsg", "Added Successfully", 0);
+        var superName = $.trim($superName.val());
 
-                setTimeout(hideDialog, 2000);
-                setTimeout(reloadSuperListHandler, 3000);
-            }
-            else if (result.ErrorCode === 106) {
-                showAlertMessage("errMsg", result.ErrorMessage, 0);
+        if (superName.length === 0) {
+            showAlertMessage("errMsg", "At least 1 username must be inputted.", 1);
+            return;
+        }
 
-                setTimeout(reloadSuperListHandler, 3000);
-                setTimeout(hideDialog, 5000);
+        var addSuper = function (results) {
+            var result;
+            var isHideDialog = true;
+            var html = [];
+            for (var i = 0, max = results.length; i < max; i++) {
+                result = results[i];
+
+                html.push("<div class='");
+                if (result.ErrorCode === 0) {
+                    html.push("alertboxscc");
+                } else if (result.ErrorCode === 106) {
+                    html.push("alertboxscc");
+                    isHideDialog = false;
+                } else {
+                    html.push("alertboxerr");
+                    isHideDialog = false;
+                }
+
+                html.push("'><div>");
+                html.push(result.ErrorMessage);
+                html.push("</div></div>");
             }
-            else {
-                showAlertMessage("errMsg", result.ErrorMessage, 1);
+
+            if (html.length > 0) {
+                $errMsg.html(html.join(""));
+                if (isHideDialog) {
+                    setTimeout(hideDialog, 3000);
+                }
             }
         };
 
-        ajaxService.addSuperToGroup(groupName, superName, addSuper);
+        ajaxService.addSuperToGroup(groupNames, superName, addSuper);
     }
 
-    self.initialize = function (groupSelect, reloadSuperListHandler) {
-        $(".btnAdd").click(showDialog);
+    self.initialize = function (htmlString, reloadSuperListHandler) {
+        $addSuperDialog
+            .off("dialogclose")
+            .on("dialogclose", reloadSuperListHandler);
+
+        $dropDownGroupName = $("#dropDownGroupName").html(htmlString).select2();
+
+        $("#btnAdd").click(showDialog);
 
         $("#addSuperToGroup").click(function () {
-            addSuperToGroup(groupSelect.val(), reloadSuperListHandler);
+            addSuperToGroup(reloadSuperListHandler);
         });
     };
 
@@ -174,18 +204,18 @@ var changeGroupService = (function ($, ajaxService) {
     var self = {};
 
     var $changeGroupDialog = $("#changeGroupDialog").dialog({
-            title: "Change Primary Group",
-            autoOpen: false,
-            height: 340,
-            width: 360,
-            modal: true,
-            open: function (event, ui) {
-                $effectiveDate.datepicker("enable");
-            },
-            close: function (event, ui) {
-                $effectiveDate.datepicker("disable");
-            }
-        });
+        title: "Change Primary Group",
+        autoOpen: false,
+        height: 340,
+        width: 360,
+        modal: true,
+        open: function (event, ui) {
+            $effectiveDate.datepicker("enable");
+        },
+        close: function (event, ui) {
+            $effectiveDate.datepicker("disable");
+        }
+    });
 
     var $changeGroupErrorMsg = $("#changeGroupErrorMsg"),
         $spanSuperName = $("#spanSuperName");
@@ -270,7 +300,7 @@ var changeGroupService = (function ($, ajaxService) {
 
     function changePrimaryGroup(reloadSuperListHandler) {
         $changeGroupErrorMsg.empty();
-        
+
         var newEffectiveDate = $effectiveDate.val();
 
         if (newEffectiveDate === today) {
@@ -393,7 +423,18 @@ var changeGroupService = (function ($, ajaxService) {
                 html.push("</option>");
             }
 
-            $groupName.html(html.join(""));
+            var htmlString = html.join("");
+            $groupName.html(htmlString);
+
+            addSuperService.initialize(
+                htmlString,
+                function () {
+                    if (formData) {
+                        formData.fromcache = false;
+                        formData.pageIndex = 1;
+                        getSuperList(formData);
+                    }
+                });
         }
     }
 
@@ -571,14 +612,6 @@ var changeGroupService = (function ($, ajaxService) {
             formData.pageIndex = 1;
             getSuperList(formData);
         });
-
-        addSuperService.initialize(
-            $groupName,
-            function () {
-                formData.fromcache = false;
-                formData.pageIndex = 1;
-                getSuperList(formData);
-            });
 
         changeGroupService.initialize(
             today,
