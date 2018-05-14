@@ -166,7 +166,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PP.1.0.0-beta4\lib\net40\Fanex.BetList.PP.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PP.1.0.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
@@ -362,7 +362,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0-beta1\lib\Fanex.Result.Core.PP.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
@@ -378,7 +378,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.ThirdParty, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.ThirdParty.1.0.4-PP\lib\net40\Fanex.Result.ThirdParty.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.ThirdParty.1.0.4\lib\net40\Fanex.Result.ThirdParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
