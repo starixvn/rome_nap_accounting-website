@@ -83,8 +83,8 @@
                 });
                 if (typeof _length != "undefined") {
                     BetListByCustInfo.initPager(_length,
-						BetListByCustInfo.paramGetBetBetlist.pageSize,
-						BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
+                        BetListByCustInfo.paramGetBetBetlist.pageSize,
+                        BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
 
                     divSystemParlayContent.find(".detail").remove();
                     divSystemParlayContent.find("#hidden0").removeAttr("href");
@@ -102,11 +102,11 @@
 
                     var downloadLink = $("#download-combinationdetails");
                     downloadLink
-						.unbind("click")
-						.bind("click", function () {
-						    var url = window.rootUrl + "BetList/ExportBetListByCustInfo_SystemParLayTab?" + $.param(BetListByCustInfo.paramGetBetlistSystemParlay);
-						    window.location.href = url
-						});
+                        .unbind("click")
+                        .bind("click", function () {
+                            var url = window.rootUrl + "BetList/ExportBetListByCustInfo_SystemParLayTab?" + $.param(BetListByCustInfo.paramGetBetlistSystemParlay);
+                            window.location.href = url
+                        });
                 }
             },
             error: function () {
@@ -117,7 +117,7 @@
             }
         });
     },
-    
+
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
         var isByDateRange = $('input[name=type]:checked').val() == "-2";
@@ -301,7 +301,7 @@
 
         //Exchange
         $('#maincontent_exchange').removeClass('hidden');
-        $('#betListExchangeContent').removeClass('hidden');        
+        $('#betListExchangeContent').removeClass('hidden');
     }
 
 };
@@ -311,7 +311,7 @@ var Helper = {
     renderExchangeCalendarFromTo: function () {
         var defaults = {
             showOtherMonths: true,
-            selectOtherMonths: true,            
+            selectOtherMonths: true,
             onSelect: function (selectedDate) {
                 var option = this.id == "exchange_fromdate" ? "minDate" : "maxDate",
                      instance = $(this).data("datepicker"),
@@ -373,8 +373,8 @@ var Helper = {
 };
 
 
-function showCombMPDetail(tranid, date, refno, betid, matchid) {
-    var title = "System Parlay";
+function showCombMPDetail(tranid, date, refno, betid, matchid, betteam) {
+    var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
     var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
 
     if (combinationOfferNameContainer.is("span")) {
@@ -484,4 +484,3 @@ head.ready(function (event) {
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");
 });
-
