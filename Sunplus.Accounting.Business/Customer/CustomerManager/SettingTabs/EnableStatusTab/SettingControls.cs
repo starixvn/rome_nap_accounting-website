@@ -224,8 +224,7 @@
             bool syncCasino,
             bool isAllowEdit,
             bool isenabled,
-            bool disabledCSParent,
-            bool disableDownLine)
+            bool disabledCSParent)
         {
             if (WebSettings.disableCS || !isAllowEdit || !syncCasino)
             {
@@ -262,7 +261,7 @@
                     }
                 }
 
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledCasino"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, disableDownLine, "CS");
+                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledCasino"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "CS");
             }
         }
 

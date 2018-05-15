@@ -718,8 +718,7 @@
                                     customerInfoViewModel.SyncRnGCasino,
                                     customerInfoViewModel.AllowEditRnGCasino,
                                     customerInfoViewModel.Enabled,
-                                    customerInfoViewModel.DisabledRnGCasinoParent,
-                                    !customerInfoViewModel.DisabledDownlinesRnGCasino));
+                                    customerInfoViewModel.DisabledRnGCasinoParent));
 
             TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
