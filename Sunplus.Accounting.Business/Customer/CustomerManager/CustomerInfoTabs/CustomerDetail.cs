@@ -6,6 +6,7 @@
     using Core.Extensions;
     using DNAide.Utils;
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public partial class CustomerManager
     {
@@ -101,6 +102,15 @@
                     TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", customerInfoViewModel.Groupheadlineid));
                     TemplateHandler.Assign(ref htmlcontent, "{Headline}", customerInfoViewModel.Headline);
                 }
+            }
+
+            if (customerInfoViewModel.IsDeposit && customerInfoViewModel.RoleId == RoleIdConstants.Member)
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{exchangeId}", customerInfoViewModel.CustId.ToString("0000000000000000"));
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "exchangeId");
             }
 
             return htmlcontent;
