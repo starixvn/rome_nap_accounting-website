@@ -1,10 +1,10 @@
 ﻿namespace Fanex.Tarus.BetList.Controller
 {
     using System.Web.Mvc;
-    using Business;
     using CustomerSetting.Module.Core.Web.Controllers;
     using Infrastructure.Caching;
     using Logging;
+    using RestSharp;
     using Result.ThirdParty.Models.Requests;
     using Result.ThirdParty.Models.Views;
     using Result.ThirdParty.Services;
@@ -16,7 +16,7 @@
 
         public ThirdPartyController()
         {
-            serviceFactory = new ProductResultServiceFactoryImpl(Logger.Log, new JsonConverterImpl());
+            serviceFactory = new ProductResultServiceFactoryImpl(Logger.Log, new RestClient());
         }
 
         public ActionResult Result(ThirdPartyResultBaseQuery message)
