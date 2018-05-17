@@ -31,7 +31,9 @@ public partial class Statement_CustomerStatement : PageBase
         try
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
-            rootUrl = Request.Url.GetLeftPart(UriPartial.Scheme) + Request.Headers["Host"] + Request.ApplicationPath + "/";
+
+            Uri uri = HttpContext.Current.Request.Url;
+            rootUrl = (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + Request.Headers["Host"] + (Request.ApplicationPath + "/").Replace("//", "/");
 
             WebUtils.SetNoCache();
 

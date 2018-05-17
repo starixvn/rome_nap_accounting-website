@@ -1,0 +1,117 @@
+﻿namespace Fanex.Tarus.BetList.Constants
+{
+    public static class BetTypeContants
+    {
+        public const int Handicap = 1;
+        public const int OverUnder2 = 3;
+        public const int OverUnder = 85;
+        public const int _1stHandicap = 7;
+        public const int _1stOverUnder = 8;
+        public const int _1stOddEven = 12;
+        public const int CorrectScore = 4;
+        public const int _1stCorrectScore = 30;
+        public const int TotalGoal = 6;
+        public const int FirstGoalLastGoal = 14;
+
+        public const int MixParlay = 9;
+        public const int SystemParlay = 29;
+        public const int MixParlayVirtualSports2 = 2799;
+
+        public const int _5MinOU = 51;
+        public const int _15MinOU = 52;
+        public const int _30MinOU = 53;
+        public const int _45MinOU = 54;
+        public const int _60MinOU = 55;
+        public const int EndOfDayOU = 56;
+
+        public const int _5MinOE = 61;
+        public const int _15MinOE = 62;
+        public const int _30MinOE = 63;
+        public const int _45MinOE = 64;
+        public const int _60MinOE = 65;
+        public const int EndOfDayOE = 66;
+
+        public const int WinToteOdds = 31;
+        public const int PlateToteOdds = 32;
+        public const int WinPlaceToteOdds = 33;
+
+        public const int WinFixedOdds = 41;
+        public const int PlaceFixedOdds = 42;
+        public const int WinPlaceFixedOdds = 43;
+
+        public const int CasinoGames = 71;
+        public const int P2P = 72;
+        public const int P2PGames = 1000;
+        public const int Baccarat = 1101;
+        public const int Roulette = 1102;
+
+        public const int OddEven = 86;
+
+        public const int KickOff = 18999;
+        public const int VirtualSportHandicap = 1201;
+        public const int VirtualSportOverUnder = 1203;
+        public const int VirtualSportCorrectScore = 1204;
+        public const int _1X2VirtualSport = 1205;
+        public const int VirtualSportTotalGoal = 1206;
+        public const int VirtualSportDoubleChance = 1224;
+
+        public const int MinVirtualSportBetType = 1201;
+        public const int MaxVirtualSportBetType = 1299;
+
+        public const int StartSetXBetTypeRange = 1311;
+        public const int EndSetXBetTypeRange = 1334;
+
+        public const int MinSportingSolutionBetType = 1301;
+        public const int MaxSportingSolutionBetType = 1334;
+
+        public const int Outright = 10;
+        public const int RNGCasinoBonus = 72;
+        public const int Win = 31;
+        public const int Place = 32;
+        public const int WinPlace = 33;
+        public const int WinUKTote = 41;
+        public const int PlaceUKTote = 42;
+        public const int WinPlaceUKTote = 43;
+        public const int VirtualSportWin = 1231;
+        public const int VirtualSportPlace = 1232;
+        public const int VirtualSportWinPlace = 1233;
+        public const int MoneyLine = 20;
+
+        public const int GoldDeluxeBaccarat = 1701;
+        public const int GoldDeluxeRoulette = 1702;
+        public const int GoldDeluxeParlayBaccarat = 1703;
+
+        public const int MetricGaming60sofKick = 801;
+        public const int MetricGamingEndBetType = 899;
+        public const int BetTradeSold = 901;
+        public const int BetTradeBought = 902;
+        public const int BetTradeCommision = 903;
+
+        public const int MicroGamingBaccarat = 2001;
+        public const int MicroGamingEndBetType = 2009;
+
+        public const int ColossusBetsSummary = 18000;
+        public const int ColossusBetsPoolBet = 18001;
+        public const int ColossusBetsCashOut = 18002;
+        public const int ColossusBetsWinningShare = 18003;
+        public const int ColossusBetsConsolationPrize = 18004;
+        public const int ColossusBetsJackpotPrize = 18005;
+        public const int ColossusBetsBonusPrize = 18006;
+
+        public const int CockFighting = 1003;
+
+        public const int FastMarketNext1Minutes = 221;
+        public const int FastMarketNext5Minutes = 222;
+        public const int FastMarketWhatWillHappenFirstInNext1Minute = 223;
+        public const int FastMarketWhatWillHappenFirstInNext5Minutes = 224;
+        public const int FastMarketNext1MinuteSetPiece = 225;
+
+        public static bool IsNG2BetType(int betType) { return betType >= 2501 && betType <= 2699; }
+
+        public const int CashOut = 911;
+        public const int CashOutBought = 912;
+
+        public static bool IsJackpotContribution(int betType)
+            => betType == 2198 || betType == 2398 || betType == 2998;
+    }
+}
