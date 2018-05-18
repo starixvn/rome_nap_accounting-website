@@ -924,7 +924,7 @@ function getBullfightingParam(refNo, custId) {
         url: "ThirdParty/Result",
         title: "Bullfighting Result",
         jsonParam: { custId: custId, gameId: refNo, productId: 30 },
-        width: 750,
+        width: 870,
         height: 500
     };
 }

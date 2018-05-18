@@ -23,7 +23,7 @@
         {
             var productName = CacheRef.GetProductName(message.ProductId);
             var productService = serviceFactory.CreateProductResultService(message.ProductId);
-            var result = productService.GetResultLink(message);
+            var result = productService.GetDetailLink(message);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, result));
         }
