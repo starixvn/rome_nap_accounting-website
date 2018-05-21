@@ -386,7 +386,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.0.6-mailinglist\lib\net40\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.0.6\lib\net40\Fanex.Tarus.Admin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Balance, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
