@@ -15,7 +15,8 @@ public partial class InternalView : System.Web.UI.Page
     {
         I1 = 1,
         I7 = 7,
-        I9 = 9
+        I9 = 9,
+        I8 = 8
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -79,6 +80,8 @@ public partial class InternalView : System.Web.UI.Page
                 return ConfigurationManager.AppSettings["int_agent_url7"];
             case AlphaSiteCode.I9:
                 return ConfigurationManager.AppSettings["int_agent_url9"];
+            case AlphaSiteCode.I8:
+                return ConfigurationManager.AppSettings["int_agent_url8"];
             default:
                 return ConfigurationManager.AppSettings["int_agent_url"];
         }
