@@ -256,7 +256,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     {
                         // get record value
                         var record = new RecordLogin();
-                        record.ID = CastAide.AsInt32(row["logid"], 0);
+                        record.ID = CastAide.AsInt64(row["logid"], 0);
                         record.Aid = CastAide.AsInt32(row["actionid"], 0);
                         record.Act = CastAide.AsString(row["actionname"], "");
                         record.Date = CastAide.AsString(row["logdate"]);
@@ -323,7 +323,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     {
                         // get record value
                         var record = new RecordCredit();
-                        record.ID = CastAide.AsInt32(row["logid"], 0);
+                        record.ID = CastAide.AsInt64(row["logid"], 0);
                         record.Aid = CastAide.AsInt32(row["actionid"], 0);
                         record.Act = CastAide.AsString(row["actionname"], "");
                         record.Date = CastAide.AsString(row["logdate"]);
@@ -351,7 +351,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private RecordSp _GetLogRecord(DataRow row)
         {
             var record = new RecordSp();
-            record.ID = CastAide.AsInt32(row["logid"], 0);
+            record.ID = CastAide.AsInt64(row["logid"], 0);
             record.Aid = CastAide.AsInt32(row["actionid"], 0);
             record.Act = CastAide.AsString(row["actionname"], "");
             record.Date = CastAide.AsString(row["logdate"]);
