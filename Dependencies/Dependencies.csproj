@@ -110,7 +110,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Bullfighting, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Bullfighting.1.1.0-beta5\lib\net40\Fanex.BetList.Bullfighting.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Bullfighting.1.1.0\lib\net40\Fanex.BetList.Bullfighting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CashOut, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -133,8 +133,8 @@
       <HintPath>..\packages\Fanex.BetList.GoldDeluxe.1.0.5.1\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Keno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Keno.1.0.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
+    <Reference Include="Fanex.BetList.Keno, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Keno.1.1.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.KenoLottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -378,7 +378,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.ThirdParty, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.ThirdParty.1.0.5.0-Bullfighting-04\lib\net40\Fanex.Result.ThirdParty.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.ThirdParty.1.0.5.0\lib\net40\Fanex.Result.ThirdParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
