@@ -804,6 +804,9 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case 801 <= bettype && bettype <= 899: // Metric Gaming.
             return getMetricGamingParam(matchid, bettype, sporttype, betid);
 
+        case 2501 <= bettype && bettype <= 2699:
+            return getNG2Param(matchid);
+
         default:
             return undefined;
     }
@@ -950,6 +953,16 @@ function getLucky3Param(matchId) {
         jsonParam: { matchId: matchId },
         width: 750,
         height: 200
+    };
+}
+
+function getNG2Param(matchId) {
+    return {
+        url: "Report/ViewNG2Result.aspx",
+        title: "Result",
+        jsonParam: { matchId: matchId },
+        width: 500,
+        height: 500
     };
 }
 
