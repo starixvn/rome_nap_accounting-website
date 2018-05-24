@@ -50,7 +50,7 @@ else
     </div>
 }
 
-@if (!ticketStatus.Equals("running"))
+@if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
 {
     <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
         @switch (betdetail.Ticket.BetTypeId)
@@ -85,7 +85,7 @@ else
     </div>
 
 
-    if (!ticketStatus.Equals("running"))
+    if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
     {
         <div class="margin-top-5">
             @comm.Format(2)

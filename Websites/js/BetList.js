@@ -703,7 +703,7 @@ function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
 function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {
     var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc);
 
-    resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid);
+    resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
 
     var handicap2 = 0
     if (isFM2(bettype)) {
@@ -783,7 +783,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
     }
 }
 
-function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid) {
+function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
@@ -806,6 +806,8 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
 
         case 2501 <= bettype && bettype <= 2699:
             return getNG2Param(matchid);
+        case bettype === 1004:
+            return getBullfightingParam(refno, custId);
 
         default:
             return undefined;
@@ -913,6 +915,16 @@ function getPPParam(matchcode, betcheck) {
         title: "PP Result",
         jsonParam: { custId: betcheck, gameId: matchcode, productId: 32 },
         width: 945,
+        height: 500
+    };
+}
+
+function getBullfightingParam(refNo, custId) {
+    return {
+        url: "ThirdParty/Result",
+        title: "Bullfighting Result",
+        jsonParam: { custId: custId, gameId: refNo, productId: 30 },
+        width: 870,
         height: 500
     };
 }
