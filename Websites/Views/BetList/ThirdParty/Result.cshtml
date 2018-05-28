@@ -1,0 +1,28 @@
+﻿@using Fanex.Result.ThirdParty.Models.Views
+@model ThirdPartyResultViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="Stylesheet"
+          href="@Url.Content("~/Views/BetList/Style/ThirdParty.css")" />
+    <title>@Model.Title</title>
+</head>
+<body>
+    <div class="third-party-result">
+        @{
+            var result = Model.Result;
+            if (result.IsSuccess)
+            {
+                <iframe src="@result.Value" frameborder="0" class="handhistory-iframe"></iframe>
+            }
+            else
+            {
+                <div class='alertboxerr'><span class='icon-error'></span>@result.Value</div>
+            }
+        }
+    </div>
+</body>
+</html>

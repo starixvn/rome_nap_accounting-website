@@ -3,21 +3,26 @@
 @using Sunplus.Accounting.Core.Configurations;
 @using Fanex.Tarus.Infrastructure.Caching;
 @using RemotingRef;
-
 @{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet")
         .Append(ng2Text)
-        .Append("/Fishing World");
+        .Append("/Fishing World")
+        .Append("/Lottery");
 
     int bullfightingId = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting;
     if (bullfightingId != 0)
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
     }
-        allowedProducts.Append("/").Append(CacheRef.GetProductName(bullfightingId));
+
+    var productIdPP = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPP;
+    if (productIdPP != 0)
+    {
+        allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdPP));
+    }
 }
 <html>
 <head>
@@ -28,7 +33,6 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
-
     <style type="text/css">
         .filterContent table {
             line-height: 20px;
@@ -72,7 +76,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="maincontent">
             <div class="filterBox">
                 <div id="bet-list-ref-no" class="filterContent">
@@ -89,7 +92,6 @@
                             <col style="width: 60px">
                             <col style="width: 120px">
                         </colgroup>
-
                         <tr class="search-by-ref">
                             <td>
                                 <input type="radio" id="rdByRef" name="search-type" value="1" checked />
@@ -101,7 +103,6 @@
                                 <input type="text" id="txtRefNo" />
                             </td>
                         </tr>
-
                         <tr>
                             <td></td>
                             <td class="text-left" colspan="8">
@@ -112,7 +113,6 @@
                                 </div>
                             </td>
                         </tr>
-
                         <tr class="search-by-product">
                             <td>
                                 <input type="radio" id="rdByProduct" name="search-type" value="2" />
@@ -130,6 +130,10 @@
                                     @if (bullfightingId != 0)
                                     {
                                         <option value="@bullfightingId">@CacheRef.GetProductName(bullfightingId)</option>
+                                    }
+                                    @if (productIdPP != 0)
+                                    {
+                                        <option value="@productIdPP">@CacheRef.GetProductName(productIdPP)</option>
                                     }
                                 </select>
                             </td>
@@ -181,7 +185,6 @@
                             </td>
                         </tr>
                     </table>
-
                     <div id="errMsg" style="display: none">
                         <div class="alertboxerr">
                             <div class="msg"></div>
@@ -190,11 +193,9 @@
                 </div>
             </div>
         </div>
-
         <div id="betListContent" style="margin-top: 10px;">
         </div>
     </div>
-
     <div id="Popup" style="display: none">
     </div>
     <script type="text/javascript">
@@ -209,11 +210,11 @@
                 "@Url.Content("~/js/BlockUI.js")",
                 "@Url.Content("~/js/dialogbox.js")",
                 "@Url.Content("~/js/common.js")",
-                "@Url.Content("~/js/BetList.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Views/BetList/BetListByRefNo/Scripts/BetListByRefNo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
+                "@Url.Content("~/js/BetList.js?v=")@WebSettings.Version",
+                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@WebSettings.Version",
+                "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?v=")@WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetListByRefNo/Scripts/BetListByRefNo.js?ver=")@WebSettings.Version",
+                "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@WebSettings.Version");
     </script>
 </body>
 </html>

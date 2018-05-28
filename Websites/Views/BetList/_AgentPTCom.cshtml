@@ -1,6 +1,6 @@
-﻿@using Fanex.BetList.Accounting.Models;
-@using Fanex.BetList.Accounting.Extensions;
-@using Fanex.BetList.Accounting.Core;
+﻿@using Fanex.Tarus.BetList.Models
+@using Fanex.Tarus.BetList.Core
+@using Fanex.Tarus.BetList.Extensions
 @{
     TicketDetail betdetail = Model;
     string ticketStatus = betdetail.Ticket.Status.ToLower();
@@ -50,7 +50,7 @@ else
     </div>
 }
 
-@if (!ticketStatus.Equals("running"))
+@if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
 {
     <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
         @switch (betdetail.Ticket.BetTypeId)
@@ -65,6 +65,7 @@ else
                 break;
         }
     </div>
+
 }
 
 @if (betlistHelper.IsShowCommission(betdetail))
@@ -83,7 +84,7 @@ else
                 break;
         }
     </div>
-    if (!ticketStatus.Equals("running"))
+    if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
     {
         <div class="margin-top-5">
             @comm.Format(2)

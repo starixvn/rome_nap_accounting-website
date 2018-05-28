@@ -503,6 +503,18 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showPPDetails(transId, winlossDate, custId, transType) {
+    var voidbridgeParam = {
+        url: "VoidbridgeBetList/BetDetails",
+        title: "PP Details",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(voidbridgeParam);
+}
+
 function showGlobalGaming(transId, winlossDate, custId, transType) {
     var globalGamingParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -691,7 +703,7 @@ function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
 function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {
     var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc);
 
-    resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid);
+    resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
 
     var handicap2 = 0
     if (isFM2(bettype)) {
@@ -718,8 +730,7 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
     openResultsPopUp(defaultResultParam);
 }
 
-function isFM2(betttype)
-{
+function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
@@ -766,6 +777,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 219: // Fishing World.
             return getFishingWorldParam(matchcode, betcheck);
 
+        case 248: //PP
+            return getPPParam(matchcode, betcheck);
+
         case 250: // AGCasino.
             return getAGCasinoParam(refno, bettype);
 
@@ -774,7 +788,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
     }
 }
 
-function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid) {
+function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
@@ -794,6 +808,11 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
 
         case 801 <= bettype && bettype <= 899: // Metric Gaming.
             return getMetricGamingParam(matchid, bettype, sporttype, betid);
+
+        case 2501 <= bettype && bettype <= 2699:
+            return getNG2Param(matchid);
+        case bettype === 1004:
+            return getBullfightingParam(refno, custId);
 
         default:
             return undefined;
@@ -895,6 +914,26 @@ function getMacauGamesParam(matchcode, betcheck) {
     };
 }
 
+function getPPParam(matchcode, betcheck) {
+    return {
+        url: "ThirdParty/Result",
+        title: "PP Result",
+        jsonParam: { custId: betcheck, gameId: matchcode, productId: 32 },
+        width: 945,
+        height: 500
+    };
+}
+
+function getBullfightingParam(refNo, custId) {
+    return {
+        url: "ThirdParty/Result",
+        title: "Bullfighting Result",
+        jsonParam: { custId: custId, gameId: refNo, productId: 30 },
+        width: 870,
+        height: 500
+    };
+}
+
 function getFishingWorldParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewGlobalGamingResult.aspx",
@@ -931,6 +970,16 @@ function getLucky3Param(matchId) {
         jsonParam: { matchId: matchId },
         width: 750,
         height: 200
+    };
+}
+
+function getNG2Param(matchId) {
+    return {
+        url: "Report/ViewNG2Result.aspx",
+        title: "Result",
+        jsonParam: { matchId: matchId },
+        width: 500,
+        height: 500
     };
 }
 

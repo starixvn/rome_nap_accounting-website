@@ -3777,4 +3777,22 @@
   <data name="Disable207_1004" xml:space="preserve">
     <value>Disabled Bullfighting</value>
   </data>
+  <data name="Disable202_1517" xml:space="preserve">
+    <value>Disabled Mini Keno</value>
+  </data>
+  <data name="Disable202_1519" xml:space="preserve">
+    <value>Disabled Spring</value>
+  </data>
+  <data name="Disable202_1520" xml:space="preserve">
+    <value>Disabled Summer</value>
+  </data>
+  <data name="Disable202_1521" xml:space="preserve">
+    <value>Disabled Autumn</value>
+  </data>
+  <data name="Disable202_1522" xml:space="preserve">
+    <value>Disabled Winter</value>
+  </data>
+  <data name="Disable202_1524" xml:space="preserve">
+    <value>Disabled Mini Keno 2</value>
+  </data>
 </root>

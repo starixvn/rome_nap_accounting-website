@@ -1,7 +1,5 @@
-﻿@using Fanex.BetList.Accounting.App_GlobalResources;
-@using Fanex.BetList.Accounting.Constants;
-@using Fanex.BetList.Accounting.Models
-@using Fanex.BetList.Accounting.Resources;
+﻿@using Fanex.Tarus.BetList.Models
+@using Fanex.Tarus.BetList.Resources
 @{ Layout = null; }
 @model IEnumerable<TicketDetail>
 
@@ -28,13 +26,13 @@
                 <table class="grid-fixed-table col_header_content">
                     <thead>
                         <tr>
-                            <th><div class="table-cell height34 width30">@Labels.No</div></th>
-                            <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
-                            <th><div class="table-cell height34 width300">@Labels.Choice</div></th>
-                            <th><div class="table-cell height34 width50">@Labels.Odds</div></th>
-                            <th><div class="table-cell height34 width50">@Labels.Stake</div></th>
-                            <th><div class="table-cell height34 width60">@Labels.Win_Loss</div></th>
-                            <th><div class="table-cell height34 width80">@Labels.Status</div></th>
+                            <th><div class="table-cell height34 width30">@BetListResources.No</div></th>
+                            <th><div class="table-cell height34 width120">@BetListResources.Trans_Time</div></th>
+                            <th><div class="table-cell height34 width300">@BetListResources.Choice</div></th>
+                            <th><div class="table-cell height34 width50">@BetListResources.Odds</div></th>
+                            <th><div class="table-cell height34 width50">@BetListResources.Stake</div></th>
+                            <th><div class="table-cell height34 width60">@BetListResources.Win_Loss</div></th>
+                            <th><div class="table-cell height34 width80">@BetListResources.Status</div></th>
                             <th><div class="table-cell height34 width60">Super<br />PT/Comm</div></th>
                             <th><div class="table-cell height34 width60">Master<br />PT/Comm</div></th>
                             <th><div class="table-cell height34 width60">Agent<br />PT/Comm</div></th>
@@ -48,13 +46,13 @@
                 <table id="tblContent" class="grid-fixed-table col_header_content">
                     <thead>
                         <tr>
-                            <th><div class="table-cell height34 width30">@Labels.No</div></th>
-                            <th><div class="table-cell height34 width120">@Labels.Trans_Time</div></th>
-                            <th><div class="table-cell height34 width300">@Labels.Choice</div></th>
-                            <th><div class="table-cell height34 width50">@Labels.Odds</div></th>
-                            <th><div class="table-cell height34 width50">@Labels.Stake</div></th>
-                            <th><div class="table-cell height34 width60">@Labels.Win_Loss</div></th>
-                            <th><div class="table-cell height34 width80">@Labels.Status</div></th>
+                            <th><div class="table-cell height34 width30">@BetListResources.No</div></th>
+                            <th><div class="table-cell height34 width120">@BetListResources.Trans_Time</div></th>
+                            <th><div class="table-cell height34 width300">@BetListResources.Choice</div></th>
+                            <th><div class="table-cell height34 width50">@BetListResources.Odds</div></th>
+                            <th><div class="table-cell height34 width50">@BetListResources.Stake</div></th>
+                            <th><div class="table-cell height34 width60">@BetListResources.Win_Loss</div></th>
+                            <th><div class="table-cell height34 width80">@BetListResources.Status</div></th>
                             <th><div class="table-cell height34 width60">Super<br />PT/Comm</div></th>
                             <th><div class="table-cell height34 width60">Master<br />PT/Comm</div></th>
                             <th><div class="table-cell height34 width60">Agent<br />PT/Comm</div></th>
@@ -64,7 +62,7 @@
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="10" class="c">@BetList.noInfo</td>
+                                <td colspan="10" class="c">@BetListResources.noInfo</td>
                             </tr>
                         }
                         else
