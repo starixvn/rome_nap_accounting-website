@@ -1,0 +1,26 @@
+﻿body, .maincontent { margin: 0; padding: 0; }
+.maincontent { width: 768px; }
+.alertboxerr, .alertboxscc { height: 25px; line-height: 25px; width: 764px; }
+.alertboxerr div, .alertboxscc div { padding: 0 0 0 21px; margin-left:5px; }
+.sourceAccount { padding: 5px 0; /*line-height: 25px; height: 25px;*/ }
+.tblcollapse { text-align: left; }
+.tblcollapse th, .tblcollapse td { padding: 4px; }
+.tblcollapse .title_1 th { background-color: #cadceb; }
+.tblGeneralInfo { margin: 10px 0; }
+.tblGeneralInfo label { font-weight: normal; }
+.tblGeneralInfo td input[type="text"], .tblGeneralInfo td input[type="password"] { height: 18px; line-height: 18px; }
+.tblGeneralInfo td input[type="text"], .tblGeneralInfo td input[type="password"], .tblGeneralInfo td select { width: 70%; }
+.warning { color: #f40000; font-weight: bold; }
+#tblProgress tr:hover { background-color: #ffddfe; }
+#txtUsernames {
+  border: 1px solid #818181;
+  font-family: Tahoma, Arial, helvetica, sans-serif;
+  font-size: 11px;
+  padding: 4px;
+  outline: none;
+  resize: vertical;
+  width: 99%;
+}
+.statusInprogress { color: #000; font-weight: bold; }
+.statusCreated { color: #618e11; font-weight: bold; }
+.statusError { color: #f40000; font-weight: bold; }

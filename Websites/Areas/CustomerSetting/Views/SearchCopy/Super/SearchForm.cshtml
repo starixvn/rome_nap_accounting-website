@@ -8,7 +8,7 @@
     <div class="row username">
         <div class="grid2">
             <span style="margin-left: 13px">Username</span></div>
-        <div class="grid6">
+        <div class="grid7">
             <input id="existedUserName" type="text" ng-model="existedUser.username" size="30"
                 required />
             <span id="checkExisted" class="success" style="display: none"></span>
@@ -31,5 +31,10 @@
     &nbsp;</div>
 <div  class="btnNextR hand"  ng-mousedown="step1Next();">
     <div class="btnNextL">
-    <span>Next ></span></div>
+    <span>Single Copy</span></div>
+</div>
+<div class="btnNextR hand" ng-mousedown="step1Multiple();">
+    <div class="btnNextL">
+        <span>Multiple Copy</span>
+    </div>
 </div>
