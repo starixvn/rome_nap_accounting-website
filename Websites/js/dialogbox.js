@@ -11,7 +11,6 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
 
     dialoghtml.appendTo($("body"));
 
-
     $("#dialog-modal").dialog({
         //resizable: resizable,
         modal: modal,
@@ -39,7 +38,7 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
                 currentExecFrame.onclose();
                 setTimeout('currentExecFrame=null;', 500);
             }
-
+            jQuery("#innerFrame").attr('src', 'about:blank');
             $("#dialog-modal").remove();
         }
     });
@@ -97,12 +96,7 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
             jQuery("#innerFrame" + popupId).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") }).show();
         },
         close: function (event, ui) {
-            //            if (currentExecFrame != null && currentExecFrame.onclose) {
-            //                currentExecFrame.onclose();
-            //                setTimeout('currentExecFrame=null;', 500);
-            //            }
-            //            jQuery("#innerFrame" + popupId).empty();
-
+            jQuery("#innerFrame" + popupId).attr('src', 'about:blank');
             jQuery('#dialog-modal' + popupId).remove();
             if (typeof fnRecall == 'function') {
                 fnRecall();
