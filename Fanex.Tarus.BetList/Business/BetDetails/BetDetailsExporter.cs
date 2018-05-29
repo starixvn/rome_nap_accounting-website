@@ -20,6 +20,8 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using Resources;
+    using Sunplus.Accounting.Business;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -122,6 +124,7 @@
                 int index = 0;
                 GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
                 ITicketHelper ticketHelper = new TicketHelper();
+                ticketHelper.IsVnIp = IpManagement.IsVNIP;
                 var ticketData = new List<ITicketData>();
                 ITicket ticket;
 
@@ -137,7 +140,7 @@
                         .AddOdds(ticket, ticketData, funcGetOddsTypeName)
                         .AddStake(ticket)
                         .AddWinLoss(ticket)
-                        .AddStatus(ticket, ticketHelper, ticketData, true)
+                        .AddStatus(ticket, ticketHelper, ticketData, !IpManagement.ReplaceVNIP(ticket.IP).Equals(WebSettings.IPVNReplace))
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
