@@ -375,8 +375,11 @@
     <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-	<Function Name="Sync Casino Tool">
-		<Setting Key="Acc_CustomerSelRnGStatus" SpName="Acc_CustomerSelRnGStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
-	</Function>	
+  <Function Name="Sync Casino Tool">
+    <Setting Key="Acc_CustomerSelRnGStatus" SpName="Acc_CustomerSelRnGStatus" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="NAP API - Update Dangerous Customers">
+    <Setting Key="Acc_CustomerUpdDangerCustList" SpName="Acc_CustomerUpdDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
