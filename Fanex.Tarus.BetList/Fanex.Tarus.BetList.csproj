@@ -106,8 +106,8 @@
       <HintPath>..\packages\Fanex.BetList.PP.1.1.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.4\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
+    <Reference Include="Fanex.BetList.RnGCasino, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.1.0.1.6-beta2\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
