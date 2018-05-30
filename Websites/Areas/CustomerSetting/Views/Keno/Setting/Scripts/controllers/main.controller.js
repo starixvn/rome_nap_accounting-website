@@ -114,7 +114,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                                 $scope.showMesseges('<div class="alertsuccess">' + resources.successful + '</div>', true);
                                 $timeout(function () {
                                     location.reload();
-                                    parent.frames["centerFr"].location.reload();
+                                    (parent.fContent || parent.centerFr).location.reload();
                                 }, 5000);
                             } else {
                                 $scope.showMesseges(html, false);

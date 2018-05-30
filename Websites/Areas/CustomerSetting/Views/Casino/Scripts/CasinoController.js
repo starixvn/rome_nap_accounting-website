@@ -113,10 +113,10 @@
 
     var ProcessUpdate = function (custIdIndex, ondone) {
         CustomerModel.isAutoReset = isAutoReset;
-        if (CustomerModel.casinoSync) {            
+        if (CustomerModel.casinoSync) {
             CustomerModel.maxTransferCredit = maxTransferCredit;
         }
-        else {            
+        else {
             CustomerModel.maxTransferCredit = CustomerModel.defaultTransferCredit = defaultTransferCredit;
         }
         var data = {
@@ -130,7 +130,7 @@
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
         data.username = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
-        
+
         $.ajax({
             url: toUrl(actionName),
             data: JSON.stringify(data),
@@ -176,7 +176,7 @@
 
                     setTimeout(function () {
                         location.reload();
-                        parent.frames["centerFr"].location.reload();
+                        (parent.fContent || parent.centerFr).location.reload();
                     }, 2000);
                     return true;
                 }
