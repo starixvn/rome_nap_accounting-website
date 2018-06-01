@@ -345,8 +345,12 @@
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-	<Function Name="Sync Casino Tool">
-		<Setting Key="Acc_CustomerSelRnGStatus" SpName="Acc_CustomerSelRnGStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-		<Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
-	</Function>
+  <Function Name="Sync Casino Tool">
+    <Setting Key="Acc_CustomerSelRnGStatus" SpName="Acc_CustomerSelRnGStatus" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="NAP API - Update Dangerous Customers">
+    <Setting Key="Acc_CustomerUpdDangerCustList" SpName="Acc_CustomerUpdDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+
 </Functions>

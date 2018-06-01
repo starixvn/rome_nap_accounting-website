@@ -35,6 +35,7 @@ BetList.BetListByRefNo = (function ($) {
                 }
 
                 $("a:[id^='hidden']").each(function () {
+                    this.click();
                     $(this).removeAttr("href");
                 });
                 $("#result").attr('style', 'cursor: pointer;cursor: hand;');
@@ -218,7 +219,8 @@ BetList.BetListByRefNo = (function ($) {
     };
 
     return {
-        init: init
+        init: init,
+        gridOpts: gridOpts
     }
 
 })(jQuery);
@@ -227,8 +229,8 @@ $(document).ready(function () {
     BetList.BetListByRefNo.init($("#bet-list-ref-no"));
 });
 
-function showCombMPDetail(tranid, date, refno, betid, matchid) {
-    var title = "System Parlay";
+function showCombMPDetail(tranid, date, refno, betid, matchid, betteam) {
+    var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
     var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
 
     if (combinationOfferNameContainer.is("span")) {
@@ -247,5 +249,85 @@ function showDetail(id) {
         e.style.display = 'block';
     }
 
-    $("#BetlistByRefNo").gridScroller(BetList.gridOpts);
+    $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+}
+
+function showMP(transid, refno) {
+    var divEvent = $("#divEvent_" + transid);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetList/GetMixParlayDetail",
+                data: "transid=" + transid + "&refno=" + refno,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divEvent.css("display", "");
+            $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+        }
+    }
+    else {
+        divEvent.css("display", "none");
+        $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+    }
+}
+
+function showCombMP(transId, transIndex, refNo) {
+    showMP(transId, refNo);
+}
+
+function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
+    var divChoiceRight = $("#choice_right_" + transId);
+    var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
+    var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
+
+    if (divParlay.css("display") === "none") {
+        if ($.trim(divParlay.html()) === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            var params = [
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+            ];
+
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetList/GetMixParlayDetail",
+                data: params.join(""),
+                success: function (result) {
+                    divParlay.html(result).css("display", "block");
+                    divCombinationOfferName.addClass("hide");
+                    $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divParlay.css("display", "block");
+            divCombinationOfferName.toggleClass("hide");
+            $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+        }
+    }
+    else {
+        divParlay.css("display", "none");
+        divCombinationOfferName.toggleClass("hide");
+        $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+    }
 }
