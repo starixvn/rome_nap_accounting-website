@@ -26,16 +26,19 @@
 
     validateInput: function (e) {
         var text = this.value
-              .replace(/[^\d.]/g, '')
-              .replace(/(^[\d]{5})[\d]/g, '$1')
-              .replace(/(\..*)\./g, '$1')
-              .replace(/(\.[\d]{4})./g, '$1');
+            .replace(/[^\d.]/g, '')
+            .replace(/(^[\d]{5})[\d]/g, '$1')
+            .replace(/(\..*)\./g, '$1')
+            .replace(/(\.[\d]{4})./g, '$1');
 
-        if (text.indexOf(".") === text.length - 1) {
-            this.value = text;
+        var indexOfDot = text.indexOf('.');
+        var realNumber = indexOfDot === -1 ? parseInt(text) : parseInt(text.substring(0, indexOfDot));
+        var fraction = indexOfDot === -1 ? '' : text.substring(indexOfDot);
+
+        if ($.isNumeric(realNumber)) {
+            this.value = realNumber.toLocaleString("en-US", { maximumFractionDigits: 4 }) + fraction;
         } else {
-            var number = parseFloat(text);
-            this.value = (number < 1000) ? number : number.toLocaleString("en-US", { maximumFractionDigits: 4 });
+            this.value = text;
         }
     },
 
