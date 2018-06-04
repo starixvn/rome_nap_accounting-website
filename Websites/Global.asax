@@ -61,7 +61,7 @@
             .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
         var productStatusConfig = new ProductStatusConfiguration()
             .UseAuthorizeService(new ProductStatusAuthorizeService())
-            .UseUserSession(new ProductStatusUser())
+            .UseProductStatusActor(new ProductStatusActor())
             .SetUnAuthorizedUrl("~/AccessDenied.aspx");
         ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
     }
