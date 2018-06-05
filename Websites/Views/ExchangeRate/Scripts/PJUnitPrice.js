@@ -33,7 +33,7 @@
 
         var indexOfDot = text.indexOf('.');
         var realNumber = indexOfDot === -1 ? parseInt(text) : parseInt(text.substring(0, indexOfDot));
-        var fraction = indexOfDot === -1 ? '' : text.substring(indexOfDot);
+        var fraction = indexOfDot === -1 ? '' : text.substring(indexOfDot, indexOfDot + 5);
 
         if ($.isNumeric(realNumber)) {
             this.value = realNumber.toLocaleString("en-US", { maximumFractionDigits: 4 }) + fraction;
@@ -61,7 +61,7 @@
         var pjUnitPrice = row.find("input[editor][pjunitprice]").val();
         var self = this;
 
-        if (!this.isPositiveNumeric(pjUnitPrice)) {
+        if (!this.isPositiveNumeric(pjUnitPrice.replace(/\,/g, ""))) {
             this.showErr("PJUnitPrice is invalid!");
             return;
         }
@@ -102,7 +102,10 @@
 
     isPositiveNumeric: function (n) {
         var number = parseFloat(n);
-        return !isNaN(parseFloat(number)) && isFinite(number) && number >= 0;
+        return !isNaN(parseFloat(number))
+            && isFinite(number)
+            && number >= 0
+            && number <= 99999.9999;
     },
 
     showErr: function (msg) {
