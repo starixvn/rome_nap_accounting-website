@@ -399,4 +399,7 @@
   <Function Name="NAP API - Update Dangerous Customers">
     <Setting Key="Acc_CustomerUpdDangerCustList" SpName="Acc_CustomerUpdDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="NAP - Customer Check Allowed Downlines">
+    <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
