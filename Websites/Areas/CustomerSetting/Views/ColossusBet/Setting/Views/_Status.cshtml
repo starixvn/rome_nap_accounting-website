@@ -1,11 +1,29 @@
 ﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
 @model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
+@{
+    var levelLabel = string.Empty;
+    switch ((int)Model.CustomerInformationPartial.RoleId)
+    {
+        case 4:
+            levelLabel = Messages.Super;
+            break;
+        case 3:
+            levelLabel = Messages.Master;
+            break;
+        case 2:
+            levelLabel = Messages.Agent;
+            break;
+        default:
+            levelLabel = Messages.Member;
+            break;
+    }
+}
 <table class="tableColor tableWidth" ng-controller="statusController">
     <tr>
         <td colspan="4" class="header c b">
-            <span>@Messages.Status</span>
+            <span>@Messages.ProductStatus</span>
             @if (!Model.CustomerInformationPartial.ReadOnly)
-            {
+        {
                 <input ng-class-name="btnSave" check-disable-element ng-model="statusPartial.IsStatusUpdated"
                        ng-click="!statusPartial.IsStatusUpdated||updated(true, 'StatusPartial')" type="button" />
             }
@@ -16,7 +34,7 @@
             <span class="b padding-left30">@Messages.ColossusBet</span>
             <div class="divInline padding-left30">
                 <input ng-disabled="!statusPartial.Upline.IsEnabled" type="checkbox" ng-model="statusPartial.IsEnabled" />
-                @Messages.Enable
+                @levelLabel
             </div>
         </td>
     </tr>
