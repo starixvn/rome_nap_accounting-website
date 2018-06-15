@@ -14,12 +14,32 @@
         var pjUnitPrice = row.find("div[pjunitprice]");
         pjUnitPrice.hide();
         var value = pjUnitPrice.html();
-        pjUnitPrice.parent().append("<input type='text' class='col120' editor='true' pjunitprice='true' style='text-align:right' value='" + value.trim() + "' />");
+        pjUnitPrice.parent()
+            .append("<input type='text' maxlength='11' class='col120' editor='true' pjunitprice='true' style='text-align:right' value='" + value.trim() + "' />");
+        pjUnitPrice.parent().find("input[pjunitprice]").on('input', this.validateInput);
 
         var divEdit = $(target).parent();
         divEdit.find("img[alt='Edit']").hide();
         divEdit.find("img[alt='Save']").show();
         divEdit.find("img[alt='Cancel']").show();
+    },
+
+    validateInput: function (e) {
+        var text = this.value
+            .replace(/[^\d.]/g, '')
+            .replace(/(^[\d]{5})[\d]/g, '$1')
+            .replace(/(\..*)\./g, '$1')
+            .replace(/(\.[\d]{4})./g, '$1');
+
+        var indexOfDot = text.indexOf('.');
+        var realNumber = indexOfDot === -1 ? parseInt(text) : parseInt(text.substring(0, indexOfDot));
+        var fraction = indexOfDot === -1 ? '' : text.substring(indexOfDot, indexOfDot + 5);
+
+        if ($.isNumeric(realNumber)) {
+            this.value = realNumber.toLocaleString("en-US", { maximumFractionDigits: 4 }) + fraction;
+        } else {
+            this.value = text;
+        }
     },
 
     cancelClick: function (e) {
@@ -41,7 +61,7 @@
         var pjUnitPrice = row.find("input[editor][pjunitprice]").val();
         var self = this;
 
-        if (!this.isNumeric(pjUnitPrice)) {
+        if (!this.isPositiveNumeric(pjUnitPrice.replace(/\,/g, ""))) {
             this.showErr("PJUnitPrice is invalid!");
             return;
         }
@@ -80,8 +100,12 @@
         this.unBlockUI();
     },
 
-    isNumeric: function (n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
+    isPositiveNumeric: function (n) {
+        var number = parseFloat(n);
+        return !isNaN(parseFloat(number))
+            && isFinite(number)
+            && number >= 0
+            && number <= 99999.9999;
     },
 
     showErr: function (msg) {
