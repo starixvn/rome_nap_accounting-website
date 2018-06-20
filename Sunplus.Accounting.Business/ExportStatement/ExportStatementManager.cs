@@ -11,13 +11,13 @@ using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Excels.VirtualRate;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
 
 /// <summary>
@@ -34,13 +34,15 @@ namespace Sunplus.Accounting.Business.ExportStatement
         public string ReadUsers()
         {
             string userslistvalid = "";
-            bool IsUploadFileSuccess = true;
             var html = new StringBuilder();
             int rows = 0;
             int success = 1;
+            var request = HttpContext.Current.Request;
+            var contentLength = request.ContentLength;
+
             if (!UserController.OnlineUserUpdate(AppSession.OnAccId))
             {
-                string appPath = HttpContext.Current.Request.ApplicationPath;
+                string appPath = request.ApplicationPath;
                 if (appPath != "/") appPath += "/";
                 html.Append(
                     "<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" +
@@ -48,16 +50,13 @@ namespace Sunplus.Accounting.Business.ExportStatement
             }
             else
             {
-                string htmlData = "", strLocation = "";
-                string FileSize = "<input type='hidden' id='FileSize' value='" +
-                                  HttpContext.Current.Request.ContentLength + "'/>";
+                string htmlData = "";
+                string FileSize = "<input type='hidden' id='FileSize' value='" + contentLength + "'/>";
                 try
                 {
-                    if (HttpContext.Current.Request.ContentLength < 1024000)
+                    if (contentLength < 1024000)
                     {
-                        string strFileName = AppSession.Username;
-
-                        if (HttpContext.Current.Request.Files.Count == 0)
+                        if (request.Files.Count == 0)
                         {
                             htmlData =
                                 "<span class='error-message'>Your upload file don't successfull, Please try again</span>";
@@ -65,22 +64,25 @@ namespace Sunplus.Accounting.Business.ExportStatement
                             html.Append(htmlData);
                             return html + "|" + userslistvalid + "|" + success;
                         }
-                        string newfilename = HttpContext.Current.Request.Files[0].FileName;
+
+                        var uploadedFile = request.Files[0];
+                        string filename = uploadedFile.FileName;
                         string ext = string.Empty;
-                        if (!string.IsNullOrEmpty(newfilename))
+
+                        if (!string.IsNullOrEmpty(filename))
                         {
-                            if (IsValidExtension(newfilename, ref ext))
+                            if (IsValidExtension(filename, ref ext))
                             {
-                                strLocation = HttpContext.Current.Server.MapPath("../Others") + "\\" + strFileName +
-                                              ".xls";
-                                HttpContext.Current.Request.Files[0].SaveAs(strLocation);
+                                IVirtualRateExcel virtualRateExcel = new VirtualRateExcel(uploadedFile.InputStream);
+                                var result = virtualRateExcel.ValidateTemplateFile();
 
-                                if (!File.Exists(strLocation))
-                                    IsUploadFileSuccess = false;
-
-                                if (IsUploadFileSuccess)
+                                if (!result.IsSuccessful)
                                 {
-                                    DataTable dtb = VirtualRate.GetDataFromExcel(strLocation);
+                                    htmlData = $"<span class='error-message'>{result.Message}</span>";
+                                }
+                                else
+                                {
+                                    DataTable dtb = virtualRateExcel.ExcelToDataTable();
                                     rows = dtb.Rows.Count;
                                     if (rows > 100)
                                     {
@@ -90,17 +92,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
                                     }
                                     else
                                     {
-                                        var file = new FileInfo(strLocation);
-                                        if (file.Exists) file.Delete();
-
                                         htmlData = ListUsers(dtb, ref userslistvalid);
                                     }
-                                }
-                                else
-                                {
-                                    htmlData =
-                                        "<span class='error-message'>Your upload file don't successfull, Please try again</span>";
-                                    success = 0;
                                 }
                             }
                             else
@@ -128,11 +121,6 @@ namespace Sunplus.Accounting.Business.ExportStatement
                 catch (Exception ex)
                 {
                     success = 0;
-                    if (strLocation != "")
-                    {
-                        var file = new FileInfo(strLocation);
-                        if (file.Exists) file.Delete();
-                    }
 
                     if (ex.Message ==
                         "'Sheet1$' is not a valid name.  Make sure that it does not include invalid characters or punctuation and that it is not too long."
