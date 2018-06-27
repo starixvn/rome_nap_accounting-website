@@ -66,7 +66,7 @@
     <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer Status">
-    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_Dep_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Pocker">
     <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBCust.CustDB.bodbAdminNet" />

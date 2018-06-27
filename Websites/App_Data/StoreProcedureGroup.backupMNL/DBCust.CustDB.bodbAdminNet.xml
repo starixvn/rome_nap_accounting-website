@@ -94,7 +94,7 @@
   </Function>
   <Function Name="Customer Status">
     <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_Dep_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Pocker">
     <Setting Key="Acc_CustomerUpdDisableP2P" SpName="Acc_CustomerUpdDisableP2P" DbName="DBCust.CustDB.bodbAdminNet" />
