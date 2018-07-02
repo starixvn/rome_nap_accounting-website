@@ -1,0 +1,53 @@
+﻿@model MultipleQueryViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.min.css?v=06132018")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="sectionMessage" class="msg-container hide"></div>
+
+    <div class="filter">
+        @using (Html.BeginForm("MultipleView", "ProductStatusSetting", FormMethod.Post, new { id = "product-form", method = "Post" }))
+        {
+
+            @Html.DropDownListFor(model => model.Products,
+                new List<SelectListItem>(
+                    Model.Products.Select(product => new SelectListItem { Value = product.Key.ToString(), Text = product.Value })),
+                        "Select Product",
+                        new { @class = "form-control", id = "productIds" })
+
+            if (!Model.ProductStatus.Any() && !Model.ProductId.Equals(0))
+            {
+                <span class="alerterror align-center"> @Resources.UnauthorizeProductMessage</span>
+            }
+
+            @Html.Hidden("productId", Model.ProductId)
+            @Html.Hidden("custIds", Model.CustIds)
+            @Html.Hidden("custNames", Model.CustNames)
+            @Html.Hidden("productIds", Model.ProductIds)
+            @Html.Hidden("custRole", Model.CustRole)
+            @Html.Hidden("custId", Model.CustIds.Split(',')[0])
+            @Html.Hidden("isMultipleBetTypes", Model.ProductStatus.Count() > 1)
+            @Html.Hidden("enableAll", Resources.EnableAll)
+            @Html.Hidden("disableAll", Resources.DisableAll)
+            @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
+            @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
+        }
+    </div>
+
+    @if (Model.ProductStatus.Any())
+    {
+        @Html.Partial("~/Areas/ProductStatusSetting/Views/Multiple/MultiplePartialView.cshtml", Model)
+    }
+
+    <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.min.js?v=06182018")"></script>
+</body>
+</html>

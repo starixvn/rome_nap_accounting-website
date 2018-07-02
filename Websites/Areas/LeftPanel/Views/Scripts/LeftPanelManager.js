@@ -80,6 +80,7 @@ var LeftPanelManager = function () {
             height = 520;
         } else if (productId === 21) {
             height = 320;
+            width = 800;
         }
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
