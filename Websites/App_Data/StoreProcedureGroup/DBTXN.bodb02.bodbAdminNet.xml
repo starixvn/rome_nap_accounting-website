@@ -72,7 +72,6 @@
   </Function>
   <Function Name="User Info">
     <Setting Key="Acc_CustomerPwdUpd" SpName="Acc_CustomerPwdUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet" />
