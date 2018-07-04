@@ -15,7 +15,7 @@
     <script src="../../../js/jQuery/json2.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="../../../js/common.js" type="text/javascript"></script>
     
-    <script src="js/EnableNG.js" type="text/javascript"></script>
+    <script src="js/EnableNG.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
 </head>
 <body>
     <div class="main">

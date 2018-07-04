@@ -21,8 +21,9 @@
             error(function (data, status) {
                 if (status === fanex.goldDeluxeSetting.UN_AUTHORIZED_CODE) {
                     fanex.goldDeluxeSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('UnauthorizeMsg');
-                }
-                else {
+                } else if (status === fanex.goldDeluxeSetting.FORBIDDEN) {
+                    fanex.goldDeluxeSetting.errorResult.CommandResultsList[0].Results[0].Message = data.ErrorMessage;
+                } else {
                     fanex.goldDeluxeSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
                 }
                 custSettingScope.mainResult = fanex.goldDeluxeSetting.errorResult;

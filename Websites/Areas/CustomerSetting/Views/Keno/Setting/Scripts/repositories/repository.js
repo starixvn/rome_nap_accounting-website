@@ -14,7 +14,7 @@ KenoModule.factory('kenoRepositories', function ($http, $q, dataService) {
             $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
             $http.post(url, kenoSetting)
                 .success(function (data, status, headers, config) { deferred.resolve(data); })
-                .error(function () { deferred.reject(); });
+                .error(function (data) { deferred.reject(data); });
             return deferred.promise;
         }
     }

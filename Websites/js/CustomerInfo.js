@@ -397,8 +397,12 @@ function ChangeAbnormalLevel(level) {
 
 
             }
-            , error: function (e) {
+            , error: function (xhr) {
                 if (PTUnBlockUI) PTUnBlockUI();
+                if (xhr.status === 403) {
+                    var denyObject = $.parseJSON(xhr.responseText);
+                    alert(denyObject.ErrorMessage);
+                }
             }
         });
     }
@@ -760,8 +764,12 @@ function UpdateDangerousCustomer(typename, type, level) {
                     }
                     if (PTUnBlockUI) PTUnBlockUI();
                 }
-            , error: function (e) {
+            , error: function (xhr) {
                 if (PTUnBlockUI) PTUnBlockUI();
+                if (xhr.status === 403) {
+                    var denyObject = $.parseJSON(xhr.responseText);
+                    alert(denyObject.ErrorMessage);
+                }
             }
             });
         }
@@ -881,8 +889,12 @@ function UpdateAbnormalCustomer(level) {
                     }
                     if (PTUnBlockUI) PTUnBlockUI();
                 }
-            , error: function (e) {
+            , error: function (xhr) {
                 if (PTUnBlockUI) PTUnBlockUI();
+                if (xhr.status === 403) {
+                    var denyObject = $.parseJSON(xhr.responseText);
+                    alert(denyObject.ErrorMessage);
+                }
             }
             });
         }

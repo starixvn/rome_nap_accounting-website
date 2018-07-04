@@ -93,7 +93,11 @@ var AGCasinoStatus = function () {
                 }
             },
             error: function (jqXHR, event, ajaxSettings) {
-                if (errorFunction && typeof (errorFunction) == 'function') {
+                if (jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showAlertMessage("result-message", denyObject.ErrorMessage, 1);
+                    self.Tables.resultMessage.removeClass("display-none");
+                } else if (errorFunction && typeof (errorFunction) == 'function') {
                     errorFunction.call(reportHandler);
                 }
             },

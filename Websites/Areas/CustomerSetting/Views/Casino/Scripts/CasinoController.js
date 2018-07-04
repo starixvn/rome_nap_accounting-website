@@ -219,11 +219,13 @@
             }
         })
         .error(function (response) {
-            if (typeof console != 'undefined') {
+            if (response.status === 403) {
+                var denyObject = $.parseJSON(response.responseText);
+                ErrorMessage = denyObject.ErrorMessage.formatErrorMessage();
+            } else if (typeof console != 'undefined') {
                 console.log(response);
+                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
             }
-
-            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
 
             if (!IsMultiple) {
                 $('#errMsg').html(ErrorMessage);

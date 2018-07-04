@@ -103,7 +103,12 @@ CustomerSecurityCode = function () {
 
                     self.Tables.errorMessage.removeClass("hidden");
                 },
-                error: function () {
+                error: function (xhr) {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        showAlertMessage("errorMessage", denyObject.ErrorMessage, 1);
+                        self.Tables.errorMessage.removeClass("hidden");
+                    }
                 },
                 complete: function () {
                     try { parent.jQuery.unblockUI(); } catch (e) { }

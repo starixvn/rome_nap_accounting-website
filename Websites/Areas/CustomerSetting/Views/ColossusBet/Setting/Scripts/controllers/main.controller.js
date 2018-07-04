@@ -1,5 +1,10 @@
 ﻿"use strict";
 var ColossusBetModule = angular.module('colossusBetSettingModule', []);
+
+ColossusBetModule.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+}]);
+
 ColossusBetModule.controller('mainController', function ($scope, $timeout, colossusBetRepositories, commonService) {
     colossusBetRepositories.getData().then(
         function (colossusBetSetting) {
@@ -88,8 +93,8 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
                             $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
                         }
                     },
-                    function () {
-                        $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
+                    function (data) {
+                        $scope.showMesseges('<div class="alerterror">' + (data && data.ErrorCode === 99999 ? data.ErrorMessage : resources.failed) + '</div>', false);
                     });
             };
         }, function (reason) { }, function (update) { });

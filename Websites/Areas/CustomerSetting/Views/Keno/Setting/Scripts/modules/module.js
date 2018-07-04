@@ -2,6 +2,11 @@
 
 var KenoModule = angular.module('kenoSettingModule', ['ngDialog']);
 
+KenoModule.config(['$httpProvider', function ($httpProvider) {
+    'use strict';
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+}]);
+
 KenoModule.run(function ($templateCache) {
     $templateCache.put('betSettingTemplate', domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/BetSetting/BetSetting.htm');
     $templateCache.put('superPositionTakingTemplate', domain + 'Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/SuperPositionTaking.htm');
