@@ -23,10 +23,10 @@
         private DataTable dynamicSettingtable { get; set; }
 
         public CustomerInfoViewModel(
-            DataRow customerInfoRow, 
-            DataRow lineInfoRow, 
-            DataRow cashRow, 
-            DataRow downlineStatusInfoRow, 
+            DataRow customerInfoRow,
+            DataRow lineInfoRow,
+            DataRow cashRow,
+            DataRow downlineStatusInfoRow,
             DataTable dynamicSettingtable)
         {
             this.customerInfoRow = customerInfoRow;
@@ -101,6 +101,8 @@
 
         public bool HideSettingBullfighting { get; private set; } = true;
 
+        public bool HideSettingPokerGames { get; private set; } = true;
+
         public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
@@ -170,6 +172,13 @@
                             bool HideUplineBullfighting = Utils.ToBoolean(row["IsHiddenUpline"]);
                             HideSettingBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
                                 IsDeposit || (RoleId < 4 && (HideBullfighting || HideUplineBullfighting));
+                            break;
+
+                        case "33":
+                            bool HidePokerGames = Utils.ToBoolean(row["IsHidden"]);
+                            bool HideUplinePokerGames = Utils.ToBoolean(row["IsHiddenUpline"]);
+                            HideSettingPokerGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames == 0 ||
+                                IsDeposit || (RoleId < 4 && (HidePokerGames || HideUplinePokerGames));
                             break;
                     }
                 }

@@ -15,7 +15,7 @@
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    
+
     public class BetListRepository : IBetListRepository
     {
         /// <summary>
@@ -523,6 +523,20 @@
             }
 
             return null;
+        }
+
+        public int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria)
+        {
+            var custId = 0;
+
+            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = db.GetOuputParams();
+                custId = Converter.ToInt(outputs["custid"]);
+            }
+
+            return custId;
         }
 
         public string GetSiteNameByCustId(ICriteria criteria)

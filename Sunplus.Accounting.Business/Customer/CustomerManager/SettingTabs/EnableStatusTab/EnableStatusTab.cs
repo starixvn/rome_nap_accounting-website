@@ -52,7 +52,8 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
                 IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit,
-                IsShowBullfighting = !customerInfoViewModel.HideSettingBullfighting
+                IsShowBullfighting = !customerInfoViewModel.HideSettingBullfighting,
+                IsShowPokerGames = !customerInfoViewModel.HideSettingPokerGames
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -247,6 +248,21 @@
                     customerInfoViewModel.RoleId,
                     21,
                     "Update Allbet Status"));
+            }
+
+            if (customerInfoViewModel.HideSettingPokerGames)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnablePokerGames");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{PokerGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    33,
+                    "Update Poker Games Status"));
             }
 
             return htmlcontent;

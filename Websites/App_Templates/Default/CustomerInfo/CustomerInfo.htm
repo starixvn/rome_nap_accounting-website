@@ -412,7 +412,7 @@
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--/Sportsbook2-->                   
+                    <!--/Sportsbook2-->
                     <!--EnableAllbet-->
                     <div class="col">
                         <span class="canchange" onclick="{AllbetOnClickFunction}">
@@ -429,6 +429,14 @@
                         </span>
                     </div>
                     <!--/EnableCashOut-->
+                    <!--EnablePokerGames-->
+                    <div class="col">
+                        <span class="canchange" onclick="{PokerGamesOnClickFunction}">
+                            Poker Games
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/EnablePokerGames-->
                     {settingcontrol}
                 </div>
             </div>
@@ -578,6 +586,11 @@
                                 Bullfighting
                             </a><br />
                             <!--/edit-Bullfighting-->
+                            <!--edit-PokerGames-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{pokerGamesLinkSetting}');">
+                                Poker Games
+                            </a><br />
+                            <!--/edit-PokerGames-->
                             <!-- Detail menu -->
                         </div>
                     </div>
@@ -610,7 +623,7 @@
     <input type="hidden" id="custName" name="custName" value="" />
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <!--checkbox-oldvalue-->
-    <input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />  
+    <input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />
     <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
     <input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}" />
     <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}" />

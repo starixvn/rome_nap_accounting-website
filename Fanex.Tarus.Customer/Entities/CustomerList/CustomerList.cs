@@ -60,6 +60,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }
         public bool IsIMBCCustomers { get; set; }
+        public bool IsHidePokerGames { get; set; }
 
         public CustomerClosedReason ClosedReason { get; set; }
     }

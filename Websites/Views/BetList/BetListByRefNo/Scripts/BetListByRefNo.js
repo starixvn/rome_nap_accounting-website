@@ -16,7 +16,8 @@ BetList.BetListByRefNo = (function ($) {
 
     var $searchTypes;
     var $searchByRefNo, $refNo, $refNoInfoMsg;
-    var $searchByProduct, $selectedProduct, $playerId, $username, $gameId, $betId, $fromdate, $toDate, $productInputs;
+    var $searchByProduct, $selectedProduct, $playerId, $username, $gameId, $betId, $fromdate, $toDate, $productInputs,
+        $playerId3rd;
     var $submit;
 
     function getData(params, url) {
@@ -86,6 +87,7 @@ BetList.BetListByRefNo = (function ($) {
     function selectProduct() {
         $gameId.removeAttr("disabled");
         $betId.removeAttr("disabled");
+        $playerId3rd.attr("disabled", "disabled");
 
         var selProductValue = $selectedProduct.val();
         if (selProductValue === "-1") {
@@ -94,6 +96,9 @@ BetList.BetListByRefNo = (function ($) {
         }
         else if (selProductValue === "22" || selProductValue === "24" || selProductValue === "32") {
             $gameId.attr("disabled", "disabled");
+        } else if (selProductValue === "33") {
+            $gameId.attr("disabled", "disabled");
+            $playerId3rd.removeAttr("disabled");
         }
     };
 
@@ -117,15 +122,26 @@ BetList.BetListByRefNo = (function ($) {
             showError("Product is required");
             return false;
         }
-        if ($playerId.val().trim() === "" && $username.val().trim() === "") {
+
+        var isPokerGames = selProductValue === "33";
+        if (isPokerGames && $playerId3rd.val().trim() === "" &&
+            $playerId.val().trim() === "" && $username.val().trim() === "") {
+            showError("PlayerID or PlayerID (3rd) or Username is required");
+            return false;
+        }
+
+        if (!isPokerGames && $playerId.val().trim() === "" && $username.val().trim() === "") {
             showError("Either PlayerID or Username is required");
             return false;
         }
+
         if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
-        if ((selProductValue === "22" || selProductValue === "24" || selProductValue === "32") && $betId.val().trim() === "") {
+
+        if ((selProductValue === "22" || selProductValue === "24" || selProductValue === "32" || isPokerGames)
+            && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
         }
@@ -146,17 +162,22 @@ BetList.BetListByRefNo = (function ($) {
             parent.BlockUI();
         } catch (e) { }
 
+        var productId = $selectedProduct.val();
+        var playerId = $playerId.val().trim();
+
         getData(
             {
                 productId: $selectedProduct.val(),
 
-                custId: $playerId.val().trim(),
+                custId: playerId,
                 username: $username.val().trim(),
                 gameId: $gameId.val().trim(),
                 betId: $betId.val().trim(),
                 fromDate: $fromdate.val(),
 
-                toDate: $toDate.val()
+                toDate: $toDate.val(),
+                playerId3rd: $playerId3rd.val(),
+                vendorId: $selectedProduct.find("option:selected").attr("data-vendor-id")
             },
         window.rootUrl + "BetList/GetBetListByProduct");
     };
@@ -192,6 +213,7 @@ BetList.BetListByRefNo = (function ($) {
         $productInputs = container.find(".search-by-product input[type='text'], .search-by-product select");
 
         $submit = $("#btnReport");
+        $playerId3rd = $("#txtPlayerId3rd");
     };
 
     function init(container) {

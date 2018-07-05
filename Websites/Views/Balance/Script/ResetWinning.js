@@ -29,15 +29,12 @@
                             bgClass = 'bgSpecial';
                             colorVariance = 'colorVariance';
                         }
-                        if (records[i].Products == "Racing (Due to Partners)") {
+
+                        var productName = records[i].Products;
+                        if (productName && productName.toLowerCase().indexOf("due to") != -1) {
                             bgClass = 'RacingAmountDue';
                         }
-                        if (records[i].Products == "Poker (Due to Partners)") {
-                            bgClass = 'RacingAmountDue';
-                        }
-                        if (records[i].Products == "Casino (Amount due to Jackpot Pool)") {
-                            bgClass = 'RacingAmountDue';
-                        }
+
                         if (i == records.length - 1)
                             bgClass = 'bgOthers';
                         arr.push(ResetWinning.renderRows(records[i], bgClass, colorVariance));

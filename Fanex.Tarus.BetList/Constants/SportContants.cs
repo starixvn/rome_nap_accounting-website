@@ -63,6 +63,7 @@
         public const int Voidbridge = 212;
         public const int FishingWorld = 219;
         public const int PP = 248;
+        public const int PokerGames = 163;
 
         public const int KenoLottery = 220;
 

@@ -22,6 +22,8 @@
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdPP));
     }
+
+    var productIdPokerGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames;
 }
 <html>
 <head>
@@ -134,6 +136,10 @@
                                     {
                                         <option value="@productIdPP">@CacheRef.GetProductName(productIdPP)</option>
                                     }
+                                    @if (productIdPokerGames != 0)
+                                    {
+                                        <option value="@productIdPokerGames" data-vendor-id="33">@CacheRef.GetProductName(productIdPokerGames)</option>
+                                    }
                                 </select>
                             </td>
                             <td style="min-width: 65px">
@@ -141,6 +147,12 @@
                             </td>
                             <td>
                                 <input type="text" id="txtPlayerId" />
+                            </td>
+                            <td style="min-width: 65px">
+                                <label class="label">PlayerID (3rd)</label>
+                            </td>
+                            <td>
+                                <input type="text" id="txtPlayerId3rd" />
                             </td>
                             <td style="min-width: 95px">
                                 <label class="label">Username</label>
@@ -199,7 +211,7 @@
     </div>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-
+        var productIdPokerGames = @productIdPokerGames;
         head.js("@Url.Content("~/js/jQuery/jquery.js")",
                 "@Url.Content("~/js/json2.js")",
                 "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",

@@ -8,7 +8,7 @@
     {
         private string RenderDetailMenu(
             string htmlcontent,
-            CustomerInfoViewModel customerInfoViewModel, 
+            CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
             htmlcontent = GenMenuMinMaxPT(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
@@ -27,7 +27,7 @@
 
         private string AssignSettingBlock(
             string htmlcontent,
-            CustomerInfoViewModel customerInfoViewModel, 
+            CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
             string userName = customerInfoViewModel.UserName;
@@ -42,7 +42,7 @@
             string detailUrl = string.Empty;
             string downlineListURL = string.Empty;
             string addDownlineURL = string.Empty;
-           
+
             var kenoSetting = string.Empty;
 
             var agCasinoLinkSetting = string.Empty;
@@ -115,13 +115,13 @@
                     break;
             }
 
-            TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);           
+            TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", string.Format(creditDCSLink, 5));
             TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
             TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));           
+            TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
             TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", string.Format(creditDCSLink, 20));
             TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", string.Format(creditDCSLink, 21));
             TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
@@ -132,6 +132,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting));
+            TemplateHandler.Assign(ref htmlcontent, "{pokerGamesLinkSetting}", string.Format(creditDCSLink, 33));
 
             var editSettingLink = $"MicroGaming/EditSettingView?parentId={renderLeftPanelParameter.ParentId}&custId={renderLeftPanelParameter.CustId}&roleId={renderLeftPanelParameter.RoleId}";
             TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);
@@ -230,6 +231,11 @@
             if (customerInfoViewModel.HideSettingBullfighting)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
+            }
+
+            if (customerInfoViewModel.HideSettingPokerGames)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-PokerGames");
             }
 
             return htmlcontent;

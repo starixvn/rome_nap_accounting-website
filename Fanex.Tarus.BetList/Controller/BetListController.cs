@@ -85,7 +85,7 @@ namespace Fanex.Tarus.BetList.Controllers
         /// <param name="betListByProductCriteria">The criteria.</param>
         /// <returns>The bet list by reference no.</returns>
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
-        public ActionResult GetBetListByProduct(BetListByProductCriteria betListByProductCriteria)
+        public ActionResult GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
             BalanceUp balanceUp = ReportService.BalanceUp;
             betListByProductCriteria.UserId = AppSession.AccId;

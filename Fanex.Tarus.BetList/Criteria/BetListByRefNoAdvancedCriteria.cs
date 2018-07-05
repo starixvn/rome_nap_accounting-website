@@ -1,9 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
 
-    public class BetListByProductCriteria : CriteriaBase
+    public class BetListByProductParam
     {
         private string _gameId;
         private string _username;
@@ -11,16 +10,20 @@
 
         public long UserId { get; set; }
 
-
         public byte ProductId { get; set; }
 
+        public int VendorId { get; set; }
+
         public int CustId { get; set; }
+
+        public string PlayerId3rd { get; set; }
 
         public string Username
         {
             get { return _username ?? ""; }
             set { _username = value; }
         }
+
         public string GameId
         {
             get { return _gameId ?? ""; }
@@ -40,15 +43,5 @@
         public DateTime MoveBetsDay { get; set; }
 
         public DateTime BalanceUpDay { get; set; }
-
-        public override string GetSettingKey()
-        {
-            return "BetList_SelByProduct";
-        }
-
-        public override bool IsValid()
-        {
-            return true;
-        }
     }
 }

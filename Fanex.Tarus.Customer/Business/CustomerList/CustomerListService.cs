@@ -117,6 +117,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge;
                         superItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld;
                         superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;
+                        superItem.IsHidePokerGames = !WebSettings.IsShowPokerGames;
 
                         superItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -255,6 +256,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                           CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         masterItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        masterItem.IsHidePokerGames = !WebSettings.IsShowPokerGames ||
+                          CastAide.AsBoolean(row["HidePokerGamesUpline"]);
 
                         masterItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
@@ -356,6 +359,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                             CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         agentItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        agentItem.IsHidePokerGames = !WebSettings.IsShowPokerGames ||
+                            CastAide.AsBoolean(row["HidePokerGamesUpline"]);
 
                         agentItem.NumberGame = CastAide.AsDouble(row["discountnumber"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -458,6 +463,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                             CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         memberItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                             CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        memberItem.IsHidePokerGames = !WebSettings.IsShowPokerGames ||
+                            CastAide.AsBoolean(row["HidePokerGamesUpline"]);
 
                         memberItem.NumberGame = CastAide.AsDouble(row["playerdiscountnumber"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);

@@ -220,6 +220,11 @@
             return 2700 <= betTypeId && betTypeId <= 2899;
         }
 
+        public static bool IsPokerGames(int betTypeId)
+        {
+            return 1401 <= betTypeId && betTypeId <= 1499;
+        }
+
         #endregion StaticMethods
     }
 }

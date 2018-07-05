@@ -14,7 +14,7 @@
 
         IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria);
 
-        IList<TicketDetail> GetBetListByProduct(BetListByProductCriteria betListByProductCriteria);
+        IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria);
 
         IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria betTypebyDateCriteria);
 
