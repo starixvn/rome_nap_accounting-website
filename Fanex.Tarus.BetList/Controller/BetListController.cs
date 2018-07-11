@@ -4,16 +4,16 @@ using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.BetList.Controllers
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Business;
     using Core;
     using CustomerSetting.Module.Core.Attributes;
     using Fanex.Common;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     [SpecialSiteFilter]
@@ -57,17 +57,23 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetBetListByRefNo(string refno)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
-            BalanceUp balanceUp = ReportService.BalanceUp;
+            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
 
-            if (BetListHelper.IsNumeric(refno.Trim()))
+            if (siteType != byte.MaxValue)
             {
-                result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
+                BalanceUp balanceUp = ReportService.BalanceUp;
+
+                if (BetListHelper.IsNumeric(refno.Trim()))
                 {
-                    UserId = AppSession.AccId,
-                    RefNo = Converter.To<long>(refno),
-                    MoveBetsDay = balanceUp.MoveBetsDay,
-                    BalanceUpDay = balanceUp.BalanceUpDay
-                });
+                    result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
+                    {
+                        UserId = AppSession.AccId,
+                        RefNo = Converter.To<long>(refno),
+                        MoveBetsDay = balanceUp.MoveBetsDay,
+                        BalanceUpDay = balanceUp.BalanceUpDay,
+                        SiteType = siteType
+                    });
+                }
             }
 
             Hashtable paramHastable = new Hashtable();
@@ -87,12 +93,19 @@ namespace Fanex.Tarus.BetList.Controllers
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
         public ActionResult GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            BalanceUp balanceUp = ReportService.BalanceUp;
-            betListByProductCriteria.UserId = AppSession.AccId;
-            betListByProductCriteria.MoveBetsDay = balanceUp.MoveBetsDay;
-            betListByProductCriteria.BalanceUpDay = balanceUp.BalanceUpDay;
+            IList<TicketDetail> result = new List<TicketDetail>();
+            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
 
-            IList<TicketDetail> result = _betListService.GetBetListByProduct(betListByProductCriteria);
+            if (siteType != byte.MaxValue)
+            {
+                BalanceUp balanceUp = ReportService.BalanceUp;
+                betListByProductCriteria.UserId = AppSession.AccId;
+                betListByProductCriteria.MoveBetsDay = balanceUp.MoveBetsDay;
+                betListByProductCriteria.BalanceUpDay = balanceUp.BalanceUpDay;
+                betListByProductCriteria.SiteType = siteType;
+
+                result = _betListService.GetBetListByProduct(betListByProductCriteria);
+            }
 
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
@@ -203,7 +216,14 @@ namespace Fanex.Tarus.BetList.Controllers
             int pageIndex)
         {
             var quantity = 0;
-            var result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, ref quantity);
+            IList<BetListByIP_Username> result = new List<BetListByIP_Username>();
+            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
+
+            if (siteType != byte.MaxValue)
+            {
+                result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, siteType, ref quantity);
+            }
+            
             var dateTmp = fromDate.ToShortDateString();
             ViewBag.NumberBegining = (pageSize * (pageIndex - 1)) + 1;
             ViewBag.Quantity = quantity;

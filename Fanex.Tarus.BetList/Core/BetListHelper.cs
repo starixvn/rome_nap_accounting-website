@@ -1,5 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using Business;
     using Constants;
     using Fanex.BetList.Core.Builder;
@@ -9,11 +12,9 @@
     using Fanex.BetList.Core.Templates;
     using Fanex.BetList.Core.Utils.StringExt;
     using Models;
-
     using Resources;
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
+    using Security.HttpModules.Services;
+    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -234,5 +235,34 @@
         }
 
         #endregion
+
+        public static byte GetSiteTypeParamValue(int userId)
+        {
+            ICreditOrDepositCustomerAuthorization customerAuthorization = new CreditOrDepositCustomerAuthorization();
+            var permissionDictionary = customerAuthorization.GetCreditAndDepositPermission(userId);
+
+            if (permissionDictionary.Count != 0)
+            {
+                var hasCreditSitePermission = permissionDictionary.ContainsKey($"[{Enumerations.Functions.CreditSiteFuncName.ToLowerInvariant()}]");
+                var hasDepositSitePermission = permissionDictionary.ContainsKey($"[{Enumerations.Functions.DepositSiteFuncName.ToLowerInvariant()}]");
+
+                if (hasCreditSitePermission && hasDepositSitePermission)
+                {
+                    return 0; // ALL
+                }
+
+                if (hasCreditSitePermission)
+                {
+                    return 1; // CREDIT
+                }
+
+                if (hasDepositSitePermission)
+                {
+                    return 2; // DEPOSIT
+                }
+            }
+
+            return byte.MaxValue;
+        }
     }
 }

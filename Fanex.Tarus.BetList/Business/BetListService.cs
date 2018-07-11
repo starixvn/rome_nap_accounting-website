@@ -812,13 +812,15 @@ namespace Fanex.Tarus.BetList.Business
             DateTime fromDate,
             int pageSize,
             int pageIndex,
+            byte siteType,
             ref int quality)
         {
             BetListByIP_UsernameCriteria criteria = new BetListByIP_UsernameCriteria
             {
                 FromDate = fromDate,
                 IP = ip,
-                MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay
+                MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
+                SiteType = siteType
             };
 
             try

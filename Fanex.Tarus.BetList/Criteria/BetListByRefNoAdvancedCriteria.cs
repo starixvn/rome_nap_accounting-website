@@ -43,5 +43,7 @@
         public DateTime MoveBetsDay { get; set; }
 
         public DateTime BalanceUpDay { get; set; }
+        public byte SiteType { get; set; }
+
     }
 }
