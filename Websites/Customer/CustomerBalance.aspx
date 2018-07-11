@@ -71,14 +71,8 @@
                     return false;
                 }
 
-                var msg = '';
-                if (CntSyncCasino > 0)
-                    msg = SyncCasinoMsg + '\n';
-                msg += 'Are you sure you want to transfer checked members?';
+                var msg = 'Are you sure you want to transfer checked members?';
                 if (!confirm(msg)) return false;
-
-
-
                 document.getElementById('memberIdList').value = _idList.substring(0, _idList.length - 1);
             }
             catch (ex) {

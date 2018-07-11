@@ -55,40 +55,6 @@ public partial class CustomerBalance : PageBase
                 {
                     _s = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                 }
-                else //reset casino max transfer
-                {
-                    string _syncedlist = "";
-                    string[] _arrgroupids = _custIdList.Split('_');
-                    foreach (string cids in _arrgroupids)
-                    {
-                        string[] _arrids = cids.Split(',');
-                        foreach (string cid in _arrids)
-                        {
-                            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(int.Parse(cid));
-                            if (custcs.CasinoSync)
-                            {
-                                _syncedlist += cid + ",";
-                            }
-                        }
-                    }
-                    if (_syncedlist != "")
-                    {
-                        if (_syncedlist.IndexOf(",") >= 0)
-                        {
-                            _syncedlist = _syncedlist.Substring(0, _syncedlist.Length - 1);
-                        }
-                        var rngSiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(_custid);
-                        bool updateResult = CasinoManager.FullResetMaxTransfer(_syncedlist, Request.UserHostAddress, AppSession.AccId, AppSession.Username, 3, rngSiteName);
-                        if (updateResult)
-                        {
-                            _s += "<br />" + AlertMessage.GetMsg(Resources.Language.casinoFullResetSuccessfully, AlertMessage.MsgType.Success);
-                        }
-                        else
-                        {
-                            _s += "<br />" + AlertMessage.GetMsg(Resources.Language.casinoFullResetUnSuccessful, AlertMessage.MsgType.Error);
-                        }
-                    }
-                }
             }
         }
         catch (AccException ex)
@@ -199,7 +165,6 @@ public partial class CustomerBalance : PageBase
             }
             
             //strcontent.Append("var cntSyncCasino=" + cntSyncCasino + ";" );
-            strcontent.Append("var SyncCasinoMsg='Full multiple transfer will reset max transfer limit';");
             strcontent.Append(" RenderCustBalance(datarows, total, isDisableAll) ");
             strcontent.Append("</script>");
         }
