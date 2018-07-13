@@ -45,7 +45,6 @@
                 var f = document.forms[formName];
                 var counter = 0;
                 cnt = f.elements.length;
-                var CntSyncCasino = 0;
                 for (var i = 0; i < cnt; i++) {
                     counter++;
                     var e = f.elements[i];
@@ -59,8 +58,6 @@
                         else {
                             _idList += e.id + ',';
                         }
-
-                        CntSyncCasino += parseInt($('#' + e.id).attr('synccasino'));
                     }
                     else {
                         counter--;

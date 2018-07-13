@@ -570,11 +570,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             }
             catch (ErrorException casinoEx)
             {
-                LogExtensions.ExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                LogExtensions.CasinoExceptionHandler(ex);
             }
 
             var parlayMixsport = new Sport()
