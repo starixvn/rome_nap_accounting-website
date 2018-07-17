@@ -3,18 +3,12 @@
 using System;
 using System.Web;
 using System.Data;
-using System.IO;
 using DNAide.Web;
-using System.Collections.Generic;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business;
 using System.Text;
-using Sunplus.Accounting.Entities.Customer;
-using Sunplus.Accounting.Business.Customer;
 using DNAide.Core;
 
 public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState.IRequiresSessionState

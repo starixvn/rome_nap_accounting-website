@@ -6,7 +6,6 @@ using System.Data;
 using System.IO;
 using DNAide.Web;
 using System.Collections.Generic;
-
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Business.Security;
@@ -20,18 +19,19 @@ using Fanex.Tarus.Excels.CrossCurrencyTransfer;
 
 public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
-    private List<StringBuilder> arrFromCust = new List<StringBuilder>();
-    private List<StringBuilder> arrToCust = new List<StringBuilder>();
-    private List<StringBuilder> arrFromAmt = new List<StringBuilder>();
-    private List<StringBuilder> arrToAmt = new List<StringBuilder>();
-    private List<StringBuilder> arrDescription = new List<StringBuilder>();
+    private const int MaxLength = 3000;
 
-    private int maxLength = 3000;
+    private readonly List<StringBuilder> arrFromCust = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrToCust = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrFromAmt = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrToAmt = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrDescription = new List<StringBuilder>();
 
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/html";
-        if (!Permissions.GetHostPermission<Enumerations.Functions.FinancialManagement>(Enumerations.Functions.FinancialManagement.AutomateFinanceTransfer))
+
+        if (!Permissions.GetHostPermission(Enumerations.Functions.FinancialManagement.AutomateFinanceTransfer))
         {
             context.Response.Write(BuildResult(Resources.ErrorMsg._500, string.Empty));
             return;
@@ -40,7 +40,9 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         try
         {
             var uploadFile = context.Request.Files[0];
-            if (uploadFile.ContentLength > 1024000)
+            var fileSize = uploadFile.ContentLength;
+
+            if (fileSize > 1024000)
             {
                 context.Response.Write(BuildResult("Your uploaded file's size can't be larger than 1 MB", string.Empty));
                 return;
@@ -53,22 +55,14 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                 return;
             }
 
-            var strLocation = context.Server.MapPath("../Transactions") + "\\" + AppSession.Username + ".xls";
-            FileInfo file = new FileInfo(strLocation);
-            if (file.Exists) file.Delete();
+            ICrossCurrencyTransferExcel crossCurrencyTransferExcel = new CrossCurrencyTransferExcel(uploadFile.InputStream);
+            var result = crossCurrencyTransferExcel.ValidateTemplateFile();
 
-            uploadFile.SaveAs(strLocation);
-
-            ICrossCurrencyTransferExcel crossCurrencyTransferExcel = new CrossCurrencyTransferExcel(strLocation);
-
-            if (!crossCurrencyTransferExcel.ValidateTemplateFile())
+            if (!result.IsSuccessful)
             {
-                context.Response.Write(BuildResult("You're using wrong template file. Please double check and try again. Thanks", string.Empty));
+                context.Response.Write(BuildResult(result.Message, string.Empty));
                 return;
-            };
-
-            file = new FileInfo(strLocation);
-            if (file.Exists) file.Delete();
+            }
 
             DataTable dataTable = crossCurrencyTransferExcel.ExcelToDataTable();
             DeleteEmptyRow(dataTable);
@@ -80,7 +74,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             }
 
             string hdFileInfo = @"<input type='hidden' id='hdFCTFileInfo' filename='" + uploadFile.FileName
-                + "' filesize='" + uploadFile.ContentLength.ToString() + "' />";
+                + "' filesize='" + fileSize.ToString() + "' />";
             context.Response.Write(BuildResult(string.Empty, RenderContent(dataTable) + hdFileInfo
                 + "|" + GetAllForexAccount()));
         }
@@ -383,7 +377,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         if (currentMaxLength < arrFromAmt[currentIndex].Length) currentMaxLength = arrFromAmt[currentIndex].Length;
         if (currentMaxLength < arrToAmt[currentIndex].Length) currentMaxLength = arrToAmt[currentIndex].Length;
         if (currentMaxLength < arrDescription[currentIndex].Length) currentMaxLength = arrDescription[currentIndex].Length;
-        return currentMaxLength > maxLength;
+        return currentMaxLength > MaxLength;
     }
 
     private void RenderSuccessPart(DataTable dataTable, ref string strTemplate, ref List<int> listValidRow)
