@@ -17,29 +17,14 @@ public partial class LogDisplay_SettingPT_Display : PageBase
 
         if (!string.IsNullOrWhiteSpace(custName))
         {
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
+            CustDetail customer = CustomerUtils.GetCustomer(custName);
+            if (customer != null)
             {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                RedirectSpecialSiteDeny();
+                custId = CastAide.AsInt32(customer.CustId, 0);
             }
-
-            if (!string.IsNullOrEmpty(custName))
+            else
             {
-                CustDetail customer = CustomerUtils.GetCustomer(custName);
-                if (customer != null)
-                {
-                    custId = CastAide.AsInt32(customer.CustId, 0);
-                }
-                else
-                {
-                    custId = -1;
-                }
+                custId = -1;
             }
         }
     }

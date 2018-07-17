@@ -216,10 +216,13 @@ ana.addNewAgent = function () {
                     showAlertMessage("err", "Insert Agent Unsuccessfully!", 1);
                 }
                 try { $.unblockUI(); } catch (e) { }
-            }
-            , error: function (e) {
+            },
+            error: function (e) {
                 $('#divShowInfo').show();
-                if (e.status == '404' || e.statusText == 'Not Found') {
+                if (e.status === 403) {
+                    var denyObject = $.parseJSON(e.responseText);
+                    showAlertMessage("err", denyObject.ErrorMessage, 1);
+                } else if (e.status == '404' || e.statusText == 'Not Found') {
                     if (isInsterTwice == false) {
                         ana.addNewAgent();
                         isInsterTwice = true;

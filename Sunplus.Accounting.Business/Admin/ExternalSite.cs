@@ -4,8 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
-using Fanex.CustomerSetting.Module.Core.Criteria;
-using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
@@ -81,20 +79,15 @@ namespace Sunplus.Accounting.Business.Admin
 
             try
             {
-                var validUserName = CheckSpecialSitePermission(username, results);
+                var result = _externalSiteDAO.AddSuperToGroup(username, groupName, AppSession.AccId);
 
-                if (!string.IsNullOrEmpty(validUserName))
+                if (result.ErrorCode != 0)
                 {
-                    var result = _externalSiteDAO.AddSuperToGroup(validUserName, groupName, AppSession.AccId);
-
-                    if (result.ErrorCode != 0)
-                    {
-                        results.Add(result);
-                    }
-                    else
-                    {
+                    results.Add(result);
+                }
+                else
+                {
                         results.AddRange(ProccessResultMessage(result.ErrorMessage));
-                    }
                 }
 
                 return results;
@@ -112,11 +105,7 @@ namespace Sunplus.Accounting.Business.Admin
         {
             try
             {
-                var permissionResult = CheckSpecialSitePermission(custId);
-
-                return permissionResult.ErrorCode > 0 ?
-                    permissionResult :
-                    _externalSiteDAO.RemoveSuperFromGroup(custId, groupName, AppSession.AccId);
+                return _externalSiteDAO.RemoveSuperFromGroup(custId, groupName, AppSession.AccId);
             }
             catch (Exception ex)
             {
@@ -147,11 +136,7 @@ namespace Sunplus.Accounting.Business.Admin
             {
                 if (DateTime.TryParse(effectiveDate, out newEffectiveDate))
                 {
-                    var permissionResult = CheckSpecialSitePermission(custId);
-
-                    return permissionResult.ErrorCode > 0 ?
-                        permissionResult :
-                        _externalSiteDAO.ChangePrimaryGroup(custId, groupName, newEffectiveDate, AppSession.AccId, Utils.GetClientIP());
+                    return _externalSiteDAO.ChangePrimaryGroup(custId, groupName, newEffectiveDate, AppSession.AccId, Utils.GetClientIP());
                 }
             }
             catch (Exception ex)
@@ -180,46 +165,6 @@ namespace Sunplus.Accounting.Business.Admin
                 LogExtensions.ExceptionHandler(ex);
                 return new List<ExternalSiteSuper>();
             }
-        }
-
-        private static Result CheckSpecialSitePermission(int? custId = null, string custName = null)
-        {
-            var criteria = new CheckSpecialSitePermissionCriteria
-            {
-                UserID = AppSession.AccId,
-                CustID = custId,
-                CustName = custName
-            };
-
-            var checkSpecialSite = new ServiceBase().CheckSpecialSitePermission(criteria);
-
-            return checkSpecialSite.ErrorCode > 0 ?
-                new Result(checkSpecialSite.ErrorCode, checkSpecialSite.ErrorMessage) :
-                new Result();
-        }
-
-        private static string CheckSpecialSitePermission(string username, ICollection<Result> noPermissionResults)
-        {
-            Result result;
-            IList<string> validUserNames = new List<string>();
-
-            var userNameArray = username.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var custName in userNameArray)
-            {
-                result = CheckSpecialSitePermission(custName: custName);
-
-                if (result.ErrorCode == 0)
-                {
-                    validUserNames.Add(custName);
-                }
-                else
-                {
-                    noPermissionResults.Add(new Result(1, $"{custName}: {result.ErrorMessage}"));
-                }
-            }
-
-            return string.Join(",", validUserNames);
         }
 
         private IEnumerable<Result> ProccessResultMessage(string xml)

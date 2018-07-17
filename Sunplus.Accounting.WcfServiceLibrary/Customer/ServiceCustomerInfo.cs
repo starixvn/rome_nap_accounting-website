@@ -49,15 +49,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var customer = new CustDetail();
             try
             {
-                var permissionService = new ServiceBase(null);
-                var checkSpecialSitePermission = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustName = username });
-                if (checkSpecialSitePermission.ErrorCode > 0)
-                {
-                    customer.ErrorCode = checkSpecialSitePermission.ErrorCode;
-                    customer.ErrorMessage = checkSpecialSitePermission.ErrorMessage;
-                    return customer;
-                }
-
                 var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
                 customer = customerManager.GetCustomerInfoMoveSite(username);
             }
@@ -74,15 +65,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var result = new Result();
             try
             {
-                var permissionService = new ServiceBase();
-                var checkSpecialSitePermission = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustID = custId });
-                if (checkSpecialSitePermission.ErrorCode > 0)
-                {
-                    result.ErrorCode = checkSpecialSitePermission.ErrorCode;
-                    result.ErrorMessage = checkSpecialSitePermission.ErrorMessage;
-                    return result;
-                }
-
                 var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
                 result = customerManager.UpdateCustomerSite(custId, newSite);
             }

@@ -50,17 +50,6 @@ public class GetData : BaseHandler
             context.Response.Write("<div class=\"alertboxerr\"><div>This function supports to view statement of Real Accounts only!</div></div>");
             return;
         }
-        var serviceBase = new ServiceBase();
-        var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
-            new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = Username
-            });
-        if (checkSpecialSitePermission.ErrorCode > 0)
-        {
-            RedirectSpecialSiteDeny();
-        }
 
         switch (reportNo)
         {

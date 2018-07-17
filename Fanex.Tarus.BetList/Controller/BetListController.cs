@@ -10,13 +10,11 @@ namespace Fanex.Tarus.BetList.Controllers
     using System.Web.Mvc;
     using Business;
     using Core;
-    using CustomerSetting.Module.Core.Attributes;
     using Fanex.Common;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
-    [SpecialSiteFilter]
     public class BetListController : Controller
     {
         private readonly IBetListService _betListService;

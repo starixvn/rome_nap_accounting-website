@@ -11,9 +11,11 @@ using Fanex.Tarus.Security.Criteria;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Fanex.CustomerSetting.Module.Core.Criteria;
 
-public class UpdateMoveCust : BaseHandler {
+public class UpdateMoveCust : BaseHandler
+{
 
-    public override void ProcessRequest (HttpContext context) {
+    public override void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         base.ProcessRequest(context);
         if (context.Session["AccId"] != null)
@@ -34,32 +36,18 @@ public class UpdateMoveCust : BaseHandler {
                 var moveCustomer = new MoveCustomer();
                 recommendId = context.Request["upline"] as string ?? string.Empty;
                 custUname = context.Request["downline"] as string ?? string.Empty;
-                var serviceBase = new ServiceBase();
-                var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
-                    new CheckSpecialSitePermissionCriteria()
-                    {
-                        UserID = AppSession.AccId,
-                        CustName = recommendId
-                    });
 
-                if (checkSpecialSitePermission.ErrorCode > 0)
+                MoveCustomer.MoveType moveType = type == "1" ? MoveCustomer.MoveType.Agent : MoveCustomer.MoveType.Master;
+
+                string resultMsg = moveCustomer.Move(moveType, custUname, recommendId);
+                if (resultMsg.IndexOf("Successfully", StringComparison.CurrentCultureIgnoreCase) > -1)
                 {
-                    context.Response.Write(AlertMessage.GetMsg(checkSpecialSitePermission.ErrorMessage, AlertMessage.MsgType.Error));
+                    CustomerService.ClearSystemUsers();
+                    context.Response.Write(AlertMessage.GetMsg(resultMsg, AlertMessage.MsgType.Success));
                 }
                 else
                 {
-                    MoveCustomer.MoveType moveType = type == "1" ? MoveCustomer.MoveType.Agent : MoveCustomer.MoveType.Master;
-
-                    string resultMsg = moveCustomer.Move(moveType, custUname, recommendId);
-                    if (resultMsg.IndexOf("Successfully", StringComparison.CurrentCultureIgnoreCase) > -1)
-                    {
-                        CustomerService.ClearSystemUsers();
-                        context.Response.Write(AlertMessage.GetMsg(resultMsg, AlertMessage.MsgType.Success));
-                    }
-                    else
-                    {
-                        context.Response.Write(AlertMessage.GetMsg(resultMsg, AlertMessage.MsgType.Error));
-                    }
+                    context.Response.Write(AlertMessage.GetMsg(resultMsg, AlertMessage.MsgType.Error));
                 }
 
             }
@@ -71,8 +59,10 @@ public class UpdateMoveCust : BaseHandler {
         }
     }
 
-    public bool IsReusable {
-        get {
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

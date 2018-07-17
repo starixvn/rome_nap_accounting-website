@@ -15,21 +15,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
     {
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogSetting(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize)
         {
-            var result = new ResultLog();
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-            
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
+
             var logParam = new LogParam()
             {
                 CustName = custName,
@@ -40,28 +27,14 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
                 PageSize = pageSize,
                 Type = (int)ELogType.Setting
             };
-            result = service.GetLogDisplay(logParam);
-            //result = service.GetLogSetting(custId, custName, fromDate, toDate,  viewBy, page, pageSize);
-            return result;
+
+            return service.GetLogDisplay(logParam);
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogStatus(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
-            var result = new ResultLog();
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
+
             var logParam = new LogParam()
             {
                 CustName = custName,
@@ -71,28 +44,14 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
                 PageSize = pageSize,
                 Type = (int)ELogType.Status
             };
-            result = service.GetLogDisplay(logParam);
-            // result = service.GetLogStatus(custId, custName, fromDate, toDate, page, pageSize);
-            return result;
+
+            return service.GetLogDisplay(logParam);
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
-            var result = new ResultLog();
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
+
             var logParam = new LogParam()
             {
                 CustName = custName,
@@ -102,28 +61,14 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
                 PageSize = pageSize,
                 Type = (int)ELogType.Login
             };
-            result = service.GetLogDisplay(logParam);
-            //var result = service.GetLogLogin(custId, custName, fromDate, toDate, page, pageSize);
-            return result;
+
+            return service.GetLogDisplay(logParam);
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
-            var result = new ResultLog();
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
+
             var logParam = new LogParam()
             {
                 CustName = custName,
@@ -133,9 +78,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
                 PageSize = pageSize,
                 Type = (int)ELogType.Credit
             };
-            result = service.GetLogDisplay(logParam);
-            //result = service.GetLogCredit(custId, custName, fromDate, toDate, page, pageSize);
-            return result;
+
+            return service.GetLogDisplay(logParam);
         }
     }
 }

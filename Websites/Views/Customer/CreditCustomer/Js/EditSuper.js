@@ -171,10 +171,13 @@ eds.editSuper = function () {
                 }
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-            , error: function (e) {
+            },
+            error: function (e) {
                 $('#divShowInfo').show();
-                if (e.status == '404' || e.statusText == 'Not Found') {
+                if (e.status === 403) {
+                    var denyObject = $.parseJSON(e.responseText);
+                    showAlertMessage("err", denyObject.ErrorMessage, 1);
+                } else if (e.status == '404' || e.statusText == 'Not Found') {
                     if (isInsterTwice == false) {
                         eds.editSuper();
                         isInsterTwice = true;
@@ -182,8 +185,7 @@ eds.editSuper = function () {
                     else {
                         showAlertMessage("err", "Request Error", 1);
                     }
-                }
-                else {
+                } else {
                     showAlertMessage("err", "Request Error", 1);
                 }
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }

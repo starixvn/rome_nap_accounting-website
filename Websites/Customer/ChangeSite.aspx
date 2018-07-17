@@ -140,12 +140,16 @@
                          else
                              showAlertMessage('dvMsg', rs.ErrorMessage, 1);
                          try { parent.jQuery.unblockUI(); } catch (e) { }
-
+                     },
+                     error: function (xhr) {
+                         if (xhr.status === 403) {
+                             var denyObject = $.parseJSON(xhr.responseText);
+                             $('#trMsg').show();
+                             showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
+                         }
+                         try { parent.jQuery.unblockUI(); } catch (e) { }
                      }
-
                  }
-
-
              );
             }
         }
@@ -192,9 +196,16 @@
                          }
 
                          try { parent.jQuery.unblockUI(); } catch (e) { }
-
+                     },
+                     error: function (xhr) {
+                         if (xhr.status === 403) {
+                             var denyObject = $.parseJSON(xhr.responseText);
+                             $('#trMsg').show();
+                             showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
+                             $('#Move').attr('disabled', true);
+                         }
+                         try { parent.jQuery.unblockUI(); } catch (e) { }
                      }
-
                  }
              );
         }

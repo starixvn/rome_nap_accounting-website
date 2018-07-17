@@ -13,7 +13,7 @@
     using Fanex.BetList.Core.Utils.StringExt;
     using Models;
     using Resources;
-    using Security.HttpModules.Services;
+    using Security.Services;
     using Sunplus.Accounting.Core.Common;
 
     /// <summary>
@@ -238,13 +238,12 @@
 
         public static byte GetSiteTypeParamValue(int userId)
         {
-            ICreditOrDepositCustomerAuthorization customerAuthorization = new CreditOrDepositCustomerAuthorization();
-            var permissionDictionary = customerAuthorization.GetCreditAndDepositPermission(userId);
+            var permissionDictionary = PermissionService.GetCreditAndDepositPolicy(userId);
 
             if (permissionDictionary.Count != 0)
             {
-                var hasCreditSitePermission = permissionDictionary.ContainsKey($"[{Enumerations.Functions.CreditSiteFuncName.ToLowerInvariant()}]");
-                var hasDepositSitePermission = permissionDictionary.ContainsKey($"[{Enumerations.Functions.DepositSiteFuncName.ToLowerInvariant()}]");
+                var hasCreditSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.CreditSiteFuncName);
+                var hasDepositSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.DepositSiteFuncName);
 
                 if (hasCreditSitePermission && hasDepositSitePermission)
                 {

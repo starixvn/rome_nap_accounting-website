@@ -29,6 +29,13 @@
                     success: function(data) {
                         try { parent.jQuery.unblockUI(); } catch (e) { }
                         alert_error(data, 'errMsg');
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 403) {
+                            var denyObject = $.parseJSON(xhr.responseText);
+                            alert_error(denyObject.ErrorMessage, 'errMsg');
+                        }
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
                     }
                 });
             }

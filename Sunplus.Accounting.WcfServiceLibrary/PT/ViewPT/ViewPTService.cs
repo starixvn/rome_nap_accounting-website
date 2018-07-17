@@ -27,40 +27,12 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 
         public ViewPtDTO ViewPositionTaking(string userName, int sportId, int bettypeId, bool isLive)
         {
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = userName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                var result = new ViewPtDTO();
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.ViewPositionTaking(userName, sportId, bettypeId, isLive);
         }
 
         public ViewCommissionDTO ViewCommission(string userName)
         {
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = userName
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                var result = new ViewCommissionDTO();
-                result.ErrorMessage = checkSpecialSite.ErrorMessage;
-                return result;
-            }
-
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.ViewCommission(userName);
         }
