@@ -1,6 +1,6 @@
 ﻿.halfwidth { width: 50%; }
 .mT10 { margin-top: 10px; }
-.maincontent { width: 680px; }
+.maincontent { width: 995px; }
 .filter_table td { padding: 4px 10px; }
 .checkbox_div { display: inline-block; position: relative; text-align: left;}
 .checkbox_div label { position: absolute; left: 22px; }
@@ -8,9 +8,9 @@
 .tblcollapse .title_1 td { background-color: #cadceb; font-weight: bold; }
 .tblcollapse th, .tblcollapse td { padding: 5px 2px; }
 .betsetting_table .numeric,
-.globalStakeLevel_table .numeric { height: 18px; line-height: 18px; text-align: right; width: 96%; }
-.betsetting_table .numeric.invalid-value,
-.globalStakeLevel_table .numeric.invalid-value { background-color: #ff7700; color: #fff; }
+.globalStakeLevel_table .numeric { height: 18px; line-height: 18px; text-align: right; width: 70%; }
+.betsetting_table .invalid-value,
+.globalStakeLevel_table .invalid-value { background-color: #ff7700; color: #fff; }
 .review-apply-members { font-weight: bold; padding: 2px; }
 .btnRefresh { cursor: auto; display: inline-block; margin: 0; padding: 0; }
 .stakelevel-bettype { background-color: #b5c4d0; }

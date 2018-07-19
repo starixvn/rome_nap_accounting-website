@@ -8,21 +8,26 @@
 <table class="tblcollapse status_table">
     <tbody>
         <tr class="title">
-            <td colspan="2">@LicenseeDcsSettingLabels.ProductStatus <span>(@Model.SuperName)</span></td>
+            <td colspan="2">@LicenseeDcsSettingLabels.ProductStatus <span>(@Model.ShowSuperOrAgentNames())</span></td>
         </tr>
         <tr>
             <td class="halfwidth">@Model.ProductName</td>
             <td>
                 <div class="">
                     <div class="checkbox_div w80">
-                        <input type="checkbox" id="disabledCheckbox" @(!status.IsDisabled ? "checked=checked" : string.Empty) />
+                        <input type="checkbox"
+                               id="disabledCheckbox"
+                               @(!status.IsDisabled ? "checked=checked" : string.Empty)
+                               @(status.IsDisabledUpline ? "disabled=disabled" : string.Empty) />
                         <label for="disabledCheckbox">@LicenseeDcsSettingLabels.Enable</label>
                     </div>
                     @if (status.HasDownline)
                     {
                         <div class="checkbox_div w120">
-                            <input type="checkbox" id="disabledDownlineCheckbox" @(!status.IsDisabledDownline ? "checked=checked" : string.Empty)
-                                   @(!status.IsDisabled && !status.IsDisabledDownline || status.IsDisabled && status.IsDisabledDownline ? "disabled=disabled" : string.Empty) />
+                            <input type="checkbox"
+                                   id="disabledDownlineCheckbox"
+                                   @(!status.IsDisabledDownline ? "checked=checked" : string.Empty)
+                                   @(status.IsDisabledUpline || !status.IsDisabled && !status.IsDisabledDownline || status.IsDisabled && status.IsDisabledDownline ? "disabled=disabled" : string.Empty) />
                             <label for="disabledDownlineCheckbox">@LicenseeDcsSettingLabels.EnableDownline</label>
                         </div>
                     }

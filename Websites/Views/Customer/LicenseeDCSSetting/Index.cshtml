@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css?v=" + version)" />
     <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/table.css?v=" + version)" />
     <link rel="stylesheet" href="@Url.Content("~/js/select2/select2.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css")" />
     <link rel="stylesheet" href="@Url.Content("~/Views/Customer/LicenseeDcsSetting/Styles/LicenseeDcsSetting.css?v=" + version)">
 </head>
 <body>
@@ -31,21 +32,26 @@
             <table border="0" class="filter_table">
                 <tr>
                     <td class="b">@LicenseeDcsSettingLabels.Site</td>
-                    <td class="w200">
+                    <td class="w120">
                         @Html.DropDownList("siteDropDown", Model.Sites, new { @class = "fullwidth" })
                     </td>
                     <td class="b">@LicenseeDcsSettingLabels.SuperUserName</td>
-                    <td class="w200">
+                    <td class="w160">
                         @Html.DropDownList("superDropDown", Model.Supers, new { @class = "fullwidth" })
                     </td>
+                    <td class="b">@LicenseeDcsSettingLabels.SelectAgentList</td>
+                    <td class="w100">
+                        <div id="agentDropDown" class="multiselect" multiple="multiple"></div>
+                    </td>
+                    <td><label><input type="checkbox" id="agentOnlyCheckbox" />@LicenseeDcsSettingLabels.AgentOnly</label></td>
                 </tr>
                 <tr>
                     <td class="b">@LicenseeDcsSettingLabels.SelectProduct</td>
-                    <td class="w200">
+                    <td class="w120">
                         @Html.DropDownList("productDropDown", Model.Products, new { @class = "fullwidth" })
                     </td>
                     <td class="b">@LicenseeDcsSettingLabels.SelectFunction</td>
-                    <td class="w200">
+                    <td class="w160">
                         @Html.DropDownList("functionDropDown", Model.Functions, new { @class = "fullwidth" })
                     </td>
                 </tr>
@@ -62,9 +68,11 @@
     <script type="text/javascript">
         var rootUrl = "@Url.Content("~")";
         var productJSON = @Html.Raw(Model.ProductJSON);
+        var agentJSON = @Html.Raw(Model.AgentJSON);
     </script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Customer/LicenseeDcsSetting/Scripts/Common.js?v=" + version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Customer/LicenseeDcsSetting/Scripts/PT.js?v=" + version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Customer/LicenseeDcsSetting/Scripts/BetSetting.js?v=" + version)"></script>

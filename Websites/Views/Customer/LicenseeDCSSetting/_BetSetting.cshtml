@@ -1,9 +1,11 @@
-﻿@using Fanex.Tarus.Customer.Resources
+﻿@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+@using Fanex.Tarus.Customer.Resources
 @using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
 @model BetSettingViewModel
 @{
     Layout = null;
     bool oneSportTypeOnly = Model.BetSettings.Count() == 1;
+    var superOrAgentNames = Model.ShowSuperOrAgentNames();
 }
 
 <div id="update_section">
@@ -13,7 +15,7 @@
     <table class="tblcollapse betsetting_table mT5" id="betsetting_table">
         <thead>
             <tr class="title">
-                <th colspan="5">@LicenseeDcsSettingLabels.BetSetting <span>(@Model.SuperName)</span></th>
+                <th colspan="5">@LicenseeDcsSettingLabels.BetSetting <span>(@superOrAgentNames)</span></th>
             </tr>
             <tr class="title_1">
                 <th>
@@ -37,14 +39,46 @@
         <tbody>
             @foreach (var item in Model.BetSettings)
             {
+                BetSettingEntity superBetSetting;
+                if (!Model.SuperBetSettings.TryGetValue(item.SportType, out superBetSetting))
+                {
+                    superBetSetting = new BetSettingEntity(item.SportType, item.BetType, 0, 0, 0);
+                }
                 <tr data-sporttype="@item.SportType" data-bettype="@item.BetType" data-sporttypename="@item.SportTypeName">
                     <td>
                         <input type="checkbox" class="sporttype-checkbox" data-sporttype="@item.SportType" />
                     </td>
                     <td class="l">@item.SportTypeName</td>
-                    <td><input type="text" disabled="disabled" class="numeric" data-sporttype="@item.SportType" data-oldvalue="@item.MinBet" value="@item.MinBet.ToString("N0")" id="minbet_@item.SportType"></td>
-                    <td><input type="text" disabled="disabled" class="numeric" data-sporttype="@item.SportType" data-oldvalue="@item.MaxBet" value="@item.MaxBet.ToString("N0")" id="maxbet_@item.SportType"></td>
-                    <td><input type="text" disabled="disabled" class="numeric" data-sporttype="@item.SportType" data-oldvalue="@item.MaxPerMatch" value="@item.MaxPerMatch.ToString("N0")" id="maxpermatch_@item.SportType"></td>
+                    <td class="l">
+                        <input type="text"
+                               disabled="disabled"
+                               class="numeric"
+                               data-sporttype="@item.SportType"
+                               data-oldvalue="@item.MinBet"
+                               value="@item.MinBet.ToString("N0")"
+                               id="minbet_@item.SportType">
+                        <span>@superBetSetting.MinBet.ToString("N0")</span>
+                    </td>
+                    <td class="l">
+                        <input type="text"
+                               disabled="disabled"
+                               class="numeric"
+                               data-sporttype="@item.SportType"
+                               data-oldvalue="@item.MaxBet"
+                               value="@item.MaxBet.ToString("N0")"
+                               id="maxbet_@item.SportType">
+                        <span>@superBetSetting.MaxBet.ToString("N0")</span>
+                    </td>
+                    <td class="l">
+                        <input type="text"
+                               disabled="disabled"
+                               class="numeric"
+                               data-sporttype="@item.SportType"
+                               data-oldvalue="@item.MaxPerMatch"
+                               value="@item.MaxPerMatch.ToString("N0")"
+                               id="maxpermatch_@item.SportType">
+                        <span>@superBetSetting.MaxPerMatch.ToString("N0")</span>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -58,7 +92,7 @@
     <table class="tblcollapse reviewsetting_table mT5" id="reviewsetting_table">
         <thead>
             <tr class="title">
-                <td colspan="6">@LicenseeDcsSettingLabels.ReviewBetSetting <span>@Model.ProductName</span> <span>(@Model.SuperName)</span></td>
+                <td colspan="6">@LicenseeDcsSettingLabels.ReviewBetSetting <span>@Model.ProductName</span> <span>(@superOrAgentNames)</span></td>
             </tr>
             <tr class="title_1">
                 <th>@LicenseeDcsSettingLabels.AllSports</th>

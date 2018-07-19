@@ -32,7 +32,7 @@
             }).always(common.unblockUI);
     }
 
-    function initialize(defaultParam) {
+    function initialize(defaultParam, getSelectedAgents) {
         var ptDropDown = $("#ptDropDown")
             .off("change")
             .on("change", ptDropDown_change)
@@ -41,7 +41,9 @@
         updateButton = $("#btnUpdatePT")
             .off("click")
             .on("click", function () {
-                var formData = $.extend({ SuperPT: ptDropDown.val() }, defaultParam);
+                var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
+                var selectedAgentIds = getSelectedAgents().AgentIds;
+                var formData = $.extend({ SuperPT: ptDropDown.val(), AgentIds: selectedAgentIds, IsAgentOnly: isAgentOnly }, defaultParam);
                 updateButton_click(formData);
             });
 

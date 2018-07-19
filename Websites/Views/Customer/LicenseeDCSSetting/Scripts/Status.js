@@ -59,7 +59,7 @@
         });
     }
 
-    function initialize(defaultParam, reloadFunction) {
+    function initialize(defaultParam, reloadFunction, getSelectedAgents) {
         var sportType = $("#hiddenSportType").val(),
             betType = $("#hiddenBetType").val(),
             bitmapOrder = $("#hiddenBitmapOrder").val();
@@ -82,8 +82,10 @@
                     IsDisabled: !disabledCheckbox.is(":checked"),
                     IsDisabledDownline: !disabledDownlineCheckbox.is(":checked")
                 };
+                var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
+                var selectedAgentIds = getSelectedAgents().AgentIds;
 
-                var formData = $.extend({ Status: status }, defaultParam);
+                var formData = $.extend({ Status: status, AgentIds: selectedAgentIds, IsAgentOnly: isAgentOnly }, defaultParam);
                 updateButton_click(formData, reloadFunction);
             });
 

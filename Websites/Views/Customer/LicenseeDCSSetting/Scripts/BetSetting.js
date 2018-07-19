@@ -275,7 +275,7 @@
         common.unblockUI();
     }
 
-    function updateButton_click(defaultParam) {
+    function updateButton_click(defaultParam, getSelectedAgents) {
         if (!globalBetSettings || globalBetSettings.length === 0) {
             return;
         }
@@ -291,6 +291,8 @@
         common.disableElement(updateButton);
         var updateUrl = rootUrl + "LicenseeDcsSetting/UpdateBetSetting";
         var applyExistedMem = applyMembersCheckbox.is(":checked");
+        var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
+        var selectedAgentIds = getSelectedAgents().AgentIds;
 
         $.each(updatedArray, function (i, item) {
             var messageDiv = $("#message_" + item.SportType);
@@ -301,7 +303,7 @@
                 url: updateUrl,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data: JSON.stringify($.extend({ ApplyExistedMem: applyExistedMem, BetSettings: [item] }, defaultParam)),
+                data: JSON.stringify($.extend({ ApplyExistedMem: applyExistedMem, BetSettings: [item], AgentIds: selectedAgentIds, IsAgentOnly: isAgentOnly }, defaultParam)),
                 success: function (data) {
                     messageDiv.removeClass().html(data.ErrorMessage);
                     messageDiv.addClass(data.ErrorCode === 0 ? "msgcorrect" : "msgerror");
@@ -322,7 +324,7 @@
         }
     }
 
-    function initialize(defaultParam, reloadFunction) {
+    function initialize(defaultParam, reloadFunction, getSelectedAgents) {
         globalValid = true;
         globalBetSettings = null;
         updateSection = $("#update_section");
@@ -354,7 +356,7 @@
 
         updateButton = reviewSection.find("#btnBetSettingUpdate")
             .off("click")
-            .on("click", function () { updateButton_click(defaultParam); });
+            .on("click", function () { updateButton_click(defaultParam, getSelectedAgents); });
 
         backButton = reviewSection.find("#btnBack")
             .off("click")
