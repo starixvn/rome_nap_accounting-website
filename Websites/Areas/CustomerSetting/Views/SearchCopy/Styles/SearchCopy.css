@@ -51,7 +51,7 @@ body.wait *, body.wait
 
 .btnNextR
 {
-    background:transparent url(styles/images/btnRight.png) no-repeat center right; text-align:left; width:96px;font-size:10pt; font-weight:bold; color:#fff;cursor:pointer; margin-left:0px !important;
+    background:transparent url(styles/images/btnRight.png) no-repeat center right; text-align:left; width:96px;font-size:10pt; font-weight:bold; color:#fff;cursor:pointer; margin-left:0px !important; display:inline-block;
 }
 
 .btnStep

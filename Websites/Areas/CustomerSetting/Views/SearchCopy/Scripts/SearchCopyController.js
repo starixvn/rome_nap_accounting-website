@@ -115,6 +115,32 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
     };
 
+    $scope.step1Multiple = function () {
+        if ($scope.existedUser.username == undefined || $scope.existedUser.username == "") {
+            validate.setRequired("#existedUserName");
+            message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);
+            $("#errorMsg").width("550");
+        }
+        else {
+            var callbackFunc = function () {
+                message.hideAlertMessage("errorMsg");
+                var multipleUrl = toUrl("super/multipleaccounts")
+                    + "?custId=" + $scope.existedUser.userid
+                    + "&custName=" + $scope.existedUser.username
+                    + "&parentId=" + $scope.parentId;
+                var currentLocation = window.location;
+                window.open(currentLocation.protocol + "//" + currentLocation.host + multipleUrl, "_blank");
+            };
+
+            if ($scope.existedUser.userid < 0) {
+                $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
+            }
+            else {
+                callbackFunc();
+            }
+        }
+    };
+
     $scope.validateData = function () {
         if ($scope.newUser.username == undefined || $scope.newUser.username == "") {
             message.showAlertMessage("errorMsg", "The username is required !", 1);
