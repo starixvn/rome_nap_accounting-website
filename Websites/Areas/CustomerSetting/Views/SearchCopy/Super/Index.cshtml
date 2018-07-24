@@ -33,7 +33,7 @@
 </script>
 
 <div id="divSearchCopy" ng-controller="SearchCopyController">
-    <input type="hidden" id="currentUserId" value='@ViewBag.CurrentUserId' />
+    <input type="hidden" id="currentUserId" value='@Fanex.CustomerSetting.Module.Core.Web.AppSession.AccId' />
     <input type="hidden" id="currentURL" value='@Url.Content("~")' />
     <div id="errorMsg" class="errMsg maincontent_box" style="width: 700px;">
     </div>

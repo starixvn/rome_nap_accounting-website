@@ -48,7 +48,6 @@
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
-        RegisterGlobalFilters(GlobalFilters.Filters);
         RegisterRoutes(RouteTable.Routes);
 
         AutoMapperConfiguration.Configure();
@@ -64,12 +63,6 @@
             .UseProductStatusActor(new ProductStatusActor())
             .SetUnAuthorizedUrl("~/AccessDenied.aspx");
         ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
-    }
-
-    public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-    {
-        //filters.Add(new LogExceptionFilter());
-        filters.Add(new HandleErrorAttribute());
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)

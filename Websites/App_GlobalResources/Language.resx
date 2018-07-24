@@ -1602,12 +1602,6 @@
   <data name="casinodownlinesdisabled" xml:space="preserve">
     <value>Casino downlines will be disabled as well</value>
   </data>
-  <data name="casinoFullResetSuccessfully" xml:space="preserve">
-    <value>Full reset Casino max transfer Successfully</value>
-  </data>
-  <data name="casinoFullResetUnSuccessful" xml:space="preserve">
-    <value>Full reset Casino max transfer UnSuccessfully</value>
-  </data>
   <data name="lblAccountingUser" xml:space="preserve">
     <value>Type</value>
   </data>

@@ -11,15 +11,15 @@
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/common.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/input.css" />
-    <link href="../App_Themes/Report/Report.css" rel="stylesheet" type="text/css">
-</link>
-    
+    <link rel="stylesheet" type="text/css" href="../App_Themes/Report/Report.css" />
+    <style type="text/css">
+        .download-link{color:#0066cc;font-weight:bold;margin-left:10px;}
+        .download-link:hover{color:#d66d35;text-decoration:none;}
+    </style>
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>    
     <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
     <script src="../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
-    
     <script src="../js/jQuery/ajaxfileupload.js" type="text/javascript"></script>     
-    
     <script src="../js/Others/ExportStatement.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" type="text/javascript"></script>
 </head>
 <body>
@@ -31,26 +31,26 @@
                 <td class="maincontent_headerR"></td>
             </tr>
         </table>
-        
         <div class="maincontent_box ">
-            <div class="h3" style="margin-top:5px">Choose an Excel file to export: </div>
+            <div class="h3" style="margin-top:5px">Choose an Excel file to export:</div>
+            <div style="color:#808080;margin-bottom:5px">(You are allowed to export statements of maximum 100 accounts)</div>
             <input type="file" onchange="return IsValidFileExtension()" size="40" name="txtfile" id="txtfile"/>
-            <input class="btn" style="width: 60px" id="btnUpload" type="submit" onclick="UploadFile()" value="Open File"/>                   
-            <div style="color:#808080;margin-bottom:5px">You are allowed to export statements of maximum 100 accounts.</div>    
-            <div id="dvCalendar" style="display:none">
-                <%=calendar%>  
+            <input class="btn" style="width: 60px" id="btnUpload" type="submit" onclick="UploadFile()" value="Open File"/>
+            <div style="margin-top:5px">
+                <span>File Size limit 1 MB</span>
+                <a href="ExportMultiStatementTemplate.xls" class="download-link">Click here to download template</a>
             </div>
-            <div id="msgError" style="display:block">&nbsp</div>
+            <div id="dvCalendar" style="display:none;margin:5px 0;">
+                <%=calendar%>
+            </div>
+            <div id="msgError" style="display:block;margin:5px 0;">&nbsp</div>
         </div>
-     </div>   
-        
+     </div>
         <div id="content"></div>
-        
         <input type="hidden" id="bolDelDataTmp" value="0" />
         <input type="hidden" id="FileName" value="0" />        
         <input type="hidden" id="userslistvalid" name="userslistvalid" />
         <input type="hidden" id="FullPath" name="FullPath" />        
         <iframe id="frm" width="0" height="0"  frameborder="0" style="display:none"></iframe>
-    
 </body>
 </html>
