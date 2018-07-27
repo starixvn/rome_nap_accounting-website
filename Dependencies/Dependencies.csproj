@@ -413,7 +413,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Finance.1.0.0.5\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Finance.1.0.0.7-TransferLink\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
