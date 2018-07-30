@@ -32,6 +32,7 @@
             </table>
             <div class="maincontent_box">
                 <div id="errMsg"></div>
+                <div id="errMsg1"></div>
                 <div id="clear2"></div>
                 <%=strfilter%>
             </div>

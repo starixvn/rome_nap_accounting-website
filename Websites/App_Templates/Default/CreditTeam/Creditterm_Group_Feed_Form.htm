@@ -2,7 +2,7 @@
 <!--Filter-->
 <table style="float:left;">
     <tr>
-        <td class="l b" style="width:130px;">GroupID:</td>
+        <td class="l b" style="width:180px;">GroupID:</td>
         <td>{groupid}</td>
         <td></td>
 		<td></td>
@@ -14,12 +14,20 @@
         <td></td>
     </tr>
     <tr>    
-        <td class="b">User Name:</td>
-        <td><input type ="text" name ="txtuser" id="txtuser"/></td>
-        <td><input class="btn" type="button" onclick="ExecuteCreditTerm('1');" value="Add to Group" name="btnadd"></input>  </td>
+        <td colspan="3"><span class="b">Usernames </span>&nbsp;(Separated by ','):</td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <textarea type="text" name="txtuser" id="txtuser" rows="4" cols="120"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td><input class="btn" type="button" onclick="ExecuteCreditTerm('1');" value="Add to Group" name="btnadd"></input></td>
+        <td></td>
+        <td></td>
     </tr>
 </table>
-<div style="float:right;padding-top:24px;">
+<div style="float:right;padding-top:55px;">
 	<div class="btngroup"><input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel({groupid});" /></div>
 </div>
 <!--/Filter-->
