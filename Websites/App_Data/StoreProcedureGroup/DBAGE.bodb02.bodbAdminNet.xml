@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Keno Setting">
-    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno_uat1" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno_UAT1" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno_UAT1" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -143,12 +143,12 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_uat1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_uat1" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -196,10 +196,10 @@
     <Setting Key="CompanyCreditDebit" SpName="Acc_Rpt_CompanyCreditDebit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gold Deluxe - GET PT Setting">
-    <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -225,7 +225,7 @@
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_uat1" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />

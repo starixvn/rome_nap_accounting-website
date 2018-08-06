@@ -345,7 +345,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.9-UpgradeNewtonjson45\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.9\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
