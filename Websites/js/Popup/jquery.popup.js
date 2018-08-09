@@ -302,16 +302,12 @@ popup.prototype.addButtons = function (p) {
 };
 
 popup.prototype.getAppPath = function () {
-    var baseURL = location.href;
-    var rootURL = baseURL.substring(0, baseURL.indexOf('/', 7));
+    var baseURL = location.origin;
 
-    return rootURL + baseURL.substring(baseURL.indexOf('/', 8), baseURL.indexOf('/', baseURL.indexOf('/', 8) + 1)) + "/";
-
-    // if the root url is localhost, don't add the directory as cassani doesn't use it
-    if (baseURL.indexOf('localhost') == -1) {
-        return rootURL + "/";
+    if (baseURL.indexOf('localhost') >= 0) {
+        return baseURL + "/";
     } else {
-        return rootURL + baseURL.substring(baseURL.indexOf('/', 8), baseURL.indexOf('/', baseURL.indexOf('/', 8) + 1)) + "/";
+        return baseURL + "/" + location.pathname.split('/')[1].toString() + "/";
     }
 }
 
