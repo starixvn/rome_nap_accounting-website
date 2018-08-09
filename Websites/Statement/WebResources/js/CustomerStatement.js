@@ -112,14 +112,21 @@ function completeUpdateIsInternal(rs) {
     jQuery('#GridContainer').addClass("hidden");
     jQuery('#statementCotent').removeClass("hidden");
     $.ajax({
-
         url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName,
         dataType: 'html',
         success: function (data) {
-
             $("#statementCotent").attr("style", "display:block");
             obj('sData').innerHTML = data;
             parent.jQuery.unblockUI();
+        },
+        error: function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                var errorBox = $("#errBox");
+                errorBox.find("div").html(denyObject.ErrorMessage);
+                errorBox.show();
+                parent.jQuery.unblockUI();
+            }
         }
     });
 }

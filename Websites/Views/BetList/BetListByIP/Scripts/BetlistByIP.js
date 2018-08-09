@@ -37,6 +37,7 @@
             BetListByIP.params_UsernameBetlist.pageSize = 100;
         }
         try { parent.BlockUI(); } catch (e) { }
+        Helper.hideErrorBox();
         $.ajax({
             type: "POST",
             url: window.rootUrl + "BetList/GetBetListByIP_Username",
@@ -126,6 +127,7 @@ var BetListByIP_SportType = {
         }
 
         try { parent.BlockUI(); } catch (e) { }
+        Helper.hideErrorBox();
         $.ajax({
             type: "POST",
             url: window.rootUrl + "BetList/GetBetListByIP_Soccer",
@@ -141,10 +143,12 @@ var BetListByIP_SportType = {
                 BetListByIP_SportType.initPager(_lengthSprortype,
                     BetListByIP_SportType.params_SportType.pageSize,
                     BetListByIP_SportType.params_SportType.pageIndex - 1);
-
-                //                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
             },
-            error: function () {
+            error: function (jqXHR) {
+                if (jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    Helper.showErrorBox(denyObject.ErrorMessage);
+                }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             complete: function () {
@@ -192,7 +196,14 @@ var Helper = {
         };
         var dates = $("#txtfromdate").datepicker(defaults);
         $("#txtfromdate").datepicker("setDate", _today);
-
+    },
+    showErrorBox: function (error) {
+        var errorBox = $("#errBox");
+        errorBox.find("div").html(error);
+        errorBox.removeClass("hide");
+    },
+    hideErrorBox: function () {
+        $("#errBox").addClass("hide").find("<div>").html("");
     }
 };
 

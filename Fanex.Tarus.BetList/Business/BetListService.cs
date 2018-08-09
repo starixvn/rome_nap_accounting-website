@@ -288,7 +288,8 @@ namespace Fanex.Tarus.BetList.Business
                 ToDate = betListByProductCriteria.ToDate,
                 MoveBetsDay = betListByProductCriteria.MoveBetsDay,
                 BalanceUpDay = betListByProductCriteria.BalanceUpDay,
-                CustId = custId
+                CustId = custId,
+                SiteType = betListByProductCriteria.SiteType
             });
         }
 

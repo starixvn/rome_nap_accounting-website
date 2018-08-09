@@ -63,8 +63,8 @@
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
     <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
     <script src="../js/Popup/confirmbox.js?ver=20161208" type="text/javascript"></script>
-    <script src="WebResources/js/CustomerStatement.js?ver=20161208" type="text/javascript"></script>
-    <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js" type="text/javascript"></script>
+    <script src="WebResources/js/CustomerStatement.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
+    <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         window.rootUrl = '<%=rootUrl%>'; 
         var isInternalCustomer = <%=isInternalCustomer%>;

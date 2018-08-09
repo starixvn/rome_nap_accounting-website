@@ -41,6 +41,8 @@
 
         public DateTime BalanceUpDay { get; set; }
 
+        public byte SiteType { get; set; }
+
         public override string GetSettingKey()
         {
             return "BetList_SelByProduct";

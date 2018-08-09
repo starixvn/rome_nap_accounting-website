@@ -94,7 +94,7 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
                         }
                     },
                     function (data) {
-                        $scope.showMesseges('<div class="alerterror">' + (data && data.ErrorCode === 99999 ? data.ErrorMessage : resources.failed) + '</div>', false);
+                        $scope.showMesseges('<div class="alerterror">' + (data && data.ErrorCode === 403 ? data.ErrorMessage : resources.failed) + '</div>', false);
                     });
             };
         }, function (reason) { }, function (update) { });

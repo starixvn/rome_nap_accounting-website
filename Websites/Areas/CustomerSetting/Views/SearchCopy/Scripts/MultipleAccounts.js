@@ -281,6 +281,11 @@ $.fn.forceNumber = function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(formData)
+        }).fail(function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                divStatus.removeClass().addClass("statusError").html("Error: " + denyObject.ErrorMessage);
+            }
         }).done(function (data) {
             divStatus.removeClass();
             if (data.Code === 0) {

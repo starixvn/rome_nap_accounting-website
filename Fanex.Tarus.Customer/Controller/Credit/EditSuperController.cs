@@ -2,7 +2,8 @@
 
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
-    using CustomerSetting.Module.Core.Attributes;
+    using System;
+    using System.Web.Mvc;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
@@ -10,9 +11,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
-    using System;
-    using System.Web.Mvc;
-    [SpecialSiteFilter]
+
     public class EditSuperController : CustomerSettingBaseController
     {
         /// <summary>

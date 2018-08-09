@@ -6,7 +6,8 @@
     var isInternalCustomer = 0;
     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     var balanceUpDay = "12/13/2014";
-    var moveBetsDay = "12/15/2014"; 
+    var moveBetsDay = "12/15/2014";
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
-    <script src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js?v=")@version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';       
         var isInternalCustomer = @isInternalCustomer;

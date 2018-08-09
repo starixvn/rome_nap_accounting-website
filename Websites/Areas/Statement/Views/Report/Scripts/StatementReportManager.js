@@ -55,10 +55,11 @@ var StatementReportManager = function () {
                 successFunction(rs);
             },
             error: function (jqXhr, event, ajaxSettings) {
-                if (jqXhr.status && jqXhr.status == 500) {
-                    var r = jQuery.parseJSON(jqXhr.responseText);
-                    alert(r.Message);
-                }
+                var responseObject = $.parseJSON(jqXhr.responseText);
+                var errorBox = $("#errBox");
+                errorBox.find("div").html(jqXhr.status === 403 ? responseObject.ErrorMessage : responseObject.Message);
+                errorBox.show();
+                parent.jQuery.unblockUI();
 
                 if (self.eventFunction.unblockUI) {
                     self.eventFunction.unblockUI();
