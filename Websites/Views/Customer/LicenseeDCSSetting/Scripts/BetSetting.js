@@ -288,9 +288,14 @@
             return;
         }
 
+        var applyExistedMem = applyMembersCheckbox.is(":checked");
+
+        if (!applyExistedMem && !confirm("Apply existing members: No. Are you sure you want to continue?")) {
+            return;
+        }
+
         common.disableElement(updateButton);
         var updateUrl = rootUrl + "LicenseeDcsSetting/UpdateBetSetting";
-        var applyExistedMem = applyMembersCheckbox.is(":checked");
         var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
         var selectedAgentIds = getSelectedAgents().AgentIds;
 

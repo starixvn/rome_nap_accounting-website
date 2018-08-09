@@ -151,17 +151,17 @@
                         globalStakeLevelHandler.initialize(defaultParam, selectButton_click);
                         break;
                     case "7":
-                        stakeLevelHandler.initialize(defaultParam, selectButton_click);
+                        stakeLevelHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     case "8":
-                        stakeLevelGroupHandler.initialize(defaultParam, selectButton_click);
+                        stakeLevelGroupHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     default:
                         break;
                 }
             };
 
-            if (functionId === "1" || functionId === "2" || functionId === "4") {
+            if (functionId !== "0") {
                 filterParam = $.extend(filterParam, getSelectedAgents());
             }
 

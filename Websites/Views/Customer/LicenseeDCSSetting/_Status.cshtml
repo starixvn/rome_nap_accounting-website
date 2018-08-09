@@ -17,8 +17,7 @@
                     <div class="checkbox_div w80">
                         <input type="checkbox"
                                id="disabledCheckbox"
-                               @(!status.IsDisabled ? "checked=checked" : string.Empty)
-                               @(status.IsDisabledUpline ? "disabled=disabled" : string.Empty) />
+                               @(!status.IsDisabled ? "checked=checked" : string.Empty) />
                         <label for="disabledCheckbox">@LicenseeDcsSettingLabels.Enable</label>
                     </div>
                     @if (status.HasDownline)
@@ -27,7 +26,7 @@
                             <input type="checkbox"
                                    id="disabledDownlineCheckbox"
                                    @(!status.IsDisabledDownline ? "checked=checked" : string.Empty)
-                                   @(status.IsDisabledUpline || !status.IsDisabled && !status.IsDisabledDownline || status.IsDisabled && status.IsDisabledDownline ? "disabled=disabled" : string.Empty) />
+                                   @(!status.IsDisabled && !status.IsDisabledDownline || status.IsDisabled && status.IsDisabledDownline ? "disabled=disabled" : string.Empty) />
                             <label for="disabledDownlineCheckbox">@LicenseeDcsSettingLabels.EnableDownline</label>
                         </div>
                     }

@@ -2,11 +2,9 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class GetSiteCriteria : CriteriaBase
+    internal sealed class GetSiteCriteria : CriteriaBase
     {
         public override string GetSettingKey()
-        {
-            return "Dep_LicenseeSelAll";
-        }
+            => "Dep_LicenseeSelAll";
     }
 }

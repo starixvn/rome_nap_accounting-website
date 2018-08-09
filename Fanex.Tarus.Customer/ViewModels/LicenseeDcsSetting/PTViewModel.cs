@@ -7,6 +7,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
     {
         public decimal SuperPT { get; set; }
 
+        public bool IsAgentOnly { get; set; }
+
         public IEnumerable<SelectListItem> PositionTakingList
         {
             get

@@ -19,13 +19,9 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_StakeLevelSelect";
-        }
+            => "Acc_Dep_CustSetting_StakeLevelSelect";
 
         public override bool IsValid()
-        {
-            return ProductId > 0 && CustId > 0;
-        }
+            => ProductId > 0 && CustId > 0;
     }
 }

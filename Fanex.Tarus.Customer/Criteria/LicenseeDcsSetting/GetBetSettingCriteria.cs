@@ -2,26 +2,25 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class GetBetSettingCriteria : CriteriaBase
+    internal sealed class GetBetSettingCriteria : CriteriaBase
     {
-        public GetBetSettingCriteria(int productId, int custId)
+        public GetBetSettingCriteria(int productId, int superId, int agentId)
         {
             ProductId = productId;
-            CustId = custId;
+            SuperId = superId;
+            AgentId = agentId;
         }
 
         public int ProductId { get; }
 
-        public int CustId { get; }
+        public int SuperId { get; }
+
+        public int AgentId { get; }
 
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_BetLimitFullLineSettingSelect";
-        }
+            => "Acc_Dep_CustSetting_BetLimitFullLineSettingSelect";
 
         public override bool IsValid()
-        {
-            return ProductId > 0 && CustId > 0;
-        }
+            => ProductId > 0 && SuperId > 0 && AgentId > 0;
     }
 }

@@ -7,25 +7,23 @@ using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.Resources;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 {
-    public class LicenseeDcsSettingDataAccess : ILicenseeDcsSettingDataAccess
+    internal class LicenseeDcsSettingDataAccess : ILicenseeDcsSettingDataAccess
     {
         public IEnumerable<string> GetSites(ICriteria criteria)
-        {
-            return ExecuteDataReader(criteria, GetSite);
-        }
+            => ExecuteDataReader(criteria, GetSite);
 
         public IEnumerable<BaseModel> GetSupers(ICriteria criteria)
-        {
-            return ExecuteDataReader(criteria, GetSuper);
-        }
+            => ExecuteDataReader(criteria, GetSuper);
+
+        public IEnumerable<BaseModel> GetAgents(ICriteria criteria)
+            => ExecuteDataReader(criteria, GetAgent);
 
         public IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria)
-        {
-            return ExecuteDataReader(criteria, GetProductSettingType);
-        }
+            => ExecuteDataReader(criteria, GetProductSettingType);
 
         public decimal GetPositionTaking(ICriteria criteria)
         {
@@ -34,22 +32,38 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             return entities == null || !entities.Any() ? 0 : entities.First();
         }
 
-        public IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria)
+        public IEnumerable<BetSettingEntity>[] GetBetSettings(ICriteria criteria)
         {
-            return ExecuteDataReader(criteria, GetBetSetting);
+            IList<BetSettingEntity> supers = new List<BetSettingEntity>();
+            IList<BetSettingEntity> agents = new List<BetSettingEntity>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        supers.Add(GetBetSetting(reader));
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            agents.Add(GetBetSetting(reader));
+                        }
+                    }
+                }
+            }
+
+            return new[] { supers, agents };
         }
 
         public StatusEntity GetStatus(ICriteria criteria)
-        {
-            var entities = ExecuteDataReader(criteria, GetStatusEntity);
-
-            return entities == null || !entities.Any() ? null : entities.First();
-        }
+            => ExecuteDataReader(criteria, GetStatusEntity).FirstOrDefault();
 
         public IEnumerable<GlobalStakeLevelEntity> GetGlobalStakeLevels(ICriteria criteria)
-        {
-            return ExecuteDataReader(criteria, GetGlobalStakeLevelEntity);
-        }
+            => ExecuteDataReader(criteria, GetGlobalStakeLevelEntity);
 
         public IEnumerable<StakeLevelEntity> GetStakeLevels(GetStakeLevelCriteria criteria)
         {
@@ -99,7 +113,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         {
             if (!criteria.IsValid())
             {
-                return new Result(400, string.Empty);
+                return new Result(400, LicenseeDcsSettingLabels.BadRequest);
             }
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -114,77 +128,73 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         }
 
         private static string GetSite(IDataReader reader)
-        {
-            return reader["licenseename"].ToString();
-        }
+            => reader["licenseename"].ToString();
 
         private static BaseModel GetSuper(IDataReader reader)
-        {
-            return new BaseModel
+            => new BaseModel
             {
                 Id = Convert.ToInt32(reader["custid"]),
                 Name = reader["username"].ToString()
             };
+
+        private static BaseModel GetAgent(IDataReader reader)
+        {
+            var agent = GetSuper(reader);
+
+            if (Convert.ToBoolean(reader["issub"]))
+            {
+                agent.Name += " (sub)";
+            }
+
+            return agent;
         }
 
         private static ProductSettingTypeEntity GetProductSettingType(IDataReader reader)
-        {
-            return new ProductSettingTypeEntity(
+            => new ProductSettingTypeEntity(
                 Convert.ToInt32(reader["productid"]),
                 reader["productname"].ToString(),
                 Convert.ToByte(reader["settingtype"]));
-        }
 
         private static decimal GetPositionTaking(IDataReader reader)
-        {
-            return Convert.ToDecimal(reader["superpt"]);
-        }
+            => Convert.ToDecimal(reader["agentpt"]);
 
         private static BetSettingEntity GetBetSetting(IDataReader reader)
-        {
-            return new BetSettingEntity(
+            => new BetSettingEntity(
                 Convert.ToInt32(reader["sporttype"]),
                 Convert.ToInt32(reader["bettype"]),
                 Convert.ToDecimal(reader["minbet"]),
                 Convert.ToDecimal(reader["maxbet"]),
                 Convert.ToDecimal(reader["maxpermatch"]));
-        }
 
         private static StatusEntity GetStatusEntity(IDataReader reader)
-        {
-            return new StatusEntity(
+            => new StatusEntity(
                 Convert.ToInt32(reader["sporttype"]),
                 Convert.ToInt32(reader["bettype"]),
                 Convert.ToByte(reader["bitmaporder"]),
                 Convert.ToBoolean(reader["isdisabled"]),
                 Convert.ToBoolean(reader["isdisableddownline"]),
-                Convert.ToBoolean(reader["hasdownline"]));
-        }
+                Convert.ToBoolean(reader["hasdownline"]),
+                Convert.ToBoolean(reader["isdisabledupline"]));
 
         private static GlobalStakeLevelEntity GetGlobalStakeLevelEntity(IDataReader reader)
-        {
-            return new GlobalStakeLevelEntity(
+            => new GlobalStakeLevelEntity(
                 Convert.ToInt32(reader["gametypeid"]),
                 Convert.ToInt32(reader["stakelevelid"]),
                 Convert.ToDecimal(reader["minstake"]),
                 Convert.ToDecimal(reader["maxstake"]),
                 reader["minlabel"].ToString(),
                 reader["maxlabel"].ToString());
-        }
 
         private static StakeLevelEntity GetStakeLevelEntity(IDataReader reader)
-        {
-            return new StakeLevelEntity(
+            => new StakeLevelEntity(
                 Convert.ToInt32(reader["sporttype"]),
                 Convert.ToInt32(reader["bettype"]),
                 Convert.ToInt32(reader["stakelevelid"]),
                 reader["stakelevelname"].ToString(),
                 Convert.ToBoolean(reader["ischecked"]));
-        }
 
         private static StakeLevelGroupEntity GetStakeLevelGroupEntity(IDataReader reader)
-        {
-            return new StakeLevelGroupEntity(
+            => new StakeLevelGroupEntity(
                 Convert.ToInt32(reader["stakelevelgroupid"]),
                 reader["stakelevelgroupname"].ToString(),
                 Convert.ToInt32(reader["bettyperef"]),
@@ -193,8 +203,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 Convert.ToInt32(reader["stakelevelid"]),
                 reader["stakelevel"].ToString(),
                 Convert.ToBoolean(reader["ischecked"]));
-        }
-        
+
         private static IEnumerable<T> ExecuteDataReader<T>(ICriteria criteria, Func<IDataReader, T> parseTFunction)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

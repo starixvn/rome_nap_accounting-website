@@ -3,35 +3,41 @@ using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class UpdateBetSettingCriteria : NonQueryCriteria
+    internal sealed class UpdateBetSettingCriteria : NonQueryCriteria
     {
         public UpdateBetSettingCriteria(
             int superId,
             bool applyExistedMem,
             BetSettingEntity betSetting,
+            int agentId,
+            bool isAgentOnly,
             int userId,
             string ip)
         {
             SuperId = superId;
             ApplyExistedMem = applyExistedMem;
             BetSetting = betSetting;
+            AgentId = agentId;
+            IsAgentOnly = isAgentOnly;
             UserId = userId;
             IP = ip;
         }
+
+        public int SuperId { get; }
 
         public bool ApplyExistedMem { get; }
 
         public BetSettingEntity BetSetting { get; }
 
+        public int AgentId { get; }
+
+        public bool IsAgentOnly { get; }
+
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_BetLimitFullLineUpd";
-        }
+            => "Acc_Dep_CustSetting_BetLimitFullLineUpd";
 
         public override bool IsValid()
-        {
-            return base.IsValid() && BetSetting != null;
-        }
+            => base.IsValid() && BetSetting != null;
 
         public override Hashtable GetSpParams()
         {
@@ -45,9 +51,11 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 
             return new Hashtable
             {
-                { "custid", SuperId },
+                { "superid", SuperId },
                 { "betlimit", betLimit },
                 { "applyexistedmem", ApplyExistedMem },
+                { "agentid", AgentId },
+                { "isagentonly", IsAgentOnly },
                 { "userid", UserId },
                 { "ip", IP },
                 { "errcode", ErrCode },

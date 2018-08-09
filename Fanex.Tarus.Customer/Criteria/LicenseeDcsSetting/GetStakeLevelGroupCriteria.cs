@@ -8,8 +8,6 @@
         }
 
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_StakeLevelGroupSelect";
-        }
+            => "Acc_Dep_CustSetting_StakeLevelGroupSelect";
     }
 }

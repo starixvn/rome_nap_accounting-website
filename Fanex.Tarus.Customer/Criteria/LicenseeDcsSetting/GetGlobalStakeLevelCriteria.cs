@@ -2,7 +2,7 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class GetGlobalStakeLevelCriteria : CriteriaBase
+    internal sealed class GetGlobalStakeLevelCriteria : CriteriaBase
     {
         public GetGlobalStakeLevelCriteria(int productId, int custId)
         {
@@ -15,13 +15,9 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public int CustId { get; }
 
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_GlobalStakeLevelSelect";
-        }
+            => "Acc_Dep_CustSetting_GlobalStakeLevelSelect";
 
         public override bool IsValid()
-        {
-            return ProductId > 0 && CustId > 0;
-        }
+            => ProductId > 0 && CustId > 0;
     }
 }

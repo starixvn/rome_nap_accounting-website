@@ -2,23 +2,19 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class GetSuperCriteria : CriteriaBase
+    internal sealed class GetSuperCriteria : CriteriaBase
     {
         public GetSuperCriteria(string site)
         {
             Site = site;
         }
 
-        public string Site { get; set; }
+        public string Site { get; }
 
         public override string GetSettingKey()
-        {
-            return "NAP_LM_LicenseeSuperList";
-        }
+            => "NAP_LM_LicenseeSuperList";
 
         public override bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(Site);
-        }
+            => !string.IsNullOrWhiteSpace(Site);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Text;
+using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class UpdateGlobalStakeLevelCriteria : NonQueryCriteria
+    internal sealed class UpdateGlobalStakeLevelCriteria : NonQueryCriteria
     {
         public UpdateGlobalStakeLevelCriteria(
             int superId,
@@ -18,16 +19,16 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
             IP = ip;
         }
 
-        public GlobalStakeLevelEntity[] GlobalStakeLevels { get; set; }
+        [SpParam(SqlParamName = "CustId")]
+        public int SuperId { get; }
+
+        public GlobalStakeLevelEntity[] GlobalStakeLevels { get; }
 
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_GlobalStakeLevelUpdate";
-        }
+            => "Acc_Dep_CustSetting_GlobalStakeLevelUpdate";
 
         public override Hashtable GetSpParams()
-        {
-            return new Hashtable
+            => new Hashtable
             {
                 { "stakelevel", BuildStakeLevelXml() },
                 { "custid", SuperId },
@@ -36,12 +37,9 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
                 { "errcode", ErrCode },
                 { "errmsg", ErrMsg }
             };
-        }
 
         public override bool IsValid()
-        {
-            return base.IsValid() && GlobalStakeLevels != null && GlobalStakeLevels.Length > 0;
-        }
+            => base.IsValid() && GlobalStakeLevels != null && GlobalStakeLevels.Length > 0;
 
         private string BuildStakeLevelXml()
         {

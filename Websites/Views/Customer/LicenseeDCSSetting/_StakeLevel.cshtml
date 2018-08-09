@@ -11,7 +11,7 @@
         <table class="tblcollapse">
             <thead>
                 <tr class="title">
-                    <th colspan="@(colspan + 1)">@LicenseeDcsSettingLabels.BetLimit <span>(@Model.SuperName)</span></th>
+                    <th colspan="@(colspan + 1)">@LicenseeDcsSettingLabels.BetLimit <span>(@Model.ShowSuperOrAgentNames())</span></th>
                 </tr>
                 <tr class="title_1">
                     <th>
@@ -34,7 +34,7 @@
                                     <input type="checkbox" class="bettype-checkbox"
                                            data-sporttype="@group.SportType"
                                            data-bettype="@group.BetType"
-                                           @(group.StakeLevels.Any(sl => !sl.IsChecked) ? string.Empty: "checked=checked")/>
+                                           @(Model.IsSelectedMultipleAgents || group.StakeLevels.Any(sl => !sl.IsChecked) ? string.Empty: "checked=checked")/>
                                 </div>
                             </div>
                         </td>
@@ -46,7 +46,7 @@
                                            id="stakeLevel_@item.StakeLevelId"
                                            data-sporttype="@group.SportType"
                                            data-bettype="@group.BetType"
-                                           @(item.IsChecked ? "checked=checked" : string.Empty)
+                                           @(!Model.IsSelectedMultipleAgents && item.IsChecked ? "checked=checked" : string.Empty)
                                            name="@item.StakeLevelId"/>
                                     <label for="stakeLevel_@item.StakeLevelId">@item.StakeLevelName</label>
                                 </div>

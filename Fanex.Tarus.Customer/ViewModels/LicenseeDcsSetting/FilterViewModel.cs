@@ -12,14 +12,19 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
         public FilterViewModel(
             IEnumerable<string> sites,
             IEnumerable<BaseModel> supers,
+            IEnumerable<BaseModel> agents,
             IEnumerable<ProductSettingTypeEntity> products)
         {
             Sites = sites.Select(s => new SelectListItem { Text = s, Value = s });
             Supers = supers.Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
+            var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            AgentJSON = JsonConvert.SerializeObject(agents, Formatting.None, jsonSetting);
+
             var productViewModels = products
                 .GroupBy(p => new { Id = p.ProductId, Name = p.ProductName })
-                .Select(p => new ProductViewModel(p.Key.Id, p.Key.Name, p.OrderBy(o => o.SettingType)));
+                .Select(p => new ProductViewModel(p.Key.Id, p.Key.Name, p.OrderBy(o => o.SettingType)))
+                .ToList();
 
             Products = productViewModels.Select(p => new SelectListItem
             {
@@ -33,15 +38,14 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 Value = s.Id.ToString()
             });
 
-            ProductJSON = JsonConvert.SerializeObject(
-                productViewModels,
-                Formatting.None,
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            ProductJSON = JsonConvert.SerializeObject(productViewModels, Formatting.None, jsonSetting);
         }
 
         public IEnumerable<SelectListItem> Sites { get; }
 
         public IEnumerable<SelectListItem> Supers { get; }
+
+        public string AgentJSON { get; }
 
         public IEnumerable<SelectListItem> Products { get; }
 

@@ -12,7 +12,8 @@
             byte bitMapOrder,
             bool isDisabled,
             bool isDisabledDownline,
-            bool hasDownline)
+            bool hasDownline,
+            bool isDisabledUpline)
         {
             SportType = sportType;
             BetType = betType;
@@ -20,6 +21,7 @@
             IsDisabled = isDisabled;
             IsDisabledDownline = isDisabledDownline;
             HasDownline = hasDownline;
+            IsDisabledUpline = isDisabledUpline;
         }
 
         public int SportType { get; set; }
@@ -33,5 +35,7 @@
         public bool IsDisabledDownline { get; set; }
 
         public bool HasDownline { get; set; }
+
+        public bool IsDisabledUpline { get; set; }
     }
 }

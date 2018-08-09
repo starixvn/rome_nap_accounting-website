@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Fanex.Tarus.Customer.Business.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
@@ -21,7 +23,7 @@ namespace Fanex.Tarus.Customer.Controller
         {
         }
 
-        public LicenseeDcsSettingController(ILicenseeDcsSettingService settingService)
+        internal LicenseeDcsSettingController(ILicenseeDcsSettingService settingService)
         {
             _settingService = settingService ?? new LicenseeDcsSettingService();
         }
@@ -29,31 +31,40 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult Index()
         {
-            var sites = _settingService.GetSites();
+            var sites = _settingService.GetSites().ToList();
 
-            string firstSite = sites.FirstOrDefault();
-            var supers = firstSite == null ?
+            var supers = sites.Count == 0 ?
+                new List<BaseModel>() :
+                _settingService.GetSupers(sites[0]).ToList();
+
+            var agents = supers.Count == 0 ?
                 Enumerable.Empty<BaseModel>() :
-                _settingService.GetSupers(firstSite);
+                _settingService.GetAgents(supers[0].Id);
 
             var products = _settingService.GetProducts();
-            var model = new FilterViewModel(sites, supers, products);
+            var model = new FilterViewModel(sites, supers, agents, products);
 
             return View("~/Views/Customer/LicenseeDCSSetting/Index.cshtml", model);
         }
 
         [HttpPost, AuthenticateRead]
         public ActionResult Supers(string site)
-        {
-            var supers = _settingService.GetSupers(site);
+            => Json(_settingService.GetSupers(site));
 
-            return Json(supers);
-        }
+        [HttpPost]
+        public ActionResult Agents(int superId)
+            => Json(_settingService.GetAgents(superId));
 
         [HttpPost, AuthenticateRead]
         public ActionResult PT(PTViewModel model)
         {
-            model.SuperPT = _settingService.GetPositionTaking(model.ProductId, model.SuperId);
+            // Get first AgentId.
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+
+            if (agentIds.Count == 1)
+            {
+                model.SuperPT = _settingService.GetPositionTaking(model.ProductId, agentIds[0]);
+            }
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_PT.cshtml", model);
         }
@@ -65,6 +76,8 @@ namespace Fanex.Tarus.Customer.Controller
                 model.ProductId,
                 model.SuperId,
                 model.SuperPT,
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
                 AppSession.AccId,
                 Utils.GetClientIP());
 
@@ -74,7 +87,13 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost, AuthenticateRead]
         public ActionResult BetSetting(BetSettingViewModel model)
         {
-            model.BetSettings = _settingService.GetBetSettings(model.ProductId, model.SuperId);
+            // Get first AgentId.
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
+
+            var betSettings = _settingService.GetBetSettings(model.ProductId, model.SuperId, agentId);
+            model.SuperBetSettings = betSettings[0].ToDictionary(s => s.SportType, s => s);
+            model.BetSettings = betSettings[1];
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSetting.cshtml", model);
         }
@@ -86,6 +105,8 @@ namespace Fanex.Tarus.Customer.Controller
                 model.SuperId,
                 model.ApplyExistedMem,
                 model.BetSettings.FirstOrDefault(),
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
                 AppSession.AccId,
                 Utils.GetClientIP());
 
@@ -95,7 +116,17 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost, AuthenticateRead]
         public ActionResult Status(StatusViewModel model)
         {
-            model.Status = _settingService.GetStatus(model.ProductId, model.SuperId);
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var custId = agentIds.Count == 0 ? model.SuperId : agentIds[0];
+            var isSelectedMultipleAgents = agentIds.Count > 1;
+
+            model.Status = _settingService.GetStatus(model.ProductId, custId);
+
+            if (isSelectedMultipleAgents)
+            {
+                model.Status.IsDisabled = true;
+                model.Status.IsDisabledDownline = true;
+            }
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_Status.cshtml", model);
         }
@@ -107,6 +138,8 @@ namespace Fanex.Tarus.Customer.Controller
                 model.ProductId,
                 model.SuperId,
                 model.Status,
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
                 AppSession.AccId,
                 Utils.GetClientIP());
 
@@ -136,23 +169,34 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost, AuthenticateRead]
         public ActionResult StakeLevel(StakeLevelViewModel model)
         {
-            var criteria = new GetStakeLevelCriteria(model.ProductId, model.SuperId);
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var custId = agentIds.Count == 0 ? model.SuperId : agentIds[0];
+
+            var criteria = new GetStakeLevelCriteria(model.ProductId, custId);
             var groupStakeLevels = _settingService.GetSportBetTypeStakeLevels(criteria);
 
             model.GroupStakeLevels = groupStakeLevels;
             model.ErrorCode = criteria.ErrCode;
             model.ErrorMessage = criteria.ErrMsg;
+            model.IsSelectedMultipleAgents = agentIds.Count > 1;
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_StakeLevel.cshtml", model);
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult UpdateStakeLevel(int productId, int superId, StakeLevelEntity[] stakeLevels)
+        public ActionResult UpdateStakeLevel(
+            int productId,
+            int superId,
+            StakeLevelEntity[] stakeLevels,
+            string agentIds,
+            bool isAgentOnly)
         {
             var result = _settingService.UpdateStakeLevels(
                 productId,
                 superId,
                 stakeLevels,
+                ConvertToIntArray(agentIds),
+                isAgentOnly,
                 AppSession.AccId,
                 Utils.GetClientIP());
 
@@ -162,14 +206,25 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost, AuthenticateRead]
         public ActionResult StakeLevelGroup(StakeLevelViewModel model)
         {
-            var criteria = new GetStakeLevelGroupCriteria(model.ProductId, model.SuperId);
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var custId = agentIds.Count == 0 ? model.SuperId : agentIds[0];
+
+            var criteria = new GetStakeLevelGroupCriteria(model.ProductId, custId);
             var groupStakeLevelGroups = _settingService.GetSportBetTypeStakeLevelGroups(criteria);
 
             model.GroupStakeLevels = groupStakeLevelGroups;
             model.ErrorCode = criteria.ErrCode;
             model.ErrorMessage = criteria.ErrMsg;
+            model.IsSelectedMultipleAgents = agentIds.Count > 1;
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_StakeLevelGroup.cshtml", model);
         }
+
+        private static IEnumerable<int> ConvertToIntArray(string idList)
+            => string.IsNullOrWhiteSpace(idList)
+                ? Enumerable.Empty<int>()
+                : idList
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(id => int.Parse(id));
     }
 }

@@ -426,6 +426,7 @@
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetGlobalStakeLevelCriteria.cs" />

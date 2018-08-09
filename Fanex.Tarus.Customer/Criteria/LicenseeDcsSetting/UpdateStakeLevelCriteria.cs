@@ -5,49 +5,50 @@ using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class UpdateStakeLevelCriteria : NonQueryCriteria
+    internal sealed class UpdateStakeLevelCriteria : NonQueryCriteria
     {
         public UpdateStakeLevelCriteria(
                int productId,
-               int superId,
+               int custId,
                StakeLevelEntity[] stakeLevels,
+               bool isAgentOnly,
                int userId,
                string ip)
         {
             ProductId = productId;
-            SuperId = superId;
+            CustId = custId;
             StakeLevels = stakeLevels;
+            IsAgentOnly = isAgentOnly;
             UserId = userId;
             IP = ip;
         }
 
-        public int ProductId { get; set; }
+        public int ProductId { get; }
+
+        public int CustId { get; }
 
         public StakeLevelEntity[] StakeLevels { get; }
 
+        public bool IsAgentOnly { get; }
+
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_StakeLevelUpd";
-        }
+            => "Acc_Dep_CustSetting_StakeLevelUpd";
 
         public override Hashtable GetSpParams()
-        {
-            return new Hashtable
+            => new Hashtable
             {
                 { "productid", ProductId },
-                { "custid", SuperId },
+                { "custid", CustId },
                 { "stakelevel", BuildStakeLevelXml() },
+                { "isagentonly", IsAgentOnly },
                 { "userid", UserId },
                 { "ip", IP },
                 { "errcode", ErrCode },
                 { "errmsg", ErrMsg }
             };
-        }
 
         public override bool IsValid()
-        {
-            return base.IsValid() && ProductId > 0 && StakeLevels != null && StakeLevels.Length > 0;
-        }
+            => base.IsValid() && ProductId > 0 && StakeLevels != null && StakeLevels.Length > 0;
 
         private string BuildStakeLevelXml()
         {
