@@ -82,6 +82,10 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.2\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
@@ -351,6 +355,8 @@
     <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
+    <Compile Include="Business\Casino\ISyncCasinoService.cs" />
+    <Compile Include="Business\Casino\SyncCasinoService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
@@ -403,6 +409,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
+    <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
@@ -487,6 +494,8 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
+    <Compile Include="DataAccess\Casino\ISyncCasinoRepository.cs" />
+    <Compile Include="DataAccess\Casino\SyncCasinoRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerOTPDataAccess.cs" />
@@ -678,17 +687,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Areas\Logs\APILoggerConnectionStrings.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.mnl.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.sit.config" />
-    <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
-    <None Include="Areas\Logs\LogsConfiguration.config" />
-    <None Include="Areas\ONEbook.NG2.API.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
