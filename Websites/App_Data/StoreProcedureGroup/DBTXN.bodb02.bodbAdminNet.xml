@@ -11,8 +11,7 @@
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="AdminIns" SpName="Acc_AccAdminIns" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="AdminInsFromExisted" SpName="Acc_AccAdminInsFromExisted" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.bodb02.bodbAdminNet" /> 
   </Function>
   <Function Name="Live Casino">
     <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="DBTXN.bodb02.bodbAdminNet" />
@@ -94,10 +93,10 @@
     <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
 </Functions>
