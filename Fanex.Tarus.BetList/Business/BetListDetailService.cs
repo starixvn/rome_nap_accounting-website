@@ -15,7 +15,7 @@
     public class BetListDetailService : IBetListDetailService
     {
         private readonly IBetListDetailRepository _betListDetailRepository;
-        
+        private readonly ITicketHelper ticketHelper = new TicketHelper();
         public BetListDetailService(IBetListDetailRepository betListDetailRepository = null)
         {
             _betListDetailRepository = betListDetailRepository ?? new BetListDetailRepository();
@@ -28,7 +28,6 @@
 
             if (ticketDetail != null)
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 ticketHelper.HideStatusCashOutHistory = true;
 
                 var factory = new BetListHTMLFactory();
@@ -37,7 +36,7 @@
 
                 ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                 ticketDetail.ChoiceHtml = builder.BuildChoice(ticket, ticketHelper, null, false);
-                ticketDetail.OddHtml = builder.BuildOdds(ticket, null, CacheRef.GetOddsTypeName);
+                ticketDetail.OddHtml = builder.BuildOdds(ticket, null, ticketHelper.GetOddsTypeNameById);
                 ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
 
                 var statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
@@ -80,7 +79,7 @@
             {
                 var betListHelper = new BetListHelper();
 
-                ITicketHelper ticketHelper = new TicketHelper();
+                
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
 
@@ -93,7 +92,7 @@
                         Ticket = ticket,
                         TransDateHtml = builder.BuildTrans(ticket),
                         ChoiceHtml = builder.BuildChoice(ticket, ticketHelper, null, false),
-                        OddHtml = builder.BuildOdds(ticket, null, CacheRef.GetOddsTypeName)
+                        OddHtml = builder.BuildOdds(ticket, null, ticketHelper.GetOddsTypeNameById)
                     };
 
                     ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);

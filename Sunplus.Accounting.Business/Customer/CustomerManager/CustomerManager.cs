@@ -1,5 +1,6 @@
 namespace Sunplus.Accounting.Business.Customer
 {
+    using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
     using Core.Helper;
@@ -13,6 +14,7 @@ namespace Sunplus.Accounting.Business.Customer
     using Entities.Customer;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
+    using Fanex.RemotingRef;
     using Fanex.Tarus.Security.Criteria;
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
@@ -29,6 +31,10 @@ namespace Sunplus.Accounting.Business.Customer
         private CustomerService customerService;
         private ISmartPunterService smartPunterService;
         private ICustomerDAO _customerDAO;
+        private readonly IRemotingRefService _remotingRefService;
+        private readonly RenderLeftPanelManager _renderLeftPanelService;
+        private readonly ConfigureDirectAccountService _configureDirectAccountService;
+        
 
         public CustomerManager()
             : this(null)
@@ -41,6 +47,9 @@ namespace Sunplus.Accounting.Business.Customer
 
             customerService = new CustomerService();
             smartPunterService = new SmartPunterService();
+            _remotingRefService = new RemotingRefService();
+            _renderLeftPanelService = new RenderLeftPanelManager();
+            _configureDirectAccountService = new ConfigureDirectAccountService();
         }
 
         public CustDetail GetCustomerInfo(string username)
@@ -168,7 +177,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public static string GetCustName(int roleId)
+        public string GetCustName(int roleId)
         {
             switch (roleId)
             {
@@ -300,7 +309,7 @@ namespace Sunplus.Accounting.Business.Customer
         public string GetRNGSiteNameByCustId(int custId) => _customerDAO.GetRNGSiteNameByCustId(custId);
 
         #region private functions
-        private static string RenderCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             htmlcontent = RenderCustomerDetail(htmlcontent, customerInfoViewModel);
             htmlcontent = GenUplineBox(htmlcontent, customerInfoViewModel);
@@ -314,7 +323,7 @@ namespace Sunplus.Accounting.Business.Customer
             return htmlcontent;
         }
 
-        private static string RenderExtraCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderExtraCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             htmlcontent = RenderBalanceInfo(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDirectInfoTab(htmlcontent, customerInfoViewModel);
@@ -357,7 +366,7 @@ namespace Sunplus.Accounting.Business.Customer
             AppSession.IsInternal = customerInfoViewModel.IsInternalUser;
         }
 
-        private static string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
+        private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
         {
             try
             {
@@ -371,7 +380,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private static string AssignJS(Hashtable param)
+        private string AssignJS(Hashtable param)
         {
             string jsscript = "<script>";
 

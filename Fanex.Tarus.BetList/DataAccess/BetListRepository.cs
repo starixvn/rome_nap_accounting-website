@@ -435,6 +435,7 @@
         {
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
+                ITicketHelper ticketHelper = new TicketHelper();
                 DataSet dataSet = db.ExecuteDataSet(criteria.GetSpParams());
                 if (dataSet != null && dataSet.Tables.Count > 0)
                 {
@@ -504,8 +505,8 @@
                                             HomeID = Converter.ToInt(dr["homeid"]),
                                             AwayID = Converter.ToInt(dr["awayid"])
                                         };
-                                        string homeName = CacheRef.GetTeamName(match.HomeID);
-                                        string awayName = CacheRef.GetTeamName(match.AwayID);
+                                        string homeName = ticketHelper.GetTeamNameById(match.HomeID);
+                                        string awayName = ticketHelper.GetTeamNameById(match.AwayID);
                                         match.Event = homeName + " -vs- " + awayName;
 
                                         parlayEvent.MatchList.Add(match);

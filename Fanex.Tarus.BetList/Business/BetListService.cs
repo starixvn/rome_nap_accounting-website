@@ -40,6 +40,7 @@ namespace Fanex.Tarus.BetList.Business
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
         private readonly IBetListRepository _betListRepository;
+        private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
 
         public BetListService()
@@ -91,18 +92,12 @@ namespace Fanex.Tarus.BetList.Business
 
             try
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 IList<TicketDetail> betDetails = _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction);
-                StringBuilder content = new StringBuilder();
-                DataTable commandData = new DataTable();
                 if (betDetails != null)
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
-
                     ticketHelper.IsShowOddsWithChoice = true;
-                    var lastTicket = betDetails.LastOrDefault();
                     var totalItem = betDetails.Count;
                     foreach (TicketDetail betDetail in betDetails)
                     {
@@ -215,7 +210,6 @@ namespace Fanex.Tarus.BetList.Business
 
             try
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref outputLiveCasino);
                 BetListHelper betListHelper = new BetListHelper();
@@ -224,7 +218,7 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
@@ -459,7 +453,6 @@ namespace Fanex.Tarus.BetList.Business
                     BetType = betType,
                 };
 
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 List<ITicketData> outputLiveCasino_Old = new List<ITicketData>();
                 List<ITicketData> outputLiveCasino_Merge = new List<ITicketData>();
@@ -495,7 +488,7 @@ namespace Fanex.Tarus.BetList.Business
                     IList<TicketDetail> betDetailsMergeModel = new List<TicketDetail>();
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     int from = pageSize * (pageIndex - 1);
                     int to = pageSize * pageIndex;
@@ -636,7 +629,6 @@ namespace Fanex.Tarus.BetList.Business
 
             try
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount) ||
                     (AppSession.IsU3SpecialAccount && !this.IsU3SpecialCustomers(customerId));
@@ -651,7 +643,7 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
@@ -696,7 +688,6 @@ namespace Fanex.Tarus.BetList.Business
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                 };
 
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 SystemParlayModel systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
 
@@ -706,7 +697,7 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                     {
@@ -899,7 +890,6 @@ namespace Fanex.Tarus.BetList.Business
         {
             try
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
                 IList<TicketDetail> betDetailsModel = new List<TicketDetail>();
@@ -1064,7 +1054,7 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
                     BetListHelper betlistHelper = new BetListHelper();
 
                     int from = pageSize * (pageIndex - 1);
@@ -1121,7 +1111,6 @@ namespace Fanex.Tarus.BetList.Business
         {
             try
             {
-                ITicketHelper ticketHelper = new TicketHelper();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
                 BetListHelper betListHelper = new BetListHelper();
@@ -1277,7 +1266,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
@@ -1430,31 +1419,31 @@ namespace Fanex.Tarus.BetList.Business
             }
             else if (ReportService.IsRNGGame_RNGCasino(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.RNG_RNGGame);
+                sportName += ticketHelper.GetSportNameById(SportContants.RNG_RNGGame);
             }
             else if (ReportService.IsMiniGame_RNGCasino(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.RNG_MiniGame);
+                sportName += ticketHelper.GetSportNameById(SportContants.RNG_MiniGame);
             }
             else if (ReportService.IsMobile_RNGCasino(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.RNG_Mobile);
+                sportName += ticketHelper.GetSportNameById(SportContants.RNG_Mobile);
             }
             else if (ReportService.IsAllBet(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.AllBet);
+                sportName += ticketHelper.GetSportNameById(SportContants.AllBet);
             }
             else if (ReportService.IsVoidbridge(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.Voidbridge);
+                sportName += ticketHelper.GetSportNameById(SportContants.Voidbridge);
             }
             else if (ReportService.IsPP(betTypeId))
             {
-                sportName += CacheRef.GetSportName(SportContants.PP);
+                sportName += ticketHelper.GetSportNameById(SportContants.PP);
             }
             else if (ReportService.IsNG2NeedSuffix(betTypeId))
             {
-                sportName += CacheRef.GetSportName(ReportService.GetNG2SportType(betTypeId));
+                sportName += ticketHelper.GetSportNameById(ReportService.GetNG2SportType(betTypeId));
             }
             else if (ReportService.IsVirtualSports2(betTypeId))
             {
@@ -1467,7 +1456,7 @@ namespace Fanex.Tarus.BetList.Business
 
         private string GetProductName(int productId)
         {
-            return CacheRef.GetResourceData("Product", productId.ToString());
+            return ticketHelper.GetResourceData("Product", productId.ToString());
         }
     }
 }

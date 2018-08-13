@@ -65,7 +65,9 @@
             TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", customerInfoViewModel.Mobile);
             //info for internal agent login
             string rndStr = Encryption.RandomString(6);
+#pragma warning disable CS0618 // Type or member is obsolete
             string accKey = FormsAuthentication.HashPasswordForStoringInConfigFile(AppSession.AccPwd + rndStr, "MD5");
+#pragma warning restore CS0618 // Type or member is obsolete
             TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
             TemplateHandler.Assign(ref htmlcontent, "{RndStr}", rndStr);
             TemplateHandler.Assign(ref htmlcontent, "{AccKey}", accKey);

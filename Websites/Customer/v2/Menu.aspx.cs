@@ -5,13 +5,14 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using RemotingRef;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using System.Data;
+using Fanex.RemotingRef;
+using Fanex.Tarus.Infrastructure.Caching;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -107,7 +108,7 @@ public partial class Others_Menu : System.Web.UI.Page
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
-        TemplateHandler.Assign(ref this.tplMenu, "{NG2}", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+        TemplateHandler.Assign(ref this.tplMenu, "{NG2}", CacheRef.GetProductName(23));
         this.RenderSettingTab("Casino", "{urlCasino}", casinoPath, WebSettings.disableCS || !AllowedCS);
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);

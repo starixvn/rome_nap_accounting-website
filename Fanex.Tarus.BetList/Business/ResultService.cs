@@ -1,6 +1,7 @@
 namespace Fanex.Tarus.BetList.Business
 {
     using Core;
+    using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
     using Fanex.Common.Extensions;
@@ -85,13 +86,14 @@ namespace Fanex.Tarus.BetList.Business
         /// <param name="bettypeId">Bet type Id.</param>
         private void FectchTennisMatchInfor(IDataReader reader, TennisMatchResult match, string matchId, int bettypeId)
         {
+            ITicketHelper ticketHelper = new TicketHelper();
             match.MatchId = matchId.Equals("-1") ? reader.ToString("matchid") : matchId;
             match.BettypeId = bettypeId.Equals(-1) ? reader.ToInt("bettype") : bettypeId;
             match.KickOffTime = reader.ToDateTime("kickofftime");
-            match.HomeName = CacheRef.GetTeamName(reader.ToString("homeID"));
-            match.AwayName = CacheRef.GetTeamName(reader.ToString("awayID"));
+            match.HomeName = ticketHelper.GetTeamNameById(reader.ToString("homeID"));
+            match.AwayName = ticketHelper.GetTeamNameById(reader.ToString("awayID"));
             match.LeagueId = reader.ToInt("LeagueID");
-            match.LeagueName = CacheRef.GetLeagueName(match.LeagueId);
+            match.LeagueName = ticketHelper.GetLeagueNameById(match.LeagueId);
             match.EventStatus = reader.ToString("eventstatus");
             match.IsPending = reader.ToBool("IsPending");
             match.SettlementStatusId = 4;

@@ -49,9 +49,8 @@ public class UpdateOperator : BaseHandler {
                     context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error) + "','errMsg')");
                 }
             }
-            catch(Exception ex)
+            catch
             {
-               
                 GotoErroPage(context);
             }
             finally
@@ -61,7 +60,7 @@ public class UpdateOperator : BaseHandler {
         }    
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

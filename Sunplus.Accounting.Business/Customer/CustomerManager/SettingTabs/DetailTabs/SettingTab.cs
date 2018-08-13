@@ -3,11 +3,10 @@
     using System;
     using Core.Common;
     using DNAide.Web;
-    using RemotingRef;
 
     public partial class CustomerManager
     {
-        private static string RenderDetailMenu(
+        private string RenderDetailMenu(
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel, 
             RenderLeftPanelParameter renderLeftPanelParameter)
@@ -26,7 +25,7 @@
             return htmlcontent;
         }
 
-        private static string AssignSettingBlock(
+        private string AssignSettingBlock(
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel, 
             RenderLeftPanelParameter renderLeftPanelParameter)
@@ -128,7 +127,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
             TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", string.Format(creditDCSLink, 23));
             TemplateHandler.Assign(ref htmlcontent, "{fishingWorldLinkSetting}", string.Format(creditDCSLink, 24));
-            TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+            TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
             TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
@@ -151,7 +150,7 @@
             return htmlcontent;
         }
 
-        private static string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.HideSettingLinkRnGCasino)
             {
@@ -236,7 +235,7 @@
             return htmlcontent;
         }
 
-        private static string RemoveUnsupportedSettingBlockDeposit(string htmlcontent)
+        private string RemoveUnsupportedSettingBlockDeposit(string htmlcontent)
         {
             TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
             TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");

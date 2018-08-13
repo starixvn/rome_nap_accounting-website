@@ -169,7 +169,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             TemplateHandler.Assign(ref tpl, "ReadOnly", "readonly='true'");
             DbResult rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);
             DataTable dt = rs.ResultSet.Tables[0];
-            string html = "";
             if (dt.Rows.Count == 0)
             {
                 tpl = GenAddContent("UpdateEditExChangeRate();");

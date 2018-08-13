@@ -21,12 +21,12 @@ public class Redirect : IHttpHandler, IRequiresSessionState
                                        HttpContext.Current.Request.Url.AbsoluteUri.Replace("https", "http") + "';</script></body></html>");
             }
         }
-        catch (Exception ex)
+        catch
         {
-
+            return;
         }
     }
- 
+
     public bool IsReusable {
         get {
             return false;

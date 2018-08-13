@@ -30,15 +30,9 @@ public partial class Customer_EditMaxExposure : PageBase
                 EditMaxExContentHtml.Text = editTpl;
             }
         }
-        catch(InvalidOperationException exception)
+        catch(InvalidOperationException)
         {
             RedirectDeny();
         }
-        catch (Exception)
-        {
-
-            throw;
-        }
-        
     }
 }

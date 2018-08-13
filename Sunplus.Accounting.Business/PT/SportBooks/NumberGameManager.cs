@@ -328,7 +328,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             var lst = Bettypes.GetEnumerator();
             var IsLive = false;
             var midfix1 = "";
-            var midfix2 = "";
 
             sporttype = Constants.Sport.NumberGame;
             param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
@@ -349,12 +348,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 if (IsLive)
                 {
                     midfix1 = "live";
-                    midfix2 = "L";
                 }
                 else
                 {
                     midfix1 = "";
-                    midfix2 = "D";
                 }
 
                 if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //copy from handicap Deadball
@@ -440,10 +437,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
                     //Super Preset Position
                     sMin = 0;
-                    sMax = sMax;
-
-                    //Auto Super Preset Position
-                    sAuto = sAuto;
 
                     TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Master Preset Position
                     TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, sMax));//Super Preset Position
@@ -515,10 +508,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
                     //Super Preset Position
                     sMin = 0;
-                    sMax = sMax;
-
-                    //Auto Super Preset Position
-                    sAuto = sAuto;
 
                     TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Master Preset Position
                     TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, sMax));//Super Preset Position
@@ -873,7 +862,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 var IsLive = false;
                 var IsAuto = false;
                 var midfix1 = "";
-                var midfix2 = "";
                 double s = 0, m = 0, auto = 0;
 
                 while (lst.MoveNext())
@@ -885,12 +873,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     if (IsLive)
                     {
                         midfix1 = "live";
-                        midfix2 = "L";
                     }
                     else
                     {
                         midfix1 = "";
-                        midfix2 = "D";
                     }
 
                     if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
@@ -1426,7 +1412,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 var IsLive = false;
                 var IsAuto = false;
                 var midfix1 = "";
-                var midfix2 = "";
                 double a = 0, m = 0, auto = 0;
 
                 while (lst.MoveNext())
@@ -1438,12 +1423,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     if (IsLive)
                     {
                         midfix1 = "live";
-                        midfix2 = "L";
                     }
                     else
                     {
                         midfix1 = "";
-                        midfix2 = "D";
                     }
 
                     if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
@@ -1685,9 +1668,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 var strValue = "";
                 var lst = Bettypes.GetEnumerator();
                 var IsLive = false;
-                var IsAuto = false;
                 var midfix1 = "";
-                var midfix2 = "";
                 double a = 0;
 
                 while (lst.MoveNext())
@@ -1699,12 +1680,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     if (IsLive)
                     {
                         midfix1 = "live";
-                        midfix2 = "L";
                     }
                     else
                     {
                         midfix1 = "";
-                        midfix2 = "D";
                     }
 
                     if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
@@ -2053,7 +2032,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 var lstValue = "";
                 var IsLive = false;
                 var hiddenHash = new Hashtable();
-                double sMin = 0, sMax = 0, s = 0;
                 var sporttype = Constants.Sport.NumberGame;
                 string live = "", pre1 = "", pre2 = "", prefix = "s", subfix = "";
 
@@ -2258,9 +2236,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
         {
             try
             {
-                double minb = 0, maxb = 0, maxpermatch = 0;
                 int sporttype = Constants.Sport.NumberGame;
-
                 var Bettypes = new Hashtable();
                 Bettypes = AssignEditParams(NumberGameSection.Level.SuperOnMember.ToString());
 
@@ -2440,7 +2416,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 var l = "";
                 double a = 0;
                 double mMin = 0, mMax = 0, m = 0;
-                double sAutoMax = 0, sAuto = 0;
                 double mAutoMax = 0, mAuto = 0;
                 int sporttype = Constants.Sport.NumberGame;
                 var IsAuto_Agent = false;
@@ -2539,7 +2514,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
         {
             try
             {
-                double minb = 0, maxb = 0, maxpermatch = 0;
                 int sporttype = Constants.Sport.NumberGame;
                 var Bettypes = new Hashtable();
                 Bettypes = AssignEditParams(NumberGameSection.Level.MasterOnMember.ToString());

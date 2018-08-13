@@ -26,7 +26,7 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
         /// Adds the mark direct account setting control.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        public static string AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria, string htmlContent)
+        public string AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria, string htmlContent)
         {
             var hasPermission = Permissions.HasPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
             if (!hasPermission || !criteria.DirectAccountStatusInfo.IsShowDirectStatus)
@@ -50,7 +50,7 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The mark direct account setting control.</returns>
-        public static SettingControl GetSettingControlMarkDirectAccount(AddMarkDirectAccountSettingControlCriteria criteria)
+        public SettingControl GetSettingControlMarkDirectAccount(AddMarkDirectAccountSettingControlCriteria criteria)
         {
             string classname = string.Empty;
             string jsonclick = string.Empty;

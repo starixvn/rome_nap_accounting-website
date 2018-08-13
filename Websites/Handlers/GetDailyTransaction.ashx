@@ -18,7 +18,6 @@ public class GetDailyTransaction : BaseHandler {
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
     private string nl = Environment.NewLine;
     int PageIndex = 1, TotalPages = 0;
-    bool hasData = false;
     
     public override void ProcessRequest (HttpContext context) {
         string _s = string.Empty;
@@ -63,13 +62,8 @@ public class GetDailyTransaction : BaseHandler {
             string sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("DailyTxnRow.htm");
             string _newrow = string.Empty;
             string odd_even = "";
-
-            string[] arrDate = _date.ToString().Split('/');
-            string strDate = arrDate[0] + "/" + arrDate[1] + "/" + arrDate[2].Substring(0, 4);
-
             if (dataResult.ResultSet.Tables[0].Rows.Count > 0)
             {
-                hasData = true;
                 foreach (DataRow dr in dataResult.ResultSet.Tables[0].Rows)
                 {
                     _newrow = sRow;

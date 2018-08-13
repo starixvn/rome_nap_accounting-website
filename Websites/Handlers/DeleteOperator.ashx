@@ -34,7 +34,7 @@ public class DeleteOperator : IHttpHandler,IRequiresSessionState {
                 }
 
             }
-            catch (Exception ex)
+            catch
             {
                 context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(Resources.Language.thereisnodata, AlertMessage.MsgType.Error) + "','errMsg');");
             }

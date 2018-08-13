@@ -41,7 +41,7 @@ public class UpdateMaxExp : BaseHandler {
                     }
                 }
             }
-            catch(Exception ex)
+            catch
             {
                //context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error) + "','errMsg');");
                 GotoErroPage(context);
@@ -55,7 +55,7 @@ public class UpdateMaxExp : BaseHandler {
         
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

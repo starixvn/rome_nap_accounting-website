@@ -3,6 +3,7 @@
     using Core;
     using Criteria;
     using DataAccess;
+    using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.TicketHelper;
     using Models;
     using Models.Excel;
@@ -99,7 +100,7 @@
             Match matchObject;
             int columnIndex, eventLength;
             StringBuilder matchBuilder;
-
+            ITicketHelper ticketHelper = new TicketHelper();
             eventLength = events.Count;
             for (int i = 0; i < eventLength; i++)
             {
@@ -127,9 +128,9 @@
                 {
                     matchObject = eventObject.MatchList[j];
                     matchBuilder
-                        .Append(CacheRef.GetTeamName(matchObject.HomeID))
+                        .Append(ticketHelper.GetTeamNameById(matchObject.HomeID))
                         .Append(" - ")
-                        .Append(CacheRef.GetTeamName(matchObject.AwayID));
+                        .Append(ticketHelper.GetTeamNameById(matchObject.AwayID));
 
                     if (j < max - 1)
                     {
@@ -242,7 +243,7 @@
 
             Match matchObject;
             StringBuilder matchBuilder = new StringBuilder(128);
-
+            ITicketHelper ticketHelper = new TicketHelper();
             if (isLoseEvent)
             {
                 matchBuilder.Append("Total of losing tickets");
@@ -253,9 +254,9 @@
                 {
                     matchObject = eventObject.Matches[j];
                     matchBuilder
-                        .Append(CacheRef.GetTeamName(matchObject.HomeID))
+                        .Append(ticketHelper.GetTeamNameById(matchObject.HomeID))
                         .Append(" - ")
-                        .Append(CacheRef.GetTeamName(matchObject.AwayID));
+                        .Append(ticketHelper.GetTeamNameById(matchObject.AwayID));
 
                     if (j < max - 1)
                     {

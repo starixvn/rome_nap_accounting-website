@@ -1,13 +1,12 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using Core.Common;
-    using Core.Configurations;
     using DNAide.Web;
-    using RemotingRef;
+    using Fanex.RemotingRef;
 
     public partial class CustomerManager
     {
-        private static string GenMenuMinMaxPT(
+        private string GenMenuMinMaxPT(
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
@@ -52,7 +51,7 @@
             return htmlcontent;
         }
 
-        private static string AssignMemberSetting(
+        private string AssignMemberSetting(
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
@@ -117,7 +116,7 @@
 
             if (renderLeftPanelParameter.IsShowNG2)
             {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>" + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
             }
 
             if (renderLeftPanelParameter.IsShowFishingWorld)
@@ -194,7 +193,7 @@
 
             if (renderLeftPanelParameter.IsShowNG2)
             {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
+                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>" + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
             }
 
             if (renderLeftPanelParameter.IsShowFishingWorld)
@@ -237,7 +236,7 @@
             return htmlcontent;
         }
 
-        private static string AssignAgentMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int masterId)
+        private string AssignAgentMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int masterId)
         {
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
@@ -248,7 +247,7 @@
             return htmlcontent;
         }
 
-        private static string AssignMasterMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int superId)
+        private string AssignMasterMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int superId)
         {
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? "" : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
@@ -259,7 +258,7 @@
             return htmlcontent;
         }
 
-        private static string AssignSuperMinSetting(string htmlcontent, int custId, string userName, bool isDeposit)
+        private string AssignSuperMinSetting(string htmlcontent, int custId, string userName, bool isDeposit)
         {
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min PT</span></a></li>");

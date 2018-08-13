@@ -142,7 +142,8 @@ public class UpdateCustomerStatus : BaseHandler
                         bool isClearCredit = bool.Parse(context.Request["isClearCredit"].ToString());
                         if (isClearCredit)
                         {
-                            string CustUserName = Sunplus.Accounting.Business.Customer.CustomerManager.GetCustName(AppSession.CustRoleId);
+                            var customerManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
+                            string CustUserName = customerManager.GetCustName(AppSession.CustRoleId);
                             string accId = AppSession.AccId.ToString();
                             IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(CustUserName, accId);
 
@@ -255,7 +256,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;               
+                    break;
                 case "disabledVS":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -277,7 +278,7 @@ public class UpdateCustomerStatus : BaseHandler
                         context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert("You are not authorized on this function.") +
                                    "</script>");
                     }
-                    break;             
+                    break;
                 case "disabledGoldDeluxe":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))

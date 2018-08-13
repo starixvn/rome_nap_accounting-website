@@ -40,7 +40,7 @@ public class UpdateVirtualRate : BaseHandler{
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 GotoErroPage(context);
                 
@@ -53,7 +53,7 @@ public class UpdateVirtualRate : BaseHandler{
         }
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

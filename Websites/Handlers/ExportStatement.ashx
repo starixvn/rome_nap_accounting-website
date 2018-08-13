@@ -17,7 +17,8 @@ using Sunplus.Accounting.Core.Extensions;
 public class UploadVirtualRate : BaseHandler
 {
 
-    public override void ProcessRequest (HttpContext context) {
+    public override void ProcessRequest(HttpContext context)
+    {
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         context.Response.ContentType = "text/html";
 
@@ -49,13 +50,10 @@ public class UploadVirtualRate : BaseHandler
 
     }
 
-
-
-
-
-
-    public bool IsReusable {
-        get {
+    public override bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

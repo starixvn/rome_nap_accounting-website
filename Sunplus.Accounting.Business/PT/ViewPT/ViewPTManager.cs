@@ -28,7 +28,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 {
     public class ViewPTManager : IViewPtManager
     {
-        private static string _ibcAutoPt = "v{0}_AutoIBC_pt_{1}";
         private static string _comGroupA = "ga{0}";
         private static string _comGroupB = "gb{0}";
         private static string _comGroupC = "gc{0}";
@@ -36,9 +35,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static string _comOther = "othercomm{0}";
         private static string _com1x2 = "comm_5_{0}";
         private static string _comGameComm = "v161_comm_81_{0}";
-        private static string _comHorse = "v{0}_comm_{1}_{2}";
         private static string _currency = "currency";
-        private static string _lcsPt = "{0}positiontaking";
 
         public SportDTO GetPtSportType(string userName)
         {
@@ -714,9 +711,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     var ptCurrent = new PositionTakingDTO();
                     var betType = CastAide.AsInt32(dr["bettype"]);
                     var sportType = CastAide.AsInt32(dr["sporttype"].ToString());
-
-                    var currencyAllowViewPt = false;
-
                     if (sportType == Constants.Sport.OtherSports && betType == Constants.BetType.MixParlay && sportId == Constants.Sport.OtherSports)
                         continue;
                     if (sportId == Constants.Sport.NumberGame && !CheckBettypeSatusForNumberGame(betType, CastAide.AsBoolean(dr["islive"])))
