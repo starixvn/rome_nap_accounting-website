@@ -1,7 +1,6 @@
 ﻿\\*.local.config
 \\*.local2.config
 \\*.master.config
-\\*.dev.config
 \\*.txt
 \\LogCS\\*
 \\RobotDetection\\*
