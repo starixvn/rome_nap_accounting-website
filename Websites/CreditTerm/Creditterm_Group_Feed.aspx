@@ -10,7 +10,7 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/image.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/CreditTerm/creditterm.css" rel="stylesheet" type="text/css" />
-    <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/Public/Message.css?v1" rel="stylesheet" type="text/css" />
     
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="../js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
@@ -31,7 +31,8 @@
                 </tr>
             </table>
             <div class="maincontent_box">
-                <div id="errMsg"></div>
+                <div id="errMsg" style="white-space: pre-line"></div>
+                <div id="errMsg1" style="white-space: pre-line"></div>
                 <div id="clear2"></div>
                 <%=strfilter%>
             </div>
@@ -47,13 +48,30 @@
                         $("input[name=chkuser]").attr("checked", $("#chkcheckall").attr("checked"));
                     }
                     function ExecuteCreditTerm(type, userid) {
+                        $("#errMsg,#errMsg1").html('');
                         var listuser="";
                         switch (type) {
                             case '1':
-                                if ($('#txtuser').val().length == 0) {
+                                var usernamesValue = $('#txtuser').val();
+                                if (usernamesValue.trim().length == 0) {
                                     showAlertMessage("errMsg","Please enter Username.",1);
                                     return;
                                 }
+
+                                // Check usernames contains '\'.
+                                if (usernamesValue.indexOf("\n") >= 0
+                                    || usernamesValue.indexOf("\r") >= 0
+                                    || usernamesValue.indexOf("\\") >= 0) {
+                                    showAlertMessage("errMsg", "You are not allowed to input [Enter] and backslash '\\' into the Usernames field.", 1);
+                                    return;
+                                }
+
+                                var usernamesArray = usernamesValue.split(",");
+                                if (usernamesArray.length > 50) {
+                                    showAlertMessage("errMsg", "The function can only create up to 50 accounts per request.", 1);
+                                    return;
+                                }
+
                                 break;
                             case '2':
                                 listuser = userid;

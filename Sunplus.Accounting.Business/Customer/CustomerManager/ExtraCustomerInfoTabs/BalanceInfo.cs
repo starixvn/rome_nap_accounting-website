@@ -14,9 +14,9 @@
             bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
 
             string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
-            TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.Cash >= 0) ? " b" : " hilight"));
+            TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.Cash >= 0) ? " b" : " hilight"));
 
-            TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayCash >= 0) ? " b" : " hilight"));
+            TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayCash >= 0) ? " b" : " hilight"));
             TemplateHandler.Assign(ref balanceinfo, "{TotalCashBal}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.Cash));
 
             TemplateHandler.Assign(ref balanceinfo, "{TotalCashBalCur}", string.Format("{0:n}", customerInfoViewModel.Cash));
@@ -25,6 +25,7 @@
             TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBal}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayCash));
             TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBalCur}", string.Format("{0:n}", customerInfoViewModel.YesterdayCash));
             TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayCashBalCur}", customerInfoViewModel.Currency + " ");
+            TemplateHandler.Assign(ref balanceinfo, "{CustName}", customerInfoViewModel.UserName);
 
             TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.AccOutstanding)));
             if (customerInfoViewModel.RoleId == 1)
@@ -66,12 +67,12 @@
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
 
-                TemplateHandler.Assign(ref balanceinfo, "{colorTotalBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.TotalBal >= 0) ? " b" : " hilight"));
+                TemplateHandler.Assign(ref balanceinfo, "{colorTotalBal}", (hasTransferPermission  ? " canchange" : string.Empty) + ((customerInfoViewModel.TotalBal >= 0) ? " b" : " hilight"));
                 TemplateHandler.Assign(ref balanceinfo, "{TotalBal}", string.Format("{0:####.##}", customerInfoViewModel.TotalBal));
                 TemplateHandler.Assign(ref balanceinfo, "{TotalBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.TotalBal)));
                 TemplateHandler.Assign(ref balanceinfo, "{CurTotalBalCur}", customerInfoViewModel.Currency + " ");
 
-                TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
+                TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", customerInfoViewModel.YesterdayBal));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayBal)));
                 TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", customerInfoViewModel.Currency + " ");

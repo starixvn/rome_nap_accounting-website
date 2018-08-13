@@ -3,8 +3,8 @@
         <td class="dot_left" style="width: 100px;">
             Total Cash
         </td>
-        <td class="dot_right b" style="width: 140px;">
-            {CurTotalCashBalCur}<span class="{colorTotalCash}" onclick="DoTransfer(this, '{TotalCashBal}');">{TotalCashBalCur}</span>
+        <td class="dot_right b" style="width: 140px;">         
+            {CurTotalCashBalCur}<span class="{colorTotalCash}" onclick="DoTransfer(this, '{TotalCashBal}', '{CustName}');">{TotalCashBalCur}</span>
         </td>
     </tr>
     <tr>
@@ -12,7 +12,7 @@
             Yesterday Cash
         </td>
         <td class="dot_right b">
-            {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', true);">
+            {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', '{CustName}');">
                 {YesterdayCashBalCur}</span>
         </td>
     </tr>
@@ -21,7 +21,7 @@
             Total Balance
         </td>
         <td class="dot_right b">
-            {CurTotalBalCur}<span class="{colorTotalBal}" onclick="DoTransfer(this, '{TotalBal}');">{TotalBalCur}</span>
+            {CurTotalBalCur}<span class="{colorTotalBal}" onclick="DoTransfer(this, '{TotalBal}', '{CustName}');">{TotalBalCur}</span>
         </td>
     </tr>
     <tr class="{hiddenbalance}">
@@ -29,7 +29,7 @@
             Yesterday Balance
         </td>
         <td class="dot_right b">
-            {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', true);">
+            {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', '{CustName}');">
                 {YesterdayBalCur}</span>
         </td>
     </tr>

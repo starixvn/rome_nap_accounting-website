@@ -581,12 +581,9 @@ function StatementClick() {
 
 //document.myFunc = function() { alert('!') } //is called from parent
 
-function DoTransfer(span, value, isYesterday) {
-    if (span.className.indexOf('canchange') == -1) return;
-    //parent.BlockUI();
-    var yesterdayTransfer = (isYesterday) ? '&isYesterday=1' : '';
-    var url = 'Transfer.aspx?amount=' + value + yesterdayTransfer;
-    //submitForm(url);
+function DoTransfer(span, value, custName) {
+    if (span.className.indexOf('canchange') == -1) return;   
+    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
     parent.gotoURL('centerFr', url);
     parent.resetMenu();
 }

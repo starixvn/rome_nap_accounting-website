@@ -10,7 +10,7 @@
 .emsg_3_2{background:url(../images/emsg_3_2.gif) repeat-x left top}
 .emsg_3_3{background:url(../images/emsg_3_3.gif) no-repeat left top}
 
-.msgerr{background:url(../images/error-icon.gif) no-repeat left top; padding:1px 0px 4px 30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; color:#E00; height:24px}
+.msgerr{background:url(../images/error-icon.gif) no-repeat left top; padding:5px 0px 4px 30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; color:#E00; height:24px}
 .msgscc{background:url(../images/sucess.gif) no-repeat left top; padding-left:30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; color:#2d9d3b; height:24px}
 
 .error-message-login{color:#ea4c18 !important;}
