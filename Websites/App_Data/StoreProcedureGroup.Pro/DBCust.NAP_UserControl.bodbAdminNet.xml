@@ -48,5 +48,5 @@
     <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-  </Function>
+  </Function> 
 </Functions>

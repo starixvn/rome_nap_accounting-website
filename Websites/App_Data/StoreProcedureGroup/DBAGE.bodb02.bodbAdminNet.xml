@@ -62,7 +62,7 @@
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -72,7 +72,7 @@
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Enable Number Game">
-    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
