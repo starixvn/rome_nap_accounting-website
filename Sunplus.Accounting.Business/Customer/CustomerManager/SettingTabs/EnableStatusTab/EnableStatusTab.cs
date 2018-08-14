@@ -13,7 +13,6 @@
     using DNAide.Core;
     using DNAide.Web;
     using Entities;
-    using RemotingRef;
     using Security;
 
     public partial class CustomerManager
@@ -82,7 +81,7 @@
             return renderLeftPanelParameter;
         }
 
-        private static string GenSettingControl(
+        private string GenSettingControl(
            string htmlcontent,
            DataRow row1,
            CustomerInfoViewModel customerInfoViewModel,
@@ -166,7 +165,7 @@
             return htmlcontent;
         }
 
-        private static string AssignTemplateValue(string htmlcontent)
+        private string AssignTemplateValue(string htmlcontent)
         {
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
@@ -193,7 +192,7 @@
             return htmlcontent;
         }
 
-        private static string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
+        private string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
             if (customerInfoViewModel.HideSportsbook2)
             {
@@ -241,7 +240,7 @@
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{AllbetOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                TemplateHandler.Assign(ref htmlcontent, "{AllbetOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
                     customerInfoViewModel.IsDeposit,
                     customerInfoViewModel.CustId,
                     customerInfoViewModel.UserName,
@@ -253,7 +252,7 @@
             return htmlcontent;
         }
 
-        private static string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (!customerInfoViewModel.ShowEnableCheckBoxKeno)
             {
@@ -261,7 +260,7 @@
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", RenderLeftPanelManager.GetProductStatusJsFunction(
+                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
                     customerInfoViewModel.IsDeposit,
                     customerInfoViewModel.CustId,
                     customerInfoViewModel.UserName,
@@ -273,7 +272,7 @@
             return htmlcontent;
         }
 
-        private static string RenderAGCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderAGCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             var canEditAGCasinoStatus = WebSettings.EnableAGCasino && customerInfoViewModel.IsDeposit;
             if (!canEditAGCasinoStatus)
@@ -338,7 +337,7 @@
             return htmlcontent;
         }
 
-        private static string RenderLimitedPerIP(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderLimitedPerIP(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.RoleId < 2) //Member
             {
@@ -403,7 +402,7 @@
             return htmlcontent;
         }
 
-        private static string RenderDCSControl(
+        private string RenderDCSControl(
             string htmlcontent,
             DataRow row1,
             CustomerDetail CustParent,
@@ -421,7 +420,7 @@
                     switch (productId)
                     {
                         case "5":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -434,7 +433,7 @@
                                                5);
                             break;
                         case "20":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS(
                                                row1,
                                                productRow,
                                                sg,
@@ -450,7 +449,7 @@
                                                4);
                             break;
                         case "22":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -463,7 +462,7 @@
                                                22);
                             break;
                         case "23":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -472,11 +471,11 @@
                                                "NG2",
                                                renderLeftPanelParameter.IsShowNG2,
                                                renderLeftPanelParameter,
-                                               "Update " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
+                                               "Update " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
                                                23);
                             break;
                         case "24":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -489,7 +488,7 @@
                                                24);
                             break;
                         case "27":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -503,7 +502,7 @@
                             break;
 
                         case "28":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -517,7 +516,7 @@
                             break;
 
                         case "26":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -531,7 +530,7 @@
                             break;
 
                         case "30":
-                            RenderLeftPanelManager.RenderEnableProductBoxDCS2(
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
                                                productRow,
                                                sg,
@@ -550,7 +549,7 @@
             return htmlcontent;
         }
 
-        private static string RenderColossusBetControl(
+        private string RenderColossusBetControl(
             string htmlcontent,
             DataRow row1,
             CustomerDetail CustParent,
@@ -559,7 +558,7 @@
             SettingGroup sg,
             bool hasDownline)
         {
-            RenderLeftPanelManager.RenderEnableProductBox2(
+            _renderLeftPanelService.RenderEnableProductBox2(
                row1,
                sg,
                ref htmlcontent,
@@ -574,7 +573,7 @@
             return htmlcontent;
         }
 
-        private static string RenderSuperLiveControl(
+        private string RenderSuperLiveControl(
             string htmlcontent,
             DataRow row1,
             CustomerDetail CustParent,
@@ -583,7 +582,7 @@
             SettingGroup sg,
             bool hasDownline)
         {
-            RenderLeftPanelManager.RenderEnableProductBox(
+            _renderLeftPanelService.RenderEnableProductBox(
                             row1,
                             sg,
                             ref htmlcontent,
@@ -597,7 +596,7 @@
             return htmlcontent;
         }
 
-        private static string RenderGoldDeluxeForCreditControl(
+        private string RenderGoldDeluxeForCreditControl(
             string htmlcontent,
             DataRow row1,
             bool isManageCustomerAccess,
@@ -605,7 +604,7 @@
             SettingGroup sg,
             bool hasDownline)
         {
-            RenderLeftPanelManager.RenderOldProductEnableBoxLikeDCS(
+            _renderLeftPanelService.RenderOldProductEnableBoxLikeDCS(
                 row1,
                 sg,
                 ref htmlcontent,
@@ -620,9 +619,9 @@
             return htmlcontent;
         }
 
-        private static string RenderAddMarkDirectAccountControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, SettingGroup sg)
+        private string RenderAddMarkDirectAccountControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, SettingGroup sg)
         {
-            htmlcontent = ConfigureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
+            htmlcontent = _configureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
             {
                 SettingGroup = sg,
                 UserId = customerInfoViewModel.CustId.ToString(),
@@ -642,7 +641,7 @@
             return htmlcontent;
         }
 
-        private static string RenderInternalControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderInternalControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (!WebSettings.DisableInternal && Functions.Settings.IsVisibleInternal)
             {
@@ -666,7 +665,7 @@
             return htmlcontent;
         }
 
-        private static string RenderAllDayBalTransferControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderAllDayBalTransferControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.RoleId == 4)
             {
@@ -689,7 +688,7 @@
             return htmlcontent;
         }
 
-        private static string RenderSuspendedControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderSuspendedControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             var suspendedControlSettingGroup = new SettingGroup();
 
@@ -705,7 +704,7 @@
             return htmlcontent;
         }
 
-        private static string RenderEnableCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderEnableCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", customerInfoViewModel.DisabledRnGCasino ? 1 : 0);
 
@@ -724,7 +723,7 @@
             return htmlcontent;
         }
 
-        private static string RenderNumberGameControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderNumberGameControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             var numberGameSettingGroup = new SettingGroup();
 
@@ -744,7 +743,7 @@
             return htmlcontent;
         }
 
-        private static string RenderEsportsControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderEsportsControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]) && (Permissions.HasPermission(Enumerations.Functions.Customer.EnableEsports)))
             {
@@ -773,7 +772,7 @@
             return htmlcontent;
         }
 
-        private static string RenderOutrightControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderOutrightControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             var outrightControlSettingGroup = new SettingGroup();
 
@@ -791,7 +790,7 @@
             return htmlcontent;
         }
 
-        private static string RenderDoubleCommControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderDoubleCommControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (WebSettings.OfferDoubleComm)
             {
@@ -816,7 +815,7 @@
             return htmlcontent;
         }
 
-        private static string RenderAutoMasterControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderAutoMasterControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.RoleId == 3)
             {
@@ -840,7 +839,7 @@
             return htmlcontent;
         }
 
-        private static string RenderSelectedBettingControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderSelectedBettingControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.RoleId > 1 && Functions.Settings.IsVisibleSelectedBetting)
             {
@@ -864,7 +863,7 @@
             return htmlcontent;
         }
 
-        private static string AssignCustomerInfo(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string AssignCustomerInfo(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
             TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.RoleId);
@@ -874,7 +873,7 @@
             return htmlcontent;
         }
 
-        private static string RenderAbnormalCustomer(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private string RenderAbnormalCustomer(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (WebSettings.EnableAbnormal)
             {

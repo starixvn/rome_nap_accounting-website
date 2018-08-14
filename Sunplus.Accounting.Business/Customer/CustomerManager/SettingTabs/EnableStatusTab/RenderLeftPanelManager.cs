@@ -8,14 +8,24 @@ namespace Sunplus.Accounting.Business.Customer
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Extensions;
-    using RemotingRef;
+    using Fanex.RemotingRef;
 
     /// <summary>
     /// Render Left Panel Manager.
     /// </summary>
-    public static class RenderLeftPanelManager
+    public class RenderLeftPanelManager
     {
-        public static void RenderEnableProductBox(
+        private readonly IRemotingRefService _remotingRefService;
+
+        public RenderLeftPanelManager() : this(null)
+        { }
+
+        public RenderLeftPanelManager(IRemotingRefService remotingRefService)
+        {
+            _remotingRefService = remotingRefService ?? new RemotingRefService();
+        }
+
+        public void RenderEnableProductBox(
             DataRow custInfoRow,
             SettingGroup settingGroup,
             ref string htmlcontent,
@@ -80,7 +90,7 @@ namespace Sunplus.Accounting.Business.Customer
         /// <param name="renderLeftPanelParameter"></param>
         /// <param name="title"></param>
         /// <param name="productId"></param>
-        public static void RenderEnableProductBox2(
+        public void RenderEnableProductBox2(
         DataRow custInfoRow,
         SettingGroup settingGroup,
         ref string htmlcontent,
@@ -139,7 +149,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public static void RenderEnableProductBoxDCS(
+        public void RenderEnableProductBoxDCS(
             DataRow custInfoRow,
             DataRow productInfo,
             SettingGroup settingGroup,
@@ -183,7 +193,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public static void RenderEnableProductBoxDCS2(
+        public void RenderEnableProductBoxDCS2(
             DataRow custInfoRow,
             DataRow productInfo,
             SettingGroup settingGroup,
@@ -222,7 +232,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public static void RenderOldProductEnableBoxLikeDCS(
+        public void RenderOldProductEnableBoxLikeDCS(
             DataRow custInfoRow,
             SettingGroup settingGroup,
             ref string htmlcontent,
@@ -263,7 +273,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private static SettingControl GetProductSettingControl(
+        private SettingControl GetProductSettingControl(
             RenderLeftPanelParameter renderLeftPanelParameter,
             bool isManageCustomerAccess,
             string statusName,
@@ -310,14 +320,14 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
                         "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        productId == 23 ? isEnabled ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
+                        productId == 23 ? isEnabled ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                         isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
                 new SettingControl(
-                    productId == 23 ? "Enable " + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
+                    productId == 23 ? "Enable " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
@@ -331,7 +341,7 @@ namespace Sunplus.Accounting.Business.Customer
                     productName);
         }
 
-        private static SettingControl GetProductSettingControl2(
+        private SettingControl GetProductSettingControl2(
            RenderLeftPanelParameter renderLeftPanelParameter,
            bool isManageCustomerAccess,
            string statusName,
@@ -359,14 +369,14 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
                         "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        productId == 23 ? isEnabled ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
+                        productId == 23 ? isEnabled ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                         isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
                 new SettingControl(
-                    productId == 23 ? RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
+                    productId == 23 ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
@@ -381,12 +391,12 @@ namespace Sunplus.Accounting.Business.Customer
         }
 
 
-        private static bool ContainColumn(DataTable table, string columnName)
+        private bool ContainColumn(DataTable table, string columnName)
         {
             return table.Columns.Contains(columnName);
         }
 
-        public static string GetProductStatusJsFunction(
+        public string GetProductStatusJsFunction(
             bool isDeposit,
             int custId,
             string userName,
@@ -401,14 +411,14 @@ namespace Sunplus.Accounting.Business.Customer
             return string.Format(jsFunction, custId, userName, roleId, productId, title);
         }
 
-        private static string GetProductStatusJSFunction(bool isDeposit)
+        private string GetProductStatusJSFunction(bool isDeposit)
         {
             return isDeposit
                 ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}', true)"
                 : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
         }
 
-        private static string GetProductStatusJSFunctionForAllbet(bool isDeposit)
+        private string GetProductStatusJSFunctionForAllbet(bool isDeposit)
         {
             return isDeposit
                 ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}')"
