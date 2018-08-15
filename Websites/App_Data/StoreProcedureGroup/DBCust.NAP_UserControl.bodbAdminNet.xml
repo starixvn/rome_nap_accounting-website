@@ -30,10 +30,8 @@
     <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" Plain="0" />    
+    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" Plain="0" />
   </Function>
-  
-
   <Function Name="User - Account Management">
     <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
@@ -44,5 +42,4 @@
     <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
-  
 </Functions>
