@@ -357,7 +357,15 @@
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Bet List By Ref No">
+  <Function Name="Special Site">
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCustDBCust.CustDB.bodbAdminNet" />
+  </Function> 
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+   <Function Name="Bet List By Ref No">
     <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+
 </Functions>
