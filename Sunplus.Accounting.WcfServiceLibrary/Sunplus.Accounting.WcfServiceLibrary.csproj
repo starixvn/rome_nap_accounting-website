@@ -77,8 +77,8 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.2\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.7\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
@@ -141,8 +141,8 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.0.12\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.4\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
