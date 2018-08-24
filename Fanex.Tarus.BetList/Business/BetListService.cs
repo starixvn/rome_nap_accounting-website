@@ -1366,20 +1366,19 @@ namespace Fanex.Tarus.BetList.Business
                 .Where(t => t.Ticket.Stake > 0)
                 .OrderBy(t => t.Ticket.MatchId)
                 .ToList();
-
+            StringBuilder result = new StringBuilder();
             TicketDetail ticketDetail;
             for (int i = 0, max = combinationTypeCombo.Length; i < max; i++)
             {
                 ticketDetail = hdp1 == 0 ? combinationTypeComboTickets[0] : combinationTypeComboTickets[i];
-
-                combinationTypeCombo[i] = string.Format(
+                result.Append(string.Format(
                     "<div>{0} x <span class=\"unit-stake\">{1} {2}</span></div>",
                     combinationTypeCombo[i],
                     ticketDetail.Ticket.Currency,
-                    ticketDetail.Ticket.Stake.ToString("N0"));
+                    ticketDetail.Ticket.Stake.ToString("N0")));
             }
 
-            return "<div class=\"offer-name-list\">" + string.Join(string.Empty, combinationTypeCombo) + "</div>";
+            return "<div class=\"offer-name-list\">" + result.ToString() + "</div>";
         }
 
         public string GetSiteNameByCustId(int custId)
