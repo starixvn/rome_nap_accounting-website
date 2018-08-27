@@ -83,7 +83,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.68.0-beta2\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.68.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
@@ -91,11 +91,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.68.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.68.0-beta2\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.68.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0-beta1\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -118,8 +118,8 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.8-RR2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.9\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
@@ -138,31 +138,31 @@
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.6-RR2\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.6\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.RemotingRef, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.RemotingRef.1.1.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
+    <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.0-beta5\lib\net40\Fanex.Result.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.0\lib\net40\Fanex.Result.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1-beta1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1-beta3\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.0-beta5\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.0\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -170,11 +170,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.2-beta1\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.2\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.1-beta1\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.1\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -182,7 +182,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.1-beta1\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.1\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
@@ -190,7 +190,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.2-beta1\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.2\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -198,19 +198,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0-beta2\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.0-beta4\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.0\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.1.0-beta3\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.1.0\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.2-beta1\lib\net40\Fanex.Result.Core.Voidbridge.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.2\lib\net40\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.ThirdParty, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -221,8 +221,8 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.2-RR2\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -230,7 +230,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.5-RR2\lib\net461\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.5\lib\net461\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -254,7 +254,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1-beta3\lib\net40\LiveCasinoResult.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1\lib\net40\LiveCasinoResult.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -337,8 +337,8 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.5-RR2\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
@@ -642,6 +642,111 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BetListResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fanex.Result\Allbet\css\button.css" />
+    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\btn_UI04.png" />
+    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\icon_UI02.png" />
+    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\oddsTable_th.png" />
+    <Content Include="Content\Fanex.Result\Allbet\css\images\layout\popup.png" />
+    <Content Include="Content\Fanex.Result\Allbet\css\menu.css" />
+    <Content Include="Content\Fanex.Result\Allbet\css\oddsFamily.css" />
+    <Content Include="Content\Fanex.Result\Allbet\css\table_w.css" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C6.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C7.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C8.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\C9.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CA.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CJ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CK.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\CQ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D6.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D7.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D8.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\D9.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DA.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DJ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DK.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\DQ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H6.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H7.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H8.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\H9.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HA.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HJ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HK.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\HQ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S6.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S7.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S8.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\S9.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SA.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SJ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SK.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\SQ.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\0.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\10.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\11.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\12.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\13.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\14.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\15.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\16.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\17.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\18.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\19.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\20.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\21.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\22.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\23.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\24.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\25.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\26.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\27.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\28.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\29.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\30.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\31.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\32.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\33.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\34.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\35.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\36.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\6.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\7.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\8.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\9.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d1.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d2.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d3.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d4.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d5.png" />
+    <Content Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\ScoreBoard_d6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

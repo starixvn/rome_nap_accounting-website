@@ -10,7 +10,6 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Collections.Generic;
-    using System.Net;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Result.Core.Sportsbook.DTO;
