@@ -108,14 +108,6 @@ function OpenByIP(custid, fdate, ip, type) {
     GeneralAjaxCall(urlLink);
 }
 
-function viewFinanceResult(transid) {
-    var width = 420;
-    if (parent.ibcWnd)
-        parent.ibcWnd.open('Report/ViewFinanceResult.aspx?transid=' + transid, '', 50, 100, width, 200, 'class1', 'class2');
-    else
-        ibcWnd.open('../Report/ViewFinanceResult.aspx?transid=' + transid, '', 50, 100, width, 200, 'class1', 'class2');
-}
-
 function ViewMainReportByBettype(fdate, tdate, bettype) {
     var urlLink = '../Handlers/GenBetList.ashx?fdate=' + fdate + '&tdate=' + tdate + '&bettype=' + bettype + '&requesttype=1';
     GeneralAjaxCall(urlLink);

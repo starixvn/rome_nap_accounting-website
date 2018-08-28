@@ -24,7 +24,7 @@ public class InvalidExRate : BaseHandler
                 result.Append("1$$$");
                 result.Append(GenerateHtml.GetContentInvalidExRate(CastAide.AsDateTime(param[0]), CastAide.AsDateTime(param[1])));
             }
-            catch (Exception ex)
+            catch
             {
                 GotoErroPage(context);
                 context.Response.End();
@@ -39,7 +39,7 @@ public class InvalidExRate : BaseHandler
 
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

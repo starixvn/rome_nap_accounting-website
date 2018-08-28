@@ -29,14 +29,13 @@
         public IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria)
         {
             var detailsTickets = _agCasinoRepository.BetDetails(criteria);
-
             if (detailsTickets != null)
             {
                 ITicketHelper ticketHelper = new TicketHelper();
                 BetListHTMLFactory factory = new BetListHTMLFactory();
                 BetListHTMLBuilder builder = factory.CreateBuilder();
                 BetListHelper betListHelper = new BetListHelper();
-                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 foreach (TicketDetail betDetail in detailsTickets)

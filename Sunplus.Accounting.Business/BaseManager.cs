@@ -25,7 +25,7 @@ namespace Sunplus.Accounting.Business
 
         private void SessionTimeoutHandle()
         {
-            if (AppSession.AccId == null)
+            if (AppSession.AccId == 0)
             {
                 HttpContext.Current.Response.Redirect("~/SignIn.aspx");
             }
@@ -48,24 +48,10 @@ namespace Sunplus.Accounting.Business
             {
                 return CastAide.AsString(SCCACHE.Get(key));
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
         }
-
-        protected virtual object GetCachedObjData(string key)
-        {
-            try
-            {
-                //return SCCACHE.SharedCache.Get(key);
-                return CacheService.CreateInstance(CacheType.ShareCached).Get(key);
-            }
-            catch (Exception ex)
-            {
-                //Logs.Write(ex.Message);
-                return null;
-            }
-        }      
     }
 }

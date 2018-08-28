@@ -186,7 +186,7 @@
                     }
                 }
 
-                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
                 BetListExcelFactory factory = new BetListExcelFactory();
                 BetListExcelBuilder builder = factory.CreateBuilder();
                 IList<ITicket> tickets = new List<ITicket>();

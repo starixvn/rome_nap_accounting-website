@@ -51,7 +51,7 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
             rs = Sunplus.Accounting.DataAccess.IBCDLL.Customer.Select4Edit.TransferOptionSel(Request["custid"]);
             if (rs != null)
             {
-                if (rs.Outputs["transferoption"] != null && rs.Outputs["transferoption"] != "")
+                if (rs.Outputs["transferoption"] != null && rs.Outputs["transferoption"].ToString() != "")
                 {
                     Char[] arrChar = rs.Outputs["transferoption"].ToString().ToCharArray();
                     for (int i = 0; i <= arrChar.Length - 2; i++)

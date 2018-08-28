@@ -24,6 +24,10 @@
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate.ProductStatus" %>
 <%@ Import Namespace="CasinoLibrary.Model.UserException" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Extensions" %>
+<%@ Import Namespace="Fanex.BetList.Core" %>
+<%@ Import Namespace="Fanex.BetList.Core.RemotingRef" %>
+<%@ Import Namespace="Fanex.Result.Core.Base" %>
+<%@ Import Namespace="Fanex.Result.Core.RemotingRef" %>
 
 
 <script RunAt="server">
@@ -63,6 +67,12 @@
             .UseProductStatusActor(new ProductStatusActor())
             .SetUnAuthorizedUrl("~/AccessDenied.aspx");
         ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
+        Fanex.RemotingRef.RefDataTypeContainer
+            .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
+            .FromApplication("NAP Accounting")
+            .SupportOnlyDefaultLanguage();
+        BetListManager.RegisterRemotingRef(new CacheRef());
+        ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)

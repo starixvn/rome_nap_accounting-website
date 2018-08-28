@@ -88,7 +88,7 @@
             return template;
         }
 
-        private static SettingControl GetSettingControlSelectedBetting(
+        private SettingControl GetSettingControlSelectedBetting(
             int roleID,
             bool parentstatus,
             bool isManageCustomerAccess,
@@ -137,7 +137,7 @@
             }
         }
 
-        private static SettingControl GetSettingControlSuspended(
+        private SettingControl GetSettingControlSuspended(
             bool isManageCustomerAccess,
             string name,
             bool currStatus,
@@ -171,7 +171,7 @@
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, name, 0, false, string.Empty);
         }
 
-        private static SettingControl GetSettingControlNumberGame(
+        private SettingControl GetSettingControlNumberGame(
             int roleID,
             bool parentstatus,
             bool isManageCustomerAccess,
@@ -216,7 +216,7 @@
 
         }
 
-        private static SettingControl GetSettingControlCasino(
+        private SettingControl GetSettingControlCasino(
             int roleID,
             bool isManageCustomerAccess,
             string statusName,
@@ -265,7 +265,7 @@
             }
         }
 
-        private static SettingControl GetSettingControlOutright(
+        private SettingControl GetSettingControlOutright(
             int roleID,
             bool parentstatus,
             bool isManageCustomerAccess,
@@ -304,7 +304,7 @@
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowOutright"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "OR");
         }
 
-        private static SettingControl GetSettingControlDoubleComm(
+        private SettingControl GetSettingControlDoubleComm(
             int roleID,
             bool parentstatus,
             bool isManageCustomerAccess,
@@ -343,7 +343,7 @@
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
         }
 
-        private static SettingControl GetSettingControlEnableAutoMaster(
+        private SettingControl GetSettingControlEnableAutoMaster(
             int roleID,
             bool isManageCustomerAccess,
             string statusName,
@@ -380,7 +380,7 @@
             }
         }
 
-        private static SettingControl GetSettingControlInternalUser(
+        private SettingControl GetSettingControlInternalUser(
             int roleID,
             bool parentIsInternal,
             bool isManageCustomerAccess,
@@ -425,7 +425,7 @@
             }
         }
 
-        private static SettingControl GetSettingControlAllDayBalTransfer(
+        private SettingControl GetSettingControlAllDayBalTransfer(
             int roleId,
             bool isManageCustomerAccess,
             string statusName, bool
@@ -454,7 +454,7 @@
             return new SettingControl("All-Day Bal Transfer", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
         }
 
-        private static SettingControl GetSettingControlEsports(
+        private SettingControl GetSettingControlEsports(
             int roleId,
             bool isManageCustomerAccess,
             string statusName,

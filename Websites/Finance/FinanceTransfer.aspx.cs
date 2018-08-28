@@ -13,6 +13,7 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Entities.ViewModel;
+using Fanex.Tarus.Infrastructure.Caching;
 
 public partial class Finance_FinanceTransfer : PageBase
 {
@@ -55,7 +56,7 @@ public partial class Finance_FinanceTransfer : PageBase
                 {
                     rowNum++;
                     string strTmp = strContent;
-                    TemplateHandler.Assign(ref strTmp, "type", RemotingRef.RefData.GetBetTypeName(r.BetType.ToString(), "E"));
+                    TemplateHandler.Assign(ref strTmp, "type", CacheRef.GetBettype(r.BetType.ToString()));
 
                     if (isReset)
                         TemplateHandler.ReplaceBlock(ref strTmp, "trandesc", r.Transdesc);
@@ -99,6 +100,6 @@ public partial class Finance_FinanceTransfer : PageBase
         {
             strResult = "<br />- " + strDesc;
         }
-        return RemotingRef.RefData.GetBetTypeName(betType.ToString(), "E") + strResult;
+        return CacheRef.GetBettype(betType) + strResult;
     }
 }

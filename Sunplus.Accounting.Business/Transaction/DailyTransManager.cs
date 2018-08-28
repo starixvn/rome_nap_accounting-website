@@ -166,7 +166,7 @@ namespace Sunplus.Accounting.Business.Transaction
                             entity.Creator = (string)dr["creator"];
                             dailyCaching.items.Add(entity);
                         }
-                        catch (Exception ex)
+                        catch
                         {
                         }
                     }
@@ -517,9 +517,7 @@ namespace Sunplus.Accounting.Business.Transaction
             {
                 #region excel format
 
-                const int startCol = 0;
                 const int startRow = 2;
-                var nextRow = 0;
                 var excelFile = new ExcelFile();
                 var maxRowsInSheet = 65000;
                 //var dailyAll = new DailyTransactionDTOList();
@@ -618,7 +616,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 response.AddHeader("Content-Disposition", "attachment; filename=DailyTransaction-" + date + ".xls");
                 excelFile.SaveXls(response.OutputStream);
             }
-            catch (Exception ex)
+            catch
             { }
         }
 

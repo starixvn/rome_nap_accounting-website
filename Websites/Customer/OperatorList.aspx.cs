@@ -9,8 +9,6 @@ using Sunplus.Accounting.Core.Extensions;
 public partial class NewCustomer_OperatorList : PageBase
 {
     private string searchText = "All", selectAlpha = "All";
-    private string strQuery = "";
-    private int PageIndex = 1, TotalPages = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {

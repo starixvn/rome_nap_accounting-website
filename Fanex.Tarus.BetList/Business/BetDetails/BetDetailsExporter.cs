@@ -105,7 +105,9 @@
                 BetType = betType
             };
 
+#pragma warning disable CS0612 // Type or member is obsolete
             var repository = new RNGCasinoRepository();
+#pragma warning restore CS0612 // Type or member is obsolete
 
             return repository.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t });
         }
@@ -116,15 +118,14 @@
 
             var factory = new BetListExcelFactory();
             var builder = factory.CreateBuilder();
-
+            ITicketHelper ticketHelper = new TicketHelper();
             builder.BuildWorksheet("BetDetails", excelColumns);
             AddHeader(builder, sportType);
 
             if (ticketDetails.Any())
             {
                 int index = 0;
-                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
-                ITicketHelper ticketHelper = new TicketHelper();
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
                 ticketHelper.IsVnIp = IpManagement.IsVNIP;
                 var ticketData = new List<ITicketData>();
                 ITicket ticket;
@@ -156,7 +157,7 @@
             workbook.Write(stream);
         }
 
-        private static void AddHeader(BetListExcelBuilder builder, int sportType)
+        private static void AddHeader(IBetListExcelBuilder builder, int sportType)
         {
             var headerStyle = builder.CreateCellStyle();
             headerStyle.CloneStyleFrom(builder.EvenCellStyle);
@@ -203,7 +204,7 @@
             builder.SetColumnWidth(cellAddr.ColumnIndex, 3400);
         }
 
-        private static void AddNoData(BetListExcelBuilder builder, int columnsNum)
+        private static void AddNoData(IBetListExcelBuilder builder, int columnsNum)
         {
             ICellStyle captionStyle = builder.CreateCellStyle();
             captionStyle.CloneStyleFrom(builder.EvenCellStyle);
@@ -253,7 +254,9 @@
 
         private static IEnumerable<TicketDetail> GetRNGCasinoOrFishingWorldTickets(long refNo, int custId, byte transType)
         {
+#pragma warning disable CS0612 // Type or member is obsolete
             var criteria = new GetRNGCasinoBetDetailsCriteria
+#pragma warning restore CS0612 // Type or member is obsolete
             {
                 TransId = refNo,
                 CustId = custId,
@@ -262,7 +265,9 @@
                 PageSize = int.MaxValue
             };
 
+#pragma warning disable CS0612 // Type or member is obsolete
             IRNGCasinoRepository repository = new RNGCasinoRepository();
+#pragma warning restore CS0612 // Type or member is obsolete
 
             return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
         }

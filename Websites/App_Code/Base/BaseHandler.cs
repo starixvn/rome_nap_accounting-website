@@ -49,7 +49,7 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
         }
     }
 
-    public bool IsReusable
+    public virtual bool IsReusable
     {
         get { return false; }
     }

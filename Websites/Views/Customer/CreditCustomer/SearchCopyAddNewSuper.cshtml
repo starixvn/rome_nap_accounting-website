@@ -1,7 +1,7 @@
 ﻿@{
     var level = string.IsNullOrWhiteSpace(Request.QueryString["level"]) ? "member" : Request.QueryString["level"];
     var showNG2 = Sunplus.Accounting.Business.Security.Permissions.HasPermission(Sunplus.Accounting.Core.Common.Enumerations.Functions.AccessSpecialSites) == true ? 1 : 0;
-    var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
+    var ng2Text = Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23);
 }
 <link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
 

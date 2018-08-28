@@ -2,10 +2,9 @@
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
 @using Fanex.Tarus.Infrastructure.Caching;
-@using RemotingRef;
 @{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
-    var ng2Text = hasNG2Permission ? "/" + RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") : string.Empty;
+    var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Gold Deluxe/Microgaming/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet")
         .Append(ng2Text)

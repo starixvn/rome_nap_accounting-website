@@ -137,7 +137,6 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             LogExtensions.ExceptionHandler(ex);
             throw new Exception("Please choose a Microsoft Excel file (.xls)");
         }
-        return null;
     }
 
     private void DeleteEmptyRow(DataTable dataTable)

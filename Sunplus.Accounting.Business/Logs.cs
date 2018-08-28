@@ -18,13 +18,7 @@ namespace Sunplus.Accounting.Business
 
         public static void Write(string msg, TraceEventType type)
         {
-            try
-            {
-                LogExtensions.ExceptionHandler(new Exception(msg));
-            }
-            catch (Exception ex)
-            {
-            }
+            LogExtensions.ExceptionHandler(new Exception(msg));
         }
     }
 }

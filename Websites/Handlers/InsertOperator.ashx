@@ -54,7 +54,7 @@ public class InsertOperator : BaseHandler {
                     context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(msg, AlertMessage.MsgType.Error) + "','errMsg');");                    
                 }
             }
-            catch (Exception ex)
+            catch
             {
                
                 GotoErroPage(context);
@@ -67,7 +67,7 @@ public class InsertOperator : BaseHandler {
         }     
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }
