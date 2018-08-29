@@ -28,13 +28,15 @@
 <%@ Import Namespace="Fanex.BetList.Core.RemotingRef" %>
 <%@ Import Namespace="Fanex.Result.Core.Base" %>
 <%@ Import Namespace="Fanex.Result.Core.RemotingRef" %>
-
+<%@ Import Namespace="Chatbot.Client" %>
+<%@ Import Namespace="Chatbot.Client.Configurations" %>
+<%@ Import Namespace="Sunplus.Accounting.Business.Helpers" %>
 
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
     {
-        // Code that runs on application startup    
+        // Code that runs on application startup
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
         //Sunplus.Data.DataAbstract.BootStrappers.BootStrapperManager.Initialize(new Sunplus.Data.DataAbstract.BootStrappers.UnityBootStrapper());
@@ -73,6 +75,12 @@
             .SupportOnlyDefaultLanguage();
         BetListManager.RegisterRemotingRef(new CacheRef());
         ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
+
+        ChatbotClientManager
+               .UseConfig(new BotClientConfigs(
+                   ConfigurationManager.AppSettings["Chatbot:BaseUrl"],
+                   ConfigurationManager.AppSettings["Chatbot:ApiKey"]))
+               .UseRestClient(new RestClientHelper());
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)
@@ -167,9 +175,9 @@
 
     void Session_End(object sender, EventArgs e)
     {
-        // Code that runs when a session ends. 
+        // Code that runs when a session ends.
         // Note: The Session_End event is raised only when the sessionstate mode
-        // is set to InProc in the Web.config file. If session mode is set to StateServer 
+        // is set to InProc in the Web.config file. If session mode is set to StateServer
         // or SQLServer, the event is not raised.
         Application.Lock();
         if (Application["UserOnlineNo"] != null)

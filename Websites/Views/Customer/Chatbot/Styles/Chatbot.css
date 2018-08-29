@@ -1,0 +1,18 @@
+﻿.history-content {
+    border-top: none;
+    background-color: #b5c4d0;
+}
+
+.filter-table {
+    background-color: #b5c4d0;
+    border: solid 1px #7c98a4;
+    border-top: none;
+}
+
+.user-row {
+    background-color: #d8e4bc;
+}
+
+.invalid-command {
+    color: #f20000;
+}
