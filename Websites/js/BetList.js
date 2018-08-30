@@ -726,8 +726,7 @@ function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
-function isFM2(betttype)
-{
+function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
@@ -774,6 +773,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 250: // AGCasino.
             return getAGCasinoParam(refno, bettype);
+
+        case 163: // Poker Games.
+            // custId, gameTypeId, transId3rd, viewerLevel
+            return getPokerGamesParam(betcheck, bettype, matchcode);
 
         default:
             return undefined;
@@ -892,6 +895,17 @@ function getAllbetParam(transdesc, betcheck, bettype) {
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
+    };
+}
+
+function getPokerGamesParam(custId, gameTypeId, transId3rd) {
+    return {
+        url: "../Report/ViewPokerGamesResult.aspx",
+        title: "Poker Games Result",
+        jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
+        width: 945,
+        height: 500,
+        iframe: "innerFramePokerGamesResult"
     };
 }
 

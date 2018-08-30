@@ -190,11 +190,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmRacing").attr('src', "");
         $("#frmRacingMinPT").attr('src', "");
         $("#frmCasino").attr('src', "");
-        $("#frmVirtualSports").attr('src', "");      
+        $("#frmVirtualSports").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
         $("#frmGoldDleluxe").attr('src', "");
         $("#frmColossusBets").attr('src', "");
-        $("#frmSportsbook2").attr('src', "");       
+        $("#frmSportsbook2").attr('src', "");
         $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
@@ -203,6 +203,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmKenoLottery").attr('src', "");
         $("#frmLucky3").attr('src', "");
         $("#frmBullfighting").attr('src', "");
+        $("#frmPokerGames").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -237,7 +238,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabSportsbookMinPT': url += "EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbookMinPT", url);
                 $scope.resize("#frmSportbookMinPT");
-                break;           
+                break;
             case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper?id=" + $scope.existedUser.userid + "&uplineid=0&groupname=true";
                 $scope.loadData("#frmCasino", url);
                 $scope.resize("#frmCasino");
@@ -245,8 +246,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabVirtualSports': url += "DCS/ViewCustomerSetting?productId=5&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
-                break;        
-           
+                break;
+
             case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
                 $scope.loadData("#frmGoldDleluxe", url);
                 $scope.resize("#frmGoldDleluxe");
@@ -258,7 +259,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabSportsbook2': url += "DCS/ViewCustomerSetting?productId=16&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmSportsbook2", url);
                 $scope.resize("#frmSportsbook2");
-                break;           
+                break;
             case 'tabAllbet': url += "DCS/ViewCustomerSetting?productId=21&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmAllbet", url);
                 $scope.resize("#frmAllbet");
@@ -291,6 +292,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmBullfighting", url);
                 $scope.resize("#frmBullfighting");
                 break;
+            case 'tabPokerGames': url += "DCS/ViewCustomerSetting?productId=33&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmPokerGames", url);
+                $scope.resize("#frmPokerGames");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 
@@ -311,14 +316,14 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $scope.sports.push({ sportname: 'Sportsbook', sportvalue: 'tabSportsbook' });
             $scope.sports.push({ sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' });
         }
-       
+
         if (!statusSports.HideCasino) {
             $scope.sports.push({ sportname: 'Casino', sportvalue: 'tabCasino' });
         }
         if (!statusSports.HideVirtualSports) {
             $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
-        }      
-      
+        }
+
         if (!statusSports.HideGoldDeluxe) {
             $scope.sports.push({ sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' });
         }
@@ -327,7 +332,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
         if (!statusSports.HideSportsbook2) {
             $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
-        }       
+        }
         if (!statusSports.HideCricket) {
             $scope.sports.push({ sportname: 'Cricket', sportvalue: 'tabCricket' });
         }
@@ -360,15 +365,13 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             dataType: "json",
             data: JSON.stringify(param),
             success: function (customerSettingView) {
-                if (customerSettingView.ErrorCode > 0)
-                {
+                if (customerSettingView.ErrorCode > 0) {
                     $("#checkExisted").removeClass('success');
                     $("#checkExisted").addClass('not_success');
                     message.showAlertMessage("errorMsg", customerSettingView.ErrorMessage, 1);
                     $("#errorMsg").width("550");
                 }
-                else
-                {
+                else {
                     var custid = customerSettingView.UserId;
                     //$scope.addSportsToDropdownlist(customerSettingView.StatusSports);
                     $scope.existedUser.userid = custid;
@@ -381,7 +384,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                         $("#checkExisted").addClass('success');
 
                         $scope.getCustomerInfoByUserId(custid);
-                        
+
                         if (callback) {
                             callback();
                         }
@@ -426,10 +429,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     }
                 }
 
-                if (allowedng2 && parent.showNG2) {                    
+                if (allowedng2 && parent.showNG2) {
                     if (!existed) {
-                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });                        
-                    }                    
+                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });
+                    }
                 }
                 else {
                     if (existed) {
@@ -580,8 +583,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     message.showAlertMessage("errorMsg", msg, 3);
                     $("#errorMsg").width("700");
 
-                    if (result.IsSuccessful && $scope.existedUser.isDirectCustomer)
-                    {
+                    if (result.IsSuccessful && $scope.existedUser.isDirectCustomer) {
                         alert('Please fulfill the Extra Information via the Information tab on the left panel');
                     }
 

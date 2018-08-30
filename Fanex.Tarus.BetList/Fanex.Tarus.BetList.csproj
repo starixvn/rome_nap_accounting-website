@@ -221,8 +221,8 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -337,8 +337,8 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
@@ -506,6 +506,7 @@
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_UsernameCriteria.cs" />
+    <Compile Include="Criteria\BetListByProductCriteria.cs" />
     <Compile Include="Criteria\BetListByRefNoAdvancedCriteria.cs" />
     <Compile Include="Criteria\BetListByRefNoCriteria.cs" />
     <Compile Include="Criteria\BetListGetSiteIdByCustIdCriteria.cs" />
@@ -523,6 +524,7 @@
     <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
+    <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
@@ -579,6 +581,7 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />
     <Compile Include="Extensions\NumberExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />

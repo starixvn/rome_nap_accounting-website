@@ -3795,4 +3795,10 @@
   <data name="Disable202_1524" xml:space="preserve">
     <value>Disabled Mini Keno 2</value>
   </data>
+  <data name="HidePokerGames" xml:space="preserve">
+    <value>Hide Poker Games</value>
+  </data>
+  <data name="Disable163_1401" xml:space="preserve">
+    <value>Disabled Poker Games</value>
+  </data>
 </root>

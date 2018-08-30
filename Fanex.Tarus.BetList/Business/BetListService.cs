@@ -148,10 +148,10 @@ namespace Fanex.Tarus.BetList.Business
                     Handicap1 = Converter.ToDecimal(r["hdp1"]),
                     Handicap2 = Converter.ToDecimal(r["hdp2"]),
                     HomeId = Converter.To<long>(r["homeid"]),
-                    EventDate = Converter.ToDateTime(r["eventdate"]),
+                    EventDate = r.Table.Columns.Contains("eventdate") ? Converter.ToDateTime(r["eventdate"]) : DateTime.Now,
                     IP = Converter.ToString2(r["ip"]),
                     IsLive = Converter.ToBool(r["liveindicator"]),
-                    IsNeutral = Converter.ToBool(r["isNeutral"]),
+                    IsNeutral = r.Table.Columns.Contains("isNeutral") ? Converter.ToBool(r["isNeutral"]) : false,
                     LeagueId = Converter.To<int>(r["leagueid"]),
                     LiveHomeScore = Converter.To<int>(r["livehomescore"]),
                     LiveAwayScore = Converter.To<int>(r["liveawayscore"]),
@@ -161,7 +161,7 @@ namespace Fanex.Tarus.BetList.Business
                     AgentComm = Converter.ToDecimal(r["acomm"]),
                     MasterDiscount = Converter.ToDecimal(r["adiscount"]),
 
-                    MasterOdds = Converter.ToDecimal(r["modds"]),
+                    MasterOdds = r.Table.Columns.Contains("modds") ? Converter.ToDecimal(r["modds"]) : 0,
                     MatchCode = Converter.ToString2(r["matchcode"]),
                     MatchId = Converter.To<int>(r["matchid"]),
                     Odds = Converter.ToDecimal(r["odds"]),
@@ -169,7 +169,7 @@ namespace Fanex.Tarus.BetList.Business
                     PlayerComm = Converter.ToDecimal(r["commission"]),
                     Race = r.Table.Columns.Contains("race") ? Converter.ToString2(r["race"]) : string.Empty,
                     RefNo = Converter.ToString2(r["refno"]),
-                    ShowTime = Converter.ToString2(r["showtime"]),
+                    ShowTime = r.Table.Columns.Contains("showtime") ? Converter.ToString2(r["showtime"]) : string.Empty,
                     SportTypeId = Converter.To<int>(r["sporttype"]),
                     Stake = Converter.To<decimal>(r["stake"]),
                     Status = Converter.ToString2(r["status"]),
@@ -252,9 +252,44 @@ namespace Fanex.Tarus.BetList.Business
             return GetBetListBy(criteria);
         }
 
-        public IList<TicketDetail> GetBetListByProduct(BetListByProductCriteria betListByProductCriteria)
+        public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            return GetBetListBy(betListByProductCriteria);
+            var isPokerGames = betListByProductCriteria.ProductId == Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames;
+            var needToMapPlayerId3rdToCustId = isPokerGames && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
+
+            var mappedCustId = needToMapPlayerId3rdToCustId
+                ? _betListRepository.MapPlayerIdToCustId(new MapPlayerId3rdToCustIdCriteria
+                {
+                    PlayerId3rd = betListByProductCriteria.PlayerId3rd,
+                    Vendor = betListByProductCriteria.VendorId,
+                    ProductId = betListByProductCriteria.ProductId
+                })
+                : 0;
+
+            if (needToMapPlayerId3rdToCustId
+                && betListByProductCriteria.CustId != 0
+                && mappedCustId != betListByProductCriteria.CustId)
+            {
+                return new List<TicketDetail>();
+            }
+
+            var custId = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
+                ? mappedCustId
+                : betListByProductCriteria.CustId;
+
+            return GetBetListBy(new BetListByProductCriteria
+            {
+                UserId = betListByProductCriteria.UserId,
+                ProductId = betListByProductCriteria.ProductId,
+                Username = betListByProductCriteria.Username,
+                GameId = betListByProductCriteria.GameId,
+                BetId = betListByProductCriteria.BetId,
+                FromDate = betListByProductCriteria.FromDate,
+                ToDate = betListByProductCriteria.ToDate,
+                MoveBetsDay = betListByProductCriteria.MoveBetsDay,
+                BalanceUpDay = betListByProductCriteria.BalanceUpDay,
+                CustId = custId
+            });
         }
 
         /// <summary>
@@ -950,8 +985,8 @@ namespace Fanex.Tarus.BetList.Business
                             {
                                 ActualStake = Converter.To<decimal>(r["actual_stake"]),
                                 AgentWinlost = Converter.ToDecimal(r["awinlost"]),
-                                AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
-                                Comm = Converter.ToDecimal(r["comm"]),
+                                AgentPositionTaking = r.Table.Columns.Contains("apositiontaking") ? Converter.ToDecimal(r["apositiontaking"]) : 0,
+                                Comm = r.Table.Columns.Contains("comm") ? Converter.ToDecimal(r["comm"]) : 0,
                                 AgentDiscount = Converter.ToDecimal(r["discount"]),
 
                                 AwayId = Converter.To<long>(r["awayid"]),
@@ -972,8 +1007,8 @@ namespace Fanex.Tarus.BetList.Business
                                 LiveAwayScore = Converter.To<int>(r["liveawayscore"]),
 
                                 MasterWinlost = Converter.ToDecimal(r["mwinlost"]),
-                                MasterPositionTaking = Converter.ToDecimal(r["mpositiontaking"]),
-                                AgentComm = Converter.ToDecimal(r["acomm"]),
+                                MasterPositionTaking = r.Table.Columns.Contains("mpositiontaking") ? Converter.ToDecimal(r["mpositiontaking"]) : 0,
+                                AgentComm = r.Table.Columns.Contains("acomm") ? Converter.ToDecimal(r["acomm"]) : 0,
                                 MasterDiscount = Converter.ToDecimal(r["adiscount"]),
 
                                 MasterOdds = Converter.ToDecimal(r["modds"]),
@@ -990,8 +1025,8 @@ namespace Fanex.Tarus.BetList.Business
                                 Status = Converter.ToString2(r["status"]),
 
                                 SuperWinlost = Converter.ToDecimal(r["swinlost"]),
-                                SuperPositionTaking = Converter.ToDecimal(r["spositiontaking"]),
-                                SuperComm = Converter.ToDecimal(r["scomm"]),
+                                SuperPositionTaking = r.Table.Columns.Contains("spositiontaking") ? Converter.ToDecimal(r["spositiontaking"]) : 0,
+                                SuperComm = r.Table.Columns.Contains("scomm") ? Converter.ToDecimal(r["scomm"]) : 0,
                                 SuperDiscount = Converter.ToDecimal(r["sdiscount"]),
 
                                 TransDate = Converter.ToDateTime(r["transdate"]),
@@ -1448,6 +1483,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 const int VirtualSports2ProductId = 27;
                 sportName = GetProductName(VirtualSports2ProductId);
+            }
+            else if (ReportService.IsPokerGames(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.PokerGames);
             }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";

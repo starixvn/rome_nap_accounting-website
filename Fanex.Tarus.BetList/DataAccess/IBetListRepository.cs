@@ -9,7 +9,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    
+
     public interface IBetListRepository
     {
         IList<S> FetchMemberWinLoss<S>(ICriteria criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
@@ -27,5 +27,7 @@
         CombinationParlay BetList_SelDetailCombinationMP(ICriteria criteria);
 
         string GetSiteNameByCustId(ICriteria criteria);
+
+        int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
     }
 }

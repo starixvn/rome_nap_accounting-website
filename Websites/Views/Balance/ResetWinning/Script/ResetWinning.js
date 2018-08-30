@@ -178,9 +178,7 @@
             }
         }
 
-        if (currentRow.Product == "Racing (Due to Partners)"
-            || currentRow.Product == "Poker (Due to Partners)"
-            || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
+        if (currentRow.Product && currentRow.Product.toLowerCase().indexOf("due to") != -1) {
             cssClass = 'dueToPartnerRow';
 
             if (currentRow.Variance != 0) {
@@ -254,9 +252,7 @@
                         cssClass = 'highlightRow';
                     }
 
-                    if (resetWinningByDay.Product == "Racing (Due to Partners)"
-                        || resetWinningByDay.Product == "Poker (Due to Partners)"
-                        || resetWinningByDay.Product == "Casino (Amount due to Jackpot Pool)") {
+                    if (resetWinningByDay.Product && resetWinningByDay.Product.toLowerCase().indexOf("due to") != -1) {
                         cssClass = 'dueToPartnerRow';
 
                         if (resetWinningByDay.Variance != 0) {
@@ -403,9 +399,7 @@
                 cssClass = 'highlightRow';
             }
 
-            if (currentRow.Product == "Racing (Due to Partners)"
-                || currentRow.Product == "Poker (Due to Partners)"
-                || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
+            if (currentRow.Product && currentRow.Product.toLowerCase().indexOf("due to") != -1) {
                 cssClass = 'dueToPartnerRow';
 
                 if (currentRow.Variance != 0) {
@@ -588,9 +582,7 @@
                 cssClass = 'highlightRow';
             }
 
-            if (currentRow.Product == "Racing (Due to Partners)"
-                || currentRow.Product == "Poker (Due to Partners)"
-                || currentRow.Product == "Casino (Amount due to Jackpot Pool)") {
+            if (currentRow.Product && currentRow.Product.toLowerCase().indexOf("due to") != -1) {
                 cssClass = 'dueToPartnerRow';
 
                 if (currentRow.Variance != 0) {
