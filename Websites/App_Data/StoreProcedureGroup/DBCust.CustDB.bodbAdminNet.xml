@@ -43,9 +43,9 @@
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -101,54 +101,54 @@
     <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Virtual Rate">
-    <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_VirtualRate_GetSportBetTypeReferences" SpName="Acc_CustomerSelReferenceVirtualRateSetting" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer Credit">
     <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Special Status - Function">
     <Setting Key="Acc_CustAllowListDel" SpName="Acc_CustAllowListDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustAllowListSel" SpName="Acc_CustAllowListSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Move Customer">
-    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Move Site">
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Security Code">
-    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DBA_ResetSecurityCode_SubAgent" SpName="Acc_CustomerUpdSecurityCode_Sub" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="DBA_ResetSecurityCode_SubAgent" SpName="Acc_CustomerUpdSecurityCode_Sub_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Licensee">
     <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -169,37 +169,37 @@
     <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdCustomer" SpName="conAcc_CreditTermUpdCustomer_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User control">
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="PJUnitPriceUpd" SpName="Acc_Exchange_PJUnitPrice_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="PJUnitPriceUpd" SpName="Acc_Exchange_PJUnitPrice_Upd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Finance">
     <Setting Key="Acc_CustOverrideUpdFI" SpName="Acc_CustOverrideUpdFI" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -229,15 +229,15 @@
   </Function>
   <Function Name="Agent's yesterday balance">
     <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerCheckValidAutoTransferAgent" SpName="Acc_CustomerCheckValidAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAutoTransferAgent" SpName="Acc_CustomerUpdAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerDelAutoTransferAgent" SpName="Acc_CustomerDelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Customer - Finance Super List">
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -282,7 +282,7 @@
   </Function>
   <Function Name="SMA Management">
     <Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Colossus Bets Bet List - Get SiteId">
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -310,10 +310,10 @@
     <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External - Admin">
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
     <Setting Key="Acc_CustomerCommissionSpecAccUpd" SpName="Acc_CustomerCommissionSpecAccUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -357,7 +357,13 @@
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Bet List By Ref No">
-    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+  <Function Name="Special Site">
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+  </Function>
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
