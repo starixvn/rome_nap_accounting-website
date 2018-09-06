@@ -36,8 +36,7 @@
   </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.NAP_UserControl.bodbAdminNet" />   
   </Function>
   <Function Name="User - Account Management">
     <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
