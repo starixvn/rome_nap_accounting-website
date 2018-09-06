@@ -33,11 +33,7 @@
   </Function>
   <Function Name="Left Menu - Credit term">
     <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-  </Function>
-  <Function Name="Special Site">
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.NAP_UserControl.bodbAdminNet" />    
-  </Function>
+  </Function> 
   <Function Name="User - Account Management">
     <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
