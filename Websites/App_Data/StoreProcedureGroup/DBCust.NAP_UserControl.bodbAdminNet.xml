@@ -1,45 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Manage Menu">
-    <Setting Key="Acc_MenuSelList" SpName="Acc_MenuSelList_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_MenuUpd" SpName="Acc_MenuUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_MenuSelGroupFunc" SpName="Acc_MenuSelGroupFunc_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_MenuIns" SpName="Acc_MenuIns_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_MenuDel" SpName="Acc_MenuDel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuSelList" SpName="Acc_MenuSelList" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuUpd" SpName="Acc_MenuUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuSelGroupFunc" SpName="Acc_MenuSelGroupFunc" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuIns" SpName="Acc_MenuIns" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuDel" SpName="Acc_MenuDel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="Login - Menu">
-    <Setting Key="Acc_MenuSelByCustID" SpName="Acc_MenuSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_MenuSelByCustID" SpName="Acc_MenuSelByCustID" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="User - Account Management">
-    <Setting Key="GroupInfoSel" SpName="Acc_Con_GroupInfoSel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="AdminSelByGroupID" SpName="Acc_Con_AdminSelByGroupID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="GroupPolicySel" SpName="Acc_Con_GroupPolicySel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="AdminPolicySelByCustID" SpName="Acc_Con_AdminPolicySelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Con_AdminSelByCustID" SpName="Acc_Con_AdminSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupInfoSel" SpName="Acc_Con_GroupInfoSel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="AdminSelByGroupID" SpName="Acc_Con_AdminSelByGroupID" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupPolicySel" SpName="Acc_Con_GroupPolicySel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="AdminPolicySelByCustID" SpName="Acc_Con_AdminPolicySelByCustID" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="Policy">
-    <Setting Key="Con_CheckPermission" SpName="Acc_Con_CheckPermission_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Con_CheckPermission" SpName="Acc_Con_CheckPermission" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="User Control">
-    <Setting Key="RemoveAccount" SpName="Acc_Con_AdminDel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Con_AdminInsFromExisted" SpName="Acc_Con_AdminInsFromExisted_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="AdminPolicy" SpName="Acc_Con_AdminPolicyUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="GroupInfoDel" SpName="Acc_Con_GroupInfoDel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" Plain="0" />
+    <Setting Key="RemoveAccount" SpName="Acc_Con_AdminDel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Con_AdminInsFromExisted" SpName="Acc_Con_AdminInsFromExisted" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="AdminPolicy" SpName="Acc_Con_AdminPolicyUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupInfoDel" SpName="Acc_Con_GroupInfoDel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBCust.NAP_UserControl.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+  </Function>
+  <Function Name="Special Site">
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="User - Account Management">
-    <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="Con_CustomerSelByUserName" SpName="Acc_Con_CustomerSelByUserName_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FuncInfoSelParent" SpName="Acc_Con_FuncInfoSelParent" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FuncInfoSel" SpName="Acc_Con_FuncInfoSel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="Con_CustomerSelByUserName" SpName="Acc_Con_CustomerSelByUserName" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
   <Function Name="User Control">
-    <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
-    <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd_UAT4" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+    <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
   </Function>
 </Functions>

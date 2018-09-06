@@ -93,10 +93,10 @@
     <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

@@ -62,17 +62,17 @@
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList_UAT4" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Enable Number Game">
-    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -134,7 +134,7 @@
     <Setting Key="WinLossDetail_Ag" SpName="Age_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel_UAT4" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -142,10 +142,10 @@
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">

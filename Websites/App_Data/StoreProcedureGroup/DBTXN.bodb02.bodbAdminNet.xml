@@ -52,16 +52,16 @@
     <Setting Key="HedgeUpd" SpName="Acc_HedgeUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines_UAT4" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
@@ -87,10 +87,10 @@
     <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
