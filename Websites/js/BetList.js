@@ -1029,7 +1029,7 @@ function openResultsPopUp(resultParam) {
         $.ajax({
             url: url,
             beforeSend: function () {
-                parent.OpenNextPopup(popupName, "_loading.htm", resultParam.title, width, height, true, false, window, 0);
+                parent.OpenNextPopup(popupName, "_loading.htm", resultParam.title, width, height, true, true, window, 0);
             }
         }).complete(function (result) {
             if (result.responseText.indexOf("<table") < 0) {
@@ -1039,6 +1039,6 @@ function openResultsPopUp(resultParam) {
             }
         });
     } else {
-        parent.OpenNextPopup(popupName, url, resultParam.title, width, height, true, false, window, 0, null, null);
+        parent.OpenNextPopup(popupName, url, resultParam.title, width, height, true, true, window, 0, null, null);
     }
 }
