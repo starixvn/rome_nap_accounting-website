@@ -820,6 +820,9 @@ var ViewPT = {
             case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
                 break;
+            case 163: // Poker Games
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 33);
+                break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
 

@@ -166,8 +166,8 @@
       <HintPath>..\packages\Fanex.BetList.NumberGame.1.1.0\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.PokerGames, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PokerGames.1.0.0\lib\net40\Fanex.BetList.PokerGames.dll</HintPath>
+    <Reference Include="Fanex.BetList.PokerGames, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PokerGames.1.1.0\lib\net40\Fanex.BetList.PokerGames.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -334,7 +334,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.2-beta1\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.2\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -492,7 +492,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.2-beta1\lib\net40\LiveCasinoResult.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.2\lib\net40\LiveCasinoResult.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LoadBalancer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
