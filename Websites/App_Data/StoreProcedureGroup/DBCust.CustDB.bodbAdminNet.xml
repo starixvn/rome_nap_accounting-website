@@ -365,4 +365,7 @@
     <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.NAP_UserControl.bodbAdminNet" />
+  </Function>
 </Functions>
