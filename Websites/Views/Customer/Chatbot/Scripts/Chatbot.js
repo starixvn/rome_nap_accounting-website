@@ -78,7 +78,7 @@
 
                     var row = '<tr class="' + css + '">' +
                         '<td><div class="col100 r">' + sender + '</div></td>' +
-                        '<td><div style="width:513px;" class="l' + messageCss + '">' + message.Content + '</div></td>' +
+                        '<td><div style="width:513px; white-space: pre-line;" class="l' + messageCss + '">' + message.Content + '</div></td>' +
                         '<td><div class="col120 c">' + message.SentDateString + '</div></td>' +
                         '</tr>';
 
@@ -156,9 +156,14 @@
             success: (result) => {
                 if (result.IsOk) {
                     Chatbot.currentLanguage = language;
-                    Chatbot.showSuccess("Update language successfully!")
+                    Chatbot.showSuccess("Update language successfully!");
                 } else {
-                    Chatbot.showErr("Update language failed.")
+                    if (result.ErrorCode == 999) {
+                        Chatbot.showErr(result.ErrorMessage);
+                    }
+                    else {
+                        Chatbot.showErr("Update language failed.");
+                    }
                 }
             },
             complete: () => {
