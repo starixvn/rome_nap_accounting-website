@@ -25,6 +25,11 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
             this.user = user;
         }
 
+        public bool AlreadyLinked
+            => user != null
+            && !user.HasNoMessengerAccount
+            && user.MessengerAccounts.Any(a => a.Type == MessengerType.Letstalk && a.Enabled);
+
         public int UserId => user.Id;
 
         public int CustId => user.CustId;

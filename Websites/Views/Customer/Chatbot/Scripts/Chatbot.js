@@ -199,7 +199,12 @@
                     Chatbot.currentFunctionIds = functionIds;
                     Chatbot.showSuccess("Update feature successfully!")
                 } else {
-                    Chatbot.showErr("Update feature failed.")
+                    if (result.ErrorCode == 999) {
+                        Chatbot.showErr(result.ErrorMessage);
+                    }
+                    else {
+                        Chatbot.showErr("Update feature failed.");
+                    }
                 }
             },
             complete: () => {
@@ -223,11 +228,15 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
                 dataType: "json",
-                success: () => {
-                    parent.$('#centerFr').attr("src", "about:blank");
+                success: (result) => {
+                    if (result && result.ErrorCode == 999) {
+                        Chatbot.showErr(result.ErrorMessage);
+                    } else {
+                        parent.$('#centerFr').attr("src", "about:blank");
 
-                    var leftPanel = parent.$('#leftPanel');
-                    leftPanel.attr('src', leftPanel.attr('src'));
+                        var leftPanel = parent.$('#leftPanel');
+                        leftPanel.attr('src', leftPanel.attr('src'));
+                    }
                 },
                 complete: () => {
                     Chatbot.unBlockUI();
