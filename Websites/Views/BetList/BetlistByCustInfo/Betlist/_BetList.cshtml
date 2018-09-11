@@ -75,7 +75,7 @@
                 @if (ip != "-" && !betdetail.Ticket.BetTypeId.Equals(500))
                 {
                     <br />
-                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                    <a href="@Url.RouteUrl("Default", new { controller = "TarusBetList", action = "BetListByIP", IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
                 }
             </div>
         </td>
