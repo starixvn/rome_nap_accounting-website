@@ -78,7 +78,7 @@
 
                     var row = '<tr class="' + css + '">' +
                         '<td><div class="col100 r">' + sender + '</div></td>' +
-                        '<td><div style="width:513px; white-space: pre-line;" class="l' + messageCss + '">' + message.Content + '</div></td>' +
+                        '<td><div class="l message-content' + messageCss + '">' + message.Content + '</div></td>' +
                         '<td><div class="col120 c">' + message.SentDateString + '</div></td>' +
                         '</tr>';
 

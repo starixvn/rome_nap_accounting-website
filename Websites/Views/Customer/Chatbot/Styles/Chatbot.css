@@ -16,3 +16,8 @@
 .invalid-command {
     color: #f20000;
 }
+
+.message-content {
+    width: 513px;
+    white-space: pre-line;
+}

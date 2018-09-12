@@ -151,7 +151,7 @@
         <script type="text/javascript">
             window.rootUrl = '@Url.Content("~")';
             var today = '@DateTime.Now.ToShortDateString()';
-            var mindate = '@DateTime.Now.AddMonths(-3).ToShortDateString()';
+            var mindate = '@DateTime.Now.AddDays(-90).ToShortDateString()';
             var jsonFeatures=@Html.Raw(Json.Encode(Model.Functions));
         </script>
     }
