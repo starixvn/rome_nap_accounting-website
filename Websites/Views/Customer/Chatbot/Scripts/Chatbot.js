@@ -15,7 +15,7 @@
             feature = jsonFeatures[i];
 
             multiselectData.push({
-                Id: "ddlFeature" + status.Value,
+                Id: "ddlFeature" + feature.Value,
                 Value: feature.Value,
                 Text: feature.Text,
                 Checked: feature.Selected,
