@@ -220,10 +220,7 @@ namespace Sunplus.Accounting.Presentation
                 }
             }
 
-            if (msg.LastIndexOf(",") > 0)
-            {
-                msg = msg.Substring(0, msg.Length - 2);
-            }
+            msg = msg.Trim().Trim(',');
 
             if (count_normal_user_selected > 0)
             {
