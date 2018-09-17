@@ -17,7 +17,8 @@ namespace Sunplus.Accounting.Business.Helpers
         public static IRestClient CreateDefaultClient()
            => new RestClient
            {
-               BaseUrl = new Uri(ChatbotClientManager.BotClientConfigs.ApiBaseUrl)
+               BaseUrl = new Uri(ChatbotClientManager.BotClientConfigs.ApiBaseUrl),
+               Authenticator = new HmacAuthenticator(ChatbotClientManager.BotClientConfigs.ApiKey)
            };
 
         public async Task<T> ExecuteGetAsync<T>(string endPoint, object data = null)

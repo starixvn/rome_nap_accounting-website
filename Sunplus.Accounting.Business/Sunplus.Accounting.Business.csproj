@@ -434,6 +434,7 @@
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="LogDisplay\LoginLogType.cs" />
