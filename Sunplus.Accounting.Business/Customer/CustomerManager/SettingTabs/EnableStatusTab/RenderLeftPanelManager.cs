@@ -396,6 +396,13 @@ namespace Sunplus.Accounting.Business.Customer
             return table.Columns.Contains(columnName);
         }
 
+        public string GetSportbook2StatusJsFunction(
+            int custId,
+            string userName,
+            int roleId,
+            string title)
+            => $"leftPanelManager.viewProductStatusSetting({custId}, '{userName}', {roleId}, 16, '{title}')";
+
         public string GetProductStatusJsFunction(
             bool isDeposit,
             int custId,
