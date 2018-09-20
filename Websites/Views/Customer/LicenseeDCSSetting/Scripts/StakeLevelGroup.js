@@ -27,7 +27,7 @@
             .prop("checked", checked);
     }
 
-    function updateForm_submit(defaultParam, reloadFunction) {
+    function updateForm_submit(defaultParam, reloadFunction, getSelectedAgents) {
         common.blockUI();
         common.hideMessage();
 
@@ -42,13 +42,15 @@
                 IsChecked: this.checked
             });
         });
+        var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
+        var selectedAgentIds = getSelectedAgents().AgentIds;
 
         $.ajax({
             type: "POST",
             url: rootUrl + "LicenseeDcsSetting/UpdateStakeLevel",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify($.extend({ StakeLevels: stakeLevels }, defaultParam)),
+            data: JSON.stringify($.extend({ StakeLevels: stakeLevels, AgentIds: selectedAgentIds, IsAgentOnly: isAgentOnly }, defaultParam)),
             success: function (data) {
                 common.showMessage(data.ErrorCode, data.ErrorMessage);
                 if (data.ErrorCode === 0) {
@@ -60,7 +62,7 @@
         });
     }
 
-    function initialize(defaultParam, reloadFunction) {
+    function initialize(defaultParam, reloadFunction, getSelectedAgents) {
         var stakeLevelGroupForm = $("#formStakeLevelGroup"),
             hideBetTypes = stakeLevelGroupForm.find(".hide"),
             viewMoreAnchor = stakeLevelGroupForm.find("#viewMoreAnchor");
@@ -112,7 +114,7 @@
                 if (stakeLevelGroupForm.serialize() === originalValue) {
                     common.showNoChangeMessage();
                 } else {
-                    updateForm_submit(defaultParam, reloadFunction);
+                    updateForm_submit(defaultParam, reloadFunction, getSelectedAgents);
                 }
             });
 

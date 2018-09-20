@@ -2,11 +2,8 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public class NonQueryCriteria : CriteriaBase
+    internal class NonQueryCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "CustId")]
-        public int SuperId { get; set; }
-
         public int UserId { get; set; }
 
         public string IP { get; set; }
@@ -16,10 +13,6 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public string ErrMsg { get; set; }
 
         public override bool IsValid()
-        {
-            return SuperId > 0 &&
-                UserId > 0 &&
-                !string.IsNullOrEmpty(IP);
-        }
+            => UserId > 0 && !string.IsNullOrEmpty(IP);
     }
 }

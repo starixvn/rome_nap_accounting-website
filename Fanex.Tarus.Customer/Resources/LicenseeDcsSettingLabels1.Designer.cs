@@ -61,6 +61,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent only.
+        /// </summary>
+        public static string AgentOnly {
+            get {
+                return ResourceManager.GetString("AgentOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Sports.
         /// </summary>
         public static string AllSports {
@@ -282,6 +291,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Agent List.
+        /// </summary>
+        public static string SelectAgentList {
+            get {
+                return ResourceManager.GetString("SelectAgentList", resourceCulture);
             }
         }
         

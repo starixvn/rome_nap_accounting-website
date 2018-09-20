@@ -5,6 +5,16 @@
         productDropDown = $("#productDropDown"),
         functionDropDown = $("#functionDropDown");
 
+    function getSelectedAgents() {
+        var agentIds = $("#agentDropDown").multiSelect("getCheckedItems");
+        var agentNames = agentIds.length > 0 ? $("#agentDropDown").multiSelect("getCheckedItemsByText") : [];
+
+        return {
+            AgentIds: agentIds.join(","),
+            AgentNames: agentNames.join(", ")
+        };
+    }
+
     function resetFrom() {
         common.hideMessage();
         boxContentDiv.addClass("hide").empty();
@@ -26,16 +36,68 @@
         return element.html(html.join(""));
     }
 
-    function siteDropDown_change() {
+    function getSuperList(siteName, successCallback) {
         common.blockUI();
-        resetFrom();
-        var siteId = this.value;
         $.post(
             rootUrl + "LicenseeDcsSetting/Supers",
-            { site: siteId },
+            { site: siteName },
             function (data) {
                 renderDropDown(superDropDown, data);
+                successCallback(data);
             }).always(common.unblockUI);
+    }
+
+    function getAgentList(superId) {
+        common.blockUI();
+        $.post(
+            rootUrl + "LicenseeDcsSetting/Agents",
+            { superId: superId },
+            renderSelectAgentList)
+        .always(common.unblockUI);
+    }
+
+    function renderSelectAgentList(data) {
+        var agent;
+        var agents = [];
+
+        for (var i = 0, max = data.length; i < max; i++) {
+            agent = data[i];
+            agents.push({
+                Id: "agentDropDown" + agent.Id,
+                Value: agent.Id,
+                Text: agent.Name,
+                Checked: true,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        }
+
+        $("#agentDropDown").multiSelect({
+            minWidth: 200,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: agents,
+            noItemText: "No Agent found."
+        });
+    }
+
+    function siteDropDown_change() {
+        resetFrom();
+        getSuperList(this.value, function (data) {
+            if (data.length > 0) {
+                getAgentList(data[0].Id);
+            }
+        });
+    }
+
+    function superDownDown_change() {
+        resetFrom();
+        getAgentList(this.value);
     }
 
     function productDropDown_change() {
@@ -77,27 +139,31 @@
 
                 switch (functionId) {
                     case "1":
-                        ptHandler.initialize(defaultParam);
+                        ptHandler.initialize(defaultParam, getSelectedAgents);
                         break;
                     case "2":
-                        betSettingHandler.initialize(defaultParam, selectButton_click);
+                        betSettingHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     case "4":
-                        statusHandler.initialize(defaultParam, selectButton_click);
+                        statusHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     case "0":
                         globalStakeLevelHandler.initialize(defaultParam, selectButton_click);
                         break;
                     case "7":
-                        stakeLevelHandler.initialize(defaultParam, selectButton_click);
+                        stakeLevelHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     case "8":
-                        stakeLevelGroupHandler.initialize(defaultParam, selectButton_click);
+                        stakeLevelGroupHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     default:
                         break;
                 }
             };
+
+            if (functionId !== "0") {
+                filterParam = $.extend(filterParam, getSelectedAgents());
+            }
 
             $.post(functionUrl, filterParam, successFunction).always(common.unblockUI);
         }
@@ -133,8 +199,9 @@
     }
 
     function initialize() {
+        renderSelectAgentList(agentJSON);
         siteDropDown.change(siteDropDown_change).select2();
-        superDropDown.change(resetFrom).select2();
+        superDropDown.change(superDownDown_change).select2();
         productDropDown.change(productDropDown_change).select2({ minimumResultsForSearch: Infinity });
         functionDropDown.change(resetFrom).select2({ minimumResultsForSearch: Infinity });
         $("#selectButton").click(selectButton_click);

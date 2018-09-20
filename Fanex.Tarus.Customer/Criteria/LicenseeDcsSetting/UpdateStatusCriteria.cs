@@ -2,27 +2,31 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    public sealed class UpdateStatusCriteria : NonQueryCriteria
+    internal sealed class UpdateStatusCriteria : NonQueryCriteria
     {
         public UpdateStatusCriteria(
             int productId,
-            int superId,
+            int custId,
             StatusEntity status,
+            bool isAgentOnly,
             int userId,
             string ip)
         {
             ProductId = productId;
-            SuperId = superId;
+            CustId = custId;
             IsDisabled = status.IsDisabled;
             IsDisabledDownline = status.IsDisabledDownline;
             SportType = status.SportType;
             BetType = status.BetType;
             BitmapOrder = status.BitmapOrder;
+            IsAgentOnly = isAgentOnly;
             UserId = userId;
             IP = ip;
         }
 
         public int ProductId { get; }
+
+        public int CustId { get; }
 
         public bool IsDisabled { get; }
 
@@ -34,14 +38,12 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 
         public byte BitmapOrder { get; }
 
+        public bool IsAgentOnly { get; }
+
         public override string GetSettingKey()
-        {
-            return "Acc_Dep_CustSetting_StatusUpd";
-        }
+            => "Acc_Dep_CustSetting_StatusUpd";
 
         public override bool IsValid()
-        {
-            return base.IsValid() && ProductId > 0;
-        }
+            => base.IsValid() && ProductId > 0;
     }
 }

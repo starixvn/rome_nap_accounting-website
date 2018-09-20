@@ -6,17 +6,19 @@ using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 {
-    public interface ILicenseeDcsSettingDataAccess
+    internal interface ILicenseeDcsSettingDataAccess
     {
         IEnumerable<string> GetSites(ICriteria criteria);
 
         IEnumerable<BaseModel> GetSupers(ICriteria criteria);
 
+        IEnumerable<BaseModel> GetAgents(ICriteria criteria);
+
         IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria);
 
         decimal GetPositionTaking(ICriteria criteria);
 
-        IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria);
+        IEnumerable<BetSettingEntity>[] GetBetSettings(ICriteria criteria);
 
         StatusEntity GetStatus(ICriteria criteria);
 

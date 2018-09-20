@@ -9,7 +9,7 @@ using Fanex.Tarus.Customer.Resources;
 
 namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 {
-    public class LicenseeDcsSettingService : ILicenseeDcsSettingService
+    internal class LicenseeDcsSettingService : ILicenseeDcsSettingService
     {
         private readonly ILicenseeDcsSettingDataAccess _settingDataAccess;
 
@@ -19,19 +19,16 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         }
 
         public IEnumerable<string> GetSites()
-        {
-            return _settingDataAccess.GetSites(new GetSiteCriteria());
-        }
+            => _settingDataAccess.GetSites(new GetSiteCriteria());
 
         public IEnumerable<BaseModel> GetSupers(string site)
-        {
-            return _settingDataAccess.GetSupers(new GetSuperCriteria(site));
-        }
+            => _settingDataAccess.GetSupers(new GetSuperCriteria(site));
+
+        public IEnumerable<BaseModel> GetAgents(int superId)
+            => _settingDataAccess.GetAgents(new GetAgentCriteria(superId));
 
         public IEnumerable<ProductSettingTypeEntity> GetProducts()
-        {
-            return _settingDataAccess.GetProducts(new GetProductCriteria());
-        }
+            => _settingDataAccess.GetProducts(new GetProductCriteria());
 
         public decimal GetPositionTaking(int productId, int superId)
         {
@@ -41,16 +38,12 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             return 0 <= pt && pt <= 100 ? pt / 100 : pt;
         }
 
-        public IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId)
-        {
-            return _settingDataAccess.GetBetSettings(
-                new GetBetSettingCriteria(productId, superId));
-        }
+        public IEnumerable<BetSettingEntity>[] GetBetSettings(int productId, int superId, int agentId)
+            => _settingDataAccess.GetBetSettings(
+                new GetBetSettingCriteria(productId, superId, agentId));
 
-        public StatusEntity GetStatus(int productId, int superId)
-        {
-            return _settingDataAccess.GetStatus(new GetStatusCriteria(productId, superId));
-        }
+        public StatusEntity GetStatus(int productId, int custId)
+            => _settingDataAccess.GetStatus(new GetStatusCriteria(productId, custId));
 
         public IEnumerable<GameTypeGlobalStakeLevel> GetGameTypeGlobalStakeLevels(int productId, int superId)
         {
@@ -107,65 +100,90 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             return groupStakeLevels;
         }
 
-        public Result UpdatePositionTaking(int productId, int superId, decimal superPT, int userId, string ip)
+        public Result UpdatePositionTaking(
+            int productId,
+            int superId,
+            decimal superPT,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
         {
-            if (0 <= superPT && superPT <= 1)
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var agentId in agentIds)
             {
-                superPT *= 100;
+                result = UpdatePositionTaking(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
             }
 
-            ICriteria criteria = new UpdatePositionTakingCriteria(productId, superId, superPT, userId, ip);
-            var result = _settingDataAccess.ExecuteNonQuery(criteria);
-
-            if (result.ErrorCode == 0)
-            {
-                result.ErrorMessage = LicenseeDcsSettingLabels.UpdatePTSuccessfully;
-            }
-            else if (result.ErrorCode == 400 && string.IsNullOrEmpty(result.ErrorMessage))
-            {
-                result.ErrorMessage = LicenseeDcsSettingLabels.BadRequest;
-            }
-
-            return result;
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdatePTSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
         }
 
-        public Result UpdateBetSetting(int superId, bool applyExistedMem, BetSettingEntity betSetting, int userId, string ip)
+        public Result UpdateBetSetting(
+            int superId,
+            bool applyExistedMem,
+            BetSettingEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
         {
-            ICriteria criteria = new UpdateBetSettingCriteria(superId, applyExistedMem, betSetting, userId, ip);
-            var result = _settingDataAccess.ExecuteNonQuery(criteria);
+            Result result;
+            IList<Result> errorResults = new List<Result>();
 
-            if (result.ErrorCode == 0)
+            foreach (var agentId in agentIds)
             {
-                result.ErrorMessage = LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully;
-            }
-            else if (result.ErrorCode == 400 && string.IsNullOrEmpty(result.ErrorMessage))
-            {
-                result.ErrorMessage = LicenseeDcsSettingLabels.BadRequest;
+                result = UpdateBetSetting(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
             }
 
-            return result;
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
         }
 
-        public Result UpdateStatus(int productId, int superId, StatusEntity status, int userId, string ip)
+        public Result UpdateStatus(
+            int productId,
+            int superId,
+            StatusEntity status,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
         {
-            ICriteria criteria = new UpdateStatusCriteria(
-                productId,
-                superId,
-                status,
-                userId,
-                ip);
-            var result = _settingDataAccess.ExecuteNonQuery(criteria);
-
-            if (result.ErrorCode == 0)
+            if (agentIds.Any())
             {
-                result.ErrorMessage = LicenseeDcsSettingLabels.UpdateStatusSuccessfully;
-            }
-            else if (result.ErrorCode == 400 && string.IsNullOrEmpty(result.ErrorMessage))
-            {
-                result.ErrorMessage = LicenseeDcsSettingLabels.BadRequest;
+                Result result;
+                IList<Result> errorResults = new List<Result>();
+
+                foreach (var agentId in agentIds)
+                {
+                    result = UpdateStatus(productId, agentId, status, isAgentOnly, userId, ip);
+
+                    if (result.ErrorCode != 0)
+                    {
+                        errorResults.Add(result);
+                    }
+                }
+
+                return errorResults.Count == 0
+                    ? new Result(0, LicenseeDcsSettingLabels.UpdateStatusSuccessfully)
+                    : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
             }
 
-            return result;
+            return UpdateStatus(productId, superId, status, isAgentOnly, userId, ip);
         }
 
         public Result UpdateGlobalStakeLevels(int superId, GlobalStakeLevelEntity[] globalStakeLevels, int userId, string ip)
@@ -181,20 +199,113 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             {
                 result.ErrorMessage = LicenseeDcsSettingLabels.UpdateGlobalStakeLevelSuccessfully;
             }
-            else if (result.ErrorCode == 400 && string.IsNullOrEmpty(result.ErrorMessage))
+
+            return result;
+        }
+
+        public Result UpdateStakeLevels(
+            int productId,
+            int superId,
+            StakeLevelEntity[] stakeLevels,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            if (agentIds.Any())
             {
-                result.ErrorMessage = LicenseeDcsSettingLabels.BadRequest;
+                Result result;
+                IList<Result> errorResults = new List<Result>();
+
+                foreach (var agentId in agentIds)
+                {
+                    result = UpdateStakeLevels(productId, agentId, stakeLevels, isAgentOnly, userId, ip);
+
+                    if (result.ErrorCode != 0)
+                    {
+                        errorResults.Add(result);
+                    }
+                }
+
+                return errorResults.Count == 0
+                    ? new Result(0, LicenseeDcsSettingLabels.UpdateStakeLevelSuccessfully)
+                    : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+            }
+
+            return UpdateStakeLevels(productId, superId, stakeLevels, isAgentOnly, userId, ip);
+        }
+
+        private Result UpdatePositionTaking(
+            int productId,
+            int superId,
+            decimal superPT,
+            int agentId,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            if (0 <= superPT && superPT <= 1)
+            {
+                superPT *= 100;
+            }
+
+            ICriteria criteria = new UpdatePositionTakingCriteria(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateBetSetting(
+            int superId,
+            bool applyExistedMem,
+            BetSettingEntity betSetting,
+            int agentId,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateBetSettingCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateStatus(
+            int productId,
+            int custId,
+            StatusEntity status,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateStatusCriteria(
+                productId,
+                custId,
+                status,
+                isAgentOnly,
+                userId,
+                ip);
+            var result = _settingDataAccess.ExecuteNonQuery(criteria);
+
+            if (result.ErrorCode == 0)
+            {
+                result.ErrorMessage = LicenseeDcsSettingLabels.UpdateStatusSuccessfully;
             }
 
             return result;
         }
 
-        public Result UpdateStakeLevels(int productId, int superId, StakeLevelEntity[] stakeLevels, int userId, string ip)
+        private Result UpdateStakeLevels(
+            int productId,
+            int custId,
+            StakeLevelEntity[] stakeLevels,
+            bool isAgentOnly,
+            int userId,
+            string ip)
         {
             ICriteria criteria = new UpdateStakeLevelCriteria(
                 productId,
-                superId,
+                custId,
                 stakeLevels,
+                isAgentOnly,
                 userId,
                 ip);
             var result = _settingDataAccess.ExecuteNonQuery(criteria);
@@ -202,10 +313,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             if (result.ErrorCode == 0)
             {
                 result.ErrorMessage = LicenseeDcsSettingLabels.UpdateStakeLevelSuccessfully;
-            }
-            else if (result.ErrorCode == 400 && string.IsNullOrEmpty(result.ErrorMessage))
-            {
-                result.ErrorMessage = LicenseeDcsSettingLabels.BadRequest;
             }
 
             return result;

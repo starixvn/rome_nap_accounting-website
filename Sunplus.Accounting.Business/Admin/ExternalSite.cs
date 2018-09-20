@@ -93,7 +93,7 @@ namespace Sunplus.Accounting.Business.Admin
                     }
                     else
                     {
-                        results.AddRange(ParseXmlOutputParam(result.ErrorMessage));
+                        results.AddRange(ProccessResultMessage(result.ErrorMessage));
                     }
                 }
 
@@ -222,7 +222,7 @@ namespace Sunplus.Accounting.Business.Admin
             return string.Join(",", validUserNames);
         }
 
-        private static IEnumerable<Result> ParseXmlOutputParam(string xml)
+        private IEnumerable<Result> ProccessResultMessage(string xml)
         {
             IList<Result> results = new List<Result>();
 
@@ -236,6 +236,7 @@ namespace Sunplus.Accounting.Business.Admin
 
                 foreach (XElement item in root.Elements())
                 {
+                    var superName = item.Attribute("SuperName").Value;
                     groupName = item.Attribute("GroupName").Value;
                     int.TryParse(item.Attribute("ErrCode").Value, out errCode);
 
@@ -249,6 +250,8 @@ namespace Sunplus.Accounting.Business.Admin
                         {
                             successHash.Add(groupName, 1);
                         }
+
+                        _externalSiteDAO.InitSuperInfo(superName);
                     }
                     else
                     {

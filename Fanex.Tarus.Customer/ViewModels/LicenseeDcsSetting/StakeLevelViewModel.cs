@@ -12,6 +12,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 
         public string ErrorMessage { get; set; }
 
+        public bool IsSelectedMultipleAgents { get; set; }
+
         public int MaxStakeLevel
         {
             get
