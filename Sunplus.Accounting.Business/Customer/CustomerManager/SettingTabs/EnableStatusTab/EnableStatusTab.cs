@@ -106,8 +106,6 @@
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
 
-            htmlcontent = RenderEsportsControl(htmlcontent, customerInfoViewModel);
-
             htmlcontent = RenderGoldDeluxeForCreditControl(
                 htmlcontent,
                 row1,
@@ -765,36 +763,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
             TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
-        }
-
-        private string RenderEsportsControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["HideESports"]) && (Permissions.HasPermission(Enumerations.Functions.Customer.EnableEsports)))
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{chkEsports}", customerInfoViewModel.DisabledEsports ? 1 : 0);
-
-                var eSportsSettingGroup = new SettingGroup();
-
-                eSportsSettingGroup.Add(
-                    GetSettingControlEsports(
-                        customerInfoViewModel.RoleId,
-                        customerInfoViewModel.ManageCustomerAccess,
-                        "disabledEsports",
-                        !customerInfoViewModel.DisabledEsports,
-                        CastAide.AsBoolean(customerInfoViewModel.Enabled.ToString()),
-                        customerInfoViewModel.DisabledEsportsParent,
-                        !customerInfoViewModel.DisabledEsportsDownline));
-
-                TemplateHandler.Assign(ref htmlcontent, "{eSportsControl}", eSportsSettingGroup.GetHTMLSettingControl());
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "{chkEsports}");
-                TemplateHandler.RemoveBlock(ref htmlcontent, "eSportsControl");
-            }
-
-            return htmlcontent;
-        }
+        }        
 
         private string RenderOutrightControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {

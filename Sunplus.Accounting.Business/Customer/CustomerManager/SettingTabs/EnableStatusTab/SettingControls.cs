@@ -452,60 +452,6 @@
             }
 
             return new SettingControl("All-Day Bal Transfer", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
-        }
-
-        private SettingControl GetSettingControlEsports(
-            int roleId,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool isenabled,
-            bool disabledUpline,
-            bool disableDownLine)
-        {
-            if (!WebSettings.EnableVirtualSports)
-            {
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "disableEsports"),
-                        false, true, string.Empty, string.Empty, string.Empty, string.Empty, statusName, roleId, disableDownLine, "ES");
-            }
-            else
-            {
-                string classname = string.Empty;
-                string jsonclick = string.Empty;
-                string jsonmouseover = string.Empty;
-                string jsonmouseout = string.Empty;
-
-                if (isManageCustomerAccess)
-                {
-                    if (isenabled)
-                    {
-                        if (4 == roleId || !disabledUpline)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return ShowDisablePop(this);";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledESUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-                return
-                    new SettingControl(
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEsports"),
-                        currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
-                        disableDownLine, "ES");
-            }
-        }
+        }               
     }
 }
