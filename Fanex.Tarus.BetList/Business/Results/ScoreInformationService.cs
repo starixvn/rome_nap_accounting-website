@@ -124,6 +124,7 @@ namespace Fanex.Tarus.BetList.Business.Results
                 IsOutright = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,
+                IsPopupOpenFromBetList = true,
                 LanguageCode = "en-US",
                 VisibleMatchCodeIDColumn = false,
                 VisiblePopUpTitle = true,
