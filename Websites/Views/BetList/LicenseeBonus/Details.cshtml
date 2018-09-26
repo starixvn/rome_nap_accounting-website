@@ -147,7 +147,7 @@
             parent.$(".ui-dialog .ui-dialog-content").each(function (index) {
                 var $this = parent.$(this);
                 $this.dialog("close");
-                $this.remove();
+                $this.dialog('destroy');
             });
         }
         function initGridOpts() {
