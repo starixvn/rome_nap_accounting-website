@@ -1671,4 +1671,7 @@
   <data name="Updateallmasters" xml:space="preserve">
     <value>Update All Masters</value>
   </data>
+  <data name="Dataavailable" xml:space="preserve">
+    <value>Data Available</value>
+  </data>
 </root>
