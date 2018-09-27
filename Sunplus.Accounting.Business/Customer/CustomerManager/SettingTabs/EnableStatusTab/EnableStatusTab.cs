@@ -199,6 +199,14 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
             }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{Sportbook2OnClickFunction}", _renderLeftPanelService.GetSportbook2StatusJsFunction(
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.RoleId,
+                    "Update Sportbook2 Status"));
+            }
 
             if (customerInfoViewModel.HideCricketCredit)
             {
