@@ -51,7 +51,8 @@
             toCustName: _toUser,
             exRate: _exRate,
             amount: _amount,
-            remark: $("#remark").val()
+            remark: $("#remark").val(),
+            isCollection: $("#chk-collection-yesterday").is(":checked")
         };
 
         if (isNaN(parseFloat(_amount))) {
@@ -85,6 +86,16 @@
         .tblFinance tr {
             line-height: 12px;
         }
+
+    label[for="chk-collection-yesterday"],
+    label[for="chk-collection-cross-transfer"],
+    label[for="chk-collection-cross-transfer-new"] {
+        cursor: pointer;
+    }
+
+    .chk-collection {
+        vertical-align: middle;
+    }
 </style>
 @{
     var IsHadPermissionOnCrossCurrencyTransfer = Model.IsHadPermissionOnCrossCurrencyTransfer;
@@ -112,7 +123,7 @@
                                 }
                             }'
                             @{ if (IsHadPermissionOnYesterdayTransfer) { @: class='current'
-                                                                                                } }>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } }>
                             <a href="javascript:;"><span>Transfer Yesterday's Transactions </span></a>
                         </li>
                         <li id="left_tab1_2" style='float:left;display:
@@ -127,7 +138,7 @@
                                 }
                             }; position:relative'
                             @{ if (!IsHadPermissionOnYesterdayTransfer) { @: class='current'
-                                                                                                } }>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } }>
                             <a href="javascript:;">
                                 <span style="padding-right: 22px">Finance Cross-Currency Transfer</span>
                             </a><span style="background-image: url('../UserGuide/image/icon_help.png'); cursor: pointer;

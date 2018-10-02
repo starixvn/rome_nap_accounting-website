@@ -1,10 +1,11 @@
 ﻿@using System.Configuration;
-@helper GenerateCurrencyCodes(){
-    var group = ConfigurationManager.AppSettings["Fanex.Tarus.Finance.CrossBaseCurrency"];
-    var listCurrencyCodes = group.Split(',');
+@helper GenerateCurrencyCodes()
+{
+var group = ConfigurationManager.AppSettings["Fanex.Tarus.Finance.CrossBaseCurrency"];
+var listCurrencyCodes = group.Split(',');
     <option value="">[Select]</option>
-    foreach(string code in listCurrencyCodes)
-    {
+foreach (string code in listCurrencyCodes)
+{
         @:<option value="@code">@code</option>
     }
 }
@@ -13,16 +14,15 @@
     var _crossTransferService = new Fanex.Tarus.Finance.Business.Transfer.CrossTransferService();
     var listExchangeRate = _crossTransferService.SelectAllExchangeRate();
     @:var arrExchangeRate = [];
-    foreach(var exchangeRate in listExchangeRate)
+                foreach(var exchangeRate in listExchangeRate)
     {
         @:arrExchangeRate.push({Code: "@exchangeRate.Code", ActualRate : @exchangeRate.ActualRate, Currency : "@exchangeRate.Currency", ExchangeId : @exchangeRate.ExchangeId});
-    }
+                }
 }
 </script>
 <style type="text/css">
-    .calregion td
-    {
-        background-color: #EBEADD
+    .calregion td {
+        background-color: #EBEADD;
     }
 </style>
 <div style="border: 1px solid #7C98A4; width: 570px">
@@ -31,7 +31,8 @@
             <tr>
                 <td align="left">
                     <div align="left" style="width: 66px; text-align: left; font-weight: bold">
-                        From User:</div>
+                        From User:
+                    </div>
                 </td>
                 <td align="left">
                     <div align="left" style="width: 140px; text-align: left; position: relative">
@@ -48,7 +49,8 @@
                 </td>
                 <td align="left">
                     <div align="left" style="width: 66px; text-align: left; font-weight: bold">
-                        To User:</div>
+                        To User:
+                    </div>
                 </td>
                 <td align="left">
                     <div align="left" style="width: 140px; text-align: left; position: relative">
@@ -233,8 +235,7 @@
                             </td>
                             <td align="left">
                                 <div align="left" style="width: 140px; text-align: left">
-                                    <select id="selectForexAccount2" style="width: 120px; margin-left: 34px">
-                                    </select>
+                                    <select id="selectForexAccount2" style="width: 120px; margin-left: 34px"></select>
                                 </div>
                             </td>
                         </tr>
@@ -246,7 +247,8 @@
                     <div>
                         <span>System Ex.Rate </span>(<span id="spanPerCurrencySystem2"></span>)<span>: </span>
                         <span id="spanExRateSystem2" style="font-weight: bold"></span><span style="padding-left: 50px">
-                            Trans Ex.Rate</span> (<span id="spanPerCurrencyTrans2"></span>)<span>: </span>
+                            Trans Ex.Rate
+                        </span> (<span id="spanPerCurrencyTrans2"></span>)<span>: </span>
                         <span id="spanExRateTrans2" style="font-weight: bold"></span>
                     </div>
                 </td>
@@ -261,6 +263,12 @@
                     <div align="left">
                         <input class="txt" type="text" id="tbxDescription2" style="width: 400px" maxlength="200" />
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="c">
+                    <input id="chk-collection-cross-transfer-new" type="checkbox" class="chk-collection" />
+                    <label for="chk-collection-cross-transfer-new">Collection</label>
                 </td>
             </tr>
             <tr>

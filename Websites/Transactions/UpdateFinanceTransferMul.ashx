@@ -20,8 +20,9 @@ using Sunplus.Accounting.Core.Web;
 
 public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
 {
-    
-    public void ProcessRequest (HttpContext context) {
+
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         try
@@ -33,13 +34,13 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
                 context.Response.Write(AlertMessage.GetMsg("You are not authorized on this function.", AlertMessage.MsgType.Error));
                 return;
             }
-            
-            IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();   
-            
+
+            IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
+
             if (CastAide.AsString(context.Request["bolUnLoadPage"]) == "0")
             {
                 int Index = CastAide.AsInt32(context.Request["Index"]);
-                var updateError = new System.Collections.Hashtable();                
+                var updateError = new System.Collections.Hashtable();
                 var dbr = userService.UpdFinanceTransferMul(AppSession.AccId, context.Request["Filename"], CastAide.AsInt32(context.Request["Filesize"], 0), context.Request.UserHostAddress, ref updateError);
                 if (dbr == null | CastAide.AsInt32(updateError["errcode"]) != 0)
                 {
@@ -53,8 +54,8 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
                 DataTable dtbSucc = dbr.Tables[1];
                 //Render html table success and fail
                 string strFail = dtbFail.Rows.Count > 0 ? AlertMessage.GetMsg("Failed transactions", AlertMessage.MsgType.Error) + GenHTML(dtbFail, "add-customer-bggray", true) + "<br />" : string.Empty;
-                string strSucc = dtbSucc.Rows.Count > 0 ?AlertMessage.GetMsg("Successful transactions", AlertMessage.MsgType.Success) + GenHTML(dtbSucc, string.Empty, false) : string.Empty;
-                
+                string strSucc = dtbSucc.Rows.Count > 0 ? AlertMessage.GetMsg("Successful transactions", AlertMessage.MsgType.Success) + GenHTML(dtbSucc, string.Empty, false) : string.Empty;
+
                 //context.Response.Write(AlertMessage.GetMsg("Updated successfully", AlertMessage.MsgType.Success));
                 context.Response.Write(strFail + strSucc);
             }
@@ -65,11 +66,13 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
         {
             context.Response.Write(AlertMessage.GetMsg(ex.Message.ToString(), AlertMessage.MsgType.Error));
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-        }      
+        }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
@@ -82,9 +85,9 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
             TemplateHandler.ReplaceBlock(ref strResult, "hreason", string.Empty);
             TemplateHandler.ReplaceBlock(ref strResult, "creason", string.Empty);
         }
-        
+
         string strContent = TemplateHandler.CopyBlock(strResult, "content");
-        TemplateHandler.Assign(ref strContent, "rowstyle", rowStyle);        
+        TemplateHandler.Assign(ref strContent, "rowstyle", rowStyle);
 
         StringBuilder strBuild = new StringBuilder();
         //Generate data
@@ -99,6 +102,7 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
                 TemplateHandler.Assign(ref strTmp, "amount", NumberFormat.DecFormat(row["amount"], 2));
                 TemplateHandler.Assign(ref strTmp, "actualrate", SplitString(row["ExchangeRate"].ToString()));
                 TemplateHandler.Assign(ref strTmp, "description", row["Description"]);
+                TemplateHandler.Assign(ref strTmp, "collection", Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No");
                 if (hasReason)
                     TemplateHandler.Assign(ref strTmp, "reason", CastAide.AsString(row["reason"], string.Empty));
                 //TemplateHandler.Assign(ref strTmp, "description", row["Description"]);

@@ -204,7 +204,8 @@ transfer.crossCurrencyTransfer = {
             FromExRate: transfer.crossCurrencyTransfer.rowFromUser.actualrate,
             ToExRate: transfer.crossCurrencyTransfer.rowToUser.actualrate,
             ForexUsername: $("#selectForexAccount").val(),
-            Remark: ($("#tbxDescription").val() == "" ? " " : $("#tbxDescription").val())
+            Remark: ($("#tbxDescription").val() == "" ? " " : $("#tbxDescription").val()),
+            IsCollection: $("#chk-collection-cross-transfer").is(":checked")
         };
         $.post("CrossCurrencyTransferInsert", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
@@ -527,7 +528,8 @@ transfer.crossCurrencyTransfer2 = {
             FromExRate: transfer.crossCurrencyTransfer2.rowFromUser.actualrate,
             ToExRate: transfer.crossCurrencyTransfer2.rowToUser.actualrate,
             ForexUsername: $("#selectForexAccount2").val(),
-            Remark: ($("#tbxDescription2").val() == "" ? " " : $("#tbxDescription2").val())
+            Remark: ($("#tbxDescription2").val() == "" ? " " : $("#tbxDescription2").val()),
+            IsCollection: $("#chk-collection-cross-transfer-new").is(":checked")
         };
         $.post("CrossCurrencyTransferInsert", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
@@ -783,4 +785,4 @@ transfer.utils = {
 $(document).ready(function () {
     transfer.init();
 });
-    
+
