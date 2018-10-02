@@ -33,13 +33,21 @@ function GetDataReport() {
     
     try{parent.BlockUI();}catch(e){}
     $.ajax({
-    url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate +  '&repno=' + obj('repno').value,
-    dataType:'html',
-    success: function(data)
-    {
-        obj('sData').innerHTML = data;
-        parent.jQuery.unblockUI();
-    }
+        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate +  '&repno=' + obj('repno').value,
+        dataType:'html',
+        success: function(data) {
+            obj('sData').innerHTML = data;
+            parent.jQuery.unblockUI();
+        },
+        error: function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                var errorBox = $("#errBox");
+                errorBox.find("div").html(denyObject.ErrorMessage);
+                errorBox.show();
+                parent.jQuery.unblockUI();
+            }
+        }
     });   
 }
 function SBD(transtype,fdate)

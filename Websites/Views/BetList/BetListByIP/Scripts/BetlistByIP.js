@@ -203,7 +203,7 @@ var Helper = {
         errorBox.removeClass("hide");
     },
     hideErrorBox: function () {
-        $("#errBox").addClass("hide").find("<div>").html("");
+        $("#errBox").addClass("hide").find("div").html("");
     }
 };
 
