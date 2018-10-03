@@ -5,12 +5,12 @@
     var betListPopUp = parent.$(".ui-dialog");
     if (betListPopUp && betListPopUp.length) {
         betListPopUp.dialog('close');
-        betListPopUp.remove();
+        betListPopUp.dialog('destroy');
     }
 
-    var detailPopUp = parent.$("#dialog-modalMicrogamingDetails");
+    var detailPopUp = parent.$('div[id^="dialog-modal"][id$="Details"]');
     detailPopUp.dialog('close');
-    detailPopUp.remove();
+    detailPopUp.dialog('destroy');
 }
 
 var MicroGamingBetDetailsManager = function () {
