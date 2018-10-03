@@ -44,76 +44,78 @@
                     </tr>
                 </table>
                 <div class="maincontent_box" style="width: 760px;">
-                    <table>
-                        <tr>
-                            <td>
-                                Username:
-                            </td>
-                            <td style="width: 80px">
-                                <strong>@Model.UserName</strong>
-                            </td>
-                            <td style="width: 40px"></td>
-                            <td>
-                                Letstalk ID:
-                            </td>
-                            <td style="width: 120px">
-                                <strong>@Model.LetstalkAccount.Username</strong>
-                                <input type="button" class="btn" onclick="" value="Unlink"
-                                       name="btnUnlink" id="btnUnlink" />
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Language
-                            </td>
-                            <td style="width: 80px">
-                                @Html.DropDownList("ddlLanguage", Model.OfferLanguages, new { style = "width:80px" })
-                            </td>
-                            <td align="left">
-                                <div class="divSave">
-                                    <img id="btnSaveLanguage" alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer;" />
-                                </div>
-                            </td>
-                            <td>
-                                Function
-                            </td>
-                            <td style="width: 120px">
-                                <div id="ddlFeature" class="multiselect" multiple="multiple" style="padding-top: 2px;">
-                                </div>
-                            </td>
-                            <td align="left">
-                                <div class="divSave">
-                                    <img id="btnSaveFeature" alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer;" />
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <table class="tbllayout" cellpadding="1">
-                        <tr class="title">
-                            <td>Chat History</td>
-                        </tr>
-                    </table>
-                    <table class="filter-table">
-                        <tr>
-                            <td>From</td>
-                            <td style="width: 140px">
-                                <input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" />
-                            </td>
-                            <td>To</td>
-                            <td style="width: 140px">
-                                <input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width: 100px;" />
-                            </td>
-                            <td>Function</td>
-                            <td style="width: 260px">
-                                @Html.DropDownList("ddlFeatureFilter", Model.FeatureFilterItems, new { style = "width:260px" })
-                            </td>
-                            <td style="width: 130px" align="right">
-                                <input type="button" class="btn" onclick="" value="Submit"
-                                       name="btnSubmit" id="btnSubmit" />
-                            </td>
-                        </tr>
-                    </table>
+                    <div id="settingContainer">
+                        <table>
+                            <tr>
+                                <td>
+                                    Username:
+                                </td>
+                                <td style="width: 80px">
+                                    <strong>@Model.UserName</strong>
+                                </td>
+                                <td style="width: 40px"></td>
+                                <td>
+                                    Letstalk ID:
+                                </td>
+                                <td style="width: 120px">
+                                    <strong>@Model.LetstalkAccount.Username</strong>
+                                    <input type="button" class="btn" onclick="" value="Unlink"
+                                           name="btnUnlink" id="btnUnlink" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Language
+                                </td>
+                                <td style="width: 80px">
+                                    @Html.DropDownList("ddlLanguage", Model.OfferLanguages, new { style = "width:80px" })
+                                </td>
+                                <td align="left">
+                                    <div class="divSave">
+                                        <img id="btnSaveLanguage" alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer;" />
+                                    </div>
+                                </td>
+                                <td>
+                                    Function
+                                </td>
+                                <td style="width: 120px">
+                                    <div id="ddlFeature" class="multiselect" multiple="multiple" style="padding-top: 2px;">
+                                    </div>
+                                </td>
+                                <td align="left">
+                                    <div class="divSave">
+                                        <img id="btnSaveFeature" alt="Save" title="Save" border="0" src="../App_Themes/Images/save1.jpg" style="cursor: pointer;" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="tbllayout" cellpadding="1">
+                            <tr class="title">
+                                <td>Chat History</td>
+                            </tr>
+                        </table>
+                        <table class="filter-table">
+                            <tr>
+                                <td>From</td>
+                                <td style="width: 140px">
+                                    <input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                                </td>
+                                <td>To</td>
+                                <td style="width: 140px">
+                                    <input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                                </td>
+                                <td>Function</td>
+                                <td style="width: 260px">
+                                    @Html.DropDownList("ddlFeatureFilter", Model.FeatureFilterItems, new { style = "width:260px" })
+                                </td>
+                                <td style="width: 130px" align="right">
+                                    <input type="button" class="btn" onclick="" value="Submit"
+                                           name="btnSubmit" id="btnSubmit" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     <div id="chatHistory" class="history-content content-warper hidden">
                         <div class="content-header clearfix">
                             <div class="header-scroll">

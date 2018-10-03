@@ -1,5 +1,4 @@
 ﻿let Chatbot = {
-    height: 720,
     width: 742,
     chatbotId: -1,
     invalidCommand: 1000000,
@@ -90,10 +89,10 @@
             var emptyrow = '<tr><td colspan="3" style="border-right:0px none"><div class="c b" style="width:' + Chatbot.width + 'px">There is no information available</div></td></tr>';
             html.push(emptyrow)
         }
-
+        var height = window.innerHeight - $('#settingContainer').height() - 60;
         $('#chatHistoryContentBody').empty().append(html.join(''));
         $('#chatHistory').removeClass('hidden');
-        $('#chatHistory').reRenderScroller(Chatbot.width, Chatbot.height, true);
+        $('#chatHistory').reRenderScroller(Chatbot.width, height, true);
     },
 
     ConvertToDate: (date) => {
