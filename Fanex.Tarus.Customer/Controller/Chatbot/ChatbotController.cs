@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Chatbot.Client.Models;
+﻿using Chatbot.Client.Models;
 using Chatbot.Client.Services;
 using Fanex.CustomerSetting.Module.Core.Attributes;
+using Fanex.CustomerSetting.Module.Core.Criteria;
 using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Chatbot;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Fanex.Tarus.Customer.Controller.Chatbot
 {
@@ -27,9 +30,28 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateRead]
         public async Task<ActionResult> Index(int custId, string username)
         {
-            var user = await settingService.GetUser(custId, 0, "en-US");
+            if (!IsAllowAccess(username))
+            {
+                return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
 
-            return View("~/Views/Customer/Chatbot/Index.cshtml", new ChatbotViewModel(username, user));
+            var user = await settingService.GetUser(custId, 0, "en-US");
+            var model = new ChatbotViewModel(username, user);
+            if (IsBelongToSpecialSite(username))
+            {
+                var vietnamese = new List<SelectListItem>()
+                {
+                    new SelectListItem
+                    {
+                       Selected = model.Language.Equals("vi-VN"),
+                       Text = "Tiếng Việt",
+                       Value = "vi-VN"
+                    }
+                };
+                model.OfferLanguages = model.OfferLanguages.Concat(vietnamese);
+            }
+
+            return View("~/Views/Customer/Chatbot/Index.cshtml", model);
         }
 
         [AuthenticateRead]
@@ -80,6 +102,45 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
             var result = await settingService.Unsubscribe(userId, MessengerType.Letstalk, letstalkId);
 
             return Json(result);
+        }
+
+        [NonAction]
+        private bool IsBelongToSpecialSite(string username)
+        {
+            var serviceBase = new CustomerSetting.Module.Core.Services.Impl.ServiceBase();
+            var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria
+            {
+                UserName = username,
+                CheckCustId = 1
+            });            
+
+            return checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline ||
+                checkCustomerBelongToSpecialSiteResult.IsSpecialSite;
+        }
+
+        [NonAction]
+        private bool IsAllowAccess(string username)
+        {
+            if (IsBelongToSpecialSite(username) &&
+                !Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
+            {
+                return false;
+            }
+
+            var serviceBase = new CustomerSetting.Module.Core.Services.Impl.ServiceBase();
+            var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
+            {
+                UserID = Sunplus.Accounting.Core.Common.AppSession.AccId,
+                CustName = username,
+                CheckCustId = 1
+            });
+
+            if (checkSpecialSitePermission.ErrorCode > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

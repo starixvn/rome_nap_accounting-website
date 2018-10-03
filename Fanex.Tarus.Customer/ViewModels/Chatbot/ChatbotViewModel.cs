@@ -1,28 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using Chatbot.Client.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Chatbot.Client.Models;
 
 namespace Fanex.Tarus.Customer.ViewModels.Chatbot
 {
     public class ChatbotViewModel
     {
-        private readonly IDictionary<string, string> languages = new Dictionary<string, string>
+        private IDictionary<string, string> languages => new Dictionary<string, string>
         {
             ["en-US"] = "English",
             ["zh-TW"] = "繁體中文",
             ["zh-CN"] = "简体中文",
             ["ja-JP"] = "日本語",
             ["th-TH"] = "ภาษาไทย",
-            ["ko-KR"] = "한국어",
+            ["ko-KR"] = "한국어"
         };
 
-        private readonly User user;
+        private IEnumerable<SelectListItem> offerLanguages;
+
+        private User user { get; set; }
 
         public ChatbotViewModel(string userName, User user)
         {
             UserName = userName;
             this.user = user;
+            offerLanguages = languages.Select(l => new SelectListItem
+            {
+                Text = l.Value,
+                Value = l.Key,
+                Selected = l.Key.Equals(user.Language)
+            });
         }
 
         public bool AlreadyLinked
@@ -50,12 +58,10 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
             });
 
         public IEnumerable<SelectListItem> OfferLanguages
-            => languages.Select(l => new SelectListItem
-            {
-                Text = l.Value,
-                Value = l.Key,
-                Selected = l.Key.Equals(user.Language)
-            });
+        {
+            get { return offerLanguages; }
+            set { offerLanguages = value; }
+        }
 
         public IEnumerable<SelectListItem> FeatureFilterItems
         {
