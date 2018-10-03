@@ -6,8 +6,6 @@ using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Chatbot;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,11 +28,6 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateRead]
         public async Task<ActionResult> Index(int custId, string username)
         {
-            if (!IsAllowAccess(username))
-            {
-                return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
-            }
-
             var user = await settingService.GetUser(custId, 0, "en-US");
             var model = new ChatbotViewModel(username, user);
             if (IsBelongToSpecialSite(username))
@@ -116,31 +109,6 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
 
             return checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline ||
                 checkCustomerBelongToSpecialSiteResult.IsSpecialSite;
-        }
-
-        [NonAction]
-        private bool IsAllowAccess(string username)
-        {
-            if (IsBelongToSpecialSite(username) &&
-                !Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                return false;
-            }
-
-            var serviceBase = new CustomerSetting.Module.Core.Services.Impl.ServiceBase();
-            var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                UserID = Sunplus.Accounting.Core.Common.AppSession.AccId,
-                CustName = username,
-                CheckCustId = 1
-            });
-
-            if (checkSpecialSitePermission.ErrorCode > 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
+        }        
     }
 }
