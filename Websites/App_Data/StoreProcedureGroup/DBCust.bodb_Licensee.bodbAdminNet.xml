@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="104" SiteName="NAP - Accounting"> 
+  <Function Name="Customer - Replicate Licensee Settings">
+    <Setting Key="Customer_ReplicateLicenseeSettings_DoAction" SpName="Acc_Dep_SyncLicenseeSetting" DbName="DBCust.bodb_Licensee.bodbAdminNet" />
+  </Function>
+</Functions>
