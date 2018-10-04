@@ -1,5 +1,12 @@
-namespace Sunplus.Accounting.Business.Customer
+﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Threading.Tasks;
+    using System.Web;
+    using Chatbot.Client.Services;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
@@ -19,11 +26,6 @@ namespace Sunplus.Accounting.Business.Customer
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
     using Security;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using Result = Entities.Result;
 
     public partial class CustomerManager : ICustomerManager
@@ -34,7 +36,7 @@ namespace Sunplus.Accounting.Business.Customer
         private readonly IRemotingRefService _remotingRefService;
         private readonly RenderLeftPanelManager _renderLeftPanelService;
         private readonly ConfigureDirectAccountService _configureDirectAccountService;
-        
+        private readonly SettingService settingService;
 
         public CustomerManager()
             : this(null)
@@ -50,6 +52,7 @@ namespace Sunplus.Accounting.Business.Customer
             _remotingRefService = new RemotingRefService();
             _renderLeftPanelService = new RenderLeftPanelManager();
             _configureDirectAccountService = new ConfigureDirectAccountService();
+            settingService = new SettingServiceImpl();
         }
 
         public CustDetail GetCustomerInfo(string username)
@@ -132,7 +135,11 @@ namespace Sunplus.Accounting.Business.Customer
                         DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
 
-                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable);
+                        var task = Task.Run(async () => await settingService.GetUser(Convert.ToInt32(customerInfoRow["custid"]), 0, "en-US"));
+                        task.Wait();
+                        var chatbotUser = task.Result;
+
+                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, chatbotUser);
                         AssignCustomerSession(customerInfoViewModel);
 
                         bool isDenied = smartPunterService.IsDeniedViewSmartPunter(
@@ -183,12 +190,16 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 case 1:
                     return AppSession.MemberUserName;
+
                 case 2:
                     return AppSession.AgentUserName;
+
                 case 3:
                     return AppSession.MasterUserName;
+
                 case 4:
                     return AppSession.SusperUserName;
+
                 default:
                     return string.Empty;
             }
@@ -309,6 +320,7 @@ namespace Sunplus.Accounting.Business.Customer
         public string GetRNGSiteNameByCustId(int custId) => _customerDAO.GetRNGSiteNameByCustId(custId);
 
         #region private functions
+
         private string RenderCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             htmlcontent = RenderCustomerDetail(htmlcontent, customerInfoViewModel);

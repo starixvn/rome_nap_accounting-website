@@ -19,13 +19,11 @@ var viewModel = @Html.Raw(Json.Encode(Model));
     <div class="maincontent">
         <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
             <tr>
-                <td class="maincontent_headerL">
-                </td>
+                <td class="maincontent_headerL"></td>
                 <td class="maincontent_headerC">
                     Function Management
                 </td>
-                <td class="maincontent_headerR">
-                </td>
+                <td class="maincontent_headerR"></td>
             </tr>
         </table>
         <div id="err">
@@ -78,8 +76,7 @@ var viewModel = @Html.Raw(Json.Encode(Model));
                             Parent Function
                         </td>
                         <td class="l" id="parent">
-                            <select style="width: 150px;" id="slParent">
-                            </select>
+                            <select style="width: 150px;" id="slParent"></select>
                         </td>
                     </tr>
                 </tbody>
@@ -136,47 +133,55 @@ var viewModel = @Html.Raw(Json.Encode(Model));
                     <table class="tbl-body-scroll">
                         <tbody id="tbodyGridFunction"></tbody>
                         <script id="scriptTemplateGridFunction" type="text/html">
-                            <tr><td>
-                                <div class="col240 l 
+                            <tr>
+                                <td>
+                                    <div class="col240 l
                                 {{if (ParentId == 0)}}
                                     b
                                 {{/if}}
-                                "><span order="${Order}" 
-                                {{if (level == 0)}}
-                                    style="margin-left:0px"
-                                {{else}}
-                                    {{if (level == 1)}}
-                                        style="margin-left:10px"
-                                    {{else}}
-                                        {{if (level == 2)}}
-                                            style="margin-left:30px"
-                                        {{else}}
-                                            {{if (level == 3)}}
-                                                style="margin-left:40px"
-                                            {{else}}
-                                                style="margin-left:0px"
-                                            {{/if}}
-                                        {{/if}}
-                                    {{/if}}
-                                {{/if}}
-                                >${Name}</span></div>
-                            </td><td>
-                                <div class="col200 l">${Desc}</div>
-                            </td><td>
-                                <div class="col360 l">${Files}</div>
-                            </td><td>
-                                <div class="col100 c">${TotalSub}</div>
-                            </td><td>
-                                <div class="col100 c">${System}</div>
-                            </td><td>
-                                <div class="col60 c">
-                                    <img alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="javascript: funcManager.grid.editFunc(${ID}, '${Name}');" />
-                                </div>
-                            </td><td>
-                                <div class="col60 c">
-                                    <img alt="Edit" title="Edit" src="../App_Themes/Images/icon_del.gif" style="cursor: pointer" onclick="javascript: funcManager.grid.deleteFunc(${ID});" />
-                                </div>
-                            </td>
+                                ">
+                                        <span order="${Order}"
+                                              {{if (level == 0)}}
+                                              style="margin-left:0px"
+                                              {{else}}
+                                              {{if (level == 1)}}
+                                              style="margin-left:10px"
+                                              {{else}}
+                                              {{if (level == 2)}}
+                                              style="margin-left:30px"
+                                              {{else}}
+                                              {{if (level == 3)}}
+                                              style="margin-left:40px"
+                                              {{else}}
+                                              style="margin-left:0px"
+                                              {{/if}}
+                                              {{/if}}
+                                              {{/if}}
+                                              {{/if}}>${Name}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col200 l">${Desc}</div>
+                                </td>
+                                <td>
+                                    <div class="col360 l">${Files}</div>
+                                </td>
+                                <td>
+                                    <div class="col100 c">${TotalSub}</div>
+                                </td>
+                                <td>
+                                    <div class="col100 c">${System}</div>
+                                </td>
+                                <td>
+                                    <div class="col60 c">
+                                        <img alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="javascript: funcManager.grid.editFunc(${ID}, '${Name}');" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col60 c">
+                                        <img alt="Edit" title="Edit" src="../App_Themes/Images/icon_del.gif" style="cursor: pointer" onclick="javascript: funcManager.grid.deleteFunc(${ID});" />
+                                    </div>
+                                </td>
                             </tr>
                         </script>
                     </table>

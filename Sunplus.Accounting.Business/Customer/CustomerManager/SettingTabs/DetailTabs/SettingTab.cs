@@ -148,6 +148,10 @@
             TemplateHandler.Assign(ref htmlcontent, "{Username}", customerInfoViewModel.UserName);
             TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.JsParam));
 
+            //Chatbot
+            var chatbotLink = $"Chatbot/Index?custid={custId}&username={userName}";
+            TemplateHandler.Assign(ref htmlcontent, "{chatbotLink}", chatbotLink);
+
             return htmlcontent;
         }
 
@@ -236,6 +240,12 @@
             if (customerInfoViewModel.HideSettingPokerGames)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-PokerGames");
+            }
+
+            // Chatbot
+            if (customerInfoViewModel.HideChatbotLink)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "chatbot");
             }
 
             return htmlcontent;

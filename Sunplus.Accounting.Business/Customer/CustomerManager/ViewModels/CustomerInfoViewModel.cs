@@ -27,13 +27,15 @@
             DataRow lineInfoRow,
             DataRow cashRow,
             DataRow downlineStatusInfoRow,
-            DataTable dynamicSettingtable)
+            DataTable dynamicSettingtable,
+            Chatbot.Client.Models.User chatbotUser)
         {
             this.customerInfoRow = customerInfoRow;
             this.lineInfoRow = lineInfoRow;
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
+            ChatbotUser = chatbotUser;
 
             JsParam = new Hashtable();
             JsParam.Add("custid", CustId);
@@ -118,12 +120,15 @@
                             HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
                             HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
                             break;
+
                         case "16":
                             HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
                             break;
+
                         case "20":
                             HideCricketCredit = (Utils.ToBoolean(row["IsHidden"]) && RoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
                             break;
+
                         case "21":
                             SyncAllbet = Utils.ToBoolean(row["IsSync"]);
                             HideAllbetUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4;
@@ -143,6 +148,7 @@
                             SyncNG2Upline = Utils.ToBoolean(row["IsSyncedUpline"]);
 
                             break;
+
                         case "24":
                             bool isHideUplineFishingWorld = Utils.ToBoolean(row["IsHiddenUpline"]);
                             bool isSyncUplineFishingWorld = Utils.ToBoolean(row["IsSyncedUpline"]);
@@ -150,6 +156,7 @@
                             HideEnableAndEditFishingWorld = (RoleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
 
                             break;
+
                         case "27":
                             HideVirtualSports2 = (Utils.ToBoolean(row["IsHiddenUpline"]) && RoleId < 4) || !WebSettings.EnableVirtualSports;
                             break;
