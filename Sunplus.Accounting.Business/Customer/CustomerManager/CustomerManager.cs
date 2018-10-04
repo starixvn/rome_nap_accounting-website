@@ -27,6 +27,7 @@
     using Fanex.Tarus.Security.Services;
     using Security;
     using Result = Entities.Result;
+    using Fanex.Logging;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -135,9 +136,18 @@
                         DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
 
-                        var task = Task.Run(async () => await settingService.GetUser(Convert.ToInt32(customerInfoRow["custid"]), 0, "en-US"));
-                        task.Wait();
-                        var chatbotUser = task.Result;
+                        Chatbot.Client.Models.User chatbotUser = null;
+
+                        try
+                        {
+                            var task = Task.Run(async () => await settingService.GetUser(Convert.ToInt32(customerInfoRow["custid"]), 0, "en-US"));
+                            task.Wait();
+                            chatbotUser = task.Result;
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log.Warn(ex.Message);
+                        }
 
                         var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, chatbotUser);
                         AssignCustomerSession(customerInfoViewModel);
