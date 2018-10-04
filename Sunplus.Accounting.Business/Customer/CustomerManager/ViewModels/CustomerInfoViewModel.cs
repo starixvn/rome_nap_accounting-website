@@ -27,15 +27,13 @@
             DataRow lineInfoRow,
             DataRow cashRow,
             DataRow downlineStatusInfoRow,
-            DataTable dynamicSettingtable,
-            Chatbot.Client.Models.User chatbotUser)
+            DataTable dynamicSettingtable)
         {
             this.customerInfoRow = customerInfoRow;
             this.lineInfoRow = lineInfoRow;
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
-            ChatbotUser = chatbotUser;
 
             JsParam = new Hashtable();
             JsParam.Add("custid", CustId);

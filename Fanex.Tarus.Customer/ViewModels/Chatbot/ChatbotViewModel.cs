@@ -1,7 +1,7 @@
-﻿using Chatbot.Client.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Chatbot.Client.Models;
 
 namespace Fanex.Tarus.Customer.ViewModels.Chatbot
 {
@@ -17,15 +17,13 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
             ["ko-KR"] = "한국어"
         };
 
-        private IEnumerable<SelectListItem> offerLanguages;
-
         private User user { get; set; }
 
         public ChatbotViewModel(string userName, User user)
         {
             UserName = userName;
             this.user = user;
-            offerLanguages = languages.Select(l => new SelectListItem
+            OfferLanguages = languages.Select(l => new SelectListItem
             {
                 Text = l.Value,
                 Value = l.Key,
@@ -57,11 +55,7 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
                 Selected = f.Enabled
             });
 
-        public IEnumerable<SelectListItem> OfferLanguages
-        {
-            get { return offerLanguages; }
-            set { offerLanguages = value; }
-        }
+        public IEnumerable<SelectListItem> OfferLanguages { get; set; }
 
         public IEnumerable<SelectListItem> FeatureFilterItems
         {

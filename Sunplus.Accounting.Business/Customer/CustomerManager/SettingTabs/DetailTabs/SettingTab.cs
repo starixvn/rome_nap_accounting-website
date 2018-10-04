@@ -243,7 +243,7 @@
             }
 
             // Chatbot
-            if (customerInfoViewModel.HideChatbotLink)
+            if (customerInfoViewModel.IsDeposit || customerInfoViewModel.RoleId == 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "chatbot");
             }

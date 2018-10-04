@@ -30,7 +30,7 @@
 <%@ Import Namespace="Fanex.Result.Core.RemotingRef" %>
 <%@ Import Namespace="Chatbot.Client" %>
 <%@ Import Namespace="Chatbot.Client.Configurations" %>
-<%@ Import Namespace="Sunplus.Accounting.Business.Helpers" %>
+<%@ Import Namespace="Fanex.Tarus.Customer.Helpers" %>
 
 <script RunAt="server">
 

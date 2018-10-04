@@ -4,9 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Threading.Tasks;
     using System.Web;
-    using Chatbot.Client.Services;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
@@ -27,7 +25,6 @@
     using Fanex.Tarus.Security.Services;
     using Security;
     using Result = Entities.Result;
-    using Fanex.Logging;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -37,7 +34,6 @@
         private readonly IRemotingRefService _remotingRefService;
         private readonly RenderLeftPanelManager _renderLeftPanelService;
         private readonly ConfigureDirectAccountService _configureDirectAccountService;
-        private readonly SettingService settingService;
 
         public CustomerManager()
             : this(null)
@@ -53,7 +49,6 @@
             _remotingRefService = new RemotingRefService();
             _renderLeftPanelService = new RenderLeftPanelManager();
             _configureDirectAccountService = new ConfigureDirectAccountService();
-            settingService = new SettingServiceImpl();
         }
 
         public CustDetail GetCustomerInfo(string username)
@@ -136,20 +131,7 @@
                         DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
 
-                        Chatbot.Client.Models.User chatbotUser = null;
-
-                        try
-                        {
-                            var task = Task.Run(async () => await settingService.GetUser(Convert.ToInt32(customerInfoRow["custid"]), 0, "en-US"));
-                            task.Wait();
-                            chatbotUser = task.Result;
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Log.Warn(ex.Message);
-                        }
-
-                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, chatbotUser);
+                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable);
                         AssignCustomerSession(customerInfoViewModel);
 
                         bool isDenied = smartPunterService.IsDeniedViewSmartPunter(

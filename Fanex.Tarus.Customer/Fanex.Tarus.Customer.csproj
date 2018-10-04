@@ -568,6 +568,8 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="Helpers\HmacAuthenticator.cs" />
+    <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
