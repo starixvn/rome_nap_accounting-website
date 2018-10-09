@@ -76,7 +76,7 @@
         .endrow {border-bottom: none!important;}
         .collabel {background-color: #EAEAEA;}
         .colW1sp {text-transform: capitalize; width: 68px; text-align: left; word-wrap: break-word; overflow:hidden}
-        .colW2sp {text-transform: capitalize; width: 70px; overflow: hidden; word-wrap: break-word; text-align: center}
+        .colW2sp {width: 70px; overflow: hidden; word-wrap: break-word; text-align: center}
         /** diff tooltip **/
         .diffTip { position: absolute; display: none; padding: 2px 3px; border: 1px solid #cc9; background-color: #ffa;-moz-box-shadow: 2px 2px 11px #666; -webkit-box-shadow: 2px 2px 11px #666; color: Green;}
         .diffPopup { position: absolute; display: none; padding: 2px 3px; border: 1px solid #cc9; background-color: #fff;-moz-box-shadow: 2px 2px 11px #666; -webkit-box-shadow: 2px 2px 11px #666;}
