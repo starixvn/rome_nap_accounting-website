@@ -225,25 +225,7 @@
     <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="MixparlayWon" SpName="Acc_Rpt_MixParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CompanyCreditDebit" SpName="Acc_Rpt_CompanyCreditDebit" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Live Casino - GET PT Setting">
-    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBCust.CustDB.bodbAdminNet">
-      <Mapping DataField="mobilephone" ObjectProperty="Mobile" />
-      <Mapping DataField="currency" ObjectProperty="CurrencyId" />
-      <Mapping DataField="SyncLiveCasino" ObjectProperty="IsSyncLiveCasino" />
-      <Mapping DataField="isAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
-      <Mapping DataField="MaxWinLiveCasino" ObjectProperty="Max" />
-      <Mapping DataField="UplineIsAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
-      <Mapping DataField="UplineMaxWinLiveCasino" ObjectProperty="Max" />
-      <Mapping DataField="username2" ObjectProperty="NickName" />
-    </Setting>
-    <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+  </Function>  
   <Function Name="Gold Deluxe - GET PT Setting">
     <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
