@@ -168,7 +168,6 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 HtHomeScore = reader["hthomescore"] != DBNull.Value ? int.Parse(reader["hthomescore"].ToString()) : new int?(),
                 EventDate = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 IsNeutral = reader["IsNeutral"] != DBNull.Value ? bool.Parse(reader["IsNeutral"].ToString()) : false,
-                IsPending = reader["IsPending"] != DBNull.Value ? bool.Parse(reader["IsPending"].ToString()) : false,
                 KickOffTime = reader["kickofftime"] != DBNull.Value ? DateTime.Parse(reader["kickofftime"].ToString()) : DateTime.MinValue,
                 MatchCode = reader["matchcode"] != DBNull.Value ? reader["matchcode"].ToString() : string.Empty,
                 GoalRecord = reader["goalrecord"] != DBNull.Value ? reader["goalrecord"].ToString() : string.Empty,
@@ -177,7 +176,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 RefNo = string.Empty,
                 GameDetails = new List<GameDetail>(),
                 Bettype = GetBetTypeFromToken(reader),
-                BetID = GetBetIDFromToken(reader)
+                BetID = GetBetIDFromToken(reader),
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
             };
 
             return item;

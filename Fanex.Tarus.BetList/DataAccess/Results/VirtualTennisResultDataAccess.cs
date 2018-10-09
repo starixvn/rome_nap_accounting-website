@@ -67,7 +67,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 GoalRecord = string.Empty,
                 IsHTCal = false,
                 Calculate = false,
-                RefNo = string.Empty
+                RefNo = string.Empty,
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
             };
         }
     }
