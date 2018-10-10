@@ -2,7 +2,7 @@
 
 var CustomerDataRange = {
     pageIndex: 1,
-    pageSize: 10,
+    pageSize: 50,
     totalItems: 0,
     width: 516,
     height: 590,
@@ -105,13 +105,13 @@ var CustomerDataRange = {
     edit: function (custId, userName) {
         var url = window.rootUrl + 'CustomerDateLimit/GetById?custId=' + custId;
         parent.OpenNextPopup('', url, 'Edit Data Range For ' + userName, 300, 250, true, false, this, 2000, null, function () {
-            location.reload(true);
+            CustomerDataRange.getList(0);
         });
     },
     add: function () {
         var url = window.rootUrl + 'CustomerDateLimit/Add';
         parent.OpenNextPopup('', url, 'Add Super ', 600, 250, true, false, this, 2000, null, function () {
-            location.reload(true);
+            CustomerDataRange.getList(0);
         });
     }
 };

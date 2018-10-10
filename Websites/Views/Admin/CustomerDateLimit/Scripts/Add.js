@@ -128,7 +128,7 @@
             type: 'post',
             data: params,
             beforeSend: function () {
-                try { parent.BlockUI(); } catch (e) { }
+                try { BlockUI(); } catch (e) { }
             },
         }).success(function (result) {
             if (result && result.ErrorMessage != "") {
@@ -140,7 +140,7 @@
             showAlertMessage("errMsg", err, 1);
 
         }).complete(function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
+            try { jQuery.unblockUI(); } catch (e) { }
         });
     },
 
