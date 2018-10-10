@@ -55,7 +55,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Chatbot.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chatbot.Client.1.0.0-beta8-82\lib\net461\Chatbot.Client.dll</HintPath>
+      <HintPath>..\packages\Chatbot.Client.1.0.0\lib\net461\Chatbot.Client.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
       <HintPath>..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
