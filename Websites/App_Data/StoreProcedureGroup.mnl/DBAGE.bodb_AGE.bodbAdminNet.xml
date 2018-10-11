@@ -15,4 +15,9 @@
     <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBAGE.bodb_AGE.bodbAdminNet" /> 
     <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
   </Function>
+  <Function Name="SuperLimitDate">
+    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+  </Function>
 </Functions>

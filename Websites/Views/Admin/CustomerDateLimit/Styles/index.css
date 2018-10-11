@@ -1,0 +1,13 @@
+﻿.ui-datepicker-trigger {
+    vertical-align: middle;
+    margin: 2px 0 5px 5px;
+}
+
+.mindate {
+    width: 120px;
+}
+
+.userNames {
+    width: 450px;
+    height: 80px;
+}

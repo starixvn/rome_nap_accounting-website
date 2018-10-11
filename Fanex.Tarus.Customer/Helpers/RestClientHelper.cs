@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Chatbot.Client;
-using RestSharp;
-
-namespace Sunplus.Accounting.Business.Helpers
+﻿namespace Fanex.Tarus.Customer.Helpers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Chatbot.Client;
+    using RestSharp;
+
     public class RestClientHelper : Chatbot.Client.Helpers.IRestClient
     {
         private readonly IRestClient restClient;

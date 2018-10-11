@@ -1,0 +1,80 @@
+﻿@using Fanex.Tarus.Admin.Entities.CustomerDateLimit;
+@using Fanex.Tarus.Admin.Enums;
+
+@model CustomerDateLimitModel
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/common.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/input.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/image.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Public/Message.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Report/reportgrid.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Views/Admin/CustomerDateLimit/Styles/index.css?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+</head>
+<body>
+    <span id="errMsg"></span>
+    <table width="100%" style="line-height: 20px;">
+        <tr>
+            <td>
+                <input id="rdb-none" type="radio" name="rdb-data-range" checked="checked" class="rdb-data-range" value="@CustomerDataRangeType.None" />
+                <label for="rdb-none">None</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <input id="rdb-time-period" type="radio" name="rdb-data-range" class="rdb-data-range" value="@CustomerDataRangeType.TimePeriod" />
+                    <label for="rdb-time-period">Time period (day)</label>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <input id="txt-time-period" type="text" autocomplete="off" maxlength="6" disabled="disabled" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <input id="rdb-min-date" type="radio" name="rdb-data-range" checked="checked" class="rdb-data-range" value="@CustomerDataRangeType.MinDate" />
+                    <label for="rdb-min-date">Min Date</label>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <input id="txt-min-date" type="text" readonly="readonly" disabled="disabled" class="mindate" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="r">
+                    <input id="btn-clear" type="button" value="Clear" class="btn" />
+                    <input id="btn-submit" type="button" value="Submit" class="btn" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    @Html.Hidden("CustIds", Model.CustId)
+    @Html.Hidden("DataRangeType", Model.Type)
+    @Html.Hidden("LimitDays", Model.LimitDays)
+    @Html.Hidden("MinDate", Model.MinDate.HasValue ? Model.MinDate.Value.ToString("MM/dd/yyyy") : string.Empty)
+
+
+
+    <script src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/Message/message.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/Popup/confirmbox.js")"></script>
+    <script src="@Url.Content("~/js/BlockUI.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
+    <script src="@Url.Content("~/Views/Admin/CustomerDateLimit/Scripts/Edit.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script type="text/javascript">
+        function resolveClientUrl(relativePath) {
+            return '@Url.Content("~/")' + relativePath;
+        }
+    </script>
+</body>
+</html>

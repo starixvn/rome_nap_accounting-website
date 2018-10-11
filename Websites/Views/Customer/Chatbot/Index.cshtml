@@ -156,17 +156,17 @@
             var mindate = '@DateTime.Now.AddDays(-90).ToShortDateString()';
             var jsonFeatures=@Html.Raw(Json.Encode(Model.Functions));
         </script>
+        <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="~/js/jQuery/json2.js" type="text/javascript"></script>
+        <script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
+        <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
+        <script src="~/js/jQuery/gridscroller.js" type="text/javascript"></script>
+        <script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+        <script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+        <script src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js?ver=2" type="text/javascript"></script>
+        <script src="~/js/common.js" type="text/javascript"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+        <script src="~/Views/Customer/Chatbot/Scripts/Chatbot.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
     }
-    <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="~/js/jQuery/json2.js" type="text/javascript"></script>
-    <script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
-    <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
-    <script src="~/js/jQuery/gridscroller.js" type="text/javascript"></script>
-    <script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
-    <script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
-    <script src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js?ver=2" type="text/javascript"></script>
-    <script src="~/js/common.js" type="text/javascript"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
-    <script src="~/Views/Customer/Chatbot/Scripts/Chatbot.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 </body>
 </html>

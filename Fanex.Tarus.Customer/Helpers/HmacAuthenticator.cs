@@ -1,4 +1,4 @@
-﻿namespace Sunplus.Accounting.Business.Helpers
+﻿namespace Fanex.Tarus.Customer.Helpers
 {
     using System;
     using System.Net;
