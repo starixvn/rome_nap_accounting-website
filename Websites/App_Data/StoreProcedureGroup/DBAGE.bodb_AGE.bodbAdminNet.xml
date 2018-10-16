@@ -18,6 +18,6 @@
   <Function Name="SuperLimitDate">
     <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd_UAT1" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
   </Function>
 </Functions>

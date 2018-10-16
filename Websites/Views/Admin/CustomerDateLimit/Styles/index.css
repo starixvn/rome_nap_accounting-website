@@ -10,4 +10,5 @@
 .userNames {
     width: 450px;
     height: 80px;
+    float: right;
 }
