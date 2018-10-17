@@ -83,9 +83,9 @@ function CustomerController($scope, $element) {
                         if (percent >= 100 || percent == -2) {
                             initArray.push('<font style="color: red">');
                         }
-                        initArray.push(percent == -2 ? "N/A" : percent.toFixed(2).formatNumber());
+                        initArray.push(percent == -2 ? "N/A" : percent.toFixed(2).formatNumber() + "%");
                         if (percent >= 100 || percent == -2) {
-                            initArray.push((percent == -2 ? '' : '%') + '</font>');
+                            initArray.push('</font>');
                         }
 
                         initArray.push('&nbsp;&nbsp;');
@@ -127,7 +127,7 @@ function CustomerController($scope, $element) {
 
                 var losingHtml = buildWinLossHandler(
                     [casinoLang.losing, ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'],
-                    currentWinLoss.currentAmount,
+                    currentWinLoss.currentAmount * -1,
                     currentWinLoss.lossPercent,
                     currentWinLoss.maxLossAmount);
 
