@@ -198,16 +198,16 @@ function RenderSuccessMsg(successMsg) {
 $(document).ready(function () {
     $('#txtMaxMemberLimit').keydown(function (e) {
         var key = e.charCode || e.keyCode || 0;
-        if (key == 109) {
-            //subtract
-            if (jQuery(this).val() == "") {
-                return true;
-            }
-        }
+        //if (key == 109) {
+        //    //subtract
+        //    if (jQuery(this).val() == "") {
+        //        return true;
+        //    }
+        //}
 
         var isAccept = (
-            (e.ctrlKey && e.keyCode == 67) || //accept ctrl + c(copy)
-            (e.ctrlKey && e.keyCode == 86) || //accept ctrl + v(paste)
+            //(e.ctrlKey && e.keyCode == 67) || //accept ctrl + c(copy)
+            //(e.ctrlKey && e.keyCode == 86) || //accept ctrl + v(paste)
             key == 16 || //shift
             key == 17 || //ctrl
             key == 8 || //backspace
@@ -215,8 +215,8 @@ $(document).ready(function () {
             key == 35 || //end
             key == 9 || //tab
             key == 46 || //delete
-            key == 109 || //-
-            key == 189 || //-
+            //key == 109 || //-
+            //key == 189 || //-
             (key >= 37 && key <= 40) || //left , right , up , down (arrow)
             (key >= 48 && key <= 57) || //0-9
             (key >= 96 && key <= 105)); //numpad 0-9
