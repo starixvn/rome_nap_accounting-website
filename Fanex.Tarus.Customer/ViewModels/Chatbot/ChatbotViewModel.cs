@@ -22,7 +22,7 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
         public ChatbotViewModel(string userName, User user)
         {
             UserName = userName;
-            this.user = user;
+            this.user = user ?? new User();
             OfferLanguages = languages.Select(l => new SelectListItem
             {
                 Text = l.Value,
