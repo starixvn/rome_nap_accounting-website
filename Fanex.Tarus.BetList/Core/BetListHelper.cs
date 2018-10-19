@@ -13,8 +13,6 @@
     using Fanex.BetList.Core.Utils.StringExt;
     using Models;
     using Resources;
-    using Security.Services;
-    using Sunplus.Accounting.Core.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -235,33 +233,5 @@
         }
 
         #endregion
-
-        public static byte GetSiteTypeParamValue(int userId)
-        {
-            var permissionDictionary = PermissionService.GetCreditAndDepositPolicy(userId);
-
-            if (permissionDictionary.Count != 0)
-            {
-                var hasCreditSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.CreditSiteFuncName);
-                var hasDepositSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.DepositSiteFuncName);
-
-                if (hasCreditSitePermission && hasDepositSitePermission)
-                {
-                    return 0; // ALL
-                }
-
-                if (hasCreditSitePermission)
-                {
-                    return 1; // CREDIT
-                }
-
-                if (hasDepositSitePermission)
-                {
-                    return 2; // DEPOSIT
-                }
-            }
-
-            return byte.MaxValue;
-        }
     }
 }

@@ -33,10 +33,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
         {
             try
             {
-                var siteType = GetSiteTypeParamValue();
+                var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-                // Don't have any permission on [CreditSite] or [DepositSite].
-                if (siteType == byte.MaxValue)
+                if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
                 {
                     return new CustomerListModel();
                 }
@@ -178,10 +177,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 }
                 else
                 {
-                    var siteType = GetSiteTypeParamValue();
+                    var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-                    // Don't have any permission on [CreditSite] or [DepositSite].
-                    if (siteType == byte.MaxValue)
+                    if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
                     {
                         return new CustomerListModel();
                     }
@@ -607,33 +605,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 strVirRate = "--";
             }
             return strVirRate;
-        }
-        private static byte GetSiteTypeParamValue()
-        {
-            var permissionDictionary = PermissionService.GetCreditAndDepositPolicy(AppSession.AccId);
-
-            if (permissionDictionary.Count != 0)
-            {
-                var hasCreditSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.CreditSiteFuncName);
-                var hasDepositSitePermission = permissionDictionary.ContainsKey(Enumerations.Functions.DepositSiteFuncName);
-
-                if (hasCreditSitePermission && hasDepositSitePermission)
-                {
-                    return 0; // ALL
-                }
-
-                if (hasCreditSitePermission)
-                {
-                    return 1; // CREDIT
-                }
-
-                if (hasDepositSitePermission)
-                {
-                    return 2; // DEPOSIT
-                }
-            }
-
-            return byte.MaxValue;
         }
     }
 }

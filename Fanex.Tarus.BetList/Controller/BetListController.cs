@@ -13,6 +13,7 @@ namespace Fanex.Tarus.BetList.Controllers
     using Fanex.Common;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
+    using Security.Services;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     public class BetListController : Controller
@@ -55,9 +56,9 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetBetListByRefNo(string refno)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
-            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
+            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-            if (siteType != byte.MaxValue)
+            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
             {
                 BalanceUp balanceUp = ReportService.BalanceUp;
 
@@ -92,9 +93,9 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
-            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
+            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-            if (siteType != byte.MaxValue)
+            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
             {
                 BalanceUp balanceUp = ReportService.BalanceUp;
                 betListByProductCriteria.UserId = AppSession.AccId;
@@ -215,9 +216,9 @@ namespace Fanex.Tarus.BetList.Controllers
         {
             var quantity = 0;
             IList<BetListByIP_Username> result = new List<BetListByIP_Username>();
-            var siteType = BetListHelper.GetSiteTypeParamValue(AppSession.AccId);
+            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-            if (siteType != byte.MaxValue)
+            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
             {
                 result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, siteType, ref quantity);
             }
