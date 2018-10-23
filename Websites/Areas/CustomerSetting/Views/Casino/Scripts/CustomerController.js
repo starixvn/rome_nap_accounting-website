@@ -111,7 +111,7 @@ function CustomerController($scope, $element) {
                         initArray.push(casinoLang.lblunlimited);
                     }
                     else { // 0%
-                        initArray.push('0.00%');
+                        initArray.push('0%');
                     }
 
                     return '<p style="margin:3px 0;line-height:1.2;">' + initArray.join('') + '</p>';
