@@ -30,7 +30,7 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         {
             var user = await settingService.GetUser(custId, 0, "en-US");
             var model = new ChatbotViewModel(username, user);
-            if (IsBelongToSpecialSite(username))
+            if (user != null && IsBelongToSpecialSite(username))
             {
                 var vietnamese = new List<SelectListItem>()
                 {
@@ -105,10 +105,10 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
             {
                 UserName = username,
                 CheckCustId = 1
-            });            
+            });
 
             return checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline ||
                 checkCustomerBelongToSpecialSiteResult.IsSpecialSite;
-        }        
+        }
     }
 }

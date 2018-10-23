@@ -13,7 +13,7 @@ var LeftPanelManager = function () {
         productName,
         productId,
         settingType) {
-        var url = ((productId == 24 || productId == 25) ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus/?') +
+        var url = ((productId == 24 || productId == 25) ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?') +
             $.param({
                 custId: custId,
                 username: username,
@@ -51,7 +51,8 @@ var LeftPanelManager = function () {
         };
 
         parent.BlockUI();
-        $.post("ThirdPartyProductStatus/Index", param, function (data) { SuccessGetThirdPartyProductStatus(data, title); });
+        var jqxhr = $.post("ThirdPartyProductStatus/Index", param, function (data) { SuccessGetThirdPartyProductStatus(data, title); });
+        jqxhr.fail(noPermission);
     };
 
     function SuccessGetThirdPartyProductStatus(data, title) {
@@ -59,6 +60,16 @@ var LeftPanelManager = function () {
         dialoghtml.appendTo(jQuery("body"));
         parent.jQuery.unblockUI();
         parent.OpenPopup2($("#dialog-modal"));
+    }
+
+    function noPermission(xhr) {
+        if (xhr.status === 403) {
+            var denyObject = $.parseJSON(xhr.responseText);
+            var dialoghtml = jQuery('<div id="dialog-modal">' + denyObject.ErrorMessage + '</div>');
+            dialoghtml.appendTo(jQuery("body"));
+            parent.jQuery.unblockUI();
+            parent.OpenPopup2($("#dialog-modal"));
+        }
     }
 
     self.viewProductStatusSetting = function (

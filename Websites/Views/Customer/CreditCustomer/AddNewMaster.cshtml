@@ -23,7 +23,7 @@
 <script src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
 <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/CommonCustomerSetting.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-<script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/AddNewMaster.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/AddNewMaster.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
 @*Custom Script*@
 <script type="text/javascript">
     var superId = @Model.CustId;

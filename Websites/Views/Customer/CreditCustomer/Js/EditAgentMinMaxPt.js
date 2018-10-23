@@ -101,7 +101,10 @@ var edm = {
                     }
 
                 }, error: function (e) {
-                    showAlertMessage("err", "Request Error", 1);
+                    var errorMessage = e.status === 403
+                        ? $.parseJSON(e.responseText).ErrorMessage
+                        : "Request Error";
+                    showAlertMessage("err", errorMessage, 1);
                 },
                 complete: function () {
                     try { parent.jQuery.unblockUI(); } catch (e) { }

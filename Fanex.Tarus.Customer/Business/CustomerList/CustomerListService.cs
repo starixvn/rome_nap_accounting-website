@@ -12,6 +12,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using Fanex.Tarus.Customer.DataAccess.CustomerList;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.CustomerList;
+    using Security.Services;
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
@@ -32,6 +33,13 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
         {
             try
             {
+                var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
+
+                if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
+                {
+                    return new CustomerListModel();
+                }
+
                 int totalPages = 0;
                 int totalChildren = 0;
                 var dtSuperList = new DataSet();
@@ -67,6 +75,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 hash.Add("totalitems", totalChildren);
                 hash.Add("userid", AppSession.AccId);
+                hash.Add("sitetype", siteType);
                 dtSuperList = _customerListAccess.GetCustomerList("Acc_CustomerSelSAg", hash, ref totalPages, ref totalChildren);
 
                 CustomerListModel model = new CustomerListModel();
@@ -168,7 +177,13 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 }
                 else
                 {
-                    //Hashtable hash = new Hashtable();
+                    var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
+
+                    if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
+                    {
+                        return new CustomerListModel();
+                    }
+
                     if (!string.IsNullOrEmpty(searchText))
                     {
                         string keyword = "%" + searchText.Replace("'", "") + "%";
@@ -194,6 +209,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                     if (!string.IsNullOrEmpty(dComm))
                         hash.Add("doublecommlosing", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(dComm)));
+
+                    hash.Add("sitetype", siteType);
 
                     dtMasterList = _customerListAccess.GetCustomerList("Acc_CustomerSelMAgByCom", hash, ref totalPages, ref totalChildren);
                 }

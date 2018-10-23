@@ -215,15 +215,22 @@ function EnableStatusController($scope) {
             if (typeof onCompleted == 'function') {
                 onCompleted(data);
             }
-        }).error(function (data) {            
-            if (data.status == 0) {
+        }).error(function (data) {
+            if (data.status === 403) {
+                var denyObject = $.parseJSON(data.responseText);
+                var $errMsg = $('#errMsg');
+                $errMsg.attr('class', 'errMsg')
+                    .html(denyObject.ErrorMessage.formatErrorMessage())
+                    .show();
+
+            } else if (data.status === 0) {
                 document.location.reload(true);
-            }
+            } 
             
             if (typeof console != 'undefined')
                 console.log(data);
 
-            Fanex.CustomerSetting.Core.BlockUI();
+            Fanex.CustomerSetting.Core.UnBlockUI();
 
             if (typeof onCompleted == 'function') {
                 onCompleted(data);

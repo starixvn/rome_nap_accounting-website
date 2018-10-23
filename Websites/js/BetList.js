@@ -623,7 +623,7 @@ function ViewGlobalGamingResult(custId, betCheck) {
     var url = "../Report/ViewGlobalGamingResult.aspx?custId=" + custId + "&gameId=" + betCheck;
     $.ajax({
         url: url,
-        beforeSend: function () { parent.OpenNextPopup("ViewGlobalGamingResult", '_loading.htm', 'Fishing Wolrd Result', 945, 500, true, false, window, 0) }
+        beforeSend: function () { parent.OpenNextPopup("ViewGlobalGamingResult", '_loading.htm', 'Fishing World Result', 945, 500, true, false, window, 0) }
     }).complete(function (result) {
         if (result.responseText.indexOf("<table") < 0) {
             parent.document.getElementById('innerFrameViewGlobalGamingResult').src = result.responseText;
@@ -943,11 +943,11 @@ function getBullfightingParam(refNo, custId) {
 function getFishingWorldParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewGlobalGamingResult.aspx",
-        title: "Fishing Wolrd Result",
+        title: "Fishing World Result",
         jsonParam: { custId: betcheck, gameId: matchcode },
         width: 945,
         height: 500,
-        iframe: "innerFrameFishingWolrdResult"
+        iframe: "innerFrameFishingWorldResult"
     };
 }
 

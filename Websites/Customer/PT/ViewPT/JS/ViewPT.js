@@ -879,7 +879,15 @@ var ViewPT = {
                 }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
-            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+            error: function (xhr) {
+                try {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        showAlertMessage("err", denyObject.ErrorMessage, 1);
+                    }
+                    parent.jQuery.unblockUI();
+                } catch (e) { }
+            }
         });
     },
     renderPTSetting: function (requestParams, result) {
@@ -915,6 +923,7 @@ var ViewPT = {
         }
     },
     viewCommFromDynamicSettingFormat: function () {
+        $('#err').html('');
         $('#sContent').html('');
         $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + $("#ddlProduct").val() + "&showFilter=false&settingTypeId=" + ($("#ddlProduct").val() == "20" ? "5" : $("#ddlProduct").val() == "26" ? "14" : "3") + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
@@ -955,7 +964,15 @@ var ViewPT = {
                 }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
-            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+            error: function (xhr) {
+                try {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        showAlertMessage("err", denyObject.ErrorMessage, 1);
+                    }
+                    parent.jQuery.unblockUI();
+                } catch (e) { }
+            }
         });
     },
     viewData: function () {

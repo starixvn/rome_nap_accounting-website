@@ -1,13 +1,16 @@
 ﻿@using DNAide.Core;
+@{ 
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Customer - Security Code</title>
-    <link href="~/App_Themes/Public/table.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
-    <link href="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Styles/CustomerSecurityCode.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="~/js/common.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script src="~/js/encode.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
-    <script src="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Scripts/CustomerSecurityCode.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <link href="~/App_Themes/Public/table.css?version=@version" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Styles/CustomerSecurityCode.css?version=@version" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/js/common.js?version=@version"></script>
+    <script src="~/js/encode.js?version=@version" type="text/javascript"></script>
+    <script src="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Scripts/CustomerSecurityCode.js?version=@version" type="text/javascript"></script>
 </head>
 <body>
     <div class="main">

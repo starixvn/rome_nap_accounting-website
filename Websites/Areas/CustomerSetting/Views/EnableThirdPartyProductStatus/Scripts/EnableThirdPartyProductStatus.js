@@ -108,7 +108,8 @@
                 isDeposit: model.IsDeposit
             };
 
-            $.post("ThirdPartyProductStatus/Update", param, function (result) { UpdateSuccess(result); });
+            var jqxhr = $.post("ThirdPartyProductStatus/Update", param, function (result) { UpdateSuccess(result); });
+            jqxhr.fail(noPermission);
         } else {
             top.content.$('#updateStatusDialog>#wrnMsg').text(errorMsg.ThereIsNoChange).removeClass('hidden');
             parent.jQuery.unblockUI();
@@ -158,6 +159,16 @@
         }
 
         parent.jQuery.unblockUI();
+    }
+
+    function noPermission(xhr) {
+        if (xhr.status === 403) {
+            var denyObject = $.parseJSON(xhr.responseText);
+            var $errorDiv = top.content.$('#updateStatusDialog>#errMsg');
+            $errorDiv.text(denyObject.ErrorMessage);
+            $errorDiv.removeClass('hidden');
+            parent.jQuery.unblockUI();
+        }
     }
 
     function ClearMessages() {

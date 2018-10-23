@@ -22,7 +22,7 @@
 <script src="~/js/jQuery/knockout/knockout-2.0.0.js" type="text/javascript"></script>
 <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/CommonCustomerSetting.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/EditAgent.js")?@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/EditAgent.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
 @*Custom Script*@
 <script type="text/javascript">
     var masterId = @Model.UplineCustId;

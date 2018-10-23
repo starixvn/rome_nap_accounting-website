@@ -1,5 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using Business;
     using Constants;
     using Fanex.BetList.Core.Builder;
@@ -9,11 +12,7 @@
     using Fanex.BetList.Core.Templates;
     using Fanex.BetList.Core.Utils.StringExt;
     using Models;
-
     using Resources;
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.

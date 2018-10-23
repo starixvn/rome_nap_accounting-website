@@ -1,12 +1,10 @@
 ﻿namespace Fanex.Tarus.BetList.Controllers
 {
+    using System.Web.Mvc;
     using Business;
     using Criteria;
-    using CustomerSetting.Module.Core.Attributes;
     using Fanex.Tarus.Security.Authenticate;
-    using System.Web.Mvc;
 
-    [SpecialSiteFilter]
     public class ExchangeBetListController : Controller
     {
         private readonly IExchangeBetListService exchangeService;

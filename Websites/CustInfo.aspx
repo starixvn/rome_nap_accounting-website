@@ -165,7 +165,13 @@
                     }
                 },
                 error: function (xhr, status) {
-                    $("#downlinecontent").html(status);
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        $("#downlinecontent").html(denyObject.ErrorMessage);
+                    }
+                    else {
+                        $("#downlinecontent").html(status);
+                    }
                 }
             });
         }
@@ -175,7 +181,6 @@
 
 
         function ajaxOnlinelist(custid) {
-
             var params = '{"custId":' + custid + '}';
             $.ajax({
                 type: "POST",
@@ -184,8 +189,13 @@
                 dataType: "json",
                 data: params,
                 success: function (rs) {
-                    //document.getElementById("onlinepanel").innerHTML = rs;
                     $('#onlinepanel').html(rs);
+                },
+                error: function (xhr, status) {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        $("#onlinepanel").html(denyObject.ErrorMessage);
+                    }
                 }
             });
         }

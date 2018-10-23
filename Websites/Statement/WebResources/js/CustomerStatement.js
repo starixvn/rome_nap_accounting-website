@@ -23,33 +23,14 @@ var custName = '';
 function GetDataReport() {
     try { parent.BlockUI(); } catch (e) { }
     custName = encodeURIComponent($("#txtCustName").attr("value"));
+    jQuery("#errBox").hide();
+    jQuery("#sData").show();
     statementReportManager.callAjax(
-        domain + 'NapStatement/StatementReport/CheckSpecialSiteAccess',
-        {
-            Username: custName
-        },
-        completeCheckSpecialSite);
-}
-
-function completeCheckSpecialSite(rs)
-{
-    if (rs.ErrorCode > 0) {
-        jQuery("#errBox").html("<div>" + rs.ErrorMessage + "</div>");
-        jQuery("#errBox").show();
-        jQuery("#GridContainer").hide();
-        jQuery("#sData").hide();
-        parent.jQuery.unblockUI();
-    }
-    else {
-        jQuery("#errBox").hide();
-        jQuery("#sData").show();
-        statementReportManager.callAjax(
-        domain + 'NapStatement/StatementReport/CheckInternalByUsername',
-        {
-            Username: custName
-        },
-        completeUpdateIsInternal);
-    }
+    domain + 'NapStatement/StatementReport/CheckInternalByUsername',
+    {
+        Username: custName
+    },
+    completeUpdateIsInternal);
 }
 
 function completeUpdateIsInternal(rs) {
@@ -131,14 +112,21 @@ function completeUpdateIsInternal(rs) {
     jQuery('#GridContainer').addClass("hidden");
     jQuery('#statementCotent').removeClass("hidden");
     $.ajax({
-
         url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName,
         dataType: 'html',
         success: function (data) {
-
             $("#statementCotent").attr("style", "display:block");
             obj('sData').innerHTML = data;
             parent.jQuery.unblockUI();
+        },
+        error: function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                var errorBox = $("#errBox");
+                errorBox.find("div").html(denyObject.ErrorMessage);
+                errorBox.show();
+                parent.jQuery.unblockUI();
+            }
         }
     });
 }

@@ -401,9 +401,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
                 //$('body').removeClass('wait');
-            }
-            , error: function (xhr, ajaxOptions, thrownError) {
-                message.showAlertMessage("errorMsg", "Error for searching existing user !", 1);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMessage = xhr.status === 403
+                    ? $.parseJSON(xhr.responseText).ErrorMessage
+                    : "Error for searching existing user !";
+                message.showAlertMessage("errorMsg", errorMessage, 1);
                 $("#errorMsg").width("550");
                 try { parent.jQuery.unblockUI() } catch (e) { }
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
@@ -597,10 +600,16 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
                 //$('body').removeClass('wait');
-            }
-            , error: function (xhr, ajaxOptions, thrownError) {
-                message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMessage = xhr.status === 403
+                    ? $.parseJSON(xhr.responseText).ErrorMessage
+                    : "Error for copying existing user !"
+                message.showAlertMessage("errorMsg", errorMessage, 1);
                 $("#errorMsg").width("700");
+                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
     };

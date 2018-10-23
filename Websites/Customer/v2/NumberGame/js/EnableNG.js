@@ -132,6 +132,13 @@ var EnableNG = {
                     }, 10000);
 
                 },
+                error: function (xhr) {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        $('#ErrMsg').show();
+                        showAlertMessage("ErrMsg", denyObject.ErrorMessage, 1);
+                    }
+                },
                 complete: function () {
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 }

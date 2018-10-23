@@ -19,6 +19,8 @@
             }
         }
 
+        public byte SiteType { get; set; }
+
         public string GetSettingKey()
         {
             return "BetList_IP_Username";

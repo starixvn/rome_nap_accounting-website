@@ -4,7 +4,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using System;
     using System.Threading;
     using System.Web.Mvc;
-    using CustomerSetting.Module.Core.Attributes;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
@@ -13,7 +12,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Module.NG2.Services;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
-    [SpecialSiteFilter]
+
     public class AddNewSuperController : CustomerSettingBaseController
     {
         public AddNewSuperController(ICustomerSettingService customerSettingService)
@@ -118,11 +117,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
                 customer.Password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(customer.Password, code);
-                //result = CheckSpecialSitePermission(AppSession.AccId, customer.UserName, null);
-                //if (result.ErrorCode != "0")
-                //{
-                //    return Json(result);
-                //}
 
                 // Check Permission for finace
                 result = CheckPermissionInsert(customer.IsInternal);

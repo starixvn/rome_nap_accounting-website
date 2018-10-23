@@ -11,21 +11,5 @@ public partial class Customer_PT_ViewPT_ViewPT :PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        var username = CastAide.AsString(Request.QueryString["username"], string.Empty);
-
-        if (!string.IsNullOrWhiteSpace(username))
-        {
-            var permissionService = new ServiceBase();
-            var checkSpecialSite = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = username
-            });
-
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                RedirectSpecialSiteDeny();
-            }
-        }
     }
 }

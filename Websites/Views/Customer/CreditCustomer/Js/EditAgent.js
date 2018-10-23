@@ -269,24 +269,27 @@ eda.SendAjaxEditAgent = function () {
                 showAlertMessage("err", "Update Agent Unsuccessfully!", 1);
             }
             //try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-        }
-            , error: function (e) {
-                $('#divShowInfo').show();
-                if (e.status == '404' || e.statusText == 'Not Found') {
-                    if (isInsterTwice == false) {
-                        eda.SendAjaxEditMaster();
-                        isInsterTwice = true;
-                    }
-                    else {
-                        showAlertMessage("err", "Request Error", 1);
-                    }
+        },
+        error: function (e) {
+            $('#divShowInfo').show();
+            if (e.status === 403) {
+                var denyObject = $.parseJSON(e.responseText);
+                showAlertMessage("err", denyObject.ErrorMessage, 1);
+            } else if (e.status == '404' || e.statusText == 'Not Found') {
+                if (isInsterTwice == false) {
+                    eda.SendAjaxEditMaster();
+                    isInsterTwice = true;
                 }
                 else {
                     showAlertMessage("err", "Request Error", 1);
                 }
-                //try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
             }
+            else {
+                showAlertMessage("err", "Request Error", 1);
+            }
+            //try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
     });
 };
 // do edit Agent

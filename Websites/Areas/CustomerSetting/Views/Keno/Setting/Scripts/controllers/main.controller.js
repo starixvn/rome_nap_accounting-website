@@ -123,8 +123,8 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                             $scope.showMesseges(results, false);
                         }
                     },
-                    function () {
-                        $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
+                    function (data) {
+                        $scope.showMesseges('<div class="alerterror">' + (data && data.ErrorCode === 403 ? data.ErrorMessage : resources.failed) + '</div>', false);
                     });
             };
         }, function (reason) { }, function (update) { });

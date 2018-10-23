@@ -34,7 +34,7 @@
         });
     };
 
-    self.addSuperToGroup = function (groupNames, superName, successCallback) {
+    self.addSuperToGroup = function (groupNames, superName, successCallback, errorCallback) {
         $.ajax({
             type: "POST",
             url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/AddSuperToGroup",
@@ -45,6 +45,11 @@
             },
             success: function (data) {
                 successCallback(data);
+            },
+            error: function (xhr) {
+                if (xhr.status === 403) {
+                    errorCallback($.parseJSON(xhr.responseText).ErrorMessage);
+                }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -179,7 +184,11 @@ var addSuperService = (function ($, ajaxService) {
             }
         };
 
-        ajaxService.addSuperToGroup(groupNames, superName, addSuper);
+        var addSuperFailure = function (errorMessage) {
+            $errMsg.html('<div class="alertboxerr"><div>' + errorMessage + "</div></div>");
+        };
+
+        ajaxService.addSuperToGroup(groupNames, superName, addSuper, addSuperFailure);
     }
 
     self.initialize = function (htmlString, reloadSuperListHandler) {

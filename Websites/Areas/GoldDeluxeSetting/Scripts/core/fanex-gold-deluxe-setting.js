@@ -89,6 +89,7 @@ fanex.goldDeluxeSetting.updateType = {
 };
 //// Constant
 fanex.goldDeluxeSetting.UN_AUTHORIZED_CODE = 401;
+fanex.goldDeluxeSetting.FORBIDDEN = 403;
 fanex.goldDeluxeSetting.PT_INTERVAL = 0.01;
 fanex.goldDeluxeSetting.COM_INTERVAL = 0.0005;
 fanex.goldDeluxeSetting.COM_DECIMAL = 4;

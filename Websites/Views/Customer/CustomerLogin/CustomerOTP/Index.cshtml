@@ -7,6 +7,7 @@
     var removingOTPConfirm = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "removingOTPConfirm");
     int customerId = Request["CustomerId"] != null ? CastAide.AsInt32(Request["CustomerId"]) : 0;
     string customerName = Request["CustomerName"] != null ? CastAide.AsString(Request["CustomerName"]) : string.Empty;
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,10 +18,10 @@
     <link href="@Url.Content("~/App_Themes/Public/input.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
-    <link href="~/Views/Customer/CustomerLogin/CustomerOTP/Styles/CustomerOTP.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Customer/CustomerLogin/CustomerOTP/Styles/CustomerOTP.css?version=@version" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="~/js/common.js"></script>
     <script src="~/js/jQuery/jquery-1.7.js" type="text/javascript"></script>
-    <script src="~/Views/Customer/CustomerLogin/CustomerOTP/Scripts/CustomerOTP.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script src="~/Views/Customer/CustomerLogin/CustomerOTP/Scripts/CustomerOTP.js?version=@version" type="text/javascript"></script>
     <script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
 </head>
 <body>

@@ -45,7 +45,12 @@
                     successCallback(data);
                 }
             },
-            error: function (jqXHR, textStatus, errorThrown) { },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showErrorMessage(denyObject.ErrorMessage);
+                }
+            },
             complete: function (jqXHR, textStatus) { }
         });
     }

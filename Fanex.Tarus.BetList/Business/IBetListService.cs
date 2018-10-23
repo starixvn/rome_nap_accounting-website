@@ -37,6 +37,7 @@
             DateTime fromdate,
             int pageSize,
             int pageIndex,
+            byte siteType,
             ref int quanlity);
 
         IList<TicketDetail> GetBetListByIP_Soccer(

@@ -77,8 +77,14 @@
                     }
                 }
             },
-            error: function (err, msg) {
-                $('#log_content').html('<div id="log_scroll"><p align="center">There is no information available.</p></div>').show();
+            error: function (xhr, msg) {
+                if (xhr.status === 403) {
+                    var denyObject = $.parseJSON(xhr.responseText);
+                    $('#log_content').html('<div id="log_scroll" class="alertboxerr" style="border: 1px solid red;"><div>' + denyObject.ErrorMessage + '</div></div>').show();
+                }
+                else {
+                    $('#log_content').html('<div id="log_scroll"><p align="center">There is no information available.</p></div>').show();
+                }
             }
         });
     },

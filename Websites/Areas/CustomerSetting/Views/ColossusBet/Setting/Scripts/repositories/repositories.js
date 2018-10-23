@@ -13,7 +13,7 @@ ColossusBetModule.factory('colossusBetRepositories', function ($http, $q) {
             var deferred = $q.defer();
             $http.post(url, colossusBetSetting)
                 .success(function (data, status, headers, config) { deferred.resolve(data); })
-                .error(function () { deferred.reject(); });
+                .error(function (data) { deferred.reject(data); });
             return deferred.promise;
         }
     }
