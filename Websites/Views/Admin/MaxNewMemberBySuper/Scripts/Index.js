@@ -75,15 +75,13 @@ function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
 function Edit() {
     $('#errMsg').html('');
     $('#txtSuperName').val('');
-    $('#txtSuperName').attr('style', '');
-    $('#txtSuperName').attr('cols', 60);
+    $('#txtSuperName').attr('style', 'width: 450px');
     $('#txtSuperName').attr('rows', 5);
     $('#txtMaxMemberLimit').val('');
     $('#txtMaxMemberLimit').removeAttr('disabled');
     $('#chkUnlimited').removeAttr('checked');
     $('#txtRemark').val('');
-    $('#txtRemark').attr('style', '');
-    $('#txtRemark').attr('cols', 60);
+    $('#txtRemark').attr('style', 'width: 450px');
     $('#txtRemark').attr('rows', 6);
     $("#dialog").dialog({
         width: 480,
