@@ -72,11 +72,15 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
                         var html = "";
                         if (typeof results != 'undefined') {
                             var length = results.length;
-                            var isError = false;
-                            for (var i = 0; i < length; i++) {
-                                if (results[i].ErrorCode > 0) {
-                                    isError = true;
-                                    html += '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
+                            var isError = typeof length === "undefined";
+                            if (isError) {
+                                html = '<div class="alerterror">' + results.errorMessage + '</div>';
+                            } else {
+                                for (var i = 0; i < length; i++) {
+                                    if (results[i].ErrorCode > 0) {
+                                        isError = true;
+                                        html += '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
+                                    }
                                 }
                             }
 

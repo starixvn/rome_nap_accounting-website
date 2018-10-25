@@ -1674,4 +1674,7 @@
   <data name="Dataavailable" xml:space="preserve">
     <value>Data Available</value>
   </data>
+  <data name="Maxmembers" xml:space="preserve">
+    <value>Max Members</value>
+  </data>
 </root>

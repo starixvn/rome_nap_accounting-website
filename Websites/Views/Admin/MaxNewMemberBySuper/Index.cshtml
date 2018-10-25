@@ -1,0 +1,90 @@
+﻿@using Fanex.Tarus.Admin.Resource;
+@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.Entities.MaxMemberLimitBySuper;
+@model MaxMemberLimitViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var test = new SelectList(Model.ListSites.Select(x => new
+    {
+        Value = x.SiteName,
+        Text = x.SiteName,
+        Selected = x.SiteName.Equals("789y")
+    }));
+}
+@section Styles
+{
+    <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/MaxNewMemberBySuper/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var lang = {
+            AccessDenied: '@Resources.Error.AccessDenied'
+        };
+    </script>
+}
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL"></td>
+            <td class="maincontent_headerC">@Language.MaxMembersLimitbySuper</td>
+            <td class="maincontent_headerR"></td>
+        </tr>
+    </table>
+    <div id="sectionMessage" class="hide" style="margin-right:4px;"></div>
+    <div class="bg_table">
+        <table border="0">
+            <tr>
+                <td>
+                    Super username
+                </td>
+                <td>
+                    <input id="SuperName" onkeydown="if (event.keyCode == 13) { GetData(1, 50); return false; }" />
+                </td>
+                <td>
+                    Site
+                </td>
+                <td>
+                    @Html.DropDownList("Site", Model.ListSites.Select(x => new SelectListItem() { Value = x.SiteName, Text = x.SiteName, Selected = x.SiteName.Equals("789y") }), new { id = "Site" })
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Submit" onclick="GetData(1, 50)" />
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Edit" onclick="Edit()" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="clear: both"></div>
+    <div id="gridContainer" class="grid-container">
+        <div id="gridId" class="freegrid"></div>
+    </div>
+    <div id="errMsg1" class="errMsg">
+    </div>
+</div>
+<div id="dialog" title="@Language.EditMaxMembersLimitbySuper" style="display: none; line-height:18px; max-height: 700px">
+    <div id="errMsg" class="errMsg">
+    </div>
+    <div class="clear"></div><br />
+    <label class="bold" for="txtSuperName">Super usernames (up to 50), separated by ','</label>
+    <div class="clear"></div><br />
+    <textarea id="txtSuperName" maxlength="3000" ></textarea>
+    <div class="clear"></div><br />
+    <label class="bold" for="txtMaxMemberLimit">Max Members Limit <span style="color:red">*</span></label>
+    <input id="txtMaxMemberLimit" maxlength="6" /> <label></label><input type="checkbox" id="chkUnlimited" onchange="chkUnlimited_OnChange();" />Unlimited</label>
+    <div class="clear"></div><br />
+    <label class="bold" for="txtRemark">Remark</label>
+    <div class="clear"></div>
+    <textarea id="txtRemark" maxlength="300" ></textarea>
+    <div class="clear"></div><br />
+    <input type="button" class="btn" value="Submit" onclick="UpdateData()" />
+</div>

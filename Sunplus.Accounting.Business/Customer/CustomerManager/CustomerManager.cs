@@ -119,10 +119,15 @@
                 var noDataMessage = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
                 var htmlcontent = noDataMessage;
 
+
                 if (!string.IsNullOrEmpty(userName))
                 {
                     var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM, checkCustId);
-
+                    if (ds.Outputs.Count > 0 && CastAide.AsInt32(ds.Outputs["errcode"])>0)
+                    {
+                        arrcontent.Add("strcontent", AlertMessage.GetMsg(ds.Outputs["errmsg"].ToString(), AlertMessage.MsgType.Error));
+                        return arrcontent;
+                    }
                     if (ds != null && ds.ResultSet.Tables.Count.Equals(5))
                     {
                         DataRow customerInfoRow = ds.ResultSet.Tables[0].Rows[0];

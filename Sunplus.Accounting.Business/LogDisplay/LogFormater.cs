@@ -8,6 +8,7 @@ using DNAide.Core;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
+using System.Web;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
@@ -41,7 +42,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 elm.P = attr.Name.ToString();
                 var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name == elm.P.ToLower()).SingleOrDefault<ParamElement>();
-                elm.Val = attr.Value;
+                elm.Val = HttpUtility.HtmlEncode(attr.Value);
                 if (logFormater != null && CastAide.AsInt32(logFormater.Value, 0) > 0)
                 {
                     var formatId = CastAide.AsInt32(logFormater.Value);

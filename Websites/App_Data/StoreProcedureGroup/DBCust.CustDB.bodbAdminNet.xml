@@ -371,4 +371,8 @@
   <Function Name="Left Menu - Credit term">
     <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Admin - Max Member Limit By Super">
+    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
