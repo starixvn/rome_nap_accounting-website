@@ -26,6 +26,28 @@ function showAlertMessage(containerid, msg, type) {
     }
 }
 
+function showMessage(containerid, msg, type) {
+    // Success=0, Error=1, Warning=2
+    if (document.getElementById(containerid) != null) {
+        switch (type) {
+            case 0:
+                $("#" + containerid).html("<div class='alertboxscc'><div>" + msg + "</div></div>");
+                break;
+            case 1:
+                $("#" + containerid).html("<div class='alertboxerr'><div>" + msg + "</div></div>");
+                break;
+            case 2:
+                $("#" + containerid).html("<div class='alertboxwrn'><div>" + msg + "</div></div>");
+                break;
+            default:
+                break;
+        }
+        window.scroll(0, 0);
+        parent.scroll(0, 0);
+
+    }
+}
+
 function formatAlertMessage(msg, type) {
     // Success=0, Error=1, Warning=2
     switch (type) {

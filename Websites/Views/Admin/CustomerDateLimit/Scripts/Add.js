@@ -8,11 +8,11 @@
 
     init: function () {
         var txtMinDate = $("#txt-min-date");
-         CustomerDataRangeAdd.txtMinDate = txtMinDate;
+        CustomerDataRangeAdd.txtMinDate = txtMinDate;
 
-         CustomerDataRangeAdd.clearForm();
+        CustomerDataRangeAdd.clearForm();
 
-        $("#btn-clear").click( CustomerDataRangeAdd.clearForm);
+        $("#btn-clear").click(CustomerDataRangeAdd.clearForm);
 
         txtMinDate.datepicker({
             showOn: 'both',
@@ -27,7 +27,7 @@
 
         $(".ui-datepicker").draggable();
 
-        $("#btn-submit").click( CustomerDataRangeAdd.updateDataRange);
+        $("#btn-submit").click(CustomerDataRangeAdd.updateDataRange);
 
         $("#txt-time-period").keydown(function (e) {
             var key = e.charCode || e.keyCode || 0;
@@ -55,20 +55,29 @@
                 $(this).val("");
             }
         });
-        $(".rdb-data-range").click( CustomerDataRangeAdd.clickDataRange);
-         CustomerDataRangeAdd.initCustData();
+
+        $("#userNames").keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+
+            var isAccept = key != 13 //enter
+
+            return isAccept;
+        });
+
+        $(".rdb-data-range").click(CustomerDataRangeAdd.clickDataRange);
+        CustomerDataRangeAdd.initCustData();
     },
     clickDataRange: function () {
         var type = parseInt($(".rdb-data-range:checked").val(), 0);
-        switch (type) {           
-            case  CustomerDataRangeAdd.dataRangeType.timePeriod:
+        switch (type) {
+            case CustomerDataRangeAdd.dataRangeType.timePeriod:
                 $("#txt-min-date").attr("disabled", "disabled");
                 $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date()));
                 $("#txt-min-date").datepicker("disable");
 
                 $("#txt-time-period").attr("disabled", null);
                 break;
-            case  CustomerDataRangeAdd.dataRangeType.minDate:
+            case CustomerDataRangeAdd.dataRangeType.minDate:
                 $("#txt-time-period").attr("disabled", "disabled");
                 $("#txt-time-period").val("");
 
@@ -80,13 +89,29 @@
     clearForm: function () {
         $("#rdb-time-period").attr("checked", "checked");
         $("#userNames").val("");
-         CustomerDataRangeAdd.clickDataRange();
+        CustomerDataRangeAdd.clickDataRange();
     },
-    updateDataRange: function () {        
+    updateDataRange: function () {
+        $("#ErrorSection").html('');
+        $("#SuccessSection").html('');
+        $("#InfoSection").html('');
         if (CustomerDataRangeAdd.getUserNames() == "") {
-            showAlertMessage("errMsg", "Super username(s) is required", 1);
+            showMessage("ErrorSection", "Please enter username.", 1);
             return;
         }
+
+        if (CustomerDataRangeAdd.getUserNames().split(',').length > 500) {
+            showMessage("ErrorSection", "The function can only support up to 500 accounts per request.", 1);
+            return;
+        }
+
+        if (CustomerDataRangeAdd.getUserNames().indexOf("\\") >= 0||
+            CustomerDataRangeAdd.getUserNames().indexOf("\n") >= 0 ||
+            CustomerDataRangeAdd.getUserNames().indexOf("\r") >= 0) {
+            showMessage("ErrorSection", "You are not allowed to input [Enter] and backslash '\\' into the Username field.", 1);
+            return;
+        }
+
         var type = parseInt($(".rdb-data-range:checked").val(), 0);
         var params = {
             userNames: CustomerDataRangeAdd.getUserNames(),
@@ -94,29 +119,29 @@
         };
 
         switch (type) {
-            case  CustomerDataRangeAdd.dataRangeType.timePeriod:
+            case CustomerDataRangeAdd.dataRangeType.timePeriod:
                 params.LimitDays = $("#txt-time-period").val();
 
                 if (params.LimitDays == "") {
-                    showAlertMessage("errMsg", "Time period (day) is required", 1);
-                    $("#txt-time-period").focus();                    
+                    showMessage("ErrorSection", "Time period (day) is required", 1);
+                    $("#txt-time-period").focus();
                     return;
                 }
 
                 var limitDays = parseInt(params.LimitDays, 0);
 
                 if (limitDays == 0 || limitDays > 32767 || limitDays <= 0 || isNaN(limitDays)) {
-                    showAlertMessage("errMsg", "Time period (day) is invalid", 1);
-                    $("#txt-time-period").focus();                    
+                    showMessage("ErrorSection", "Time period (day) is invalid", 1);
+                    $("#txt-time-period").focus();
                     return;
                 }
 
                 break;
-            case  CustomerDataRangeAdd.dataRangeType.minDate:
+            case CustomerDataRangeAdd.dataRangeType.minDate:
                 params.MinDate = $('#txt-min-date').val();
                 break;
         }
-         CustomerDataRangeAdd.postUpdateDataRange(params);
+        CustomerDataRangeAdd.postUpdateDataRange(params);
     },
     getUserNames: function () {
         return $("#userNames").val();
@@ -131,13 +156,21 @@
                 try { BlockUI(); } catch (e) { }
             },
         }).success(function (result) {
-            if (result && result.ErrorMessage != "") {
-                showAlertMessage("errMsg", result.ErrorMessage, 1);
-            } else {
-                setTimeout(parent.ClosePopup(), 500);
-            }            
+            if (result.ErrorMessage != "") {
+                showMessage("ErrorSection", result.ErrorMessage, 1);
+            }
+
+
+            if (result.NoChangeUsers != "") {
+                showMessage("InfoSection", result.NoChangeUsers + ": There is no change to be updated.", 2);
+            }
+
+            if (result.EffectedRow > 0) {
+                showMessage("SuccessSection", "Successfully updated: " + result.EffectedRow + " super(s)", 0);
+            }
+
         }).error(function (xhr, status, err) {
-            showAlertMessage("errMsg", err, 1);
+            showMessage("ErrorSection", err, 1);
 
         }).complete(function () {
             try { jQuery.unblockUI(); } catch (e) { }
@@ -147,13 +180,13 @@
     initCustData: function () {
         var type = parseInt($("#DataRangeType").val(), 0);
         $(".rdb-data-range[value='" + type + "']").click();
-         CustomerDataRangeAdd.clickDataRange();
-        if (type ==  CustomerDataRangeAdd.dataRangeType.minDate) {
-            $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date($("#MinDate").val())));            
+        CustomerDataRangeAdd.clickDataRange();
+        if (type == CustomerDataRangeAdd.dataRangeType.minDate) {
+            $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date($("#MinDate").val())));
         } else {
             $("#txt-time-period").val($("#LimitDays").val());
         }
     }
 };
 
-$(document).ready( CustomerDataRangeAdd.init);
+$(document).ready(CustomerDataRangeAdd.init);
