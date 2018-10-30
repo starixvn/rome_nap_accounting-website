@@ -106,7 +106,7 @@
                 params.LimitDays = $("#txt-time-period").val();
 
                 if (params.LimitDays == "") {
-                    showAlertMessage("errMsg", "Time period (day) is required", 1);
+                    showMessage("errMsg", "Time period (day) is required", 1);
                     $("#txt-time-period").focus();
                     return;
                 }
@@ -114,7 +114,7 @@
                 var limitDays = parseInt(params.LimitDays, 0);
 
                 if (limitDays == 0 || limitDays > 32767 || limitDays <= 0 || isNaN(limitDays)) {
-                    showAlertMessage("errMsg", "Time period (day) is invalid", 1);
+                    showMessage("errMsg", "Time period (day) is invalid", 1);
                     $("#txt-time-period").focus();
                     return;
                 }
@@ -140,13 +140,13 @@
             },
         }).success(function (result) {
             if (result && result.ErrorMessage != "") {
-                showAlertMessage("errMsg", result.ErrorMessage, 1);
+                showMessage("errMsg", result.ErrorMessage, 1);
             } else {
                 setTimeout(parent.ClosePopup(), 500);
             }
 
         }).error(function (xhr, status, err) {
-            showAlertMessage("errMsg", err, 1);
+            showMessage("errMsg", err, 1);
 
         }).complete(function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }

@@ -1,21 +1,25 @@
-﻿using Chatbot.Client.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Chatbot.Client.Models;
 using Chatbot.Client.Services;
+using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.CustomerSetting.Module.Core.Criteria;
 using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Chatbot;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.Customer.Controller.Chatbot
 {
     [SpecialSiteFilter]
     public class ChatbotController : BaseController
     {
+        private const string CustIdSessionKey = "Fanex.Tarus.Customer.Controller.Chatbot.ChatbotController.CustId";
+
         private readonly SettingService settingService;
         private readonly MessageService messageService;
 
@@ -28,6 +32,8 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateRead]
         public async Task<ActionResult> Index(int custId, string username)
         {
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, CustIdSessionKey, custId);
+
             var user = await settingService.GetUser(custId, 0, "en-US");
             var model = new ChatbotViewModel(username, user);
             if (user != null && IsBelongToSpecialSite(username))
@@ -64,7 +70,10 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateHost]
         public async Task<ActionResult> UpdateLanguage(int userId, string language)
         {
-            var result = await settingService.UpdateLanguage(userId, language);
+            var result = await settingService.UpdateLanguage(
+                userId,
+                language,
+                CreateLogParam(AppSession.AccId, GetCurrentCustId(), Utils.GetClientIP()));
 
             return Json(result);
         }
@@ -73,6 +82,7 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateHost]
         public async Task<ActionResult> UpdateFunctions(int userId, IEnumerable<int> functionIds)
         {
+            var logParam = CreateLogParam(AppSession.AccId, GetCurrentCustId(), Utils.GetClientIP());
             var functions = await settingService.GetFunctions(userId, "en-Us");
 
             var updatefunctions = functions.Select(
@@ -83,7 +93,10 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
                     Enabled = functionIds != null && functionIds.Contains(f.Id)
                 });
 
-            var result = await settingService.UpdateFunctions(userId, updatefunctions);
+            var result = await settingService.UpdateFunctions(
+                userId,
+                updatefunctions,
+                logParam);
 
             return Json(result);
         }
@@ -92,7 +105,11 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
         [AuthenticateHost]
         public async Task<ActionResult> Unlink(int userId, string letstalkId)
         {
-            var result = await settingService.Unsubscribe(userId, MessengerType.Letstalk, letstalkId);
+            var result = await settingService.Unsubscribe(
+                userId,
+                MessengerType.Letstalk,
+                letstalkId,
+                CreateLogParam(AppSession.AccId, GetCurrentCustId(), Utils.GetClientIP()));
 
             return Json(result);
         }
@@ -110,5 +127,16 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
             return checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline ||
                 checkCustomerBelongToSpecialSiteResult.IsSpecialSite;
         }
+
+        private static LogParam CreateLogParam(int actorId, int custId, string ip)
+            => new LogParam
+            {
+                ActorId = actorId,
+                CustId = custId,
+                IP = ip
+            };
+
+        private static int GetCurrentCustId()
+            => (int)AppSession.GetSession(System.Web.HttpContext.Current.Session, CustIdSessionKey);
     }
 }

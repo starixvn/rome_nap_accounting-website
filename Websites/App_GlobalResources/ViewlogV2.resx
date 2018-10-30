@@ -1677,4 +1677,28 @@
   <data name="Maxmembers" xml:space="preserve">
     <value>Max Members</value>
   </data>
+  <data name="function1" xml:space="preserve">
+    <value>Outstanding</value>
+  </data>
+  <data name="function2" xml:space="preserve">
+    <value>Today Win Loss</value>
+  </data>
+  <data name="function3" xml:space="preserve">
+    <value>Balance Info</value>
+  </data>
+  <data name="function4" xml:space="preserve">
+    <value>Yesterday Win Loss</value>
+  </data>
+  <data name="function5" xml:space="preserve">
+    <value>Personal Message</value>
+  </data>
+  <data name="function6" xml:space="preserve">
+    <value>Special Announcement</value>
+  </data>
+  <data name="function7" xml:space="preserve">
+    <value>Normal Announcement</value>
+  </data>
+  <data name="function8" xml:space="preserve">
+    <value>System Announcement</value>
+  </data>
 </root>

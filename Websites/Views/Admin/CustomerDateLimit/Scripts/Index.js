@@ -104,13 +104,19 @@ var CustomerDataRange = {
     },
     edit: function (custId, userName) {
         var url = window.rootUrl + 'CustomerDateLimit/GetById?custId=' + custId;
-        parent.OpenNextPopup('', url, 'Edit Data Range For ' + userName, 300, 250, true, false, this, 2000, null, function () {
+        parent.OpenNextPopup('', url, 'Edit Data Range For ' + userName, 300, 200, true, false, this, 2000, null, function () {
             CustomerDataRange.getList(0);
         });
     },
     add: function () {
         var url = window.rootUrl + 'CustomerDateLimit/Add';
-        parent.OpenNextPopup('', url, 'Add Super ', 600, 250, true, false, this, 2000, null, function () {
+        parent.OpenNextPopup('', url, 'Add Super ', 500, 320, true, false, this, 2000, null, function () {
+            CustomerDataRange.getList(0);
+        });
+    },
+    remove: function () {
+        var url = window.rootUrl + 'CustomerDateLimit/Remove';
+        parent.OpenNextPopup('', url, 'Remove Super ', 500, 280, true, false, this, 2000, null, function () {
             CustomerDataRange.getList(0);
         });
     }
