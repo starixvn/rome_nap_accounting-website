@@ -154,4 +154,81 @@ function CustomerController($scope, $element) {
             }
         });
     }
+
+    $scope.SaveCurrentWinLimit = function () {
+        UpdateWinLossMessage = '';
+        HasError = false;
+        try {
+            Fanex.CustomerSetting.Core.BlockUI();
+        }
+        catch (e) {
+        }
+
+        ProcessUpdateWinLossLimit($scope.CustomerModel.iBCCustID, $scope.CustomerModel.userName, JSON.stringify($scope.CustomerModel.memberWinLimit));
+    }
+
+    var UpdateWinLossMessage = '';
+    var HasError = false;
+    var ProcessUpdateWinLossLimit = function (custId, username, winLossLimit) {
+        if (!$scope.CustomerModel.casinoSync) {
+            HasError = true;
+            UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+            try {
+                $('#errMsg')
+                    .html(UpdateWinLossMessage)
+                    .show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        }
+        else {
+            $.ajax({
+                url: toUrl('WinLossLimit/Update'),
+                type: 'post',
+                data: {
+                    custId: custId,
+                    userId: userId,
+                    subAccId: subAccId,
+                    winLimit: winLossLimit
+                }
+            }).success(function (result) {
+                if (result.errorCode == 0) {
+                    UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='blue'>Updated successfully.</font></div>";
+                }
+                else {
+                    HasError = true;
+                    UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>" + result.errorMessage.formatErrorMessage() + "</font></div>";
+                }
+
+                $('#errMsg')
+                    .html(UpdateWinLossMessage)
+                    .show();
+
+                try {
+                    Fanex.CustomerSetting.Core.UnBlockUI();
+                    if (!HasError) {
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+                            document.location.reload(true);
+                        }, 3000);
+                    }
+                }
+                catch (e) {
+                }
+            }).error(function (data) {
+                UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+                $('#errMsg')
+                    .html(UpdateWinLossMessage)
+                    .show();
+
+                try {
+                    Fanex.CustomerSetting.Core.UnBlockUI();
+                }
+                catch (e) {
+                }
+            });
+        }
+    }
 }

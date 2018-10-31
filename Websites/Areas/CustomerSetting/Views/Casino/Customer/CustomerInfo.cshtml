@@ -7,7 +7,7 @@
 }
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css?v=" + AccCommon.Version())" />
 <div class="custInfo" data-ng-controller="CustomerController">
     <div class="headerPositionTaking noneBorderLR custInfoHeader">
         @NGCasinoLang.lblCustomerInformation
@@ -56,6 +56,7 @@
     </div>
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
         <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
+        <span title="Update" data-ng-click="SaveCurrentWinLimit()" data-ng-show="CustomerModel.casinoSync" class="btnSave"></span>
     </div>
     <table cellpadding="0" cellspacing="0" class="tableInfo">
         <tr>
@@ -84,7 +85,6 @@
             <td class=""><div id="currentWinLimit" style="color: #0000ff; cursor: pointer" data-ng-click="GetCurrentWinLimit()">@NGCasinoLang.lblClickToViewCurrentWinLossAmount</div></td>
         </tr>
     </table>
-    @Html.AntiForgeryToken()    
     @Html.AntiForgeryToken()
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
@@ -105,7 +105,8 @@
 
         var custId = '@id';
         var uplineId = '@uplineId';
-
+        var userId = @Sunplus.Accounting.Core.Common.AppSession.AccId;
+        var subAccId = 0;
         function toUrl(relativeUrl) {
             return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
         }
