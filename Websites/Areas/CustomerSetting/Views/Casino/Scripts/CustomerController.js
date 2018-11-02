@@ -23,7 +23,7 @@ function CustomerController($scope, $element) {
     $scope.CustomerModel.maxTransferFormated = !$scope.CustomerModel.casinoSync && $scope.CustomerModel.roleId == 4 ? $scope.CustomerModel.defaultTransferCredit.formatNumber() : $scope.CustomerModel.maxTransferCredit.formatNumber();
     $scope.CustomerModel.memberWinLimit.maximumLossFormated = $scope.CustomerModel.memberWinLimit.maximumLoss.formatNumber();
 
-    UplineRoleId = $scope.CustomerModel.uplineRoleId;
+    UplineRoleId = $scope.CustomerModel.roleId + 1;
 
     switch ($scope.CustomerModel.roleId) {
         case 1:
@@ -191,7 +191,8 @@ function CustomerController($scope, $element) {
                     custId: custId,
                     userId: userId,
                     subAccId: subAccId,
-                    winLimit: winLossLimit
+                    winLimit: winLossLimit,
+                    roleId: $scope.CustomerModel.roleId
                 }
             }).success(function (result) {
                 if (result.errorCode == 0) {
