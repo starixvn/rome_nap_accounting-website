@@ -116,5 +116,14 @@
       <MaxPerBallMin></MaxPerBallMin>
     </BettingLimitItem>
 
+    <BettingLimitItem id="164" name="Happy5" key="Happy5" resourcekey="happy5">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>      
+    </BettingLimitItem>
   </BettingLimitItems>
 </BettingLimit>
