@@ -274,8 +274,9 @@ function showDetail(id) {
     $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
 }
 
-function showMP(transid, refno) {
-    var divEvent = $("#divEvent_" + transid);
+function showMP(transid, refno, custId, transIndex) {
+    transIndex = transIndex == undefined ? "" : transIndex;
+    var divEvent = $("#divEvent_" + transid + transIndex);
 
     if (divEvent.css("display") === "none") {
         if (divEvent.html() === "") {
@@ -283,7 +284,7 @@ function showMP(transid, refno) {
             $.ajax({
                 type: "POST",
                 url: window.rootUrl + "BetList/GetMixParlayDetail",
-                data: "transid=" + transid + "&refno=" + refno,
+                data: "transid=" + transid + "&refno=" + refno + "&custId=" + custId,
                 success: function (result) {
                     divEvent.html(result);
                     divEvent.css("display", "");
@@ -308,11 +309,11 @@ function showMP(transid, refno) {
     }
 }
 
-function showCombMP(transId, transIndex, refNo) {
-    showMP(transId, refNo);
+function showCombMP(transId, transIndex, refNo, custId) {
+    showMP(transId, refNo, custId, transIndex);
 }
 
-function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam) {
+function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam, custId) {
     var divChoiceRight = $("#choice_right_" + transId);
     var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
     var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
@@ -321,7 +322,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
         if ($.trim(divParlay.html()) === "") {
             try { parent.BlockUI(); } catch (e) { }
             var params = [
-                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId
             ];
 
             $.ajax({

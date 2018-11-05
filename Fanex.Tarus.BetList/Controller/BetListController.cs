@@ -29,14 +29,15 @@ namespace Fanex.Tarus.BetList.Controllers
             _betListDetailService = new BetListDetailService();
         }
 
-        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam)
+        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId)
 
         {
             var result = _betListService.GetMixParlayTickets(
                 new MixParlayDetailCriteria
                 {
                     TransId = transId,
-                    RefNo = refNo
+                    RefNo = refNo,
+                    CustId = custId
                 });
 
             ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?

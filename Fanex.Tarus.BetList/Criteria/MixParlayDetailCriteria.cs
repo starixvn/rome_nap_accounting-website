@@ -10,6 +10,9 @@
         [SpParam(SqlParamName = "refno")]
         public long RefNo { get; set; }
 
+        [SpParam(SqlParamName = "custid")]
+        public int CustId { get; set; }
+
         public string GetSettingKey()
         {
             return "BetList_MixParlayBetsSel";
