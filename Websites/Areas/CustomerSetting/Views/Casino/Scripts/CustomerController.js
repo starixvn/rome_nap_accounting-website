@@ -23,7 +23,7 @@ function CustomerController($scope, $element) {
     $scope.CustomerModel.maxTransferFormated = !$scope.CustomerModel.casinoSync && $scope.CustomerModel.roleId == 4 ? $scope.CustomerModel.defaultTransferCredit.formatNumber() : $scope.CustomerModel.maxTransferCredit.formatNumber();
     $scope.CustomerModel.memberWinLimit.maximumLossFormated = $scope.CustomerModel.memberWinLimit.maximumLoss.formatNumber();
 
-    UplineRoleId = $scope.CustomerModel.uplineRoleId;
+    UplineRoleId = $scope.CustomerModel.roleId + 1;
 
     switch ($scope.CustomerModel.roleId) {
         case 1:
@@ -147,6 +147,93 @@ function CustomerController($scope, $element) {
             if (typeof console != 'undefined')
                 console.log(data);
         }).complete(function (data) {
+            try {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        });
+    }
+
+    $scope.SaveCurrentWinLimit = function () {
+        UpdateWinLossMessage = '';
+        HasError = false;
+        try {
+            Fanex.CustomerSetting.Core.BlockUI();
+        }
+        catch (e) {
+        }
+
+        ProcessUpdateWinLossLimit();
+    }
+
+    var UpdateWinLossMessage = '';
+    var HasError = false;
+    var ProcessUpdateWinLossLimit = function () {
+        if (!$scope.CustomerModel.casinoSync) {
+            HasError = true;
+            UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+            try {
+                $('#errMsg')
+                    .html(UpdateWinLossMessage)
+                    .show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        }
+        else {
+            UpdateWinLossLimit();
+        }
+    }
+
+    var UpdateWinLossLimit = function () {
+        var custId = $scope.CustomerModel.iBCCustID;
+        var username = $scope.CustomerModel.userName;
+        var winLossLimit = JSON.stringify($scope.CustomerModel.memberWinLimit);
+        var roleId = $scope.CustomerModel.roleId;
+
+        $.ajax({
+            url: toUrl('WinLossLimit/Update'),
+            type: 'post',
+            data: {
+                custId: custId,
+                userId: userId,
+                subAccId: subAccId,
+                winLimit: winLossLimit,
+                roleId: roleId
+            }
+        }).success(function (result) {
+            if (result.errorCode == 0) {
+                UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='blue'>Updated successfully.</font></div>";
+            }
+            else {
+                HasError = true;
+                UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>" + result.errorMessage.formatErrorMessage() + "</font></div>";
+            }
+
+            $('#errMsg')
+                .html(UpdateWinLossMessage)
+                .show();
+
+            try {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+                if (!HasError) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        document.location.reload(true);
+                    }, 3000);
+                }
+            }
+            catch (e) {
+            }
+        }).error(function (data) {
+            UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+            $('#errMsg')
+                .html(UpdateWinLossMessage)
+                .show();
+
             try {
                 Fanex.CustomerSetting.Core.UnBlockUI();
             }

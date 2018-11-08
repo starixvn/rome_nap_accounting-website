@@ -2,7 +2,7 @@
     return document.getElementById(id);
 }
 
-function showMP(refno, listType) {
+function showMP(refno, listType, custId, transIndex) {
     var spEvent = obj('spEvent_' + refno);
     if (!spEvent) return;
 
@@ -10,7 +10,7 @@ function showMP(refno, listType) {
         if (spEvent.innerHTML == "") {
             BlockUI();
             $.ajax({
-                url: '../Handlers/GenMixParlay.ashx?refno=' + refno + '&listType=' + listType + '&type=1',
+                url: '../Handlers/GenMixParlay.ashx?refno=' + refno + '&listType=' + listType + '&type=1' + '&custId=' + custId,
                 dataType: 'html',
                 success: function (data) {
                     spEvent.innerHTML = data;
