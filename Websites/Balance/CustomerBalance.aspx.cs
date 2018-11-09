@@ -49,10 +49,7 @@ public partial class Areas_Test_FunctionUsed : System.Web.UI.Page
         tableColumns.Add("CreditOthers", new { Text = "Credit Others", Width = "120", DataType = "Number" });
         tableColumns.Add("DebitOthers", new { Text = "Debit Others", Width = "120", DataType = "Number" });
         tableColumns.Add("CreditTransfer", new { Text = "Credit Transfer", Width = "120", DataType = "Number" });
-        tableColumns.Add("DebitTransfer", new { Text = "Debit Transfer", Width = "120", DataType = "Number" });
-        tableColumns.Add("CreditOld", new { Text = "Credit Old", Width = "120", DataType = "Number" });
-        tableColumns.Add("DebitOld", new { Text = "Debit Old", Width = "120", DataType = "Number" });
-        tableColumns.Add("cashbalanceOld", new { Text = "Cash Balance Old", Width = "120", DataType = "Number" });
+        tableColumns.Add("DebitTransfer", new { Text = "Debit Transfer", Width = "120", DataType = "Number" });       
 
         tableHtml += "<thead>";
         tableHtml += "<tr>";
