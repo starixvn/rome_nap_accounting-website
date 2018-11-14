@@ -108,7 +108,7 @@ function CustomerController($scope, $element) {
                         initArray.push(')');
                     }
                     else if (percent == -1) { // Unlimited
-                        initArray.push(casinoLang.lblunlimited);
+                        initArray.push(casinoLang.unlimited);
                     }
                     else { // 0%
                         initArray.push('0%');
