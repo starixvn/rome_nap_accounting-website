@@ -58,8 +58,8 @@
       <HintPath>..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Chatbot.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chatbot.Client.1.0.1\lib\net461\Chatbot.Client.dll</HintPath>
+    <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chatbot.Client.1.0.5-SelfDestructMessages-06\lib\net461\Chatbot.Client.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase">
       <HintPath>..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Couchbase.dll</HintPath>
@@ -375,6 +375,7 @@
     <Compile Include="Business\VirtualRate\UploadRate\UploadVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
+    <Compile Include="Constants\SelfDestructionPeriodConstants.cs" />
     <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\LiveTypeNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />

@@ -4,6 +4,7 @@
     invalidCommand: 1000000,
     currentLanguage: '',
     currentFunctionIds: [],
+    currentPeriod: '',
 
     assignFeatures: () => {
         let feature;
@@ -171,6 +172,43 @@
         });
     },
 
+    updatePeriod: () => {
+        var userId = $('#UserId').val();
+        var period = $('#ddlPeriod').val();
+
+        if (period === Chatbot.currentPeriod) {
+            return;
+        }
+
+        var data = { userId: userId, minutes: period };
+
+        Chatbot.blockUI();
+
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "Chatbot/UpdateSelfDestructionPeriod",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: (result) => {
+                if (result.IsOk) {
+                    Chatbot.currentPeriod = period;
+                    Chatbot.showSuccess("Self-destruction period updated.");
+                } else {
+                    if (result.ErrorCode == 999) {
+                        Chatbot.showErr(result.ErrorMessage);
+                    }
+                    else {
+                        Chatbot.showErr("Update self-destruction period unsuccessfully, please try again.");
+                    }
+                }
+            },
+            complete: () => {
+                Chatbot.unBlockUI();
+            }
+        });
+    },
+
     compareArrays: (array1, array2) => {
         return $(array1).not(array2).length == 0 && $(array2).not(array1).length == 0;
     },
@@ -282,6 +320,7 @@
 
     initialize: () => {
         Chatbot.currentLanguage = $('#ddlLanguage').val();
+        Chatbot.currentPeriod = $('#ddlPeriod').val();
 
         Chatbot.assignFeatures();
         Chatbot.currentFunctionIds = $('#ddlFeature').multiSelect("getCheckedItems");
@@ -292,6 +331,7 @@
         $('#btnSubmit').click(Chatbot.getMessageLogs)
         $('#btnSaveLanguage').click(Chatbot.updateLanguage);
         $('#btnSaveFeature').click(Chatbot.updateFeatures);
+        $('#btnSavePeriod').click(Chatbot.updatePeriod);
         $('#btnUnlink').click(Chatbot.unlink);
     },
 };

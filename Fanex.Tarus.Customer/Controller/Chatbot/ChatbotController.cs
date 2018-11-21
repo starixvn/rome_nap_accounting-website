@@ -7,6 +7,7 @@ using Chatbot.Client.Services;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Chatbot;
 using Fanex.Tarus.Web.Controllers;
@@ -97,6 +98,22 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
                 userId,
                 updatefunctions,
                 logParam);
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public async Task<ActionResult> UpdateSelfDestructionPeriod(int userId, int minutes)
+        {
+            if (!SelfDestructionPeriodConstants.Options.ContainsKey(minutes))
+            {
+                return Json(new Result { Code = 1 });
+            }
+
+            var logParam = CreateLogParam(AppSession.AccId, GetCurrentCustId(), Utils.GetClientIP());
+
+            var result = await settingService.UpdateSelfdestructionPeriod(userId, minutes, logParam);
 
             return Json(result);
         }
