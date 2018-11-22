@@ -26,6 +26,7 @@
                         ticketDetail.Ticket.OriginalBetType = Convert.ToInt32(reader["originalbettype"]);
                         ticketDetail.Ticket.BetdaqId = Convert.ToInt64(reader["betdaqid"]);
                         ticketDetail.Ticket.ExtraInfo = Convert.ToString(reader["extrainfo"]);
+                        ticketDetail.Ticket.SettlementStatus = Convert.ToByte(reader["SettlementStatus"]);
                     }
 
                     if (reader.NextResult())
@@ -60,7 +61,7 @@
                         ticket = BuildCoreTicket(reader);
                         ticket.WalletType = Convert.ToByte(reader["wallettype"]);
                         ticket.RefCode = Convert.ToInt64(reader["refcode"]);
-
+                        ticket.SettlementStatus = Convert.ToByte(reader["SettlementStatus"]);
                         tickes.Add(ticket);
                     }
                 }

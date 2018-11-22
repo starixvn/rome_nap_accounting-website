@@ -102,7 +102,6 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 EventDate = reader["eventdate"] != DBNull.Value ? Convert.ToDateTime(reader["eventdate"].ToString()) : DateTime.MinValue,
                 IsNeutral = reader["IsNeutral"] != DBNull.Value ? Convert.ToBoolean(reader["IsNeutral"]) : false,
                 BetStatus = reader["betstatus"] != DBNull.Value ? Convert.ToString(reader["betstatus"]) : string.Empty,
-                IsPending = reader["IsPending"] != DBNull.Value ? Convert.ToBoolean(reader["IsPending"]) : false,
                 LeagueId = reader["LeagueID"] != DBNull.Value ? Convert.ToInt32(reader["LeagueID"]) : 0,
                 MatchId = criteria.MatchId,
                 Color = string.Empty,
@@ -115,7 +114,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 RefNo = string.Empty,
                 BetID = criteria.BetId.ToString(),
                 Bettype = criteria.BetType,
-                GameDetails = new List<GameDetail>()
+                GameDetails = new List<GameDetail>(),
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
             };
         }
     }

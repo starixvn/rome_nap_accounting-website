@@ -196,7 +196,8 @@ namespace Fanex.Tarus.BetList.Business
                     Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
 
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
+                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -439,7 +440,8 @@ namespace Fanex.Tarus.BetList.Business
                     Currency = Converter.ToString2(r["Currency"]),
 
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0
+                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
+                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -649,7 +651,8 @@ namespace Fanex.Tarus.BetList.Business
                     Currency = Converter.ToString2(r["Currency"]),
 
                     WalletType = Convert.ToByte(r["wallettype"]),
-                    RefCode = Convert.ToInt64(r["refcode"])
+                    RefCode = Convert.ToInt64(r["refcode"]),
+                    SettlementStatus = Convert.ToByte(r["SettlementStatus"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -1049,7 +1052,8 @@ namespace Fanex.Tarus.BetList.Business
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
                                 WalletType = Convert.ToByte(r["wallettype"]),
 
-                                RefCode = Convert.ToInt64(r["refcode"])
+                                RefCode = Convert.ToInt64(r["refcode"]),
+                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1254,7 +1258,8 @@ namespace Fanex.Tarus.BetList.Business
                                 Currency = Converter.ToString2(r["Currency"]),
 
                                 WalletType = Convert.ToByte(r["wallettype"]),
-                                RefCode = Convert.ToInt64(r["refcode"])
+                                RefCode = Convert.ToInt64(r["refcode"]),
+                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

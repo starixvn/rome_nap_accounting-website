@@ -133,7 +133,7 @@ namespace Fanex.Tarus.BetList.Extensions
             }
 
             cellAddr = factory.AddCell(new HSSFRichTextString(BetListResources.Status), headerStyle);
-            factory.SetColumnWidth(cellAddr.ColumnIndex, 3400);
+            factory.SetColumnWidth(cellAddr.ColumnIndex, 5000);
 
             if (isShowSuperPT)
             {
