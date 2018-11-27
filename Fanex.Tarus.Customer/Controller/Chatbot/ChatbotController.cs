@@ -104,16 +104,16 @@ namespace Fanex.Tarus.Customer.Controller.Chatbot
 
         [HttpPost]
         [AuthenticateHost]
-        public async Task<ActionResult> UpdateSelfDestructionPeriod(int userId, int minutes)
+        public async Task<ActionResult> UpdateSelfDestructionPeriod(int userId, int period)
         {
-            if (!SelfDestructionPeriodConstants.Options.ContainsKey(minutes))
+            if (!SelfDestructionPeriodConstants.Options.ContainsKey(period))
             {
                 return Json(new Result { Code = 1 });
             }
 
             var logParam = CreateLogParam(AppSession.AccId, GetCurrentCustId(), Utils.GetClientIP());
 
-            var result = await settingService.UpdateSelfdestructionPeriod(userId, minutes, logParam);
+            var result = await settingService.UpdateSelfdestructionPeriod(userId, period, logParam);
 
             return Json(result);
         }

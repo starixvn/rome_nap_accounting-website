@@ -180,7 +180,7 @@
             return;
         }
 
-        var data = { userId: userId, minutes: period };
+        var data = { userId: userId, period: period };
 
         Chatbot.blockUI();
 
