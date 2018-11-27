@@ -131,7 +131,9 @@
         {
             return betTypeId == BetTypeContants.GoldDeluxeBaccarat ||
                 betTypeId == BetTypeContants.GoldDeluxeParlayBaccarat ||
-                betTypeId == BetTypeContants.GoldDeluxeRoulette;
+                betTypeId == BetTypeContants.GoldDeluxeRoulette ||
+                betTypeId == BetTypeContants.Sicbo ||
+                betTypeId == BetTypeContants.Bidme;
         }
 
         public static bool IsMicroGaming(int betTypeId)

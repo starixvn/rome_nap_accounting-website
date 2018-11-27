@@ -80,6 +80,8 @@
         public const int GoldDeluxeBaccarat = 1701;
         public const int GoldDeluxeRoulette = 1702;
         public const int GoldDeluxeParlayBaccarat = 1703;
+        public const int Sicbo = 1704;
+        public const int Bidme = 1705;
 
         public const int MetricGaming60sofKick = 801;
         public const int MetricGamingEndBetType = 899;
