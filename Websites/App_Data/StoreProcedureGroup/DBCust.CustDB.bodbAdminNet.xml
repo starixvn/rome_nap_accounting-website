@@ -375,4 +375,7 @@
     <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Others - PlayerID (3rd)">
+    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

@@ -394,6 +394,7 @@
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\NG2\SyncCustomerController.cs" />
     <Compile Include="Controller\NG2\SyncCurrencyController.cs" />
+    <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Controller\VirtualRateController.cs" />
@@ -450,6 +451,7 @@
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
@@ -492,6 +494,7 @@
     <Compile Include="DataAccess\NG2\ISyncCurrencyRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCustomerRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCurrencyRepository.cs" />
+    <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
@@ -569,6 +572,7 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
