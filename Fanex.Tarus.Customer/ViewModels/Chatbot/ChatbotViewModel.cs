@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Chatbot.Client.Models;
+using Fanex.Tarus.Customer.Constants;
 
 namespace Fanex.Tarus.Customer.ViewModels.Chatbot
 {
@@ -73,5 +74,15 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
                 return functions;
             }
         }
+
+        public IEnumerable<SelectListItem> SelfDestructionPeriodOptions
+            => SelfDestructionPeriodConstants.Options.Select(p => new SelectListItem
+            {
+                Text = p.Value,
+                Value = p.Key.ToString(),
+                Selected = user.SelfdestructionPeriod.HasValue
+                            ? p.Key == user.SelfdestructionPeriod.Value
+                            : p.Key == SelfDestructionPeriodConstants.ThreeHours
+            });
     }
 }

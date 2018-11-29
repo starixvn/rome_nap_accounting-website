@@ -795,7 +795,7 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case 1600 <= bettype && bettype <= 1610: // Lucky 3.
             return getLucky3Param(matchid);
 
-        case bettype === 1701 || bettype === 1702 || bettype === 1703: // Gold Deluxe.
+        case bettype === 1701 || bettype === 1702 || bettype === 1703 || bettype === 1704 || bettype === 1705: // Gold Deluxe.
             return getGoldDeluxeParam(bettype, refno);
 
         case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing.

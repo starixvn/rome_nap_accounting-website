@@ -14,8 +14,7 @@
 }
 
 /* Begin General */
-table.fn-rs
-{
+table.fn-rs {
     clear: both;
     width: 99%;
     border-right: 1px solid #b7b7b7;
@@ -29,226 +28,200 @@ table.fn-rs
     min-width: 500px !important;
 }
 
-table.fn-rs tr.header, table.fn-rs .sub-header
-{
-    background: url("images/bg_header02.jpg") repeat-x scroll center top #6a6969;
-    height: 20px;
-    color: #fff;
-}
+    table.fn-rs tr.header, table.fn-rs .sub-header {
+        background: url("images/bg_header02.jpg") repeat-x scroll center top #6a6969;
+        height: 20px;
+        color: #fff;
+    }
 
-table.fn-rs tr.header th:first-child
-{
-    border-left: 1px solid #b7b7b7;
-}
+        table.fn-rs tr.header th:first-child {
+            border-left: 1px solid #b7b7b7;
+        }
 
-table.fn-rs tr.header th
-{
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: -moz-use-text-color #b7b7b7 #b7b7b7 -moz-use-text-color;
-    border-image: none;
-    border-right: 1px solid #b7b7b7;
-    border-bottom: 1px solid #b7b7b7;
-    border-style: none solid solid none;
-    border-width: medium 1px 1px medium;
-    overflow: hidden;
-    padding: 0 2px;
-    vertical-align: middle;
-    text-align: center;
-    white-space: nowrap;
-    font-size: 11px !important;
-    font-weight: 400 !important;
-}
+        table.fn-rs tr.header th {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            border-color: -moz-use-text-color #b7b7b7 #b7b7b7 -moz-use-text-color;
+            border-image: none;
+            border-right: 1px solid #b7b7b7;
+            border-bottom: 1px solid #b7b7b7;
+            border-style: none solid solid none;
+            border-width: medium 1px 1px medium;
+            overflow: hidden;
+            padding: 0 2px;
+            vertical-align: middle;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 11px !important;
+            font-weight: 400 !important;
+        }
 
-table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover {
-    color: #222222;
-}
+    table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover {
+        color: #222222;
+    }
 
-table.fn-rs tbody tr.even {
-    background-color: #F6F8F9;
-}
+    table.fn-rs tbody tr.even {
+        background-color: #F6F8F9;
+    }
 
-table.fn-rs tr.data
-{
-    background-color: #faf9ee;
-}
+    table.fn-rs tr.data {
+        background-color: #faf9ee;
+    }
 
-table.fn-rs tr.data:hover
-{
-    background-color: #f8ff8d;
-}
+        table.fn-rs tr.data:hover {
+            background-color: #f8ff8d;
+        }
 
-table.fn-rs tr.data td, table.fn-rs tr.row-noinfo td
-{
-    border-left: 1px solid #b7b7b7;
-    border-bottom: 1px solid #b7b7b7;
-    font-size: 1em;
-    height: 22px;
-    padding: 0 2px;
-    vertical-align: middle;
-    color: #222222;
-    white-space: normal;
-    border-color: #b7b7b7;
-}
+        table.fn-rs tr.data td, table.fn-rs tr.row-noinfo td {
+            border-left: 1px solid #b7b7b7;
+            border-bottom: 1px solid #b7b7b7;
+            font-size: 1em;
+            height: 22px;
+            padding: 0 2px;
+            vertical-align: middle;
+            color: #222222;
+            white-space: normal;
+            border-color: #b7b7b7;
+        }
 
-table.fn-rs tr.data td.cl-ht-score, 
-table.fn-rs tr.data td.cl-f-score, 
-table.fn-rs tr.data td.cl-status, 
-table.fn-rs tr.data td.cl-totalgames, 
-table.fn-rs tr.data td.cl-totalset, 
-table.fn-rs tr.data td.cl-s,
-table.fn-rs tr.data td.cl-ei,
-table.fn-rs tr.row-noinfo td
-{
-    font-weight: bold;
-}
+            table.fn-rs tr.data td.cl-ht-score,
+            table.fn-rs tr.data td.cl-f-score,
+            table.fn-rs tr.data td.cl-status,
+            table.fn-rs tr.data td.cl-totalgames,
+            table.fn-rs tr.data td.cl-totalset,
+            table.fn-rs tr.data td.cl-s,
+            table.fn-rs tr.data td.cl-ei,
+            table.fn-rs tr.row-noinfo td {
+                font-weight: bold;
+            }
 
-table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover
-{
-    color: #222222;
-}
+                table.fn-rs tr.data td:hover, table.fn-rs tr.row-noinfo td:hover {
+                    color: #222222;
+                }
 
-table.fn-rs tbody .cl-match.home, table.fn-rs tbody .cl-match.away
-{
-    color: #222222;
-}
+    table.fn-rs tbody .cl-match.home, table.fn-rs tbody .cl-match.away {
+        color: #222222;
+    }
 
-table.fn-rs tbody .cl-match.win
-{
-    font-weight: bold;
-}
+    table.fn-rs tbody .cl-match.win {
+        font-weight: bold;
+    }
 
-table.fn-rs .cl-ko-time {
-}
+    table.fn-rs .cl-ko-time {
+    }
 
-table.fn-rs .cl-ht-score, table.fn-rs .cl-f-score {
-    width: 95px;
-}
+    table.fn-rs .cl-ht-score, table.fn-rs .cl-f-score {
+        width: 95px;
+    }
 
 /* End General */
 
 /* Begin Parlay Popup */
-.fn-rs-popup.parlay
-{
+.fn-rs-popup.parlay {
     margin-left: auto;
     margin-right: auto;
     width: 690px;
 }
 
-.fn-rs-popup.parlay .sporttype .bl-sport-type 
-{
-    color: #0066cc;
-}
+    .fn-rs-popup.parlay .sporttype .bl-sport-type {
+        color: #0066cc;
+    }
 /* End Parlay Popup */
 
 /* Begin Live Casino Popup, Live Casino Popup */
 table.fn-rs.casino thead th.cl-title,
-table.fn-rs.number-game thead th.cl-title
-{
+table.fn-rs.number-game thead th.cl-title {
     background-color: #ffffff;
     font-weight: bold;
     border-left: 1px solid #b7b7b7;
     border-right: 1px solid #b7b7b7;
 }
 
-table.fn-rs.casino thead th.cl-title .sport,
-table.fn-rs.number-game thead th.cl-title .sport
-{
-    color: #0066cc;
-}
+    table.fn-rs.casino thead th.cl-title .sport,
+    table.fn-rs.number-game thead th.cl-title .sport {
+        color: #0066cc;
+    }
 /* End Live Casino Popup, Live Casino Popup */
 
 /* Begin Number Game Popup */
-table.number-game span.ball
-{
+table.number-game span.ball {
     padding: 0;
 }
 /* End Number Game Popup */
 
 /* Begin Tennis Popup */
-table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint, table.fn-rs .cl-totalset
-{
+table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint, table.fn-rs .cl-totalset {
     color: #ffffff;
 }
 /* End Tennis Popup */
 
 /* Begin General Result */
-table.fn-rs tr.data td.cl-league
-{
+table.fn-rs tr.data td.cl-league {
     background: url("images/bg_header03.jpg") repeat-x scroll center top #f8f1e9;
     padding-left: 20px;
 }
 
-div.fn-rs-content-header
-{
+div.fn-rs-content-header {
     border: none;
 }
 
-div.fn-rs-content-scroll .fn-rs
-{
+div.fn-rs-content-scroll .fn-rs {
     border-top: none;
 }
 
-table.fn-rs tr.row-noinfo td
-{
+table.fn-rs tr.row-noinfo td {
     border: 0px;
 }
 
 /* End General Result */
 
 /* Begin Sportsbook Result */
-div.fn-rs-content-scroll
-{
+div.fn-rs-content-scroll {
     overflow-x: inherit !important;
     overflow-y: inherit !important;
     max-height: inherit;
 }
 
-div.fn-rs-content-scroll .fn-rs 
-{
-    width: 100%;
-}
+    div.fn-rs-content-scroll .fn-rs {
+        width: 100%;
+    }
 
-div.fn-rs-content-header
-{
+div.fn-rs-content-header {
     padding-right: 0px;
 }
 
-div.fn-rs-content-header table.fn-rs
-{
-    width: 100%;
-}
+    div.fn-rs-content-header table.fn-rs {
+        width: 100%;
+    }
 
 /* End Sportsbook Result */
 
 /* Begin Tennis Result */
-table.fn-rs .cl-totalset
-{
+table.fn-rs .cl-totalset {
     width: 60px;
 }
 
-table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint
-{
+table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint {
     width: 76px;
 }
 /* End Tennis Result */
 
 /* Begin Gold Deluxe Result*/
-table thead th.cl-title ,table thead th.cl-title .leagueName {
-	color: #0066cc !important;
+table thead th.cl-title, table thead th.cl-title .leagueName {
+    color: #0066cc !important;
 }
 
 table.fn-rs tbody tr td ul li {
-	list-style: none;
+    list-style: none;
 }
 /* End Gold Deluxe Result*/
 
-.data-header
-{
+.data-header {
     font-weight: bold;
 }
+
 .lottoBall {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 900;
@@ -263,18 +236,18 @@ table.fn-rs tbody tr td ul li {
     background-repeat: no-repeat;
 }
 
-.lottoBall.red {
-    background-position: 0 0;
-}
+    .lottoBall.red {
+        background-position: 0 0;
+    }
 
-.lottoBall.blue {
-    background-position: 0 -30px;
-}
+    .lottoBall.blue {
+        background-position: 0 -30px;
+    }
 
-.lottoBall.disable {
-    color: #999;
-    background-position: 0 -60px;
-}
+    .lottoBall.disable {
+        color: #999;
+        background-position: 0 -60px;
+    }
 
 .lotto-bets .button i {
     display: block;
@@ -312,4 +285,8 @@ table.fn-rs tbody tr td ul li {
     width: 16px;
     height: 17px;
     text-align: center;
+}
+
+.sicbo-result {
+    width: auto !important;
 }
