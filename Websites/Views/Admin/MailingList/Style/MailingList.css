@@ -23,7 +23,3 @@ ul.token-input-list-facebook hover
     margin-top: 5px;
     display: none;
 }
-
-ul.token-input-list-facebook {
-    overflow: auto !important;
-}

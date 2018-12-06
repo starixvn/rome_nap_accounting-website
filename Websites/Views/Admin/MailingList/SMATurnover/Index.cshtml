@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link rel="stylesheet" type="text/css" href="~/Views/Admin/MailingList/Style/MailingList.css" />
-    <link rel="stylesheet" type="text/css" href="~/Views/Admin/MailingList/Script/TokenInput/token-input-facebook.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/TokenInput/token-input-facebook.css" />
 </head>
 <body>
     <div class="main">
@@ -40,8 +40,7 @@
                                     </td>
                                     <td>
                                         <div id='divToList' style="margin-top: 20px;">
-                                            <select id="tbxToList" name="tbxCCList">
-                                            </select>
+                                            <select id="tbxToList" name="tbxCCList"></select>
                                         </div>
                                     </td>
                                 </tr>
@@ -53,8 +52,7 @@
                                     </td>
                                     <td>
                                         <div style="margin-top: 20px;">
-                                            <select id="tbxCCList" name="tbxCCList">
-                                            </select>
+                                            <select id="tbxCCList" name="tbxCCList"></select>
                                         </div>
                                     </td>
                                 </tr>
@@ -66,8 +64,7 @@
                                     </td>
                                     <td>
                                         <div style="margin-top: 20px;">
-                                            <select id="tbxBCCList" name="tbxCCList">
-                                            </select>
+                                            <select id="tbxBCCList" name="tbxCCList"></select>
                                         </div>
                                     </td>
                                 </tr>
@@ -82,26 +79,25 @@
         </table>
     </div>
     <div id="dialogConfirm" style="display: none;">
-        <table border="0px" id="tblconfirm">
-        </table>
+        <table border="0px" id="tblconfirm"></table>
     </div>
     <script type="text/javascript">
-     var _model = @Html.Raw(serializer.Serialize(Model)); 
-     var _isReload = '@ViewBag.Reload'; 
-     var _groupId = @Sunplus.Accounting.Core.Common.AppSession.GroupID;
-  var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
-    window.rootUrl = '@Url.Content("~")';
-   
-    head.js("@Url.Content("~/js/jQuery/jquery-1.7.js")",
-            "@Url.Content("~/js/json2.js")", 
-            "@Url.Content("~/js/common.js")", 
-            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
-            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
-            "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
-             "@Url.Content("~/js/dialogbox.js")",
-            "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-            "@Url.Content("~/Views/Admin/MailingList/Script/TokenInput/jquery.tokeninput.js")",
-            "@Url.Content("~/Views/Admin/MailingList/SMATurnover/Scripts/MailingList.js")");
+        var _model = @Html.Raw(serializer.Serialize(Model));
+        var _isReload = '@ViewBag.Reload';
+        var _groupId = @Sunplus.Accounting.Core.Common.AppSession.GroupID;
+        var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
+        window.rootUrl = '@Url.Content("~")';
+
+        head.js("@Url.Content("~/js/jQuery/jquery-1.7.js")",
+                "@Url.Content("~/js/json2.js")",
+                "@Url.Content("~/js/common.js")",
+                "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+                "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+                "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
+                "@Url.Content("~/js/dialogbox.js")",
+                "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/js/TokenInput/jquery.tokeninput.js")",
+                "@Url.Content("~/Views/Admin/MailingList/SMATurnover/Scripts/MailingList.js")");
     </script>
 </body>
 </html>
