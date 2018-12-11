@@ -42,15 +42,12 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                     }
                 }
 
-                if ($scope.confirmIsAutoArray.length > 0) {
-                    $scope.$broadcast("updateAllMember");
-                    $scope.$on('confirmUpdateAllMember', function (event) {
-                        $scope.doUpdated($scope.getUrlUpdated());
-                    });
-                } else {
-                    $scope.doUpdated($scope.getUrlUpdated());
-                }
-            };
+				$scope.confirmIsAutoArray.length > 0 ? $scope.$broadcast("updateAllMember") : $scope.doUpdated();
+			};
+
+			$scope.$on('confirmUpdateAllMember', function () {
+				$scope.doUpdated();
+			});
 
             $scope.getUrlUpdated = function () {
                 var url = "";
@@ -93,9 +90,9 @@ KenoModule.controller('mainController', function ($scope, $timeout, kenoReposito
                 }
             }
 
-            $scope.doUpdated = function (url) {
+            $scope.doUpdated = function () {
                 commonService.blockUI();
-                kenoRepositories.save(url, $scope.kenoSetting).then(
+				kenoRepositories.save($scope.getUrlUpdated(), $scope.kenoSetting).then(
                     function (results) {
                         $("#divShowInfo").empty().show();
 
