@@ -1719,4 +1719,7 @@
   <data name="systemid_8" xml:space="preserve">
     <value>Chatbot</value>
   </data>
+  <data name="function9" xml:space="preserve">
+    <value>Create new member from existing account</value>
+  </data>
 </root>
