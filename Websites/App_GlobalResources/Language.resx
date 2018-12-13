@@ -2560,4 +2560,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="MemberInformation" xml:space="preserve">
     <value>Member Information</value>
   </data>
+  <data name="NoteBetSetting" xml:space="preserve">
+    <value>For E-Sports' Bet Settings, please use Sportsbook 2 instead</value>
+  </data>
+  <data name="NotePTSetting" xml:space="preserve">
+    <value>For E-Sports' PT Settings, please use Sportsbook 2 instead</value>
+  </data>
+  <data name="NoteSportsbookSetting" xml:space="preserve">
+    <value>For E-Sports' PT and Bet Settings, please use Sportsbook 2 instead</value>
+  </data>
 </root>

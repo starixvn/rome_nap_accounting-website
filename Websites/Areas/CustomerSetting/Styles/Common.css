@@ -76,13 +76,13 @@
     font-size: 13px;
     clear: both;
     padding-left: 30px;
-    white-space: pre-line;
     margin-bottom: 5px;
     border: 1px solid #d2a243;
     min-height: 25px;
     padding-top: 5px;
     max-height: 180px;
     overflow: auto;
+    color: #ff5411;
 }
 
 .buttonPopup, .ui-button, button[type=button] {

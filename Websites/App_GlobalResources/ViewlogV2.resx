@@ -1701,4 +1701,7 @@
   <data name="function8" xml:space="preserve">
     <value>System Announcement</value>
   </data>
+  <data name="disable43_1" xml:space="preserve">
+    <value>Disabled E-Sports</value>
+  </data>
 </root>
