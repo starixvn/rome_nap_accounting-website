@@ -2,6 +2,7 @@
     parent.BlockUI();
     $('#errMsg').html('');
     if (!ValidateData()) {
+        $('#gridContainer').hide();
         parent.jQuery.unblockUI();
         return;
     }
@@ -24,12 +25,12 @@
             else {
                 var bodyRows = [];
                 var row = { Columns: [] };
-                var isHighLight = data.TotalCash != data.TotalCashGeneralWallet;
+                var isHighLight = data.TotalLeftPanel != data.TotalCashGeneralWallet;
                 if (data.UserName != undefined && data.UserName != '') {
                     row.Columns.push({ Name: 'UserName', Value: data.UserName, CellAlign: 'left' });
-                    row.Columns.push({ Name: 'TotalCash', Value: data.TotalCash, CellAlign: 'right', TdClass: isHighLight ? 'ui-state-highlight' : '' });
+                    row.Columns.push({ Name: 'TotalCash', Value: data.TotalCash, CellAlign: 'right' });
                     row.Columns.push({ Name: 'OutStanding', Value: data.OutStanding, CellAlign: 'right' });
-                    row.Columns.push({ Name: 'TotalLeftPanel', Value: data.TotalLeftPanel, CellAlign: 'right' });
+                    row.Columns.push({ Name: 'TotalLeftPanel', Value: data.TotalLeftPanel, CellAlign: 'right', TdClass: isHighLight ? 'ui-state-highlight' : '' });
                     row.Columns.push({ Name: 'CreditSports', Value: data.CreditSports, CellAlign: 'right' });
                     row.Columns.push({ Name: 'DebitSports', Value: data.DebitSports, CellAlign: 'right' });
                     row.Columns.push({ Name: 'CreditCasino', Value: data.CreditCasino, CellAlign: 'right' });
@@ -99,6 +100,7 @@
         },
         error: function (xhr) {
             if (xhr.status === 403) {
+                $('#gridContainer').hide();
                 RenderErrMsg(lang.AccessDenied);
             }
         },
