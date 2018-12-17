@@ -40,22 +40,6 @@
   <Function Name="Helper">
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Racing - PT Setting">
-    <Setting Key="Racing_UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperHR_All" SpName="Acc_CustomerUpdSuperHR_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMasterHR_All" SpName="Acc_CustomerUpdMasterHR_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAgentHR_All" SpName="Acc_CustomerUpdAgentHR_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_All" SpName="Acc_CustomerUpdMemberHR_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_SAg" SpName="Acc_CustomerUpdMemberHR_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_MAg" SpName="Acc_CustomerUpdMemberHR_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="UpdateStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdRBStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMember_CommissionHR" SpName="Acc_CustomerUpdMember_CommissionHR" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAgent_CommissionHR" SpName="Acc_CustomerUpdAgent_CommissionHR" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMaster_CommissionHR" SpName="Acc_CustomerUpdMaster_CommissionHR" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuper_CommissionHR" SpName="Acc_CustomerUpdSuper_CommissionHR" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -362,6 +346,10 @@
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsSuperInfo" SpName="Acc_CustomerInsSuperInfo" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
     <Setting Key="Acc_CustomerCommissionSpecAccUpd" SpName="Acc_CustomerCommissionSpecAccUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -420,6 +408,15 @@
   <Function Name="Admin - Max Member Limit By Super">
     <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Left Panel - Customer Info">
+    <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="SuperLimitDate">
+    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Others - PlayerID (3rd)">
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />

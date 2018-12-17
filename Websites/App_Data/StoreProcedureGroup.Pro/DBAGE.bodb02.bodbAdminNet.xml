@@ -137,7 +137,6 @@
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="External">
-    <Setting Key="WinLossDetail_ComEx" SpName="Acc_Rpt_WinLossDetail_ComEx" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="WinLossDetail_SAg" SpName="Age_Rpt_WinLossDetail_SAg" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="WinLossDetail_MAg_New" SpName="Age_Rpt_WinLossDetail_MAg_New" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="WinLossDetail_Ag" SpName="Age_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -146,10 +145,6 @@
     <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Left Panel - Customer Info">
-    <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
