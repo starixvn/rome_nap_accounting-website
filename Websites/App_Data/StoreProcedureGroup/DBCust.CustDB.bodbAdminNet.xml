@@ -42,10 +42,10 @@
   </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -174,12 +174,12 @@
     <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User control">
     <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -216,15 +216,15 @@
   </Function>
   <Function Name="SearchCopy">
     <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="ConfigureDirectAccount">
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Agent's yesterday balance">

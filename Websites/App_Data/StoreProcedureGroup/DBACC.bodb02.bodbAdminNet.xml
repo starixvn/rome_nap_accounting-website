@@ -23,13 +23,13 @@
     <Setting Key="Acc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Daily Transaction">
-    <Setting Key="SelDailyFinanceTxn" SpName="Acc_DailyTxn_Sel_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SelDailyFinanceTxn" SpName="Acc_DailyTxn_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Betlist">
     <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -37,8 +37,8 @@
     <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_FULL2" SpName="Acc_AllStatement_FULL2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
@@ -49,9 +49,9 @@
     <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Special delete - Ticket Listing">
     <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -67,7 +67,7 @@
     <Setting Key="TicketsListing" SpName="Acc_Rpt_TicketsListing" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Statement">
-    <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="AllStatementCompany" SpName="Acc_Rpt_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -81,12 +81,12 @@
     <Setting Key="Acc_ResetWinning_Sel" SpName="Acc_ResetWinning_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Rpt_Balance_Company" SpName="Acc_Rpt_Balance_Company" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Left Panel - Transfer">
     <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Virtual Rate">
@@ -94,7 +94,7 @@
   </Function>
   <Function Name="Report">
     <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer_xpre" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ticket To Group Headline">
