@@ -48,6 +48,8 @@
             throw new InvalidOperationException(
                 string.Join(
                     "\r\n",
+                    $"Uri: {response.ResponseUri}",
+                    $"Status: {response.StatusCode}",
                     $"Content: {response.Content}",
                     $"ErrorMessage: {response.ErrorMessage}"));
         }
