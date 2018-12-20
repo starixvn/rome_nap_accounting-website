@@ -26,6 +26,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
     private readonly List<StringBuilder> arrFromAmt = new List<StringBuilder>();
     private readonly List<StringBuilder> arrToAmt = new List<StringBuilder>();
     private readonly List<StringBuilder> arrDescription = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrCollection = new List<StringBuilder>();
 
     public void ProcessRequest(HttpContext context)
     {
@@ -114,6 +115,11 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             col.DataType = typeof(string);
             dtb.Columns.Add(col);
 
+            col = new DataColumn();
+            col.ColumnName = "Collection";
+            col.DataType = typeof(string);
+            dtb.Columns.Add(col);
+
             ExcelUtil.Spreadsheet.ExcelFile excelFile = new ExcelUtil.Spreadsheet.ExcelFile();
             excelFile.LoadXls(ExcelPath);
             var workSheet = excelFile.Worksheets[0];
@@ -128,6 +134,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                 row[2] = DNAide.Core.CastAide.AsDouble(workSheet.Rows[i].Cells[2].Value);
                 row[3] = DNAide.Core.CastAide.AsDouble(workSheet.Rows[i].Cells[3].Value);
                 row[4] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[4].Value);
+                row[5] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[5].Value);
                 dtb.Rows.Add(row);
             }
             return dtb;
@@ -201,7 +208,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         for (int i = 0; i < arrFromCust.Count; ++i)
         {
             var rs = userService.InsDataTmpExcelFinanceCrossTransfer(AppSession.AccId, arrFromCust[i].ToString().Trim()
-            , arrToCust[i].ToString().Trim(), arrFromAmt[i].ToString(), arrToAmt[i].ToString(), arrDescription[i].ToString());
+            , arrToCust[i].ToString().Trim(), arrFromAmt[i].ToString(), arrToAmt[i].ToString(), arrDescription[i].ToString(), arrCollection[i].ToString());
 
             if (rs.ErrorCode > 0)
                 isSuccess = false;
@@ -254,6 +261,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         string tocust = string.Empty;
         double fromamount;
         double toamount;
+        string collection = string.Empty;
         string remark = string.Empty;
 
         StringBuilder stb = new StringBuilder();
@@ -273,6 +281,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
+            collection = row.IsNull(5) ? string.Empty : row[5].ToString();
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -281,6 +290,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
+            TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
             CustomerExRate fromCustomerExRate = null;
             CustomerExRate toCustomerExRate = null;
@@ -306,6 +316,12 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             {
                 TemplateHandler.Assign(ref strConentTemp, "reason", "Max length of Remark must be less than 200 characters");
             }
+            else if (!string.IsNullOrWhiteSpace(collection) &&
+                    string.Equals(collection, "Yes", StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(collection, "No", StringComparison.OrdinalIgnoreCase))
+            {
+                TemplateHandler.Assign(ref strConentTemp, "reason", "Invalid Collection");
+            }
             else
             {
                 if (!isReachMax())
@@ -317,6 +333,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                         arrFromAmt.Add(new StringBuilder());
                         arrToAmt.Add(new StringBuilder());
                         arrDescription.Add(new StringBuilder());
+                        arrCollection.Add(new StringBuilder());
 
                         arrFromCust[0].Append(fromcust + "");
                         arrToCust[0].Append(tocust + "");
@@ -325,6 +342,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                         arrToAmt[0].Append(toamount + "");
 
                         arrDescription[0].Append(remark + "");
+                        arrCollection[0].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
                     }
                     else
                     {
@@ -336,6 +354,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                         arrToAmt[currentIndex].Append(toamount + "");
 
                         arrDescription[currentIndex].Append(remark + "");
+                        arrCollection[currentIndex].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
                     }
                 }
                 else
@@ -345,6 +364,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                     arrFromAmt.Add(new StringBuilder());
                     arrToAmt.Add(new StringBuilder());
                     arrDescription.Add(new StringBuilder());
+                    arrCollection.Add(new StringBuilder());
 
                     int currentIndex = arrFromCust.Count - 1;
                     arrFromCust[currentIndex].Append(fromcust + "");
@@ -354,6 +374,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                     arrToAmt[currentIndex].Append(toamount + "");
 
                     arrDescription[currentIndex].Append(remark + "");
+                    arrCollection[currentIndex].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
                 }
                 listValidRow.Add(rowIndex);
                 continue;
@@ -376,6 +397,8 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         if (currentMaxLength < arrFromAmt[currentIndex].Length) currentMaxLength = arrFromAmt[currentIndex].Length;
         if (currentMaxLength < arrToAmt[currentIndex].Length) currentMaxLength = arrToAmt[currentIndex].Length;
         if (currentMaxLength < arrDescription[currentIndex].Length) currentMaxLength = arrDescription[currentIndex].Length;
+        if (currentMaxLength < arrCollection[currentIndex].Length) currentMaxLength = arrCollection[currentIndex].Length;
+
         return currentMaxLength > MaxLength;
     }
 
@@ -394,6 +417,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         double fromamount;
         double toamount;
         string remark = string.Empty;
+        string collection = string.Empty;
 
         StringBuilder stb = new StringBuilder();
 
@@ -412,6 +436,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
+            collection = row.IsNull(5) ? string.Empty : row[5].ToString();
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -420,6 +445,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
+            TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
             TemplateHandler.Assign(ref strConentTemp, "rowstyle", string.Empty);
             stb.Append(strConentTemp);

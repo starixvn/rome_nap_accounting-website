@@ -51,7 +51,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
 
             IAutomateTransferExcel automateTransferExcel = new AutomateTransferExcel(uploadFile.InputStream);
             var result = automateTransferExcel.ValidateTemplateFile();
-            
+
             if (!result.IsSuccessful)
             {
                 context.Response.Write(BuildResult(result.Message, string.Empty));
@@ -161,6 +161,8 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 .Append(CastAide.AsDouble(drow[4]))
                 .Append("\" Description=\"")
                 .Append(HttpUtility.HtmlEncode(drow[5].ToString().Trim()))
+                .Append("\" IsCollection=\"")
+                .Append(string.Equals("yes", drow[6].ToString().Trim(), StringComparison.OrdinalIgnoreCase) ? 1 : 0)
                 .Append("\"></Transfer>");
         }
 
@@ -223,6 +225,10 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 StringWriter des = new StringWriter();
                 HttpUtility.HtmlDecode(row["Description"].ToString(), des);
                 TemplateHandler.Assign(ref strTmp, "description", des.ToString());
+
+                StringWriter collection = new StringWriter();
+                HttpUtility.HtmlDecode(Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No", collection);
+                TemplateHandler.Assign(ref strTmp, "collection", collection.ToString());
 
                 if (hasReason)
                 {

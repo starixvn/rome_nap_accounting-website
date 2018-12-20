@@ -13,8 +13,9 @@ using DNAide.Core;
 
 public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
-    
-    public void ProcessRequest (HttpContext context) {
+
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
         if (string.IsNullOrEmpty(context.Request.QueryString["delTemp"]) || context.Request.QueryString["delTemp"].Trim() == "true")
@@ -57,9 +58,11 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
     {
         return msg + "|" + data;
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
@@ -95,6 +98,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
         double fromamount;
         double toamount;
         string remark = string.Empty;
+        string collection = string.Empty;
 
         StringBuilder stb = new StringBuilder();
 
@@ -109,6 +113,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
+            collection = row.IsNull(5) ? string.Empty : Convert.ToBoolean(row[5]) ? "Yes" : "No";
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -117,6 +122,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
+            TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
             TemplateHandler.Assign(ref strConentTemp, "rowstyle", "class='add-customer-bggray'");
             stb.Append(strConentTemp);
@@ -140,6 +146,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
         double fromamount;
         double toamount;
         string remark = string.Empty;
+        string collection = string.Empty;
 
         StringBuilder stb = new StringBuilder();
 
@@ -154,6 +161,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
+            collection = row.IsNull(5) ? string.Empty : Convert.ToBoolean(row[5]) ? "Yes" : "No";
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -162,13 +170,14 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
+            TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
             TemplateHandler.Assign(ref strConentTemp, "rowstyle", string.Empty);
             stb.Append(strConentTemp);
         }
         TemplateHandler.ReplaceBlock(ref strTemplate, "content", stb.ToString());
     }
-    
+
     private string ReplaceToken(string strTemplate)
     {
         strTemplate = strTemplate.Replace("<!--errorpart-->", string.Empty);

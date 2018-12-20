@@ -3801,4 +3801,7 @@
   <data name="Disable163_1401" xml:space="preserve">
     <value>Disabled Poker Games</value>
   </data>
+  <data name="Coll_Status" xml:space="preserve">
+    <value>Coll Status</value>
+  </data>
 </root>

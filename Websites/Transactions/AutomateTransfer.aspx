@@ -20,7 +20,7 @@
     <script type="text/javascript" src="../js/common.js"></script>
 
     <script type="text/javascript" src="js/automateTransfer.js"></script>
-    
+
     <script type="text/javascript" src="../js/BlockUI.js"></script>
 
     <script src="../js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
@@ -36,7 +36,7 @@
 
         function IsValidFileExtension() {
             var filename = obj('txtfile').value;
-            obj('FileName').value = filename;            
+            obj('FileName').value = filename;
             var isOK = false;
             if (filename != "") {
                 var ext = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
@@ -70,12 +70,12 @@
                     secureuri: false,
                     fileElementId: 'txtfile',
                     dataType: 'html',
-                    success: function(data, status) {
+                    success: function (data, status) {
                         $.unblockUI();
                         if (typeof data == "undefined" || data == null) {
                             return;
                         }
-                    
+
                         //--------------------------------------
                         var arr = data.split('|');
                         var msg = arr[0];
@@ -95,7 +95,7 @@
                         }
                         $('#bolDelDataTmp').val(1);
                     },
-                    error: function(data, status, e) {
+                    error: function (data, status, e) {
                         $.unblockUI();
                         alert(data);
                     }
@@ -106,12 +106,12 @@
         function UpdateData() {
             var allowUpd = confirm('Are you sure you want to update Finance Transfer Transactions for these customers?');
             if (allowUpd) {
-                try{parent.BlockUI();}catch(e){}
+                try { parent.BlockUI(); } catch (e) { }
                 $.ajax({
                     url: 'UpdateFinanceTransferMul.ashx?bolUnLoadPage=0&FileName=' + obj('FileName').value + '&FileSize=' + obj('FileSize').value, // + '&Index=' + obj('Index').value,
                     dataType: 'html',
                     cache: false,
-                    success: function(data) {
+                    success: function (data) {
                         $("#divcontainer").removeClass("allhidden");
                         parent.jQuery.unblockUI();
                         $('#content').html(data);
@@ -133,16 +133,15 @@
 <body>
     <div class="main">
         <div class="maincontent">
-            <div style="border: 1px solid #7C98A4; width: 700px; padding: 0px" class="maincontent_box">
+            <div style="border: 1px solid #7C98A4; width: 800px; padding: 0px" class="maincontent_box">
                 <div class="box_header" style="width: 100%; margin: 0px">
                     <div id="left_tab1" class="left_tab" style="width: 100%">
                         <ul>
                             <li id="left_tab1_1" class="current"><a href="javascript:;"><span>Automate Transfer</span></a></li>
-                            <li id="left_tab1_2" style="position:relative">
-                                <a href="javascript:;"><span style="padding-right:22px">Cross-Currency Transfer</span> </a>
-                                <span style="background-image:url('../UserGuide/image/icon_help.png'); cursor:pointer;
-                                        width:14px; height:14px; position:absolute; right:8px; top:3px"
-                                        onclick="javascript:userGuide.show('MultiCrossCurrencyTransfer', 'Multiple Cross-Currency Finance Transfer', 700, 500);"></span>
+                            <li id="left_tab1_2" style="position: relative">
+                                <a href="javascript:;"><span style="padding-right: 22px">Cross-Currency Transfer</span> </a>
+                                <span style="background-image: url('../UserGuide/image/icon_help.png'); cursor: pointer; width: 14px; height: 14px; position: absolute; right: 8px; top: 3px"
+                                    onclick="javascript:userGuide.show('MultiCrossCurrencyTransfer', 'Multiple Cross-Currency Finance Transfer', 700, 500);"></span>
                             </li>
                         </ul>
                     </div>
@@ -161,23 +160,21 @@
                             <input class='btn' id='btnSubmit' onclick='UpdateData()' type='button' value='Update Now!'
                                 disabled="disabled" style="margin-left: 9px" />
                             <div class="defaulttext">
-                                <span>File Size limit 1 MB</span> <a href="Automate Finance.xls" style="font-weight: bold;
-                                    margin-left: 10px">Click here to download template</a>
+                                <span>File Size limit 1 MB</span> <a href="Automate Finance.xls" style="font-weight: bold; margin-left: 10px">Click here to download template</a>
                             </div>
                         </div>
                     </div>
                     <div id="content_tab2" style="margin-top: 10px; margin-left: 10px; display: none">
                         <div>
-                            <div class="b mT5" style="position:relative">
-                                <div style="width:180px">Choose an Excel file to update:</div>
+                            <div class="b mT5" style="position: relative">
+                                <div style="width: 180px">Choose an Excel file to update:</div>
                             </div>
                             <input type="file" style="font-size: 11px; vertical-align: middle" onchange="javascript:return autoTran.isValidFileExtension();"
                                 size="40" name="fileCrossCur" id="fileCrossCur" />
-                            <input class="btn" id="btnUploadFile" type="submit" onclick="javascript:autoTran.UploadFile();"
+                            <input class="btn" id="btnUploadFile" type="submit" onclick="javascript: autoTran.UploadFile();"
                                 style="margin-left: 9px" value="Open File" />
                             <div class="defaulttext">
-                                <span>File Size limit 1 MB</span> <a href="CrossCurrencyTemplate.xls" style="font-weight: bold;
-                                    margin-left: 10px">Click here to download template</a>
+                                <span>File Size limit 1 MB</span> <a href="CrossCurrencyTemplate.xls" style="font-weight: bold; margin-left: 10px">Click here to download template</a>
                             </div>
                         </div>
                         <div>
@@ -185,20 +182,20 @@
                     </div>
                 </div>
             </div>
-            <div id="divcontainer" class="bg_table" style="width:696px; display:none">
+            <div id="divcontainer" class="bg_table" style="width: 796px; display: none">
                 <div id="content">
                 </div>
                 <input type="hidden" id="bolDelDataTmp" value="0" />
                 <input type="hidden" id="FileName" value="0" />
                 <iframe id="fDeleteTmp" name="fDeleteTmp" style="display: none"></iframe>
             </div>
-            <div id="divCrossCurTran" class="bg_table" style="width:696px; display:none">
+            <div id="divCrossCurTran" class="bg_table" style="width: 796px; display: none">
                 <div id="divHTML"></div>
-                <div id="divUploadCCT" style="margin-top:10px">
+                <div id="divUploadCCT" style="margin-top: 10px">
                     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse">
                         <tr>
                             <td align="left">
-                                <div align="left" style="width: 100px; text-align: left; font-weight:bold">
+                                <div align="left" style="width: 100px; text-align: left; font-weight: bold">
                                     Forex account:
                                 </div>
                             </td>
