@@ -314,7 +314,7 @@
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 PlayerComm = Converter.ToDecimal(r["playercomm"]),
                                 Status = Converter.ToString2(r["status"]),
-
+                                IsLive = Converter.ToBool(r["Liveindicator"]),
                                 CommStatus = Converter.To<string>(r["comstatus"]),
                                 BetTeam = Converter.ToString2(r["betteam"]),
                                 IP = Converter.ToString2(r["ip"]),
