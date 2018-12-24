@@ -344,8 +344,8 @@
                     <!--doubleCommControl-->
                     {doubleCommControl}
                     <!--/doubleCommControl-->
+                    <!--CN88HiddenItem-->
                     {outrightControl}
-                                       
                     {numberGameControl}
                     {casinoControl}
                     <!--AGCasinoStatus-->
@@ -429,12 +429,14 @@
                     </div>
                     <!--/EnablePokerGames-->
                     {settingcontrol}
+                    <!--/CN88HiddenItem-->
                 </div>
             </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
                    cellspacing="0"></table>
             <div class="tab_left_content hidden" id="box_05_content_2">
                 <div id="box_detail">
+                    <!--CN88HiddenItem-->
                     <div id="de_left">
                         <ul>
                             <!--detail_edit_menu-->
@@ -450,18 +452,22 @@
                             </li>
                         </ul>
                     </div>
+                    <!--/CN88HiddenItem-->
                     <div id="detail_tab_contents">
+                        <!--CN88HiddenItem-->
                         <div id="detail_tab_content_1" class="l detail_tab_content hidden">
                             {contentminmax}
                         </div>
                         <div id="detail_tab_content_2" class="l detail_tab_content hidden">
                             {contentminmax1}
                         </div>
+                        <!--/CN88HiddenItem-->
                         <div id="detail_tab_content_3" class="l detail_tab_content ">
                             <!-- Detail menu -->
                             <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
                                 Info
                             </a><br />
+                            <!--CN88HiddenItem-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
                                     Sportsbook
@@ -475,6 +481,19 @@
                                     Add New
                                 </a><br />
                             </span>
+                            <!--/CN88HiddenItem-->
+                            <!--CN88VisibleItem-->
+                            <span>
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', 'Views//CN88Temp//EditSportsbook.html');">
+                                    Sportsbook
+                                </a><br />
+                            </span>
+                            <span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', 'Views//CN88Temp//AddNewCustomer.html');">
+                                    Add New
+                                </a><br />
+                            </span>
+                            <!--/CN88VisibleItem-->
                             <!--editTransferTime-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
@@ -496,6 +515,7 @@
                                 </a><br />
                             </span>
                             <!--/chatbot-->
+                            <!--CN88HiddenItem-->
                             <!--edit-casino-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
@@ -587,6 +607,7 @@
                                 Poker Games
                             </a><br />
                             <!--/edit-PokerGames-->
+                            <!--/CN88HiddenItem-->
                             <!-- Detail menu -->
                         </div>
                     </div>

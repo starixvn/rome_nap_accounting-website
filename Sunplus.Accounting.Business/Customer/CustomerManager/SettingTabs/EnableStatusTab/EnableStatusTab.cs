@@ -79,6 +79,15 @@
                             renderLeftPanelParameter,
                             dynamicSettingtable);
 
+            if (customerInfoViewModel.CustomerSite == "CN88")
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HiddenItem");
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88VisibleItem");
+            }
+
             return renderLeftPanelParameter;
         }
 
