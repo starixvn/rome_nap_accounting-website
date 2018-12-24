@@ -357,7 +357,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Happy5, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0-beta3\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0-beta4\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
