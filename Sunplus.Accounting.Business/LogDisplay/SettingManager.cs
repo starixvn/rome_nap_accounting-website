@@ -464,6 +464,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     #endregion
 
+                    #region SystemId
+
+                    trackingVal = ReplaceSystemIdOfSearchAndCopyFunction(trackingVal);
+
+                    #endregion
+
                     xmlLoad = XElement.Parse(trackingVal);
 
                     if (xmlLoad == null) { return tracking; }
@@ -891,6 +897,32 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private string ReplaceIgnoreCase(string input, string oldValue, string newValue)
         {
             return Regex.Replace(input, oldValue, newValue, RegexOptions.IgnoreCase);
+        }
+
+        private string ReplaceSystemIdOfSearchAndCopyFunction(string trackingValue)
+        {
+            if (trackingValue.StartsWith("<Acc_CustomerInsMember_CloneSetting_SAg", StringComparison.OrdinalIgnoreCase)
+                || trackingValue.StartsWith("<Acc_CustomerInsMember_CloneSetting_MAg", StringComparison.OrdinalIgnoreCase)
+                || trackingValue.StartsWith("<Acc_CustomerInsMember_Ag", StringComparison.OrdinalIgnoreCase))
+            {
+                var regxSystemId = new Regex("systemid=\"[0-9]+\"", RegexOptions.IgnoreCase);
+                var systemIdMatchs = regxSystemId.Matches(trackingValue);
+
+                if (systemIdMatchs.Count > 0)
+                {
+                    foreach (Match match in systemIdMatchs)
+                    {
+                        var regxSystemIdValue = new Regex("[0-9]+");
+                        var matchSystemId = regxSystemIdValue.Match(match.Value);
+                        var systemIdText = string.Format("systemid=\"{0}\"", matchSystemId.Value);
+                        var replaceText = string.Format("systemid=\"{0}\"", LogFormater.GetResourceName("systemid_" + matchSystemId.Value));
+
+                        trackingValue = ReplaceIgnoreCase(trackingValue, systemIdText, replaceText);
+                    }
+                }
+            }
+
+            return trackingValue;
         }
     }
 }
