@@ -404,7 +404,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1-compareBalance05\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
