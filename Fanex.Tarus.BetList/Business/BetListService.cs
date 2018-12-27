@@ -1496,7 +1496,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.PokerGames);
             }
-
+            else if(ReportService.IsHappy5Bettype(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.Happy5);
+            }
+            
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
 

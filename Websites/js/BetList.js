@@ -744,6 +744,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 162: // Live Casino.
             return getLiveCasinoParam(matchid, bettype, league);
 
+        case 164: // Happy5
+            return getHappy5Param(matchid);
+
         case 181:
         case 182:
         case 183:
@@ -831,6 +834,16 @@ function getNumberGameParam(matchid) {
         url: "Betlist/BetListNumberGameResult.aspx",
         title: "Number Game",
         jsonParam: { matchid: matchid }
+    };
+}
+
+function getHappy5Param(matchid) {
+    return {
+        url: "Report/ViewHappy5Result.aspx",
+        title: "Happy 5",
+        jsonParam: { matchid: matchid },
+        width: 800,
+        height: 300
     };
 }
 

@@ -1,0 +1,117 @@
+﻿@using Fanex.Tarus.Admin.Resource;
+@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.Entities.CompareBalance;
+@model CompareBalanceModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/Statement/Views/Guideline/Styles/Guideline.less?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/CompareBalance/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var lang = {
+            AccessDenied: '@Resources.Language.DontHavePermission'
+        };
+    </script>
+}
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL"></td>
+            <td class="maincontent_headerC">@Language.CompareBalance</td>
+            <td class="maincontent_headerR"></td>
+        </tr>
+    </table>
+    <div class="bg_table">
+        <div id="errMsg" class="errMsg">
+        </div>
+        <table border="0">
+            <tr>
+                <td>
+                    <label for="txtUserName" class="b">Username: </label>
+                </td>
+                <td>
+                    <input id="txtUserName" onkeydown="if (event.keyCode == 13) { GetData(); return false; }" />
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Submit" onclick="GetData()" />
+                </td>
+                <td>
+                    <span id="notemessage" class="note-info-message" style="float: none;" title="" onclick="ShowTips()"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="clear: both"></div>
+    <div id="gridContainer" class="grid-container">
+        <div id="gridId" class="freegrid"></div>
+    </div>
+</div>
+<div id="infoMessage" class="hidden">
+    <div class="guideline-row">
+        <span class="bold-weight">Total Balance: </span>
+        <span>Total Balance amount from Leftpanel.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">Outstanding: </span>
+        <span>Outstanding amount from Leftpanel.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Credit Sports: </span>
+        <span>get data from the credit balance table (BalCreditSports). Bonus amount is also included if member joins bonus.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Debit Sports: </span>
+        <span>get data from the debit balance table (BalDebitSports). Bonus amount is also included if member joins bonus.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Credit Casino: </span>
+        <span>get data from the credit balance table (BalCreditCasino).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Debit Casino: </span>
+        <span>get data from the debit balance table (BalDebitCasino).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Credit Others: </span>
+        <span>get data from the credit balance table (BalCreditOthers).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Debit Others: </span>
+        <span>get data from the debit balance table (BalDebitOthers).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Credit Transfer: </span>
+        <span>get data from the credit balance table (BalCreditTransfer). Bonus amount is also included if member joins bonus.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Debit Transfer: </span>
+        <span>get data from the debit balance table (BalCreditTransfer). Bonus amount is also included if member joins bonus.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Credit Net Position: </span>
+        <span>get data from the credit balance tables (BalNetPosition).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">General wallet/Debit Net Position: </span>
+        <span>get data from the debit balance tables (BalNetPosition).</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">Bonus wallet/Credit: </span>
+        <span>get data from the credit balance tables for bonus (BonusWalletCredit) if member joins bonus.</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">Bonus wallet/Debit: </span>
+        <span>get data from the debit balance tables for bonus (BonusWalletCredit) if member joins bonus.</span>
+    </div>
+</div>

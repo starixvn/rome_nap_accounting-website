@@ -1722,4 +1722,19 @@
   <data name="function9" xml:space="preserve">
     <value>Create new member from existing account</value>
   </data>
+  <data name="happy5" xml:space="preserve">
+    <value>Happy 5</value>
+  </data>
+  <data name="MinBv164" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="MaxBv164" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MPMv164" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="UMMBv164" xml:space="preserve">
+    <value>Update Min-Max Bet</value>
+  </data>
 </root>
