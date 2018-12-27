@@ -138,7 +138,8 @@
                 TransDesc = Convert.ToString(reader["transdesc"]),
 
                 BetCheck = Convert.ToString(reader["betcheck"]),
-                OddsSpread = Convert.ToDecimal(reader["OddsSpread"])
+                OddsSpread = Convert.ToDecimal(reader["OddsSpread"]),
+                ExtraInfo = Convert.ToString(reader["ExtraInfo"])
             };
         }
 

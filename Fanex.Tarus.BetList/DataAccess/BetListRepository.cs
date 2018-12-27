@@ -314,7 +314,7 @@
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 PlayerComm = Converter.ToDecimal(r["playercomm"]),
                                 Status = Converter.ToString2(r["status"]),
-                                IsLive = Converter.ToBool(r["Liveindicator"]),
+                                
                                 CommStatus = Converter.To<string>(r["comstatus"]),
                                 BetTeam = Converter.ToString2(r["betteam"]),
                                 IP = Converter.ToString2(r["ip"]),
@@ -369,7 +369,8 @@
                                 BetCheck = Converter.ToString2(r["BetCheck"]),
                                 TransDesc = Converter.ToString2(r["transdesc"]),
                                 Stake = Converter.ToDecimal(r["Stake"]),
-                                Currency = Converter.ToString2(r["Currency"])
+                                Currency = Converter.ToString2(r["Currency"]),
+                                IsLive = Converter.ToBool(r["liveindicator"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
