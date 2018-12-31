@@ -330,11 +330,13 @@
                     <!--selectedBettingControl-->
                     {selectedBettingControl}
                     <!--/selectedBettingControl-->
+                    <!--CN88HiddenItem-->
                     {suspendedControl}
-
                     <div class="col">
                         Closed {closedCustomer}
                     </div>
+                    <!--/CN88HiddenItem-->
+                    
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
@@ -344,6 +346,13 @@
                     <!--doubleCommControl-->
                     {doubleCommControl}
                     <!--/doubleCommControl-->
+                    <!--CN88VisibleItem-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.CN88EditCustStatus('{UserName}', {CustomerStatusId});">
+                            Status:{CustomerStatus}
+                        </span>
+                    </div> 
+                    <!--/CN88VisibleItem-->
                     <!--CN88HiddenItem-->
                     {outrightControl}
                     {numberGameControl}
@@ -463,11 +472,11 @@
                         </div>
                         <!--/CN88HiddenItem-->
                         <div id="detail_tab_content_3" class="l detail_tab_content ">
+                            <!--CN88HiddenItem-->
                             <!-- Detail menu -->
                             <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
                                 Info
                             </a><br />
-                            <!--CN88HiddenItem-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
                                     Sportsbook
@@ -484,16 +493,17 @@
                             <!--/CN88HiddenItem-->
                             <!--CN88VisibleItem-->
                             <span>
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', 'Views//CN88Temp//EditSportsbook.html');">
-                                    Sportsbook
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{linkEditSettingCN88}');">
+                                    Edit Setting
                                 </a><br />
                             </span>
                             <span class="{IsHidden1}">
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', 'Views//CN88Temp//AddNewCustomer.html');">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{linkAddnewDownlineCN88}');">
                                     Add New
                                 </a><br />
                             </span>
                             <!--/CN88VisibleItem-->
+                            <!--CN88HiddenItem-->
                             <!--editTransferTime-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
@@ -501,6 +511,7 @@
                                 </a><br />
                             </span>
                             <!--/editTransferTime-->
+                            <!--/CN88HiddenItem-->
                             <!--maxexposure-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/EditMaxExposure.aspx?set=1&custId={CustId}&uname={FullUserName}&type={type}');">

@@ -8,17 +8,10 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using System;
 using System.Configuration;
+using Fanex.Tarus.Infrastructure.Configurations.InternalLogin;
 
 public partial class InternalView : System.Web.UI.Page
 {
-    private enum AlphaSiteCode
-    {
-        I1 = 1,
-        I7 = 7,
-        I9 = 9,
-        I8 = 8
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         var serviceBase = new ServiceBase();
@@ -52,7 +45,7 @@ public partial class InternalView : System.Web.UI.Page
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
 
-        string internalAgentUrl = GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode);
+        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site) ?? string.Empty;
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),
@@ -70,20 +63,5 @@ public partial class InternalView : System.Web.UI.Page
             (ipReturn.StartsWith("10.", StringComparison.OrdinalIgnoreCase) ||
             ipReturn.StartsWith("172.16.", StringComparison.OrdinalIgnoreCase) ||
             ipReturn.StartsWith("192.168.", StringComparison.OrdinalIgnoreCase)) ? 1 : 0;
-    }
-
-    private static string GetInternalLoginUrl(AlphaSiteCode siteCode)
-    {
-        switch (siteCode)
-        {
-            case AlphaSiteCode.I7:
-                return ConfigurationManager.AppSettings["int_agent_url7"];
-            case AlphaSiteCode.I9:
-                return ConfigurationManager.AppSettings["int_agent_url9"];
-            case AlphaSiteCode.I8:
-                return ConfigurationManager.AppSettings["int_agent_url8"];
-            default:
-                return ConfigurationManager.AppSettings["int_agent_url"];
-        }
     }
 }

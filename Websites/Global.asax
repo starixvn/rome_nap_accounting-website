@@ -31,6 +31,7 @@
 <%@ Import Namespace="Chatbot.Client" %>
 <%@ Import Namespace="Chatbot.Client.Configurations" %>
 <%@ Import Namespace="Fanex.Tarus.Customer.Helpers" %>
+<%@ Import Namespace="CN88.CustomerSetting.Client" %>
 
 <script RunAt="server">
 
@@ -54,6 +55,7 @@
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
+        CN88CustomerSettingRegistration.Init();
         RegisterRoutes(RouteTable.Routes);
 
         AutoMapperConfiguration.Configure();

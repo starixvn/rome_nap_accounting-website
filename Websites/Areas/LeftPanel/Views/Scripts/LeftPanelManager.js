@@ -99,6 +99,16 @@ var LeftPanelManager = function () {
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
+
+    self.CN88EditCustStatus = function(userName, status)
+    {
+        var param = {
+            userName: userName,
+            status: status
+        };
+        var url = "CustomerSetting/ViewCN88CustomerStatus?" + $.param(param);
+        parent.OpenNextPopup("CN88CustomerStatusSetting", url, "Update Account Status", 400, 200, true, false, window, 0, null, null);
+    }
 };
 
 window.top.reloadLeftPanel = function () {

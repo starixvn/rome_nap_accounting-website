@@ -1,0 +1,25 @@
+﻿@using Fanex.Tarus.Customer.ViewModels.CN88;
+@model CN88CustomerStatusViewModel
+@{
+    List<SelectListItem> custStatus = new List<SelectListItem>
+    {
+        new SelectListItem { Text="Open", Value="1" },
+        new SelectListItem { Text="Closed", Value="2" },
+        new SelectListItem { Text="Suspended", Value="3" }
+    };
+}
+<!DOCTYPE html>
+<html lang="en" class="linen">
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body id="body">
+    <div id="errMsg" class="errMsg"></div>
+    Username: @Model.UserName
+    @Html.DropDownListFor(model => model.Status, custStatus)
+    <input type="button" value="Cancel" />
+    <input type="button" value="Submit" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/LeftPanel/Views/CN88/Scripts/UpdateCN88CustomerStatus.js")></script>
+</body>
+</html>
