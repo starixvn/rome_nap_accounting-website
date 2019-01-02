@@ -50,6 +50,7 @@ anmb.initContext = function () {
 };
 //get default super value
 anmb.initCustomer = function () {
+    try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
     $.ajax({
         type: "POST",
         url: "GetCustomerObject",
