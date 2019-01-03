@@ -64,6 +64,7 @@ ans.initContext = function () {
 };
 //get default super value
 ans.initCustomer = function () {
+    try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
     $.ajax({
         type: "POST",
         url: "GetCustomerObject",
