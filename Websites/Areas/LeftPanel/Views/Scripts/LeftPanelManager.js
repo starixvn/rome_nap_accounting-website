@@ -100,9 +100,10 @@ var LeftPanelManager = function () {
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
 
-    self.CN88EditCustStatus = function(userName, status)
+    self.CN88EditCustStatus = function(custId, userName, status)
     {
         var param = {
+            custId: custId,
             userName: userName,
             status: status
         };

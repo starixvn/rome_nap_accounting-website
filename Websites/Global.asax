@@ -53,9 +53,10 @@
         AreaRegistration.RegisterAllAreas();
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+        CN88CustomerSettingRegistration.Init();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
-        CN88CustomerSettingRegistration.Init();
+
         RegisterRoutes(RouteTable.Routes);
 
         AutoMapperConfiguration.Configure();

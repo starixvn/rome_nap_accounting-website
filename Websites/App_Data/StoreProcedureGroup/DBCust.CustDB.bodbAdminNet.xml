@@ -217,7 +217,7 @@
   <Function Name="SearchCopy">
     <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel_UAT3" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -391,5 +391,8 @@
   </Function>
   <Function Name="Others - PlayerID (3rd)">
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="CN88">
+    <Setting Key="Age_CS_Customer_Status_Upd" SpName="Age_CS_Customer_Status_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

@@ -340,15 +340,17 @@
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
+                    <!--CN88HiddenItem-->
                     <!--allowAutoPTControl-->
                     {allowAutoPTControl}
                     <!--/allowAutoPTControl-->
                     <!--doubleCommControl-->
                     {doubleCommControl}
                     <!--/doubleCommControl-->
+                    <!--/CN88HiddenItem-->
                     <!--CN88VisibleItem-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.CN88EditCustStatus('{UserName}', {CustomerStatusId});">
+                        <span class="canchange" onclick="leftPanelManager.CN88EditCustStatus({CustId}, '{UserName}', {CustomerStatusId});">
                             Status:{CustomerStatus}
                         </span>
                     </div> 

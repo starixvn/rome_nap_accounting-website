@@ -27,8 +27,8 @@ namespace Fanex.Tarus.Customer.DataAccess
                 var outputs = objDB.GetOuputParams();
                 return new Result()
                 {
-                    ErrorCode = (int)outputs[""],
-                    ErrorMessage = outputs[""].ToString()
+                    ErrorCode = (int)outputs["errcode"],
+                    ErrorMessage = outputs["errmsg"]?.ToString()
                 };
             }
         }

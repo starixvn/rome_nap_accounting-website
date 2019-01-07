@@ -91,6 +91,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                         {
                             while (reader.Read())
                             {
+                                if (reader[1].ToString().Equals("CN88"))
+                                {
+                                    continue;
+                                }
+
                                 if (reader["islicensee"].ToString() == "True")
                                 {
                                     licenseeSites.ListSite.Add(new Site

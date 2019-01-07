@@ -280,6 +280,14 @@
                 }
             }
         }
+
+        var cn88SuccessfulUpdatingCallback = function () {
+            if (this.$window.location.href.indexOf('CN88CustomerSetting/ViewCN88CustomerSetting/Edit') != -1)
+            {
+                this.$window.location.reload();
+            }
+        }
+
         $(document).ready(function () {
             var getURLParam = function (strParamName) {
                 var strReturn = null;

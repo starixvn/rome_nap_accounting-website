@@ -50,9 +50,9 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
-        public ActionResult ViewCN88CustomerStatus(string userName, int status)
+        public ActionResult ViewCN88CustomerStatus(int custId, string userName, int status)
         {
-            return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { Status = status, UserName = userName });
+            return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { CustId=custId, Status = status, UserName = userName });
         }
 
         public JsonResult UpdateCN88CustomerStatus(int custId, byte updStatusId)
