@@ -7,7 +7,6 @@
 //   <change who="Ricky.Nguyen" date="2012.12.10">Created</change>
 // </history>
 
-
 namespace Fanex.Tarus.BetList.Business
 {
     using System;
@@ -71,7 +70,6 @@ namespace Fanex.Tarus.BetList.Business
                     Handicap2 = Converter.ToDecimal(r["hdp2"]),
                     Odds = Converter.ToDecimal(r["Odds"]),
                     BetTeam = Converter.ToString2(r["Betteam"]),
-                    StatusId = Converter.ToInt(r["statusid"]),
                     IsLive = Converter.ToBool(r["Liveindicator"]),
                     LiveHomeScore = Converter.ToInt(r["Livehomescore"]),
                     LiveAwayScore = Converter.ToInt(r["Liveawayscore"]),
@@ -83,7 +81,9 @@ namespace Fanex.Tarus.BetList.Business
                     IsNeutral = Converter.ToBool(r["isNeutral"]),
                     BetCheck = Converter.ToString2(r["BetCheck"]),
                     TransDesc = Converter.ToString2(r["transdesc"]),
-                    ShowTime = Converter.ToString2(r["showtime"])
+                    ShowTime = Converter.ToString2(r["showtime"]),
+                    EventDate = Converter.ToDateTime(r["eventdate"]),
+                    Status = Converter.ToString2(r["status"])
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -103,10 +103,10 @@ namespace Fanex.Tarus.BetList.Business
                     {
                         totalItem--;
                         betDetail.ChoiceHtml =
-                            "<div class='ticketList'>" + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
-                                + (totalItem > 0 ?
-                                "</div>" + "<div class=\"line\"></div>" :
-                                "</div>");
+                            "<div class='ticketList'>"
+                                + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
+                                + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
+                            + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
                     }
 
                     return betDetails;
@@ -223,7 +223,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -303,7 +303,7 @@ namespace Fanex.Tarus.BetList.Business
         public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
         {
             bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount)
-            || (AppSession.IsU3SpecialAccount && !this.IsU3SpecialCustomers(criteria.CustId));
+            || (AppSession.IsU3SpecialAccount && !IsU3SpecialCustomers(criteria.CustId));
 
             if (isLimitForU3)
             {
@@ -538,7 +538,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in betDetailsMergeModel)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino_Merge, false);
@@ -670,7 +670,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount) ||
-                    (AppSession.IsU3SpecialAccount && !this.IsU3SpecialCustomers(customerId));
+                    (AppSession.IsU3SpecialAccount && !IsU3SpecialCustomers(customerId));
 
                 IList<TicketDetail> betDetails = isLimitForU3 ?
                     _betListRepository.Fetch<TicketDetail>(criteriaForU3, mapTicketObjectFunction, ref outputLiveCasino) :
@@ -686,7 +686,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -740,7 +740,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -779,10 +779,10 @@ namespace Fanex.Tarus.BetList.Business
 
                             betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
                             betDetail.ChoiceHtml =
-                                "<div class='ticketList'>" + builderParlayDetail.BuildChoice(betDetail.Ticket, ticketHelper, null, false) +
-                                (totalItem > 0 ?
-                                "</div><div class=\"line\"></div>" :
-                                "</div>");
+                                "<div class='ticketList'>"
+                                    + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
+                                    + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
+                                + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
 
                             firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
                         }
@@ -1110,7 +1110,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in betDetailsModel)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -1313,7 +1313,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     foreach (TicketDetail betDetail in betDetails)
                     {
-                        ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -1496,11 +1496,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.PokerGames);
             }
-            else if(ReportService.IsHappy5Bettype(betTypeId))
+            else if (ReportService.IsHappy5Bettype(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);
             }
-            
+
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
 
