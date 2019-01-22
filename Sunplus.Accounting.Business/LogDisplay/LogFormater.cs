@@ -65,6 +65,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     strVal = ReplaceIP(val);
                     break;
 
+                case 3:
+                    strVal = Convert.ToDouble(val).ToString("N0");
+                    break;
                 default:
                     break;
             }

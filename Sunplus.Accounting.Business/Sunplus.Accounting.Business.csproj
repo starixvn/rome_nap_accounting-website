@@ -435,6 +435,7 @@
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
+    <Compile Include="LogDisplay\CN88LogFormatter.cs" />
     <Compile Include="LogDisplay\LoginLogType.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
