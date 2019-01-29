@@ -48,6 +48,7 @@
     </table>
     <div id="divShowInfo" class="maincontent_box tableWidth">
     </div>
+    <div class="errMsg" style="color: #ff5411">@Html.Raw(Model.CustomerInformation.RoleId == 1 ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
     <div id="customerInfo">
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
