@@ -106,8 +106,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.77.0-beta04\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetList.Core.2.77.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Bullfighting, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Bullfighting.1.2.0\lib\net40\Fanex.BetList.Bullfighting.dll</HintPath>
@@ -122,8 +121,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.77.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.77.0-beta04\lib\net40\Fanex.BetList.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetList.Core.2.77.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
