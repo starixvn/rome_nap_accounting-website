@@ -13,7 +13,7 @@
     <script type="text/javascript">
         function changePwd() {
             var code = document.getElementById('code').value;
-            document.getElementById('txtPwd').value = document.getElementById('txtPwd').value.ec(code).hc();
+            document.getElementById('txtPwd').value = document.getElementById('txtPwd').value.encrypt(code);
             return true;
         }
         function CheckInputValid() {

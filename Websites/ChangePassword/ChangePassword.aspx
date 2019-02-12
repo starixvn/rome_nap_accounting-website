@@ -26,8 +26,8 @@
     </div>
     <script type="text/javascript">
         function changePwd() {
-            document.getElementById('txtPass').value = document.getElementById('txtPass').value.ec(document.getElementById('code').value).hc();
-            document.getElementById('txtConfirmPass').value = document.getElementById('txtConfirmPass').value.ec(document.getElementById('code').value).hc();
+            document.getElementById('txtPass').value = document.getElementById('txtPass').value.encrypt(document.getElementById('code').value);
+            document.getElementById('txtConfirmPass').value = document.getElementById('txtConfirmPass').value.encrypt(document.getElementById('code').value);
             return true;
         }
     </script>

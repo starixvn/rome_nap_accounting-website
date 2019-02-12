@@ -85,8 +85,8 @@ CustomerSecurityCode = function () {
             self.Tables.errorMessage.addClass("hidden");
 
             var code = document.getElementById('code').value;
-            self.Params.reportParams.Securitycode = self.Tables.txtSecurityCode.val().ec(code).hc();
-            self.Params.reportParams.ConfirmSecurityCode = self.Tables.txtConfirmSecurityCode.val().ec(code).hc();
+            self.Params.reportParams.Securitycode = self.Tables.txtSecurityCode.val().encrypt(code);
+            self.Params.reportParams.ConfirmSecurityCode = self.Tables.txtConfirmSecurityCode.val().encrypt(code);
 
             $.ajax({
                 type: "POST",

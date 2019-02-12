@@ -40,7 +40,7 @@
 <script type="text/javascript">
     function changePwd() {
         var code = document.getElementById('code').value;
-        document.getElementById('tbxPassNewAcc').value = document.getElementById('tbxPassNewAcc').value.ec(code).hc();
+        document.getElementById('tbxPassNewAcc').value = document.getElementById('tbxPassNewAcc').value.encrypt(code);
         return true;
     }
 </script>
