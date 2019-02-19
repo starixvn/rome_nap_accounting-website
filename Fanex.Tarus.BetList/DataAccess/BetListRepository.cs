@@ -1,5 +1,11 @@
 ﻿namespace Fanex.Tarus.BetList.DataAccess
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Constants;
     using Criteria;
     using Fanex.BetList.Core.Entities;
@@ -9,12 +15,6 @@
     using Fanex.NAP.Framework.Data;
     using Models;
     using Resources;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
 
     public class BetListRepository : IBetListRepository
     {
@@ -314,7 +314,7 @@
                                 Winlost = Converter.ToDecimal(r["winlost"]),
                                 PlayerComm = Converter.ToDecimal(r["playercomm"]),
                                 Status = Converter.ToString2(r["status"]),
-                                
+
                                 CommStatus = Converter.To<string>(r["comstatus"]),
                                 BetTeam = Converter.ToString2(r["betteam"]),
                                 IP = Converter.ToString2(r["ip"]),
@@ -354,7 +354,6 @@
                                 BetTypeId = Converter.To<int>(r["bettype"]),
                                 HomeId = Converter.To<long>(r["homeid"]),
                                 AwayId = Converter.To<long>(r["awayid"]),
-                                StatusId = Converter.ToInt(r["statusid"]),
                                 Handicap1 = Converter.ToDecimal(r["hdp1"]),
                                 Handicap2 = Converter.ToDecimal(r["hdp2"]),
                                 Odds = Converter.ToDecimal(r["odds"]),
@@ -370,7 +369,9 @@
                                 TransDesc = Converter.ToString2(r["transdesc"]),
                                 Stake = Converter.ToDecimal(r["Stake"]),
                                 Currency = Converter.ToString2(r["Currency"]),
-                                IsLive = Converter.ToBool(r["liveindicator"])
+                                IsLive = Converter.ToBool(r["liveindicator"]),
+                                EventDate = Converter.ToDateTime(r["eventdate"]),
+                                Status = Converter.ToString2(r["status"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

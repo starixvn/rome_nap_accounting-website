@@ -232,6 +232,6 @@
                 BetListResources.Details);
         }
 
-        #endregion
+        #endregion For Cash Out
     }
 }
