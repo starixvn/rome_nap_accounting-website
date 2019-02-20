@@ -1,0 +1,14 @@
+﻿@using Fanex.BetDetails.BetBuilder.ViewModels;
+
+@model BetBuilderDetailViewModel
+@if (Model.Details.Any())
+{
+    <div class="betbuilder">
+        @foreach (var detail in Model.Details)
+        {
+            <div>
+                @detail.SelectionName - @detail.Result
+            </div>
+        }
+    </div>
+}

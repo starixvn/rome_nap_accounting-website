@@ -265,6 +265,40 @@ function showMP(transid, refno, custId, transIndex) {
     }
 }
 
+function showSingleMatchParlayDetail(transid, custid, transIndex) {
+    var divEvent = $("#divEvent_" + transid + transIndex);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "GET",
+                url: window.rootUrl + "BetBuilder/ViewDetail",
+                data: "TransactionId=" + transid + "&CustomerId=" + custid,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divEvent.css("display", "");
+            $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+        }
+    }
+    else {
+        divEvent.css("display", "none");
+        $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+    }
+}
+
 function showCombMP(transid, transIndex, refno, custId) {
     showMP(transid, refno, custId, transIndex);
 }

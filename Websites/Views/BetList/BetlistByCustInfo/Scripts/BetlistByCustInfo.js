@@ -396,6 +396,40 @@ function showDetail(id) {
     $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
 }
 
+function showSingleMatchParlayDetail(transid, custid, transIndex) {
+    var divEvent = $("#divEvent_" + transid + transIndex);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "GET",
+                url: window.rootUrl + "BetBuilder/ViewDetail",
+                data: "TransactionId=" + transid + "&CustomerId=" + custid,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divEvent.css("display", "");
+            $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+        }
+    }
+    else {
+        divEvent.css("display", "none");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    }
+}
+
 function showMP(transid, refno, custId, transIndex) {
     transIndex = transIndex == undefined ? "" : transIndex;
     var divEvent = $("#divEvent_" + transid + transIndex);

@@ -70,6 +70,10 @@
       <HintPath>..\packages\Fanex.AuthenticationFilter.1.0.0.0\lib\net40\Fanex.AuthenticationFilter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.0-beta5\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
       <Private>True</Private>
@@ -83,15 +87,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.85.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.78.0-beta03\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.85.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.85.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.78.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.78.0-beta03\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -149,8 +153,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.RemotingRef, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.RemotingRef.1.3.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
+    <Reference Include="Fanex.RemotingRef, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.RemotingRef.1.4.0-beta1\lib\net461\Fanex.RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -495,6 +499,7 @@
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Controller\BetListController.cs" />
     <Compile Include="Controller\ExchangeBetListController.cs" />
+    <Compile Include="Controller\BetBuilderController.cs" />
     <Compile Include="Controller\Lucky3Controller.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
@@ -531,6 +536,7 @@
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
+    <Compile Include="Criteria\BetBuilder\GetBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
     <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
@@ -554,6 +560,7 @@
     <Compile Include="DataAccess\IBetListDetailRepository.cs" />
     <Compile Include="DataAccess\IBetListRepository.cs" />
     <Compile Include="DataAccess\ISystemParlayRepository.cs" />
+    <Compile Include="DataAccess\BetBuilder\BetBuilderRepository.cs" />
     <Compile Include="DataAccess\Lucky3\Lucky3Repository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
