@@ -539,7 +539,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         var code = document.getElementById('code').value;
         var param = {
             UserName: $scope.newUser.username,
-            Userpwd: $scope.newUser.password.ec(code).hc(),
+            Userpwd: $scope.newUser.password.encrypt(code),
             FirstName: $scope.newUser.firstname,
             LastName: $scope.newUser.lastname,
             Phone: $scope.newUser.phone,

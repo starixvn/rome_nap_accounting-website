@@ -15,8 +15,8 @@
     <script type="text/javascript">
         function changePwd() {
             var code = document.getElementById('code').value;
-            document.getElementById('password').value = document.getElementById('password').value.ec(code).hc();
-            document.getElementById('confirm').value = document.getElementById('confirm').value.ec(code).hc();
+            document.getElementById('password').value = document.getElementById('password').value.encrypt(code);
+            document.getElementById('confirm').value = document.getElementById('confirm').value.encrypt(code);
             return true;
         }
 

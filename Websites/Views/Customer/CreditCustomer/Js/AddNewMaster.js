@@ -167,7 +167,7 @@ anm.checkValidInput = function () {
 anm.addNewMaster = function () {
     if (anm.checkValidInput()) {
         var code = document.getElementById('code').value;
-        customer.password = customer.password.ec(code).hc();
+        customer.password = customer.password.encrypt(code);
         //get betting limit
         if (bettingLimitGrid.Validate()) {
             customer.bettingLimit = bettingLimitGrid.Save();

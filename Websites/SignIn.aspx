@@ -52,7 +52,7 @@
                     return false;
                 }
 
-                document.getElementById('TxtPassword').value = document.getElementById('TxtPassword').value.ec(document.getElementById('code').value).hc();
+                document.getElementById('TxtPassword').value = document.getElementById('TxtPassword').value.encrypt(document.getElementById('code').value);
 
                 return true;
             },

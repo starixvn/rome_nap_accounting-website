@@ -75,7 +75,7 @@
     </div>
     <script type="text/javascript">
         function changePwd() {
-            document.getElementById('password').value = document.getElementById('password').value.ec(document.getElementById('code').value).hc();
+            document.getElementById('password').value = document.getElementById('password').value.encrypt(document.getElementById('code').value);
             return true;
         }
     </script>

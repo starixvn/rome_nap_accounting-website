@@ -165,7 +165,7 @@ ans.checkValidInput = function () {
 ans.addNewSuper = function () {
     if (ans.checkValidInput()) {
         var code = document.getElementById('code').value;
-        customer.password = customer.password.ec(code).hc();
+        customer.password = customer.password.encrypt(code);
         //get betting limit
         if (bettingLimitGrid.Validate()) {
             customer.bettingLimit = bettingLimitGrid.Save();

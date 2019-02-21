@@ -183,7 +183,7 @@ $.fn.forceNumber = function () {
         }
 
         return {
-            userpwd: passwordValue.ec(vm.code).hc(),
+            userpwd: passwordValue.encrypt(vm.code),
             firstName: $.trim($firstName.val()),
             lastName: $.trim($lastName.val()),
             phone: $.trim($phone.val()),
