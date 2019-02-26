@@ -18,10 +18,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly Dictionary<string, string> _groupResourceKeyDictionary = new Dictionary<string, string>() {
             {"10","HandicapOverUnderOddEven" },
-            {"11","LiveHandicapOverUnderOddEven" },
-            {"50","1x2Live1x2" },
+            {"11","InPlayHandicapOverUnderOddEven" },
+            {"50","1x2InPlay1x2" },
             {"99990","OtherBetType" },
-            {"99991","LiveOtherBetType" },
+            {"99991","InPlayOtherBetType" },
             {"100","Outright" }
         };
 

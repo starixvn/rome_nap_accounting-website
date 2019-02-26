@@ -1740,8 +1740,8 @@
   <data name="GeneralInfo" xml:space="preserve">
     <value>General Information</value>
   </data>
-  <data name="1x2Live1x2" xml:space="preserve">
-    <value>1x2, Live 1x2</value>
+  <data name="1x2InPlay1x2" xml:space="preserve">
+    <value>1x2,In-Play 1x2</value>
   </data>
   <data name="Comm" xml:space="preserve">
     <value>Commission</value>
@@ -1749,14 +1749,14 @@
   <data name="HandicapOverUnderOddEven" xml:space="preserve">
     <value>Handicap, Over/Under, Odd/Even</value>
   </data>
-  <data name="LiveHandicapOverUnderOddEven" xml:space="preserve">
-    <value>Live Handicap, Over/Under, Odd/Even</value>
+  <data name="InPlayHandicapOverUnderOddEven" xml:space="preserve">
+    <value>In-Play Handicap, In-Play Over/Under, In-Play Odd/Even</value>
   </data>
-  <data name="LiveOtherBetType" xml:space="preserve">
-    <value>Live Other Bet Types</value>
+  <data name="InPlayOtherBetType" xml:space="preserve">
+    <value>In-Play Other Bet Types</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Max Bet</value>
+    <value>Max per Event</value>
   </data>
   <data name="OtherBetType" xml:space="preserve">
     <value>Other Bet Types</value>
