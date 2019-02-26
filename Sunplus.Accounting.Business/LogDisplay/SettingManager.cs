@@ -113,22 +113,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("pageindex", page > 0 ? page - 1 : 0);
                 param.Add("pagesize", pageSize);
                 DataTable data = null;
-                //DataSet dsTemp = new DataSet();
-                //dsTemp.ReadXml("D:\\Gitlab\\Accounting\\accounting-website-5\\Websites\\CN88FakeLogData.xml");
-                //data = dsTemp.Tables[0];
                 if (custId != -1)
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
-
-                //data.WriteXml("D:\\Gitlab\\Accounting\\accounting-website-5\\Websites\\CN88FakeLogData.xml");
+                
                 if (data != null && data.Rows.Count > 0)
                 {
                     logResult.Total = _logDAO.GetLogDisplayTotal(param, logType);
                     logResult.Rows = new List<RecordSp>();
-
-                    //logResult.Rows.Add(new RecordSp());
-
+                    
                     foreach (DataRow row in data.Rows)
                     {
                         // get record value
@@ -137,23 +131,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get tracking value
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
-                        if (_cn88LogFormatter.IsCN88LogActionId(actionId))
-                        {
-                            record.Detail = _cn88LogFormatter.GenerateDetail(trackingvalue, CastAide.AsString(row["SPName"]));
-                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
-                        }
-                        else
-                        {
-                            var trackingVal = _ParseTrackingValue(trackingvalue, actionId, CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
-                            record.Detail = trackingVal;
-                            var diffVals = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
-                            record.Diffs = diffVals;
-                            /*if (diffVals.Count<TrackingValue>() > 0)
-                            {
-                                record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0));
-                            }*/
-                        }
-
+                        record.Detail = _cn88LogFormatter.IsCN88LogActionId(actionId)
+                                ? _cn88LogFormatter.GenerateDetail(trackingvalue, CastAide.AsString(row["SPName"]))
+                                : _ParseTrackingValue(trackingvalue, actionId, CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
+                        record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
+                       
                         logResult.Rows.Add(record);
                     }
                 }

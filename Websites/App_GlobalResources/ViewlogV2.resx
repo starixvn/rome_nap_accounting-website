@@ -1761,4 +1761,16 @@
   <data name="OtherBetType" xml:space="preserve">
     <value>Other Bet Types</value>
   </data>
+  <data name="GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
 </root>

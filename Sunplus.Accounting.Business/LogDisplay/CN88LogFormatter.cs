@@ -101,12 +101,5 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
             return detail;
         }
-
-        public List<List<TrackingValue>> GenerateDiff(string trackingValue, string trackingValueOld)
-        {
-            var diff = new List<List<TrackingValue>>();
-
-            return diff;
-        }
     }
 }
