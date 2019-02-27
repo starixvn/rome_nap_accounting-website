@@ -14,7 +14,7 @@
         public IEnumerable<BetBuilderDetailModel> GetBetBuilderDetail(IGetBetBuilderDetailParameter criteria)
         {
             IList<BetBuilderDetailModel> details = new List<BetBuilderDetailModel>();
-            var parameter = new GetBetBuilderDetailCriteria(criteria);
+            var parameter = new GetBetListBetBuilderDetailCriteria(criteria);
 
             using (var db = new ObjectDb(parameter.GetSettingKey()))
             {

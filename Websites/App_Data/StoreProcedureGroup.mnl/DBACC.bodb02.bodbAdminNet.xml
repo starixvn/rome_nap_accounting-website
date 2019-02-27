@@ -119,4 +119,8 @@
   <Function Name="Jackpot Details">
     <Setting Key="Acc_BetList_Jackpot_Detail" SpName="Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Bet Builder Detail">
+    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_TicketResult_BetBuilder " SpName="Acc_TicketResult_BetBuildert" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>

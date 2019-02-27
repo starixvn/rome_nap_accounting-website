@@ -3,9 +3,9 @@
     using BetDetails.BetBuilder.Criteria;
     using NAP.Framework.Data;
 
-    public class GetBetBuilderDetailCriteria : CriteriaBase
+    public class GetBetListBetBuilderDetailCriteria : CriteriaBase
     {
-        public GetBetBuilderDetailCriteria(IGetBetBuilderDetailParameter commandData)
+        public GetBetListBetBuilderDetailCriteria(IGetBetBuilderDetailParameter commandData)
         {
             Criteria = commandData;
         }

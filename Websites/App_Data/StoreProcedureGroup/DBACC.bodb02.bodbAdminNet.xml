@@ -119,5 +119,6 @@
   </Function>
   <Function Name="Bet Builder Detail">
     <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_TicketResult_BetBuilder " SpName="Acc_TicketResult_BetBuilder_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>

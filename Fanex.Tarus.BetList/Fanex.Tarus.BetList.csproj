@@ -71,8 +71,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.0-beta5\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.0-beta8\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
@@ -87,16 +86,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.78.0-beta03\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetList.Core.2.84.0-beta03\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.78.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.78.0-beta03\lib\net40\Fanex.BetList.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.Core, Version=2.84.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.84.0-beta03\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -157,8 +154,8 @@
       <HintPath>..\packages\Fanex.RemotingRef.1.4.0-beta1\lib\net461\Fanex.RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.8\lib\net40\Fanex.Result.Core.dll</HintPath>
+    <Reference Include="Fanex.Result.Core, Version=2.1.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.2.0-betbuilder-01\lib\net40\Fanex.Result.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -169,8 +166,8 @@
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.4\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.8\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.2.0-betbuilder-01\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -213,11 +210,12 @@
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.2\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.3-beta01\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.1.5\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.1.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.1.9-betbuilder-01\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -509,6 +507,7 @@
     <Compile Include="Core\LoggingHandler.cs" />
     <Compile Include="Core\NpoiExcelUtils.cs" />
     <Compile Include="Core\SessionManager.cs" />
+    <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
@@ -536,7 +535,7 @@
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
-    <Compile Include="Criteria\BetBuilder\GetBetBuilderDetailCriteria.cs" />
+    <Compile Include="Criteria\BetBuilder\GetBetListBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
     <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />

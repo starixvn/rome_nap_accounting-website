@@ -7,7 +7,7 @@
 
     public class BetBuilderController : Controller
     {
-        private readonly IBetBuilderService lucky3Service;
+        private readonly IBetBuilderService service;
 
         public BetBuilderController()
             : this(null)
@@ -16,12 +16,12 @@
 
         public BetBuilderController(IBetBuilderService betBuilderService)
         {
-            this.lucky3Service = betBuilderService?? new BetBuilderService(new BetBuilderRepository());
+            this.service = betBuilderService?? new BetBuilderService(new BetBuilderRepository());
         }
 
         public ActionResult ViewDetail(GetBetBuilderDetailParameter criteria)
         {
-            var result = lucky3Service.GetBetListDetail(criteria);
+            var result = service.GetBetListDetail(criteria);
 
             return PartialView("~/Views/BetListDetails/BetBuilder/Index.cshtml", result);
         }        

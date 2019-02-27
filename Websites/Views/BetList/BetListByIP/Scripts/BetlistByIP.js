@@ -265,7 +265,7 @@ function showMP(transid, refno, custId, transIndex) {
     }
 }
 
-function showSingleMatchParlayDetail(transid, custid, transIndex) {
+function showSingleMatchParlayDetail(transid, custid, status,transIndex) {
     var divEvent = $("#divEvent_" + transid + transIndex);
 
     if (divEvent.css("display") === "none") {
@@ -274,7 +274,7 @@ function showSingleMatchParlayDetail(transid, custid, transIndex) {
             $.ajax({
                 type: "GET",
                 url: window.rootUrl + "BetBuilder/ViewDetail",
-                data: "TransactionId=" + transid + "&CustomerId=" + custid,
+                data: "TransactionId=" + transid + "&CustomerId=" + custid + "&Status=" + status,
                 success: function (result) {
                     divEvent.html(result);
                     divEvent.css("display", "");
