@@ -75,10 +75,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     foreach (var ele in group)
                     {
                         var sport = ele.Attribute("Sport")?.Value;
-                        trackingNode.N = sport.Equals("9999") ? "All Sports" : _remotingRefService.GetSportName(sport, "en-US");
+                        trackingNode.N = sport.Equals("9999") ? "All Sports" : _remotingRefService.GetSportName(sport, "en-US", sport);
                         var bettype = ele.Attribute("BT")?.Value;
                         var isLive = ele.Attribute("IsL")?.Value;
-                        var groupResourceKey = _groupResourceKeyDictionary[bettype + isLive];
+                        var groupResourceKey = _groupResourceKeyDictionary.ContainsKey(bettype + isLive)? _groupResourceKeyDictionary[bettype + isLive]: (bettype + isLive);
                         var trackingGroup = new TrackingGroup();
                         trackingGroup.N = LogFormater.GetResourceName(groupResourceKey);
                         trackingGroup.Vals = new List<TrackingElement>();
