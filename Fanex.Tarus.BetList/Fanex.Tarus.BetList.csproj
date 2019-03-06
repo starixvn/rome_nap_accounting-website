@@ -82,15 +82,17 @@
       <HintPath>..\packages\Fanex.BetList.Allbet.1.0.0.9\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.BetTrade, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.77.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+    <Reference Include="Fanex.BetList.BetTrade, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.79.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.77.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.77.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.79.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.79.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
