@@ -1756,7 +1756,7 @@
     <value>In-Play Other Bet Types</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Max per Event</value>
+    <value>Max per Bet</value>
   </data>
   <data name="OtherBetType" xml:space="preserve">
     <value>Other Bet Types</value>
@@ -1772,5 +1772,8 @@
   </data>
   <data name="GrD" xml:space="preserve">
     <value>GroupD</value>
+  </data>
+  <data name="MPE" xml:space="preserve">
+    <value>Max per Event</value>
   </data>
 </root>
