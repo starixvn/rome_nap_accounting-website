@@ -47,13 +47,7 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
             var criteria = GetCriteria(transId, bettype);
             List<GoldDeluxe> goldDeluxe = this._goldDeluxeResultService.GetGoldDeluxePopUpResult(criteria);
-
-            if (goldDeluxe != null && goldDeluxe.Count > 0)
-            {
-                return ResultEngine.HtmlParser(goldDeluxe, GetFanexResultSetting());
-            }
-
-            return string.Empty;
+            return ResultEngine.HtmlParser(goldDeluxe, GetFanexResultSetting());
         }
 
         private static bool IsSupport(int sportType)

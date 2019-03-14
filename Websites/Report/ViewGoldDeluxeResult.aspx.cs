@@ -12,8 +12,7 @@ public partial class Report_ViewResult : System.Web.UI.Page
         {
             long transId = CastAide.AsInt64(Request.QueryString["transId"], 0);
             int bettype = CastAide.AsInt32(Request.QueryString["bettype"], 0);
-            string result = new GoldDeluxeResultService().GetResult(transId, bettype);
-            this.lResult.Text = string.IsNullOrEmpty(result) ? "<table class=\"fn-rs casino popup\"><tbody><tr><td class=\"row-noinfo\">There is no information available</td></tr></tbody></table>" : result;
+            this.lResult.Text = new GoldDeluxeResultService().GetResult(transId, bettype);
         }
         catch (Exception exception)
         {
