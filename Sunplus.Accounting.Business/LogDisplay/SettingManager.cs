@@ -132,7 +132,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
                         record.Detail = _cn88LogFormatter.IsCN88LogActionId(actionId)
-                                ? _cn88LogFormatter.GenerateDetail(trackingvalue, CastAide.AsString(row["SPName"]))
+                                ? _cn88LogFormatter.GenerateDetail(actionId, trackingvalue, CastAide.AsString(row["SPName"]), CastAide.AsString(row["actionname"]))
                                 : _ParseTrackingValue(trackingvalue, actionId, CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
                         record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
                        

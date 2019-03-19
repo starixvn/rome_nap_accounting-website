@@ -1776,4 +1776,28 @@
   <data name="MPE" xml:space="preserve">
     <value>Max per Event</value>
   </data>
+  <data name="AgentPossess" xml:space="preserve">
+    <value>Agent Possess</value>
+  </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="MasterPossess" xml:space="preserve">
+    <value>MA Possess</value>
+  </data>
+  <data name="MaxPossess" xml:space="preserve">
+    <value>SMA Max Possess</value>
+  </data>
+  <data name="MinPossess" xml:space="preserve">
+    <value>SMA Min Possess</value>
+  </data>
+  <data name="PrimaryGroup" xml:space="preserve">
+    <value>Primary Group</value>
+  </data>
+  <data name="SuperPossess" xml:space="preserve">
+    <value>SMA Possess</value>
+  </data>
+  <data name="MoneylineInPlayMoneyline" xml:space="preserve">
+    <value>Moneyline, In-Play Moneyline</value>
+  </data>
 </root>
