@@ -7,12 +7,14 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml.Linq;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
     public class CN88LogFormatter
     {
+        private readonly string _resourceClassName = "ViewlogV2";
         private readonly List<int> _cn88LogActionIdCollection = new List<int>
         {
             100000, 105000, 110000,
@@ -105,11 +107,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     foreach (var ele in group)
                     {
-                        var sport = ele.Attribute("Sport")?.Value;
-                        trackingNode.N = sport.Equals("9999") ? "All Sports" : _remotingRefService.GetSportName(sport, "en-US", sport);
-                        var bettype = ele.Attribute("BT")?.Value;
-                        var isLive = ele.Attribute("InPlay")?.Value;
-                        var groupResourceKey = _groupResourceKeyDictionary.ContainsKey(bettype + isLive) ? _groupResourceKeyDictionary[bettype + isLive] : (bettype + isLive);
+                        trackingNode.N = GetSportName(ele.Attribute("Sport")?.Value);
+                        var groupResourceKey = GetBettypeName(ele.Attribute("BT")?.Value, ele.Attribute("InPlay")?.Value);
                         var trackingGroup = new TrackingGroup();
                         trackingGroup.N = LogFormater.GetResourceName(groupResourceKey);
                         trackingGroup.Vals = new List<TrackingElement>();
@@ -163,8 +162,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     var trackingNode = new TrackingNode();
                     trackingNode.Groups = new List<TrackingGroup>();
                     trackingNode.Vals = new List<TrackingElement>();
-                    var sport = ele.Attribute("Sport")?.Value;
-                    trackingNode.N = _sportResourceKeyDictionary.ContainsKey(sport) ? _sportResourceKeyDictionary[sport] : sport;
+                    var sporttype = ele.Attribute("Sport")?.Value;
+                    trackingNode.N = sporttype.Equals("1") ? "Sportsbook" : GetSportName(sporttype);
                     foreach (var attr in ele.Attributes())
                     {
                         if (!attr.Name.LocalName.Equals("Sport")
@@ -178,6 +177,31 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
             }
             return detail;
+        }
+
+        private string GetSportName(string sport)
+        {
+            string sportName = GetFromResource($"cn88_sporttype_{sport}");
+            sportName = sportName ?? _remotingRefService.GetSportName(sport, "en-US", sport);
+            return sportName ?? sport;
+        }
+
+        private string GetBettypeName(string bettype, string inplay)
+        {
+            string bettypeName = GetFromResource($"cn88_bettype_{bettype}_inplay_{inplay}");
+            return bettypeName ?? bettype;
+        }
+
+        private string GetFromResource(string key)
+        {
+            try
+            {
+                return HttpContext.GetGlobalResourceObject(_resourceClassName, key)?.ToString();
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
