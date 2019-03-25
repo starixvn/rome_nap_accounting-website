@@ -15,16 +15,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
     public class CN88LogFormatter
     {
         private readonly string _resourceClassName = "ViewlogV2";
-        private readonly List<int> _cn88LogActionIdCollection = new List<int>
-        {
-            100000, 105000, 110000,
-            119997, 119998, 119999,
-            120000, 125000, 130000,
-            135000, 139996, 139997,
-            139998, 139999, 140000,
-            145000, 149996, 149997,
-            149998, 149999, 150000,
-            155000 };
 
         private readonly Dictionary<string, string> _groupResourceKeyDictionary = new Dictionary<string, string>() {
             {"10","HandicapOverUnderOddEven" },
@@ -54,7 +44,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         public bool IsCN88LogActionId(int actionId)
         {
-            return _cn88LogActionIdCollection.Contains(actionId);
+            return 100000 <= actionId && actionId < 160000;
         }
 
         public TrackingLog GenerateDetail(int actionId, string trackingValue, string SPName, string actionName)
@@ -68,10 +58,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return GenerateCommissionAndBetSettingDetail(trackingValue, SPName, actionName);
             }
         }
-
+        
         private bool IsUpdatePTLog(int actionId)
         {
             return actionId >= 100000 && actionId < 120000;
+        }
+
+        private bool IsUpdateCommANDBetLimit(int actionId)
+        {
+            return actionId >= 120000 && actionId < 160000;
         }
 
         private TrackingLog GenerateCommissionAndBetSettingDetail(string trackingValue, string SPName, string actionName)
@@ -107,8 +102,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     foreach (var ele in group)
                     {
-                        trackingNode.N = GetSportName(ele.Attribute("Sport")?.Value);
-                        var groupResourceKey = GetBettypeName(ele.Attribute("BT")?.Value, ele.Attribute("InPlay")?.Value);
+                        var sporttype = ele.Attribute("Sport")?.Value;
+                        var bettype = ele.Attribute("BT")?.Value;
+                        var inplay = ele.Attribute("InPlay")?.Value;
+                        trackingNode.N = GetSportName(sporttype);
+                        var groupResourceKey = GetBettypeName(bettype, inplay);
                         var trackingGroup = new TrackingGroup();
                         trackingGroup.N = LogFormater.GetResourceName(groupResourceKey);
                         trackingGroup.Vals = new List<TrackingElement>();
@@ -118,7 +116,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 && !attr.Name.LocalName.Equals("BT")
                                 && !attr.Name.LocalName.Equals("InPlay"))
                             {
-                                trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                                trackingGroup.Vals.Add(LogFormater.FormatElement(attr, null, $"cn88_{sporttype}_{bettype}_{inplay}_"));
                             }
                         }
 

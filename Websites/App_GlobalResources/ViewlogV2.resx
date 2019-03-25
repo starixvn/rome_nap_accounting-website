@@ -1761,16 +1761,16 @@
   <data name="cn88_bettype_9999_inplay_0" xml:space="preserve">
     <value>Other Bet Types</value>
   </data>
-  <data name="GrA" xml:space="preserve">
+  <data name="cn88_1_1_0_GrA" xml:space="preserve">
     <value>GroupA</value>
   </data>
-  <data name="GrB" xml:space="preserve">
+  <data name="cn88_1_1_0_GrB" xml:space="preserve">
     <value>GroupB</value>
   </data>
-  <data name="GrC" xml:space="preserve">
+  <data name="cn88_1_1_0_GrC" xml:space="preserve">
     <value>GroupC</value>
   </data>
-  <data name="GrD" xml:space="preserve">
+  <data name="cn88_1_1_0_GrD" xml:space="preserve">
     <value>GroupD</value>
   </data>
   <data name="MPE" xml:space="preserve">
@@ -1817,5 +1817,209 @@
   </data>
   <data name="cn88_bettype_10_inplay_0" xml:space="preserve">
     <value>Outright</value>
+  </data>
+  <data name="cn88_1_1_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_1_1_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_1_1_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_1_1_1_GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="cn88_1_1_1_GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="cn88_1_1_1_GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="cn88_1_1_1_GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
+  <data name="Cn88_1_1_1_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_1_1_1_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_1_5_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_1_5_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_1_5_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_1_9999_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_1_9999_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_1_9999_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_1_9999_1_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_1_9999_1_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_1_9999_1_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_2_1_0_GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="cn88_2_1_0_GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="cn88_2_1_0_GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="cn88_2_1_0_GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
+  <data name="Cn88_2_1_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_2_1_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_2_1_1_GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="cn88_2_1_1_GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="cn88_2_1_1_GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="cn88_2_1_1_GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
+  <data name="Cn88_2_1_1_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_2_1_1_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_2_20_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_2_20_0_Comm1" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_2_20_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_2_20_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_2_9999_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_2_9999_0_Comm1" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_2_9999_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_2_9999_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="Cn88_9998_1201_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_9998_1201_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="Cn88_9998_1501_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_9998_1501_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="Cn88_9998_81_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_9998_81_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="Cn88_9999_10_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_9999_10_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_9999_10_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_9999_1_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_99_1_0_GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="cn88_99_1_0_GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="cn88_99_1_0_GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="cn88_99_1_0_GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
+  <data name="Cn88_99_1_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_99_1_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_99_1_1_GrA" xml:space="preserve">
+    <value>GroupA</value>
+  </data>
+  <data name="cn88_99_1_1_GrB" xml:space="preserve">
+    <value>GroupB</value>
+  </data>
+  <data name="cn88_99_1_1_GrC" xml:space="preserve">
+    <value>GroupC</value>
+  </data>
+  <data name="cn88_99_1_1_GrD" xml:space="preserve">
+    <value>GroupD</value>
+  </data>
+  <data name="Cn88_99_1_1_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_99_1_1_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_99_5_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_99_5_0_Comm1" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_99_5_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_99_5_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="cn88_99_9999_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_99_9999_0_Comm1" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_99_9999_0_Max" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="Cn88_99_9999_0_MPE" xml:space="preserve">
+    <value>Max per Event</value>
   </data>
 </root>
