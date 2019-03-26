@@ -26,7 +26,7 @@ namespace Fanex.Tarus.Customer.Criteria.CN88
 
         public override string GetSettingKey()
         {
-            return "Age_CS_Customer_Status_Upd";
+            return "CS_Customer_Status_Upd";
         }
     }
 }
