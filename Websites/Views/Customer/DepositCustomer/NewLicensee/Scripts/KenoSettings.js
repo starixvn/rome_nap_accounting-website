@@ -123,9 +123,9 @@
         var pt = kenoPositionTaking_Max;
         var val;
         while (pt > 0) {
-            val = parseFloat(pt.toFixed(2));
+            val = parseFloat(pt.toFixed(3));
             options += "<option value='" + val + "'>" + val + "</option>";
-            pt = pt - 0.01;
+            pt = pt - 0.005;
         }
 
         options += "<option selected='selected' value='0'>0</option>";
