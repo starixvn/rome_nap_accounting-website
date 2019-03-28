@@ -39,12 +39,12 @@ common.init = function () {
    
 
     //Sportbook
-    var pt = 0.9;
+    var pt = 1;
     var val;
     while (pt > 0) {
-        val = parseFloat(pt.toFixed(2));
+        val = parseFloat(pt.toFixed(3));
         $("#selSBPT").append("<option value='" + val + "'>" + val + "</option>");
-        pt = pt - 0.01;
+        pt = pt - 0.005;
     }
     $("#selSBPT").append("<option selected='selected' value='0'>0</option>");
 
