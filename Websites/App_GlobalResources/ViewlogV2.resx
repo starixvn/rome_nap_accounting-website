@@ -2022,4 +2022,19 @@
   <data name="Cn88_99_9999_0_MPE" xml:space="preserve">
     <value>Max per Event</value>
   </data>
+  <data name="cn88_1_1_1_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_2_1_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="cn88_2_1_1_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_99_1_0_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Cn88_99_1_1_Comm" xml:space="preserve">
+    <value>Commission</value>
+  </data>
 </root>
