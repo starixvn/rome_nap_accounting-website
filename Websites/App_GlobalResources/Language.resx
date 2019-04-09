@@ -2575,4 +2575,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="SMAUnlimitedBetSettingWarningMessage" xml:space="preserve">
     <value>Inputting Min Bet = Max Bet = Max Per Match = (Max Per Ball) = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 / (0.1) for Min Bet / Max Bet / Max Per Match / (Max Per Ball).</value>
   </data>
+  <data name="TransferConditionsWarning_Master" xml:space="preserve">
+    <value>You are set daily transfer by your upline. You are not allowed to adjust the Weekly Transfer Condition.</value>
+  </data>
+  <data name="TransferConditionsWarning_Super" xml:space="preserve">
+    <value>You are set daily transfer by the company automated transferring process. You are not allowed to adjust the Weekly Transfer Condition.</value>
+  </data>
 </root>

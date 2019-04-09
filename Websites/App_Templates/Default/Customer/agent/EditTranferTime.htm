@@ -2,6 +2,11 @@
 	<tr class="title">
 		<td>{acc-balance-tranfer}</td>		
 	</tr>
+    <tr class="errMsg">
+        <td>
+            <div id="transfercondition_message">{TransferConditions_Message}</div>
+        </td>
+    </tr>
 	<tr>
 		<td width="30%" class="l m"><input type="radio" style=" vertical-align:middle;" {daily-chk} onclick="selectTranferTime(this);" name="tranfer" id="rdDaily" value="daily"></input>{daily}</td>
 	</tr>
@@ -20,7 +25,7 @@
 	<!--none-add-->	
 	<tr>
 		<td class="c">
-			<input type="submit" class="btn" name="btnSubmit" id="btnSubmit" value="{submit-text}"></input>
+			<input type="submit" class="btn" name="btnSubmit" id="btnSubmit" value="{submit-text}" {submit-disabled}></input>
 		</td>		
 	</tr>
 	<!--/none-add-->	
