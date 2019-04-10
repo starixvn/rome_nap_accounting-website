@@ -36,6 +36,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
 
             int custid = DNAide.Core.CastAide.AsInt32(Request["custId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
+            string site = Request["Site"];
             string strUsername = Convert.ToString(Session["CustUname"]);
             bool isRequest = false;
 
@@ -69,7 +70,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 str = AlertMessage.GetMsg("Password must have at least 4 characters.", AlertMessage.MsgType.Error);
             else if (!txtPass.Equals(txtConfirmPass))
                 str = AlertMessage.GetMsg("Password was not correctly confirmed.", AlertMessage.MsgType.Error);
-            else if (changePWD(custid, encodepwd, userid, language))
+            else if (changePWD(custid, encodepwd, userid, language, site))
             {
                 if (!isRequest)
                 {
@@ -115,7 +116,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
         }
     }
 
-    private bool changePWD(int custid, string userpwd, int userid, string language)
+    private bool changePWD(int custid, string userpwd, int userid, string language, string site)
     {
         try
         {
@@ -129,7 +130,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             {
                 // Notes: should be put into 1 transaction later!!!
                 //1
-                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language);
+                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, site.Equals("CN88", StringComparison.CurrentCultureIgnoreCase));
                 //2
 
                 if (Request["type"] != "User" && custcs.CasinoSync)
