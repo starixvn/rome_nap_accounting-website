@@ -13,21 +13,26 @@ namespace Fanex.Tarus.Customer.Controller.Setting
     using Fanex.Tarus.Web.Controllers;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
+    using ViewModels.CN88;
+    using DataAccess;
+    using Criteria.CN88;
 
-    public class CustomerSettingController: BaseController
+    public class CustomerSettingController : BaseController
     {
         private readonly ICustomerSettingService _customerSetting;
+        private readonly BaseDataAccess _dataAccessService;
 
         public CustomerSettingController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerSettingController(ICustomerSettingService customerSetting)
+        public CustomerSettingController(ICustomerSettingService customerSetting, BaseDataAccess dataAccess)
         {
             _customerSetting = customerSetting ?? new CustomerSettingService();
+            _dataAccessService = dataAccess ?? new BaseDataAccess();
         }
-        
+
         public JsonResult UpdateDoubleComm(int custId, bool isDoubleComm)
         {
             var result = new Result();
@@ -43,6 +48,22 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             var result = _customerSetting.UpdateAllDayBalTransfer(custId, status, AppSession.AccId, Utils.GetClientIP());
 
             return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        public ActionResult ViewCN88CustomerStatus(int custId, string userName, int status)
+        {
+            return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { CustId=custId, Status = status, UserName = userName });
+        }
+
+        public JsonResult UpdateCN88CustomerStatus(int custId, byte updStatusId)
+        {
+            return Json(_dataAccessService.ExecuteNonQuery(new CN88CustomerSettingCriteria
+            {
+                UserId = AppSession.AccId,
+                CustId = custId,
+                IP = Utils.GetClientIP(),
+                UpdStatusId = updStatusId
+            }));
         }
     }
 }

@@ -16,16 +16,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
     {
         public static TrackingElement FormatElement(XAttribute attr)
         {
-            return FormatElement(attr, null);
+            return FormatElement(attr, null, null);
         }
 
-        public static TrackingElement FormatElement(XAttribute attr, ActionElement action)
+        public static TrackingElement FormatElement(XAttribute attr, ActionElement action, string prefixP)
         {
             var elm = new TrackingElement();
             if (attr != null)
             {
                 var elmVal = FormatValue(attr);
-                var param = elmVal.P;
+                var param = prefixP + elmVal.P;
                 elm.P = param;
                 elm.Val = elmVal.Val;
                 if (action != null && !string.IsNullOrEmpty(action.Prefix))
@@ -37,11 +37,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         public static TrackingValue FormatValue(XAttribute attr)
         {
+            return FormatValue(attr, string.Empty);
+        }
+
+        public static TrackingValue FormatValue(XAttribute attr, string prefixP)
+        {
             var elm = new TrackingValue();
             if (attr != null)
             {
-                elm.P = attr.Name.ToString();
-                var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name == elm.P.ToLower()).SingleOrDefault<ParamElement>();
+                elm.P = prefixP + attr.Name.ToString();
+                var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name == attr.Name.ToString().ToLower()).SingleOrDefault<ParamElement>();
                 elm.Val = HttpUtility.HtmlEncode(attr.Value);
                 if (logFormater != null && CastAide.AsInt32(logFormater.Value, 0) > 0)
                 {
@@ -65,6 +70,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     strVal = ReplaceIP(val);
                     break;
 
+                case 3:
+                    strVal = Convert.ToDouble(val).ToString("N0");
+                    break;
                 default:
                     break;
             }

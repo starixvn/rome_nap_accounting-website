@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.ViewModels.Chatbot
             ["en-US"] = "English",
             ["zh-TW"] = "繁體中文",
             ["zh-CN"] = "简体中文",
+            ["zh-Hans"] = "简体中文(新)",
             ["ja-JP"] = "日本語",
             ["th-TH"] = "ภาษาไทย",
             ["ko-KR"] = "한국어"

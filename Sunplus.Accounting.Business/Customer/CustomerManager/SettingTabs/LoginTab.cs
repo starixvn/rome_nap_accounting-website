@@ -28,6 +28,7 @@
             TemplateHandler.Assign(ref tplLoginDetail, "{custid}", customerInfoViewModel.CustId);
             TemplateHandler.Assign(ref tplLoginDetail, "{Username}", customerInfoViewModel.UserName);
             TemplateHandler.Assign(ref tplLoginDetail, "{last_change_security_code_date}", customerInfoViewModel.LastChangeSecurityCodeDate);
+            TemplateHandler.Assign(ref tplLoginDetail, "{Site}", customerInfoViewModel.CustomerSite);
             TemplateHandler.Assign(ref htmlcontent, "{logindetail}", tplLoginDetail);
             TemplateHandler.Assign(ref htmlcontent, "{last_change_OTP_date}", customerInfoViewModel.LastChangeOTPCodeDate);
 

@@ -174,6 +174,7 @@
     <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -437,5 +438,8 @@
   </Function>
   <Function Name="Others - PlayerID (3rd)">
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="CN88">
+    <Setting Key="CS_Customer_Status_Upd" SpName="CS_Customer_Status_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

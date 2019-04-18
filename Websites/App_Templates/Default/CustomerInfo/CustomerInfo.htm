@@ -330,22 +330,40 @@
                     <!--selectedBettingControl-->
                     {selectedBettingControl}
                     <!--/selectedBettingControl-->
+                    <!--CN88HiddenItem-->
                     {suspendedControl}
-
                     <div class="col">
                         Closed {closedCustomer}
                     </div>
+                    <!--/CN88HiddenItem-->
+                    
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
+                    <!--CN88HiddenItem-->
                     <!--allowAutoPTControl-->
                     {allowAutoPTControl}
                     <!--/allowAutoPTControl-->
                     <!--doubleCommControl-->
                     {doubleCommControl}
                     <!--/doubleCommControl-->
+                    <!--/CN88HiddenItem-->
+                    <!--CN88VisibleItem-->
+                    <div class="col">
+                        <!--CN88CustomerStatus-->
+                        <span class="canchange" onclick="leftPanelManager.CN88EditCustStatus({CustId}, '{UserName}', {CustomerStatusId});">
+                            Status:{CustomerStatus}
+                        </span>
+                        <!--/CN88CustomerStatus-->
+                        <!--CN88CustomerStatusDisabled-->
+                        <span>
+                            Status:{CustomerStatus}
+                        </span>
+                        <!--/CN88CustomerStatusDisabled-->
+                    </div> 
+                    <!--/CN88VisibleItem-->
+                    <!--CN88HiddenItem-->
                     {outrightControl}
-                                       
                     {numberGameControl}
                     {casinoControl}
                     <!--AGCasinoStatus-->
@@ -429,12 +447,14 @@
                     </div>
                     <!--/EnablePokerGames-->
                     {settingcontrol}
+                    <!--/CN88HiddenItem-->
                 </div>
             </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
                    cellspacing="0"></table>
             <div class="tab_left_content hidden" id="box_05_content_2">
                 <div id="box_detail">
+                    <!--CN88HiddenItem-->
                     <div id="de_left">
                         <ul>
                             <!--detail_edit_menu-->
@@ -450,14 +470,18 @@
                             </li>
                         </ul>
                     </div>
+                    <!--/CN88HiddenItem-->
                     <div id="detail_tab_contents">
+                        <!--CN88HiddenItem-->
                         <div id="detail_tab_content_1" class="l detail_tab_content hidden">
                             {contentminmax}
                         </div>
                         <div id="detail_tab_content_2" class="l detail_tab_content hidden">
                             {contentminmax1}
                         </div>
+                        <!--/CN88HiddenItem-->
                         <div id="detail_tab_content_3" class="l detail_tab_content ">
+                            <!--CN88HiddenItem-->
                             <!-- Detail menu -->
                             <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
                                 Info
@@ -475,6 +499,20 @@
                                     Add New
                                 </a><br />
                             </span>
+                            <!--/CN88HiddenItem-->
+                            <!--CN88VisibleItem-->
+                            <span>
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{linkEditSettingCN88}');">
+                                    Edit Setting
+                                </a><br />
+                            </span>
+                            <span class="{IsHidden1}">
+                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', '{linkAddnewDownlineCN88}');">
+                                    Add New
+                                </a><br />
+                            </span>
+                            <!--/CN88VisibleItem-->
+                            <!--CN88HiddenItem-->
                             <!--editTransferTime-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
@@ -482,6 +520,7 @@
                                 </a><br />
                             </span>
                             <!--/editTransferTime-->
+                            <!--/CN88HiddenItem-->
                             <!--maxexposure-->
                             <span class="{IsHidden1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/EditMaxExposure.aspx?set=1&custId={CustId}&uname={FullUserName}&type={type}');">
@@ -496,6 +535,7 @@
                                 </a><br />
                             </span>
                             <!--/chatbot-->
+                            <!--CN88HiddenItem-->
                             <!--edit-casino-->
                             <span class="{IsShow1}">
                                 <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
@@ -587,6 +627,7 @@
                                 Poker Games
                             </a><br />
                             <!--/edit-PokerGames-->
+                            <!--/CN88HiddenItem-->
                             <!-- Detail menu -->
                         </div>
                     </div>

@@ -27,9 +27,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private CultureInfo culture = Thread.CurrentThread.CurrentCulture;
 
-        public SettingManager(ILogDisplayDAO logDAO)
+        private readonly CN88LogFormatter _cn88LogFormatter;
+
+        public SettingManager(ILogDisplayDAO logDAO, CN88LogFormatter cn88LogFormatter)
         {
             _logDAO = logDAO;
+            _cn88LogFormatter = cn88LogFormatter ?? new CN88LogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -114,25 +117,24 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
+
                 if (data != null && data.Rows.Count > 0)
                 {
                     logResult.Total = _logDAO.GetLogDisplayTotal(param, logType);
                     logResult.Rows = new List<RecordSp>();
+
                     foreach (DataRow row in data.Rows)
                     {
                         // get record value
                         var record = _GetLogRecord(row);
+                        var actionId = CastAide.AsInt32(row["actionid"], 0);
                         // get tracking value
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
-                        var trackingVal = _ParseTrackingValue(trackingvalue, CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
-                        record.Detail = trackingVal;
-                        var diffVals = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
-                        record.Diffs = diffVals;
-                        /*if (diffVals.Count<TrackingValue>() > 0)
-                        {
-                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0));
-                        }*/
+                        record.Detail = _cn88LogFormatter.IsCN88LogActionId(actionId)
+                                ? _cn88LogFormatter.GenerateDetail(actionId, trackingvalue, CastAide.AsString(row["SPName"]), CastAide.AsString(row["actionname"]))
+                                : _ParseTrackingValue(trackingvalue, actionId, CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
+                        record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
 
                         logResult.Rows.Add(record);
                     }
@@ -197,13 +199,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get record value
                         var record = _GetLogRecord(row);
                         // get tracking value
-                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
+                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(CastAide.AsString(row["trackingvalue"], string.Empty), CastAide.AsString(row["trackingvalueold"], string.Empty));
                         record.Diffs = diffVals;
                         if (diffVals.Count > 0)
                         {
-                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
+                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
                         }
 
                         logResult.Rows.Add(record);
@@ -383,7 +385,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingVal;
         }
 
-        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId, string actionName)
+        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId, string actionName, string spName)
         {
             var tracking = new TrackingLog();
             if (!string.IsNullOrEmpty(trackingVal))
@@ -474,7 +476,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     if (xmlLoad == null) { return tracking; }
 
-                    tracking.SP = xmlLoad.Name.ToString();
+                    tracking.SP = spName;
                     tracking.Attrs = new List<TrackingElement>();
                     tracking.Vals = new List<TrackingNode>();
 
@@ -747,7 +749,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         var isGoldDeluxeGameType = IsGoldDeluxeGameType(fieldName, attr.Value);
                         if (!hiddenField.Contains<string>(fieldName) || isGoldDeluxeGameType)
                         {
-                            var elm = LogFormater.FormatElement(attr, filter);
+                            var elm = LogFormater.FormatElement(attr, filter, null);
                             if (isGoldDeluxeGameType)
                             {
                                 elm.Val = GetBettypeName(attr.Value);
@@ -820,7 +822,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 // parse XML
                 var xmlValue = XElement.Parse(trackingValue);
-
+                var previousSporttype = xmlValue.Elements()?.FirstOrDefault()?.Attribute("Sport")?.Value;
                 foreach (var attr in xmlValue.Attributes())
                 {
                     if (listVal.ContainsKey(attr.Name.ToString()))
@@ -832,23 +834,34 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
 
                 result.Add(listVal);
-
+                listVal = new Dictionary<string, TrackingValue>();
                 foreach (var elm in xmlValue.Elements())
                 {
-                    listVal = new Dictionary<string, TrackingValue>();
-
+                    var sporttype = elm.Attribute("Sport")?.Value;
+                    var bettype = elm.Attribute("BT")?.Value;
+                    var inplay = elm.Attribute("InPlay")?.Value;
+                    var isCN88SettingLog = sporttype != null && bettype != null && inplay != null;
                     foreach (var attr in elm.Attributes())
                     {
-                        if (listVal.ContainsKey(attr.Name.ToString()))
+                        var attrName = (isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty) + attr.Name.ToString();
+                        if (listVal.ContainsKey(attrName))
                         {
                             continue;
                         }
 
-                        listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
+                        listVal.Add(attrName, LogFormater.FormatValue(attr, isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty));
                     }
 
-                    result.Add(listVal);
+                    if (!isCN88SettingLog || sporttype == null || previousSporttype != sporttype)
+                    {
+                        result.Add(listVal);
+                        previousSporttype = sporttype;
+                        listVal = new Dictionary<string, TrackingValue>();
+                    }
                 }
+
+                if (listVal.Count > 0)
+                    result.Add(listVal);
             }
             catch (Exception ex)
             {
@@ -923,6 +936,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
 
             return trackingValue;
+        }
+
+        private string getPValueOfCN88(string sporttype, string bettype, string inplay)
+        {
+            return "cn88_" + sporttype + "_" + bettype + "_" + inplay + "_";
         }
     }
 }

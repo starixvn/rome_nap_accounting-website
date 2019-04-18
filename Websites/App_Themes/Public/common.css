@@ -22,6 +22,10 @@ button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="but
     clear: both;
 }
 
+.clear {
+    clear: both;
+}
+
 #clear2 {
     clear: both;
     height: 2px;
