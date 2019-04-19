@@ -130,7 +130,8 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             {
                 // Notes: should be put into 1 transaction later!!!
                 //1
-                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, site.Equals("CN88", StringComparison.CurrentCultureIgnoreCase));
+                bool isCN88 = string.IsNullOrWhiteSpace(site) ? false : site.Equals("CN88", StringComparison.CurrentCultureIgnoreCase);
+                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, isCN88);
                 //2
 
                 if (Request["type"] != "User" && custcs.CasinoSync)
