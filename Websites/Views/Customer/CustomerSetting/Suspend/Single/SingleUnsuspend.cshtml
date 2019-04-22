@@ -1,0 +1,93 @@
+﻿@using Fanex.Tarus.Customer.ViewModels.CustomerSetting.Suspend;
+@using Sunplus.Accounting.Core.Configurations;
+@model SingleUpdateViewModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/CustomerSetting/Suspend/Styles/SingleUnsuspend.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Views/Customer/CreditCustomer/Styles/CustomerSettingCommon.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="tab-main">
+        <div id="successMsg" class="hidden successMsg"></div>
+        <div id="errMsg" class="hidden errMsg"></div>
+        <div>
+            <span id="header-title">List of downlines whose status are changed/unchanged after going to unsuspend @Model.UserName</span>
+            <div class="floatRight"><span id="information-box" class="ml10 infoIcon"></span></div>
+        </div>
+        <table class="tableInfo" cellpadding="2" cellspacing="0" border="1">
+            <thead>
+                <tr>
+                    <th class="bgTitle left">Level</th>
+                    <th class="bgTitle">Affected Downlines</th>
+                    <th class="bgTitle">Remain Unchanges Downlines</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.AffectedDowlines == null || Model.AffectedDowlines.Count == 0)
+                {
+                    <tr>
+                        <td colspan="3" class="red center">@Resources.Language.thereisnodata</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var row in Model.AffectedDowlines)
+                    {
+                        <tr>
+                            <td>@row.LevelName</td>
+                            <td class="right">
+                                <span class="@(row.AffectedDownlines > 0 ? "canchange": string.Empty)"
+                                      onclick="@(row.AffectedDownlines > 0 ? ("return GetDownlinesDetailInfo("+Model.CustId+", true, "+@row.Level+", 50, 0);") : string.Empty)">
+                                    @row.AffectedDownlines
+                                </span>
+                            </td>
+                            <td class="right">
+                                <span class="@(row.RemainUnchangedDownlines > 0 ? "canchange": string.Empty)"
+                                      onclick="@(row.RemainUnchangedDownlines > 0 ? ("return GetDownlinesDetailInfo("+Model.CustId+", false, "+@row.Level+", 50, 0);") : string.Empty)">
+                                    @row.RemainUnchangedDownlines
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <input id="custId" type="hidden" value="@Model.CustId" />
+        <div style="text-align: right">
+            <input id="btnUnsuspend" type="button" class="buttonPopup" value="Unsuspend" />
+        </div>
+    </div>
+    <div id="tab-detail" class="hidden" style="width: 600px; height: 300px;">
+        <div style="clear:both;"></div>
+        <div id="gridContainer" class="grid-container">
+            <div id="gridId" class="freegrid"></div>
+        </div>
+        <div style="text-align: right">
+            <input id="btnBack" type="button" class="buttonPopup" value="Back" />
+        </div>
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery-1.8.2.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CustomerSetting/Suspend/Scripts/SingleUnsuspend.js?v=9" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var cachedDownlinesDetailInfoData = {
+            custId: 0,
+            isAffected: false,
+            downlineRoleId: 0,
+        };
+
+        var LanguageResources = {
+            UpdateSuspendSuccess: '@Resources.ErrorMsg.UpdateSuspendSuccess',
+            SuspendInfoMessage: '@Html.Raw(Resources.Language.SuspendInfoMessage)',
+            UnsuspendSingleConfirmMesssage: '@Resources.Language.UnsuspendSingleConfirmMesssage',
+        };
+    </script>
+</body>
+</html>

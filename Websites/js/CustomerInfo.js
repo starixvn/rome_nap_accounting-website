@@ -14,6 +14,9 @@
 function GetCustId() {
     return obj('custid').value;
 }
+function GetCustName() {
+    return obj('custName').value;
+}
 function ClearUsername() {
     obj('username').value = "";
     window.location.reload(true);
@@ -95,8 +98,7 @@ function changeStatus(type, hasDownLine) {
                             return;
                     }
                     else {
-                        if (!confirm("Are you sure you want to change Suspended status for this customer? All downlines will be un-suspended as well"))
-                            return;
+                        return updateUnsuspend(GetCustId(), GetCustName());
                     }
                 }
                 else {
@@ -190,6 +192,11 @@ function changeStatus(type, hasDownLine) {
         alert(ex);
     }
 }
+
+function updateUnsuspend(custId, userName) {
+    parent.OpenNextPopup('update-unsuspend', 'UnsuspendCustomer/SingleSuspendView?custId=' + custId + '&userName=' + userName, 'Update Unsuspend Status for ' + obj('custName').value, 650, 450, true, false, window, 0, null, null);
+}
+
 function updateLimitPerIP(limitperid, isUpdateDownline) {
     var _URL = 'Handlers/UpdateCustomerStatus.ashx?isupddownline=' + isUpdateDownline + '&type=limitperip&status=true';
     _URL += "&limitperid=" + limitperid;
@@ -594,6 +601,12 @@ function DoTransfer(span, value, custName) {
 }
 function OpenViewPT(username) {
     var url = 'Customer/PT/ViewPT/ViewPT.aspx?username=' + username;
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
+function OpenViewSuspend(username) {
+    var url = 'UnsuspendCustomer/SuspendMatrixView?username=' + username;
     parent.gotoURL('centerFr', url);
     parent.resetMenu();
 }

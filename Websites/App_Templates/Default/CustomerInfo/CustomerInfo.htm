@@ -21,7 +21,7 @@
                 <div style="float: right;">
                     [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span>
                     <!--CN88HiddenItem-->
-                    | <span class="canchange" onclick="OpenViewPT('{FullUserName}')">PT</span>
+                    | <span class="canchange" onmouseover="mopen('InfoID')" onmouseout="mclosetime()">Info</span>]
                     <!--/CN88HiddenItem-->
                     ]
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="LogID">
@@ -30,6 +30,10 @@
                         <a onclick="ViewLogs('Credit','{FullUserName}')">• Credit</a><br />
                         <a onclick="ViewLogs('Login','{FullUserName}')">• Login</a>
                         <input id="TabLogs" type="hidden" value="" />
+                    </div>
+                    <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="InfoID">
+                        <a onclick="OpenViewPT('{FullUserName}')">• PT</a><br />
+                        <a onclick="OpenViewSuspend('{FullUserName}')">• Suspend</a><br />
                     </div>
                 </div>
             </div>
@@ -413,7 +417,7 @@
                     <!--/EnableKeno-->
                     <!--GoldDeluxe-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId}, '{UserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status', 'GoldDeluxe', 0)">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId}, '{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true, true, true, 'Update Gold Deluxe Status', 'GoldDeluxe', 0)">
                             Gold Deluxe
                             <span class="icon-list"></span>
                         </span>
@@ -421,7 +425,7 @@
                     <!--/GoldDeluxe-->
                     <!--BetTrade-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
                             BetTrade
                             <span class="icon-list"></span>
                         </span>
@@ -429,7 +433,7 @@
                     <!--/BetTrade-->
                     <!--Microgaming-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusMicrogaming}, true, 'Update Microgaming Status' ,'MicroGaming', {microGamingId})">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusMicrogaming}, true, 'Update Microgaming Status' ,'MicroGaming', {microGamingId})">
                             Microgaming
                             <span class="icon-list"></span>
                         </span>
@@ -437,7 +441,7 @@
                     <!--/Microgaming-->
                     <!--Macau-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
                             Macau
                             <span class="icon-list"></span>
                         </span>
@@ -461,7 +465,7 @@
                     <!--/EnableAllbet-->
                     <!--EnableCashOut-->
                     <div class="col">
-                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{UserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">
+                        <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusCashOut}, true, 'Update Cash Out Status','CashOut', {cashOutId})">
                             Cash Out
                             <span class="icon-list"></span>
                         </span>
@@ -687,7 +691,7 @@
     <input type="hidden" id="custid" value="{CustId}" />
     <input type="hidden" id="chalengeStr" name="chalengeStr" value="{RndStr}" />
     <input type="hidden" id="accKey" name="accKey" value="{AccKey}" />
-    <input type="hidden" id="custName" name="custName" value="" />
+    <input type="hidden" id="custName" name="custName" value="{FullUserName}" />
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <input type="hidden" id="roleId" name="roleId" value="{RoleId}" />
     <!--checkbox-oldvalue-->

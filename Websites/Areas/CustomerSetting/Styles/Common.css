@@ -433,3 +433,11 @@ li {
 .floatLeft {
     float: left;
 }
+
+.floatRight {
+    float: right;
+}
+
+.ml10{
+    margin-left: 10px;
+}

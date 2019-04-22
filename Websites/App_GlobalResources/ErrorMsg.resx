@@ -309,4 +309,7 @@
   <data name="ThereIsNoChange" xml:space="preserve">
     <value>There is no change to update.</value>
   </data>
+  <data name="UpdateSuspendSuccess" xml:space="preserve">
+    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+  </data>
 </root>

@@ -64,6 +64,60 @@ function OpenPopup2(dialogId) {
     });
 }
 
+function AlertPopup(title, message) {
+    var dialoghtml = jQuery('<div id="dialog-modal-alert-popup" title="' + title + '" style=" overflow:hidden">' + message + '</div>');
+    dialoghtml.appendTo(jQuery("body"));
+    jQuery('#dialog-modal-alert-popup').dialog({
+        modal: true,
+        width: 'auto',
+        height: 'auto',
+        autoOpen: true,
+        zIndex: 9999,
+        close: function (event, ui) {
+            $(this).dialog('destroy').remove()
+        },
+        buttons: [{
+            text: "Ok",
+            click: function () {
+                $(this).dialog("close");
+            }
+        }]
+    });
+}
+function ConfirmPopup(title, message, fncYesCallback, fncNoCallback) {
+    var dialoghtml = jQuery('<div id="dialog-modal-alert-popup" title="' + title + '" style=" overflow:hidden">' + message + '</div>');
+    dialoghtml.appendTo(jQuery("body"));
+    jQuery('#dialog-modal-alert-popup').dialog({
+        modal: true,
+        width: 'auto',
+        height: 'auto',
+        autoOpen: true,
+        zIndex: 9999,
+        close: function (event, ui) {
+            $(this).dialog('destroy').remove()
+        },
+        buttons: [
+            {
+                text: "Yes",
+                click: function () {
+                    $(this).dialog("close");
+                    if (typeof fncYesCallback == 'function') {
+                        fncYesCallback();
+                    }
+                }
+            },
+            {
+                text: "No",
+                click: function () {
+                    $(this).dialog("close");
+                    if (typeof fncNoCallback == 'function') {
+                        fncYesCallback();
+                    }
+                }
+            }
+        ]
+    });
+}
 
 function OpenNextPopup(popupId, url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose) {
 
@@ -79,7 +133,7 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
         width: width,
         height: height,
         autoOpen: false,
-        zIndex: 9999999,
+        zIndex: 9999,
         open: function (event, ui) {
             jQuery("#innerFrame" + popupId).attr({ "src": url }).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") });
         },

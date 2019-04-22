@@ -166,6 +166,10 @@
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />

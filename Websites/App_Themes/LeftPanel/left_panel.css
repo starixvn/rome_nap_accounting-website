@@ -411,6 +411,23 @@ body
 {
 	cursor:pointer;
 	}
+#InfoID
+{
+	margin-top:-2px;
+	margin-left:-20px;
+	position:absolute;
+	display:none;
+	width: 58px;
+	background-color:#fff;
+	padding-left:8px;
+	border:solid 1px #000;
+	!margin-top:16px;
+	!margin-left:-92px;
+}
+#InfoID a
+{
+	cursor:pointer;
+	}
 .imgDownUp
 {
 	vertical-align:middle;

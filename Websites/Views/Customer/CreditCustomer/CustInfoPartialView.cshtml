@@ -350,16 +350,22 @@ else
             <td colspan="2">
             </td>
         </tr>
-                if (Model.IsInsertPage == false)
-                {
-                <tr> <td class="l">
-                @Resources.Language.lblStatusClosed
-                </td> <td class="l"> <input type="checkbox" onclick="" class="" name="chkClosed"
-                id="chkClosed" data-bind="checked: customer.statusSetting.closed"> </td> <td class="l">
-                @Resources.Language.lblSuspended
-            </td> <td class="l"> <input type="checkbox" onclick="" class="" name="chkSuspended"
-            id="chkSuspended" data-bind="checked: customer.statusSetting.suspended"> </td> </tr>
-                }
+            if (Model.IsInsertPage == false)
+            {
+                <tr>
+                    <td class="l">
+                        @Resources.Language.lblStatusClosed
+                    </td>
+                    <td class="l">
+                        <input type="checkbox" onclick="" class="" name="chkClosed"
+                               id="chkClosed" data-bind="checked: customer.statusSetting.closed">
+                    </td>
+                    <td class="l">
+                    </td>
+                    <td class="l">
+                    </td>
+                </tr>
+            }
         }
         else if (Model.IsMemberSetting)
         {
@@ -398,25 +404,6 @@ else
                 >
             </td>
         </tr>
-        <tr id="suspended-row">
-            <td colspan="2">
-            </td>
-            <td class="l">
-                @Resources.Language.lblSuspended
-            </td>
-            <td class="l">
-                <input type="checkbox" onclick="" class="" name="chkSuspended" id="chkSuspended"
-                 @if (Model.IsInsertPage)
-                 {
-                    @:data-bind="checked: customer.statusSetting.suspended, disable: customer.statusSetting.suspended"
-                }
-                 else
-                 {
-                     @:data-bind="checked: customer.statusSetting.suspended"
-                 }
-                     >
-            </td>
-        </tr>
         }
         else if (Model.IsInsertPage == false)
         {
@@ -428,11 +415,8 @@ else
                 <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" data-bind="checked: customer.statusSetting.closed">
             </td>
             <td class="l">
-                @Resources.Language.lblSuspended
             </td>
             <td class="l">
-                <input type="checkbox" onclick="" class="" name="chkSuspended" id="chkSuspended"
-                    data-bind="checked: customer.statusSetting.suspended">
             </td>
         </tr>
         }
