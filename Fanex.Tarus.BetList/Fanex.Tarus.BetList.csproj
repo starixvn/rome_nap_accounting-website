@@ -488,6 +488,7 @@
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\CurrencyContants.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
+    <Compile Include="Constants\Language.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
@@ -631,6 +632,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BetListResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\LanguageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

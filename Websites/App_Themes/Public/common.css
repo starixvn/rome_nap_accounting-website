@@ -348,3 +348,78 @@ span.cannotchangeinternal {
     overflow: auto;
     color: #ff5411;
 }
+
+.flag {
+    background: url(../Images/sprites.png) no-repeat;
+    display: inline-block;
+}
+.flag {
+    width: 23px;
+    height: 16px;
+    position: relative;
+    top: 4px;
+    margin-right: 4px;
+}
+
+    .flag.flag-en-US {
+        background-position: 0 0px;
+    }
+
+    .flag.flag-zh-TW {
+        background-position: 0 -17px;
+    }
+    .flag.flag-zh-CN {
+        background-position: 0 -17px;
+    }
+    .flag.flag-zh-Hans {
+        background-position: 0 -17px;
+    }
+.lang-container {
+    position: relative;
+}
+
+.lang-box {
+    float: right;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #7C98A4;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid \9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.list-lang {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 160px;
+    background-color: #fff;
+    border-radius: 1px;
+    border: 1px solid rgba(0,0,0,.15);
+    box-shadow: 0 2px 2px rgba(0,0,0,.3);
+    list-style: none;
+    z-index: 999;
+    list-style: none;
+}
+
+    .list-lang .lang {
+        display: block;
+        padding: 4px 6px;
+        line-height: 1.42857;
+        color: #333;
+    }
+        .list-lang .lang:hover {
+            background-color: #f5f5f5;
+        }

@@ -1,8 +1,11 @@
 ﻿@using Fanex.BetList.Core.Entities
+@using Sunplus.Accounting.Core.Common;
 @using Fanex.Tarus.BetList.Models
 @using Fanex.Tarus.BetList.Constants
+
 @model IList<TicketDetail>
 @{
+    var languages = (LanguageViewModel)ViewBag.Languages;
     TicketDetail betdetail = new TicketDetail();
     if (Model != null && Model.Count > 0)
     {
@@ -109,6 +112,25 @@
         </td>
     </tr>
 }
+
+<div class="lang-container" id="lang-container">
+    <div class="lang-box" id="lang-box">
+        <span id="languageCode" class="flag flag-@languages.CurrentLanguage"></span>
+        <span id="languageName">@Language.GetCountryName(languages.CurrentLanguage)</span>
+        <input type="hidden" id="languageCodeHidden" value="@languages.CurrentLanguage" />
+        <span class="caret"></span>
+    </div>
+    <ul class="list-lang" id="language-ddl" style="display:none">
+        @foreach (var item in languages.Data)
+        {
+            <li class="lang">
+                <span class="flag flag-@item.Key" data-language-code="@item.Key" data-language-name="@item.Value"></span>
+                @item.Value
+            </li>
+        }
+    </ul>
+</div>
+
 <div id="BetlistByRefNo" class="freegrid display-none">
     <div class="col_header row-headers-background scroll-y">
         <div class="header-container">
@@ -122,58 +144,52 @@
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Username
+                                @Resources.NewBetList.Username
                             </div>
                         </th>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date
+                                @Resources.NewBetList.Date
                             </div>
                         </th>
                         <th>
                             <div class="width250 height34 table-cell">
-                                Choice
+                                @Resources.NewBetList.Choice
                             </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Odds
+                                @Resources.NewBetList.Odds
                             </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake
+                                @Resources.NewBetList.Stake
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Win Loss
+                                @Resources.NewBetList.WinLoss
                             </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status
+                                @Resources.NewBetList.Status
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Super
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.SuperPT
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Master
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.MasterPT
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Agent
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.AgentPT
                             </div>
                         </th>
                     </tr>
@@ -193,58 +209,52 @@
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Username
+                                @Resources.NewBetList.Username
                             </div>
                         </th>
                         <th>
                             <div class="width120 height34 table-cell">
-                                Date
+                                @Resources.NewBetList.Date
                             </div>
                         </th>
                         <th>
                             <div class="width250 height34 table-cell">
-                                Choice
+                                @Resources.NewBetList.Choice
                             </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Odds
+                                @Resources.NewBetList.Odds
                             </div>
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
-                                Stake
+                                @Resources.NewBetList.Stake
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Win Loss
+                                @Resources.NewBetList.WinLoss
                             </div>
                         </th>
                         <th>
                             <div class="width100 height34 table-cell">
-                                Status
+                                @Resources.NewBetList.Status
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Super
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.SuperPT
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Master
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.MasterPT
                             </div>
                         </th>
                         <th>
                             <div class="width60 height34 table-cell">
-                                Agent
-                                <br />
-                                PT/Comm
+                                @Resources.NewBetList.AgentPT
                             </div>
                         </th>
                     </tr>
@@ -260,7 +270,7 @@
                         <tr class="c">
                             <td colspan="11">
                                 <div class="c b" style="margin-left: 60px;">
-                                    There is no data
+                                    @Resources.NewBetList.NoInformation
                                 </div>
                             </td>
                         </tr>
@@ -271,7 +281,13 @@
         </div>
     </div>
 </div>
+<script src="@Url.Content("~/Views/BetList/Scripts/LanguageDropdownList.js?ver=" + AccCommon.Version())" type="text/javascript"></script>
 <script type="text/javascript">
     var _custid = @betdetail.Ticket.CustId;
     var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
+    $(document).ready(function () {
+        BetList.LanguageDropdownList.init(BetList.BetListByRefNo.getBetList);
+    });
+
 </script>
+
