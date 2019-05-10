@@ -80,16 +80,17 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
             }
 
             var isSuperInAutomateTransfer = Sunplus.Accounting.DataAccess.IBCDLL.Customer.Select4Edit.SelectSuperInAutomateTransfer(int.Parse(Request["custid"])).Count() > 0;
-            if(isSuperInAutomateTransfer)
+            if (isSuperInAutomateTransfer)
             {
                 var roleId = Request["rid"];
+                var messageTemplate = "<tr class=\"errMsg\"><td><div id = \"transfercondition_message\" >{0}</div></td></tr>";
                 if (roleId == "4")
                 {
-                    TemplateHandler.Assign(ref strHtml, "{TransferConditions_Message}", Resources.Language.TransferConditionsWarning_Super);
+                    TemplateHandler.Assign(ref strHtml, "{TransferConditions_Message}", string.Format(messageTemplate, Resources.Language.TransferConditionsWarning_Super));
                 }
                 else
                 {
-                    TemplateHandler.Assign(ref strHtml, "{TransferConditions_Message}", Resources.Language.TransferConditionsWarning_Master);
+                    TemplateHandler.Assign(ref strHtml, "{TransferConditions_Message}", string.Format(messageTemplate, Resources.Language.TransferConditionsWarning_Master));
                 }
                 TemplateHandler.Assign(ref strHtml, "{submit-disabled}", "disabled");
             }
