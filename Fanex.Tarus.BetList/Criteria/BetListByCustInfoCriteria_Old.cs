@@ -11,6 +11,8 @@
         [SpParam(SqlParamName = "CustID")]
         public int CustId { get; set; }
 
+        public bool IsCN88 { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate

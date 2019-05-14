@@ -1,0 +1,6 @@
+﻿@using Fanex.BetList.Core.Entities
+@using Fanex.Tarus.BetList.Helper
+@helper Render(ITicket ticket)
+{
+    <td class="stake-block bl_underdog r">@(new HtmlString(CN88BetListHelpers.Stake(ticket.Stake)))</td>
+}

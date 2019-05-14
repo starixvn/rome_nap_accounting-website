@@ -1,0 +1,11 @@
+﻿@using Fanex.Tarus.BetList.Models.CN88
+@using Fanex.BetList.Core.Entities
+@using Fanex.BetList.Core.Utils
+@using CN88.BetList.Core.Builders
+
+@helper Render(TicketDto ticket, IBetListCN88HtmlBuilder builder, ITicketHelper helper, GetCachePropertyById getOddsTypeNameFunc)
+{
+    <td>
+        @(new HtmlString(builder.BuildBetInfo(ticket, helper, (obj) => getOddsTypeNameFunc(ConvertByBetType.OddsType(ticket.BetTypeId, ticket.OddsType)))))
+    </td>
+}

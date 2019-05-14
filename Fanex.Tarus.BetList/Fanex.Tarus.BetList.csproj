@@ -58,6 +58,14 @@
       <HintPath>..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CN88.BetList.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0-beta19\lib\net461\CN88.BetList.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0-beta15\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -443,10 +451,12 @@
     <Compile Include="Business\BetDetails\BetDetailsExporter.cs" />
     <Compile Include="Business\BetDetails\IBetDetailsExporter.cs" />
     <Compile Include="Business\BetListDetailService.cs" />
+    <Compile Include="Business\CN88BetListService.cs" />
     <Compile Include="Business\BetListService.cs" />
     <Compile Include="Business\ExchangeBetListService.cs" />
     <Compile Include="Business\ExportExcelBetlist.cs" />
     <Compile Include="Business\IBetListDetailService.cs" />
+    <Compile Include="Business\ICN88BetListService.cs" />
     <Compile Include="Business\IBetListService.cs" />
     <Compile Include="Business\IpService.cs" />
     <Compile Include="Business\IResultService.cs" />
@@ -498,6 +508,7 @@
     <Compile Include="Controller\Lucky3Controller.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
+    <Compile Include="Controller\CN88BetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Controller\ThirdPartyController.cs" />
     <Compile Include="Core\BetListHelper.cs" />
@@ -592,6 +603,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
+    <Compile Include="Helper\CN88BetListHelpers.cs" />
     <Compile Include="Helper\ReportServices.cs" />
     <Compile Include="Models\BalanceUp.cs" />
     <Compile Include="Models\BetListByIP_Username.cs" />
@@ -600,6 +612,7 @@
     <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\CashOutDetails.cs" />
     <Compile Include="Models\CashOutTicket.cs" />
+    <Compile Include="Models\CN88\BetListData.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventExcel.cs" />
@@ -624,6 +637,7 @@
     <Compile Include="Models\TennisResult\TennisResultEntity.cs" />
     <Compile Include="Models\TennisResult\TennisSetResult.cs" />
     <Compile Include="Models\TicketDetail.cs" />
+    <Compile Include="Models\CN88\TicketDto.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Models\WinLossModel.cs" />
@@ -633,6 +647,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BetListResources.resx</DependentUpon>
     </Compile>
+
+    <Compile Include="ViewModel\CN88MixParlayDetailViewModel.cs" />
+    <Compile Include="ViewModel\CN88BetListViewModel.cs" />
     <Compile Include="ViewModel\LanguageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

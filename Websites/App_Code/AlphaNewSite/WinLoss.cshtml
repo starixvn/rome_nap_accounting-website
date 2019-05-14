@@ -1,0 +1,7 @@
+﻿@using Fanex.BetList.Core.Entities
+@using Fanex.BetList.Core.Utils
+
+@helper Render(ITicket ticket)
+{
+    <td class="r">@(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+}

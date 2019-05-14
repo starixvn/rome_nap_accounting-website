@@ -44,6 +44,16 @@
             }
         }
 
+        public bool IsCN88
+        {
+            get
+            {
+                var site = Converter.ToString2(customerInfoRow["site"]);
+                if (string.IsNullOrWhiteSpace(site))
+                    return Converter.ToString2(customerInfoRow["membersite"]).ToUpper().Equals("CN88");
+                return site.ToUpper().Equals("CN88");
+            }
+        }
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
 
         public string LastLoginTime => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortTimeString()}";

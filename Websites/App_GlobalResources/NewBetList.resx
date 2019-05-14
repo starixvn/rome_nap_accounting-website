@@ -118,36 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Username</value></data>
+  <data name="AgentPercent" xml:space="preserve">
+    <value>Agent %</value>
   </data>
+  <data name="BetId" xml:space="preserve">
+    <value>Bet ID</value></data>
   <data name="Date" xml:space="preserve">
     <value>Trans.Time</value>
   </data>
   <data name="Choice" xml:space="preserve">
-    <value>Choice</value>
+    <value>Choice</value></data>
+  <data name="BetType" xml:space="preserve">
+    <value>Bet Type</value>
   </data>
   <data name="Odds" xml:space="preserve">
-    <value>Odds</value>
+    <value>Odds</value></data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commision</value>
   </data>
   <data name="Stake" xml:space="preserve">
-    <value>Stake</value>
+    <value>Stake</value></data>
+  <data name="CoPercent" xml:space="preserve">
+    <value>Co. %</value>
   </data>
   <data name="WinLoss" xml:space="preserve">
-    <value>Win Loss</value>
+    <value>Win Loss</value></data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date Time</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value></data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="SuperPT" xml:space="preserve">
+    <value>Super PT/ Comm</value></data>
+  <data name="MAPercent" xml:space="preserve">
+    <value>MA %</value>
+  </data>
+  <data name="MasterPT" xml:space="preserve">
+    <value>Master PT/ Comm</value></data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="AgentPT" xml:space="preserve">
+    <value>Agent PT/ Comm</value></data>
+  <data name="SMAPercent" xml:space="preserve">
+    <value>SMA %</value>
+  </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>No information is available</value></data>
+  <data name="Stake" xml:space="preserve">
+    <value>Stake</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="SuperPT" xml:space="preserve">
-    <value>Super PT/ Comm</value>
-  </data>
-  <data name="MasterPT" xml:space="preserve">
-    <value>Master PT/ Comm</value>
-  </data>
-  <data name="AgentPT" xml:space="preserve">
-    <value>Agent PT/ Comm</value>
-  </data>
-  <data name="NoInformation" xml:space="preserve">
-    <value>No information is available</value>
+  <data name="WinLoss" xml:space="preserve">
+    <value>Win / Loss</value>
   </data>
 </root>

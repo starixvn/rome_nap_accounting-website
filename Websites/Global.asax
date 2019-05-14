@@ -78,6 +78,7 @@
         Fanex.RemotingRef.RefDataTypeContainer
             .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
             .FromApplication("NAP Accounting");
+            
         BetListManager.RegisterRemotingRef(new CacheRef());
         ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
 
@@ -226,7 +227,6 @@
         {
             //Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
         SetGlobalCultureInfo();
     }
 
@@ -236,6 +236,7 @@
         if (!url.Contains("BetList/GetBetListByRefNo") &&
             !url.Contains("BetList/GetBetListByProduct") &&
             !url.Contains("BetList/GetMixParlayDetail") &&
+            !url.Contains("/CN88BetList/")&&
             Thread.CurrentThread.CurrentCulture.Name != Language.Default)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);
@@ -294,6 +295,17 @@
             string username = Convert.ToString(temp[1]);
             byte roleId = Convert.ToByte(temp[2]);
             Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLogOut(onUserId, username);
+        }
+    }
+
+    private void SetGlobalCultureInfo()
+    {
+        string url = Request.RawUrl.ToLower();
+        if (!url.Contains("/CN88BetList/") &&
+            Thread.CurrentThread.CurrentCulture.Name != Language.Default)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
         }
     }
 
