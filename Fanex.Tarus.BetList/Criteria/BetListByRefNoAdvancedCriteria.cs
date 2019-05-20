@@ -45,5 +45,18 @@
         public DateTime BalanceUpDay { get; set; }
 
         public byte SiteType { get; set; }
+
+        private string _language;
+        public string Language
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_language) ? Constants.Language.Default : _language;
+            }
+            set
+            {
+                _language = value;
+            }
+        } 
     }
 }

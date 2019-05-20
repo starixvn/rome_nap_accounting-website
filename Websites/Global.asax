@@ -32,6 +32,9 @@
 <%@ Import Namespace="Chatbot.Client.Configurations" %>
 <%@ Import Namespace="Fanex.Tarus.Customer.Helpers" %>
 <%@ Import Namespace="CN88.CustomerSetting.Client" %>
+<%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="System.Threading" %>
+<%@ Import Namespace="Fanex.Tarus.BetList.Constants" %>
 
 <script RunAt="server">
 
@@ -74,8 +77,7 @@
         ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
         Fanex.RemotingRef.RefDataTypeContainer
             .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
-            .FromApplication("NAP Accounting")
-            .SupportOnlyDefaultLanguage();
+            .FromApplication("NAP Accounting");
         BetListManager.RegisterRemotingRef(new CacheRef());
         ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
 
@@ -223,6 +225,21 @@
         catch (Exception ex)
         {
             //Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+        SetGlobalCultureInfo();
+    }
+
+    private void SetGlobalCultureInfo()
+    {
+        string url = Request.RawUrl.ToLower();
+        if (!url.Contains("BetList/GetBetListByRefNo") &&
+            !url.Contains("BetList/GetBetListByProduct") &&
+            !url.Contains("BetList/GetMixParlayDetail") &&
+            Thread.CurrentThread.CurrentCulture.Name != Language.Default)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
         }
     }
 

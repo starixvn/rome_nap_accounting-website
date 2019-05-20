@@ -40,6 +40,7 @@ BetList.BetListByRefNo = (function ($) {
                     $(this).removeAttr("href");
                 });
                 $("#result").attr('style', 'cursor: pointer;cursor: hand;');
+                $("#lang-container").width($("#BetlistByRefNo").width())
             },
             error: function () {
                 try {
@@ -153,8 +154,12 @@ BetList.BetListByRefNo = (function ($) {
         try {
             parent.BlockUI();
         } catch (e) { }
-
-        getData({ refno: $refNo.val().trim() }, window.rootUrl + "BetList/GetBetListByRefNo");
+        getData(
+            {
+                refno: $refNo.val().trim(),
+                language: $("#languageCodeHidden").val()
+            },
+            window.rootUrl + "BetList/GetBetListByRefNo");
     };
 
     function searchByProduct() {
@@ -168,7 +173,7 @@ BetList.BetListByRefNo = (function ($) {
         getData(
             {
                 productId: $selectedProduct.val(),
-
+                language: $("#languageCodeHidden").val(),
                 custId: playerId,
                 username: $username.val().trim(),
                 gameId: $gameId.val().trim(),
@@ -237,11 +242,12 @@ BetList.BetListByRefNo = (function ($) {
 
         $submit.click(function () {
             getBetList();
-        });
+        });        
     };
 
     return {
         init: init,
+        getBetList: getBetList,
         gridOpts: gridOpts
     }
 
@@ -277,14 +283,15 @@ function showDetail(id) {
 function showMP(transid, refno, custId, transIndex) {
     transIndex = transIndex == undefined ? "" : transIndex;
     var divEvent = $("#divEvent_" + transid + transIndex);
-
+    var language = $("#languageCodeHidden").val();
+    debugger;
     if (divEvent.css("display") === "none") {
         if (divEvent.html() === "") {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 type: "POST",
                 url: window.rootUrl + "BetList/GetMixParlayDetail",
-                data: "transid=" + transid + "&refno=" + refno + "&custId=" + custId,
+                data: "transid=" + transid + "&refno=" + refno + "&custId=" + custId + "&language=" + language,
                 success: function (result) {
                     divEvent.html(result);
                     divEvent.css("display", "");
@@ -310,6 +317,7 @@ function showMP(transid, refno, custId, transIndex) {
 }
 
 function showCombMP(transId, transIndex, refNo, custId) {
+
     showMP(transId, refNo, custId, transIndex);
 }
 
@@ -317,12 +325,13 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
     var divChoiceRight = $("#choice_right_" + transId);
     var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
     var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
+    var language = $("#languageCodeHidden").val();
 
     if (divParlay.css("display") === "none") {
         if ($.trim(divParlay.html()) === "") {
             try { parent.BlockUI(); } catch (e) { }
             var params = [
-                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId, "&language=", language
             ];
 
             $.ajax({

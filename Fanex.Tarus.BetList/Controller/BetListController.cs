@@ -7,10 +7,13 @@ namespace Fanex.Tarus.BetList.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Threading;
     using System.Web.Mvc;
     using Business;
     using Core;
     using Fanex.Common;
+    using Fanex.Tarus.BetList.Constants;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
     using Security.Services;
@@ -29,9 +32,9 @@ namespace Fanex.Tarus.BetList.Controllers
             _betListDetailService = new BetListDetailService();
         }
 
-        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId)
-
+        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId, string language = Language.Default)
         {
+            SetCulture(language);
             var result = _betListService.GetMixParlayTickets(
                 new MixParlayDetailCriteria
                 {
@@ -54,7 +57,7 @@ namespace Fanex.Tarus.BetList.Controllers
         /// <returns>The bet list by reference no.</returns>
         [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
-        public ActionResult GetBetListByRefNo(string refno)
+        public ActionResult GetBetListByRefNo(string refno, string language = Language.Default)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
             var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
@@ -65,6 +68,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
                 if (BetListHelper.IsNumeric(refno.Trim()))
                 {
+                    SetCulture(language);
                     result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
                     {
                         UserId = AppSession.AccId,
@@ -76,6 +80,7 @@ namespace Fanex.Tarus.BetList.Controllers
                 }
             }
 
+            ViewBag.Languages = new LanguageViewModel(language);
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
             paramHastable.Add("custId", custId);
@@ -104,9 +109,11 @@ namespace Fanex.Tarus.BetList.Controllers
                 betListByProductCriteria.BalanceUpDay = balanceUp.BalanceUpDay;
                 betListByProductCriteria.SiteType = siteType;
 
+                SetCulture(betListByProductCriteria.Language);
+
                 result = _betListService.GetBetListByProduct(betListByProductCriteria);
             }
-
+            ViewBag.Languages = new LanguageViewModel(betListByProductCriteria.Language);
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
             paramHastable.Add("custId", custId);
@@ -223,7 +230,7 @@ namespace Fanex.Tarus.BetList.Controllers
             {
                 result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, siteType, ref quantity);
             }
-            
+
             var dateTmp = fromDate.ToShortDateString();
             ViewBag.NumberBegining = (pageSize * (pageIndex - 1)) + 1;
             ViewBag.Quantity = quantity;
@@ -370,6 +377,15 @@ namespace Fanex.Tarus.BetList.Controllers
             var result = _betListDetailService.GetLicenseeBonusDetails(criteria);
 
             return View("~/Views/BetList/LicenseeBonus/Details.cshtml", result);
+        }
+
+        private void SetCulture(string language)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            var defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentCulture.DateTimeFormat = defaultCulture.DateTimeFormat;
+            Thread.CurrentThread.CurrentCulture.NumberFormat = defaultCulture.NumberFormat;
         }
     }
 }
