@@ -525,4 +525,7 @@
   <data name="VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP" xml:space="preserve">
     <value>Copy Virtual Rate value from Basketball HDP Live to other sports/bettypes.</value>
   </data>
+  <data name="InvalidCredit" xml:space="preserve">
+    <value>New Credit is out of range, please refresh the form and try again.</value>
+  </data>
 </root>

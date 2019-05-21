@@ -134,7 +134,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.6-CN88Headline001\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
@@ -407,7 +407,11 @@
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
+    <Compile Include="Criteria\CN88\CN88UnlockCustomerCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
+    <Compile Include="Criteria\CN88\SelectCreditRangeCriteria.cs" />
+    <Compile Include="Criteria\CN88\SelectMemberUsedCreditCriteria.cs" />
+    <Compile Include="Criteria\CN88\UpdateCreditCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
@@ -549,6 +553,7 @@
     <Compile Include="Entities\AutoTransferAll\ValidAgents.cs" />
     <Compile Include="Entities\AutoTransferAll\ValidAgent.cs" />
     <Compile Include="Entities\BaseModel.cs" />
+    <Compile Include="Entities\CN88\CreditRangeModel.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\ImportDirectAccountResult.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\UpdateDirectAccountStatusEffectInfo.cs" />
@@ -575,9 +580,11 @@
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
+    <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
+    <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />

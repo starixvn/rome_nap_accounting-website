@@ -2581,4 +2581,14 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="TransferConditionsWarning_Super" xml:space="preserve">
     <value>The Daily Transfer setting has been applied to this account via the company automated transfer process. You are not allowed to adjust the Weekly Transfer Condition.</value>
   </data>
+  <data name="BetCredit" xml:space="preserve">
+    <value>Bet Credit</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+
+  <data name="UsedCredit" xml:space="preserve">
+    <value>Used Credit</value>
+  </data>
 </root>

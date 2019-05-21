@@ -1,5 +1,5 @@
 ﻿IBC = [];
-IBC.addEvent = function(el, evname, func) {
+IBC.addEvent = function (el, evname, func) {
     if (el.attachEvent) { // IE
         el.attachEvent("on" + evname, func);
     } else if (el.addEventListener) { // Gecko / W3C
@@ -9,7 +9,7 @@ IBC.addEvent = function(el, evname, func) {
     }
 }
 
-IBC.removeEvent = function(el, evname, func) {
+IBC.removeEvent = function (el, evname, func) {
     if (el.detachEvent) { // IE
         el.detachEvent("on" + evname, func);
     } else if (el.removeEventListener) { // Gecko / W3C
@@ -21,79 +21,78 @@ IBC.removeEvent = function(el, evname, func) {
 
 // JScript File
 //Check if current page open as the top window(not in any frame) and redirect to the home page
-function checkDirectView(){
-	if(window==top){
-		alert("You are not allowed to view this page directly!");
-		top.location.href="index.html";
-	}
+function checkDirectView() {
+    if (window == top) {
+        alert("You are not allowed to view this page directly!");
+        top.location.href = "index.html";
+    }
 }
 
 function obj(id) {
     if (document.getElementById(id))
         return document.getElementById(id);
-	else return null
+    else return null
 }
 
 // check or uncheck all checkbox
 // @viet hoang
-function checkAll(formName, id){
-    try {                    
-        var f =document.forms[formName];
-        var isChecked =document.getElementById(id).checked;
+function checkAll(formName, id) {
+    try {
+        var f = document.forms[formName];
+        var isChecked = document.getElementById(id).checked;
         cnt = f.elements.length;
-        for (var i=0; i <cnt; i++) 
-        {
-            var e =f.elements[i];
-            if (typeof e !='undefined' && e.type =='checkbox') e.checked =isChecked;	  
+        for (var i = 0; i < cnt; i++) {
+            var e = f.elements[i];
+            if (typeof e != 'undefined' && e.type == 'checkbox') e.checked = isChecked;
         }
     }
     catch (ex) {
         alert(ex);
-    }                
+    }
 }
 
-function createFrame(id){
-	var fr = documnet.getElementById(id);
-	if (!fr && document.createElement){		
-	    try {
-	        fr = document.createElement("iframe");
-		    fr.setAttribute("id", id);
-		    fr.setAttribute("name", id);
-		    fr.setAttribute("frameborder", 0);
-		    fr.setAttribute("border", 0);
-		    fr.width = "0px";
-		    fr.height = "0px";		
-		    document.body.appendChild(fr);
-		    if (document.frames) fr =document.frames[id];		    
-	    }
-	    catch (exception) {
-	        var fHTML ='\<iframe id="' +id +'" style="';
-	        fHTML +='boder: 0px;';
-	        fHTML +='width: 0px;';
-	        fHTML +='height: 0px;';
-	        fHTML =='"><\/iframe>';
-	        var _body =document.getElementsByTagName('body')[0];
-	        if (_body) _body.innerHTML += fHTML;
-	        fr =new Object();
-	        fr.document =new Object();
-	        fr.document.location = new Object();
+function createFrame(id) {
+    var fr = documnet.getElementById(id);
+    if (!fr && document.createElement) {
+        try {
+            fr = document.createElement("iframe");
+            fr.setAttribute("id", id);
+            fr.setAttribute("name", id);
+            fr.setAttribute("frameborder", 0);
+            fr.setAttribute("border", 0);
+            fr.width = "0px";
+            fr.height = "0px";
+            document.body.appendChild(fr);
+            if (document.frames) fr = document.frames[id];
+        }
+        catch (exception) {
+            var fHTML = '\<iframe id="' + id + '" style="';
+            fHTML += 'boder: 0px;';
+            fHTML += 'width: 0px;';
+            fHTML += 'height: 0px;';
+            fHTML == '"><\/iframe>';
+            var _body = document.getElementsByTagName('body')[0];
+            if (_body) _body.innerHTML += fHTML;
+            fr = new Object();
+            fr.document = new Object();
+            fr.document.location = new Object();
             fr.document.location.iframe = document.getElementById(id);
-            fr.document.location.replace = function(location) {
+            fr.document.location.replace = function (location) {
                 this.iframe.src = location;
             }
-	    }		
-	}
-	return fr;
+        }
+    }
+    return fr;
 }
-function dataProcess(url, frame){
-	var fr = createFrame(frame);
-	if (fr){
-		if (frame == "oddsinfo"){
-		    var f = self.frames["oddsinfo"];
-			f.finished = null;
-		}		
-		fr.src = url;		
-	}
+function dataProcess(url, frame) {
+    var fr = createFrame(frame);
+    if (fr) {
+        if (frame == "oddsinfo") {
+            var f = self.frames["oddsinfo"];
+            f.finished = null;
+        }
+        fr.src = url;
+    }
 }
 
 //format number
@@ -101,129 +100,117 @@ function dataProcess(url, frame){
 //example
 //var nr = 1345652345.67890;
 //formatNumber(nr ,2,',','.','','','',' CR')-->1,345,652,345.68
-function formatNumber(num,dec,thou,pnt,curr1,curr2,n1,n2) {
-    var sign ='';
-    if(num <0) sign='-';
-    var x =Math.round(num * Math.pow(10,dec));
-    if (x >=0) n1=n2='';
-    var y =('' +Math.abs(x)).split('');
-    var z =y.length -dec;
+function formatNumber(num, dec, thou, pnt, curr1, curr2, n1, n2) {
+    var sign = '';
+    if (num < 0) sign = '-';
+    var x = Math.round(num * Math.pow(10, dec));
+    if (x >= 0) n1 = n2 = '';
+    var y = ('' + Math.abs(x)).split('');
+    var z = y.length - dec;
     y.splice(z, 0, pnt);
-    while (z >3) {
-        z -=3; 
-        y.splice(z,0,thou);
+    while (z > 3) {
+        z -= 3;
+        y.splice(z, 0, thou);
     }
-    var r = curr1 +n1 +y.join('') +n2 +curr2;
-    if(num >-1 && num <1 && r.indexOf('.') ==0) r ="0" +r;
-    return sign +r;
-    
+    var r = curr1 + n1 + y.join('') + n2 + curr2;
+    if (num > -1 && num < 1 && r.indexOf('.') == 0) r = "0" + r;
+    return sign + r;
+
 }
 //format number to form: #,###,###
-function formatNumber2(nr){
-    return formatNumber(nr,0,',','','','','','');
+function formatNumber2(nr) {
+    return formatNumber(nr, 0, ',', '', '', '', '', '');
 }
 //format number to form: #,###,###.00
-function formatNumber32(nr){
-    return formatNumber(nr,2,',','.','','','','');
+function formatNumber32(nr) {
+    return formatNumber(nr, 2, ',', '.', '', '', '', '');
 }
 //replace all occurrence of a sub string in a string
 //@PhuongDN
 //Find all occurrence of findStr in str and replace it with replacingStr
-function replaceAll(str,findStr,replacingStr){         
-    return str.replace(eval('/' +findStr +'/g'), replacingStr);
+function replaceAll(str, findStr, replacingStr) {
+    return str.replace(eval('/' + findStr + '/g'), replacingStr);
 }
 
 // check number
-function isNumericChar(value){
-     var check ="0123456789";
-     if (check.indexOf(value) <0) return false;     
-     return true;     
+function isNumericChar(value) {
+    var check = "0123456789";
+    if (check.indexOf(value) < 0) return false;
+    return true;
 }
 
 // check number
-function checkOdds(value){                
-     var check = "-.0123456789";
-     if (check.indexOf(value) < 0) return false;     
-     return true;
+function checkOdds(value) {
+    var check = "-.0123456789";
+    if (check.indexOf(value) < 0) return false;
+    return true;
 }
 //Hanh add
-function round(number,X)
-{
+function round(number, X) {
     X = (!X ? 2 : X);
-    return Math.round(number*Math.pow(10,X))/Math.pow(10,X);
+    return Math.round(number * Math.pow(10, X)) / Math.pow(10, X);
 }
 
-function ReplaceAll(str,regexp,newstr)
-{
-	return str.replace(eval('/' +regexp +'/g'), newstr);
+function ReplaceAll(str, regexp, newstr) {
+    return str.replace(eval('/' + regexp + '/g'), newstr);
 }
 //trim function for string
 
-String.prototype.ltrim = function() {return this.replace(/^\s+/,"");}
-String.prototype.rtrim = function() {return this.replace(/\s+$/,"");}
+String.prototype.ltrim = function () { return this.replace(/^\s+/, ""); }
+String.prototype.rtrim = function () { return this.replace(/\s+$/, ""); }
 //check empty input field by id
-function isEmpty(id){
-    try
-    {   
-        return obj(id).value.trim()=="";
+function isEmpty(id) {
+    try {
+        return obj(id).value.trim() == "";
     }
-    catch(e)
-    {
+    catch (e) {
         alert('cannot found id: ' + id);
     }
 }
 //check string input field by id , return true or false
-function isString(id)
-{
-    return isNaN(ReplaceAll(obj(id).value,',',''));
+function isString(id) {
+    return isNaN(ReplaceAll(obj(id).value, ',', ''));
 }
 //check Numeric input field by id , return value
-function isNumeric(id)
-{
-    return parseFloat(ReplaceAll(obj(id).value,',',''));
+function isNumeric(id) {
+    return parseFloat(ReplaceAll(obj(id).value, ',', ''));
 }
 //check Numeric input field by id, can be null or empty
-function isNumber(id){
-    var result=false;
-    try
-    {
-        if(obj(id)==null || obj(id).value.trim()==""){
-            result=true;
-        }else{
-            result=!isNaN(obj(id).value);
+function isNumber(id) {
+    var result = false;
+    try {
+        if (obj(id) == null || obj(id).value.trim() == "") {
+            result = true;
+        } else {
+            result = !isNaN(obj(id).value);
         }
-    }catch(error){
+    } catch (error) {
     }
 }
 //check Numeric input field by id
-function isNumberNotNull(id){
-    var result=false;
-    try
-    {
-        if(!obj(id).value.trim()=="")
-        {
-            result=!isNaN(obj(id).value);
+function isNumberNotNull(id) {
+    var result = false;
+    try {
+        if (!obj(id).value.trim() == "") {
+            result = !isNaN(obj(id).value);
         }
-    }catch(error){
+    } catch (error) {
     }
     return result;
 }
 //this function is used (in AddNewSuper.aspx & EditSuper.aspx pages) to:
 //check keycode is inputed into textbox must be number
-function CheckInputNumber(e)
-{
+function CheckInputNumber(e) {
     var code = "";
-    if(e.keyCode) code=e.keyCode;
-    else if(e.which) code=e.which;  				
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0 && code!=46)
-    {		
+    if (e.keyCode) code = e.keyCode;
+    else if (e.which) code = e.which;
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 46) {
         return false;
     }
-    return true;		
+    return true;
 }
 //Check for integer
-function CheckIntNumber(e)
-{
+function CheckIntNumber(e) {
     if (!e) {
         e = window.event;
     }
@@ -235,207 +222,198 @@ function CheckIntNumber(e)
 
     if ((code < 48 || code > 57) &&
         code != 8 &&
-        code != 13 && 
-        code !=0)
-    {		
+        code != 13 &&
+        code != 0) {
         return false;
     }
 
-    return true;		
+    return true;
 }
 //Check for decimal number
 function CheckDecNumber(e) {
-   
+
     var code = "";
     if (e.keyCode) code = e.keyCode;
     else if (e.which) code = e.which;
     if (code == 9) {
         return code;
     }
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0 && code!=46)
-    {		
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 46) {
         return false;
     }
-    return true;		
+    return true;
 }
 
-function CheckDecNumber_Ne(e){
+function CheckDecNumber_Ne(e) {
     var code = "";
-    if(e.keyCode) code=e.keyCode;
+    if (e.keyCode) code = e.keyCode;
     else if (e.which) code = e.which;
     if (code == 9) {
         return code;
-    }				
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0 && code!=46 && code!=45)
-    {		
+    }
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 46 && code != 45) {
         return false;
     }
-    return true;		
+    return true;
 }
 
 //Check password with min length, having least 2 alpha characters and 2 numeric characters
-function validPass(len,pass){
-    
-    if(pass==null || pass.length<len)
+function validPass(len, pass) {
+
+    if (pass == null || pass.length < len)
         return false;
-    if(pass.match(/.*\d.*\d.*/)==null)
+    if (pass.match(/.*\d.*\d.*/) == null)
         return false;
-    if(pass.match(/.*([a-z]|[A-Z]).*([a-z]|[A-Z]).*/)==null)
+    if (pass.match(/.*([a-z]|[A-Z]).*([a-z]|[A-Z]).*/) == null)
         return false;
     return true;
 }
 //Hanh add for change color of row
-var flag=0;
-var colorWhite="#ffffff";
-var colorGrey="#e8e8e8";
-var rowColor="#ffffff";
-function ChangeColor()
-{
-    if(flag==0)
-    {
-        rowColor=colorWhite;
-        flag=1;
+var flag = 0;
+var colorWhite = "#ffffff";
+var colorGrey = "#e8e8e8";
+var rowColor = "#ffffff";
+function ChangeColor() {
+    if (flag == 0) {
+        rowColor = colorWhite;
+        flag = 1;
     }
-    else
-    {
-        rowColor=colorGrey;
-        flag=0;
+    else {
+        rowColor = colorGrey;
+        flag = 0;
     }
 }
 //Check if a string is empty after remove space characrer at front and end
-function isEmptyStr(str)
-{
+function isEmptyStr(str) {
     var v;
-    try{
-        v = (str.trim()=="");
-    }catch(error){
+    try {
+        v = (str.trim() == "");
+    } catch (error) {
         v = false;
     }
     return v;
 }
 
 //Check if browser is IE
-function isIE(){
-    return (navigator.appName.indexOf("Internet Explorer")>-1)
+function isIE() {
+    return (navigator.appName.indexOf("Internet Explorer") > -1)
 }
 //assign css class for clicked left menu item
 //menu item must has id 'lm'+index
 //len: number of menu item
-function selectLeftMenu(itemIndex,len){
-    for(var i=0;i<len;++i){
-        if(i==itemIndex)
-            obj("lm"+i).className="selected";
+function selectLeftMenu(itemIndex, len) {
+    for (var i = 0; i < len; ++i) {
+        if (i == itemIndex)
+            obj("lm" + i).className = "selected";
         else
-            obj("lm"+i).className="";
+            obj("lm" + i).className = "";
     }
 }
 //Check if first value is null --> return replacing value; else return first value
-function ifNull(val,rep){
-    return (val==null)?rep:val;
+function ifNull(val, rep) {
+    return (val == null) ? rep : val;
 }
 //convert value(if null) to empty string
-function null2Blank(val){
-    return ifNull(val,"");
+function null2Blank(val) {
+    return ifNull(val, "");
 }
 //Show sucessfull message
-function showSuccMsg(id){
-    obj(id).style.display='';
-    setTimeout("hideSuccMsg('"+id+"');",3000);
+function showSuccMsg(id) {
+    obj(id).style.display = '';
+    setTimeout("hideSuccMsg('" + id + "');", 3000);
 }
 //hide sucessful message
-function hideSuccMsg(id){
-    obj(id).style.display='none';
+function hideSuccMsg(id) {
+    obj(id).style.display = 'none';
 }
 // to check Odds value must be number
-function CheckOddsNumber(e)
-{
+function CheckOddsNumber(e) {
     if (!e) e = window.event;
-    var code = (e.keyCode) ? e.keyCode : e.which; 				
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0 && code!=46 && code!=45)
-    {		
+    var code = (e.keyCode) ? e.keyCode : e.which;
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 46 && code != 45) {
         return false;
-    }    
-    return true;		
+    }
+    return true;
 }
 
- function writeErrMsg(_errmsg, _spanId){
-    var _err =document.getElementById(_spanId);
-    if (typeof _err !='undefined') _err.innerHTML ="* " +_errmsg +"!";
+function writeErrMsg(_errmsg, _spanId) {
+    var _err = document.getElementById(_spanId);
+    if (typeof _err != 'undefined') _err.innerHTML = "* " + _errmsg + "!";
 }
 // -----------------------------------------------------------------------------
 // viet add 
 //--- String properties------
-String.prototype.trimLeft =function(){
-  return this.replace(/^\s*/,"");
+String.prototype.trimLeft = function () {
+    return this.replace(/^\s*/, "");
 }
 
-String.prototype.trimRight =function(){
-  return this.replace(/\s*$/,"");
+String.prototype.trimRight = function () {
+    return this.replace(/\s*$/, "");
 }
 
-String.prototype.trim =function(){
-  return this.trimRight().trimLeft();
+String.prototype.trim = function () {
+    return this.trimRight().trimLeft();
 }
 
-String.prototype.isNullOrEmpty =function() {
-   return (typeof this =='undefined' || this ==null || this.trim() =='');    
+String.prototype.isNullOrEmpty = function () {
+    return (typeof this == 'undefined' || this == null || this.trim() == '');
 }
 
 //12,234,345.023 || 12464524.34
-String.prototype.isNumeric =function() {    
-    var regs1 =new RegExp(/^-?\d+(\.\d+)?$/);
+String.prototype.isNumeric = function () {
+    var regs1 = new RegExp(/^-?\d+(\.\d+)?$/);
     //var regs2= new RegExp(/^-?\d{1,3}(\,\d{3})+(\.\d+)?\s*$/);    
-    var regs2= new RegExp(/^-?\d+(\,\d+)+(\.\d+)?\s*$/);    
+    var regs2 = new RegExp(/^-?\d+(\,\d+)+(\.\d+)?\s*$/);
     return (regs1.test(this) || regs2.test(this));
 }
 
-String.prototype.isDateTime = function() { 
+String.prototype.isDateTime = function () {
     return !(this.isNullOrEmpty() && isNaN(Date.parse(this)));
 }
 
-String.prototype.contains =function(item){
-	return (this.indexOf(item) >=0);
+String.prototype.contains = function (item) {
+    return (this.indexOf(item) >= 0);
 }
 
-String.prototype.startsWith =function(prefix){
-  return (this.substr(0,prefix.length)==prefix);
+String.prototype.startsWith = function (prefix) {
+    return (this.substr(0, prefix.length) == prefix);
 }
 
-String.prototype.endsWith =function(suffix){
-  return (this.substr(this.length -suffix.length)==suffix);
+String.prototype.endsWith = function (suffix) {
+    return (this.substr(this.length - suffix.length) == suffix);
 }
 
-String.prototype.compare =function(args, isIgnoreCase){		
-	if(isIgnoreCase) {
-		return ((new String(this.toLowerCase())==(new String(args)).toLowerCase()) ?0 :1);		
-	}
-	return ((this ==args) ?0 :1);
+String.prototype.compare = function (args, isIgnoreCase) {
+    if (isIgnoreCase) {
+        return ((new String(this.toLowerCase()) == (new String(args)).toLowerCase()) ? 0 : 1);
+    }
+    return ((this == args) ? 0 : 1);
 }
 
 // --- Number property---
-Number.prototype.toDecimals =function(n){
-    n =(isNaN(n)) ?2 :n;
-    var num =Math.pow(10,n);
+Number.prototype.toDecimals = function (n) {
+    n = (isNaN(n)) ? 2 : n;
+    var num = Math.pow(10, n);
     function pad(s) {
-        s =s ||'.';
-        return (s.length >n) ?s :pad(s +'0');
+        s = s || '.';
+        return (s.length > n) ? s : pad(s + '0');
     }
-    return (isNaN(this)) ?this :(new String(Math.round(this*num)/num)).replace(/(\.\d*)?$/,pad);
+    return (isNaN(this)) ? this : (new String(Math.round(this * num) / num)).replace(/(\.\d*)?$/, pad);
 }
 
 
 //--- Array properties ---
-Array.prototype.clear =function() {
-    var len =this.length;
-    if (len >0) this.splice(0, len);
+Array.prototype.clear = function () {
+    var len = this.length;
+    if (len > 0) this.splice(0, len);
 }
 
-Array.prototype.isEmpty =function() {
-    return (this.length ==0);
+Array.prototype.isEmpty = function () {
+    return (this.length == 0);
 }
 
 //Array.prototype.toString =function() {
-    //return this.join(this ||'');    
+//return this.join(this ||'');    
 //}
 
 //-- StringBuilder ---
@@ -454,26 +432,25 @@ Array.prototype.isEmpty =function() {
 
 //--------- Window Popup ------------
 
-function openWindow(_url, _name, _width, _height, _top, _left) { 
-    if (typeof _name =='undefined' || !_name) _name ='Accounting';
-    if (typeof _width =='undefined' || !_width) _width ='450';
-    if (typeof _height =='undefined' || !_height) _height ='280';
-    var props ="toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,dependent=yes,titlebar=no,directories=no,width=" +_width +",height=" +_height;	
-    if (typeof _top != 'undefined' && _top && typeof _left !='undefined' && _left) props +=",top=" +_top +",left=" +_left;             	        
-    var newwindow =window.open(_url, _name, props);
-    if (window.focus && typeof newwindow !='undefined' && newwindow !=null) newwindow.focus(); return false;
+function openWindow(_url, _name, _width, _height, _top, _left) {
+    if (typeof _name == 'undefined' || !_name) _name = 'Accounting';
+    if (typeof _width == 'undefined' || !_width) _width = '450';
+    if (typeof _height == 'undefined' || !_height) _height = '280';
+    var props = "toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,dependent=yes,titlebar=no,directories=no,width=" + _width + ",height=" + _height;
+    if (typeof _top != 'undefined' && _top && typeof _left != 'undefined' && _left) props += ",top=" + _top + ",left=" + _left;
+    var newwindow = window.open(_url, _name, props);
+    if (window.focus && typeof newwindow != 'undefined' && newwindow != null) newwindow.focus(); return false;
 }
 
-function PopUpWindow(url, width, height)
-{
-    var top=(screen.height-height)/2;
-    var left=(screen.width-width)/2;
-    var newwindow = window.open(url,"EditSuper","height="+ height +",width="+ width +",top="+ top +",left="+ left +",scrollbars=1");
-    if(newwindow) newwindow.focus(); 
+function PopUpWindow(url, width, height) {
+    var top = (screen.height - height) / 2;
+    var left = (screen.width - width) / 2;
+    var newwindow = window.open(url, "EditSuper", "height=" + height + ",width=" + width + ",top=" + top + ",left=" + left + ",scrollbars=1");
+    if (newwindow) newwindow.focus();
 }
 
-function exitWindow(hasChanged){    
-    if (typeof hasChanged !='undefined' && hasChanged ==1) {
+function exitWindow(hasChanged) {
+    if (typeof hasChanged != 'undefined' && hasChanged == 1) {
         this.location.reload();
     }
 }
@@ -486,16 +463,16 @@ function getElementByClassName(classname, node) {
     return getElementsByClassName(classname, node, '')
 }
 
-function getElementsByClassName(classname, node, tag){
-    if (node.toString().isNullOrEmpty()) node =document.getElementsByTagName('body')[0];    
-    if (tag.toString().isNullOrEmpty()) tag ='*';    
-    var a =new Array();
-    var regs =new RegExp('\\b' +classname +'\\b');
-    var els =node.getElementsByTagName(tag);
+function getElementsByClassName(classname, node, tag) {
+    if (node.toString().isNullOrEmpty()) node = document.getElementsByTagName('body')[0];
+    if (tag.toString().isNullOrEmpty()) tag = '*';
+    var a = new Array();
+    var regs = new RegExp('\\b' + classname + '\\b');
+    var els = node.getElementsByTagName(tag);
     if (regs && els) {
-		for(var i=0, j=els.length; i<j; i++) {
-			if(regs.test(els[i].className)) a.push(els[i]);
-		}
+        for (var i = 0, j = els.length; i < j; i++) {
+            if (regs.test(els[i].className)) a.push(els[i]);
+        }
     }
     return a;
 }
@@ -513,8 +490,7 @@ function check_UnameAndPwd(usertxt, pwdtxt, errmsg) {
         return false;
     }
 
-    if (obj('betfrom') && obj('betfrom').value == 'p') 
-    {
+    if (obj('betfrom') && obj('betfrom').value == 'p') {
         var str = obj('men').value + obj('mch').value;
         if (str.length > 0)
             return CheckValidPrivateMsg(errmsg);
@@ -525,7 +501,7 @@ function check_UnameAndPwd(usertxt, pwdtxt, errmsg) {
         return CheckValidPrivateMsg(errmsg);
 }
 
-function CheckValidPrivateMsg(errmsg) { 
+function CheckValidPrivateMsg(errmsg) {
     if (obj('men') && obj('men').value == "") {
         obj(errmsg).innerHTML = "*You must enter English message";
         obj('men').focus();
@@ -569,67 +545,55 @@ function CheckValidPrivateMsg(errmsg) {
     return true;
 }
 
-function alert_error(errmsg,errHolderId)
-{    
-   var intValue;
-    try
-    {
-        errHolderId = (errHolderId) ? errHolderId:'errMsg';
-        if(errmsg.length > 0)
-        {
-            if (document.getElementById('err'))
-            {
-                document.getElementById('err').innerHTML="";
+function alert_error(errmsg, errHolderId) {
+    var intValue;
+    try {
+        errHolderId = (errHolderId) ? errHolderId : 'errMsg';
+        if (errmsg.length > 0) {
+            if (document.getElementById('err')) {
+                document.getElementById('err').innerHTML = "";
             }
-            if (document.getElementById('errMsg'))
-            {
-                document.getElementById('errMsg').innerHTML="";
+            if (document.getElementById('errMsg')) {
+                document.getElementById('errMsg').innerHTML = "";
             }
-           
+
             document.getElementById(errHolderId).innerHTML = errmsg;
-            
-            if(errHolderId =="errfunc" && errmsg != '')
-            {
-              intValue = window.setTimeout("alert_error('','errfunc')",5000);
-            }            
+
+            if (errHolderId == "errfunc" && errmsg != '') {
+                intValue = window.setTimeout("alert_error('','errfunc')", 5000);
+            }
         }
-        else 
-        {
+        else {
             document.getElementById(errHolderId).innerHTML = '';
         }
     }
-    catch(e){alert('Cannot found id :' + errHolderId + '\nerrMsg: ' + errmsg);}
+    catch (e) { alert('Cannot found id :' + errHolderId + '\nerrMsg: ' + errmsg); }
 }
-function open_report(link)
-{
-    var fdate=document.getElementById('fdate').value;
-    var tdate=document.getElementById('tdate').value;
-    var linkHref=link.href;
-    if(linkHref.indexOf('?')>-1)
-        top.centerFr.location.href=linkHref+"&fdate="+fdate+"&tdate="+tdate;
+function open_report(link) {
+    var fdate = document.getElementById('fdate').value;
+    var tdate = document.getElementById('tdate').value;
+    var linkHref = link.href;
+    if (linkHref.indexOf('?') > -1)
+        top.centerFr.location.href = linkHref + "&fdate=" + fdate + "&tdate=" + tdate;
     else
-        top.centerFr.location.href=linkHref+"?fdate="+fdate+"&tdate="+tdate;
+        top.centerFr.location.href = linkHref + "?fdate=" + fdate + "&tdate=" + tdate;
 }
 
-function open_report2(link)
-{
-    var fdate=document.getElementById('fdate').value;
-    var tdate=document.getElementById('tdate').value;
-    var linkHref=link.href;
-    if(linkHref.indexOf('?')>-1)
-    {
-        var url =linkHref+"&fdate="+fdate+"&tdate="+tdate;
+function open_report2(link) {
+    var fdate = document.getElementById('fdate').value;
+    var tdate = document.getElementById('tdate').value;
+    var linkHref = link.href;
+    if (linkHref.indexOf('?') > -1) {
+        var url = linkHref + "&fdate=" + fdate + "&tdate=" + tdate;
         window.open(url, '_blank');
-     }   
-    else
-    {
-        var url =linkHref+"?fdate="+fdate+"&tdate="+tdate;
+    }
+    else {
+        var url = linkHref + "?fdate=" + fdate + "&tdate=" + tdate;
         window.open(url, '_blank');
     }
 }
 
-function open_dailyreport(link)
-{
+function open_dailyreport(link) {
     if (parent.location.pathname.indexOf("Default.aspx") == -1 && parent.location.pathname.indexOf("index.aspx")) {
         if (parent.frames.length > 1) parent.window.location.href = link;
     }
@@ -640,66 +604,56 @@ function open_dailyreport(link)
 
 //this function is used to display span error for Adding, Editing of Customer
 //when error of each Sporttype is shown, panel of each Sporttype is shown too
-var arrPlaceHolder=["err","error1","error2","error3","error5","error8","error10","error11","error201","error99","error151", "error161", "error99_9"];
-var arrPanel=["","panelSoccer","panelBasket","panelFootball","panelTennis","panelBaseball","panelGolf","panelMoto","panelFinancial","panelOtherSports","panelHorseRacing", "panelNumberGame", "panelMixedSports"];
-function ShowError(errMsg,placeHolder)
-{
-	flag=false; 	
-	window.scroll(0,0); 
-	parent.scroll(0,0); 	
-	var isEdit=(obj("hidEdit")!=null?true:false);
-	
-	for(var i=0;i<arrPlaceHolder.length;i++)
-	{	    
-		if(placeHolder==arrPlaceHolder[i])
-		{	
-			alert_error(errMsg,placeHolder);
-			if (i==0) continue;
-			obj(arrPanel[i]).style.display="";
-		}
-		else
-		{	
-		    //@phuong.nguyen
-		    //object is null or not
-		    if(null != obj(arrPlaceHolder[i]))
-			    obj(arrPlaceHolder[i]).innerHTML="";
-		}
-	}
-	if(obj("btnSubmit"))
-	{
-	    obj("btnSubmit").style.color="#ffffff";
-		obj("btnSubmit").disabled=false;
-	}
-	else if(obj("btnAdd"))
-	{
-	    obj("btnAdd").style.color="#ffffff";
-		obj("btnAdd").disabled=false;
-	}
+var arrPlaceHolder = ["err", "error1", "error2", "error3", "error5", "error8", "error10", "error11", "error201", "error99", "error151", "error161", "error99_9"];
+var arrPanel = ["", "panelSoccer", "panelBasket", "panelFootball", "panelTennis", "panelBaseball", "panelGolf", "panelMoto", "panelFinancial", "panelOtherSports", "panelHorseRacing", "panelNumberGame", "panelMixedSports"];
+function ShowError(errMsg, placeHolder) {
+    flag = false;
+    window.scroll(0, 0);
+    parent.scroll(0, 0);
+    var isEdit = (obj("hidEdit") != null ? true : false);
+
+    for (var i = 0; i < arrPlaceHolder.length; i++) {
+        if (placeHolder == arrPlaceHolder[i]) {
+            alert_error(errMsg, placeHolder);
+            if (i == 0) continue;
+            obj(arrPanel[i]).style.display = "";
+        }
+        else {
+            //@phuong.nguyen
+            //object is null or not
+            if (null != obj(arrPlaceHolder[i]))
+                obj(arrPlaceHolder[i]).innerHTML = "";
+        }
+    }
+    if (obj("btnSubmit")) {
+        obj("btnSubmit").style.color = "#ffffff";
+        obj("btnSubmit").disabled = false;
+    }
+    else if (obj("btnAdd")) {
+        obj("btnAdd").style.color = "#ffffff";
+        obj("btnAdd").disabled = false;
+    }
 }
 
 //Khoa add for when user click again on button Add or Submit, all old messages need to clear
-function ClearAllMsg()
-{
-    for(var i=0;i<arrPlaceHolder.length;i++)
-	{	
-	    if(null != obj(arrPlaceHolder[i]))					
-		    obj(arrPlaceHolder[i]).innerHTML="";
-	}
+function ClearAllMsg() {
+    for (var i = 0; i < arrPlaceHolder.length; i++) {
+        if (null != obj(arrPlaceHolder[i]))
+            obj(arrPlaceHolder[i]).innerHTML = "";
+    }
 }
 
 // Hanh add for Increase or Reduce PositionTaking
 //ddl: id of Positiontaking dropdown
 //step: value of each step (1 or 10)
 //max: maximum value that dropdown can increase to
-function Increase(ddl,step,max)
-{
-    var objDDL=obj(ddl);
-    var maxValue=Math.round(max*100);
-    var currSelect=Math.round(parseFloat(objDDL.value)*100);
-    var nextValue=currSelect+step;                        
-    if(nextValue<=maxValue)
-    {
-        objDDL.value=nextValue/100.0;
+function Increase(ddl, step, max) {
+    var objDDL = obj(ddl);
+    var maxValue = Math.round(max * 100);
+    var currSelect = Math.round(parseFloat(objDDL.value) * 100);
+    var nextValue = currSelect + step;
+    if (nextValue <= maxValue) {
+        objDDL.value = nextValue / 100.0;
     }
 }
 
@@ -707,28 +661,25 @@ function Increase(ddl,step,max)
 //ddl: id of Positiontaking dropdown
 //step: value of each step (1 or 10)
 //min: minimum value that dropdown can reduce to
-function Reduce(ddl,step,min)
-{
-    var objDDL=obj(ddl);
-    var minValue=Math.round(min*100);
-    var currSelect=Math.round(parseFloat(objDDL.value)*100);
-    var nextValue=currSelect-step;                          
-    if(nextValue>=minValue)
-    {
-        objDDL.value=nextValue/100.0;
+function Reduce(ddl, step, min) {
+    var objDDL = obj(ddl);
+    var minValue = Math.round(min * 100);
+    var currSelect = Math.round(parseFloat(objDDL.value) * 100);
+    var nextValue = currSelect - step;
+    if (nextValue >= minValue) {
+        objDDL.value = nextValue / 100.0;
     }
 }
 
 //this function is used to disable all checkboxes of Weekly in Adding case
-function selectTranferTime()
-{
+function selectTranferTime() {
     try {
-	    var elements= obj("alldays").getElementsByTagName("input");						
-	    for(var i=1; i<elements.length; i++)
-	        elements[i].disabled=obj("rdDaily").checked;
-	    if (obj("rdDaily").checked) {
-	        var o=obj("errTransfer");
-	        if (o) o.innerHTML = "";
+        var elements = obj("alldays").getElementsByTagName("input");
+        for (var i = 1; i < elements.length; i++)
+            elements[i].disabled = obj("rdDaily").checked;
+        if (obj("rdDaily").checked) {
+            var o = obj("errTransfer");
+            if (o) o.innerHTML = "";
 	    }
 	    var transfercondition_message = document.getElementById("transfercondition_message").innerHTML;
 	    if (transfercondition_message.length > 0) {
@@ -736,89 +687,75 @@ function selectTranferTime()
 	        for (var j = 0; j < elements.length; j++) {
 	            elements[j].disabled = true;
 	        }
-	    }
-	}
-	catch (ex) {}
-}	
+        }
+    }
+    catch (ex) { }
+}
 //this function is used to check case editing transfer time
 //When Weekly radio is selected and don't have any checkbox of days is checked
 function CheckTime() {
     var strConfirm = true;
-	if(typeof(lblConfirm)!='undefined')	
-	{	    
-		strConfirm=confirm(lblConfirm);
+    if (typeof (lblConfirm) != 'undefined') {
+        strConfirm = confirm(lblConfirm);
     }
-	if(strConfirm)
-	{
-        var chkCount=0;
-        var isSelect=false;
-        if(obj("rdWeekly").checked)
-        {
-	        var elements= obj("alldays").getElementsByTagName("input");						
-	        for(var i=1;i<elements.length;i++)
-	        {
-		        if(elements[i].checked)
-		        {
-			        isSelect=true;				
-			        chkCount ++;				
-		        }
-	        }	
-	        if (!isSelect)
-	        {
-	            showAlertMessage("err",lblChooseOneDay,1);
-		        scroll(0,0);
-		        return false;
-	        }		
+    if (strConfirm) {
+        var chkCount = 0;
+        var isSelect = false;
+        if (obj("rdWeekly").checked) {
+            var elements = obj("alldays").getElementsByTagName("input");
+            for (var i = 1; i < elements.length; i++) {
+                if (elements[i].checked) {
+                    isSelect = true;
+                    chkCount++;
+                }
+            }
+            if (!isSelect) {
+                showAlertMessage("err", lblChooseOneDay, 1);
+                scroll(0, 0);
+                return false;
+            }
         }
-        return true;	
+        return true;
     }
     return false;
 }
 //this function is used to check case editing transfer time
 //When Weekly radio is selected and all checkbox of 7 days can not be checked
-function ChooseDate()
-{    
-    var chkCount=0;
-    if(obj("rdWeekly").checked)
-    {
-	    var elements= obj("alldays").getElementsByTagName("input");		
-	    if(obj("err")!=null && obj("err").innerHTML!="")
-	    {	
-		    obj("err").innerHTML="";			
-	    }
-	    for(var i=1;i<elements.length;i++)
-	    {
-		    if(elements[i].checked)
-		    {
-			    isSelect=true;				
-			    chkCount ++;				
-			    if (chkCount==7)
-			    {
-			        showAlertMessage("err",lblChooseDaily,1);
-				    return false;									
-			    }
-		    }
-	    }				
+function ChooseDate() {
+    var chkCount = 0;
+    if (obj("rdWeekly").checked) {
+        var elements = obj("alldays").getElementsByTagName("input");
+        if (obj("err") != null && obj("err").innerHTML != "") {
+            obj("err").innerHTML = "";
+        }
+        for (var i = 1; i < elements.length; i++) {
+            if (elements[i].checked) {
+                isSelect = true;
+                chkCount++;
+                if (chkCount == 7) {
+                    showAlertMessage("err", lblChooseDaily, 1);
+                    return false;
+                }
+            }
+        }
     }
-    return true;	
+    return true;
 }
 
 //check Numeric input field by id , return value
-function isNumericSpan(id)
-{
-    return parseFloat(ReplaceAll(obj(id).innerHTML,',',''));
+function isNumericSpan(id) {
+    return parseFloat(ReplaceAll(obj(id).innerHTML, ',', ''));
 }
 
-function OnSelectExRate(objDLL)
-{
-    var index=objDLL.selectedIndex;            
-    var selVal= arrExRate[index];   
-    obj("hidExRate").value=selVal;            
+function OnSelectExRate(objDLL) {
+    var index = objDLL.selectedIndex;
+    var selVal = arrExRate[index];
+    obj("hidExRate").value = selVal;
 }
 
 //this function to reload page when update position taking successful.
 function doReload(msg) {
-    setTimeout("reloadCallBack('" + msg + "');", 2000 );
+    setTimeout("reloadCallBack('" + msg + "');", 2000);
 }
 function reloadCallBack(msg, ispopup) {
     PTUnBlockUI();
@@ -830,97 +767,84 @@ function reloadCallBack(msg, ispopup) {
 
 //this function to go to page in paging
 function jumpto(url) {
- 
+
     var page_menu = obj('page_menu');
-    if(page_menu.style.display == 'none' && url !='') 
-    {
+    if (page_menu.style.display == 'none' && url != '') {
         page_menu.style.left = String(xMousePos) + 'px';
         page_menu.style.position = 'absolute';
         page_menu.style.display = 'block';
-    }   
-    else
-    {
+    }
+    else {
         page_menu.style.display = 'none';
-        }
+    }
 }
 
 //this function is used in paging
-function gotopage(url)
-{              
-    var page=obj("txtpage").value;            
-    if(page=="")
-    {
-        return false;      
+function gotopage(url) {
+    var page = obj("txtpage").value;
+    if (page == "") {
+        return false;
     }
-    else
-    {                
+    else {
         url += 'page=' + page;
         window.location.href = url;
     }
 }
 //this function is used when Enter key is pressed "Go to page" textbox
-function KeyPress(e)
-{
+function KeyPress(e) {
     if (!e) e = window.event;
-    var code = (e.keyCode) ? e.keyCode : e.which; 	
-    if(code == 13)
-    {
-        obj("pagenav_ibtn").click();                
+    var code = (e.keyCode) ? e.keyCode : e.which;
+    if (code == 13) {
+        obj("pagenav_ibtn").click();
     }
-}   
+}
 
 
 //------------------------------------------
-function DisableHR(idchkHR)
-{
-    if(obj(idchkHR).checked)
-    {
-        obj('hddisableHR').value=0;
+function DisableHR(idchkHR) {
+    if (obj(idchkHR).checked) {
+        obj('hddisableHR').value = 0;
     }
-    else
-    {
-        obj('hddisableHR').value=1;
+    else {
+        obj('hddisableHR').value = 1;
     }
 }
 function DisableHRByCurr(sel) {
-    
-    var CurrAllow="0";
-    var currvalue="0";               
-    if(sel.value != "0")
-    {          
-        CurrAllow=sel.value.split('_')[1];
-        currvalue=sel.value.split('_')[0];       
+
+    var CurrAllow = "0";
+    var currvalue = "0";
+    if (sel.value != "0") {
+        CurrAllow = sel.value.split('_')[1];
+        currvalue = sel.value.split('_')[0];
     }
-    obj("hdCurr").value=currvalue;
-    obj("hdAllowCurr").value=CurrAllow;
+    obj("hdCurr").value = currvalue;
+    obj("hdAllowCurr").value = CurrAllow;
 }
 
 //do not allow enter text on numberic field
-function AllowNumber(e)
-{
+function AllowNumber(e) {
     var code = "";
-    if(e.which)
-        code=e.which;
-    else if(e.keyCode)
-        code=e.keyCode;            
-   	if(code == 37 || code == 39)
-   	    return true;
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0 && code!=46 && code!=9)
-    {		
+    if (e.which)
+        code = e.which;
+    else if (e.keyCode)
+        code = e.keyCode;
+    if (code == 37 || code == 39)
+        return true;
+    if (code == 46 && e.target.value.indexOf('.') == -1)
+        return true;
+
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 9) {
         return false;
     }
-    if(code ==13 )
-    {
-        if (typeof(UpdatePT) == "undefined")
-        {
-              BtnOnClick();
+    if (code == 13) {
+        if (typeof (UpdatePT) == "undefined") {
+            BtnOnClick();
         }
-        else
-        {
+        else {
             UpdatePT();
         }
     }
-    return true;		
+    return true;
 }
 
 function getRealTop(el) {
@@ -934,7 +858,7 @@ function getRealTop(el) {
         }
     }
     catch (e)
-                { }
+    { }
 
     return yPos;
 }
@@ -949,7 +873,7 @@ function getRealLeft(el) {
         }
     }
     catch (e)
-                { }
+    { }
 
     return xPos;
 }
@@ -1002,28 +926,23 @@ function gup(name) {
         return results[1];
 }
 
-function DelayPage1( time, path, rootPath)
-{
+function DelayPage1(time, path, rootPath) {
     overlay('disableControl');
-    var delay = time?time:1500;
+    var delay = time ? time : 1500;
     setTimeout("window.divMaskLoading1.style.display = 'none'", delay);
 }
 
-function DelayReloadPage1(url, time, path, rootPath)
-{
-    
-    var delay = time?time:1500;
-    
-    if(!url)
+function DelayReloadPage1(url, time, path, rootPath) {
+
+    var delay = time ? time : 1500;
+
+    if (!url)
         setTimeout("location.reload(false)", delay);
-    else
-    {      
-        if(!path)
-        {
+    else {
+        if (!path) {
             setTimeout("location.href = '" + url + "'", delay);
         }
-        else
-        {
+        else {
             setTimeout(path + "= '" + url + "'", delay);
         }
     }
@@ -1069,7 +988,7 @@ function ParseToBoolean(value) {
     else if (value == false)
         return false;
     else if (isNaN(value)) {
-    if (value.toLowerCase() == "true")
+        if (value.toLowerCase() == "true")
             return true;
         else
             return false;
@@ -1092,28 +1011,27 @@ function overlay(id) {
 
 // Success=0, Error=1, Warning=2
 function showAlertMessage(containerid, msg, type) {
-   
-    switch(type)
-    {
+
+    switch (type) {
         case 0:
             document.getElementById(containerid).innerHTML = "<div class='alertboxscc'><div>" + msg + "</div></div>";
-          break;
+            break;
         case 1:
             document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg + "</div></div>";
-          break;
+            break;
         case 2:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>"; ;
-          break;    
+            document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>";;
+            break;
         default:
-          break
+            break
     }
     window.scroll(0, 0);
-    parent.scroll(0, 0); 	
+    parent.scroll(0, 0);
 }
 
 function rowover(obj) {
-        $(".tbllayout .overrow").removeClass("overrow");
-        $(obj).addClass("overrow");
+    $(".tbllayout .overrow").removeClass("overrow");
+    $(obj).addClass("overrow");
 }
 function rowout() {
     $(".tbllayout .overrow").removeClass("overrow");
@@ -1121,46 +1039,40 @@ function rowout() {
 
 function DelayReloadPage(url, time, path, rootPath) {
     var delay = time ? time : 1500;
-    if (!url)
-    {
+    if (!url) {
         PTUnBlockUI();
         setTimeout("ReloadCallback()", delay);
     }
-    else 
-    {
-      
-        if (name=='fContent')
-        {
+    else {
+
+        if (name == 'fContent') {
             setTimeout("PTUnBlockUI();location.href = '" + url + "'", delay);
         }
-        else
-        {
-            if (parent.name=="centerFr")
-                {
-                    setTimeout("PTUnBlockUI();parent.location.href = '" + url + "'", delay);
-                }
-                else
-                {
-                    setTimeout("PTUnBlockUI();location.href = '" + url + "'", delay);
-                }
-         }
-      
+        else {
+            if (parent.name == "centerFr") {
+                setTimeout("PTUnBlockUI();parent.location.href = '" + url + "'", delay);
+            }
+            else {
+                setTimeout("PTUnBlockUI();location.href = '" + url + "'", delay);
+            }
+        }
+
     }
-    if (typeof afterUpdate != 'undefined') afterUpdate(false, 2000);   
+    if (typeof afterUpdate != 'undefined') afterUpdate(false, 2000);
 }
 
 
 function ReloadCallback() {
     PTUnBlockUI();
-    location.href=location.href;
+    location.href = location.href;
 }
 
 function PTBlockUI() {
 
     if (parent.BlockUI) {
-        try{parent.BlockUI();}catch(e){}
+        try { parent.BlockUI(); } catch (e) { }
     }
-    //Called inside a frame set (#centerFr)
+        //Called inside a frame set (#centerFr)
     else {
         if (parent.parent.BlockUI) {
             parent.parent.BlockUI();
@@ -1180,10 +1092,10 @@ function PTUnBlockUI() {
     }
     //Called inside a frame set (#centerFr)
     if (parent.parent.jQuery && parent.parent.jQuery.unblockUI) {
-            parent.parent.jQuery.unblockUI();
-        }
-        //Called from popup
-        
+        parent.parent.jQuery.unblockUI();
+    }
+    //Called from popup
+
     if (opener) {
         if (opener.parent.jQuery.unblockUI) {
             opener.parent.jQuery.unblockUI();
@@ -1209,14 +1121,14 @@ function MenuItemClick(divControl, divpanel) {
         $("#" + tdid).addClass("md2");
         $("#" + divpanel).removeClass("hidden");
         $("#" + divpanel).addClass("show");
-        
+
     } else {
         $("#" + tdid).removeClass("md2");
         $("#" + tdid).addClass("md3");
         $("#" + divpanel).removeClass("show");
         $("#" + divpanel).addClass("hidden");
     }
-   
+
     //$("#" + divpanel).toggle();
 }
 
@@ -1326,9 +1238,9 @@ function isCurrency2(str) {
      * Return string
      */
     str = str.replace(/^\s+|\s+$/g, '');
-    if (/^\$?[1-9][0-9]{0,2}(,[0-9]{3})*(\.[0-9]{0,2})?$/.test(str) ) {
+    if (/^\$?[1-9][0-9]{0,2}(,[0-9]{3})*(\.[0-9]{0,2})?$/.test(str)) {
 
-        if (/\.[0-9]$/.test(str) ) {
+        if (/\.[0-9]$/.test(str)) {
             //needs trailing zero
             str += "0";
         }
@@ -1336,7 +1248,7 @@ function isCurrency2(str) {
             //needs both trailing zeroes
             str += "00";
         }
-        else if (!/\.[0-9]{2}$/.test(str) ) {
+        else if (!/\.[0-9]{2}$/.test(str)) {
             //needs everything
             str += ".00";
         }
@@ -1356,15 +1268,15 @@ function isCurrency3(str) {
      */
     str = str.replace(/^\s+|\s+$/g, '');
 
-    if (/^[-+]?\$?[1-9]\d{0,2}(,\d{3})*(\.\d{0,2})?$/.test(str) ) {
+    if (/^[-+]?\$?[1-9]\d{0,2}(,\d{3})*(\.\d{0,2})?$/.test(str)) {
 
         if (/\.\d$/.test(str)) {
             str += "0";
         }
-        else if (/\.$/.test(str) ) {
+        else if (/\.$/.test(str)) {
             str += "00";
         }
-        else if (!/\.\d{2}$/.test(str) ) {
+        else if (!/\.\d{2}$/.test(str)) {
             str += ".00";
         }
         return str;
@@ -1376,17 +1288,17 @@ function isCurrency3(str) {
 
 
 function trim(str, chars) {
-	return ltrim(rtrim(str, chars), chars);
+    return ltrim(rtrim(str, chars), chars);
 }
- 
+
 function ltrim(str, chars) {
-	chars = chars || "\\s";
-	return str.replace(new RegExp("^[" + chars + "]+", "g"), "");
+    chars = chars || "\\s";
+    return str.replace(new RegExp("^[" + chars + "]+", "g"), "");
 }
- 
+
 function rtrim(str, chars) {
-	chars = chars || "\\s";
-	return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
+    chars = chars || "\\s";
+    return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
 }
 
 function convertUnitToLocalDatetime(objDatime) {

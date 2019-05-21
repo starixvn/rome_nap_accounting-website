@@ -12,6 +12,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using System.Data;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using NAP.Framework.Data;
+    using CustomerSetting.Module.Core.Models;
+    using Customer.Entities.CN88;
 
     /// <summary>
     /// TODO: Update summary.
@@ -23,7 +25,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         /// </summary>
         /// <param name="system">Name of system</param>
         /// <returns>List of currency (name and id)</returns>
-        List<Currency> GetCurrencyList(string system);
+        List<Fanex.Tarus.Customer.CreditCustomer.Entities.Currency> GetCurrencyList(string system);
 
         /// <summary>
         /// Get Site for add new super
@@ -44,6 +46,10 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         string GetRNGSiteNameByCustId(int custId);
 
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(ICriteria criteria);
+
+        Result ExecuteNonQuery(ICriteria criteria);
+
+        CreditRangeModel GetCreditRangeModel(ICriteria criteria);
 
     }
 }

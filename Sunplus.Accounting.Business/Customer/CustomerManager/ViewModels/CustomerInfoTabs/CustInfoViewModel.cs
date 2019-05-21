@@ -4,6 +4,7 @@
     using Core.Configurations;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerInfoViewModel
     {
@@ -54,6 +55,9 @@
                 return site.ToUpper().Equals("CN88");
             }
         }
+
+        public bool IsHeadline => RoleId == (int)Role.Headline;
+
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
 
         public string LastLoginTime => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortTimeString()}";
@@ -70,9 +74,9 @@
 
         public string PwdExpiryTime => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortTimeString()}";
 
-        public string LastTxnDate => Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : Converter.ToDateTime(cashRow["lastTxn"]).ToShortDateString();
+        public string LastTxnDate => (this.RoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : Converter.ToDateTime(cashRow["lastTxn"]).ToShortDateString();
 
-        public string LastTxnTime => Convert.IsDBNull(cashRow["lastTxn"]) ? string.Empty : $" {Converter.ToDateTime(cashRow["lastTxn"]).ToShortTimeString()}";
+        public string LastTxnTime => (this.RoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : $" {Converter.ToDateTime(cashRow["lastTxn"]).ToShortTimeString()}";
 
         public string Phone => Converter.ToString2(customerInfoRow["phone"]);
 
@@ -92,7 +96,7 @@
 
         public string LastChangeSecurityCodeDate => Converter.ToString2(customerInfoRow["LastChangedSecurityCodeDate"]);
 
-        public string LastChangeOTPCodeDate => Converter.ToString2(customerInfoRow["OTPCreateDate"]);
+        public string LastChangeOTPCodeDate => this.RoleId != (int)Role.Headline ? Converter.ToString2(customerInfoRow["OTPCreateDate"]) : string.Empty;
 
         public int Groupheadlineid => Converter.ToInt(customerInfoRow["groupheadlineid"]);
 
@@ -119,6 +123,10 @@
         public bool IsBA => Utils.ToBoolean(customerInfoRow["isba"]);
 
         public int ExchangeId => Converter.ToInt(customerInfoRow["exchangeid"]);
+
+        public int CN88HeadlineId => Converter.ToInt(lineInfoRow["headlineID"]);
+
+        public string CN88HeadlineName => Converter.ToString2(lineInfoRow["headlineName"]);
 
         public int SuperId => Converter.ToInt(lineInfoRow["SuperID"]);
 

@@ -8,6 +8,7 @@
     using DataAccess;
     using DNAide.Data;
     using DNAide.Web;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
     {
@@ -17,7 +18,7 @@
             string content = "";
             string tplDownlineList = WebUtils.LoadTemplate("CustomerInfo/DownlineList.htm");
             string tplRowData = TemplateHandler.CopyBlock(tplDownlineList, "rowdata");
-            if (roleId <= IBCUtils.Objects.UserInfo.ROLE_MEMBER || roleId > IBCUtils.Objects.UserInfo.ROLE_SUPER)
+            if (roleId != (int)Role.Headline && (roleId <= (int)Role.Member || roleId > (int)Role.Super))
             {
                 content = "<div style='width:250px;text-align:center;'>No downline list</div>";
                 returndata.Add("Content", content);

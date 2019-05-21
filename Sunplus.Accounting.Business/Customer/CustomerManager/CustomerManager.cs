@@ -1,10 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
@@ -14,6 +9,7 @@
     using DataAccess.AdoNet;
     using DataAccess.IBCDLL.Customer;
     using DNAide.Core;
+    using DNAide.Web;
     using Entities;
     using Entities.Casino;
     using Entities.Customer;
@@ -24,6 +20,12 @@
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
     using Security;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using Result = Entities.Result;
 
     public partial class CustomerManager : ICustomerManager
@@ -123,11 +125,12 @@
                 if (!string.IsNullOrEmpty(userName))
                 {
                     var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM, checkCustId);
-                    if (ds.Outputs.Count > 0 && CastAide.AsInt32(ds.Outputs["errcode"])>0)
+                    if (ds.Outputs.Count > 0 && CastAide.AsInt32(ds.Outputs["errcode"]) > 0)
                     {
                         arrcontent.Add("strcontent", AlertMessage.GetMsg(ds.Outputs["errmsg"].ToString(), AlertMessage.MsgType.Error));
                         return arrcontent;
                     }
+
                     if (ds != null && ds.ResultSet.Tables.Count.Equals(5))
                     {
                         DataRow customerInfoRow = ds.ResultSet.Tables[0].Rows[0];
@@ -135,7 +138,6 @@
                         DataRow cashRow = ds.ResultSet.Tables[2].Rows[0];
                         DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
-
                         var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable);
                         AssignCustomerSession(customerInfoViewModel);
 
@@ -167,7 +169,8 @@
                         htmlcontent = RenderCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderExtraCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
-                        arrcontent.Add("isba", customerInfoViewModel.IsBA);
+                        RenderCN88Headline(ref htmlcontent, customerInfoViewModel);
+                        arrcontent.Add("isba", customerInfoViewModel.RoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
                     }
                 }
 
@@ -323,12 +326,13 @@
             htmlcontent = RenderCustomerDetail(htmlcontent, customerInfoViewModel);
             htmlcontent = GenUplineBox(htmlcontent, customerInfoViewModel);
 
-            if (!customerInfoViewModel.ViewFiAcc)
+            if (!customerInfoViewModel.IsCN88 && !customerInfoViewModel.ViewFiAcc)
             {
                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
             }
 
             htmlcontent = GenTransLinskBox(htmlcontent, customerInfoViewModel);
+            TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.JsParam));
             return htmlcontent;
         }
 
@@ -341,11 +345,23 @@
 
         private string RenderSettingTabs(string htmlcontent, DataRow customerInfoRow, DataTable dynamicSettingtable, CustomerInfoViewModel customerInfoViewModel)
         {
+            if (!customerInfoViewModel.Closed)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerUnlock");
+            }
+
+            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", "Customer/EditCustomerInfo.aspx?custId=" + customerInfoViewModel.CustId + "&type=Headline");
+                htmlcontent = GenLoginDetail(htmlcontent, customerInfoViewModel);
+                return htmlcontent;
+            }
+
             RenderLeftPanelParameter renderLeftPanelParameter = RenderSettingMenu(
-                ref htmlcontent,
-                customerInfoRow,
-                dynamicSettingtable,
-                customerInfoViewModel);
+            ref htmlcontent,
+            customerInfoRow,
+            dynamicSettingtable,
+            customerInfoViewModel);
 
             htmlcontent = RenderDetailMenu(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
             htmlcontent = GenLoginDetail(htmlcontent, customerInfoViewModel);
@@ -353,26 +369,40 @@
             return htmlcontent;
         }
 
+        private void RenderCN88Headline(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineHiddenItem");
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineVisibleItem");
+            }
+        }
+
         private void AssignCustomerSession(CustomerInfoViewModel customerInfoViewModel)
         {
             AppSession.CustRoleId = customerInfoViewModel.RoleId;
             AppSession.CustID = customerInfoViewModel.CustId;
             AppSession.CustUName = customerInfoViewModel.UserName;
+            if (customerInfoViewModel.RoleId != (int)Role.Headline)
+            {
+                AppSession.MemberID = customerInfoViewModel.MemberId;
+                AppSession.MemberUserName = customerInfoViewModel.MemberName;
 
-            AppSession.MemberID = customerInfoViewModel.MemberId;
-            AppSession.MemberUserName = customerInfoViewModel.MemberName;
+                AppSession.AgentID = customerInfoViewModel.AgentId;
+                AppSession.AgentUserName = customerInfoViewModel.AgentName;
 
-            AppSession.AgentID = customerInfoViewModel.AgentId;
-            AppSession.AgentUserName = customerInfoViewModel.AgentName;
+                AppSession.MasterID = customerInfoViewModel.MasterId;
+                AppSession.MasterUserName = customerInfoViewModel.MasterName;
 
-            AppSession.MasterID = customerInfoViewModel.MasterId;
-            AppSession.MasterUserName = customerInfoViewModel.MasterName;
+                AppSession.SuperID = customerInfoViewModel.SuperId;
+                AppSession.SusperUserName = customerInfoViewModel.SuperName;
 
-            AppSession.SuperID = customerInfoViewModel.SuperId;
-            AppSession.SusperUserName = customerInfoViewModel.SuperName;
-
-            AppSession.IsSyncCSCurrentCust = customerInfoViewModel.SyncRnGCasino;
-            AppSession.IsInternal = customerInfoViewModel.IsInternalUser;
+                AppSession.IsSyncCSCurrentCust = customerInfoViewModel.SyncRnGCasino;
+                AppSession.IsInternal = customerInfoViewModel.IsInternalUser;
+            }
         }
 
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)

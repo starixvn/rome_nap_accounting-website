@@ -24,6 +24,7 @@
     <script src="js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
     <script src="js/dialogbox.js?vs=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="js/BlockUI.js" type="text/javascript"></script>
+    <script src="js/common.js?v=<%=WebSettings.Version%>" type="text/javascript" ></script>
     <script src="js/mainpage.js?vs=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="js/mainmenu.js?vs=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="js/jscookies.js?vs=<%=WebSettings.Version%>" type="text/javascript"></script>

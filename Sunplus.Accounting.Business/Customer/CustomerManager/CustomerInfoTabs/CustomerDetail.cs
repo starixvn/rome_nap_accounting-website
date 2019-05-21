@@ -7,6 +7,7 @@
     using DNAide.Utils;
     using DNAide.Web;
     using Fanex.Tarus.Infrastructure.Constants;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
     {
@@ -15,45 +16,95 @@
             string statusClass = string.Empty;
             string statusTip = string.Empty;
             bool isOpenStatus = true;
-
-            if (!customerInfoViewModel.Enabled)
+            if (customerInfoViewModel.RoleId == (int)Role.Headline)
             {
-                statusClass = "memberDisabled ";
-                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount");
-                isOpenStatus = false;
-            }
-            else if (customerInfoViewModel.Closed)
-            {
-                var customerClosedReason = new CustomerClosedReason(customerInfoViewModel.ClosedReason);
-
-                statusClass = customerClosedReason.ClassName + " ";
-                statusTip = customerClosedReason.ClosedReason;
-                isOpenStatus = false;
-            }
-            else if (customerInfoViewModel.Suspend)
-            {
-                statusClass = "memberSuspended ";
-                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspendedAccount");
-                isOpenStatus = false;
+                TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", string.Empty);
             }
             else
             {
-                statusClass = " ";
+                if (!customerInfoViewModel.Enabled)
+                {
+                    statusClass = "memberDisabled ";
+                    statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount");
+                    isOpenStatus = false;
+                }
+                else if (customerInfoViewModel.Closed)
+                {
+                    var customerClosedReason = new CustomerClosedReason(customerInfoViewModel.ClosedReason);
+
+                    statusClass = customerClosedReason.ClassName + " ";
+                    statusTip = customerClosedReason.ClosedReason;
+                    isOpenStatus = false;
+                }
+                else if (customerInfoViewModel.Suspend)
+                {
+                    statusClass = "memberSuspended ";
+                    statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspendedAccount");
+                    isOpenStatus = false;
+                }
+                else
+                {
+                    statusClass = " ";
+                }
+
+                if (customerInfoViewModel.RoleId == 1)
+                {
+                    TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
+                    TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + customerInfoViewModel.UserName + "');\" ");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", "");
+                    TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", " ");
+                }
+
+                //Render Enabled
+                if (isOpenStatus)
+                {
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", string.Empty);
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", string.Empty);
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "");
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", "Tip('" + statusTip + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
+                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", "UnTip()");
+                }
+
+                if (customerInfoViewModel.IsDeposit)
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "headline");
+                }
+                else
+                {
+                    if (customerInfoViewModel.Groupheadlineid.Equals(0))
+                    {
+                        TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
+                    }
+                    else
+                    {
+                        TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
+                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", customerInfoViewModel.Groupheadlineid));
+                        TemplateHandler.Assign(ref htmlcontent, "{Headline}", customerInfoViewModel.Headline);
+                    }
+                }
+
+                if (customerInfoViewModel.IsDeposit && customerInfoViewModel.RoleId == RoleIdConstants.Member)
+                {
+                    TemplateHandler.Assign(ref htmlcontent, "{exchangeId}", customerInfoViewModel.CustId.ToString("0000000000000000"));
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "exchangeId");
+                }
             }
 
             string shortUserName = customerInfoViewModel.UserName.Length < 20 ? customerInfoViewModel.UserName : customerInfoViewModel.UserName.Substring(0, 20) + "...";
-
-            if (customerInfoViewModel.RoleId == 1)
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
-                TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + customerInfoViewModel.UserName + "');\" ");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", "");
-                TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", " ");
-            }
-
             TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
             TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
             TemplateHandler.Assign(ref htmlcontent, "{FullUserName}", customerInfoViewModel.UserName);
@@ -73,48 +124,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{AccKey}", accKey);
             TemplateHandler.Assign(ref htmlcontent, "{AccId}", AppSession.AccId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{InternalAgent}", WebSettings.InternalAgentUrl);
-
-            //Render Enabled
-            if (isOpenStatus)
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
-                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", string.Empty);
-                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", string.Empty);
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "");
-                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", "Tip('" + statusTip + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
-                TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", "UnTip()");
-            }
-
-            if (customerInfoViewModel.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "headline");
-            }
-            else
-            {
-                if (customerInfoViewModel.Groupheadlineid.Equals(0))
-                {
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "haveHeadline");
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
-                    TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", customerInfoViewModel.Groupheadlineid));
-                    TemplateHandler.Assign(ref htmlcontent, "{Headline}", customerInfoViewModel.Headline);
-                }
-            }
-
-            if (customerInfoViewModel.IsDeposit && customerInfoViewModel.RoleId == RoleIdConstants.Member)
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{exchangeId}", customerInfoViewModel.CustId.ToString("0000000000000000"));
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "exchangeId");
-            }
-
             return htmlcontent;
         }
     }

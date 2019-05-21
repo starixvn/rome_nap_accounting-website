@@ -18,7 +18,6 @@ namespace Sunplus.Accounting.Business.CustSetting
 
         public string GetSiteNameByCustId(int custId, int roleId, string siteName, string userName)
         {
-            var cust = new CustSettingProviderClient();
             bool isAllow = false;
             if (AppSession.SYSTEM.Equals(Enumerations.AccountingSystem.Accounting))
                 isAllow = Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite) && roleId != 1;

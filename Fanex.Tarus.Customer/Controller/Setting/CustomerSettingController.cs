@@ -16,11 +16,17 @@ namespace Fanex.Tarus.Customer.Controller.Setting
     using ViewModels.CN88;
     using DataAccess;
     using Criteria.CN88;
+    using Security.Authenticate;
+    using Security.Permission;
+    using Requests.CN88;
+    using static Infrastructure.Common.Enumerations;
 
     public class CustomerSettingController : BaseController
     {
         private readonly ICustomerSettingService _customerSetting;
         private readonly BaseDataAccess _dataAccessService;
+
+        private readonly string _creditPopupPath = "~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerCredit.cshtml";
 
         public CustomerSettingController()
             : this(null, null)
@@ -52,9 +58,10 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
         public ActionResult ViewCN88CustomerStatus(int custId, string userName, int status)
         {
-            return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { CustId=custId, Status = status, UserName = userName });
+            return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { CustId = custId, Status = status, UserName = userName });
         }
 
+        [HttpPost]
         public JsonResult UpdateCN88CustomerStatus(int custId, byte updStatusId)
         {
             return Json(_dataAccessService.ExecuteNonQuery(new CN88CustomerSettingCriteria
@@ -64,6 +71,28 @@ namespace Fanex.Tarus.Customer.Controller.Setting
                 IP = Utils.GetClientIP(),
                 UpdStatusId = updStatusId
             }));
+        }
+
+        [HttpGet, CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
+        public ActionResult CreditPopup(int searchAccountId, int roleId)
+        {
+            return View(_creditPopupPath, new CreditRangeViewModel(_customerSetting.GetCreditRangeModel(searchAccountId, roleId == (int)Role.Member), searchAccountId, roleId));
+        }
+
+        public JsonResult UpdateCN88UnlockAccess(int custId)
+        {
+            return Json(_dataAccessService.ExecuteNonQuery(new CN88UnlockCustomerCriteria
+            {
+                UserId = AppSession.AccId,
+                CustId = custId,
+                IP = Utils.GetClientIP()
+            }));
+        }
+
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
+        public JsonResult UpdateCredit(int searchAccountId, int roleId, decimal updCredit)
+        {
+            return Json(_customerSetting.UpdateCredit(searchAccountId, roleId, updCredit));
         }
     }
 }

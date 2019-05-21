@@ -19,7 +19,11 @@
                           onmouseout="{enabledtooltipout}" {onclickUName} title="{FullUserName}" class="{memberClass}">{UserName}</span>&nbsp;<span id="btnupdownCustInfo" name="btnupdownCustInfo" onclick="collapseInfo();" title="Show Detail"><img src="App_Themes/Images/icon_down.gif" class="imgDownUp" /></span>
                 </div>
                 <div style="float: right;">
-                    [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span> | <span class="canchange" onclick="OpenViewPT('{FullUserName}')">PT</span>]
+                    [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span>
+                    <!--CN88HeadlineHiddenItem-->
+                     | <span class="canchange" onclick="OpenViewPT('{FullUserName}')">PT</span>
+                    <!--/CN88HeadlineHiddenItem-->
+                    ]
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="LogID">
                         <a onclick="ViewLogs('Setting','{FullUserName}')">• Setting</a><br />
                         <a onclick="ViewLogs('Status','{FullUserName}')">• Status</a><br />
@@ -89,8 +93,9 @@
                         <span id="vGroupHeadlineMaxLoss">{GroupHeadlineCurrency} {GroupHeadlineMaxLoss}&nbsp;</span>
                     </td>
                 </tr>
-                </tr>
                 <!--/directinfo-->
+                <!--CN88HeadlineHiddenItem-->
+                <!--CN88HiddenItem-->
                 <!--headline-->
                 <tr>
                     <td class="dot_left">
@@ -106,6 +111,7 @@
                     </td>
                 </tr>
                 <!--/headline-->
+                <!--/CN88HiddenItem-->
                 <!--exchangeId-->
                 <tr>
                     <td class="dot_left">
@@ -116,16 +122,19 @@
                     </td>
                 </tr>
                 <!--/exchangeId-->
+                <!--/CN88HeadlineHiddenItem-->
             </table>
         </div>
         <!--end customer detail-->
         <div class="spacing">
         </div>
+        <!--CN88HeadlineHiddenItem-->
         <!--start button-->
         <div class="button_Lpane">
             {TransLinksBox}
         </div>
         <!--end button-->
+        <!--/CN88HeadlineHiddenItem-->
         <div class="spacing">
         </div>
         <!--box balnace - downline list--direct info-->
@@ -142,9 +151,11 @@
                     <!--hideonmember-->
                     <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Downline</span></a></li>
                     <!--/hideonmember-->
+                    <!--CN88HeadlineHiddenItem-->
                     <!--directinfotab-->
                     <li id="left_tab1_3" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Information</span></a></li>
                     <!--/directinfotab-->
+                    <!--/CN88HeadlineHiddenItem-->
                 </ul>
             </div>
         </div>
@@ -165,6 +176,7 @@
                     </div>
                 </div>
             </div>
+            <!--CN88HeadlineHiddenItem-->
             <!--directinfotabcontent-->
             <div id="box_04_content_3">
                 <div class="holder osX">
@@ -244,6 +256,7 @@
                 </div>
             </div>
             <!--/directinfotabcontent-->
+            <!--/CN88HeadlineHiddenItem-->
         </div>
         <div class="pagerbox">
             <div id="dllpager">
@@ -262,7 +275,9 @@
                             </span>
                         </a>
                     </li>
+                    <!--CN88HeadlineHiddenItem-->
                     <li id="left_tab2_2" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Detail</span></a></li>
+                    <!--/CN88HeadlineHiddenItem-->
                     <li id="left_tab2_3" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Login</span></a></li>
                     <li id="left_tab2_4" onclick="left_Tab2_Click(this)"><a href="javascript:;"><span>Online List</span></a></li>
                 </ul>
@@ -271,6 +286,12 @@
         <div class="box_05_contents" id="box_05_contents">
             <div id="box_05_content_1">
                 <div class="container">
+                    <!--CN88HeadlineVisibleItem-->
+                    <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
+                        Edit Info
+                    </a>
+                    <!--/CN88HeadlineVisibleItem-->
+                    <!--CN88HeadlineHiddenItem-->
                     <!--dangerous-->
                     <div class="col">
                         Dangerous
@@ -360,7 +381,14 @@
                             Status:{CustomerStatus}
                         </span>
                         <!--/CN88CustomerStatusDisabled-->
-                    </div> 
+                    </div>
+                    <!--CN88CustomerUnlock-->
+                    <div class="col">
+                        <span class="canchange" onclick="leftPanelManager.CN88UnlockCust({CustId});">
+                            Unlock Access
+                        </span>
+                    </div>
+                    <!--/CN88CustomerUnlock-->
                     <!--/CN88VisibleItem-->
                     <!--CN88HiddenItem-->
                     {outrightControl}
@@ -448,6 +476,7 @@
                     <!--/EnablePokerGames-->
                     {settingcontrol}
                     <!--/CN88HiddenItem-->
+                    <!--/CN88HeadlineHiddenItem-->
                 </div>
             </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"

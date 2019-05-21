@@ -7,10 +7,9 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
+    using Customer.DataAccess;
+    using Customer.Entities.CN88;
+    using CustomerSetting.Module.Core;
     using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
@@ -19,11 +18,16 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using ViewModels.CN88;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CustomerSettingDataAccess : ICustomerSettingDataAccess
+    public class CustomerSettingDataAccess : BaseDataAccess, ICustomerSettingDataAccess
     {
         /// <summary>
         /// Get CurrencyList
@@ -206,6 +210,21 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             }
 
             return new Result(500, string.Empty);
+        }
+
+        public CreditRangeModel GetCreditRangeModel(ICriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                reader.Read();
+                return new CreditRangeModel(
+                    Utils.ToDecimal(reader["GivenCredit"]),
+                    Utils.ToDecimal(reader["UsedCredit"]),
+                    Utils.ToDecimal(reader["MinCredit"]),
+                    Utils.ToDecimal(reader["MaxCredit"]));
+            }
         }
     }
 }
