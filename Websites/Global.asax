@@ -296,18 +296,7 @@
             byte roleId = Convert.ToByte(temp[2]);
             Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLogOut(onUserId, username);
         }
-    }
-
-    private void SetGlobalCultureInfo()
-    {
-        string url = Request.RawUrl.ToLower();
-        if (!url.Contains("/CN88BetList/") &&
-            Thread.CurrentThread.CurrentCulture.Name != Language.Default)
-        {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-        }
-    }
+    }    
 
     #endregion
     //Temporarily deny U3 account from access un-limited pages

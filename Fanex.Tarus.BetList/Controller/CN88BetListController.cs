@@ -49,7 +49,8 @@
                 {
                     TransId = transId,
                     RefNo = refNo,
-                    CustId = custId
+                    CustId = custId,
+                    IsCN88 = true
                 });
 
             ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
