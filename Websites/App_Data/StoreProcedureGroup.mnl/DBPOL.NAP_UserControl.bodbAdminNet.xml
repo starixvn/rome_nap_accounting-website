@@ -41,5 +41,8 @@
     <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
     <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-  </Function> 
+  </Function>
+  <Function Name="External - Admin">
+    <Setting Key="SelectGroupName" SpName="Acc_ExternalGroupSel" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
+  </Function>
 </Functions>

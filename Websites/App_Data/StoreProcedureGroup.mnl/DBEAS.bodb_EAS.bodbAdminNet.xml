@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="External - Admin">
-    <Setting Key="SelectGroupName" SpName="Acc_ExternalGroupSel" DbName="DBEAS.bodb_EAS.bodbAdminNet" />
-  </Function>
-</Functions>
