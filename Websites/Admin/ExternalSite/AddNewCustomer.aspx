@@ -211,7 +211,7 @@
     <script type="text/javascript" src="../../Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js"></script>
     <script type="text/javascript" src="../../js/jQuery/gridscroller.js"></script>
     <script type="text/javascript" src="../../js/jQuery/jquery.json-2.2.min.js"></script>
-    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript" src="../../js/common.js?v=<%=AccCommon.Version()%>"></script>
     <script type="text/javascript" src="../../js/jQuery/Pager/jpager.js"></script>
     <script type="text/javascript" src="../../js/showhidepopup.js"></script>
     <script type="text/javascript" src="../../js/Common/ArrayUtils.js"></script>
