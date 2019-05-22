@@ -721,7 +721,7 @@ function Reduce(ddl,step,min)
 
 //this function is used to disable all checkboxes of Weekly in Adding case
 function selectTranferTime()
-{		
+{
     try {
 	    var elements= obj("alldays").getElementsByTagName("input");						
 	    for(var i=1; i<elements.length; i++)
@@ -729,6 +729,13 @@ function selectTranferTime()
 	    if (obj("rdDaily").checked) {
 	        var o=obj("errTransfer");
 	        if (o) o.innerHTML = "";
+	    }
+	    var transfercondition_message = document.getElementById("transfercondition_message").innerHTML;
+	    if (transfercondition_message.length > 0) {
+	        document.getElementById("rdWeekly").disabled = true;
+	        for (var j = 0; j < elements.length; j++) {
+	            elements[j].disabled = true;
+	        }
 	    }
 	}
 	catch (ex) {}

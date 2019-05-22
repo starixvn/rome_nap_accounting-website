@@ -40,5 +40,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Entities
         public string SiteName { get; set; }
 
         public bool CanEditCredit { get; set; }
+
+        public bool IsSuperInAutomateTransfer { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
     using System;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
@@ -9,6 +10,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
     /// <summary>
     /// This controller will handler add new master of super and company
@@ -38,6 +40,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 userName = AppSession.CustUName;
             }
+
+            var isSuperInAutomateTransfer = Select4Edit.SelectSuperInAutomateTransfer(superId).Count() > 0;
             //// Setting for customer information section
             CustomerSettingView customerSettingView = new CustomerSettingView
             {
@@ -50,7 +54,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 CustId = superId,
                 CustUserName = userName,
                 CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
-                SiteName = siteName
+                SiteName = siteName,
+                IsSuperInAutomateTransfer = isSuperInAutomateTransfer
             };
             System.Web.HttpContext.Current.Session["SettingSiteName"] = siteName;
             return View("~/Views/Customer/CreditCustomer/AddNewMaster.cshtml", customerSettingView);

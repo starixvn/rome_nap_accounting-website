@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
     using System;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
@@ -9,6 +10,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
     public class AddNewAgentController : CustomerSettingBaseController
     {
@@ -35,6 +37,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             {
                 userName = AppSession.CustUName;
             }
+            var isSuperInAutomateTransfer = Select4Edit.SelectSuperInAutomateTransfer(masterId).Count() > 0;
+
             //// Setting for customer information section
             CustomerSettingView customerSettingView = new CustomerSettingView
             {
@@ -47,7 +51,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 CustId = masterId,
                 CustUserName = userName,
                 CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
-                SiteName = siteName
+                SiteName = siteName,
+                IsSuperInAutomateTransfer = isSuperInAutomateTransfer
             };
             return View("~/Views/Customer/CreditCustomer/AddNewAgent.cshtml", customerSettingView);
         }
