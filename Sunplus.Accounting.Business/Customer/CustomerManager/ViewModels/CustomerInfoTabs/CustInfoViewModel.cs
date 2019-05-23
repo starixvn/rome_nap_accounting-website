@@ -144,6 +144,8 @@
 
         public string MemberName => Converter.ToString2(lineInfoRow["MemberName"]);
 
+        public bool HeadlineEnabled => Utils.ToBoolean(lineInfoRow["HeadlineEnabled"]);
+
         public bool SuperEnabled => Utils.ToBoolean(lineInfoRow["SuperEnabled"]);
 
         public bool MasterEnabled => Utils.ToBoolean(lineInfoRow["MasterEnabled"]);

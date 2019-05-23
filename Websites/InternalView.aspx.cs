@@ -9,6 +9,7 @@ using Sunplus.Accounting.Core.Configurations;
 using System;
 using System.Configuration;
 using Fanex.Tarus.Infrastructure.Configurations.InternalLogin;
+using Fanex.CustomerSetting.Module.Core;
 
 public partial class InternalView : System.Web.UI.Page
 {
@@ -44,8 +45,9 @@ public partial class InternalView : System.Web.UI.Page
         }
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-
-        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site) ?? string.Empty;
+        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(
+            checkCustomerBelongToSpecialSiteResult.Site,
+            (Fanex.Tarus.Infrastructure.Common.Enumerations.Role)Utils.ToInt32(Request["roleId"])) ?? string.Empty;
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),

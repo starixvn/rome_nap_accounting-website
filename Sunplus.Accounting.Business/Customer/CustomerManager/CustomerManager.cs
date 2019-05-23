@@ -170,6 +170,7 @@
                         htmlcontent = RenderExtraCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
                         RenderCN88Headline(ref htmlcontent, customerInfoViewModel);
+                        RenderCommonInfo(ref htmlcontent, customerInfoViewModel);
                         arrcontent.Add("isba", customerInfoViewModel.RoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
                     }
                 }
@@ -379,6 +380,13 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineVisibleItem");
             }
+        }
+        private void RenderCommonInfo(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            TemplateHandler.Assign(ref htmlcontent, "{ParentId}", customerInfoViewModel.ParentId.ToString());
+            TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.RoleId.ToString());
+            TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
+            TemplateHandler.Assign(ref htmlcontent, "{Username}", customerInfoViewModel.UserName);
         }
 
         private void AssignCustomerSession(CustomerInfoViewModel customerInfoViewModel)

@@ -157,11 +157,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
-            TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
-            TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
-            TemplateHandler.Assign(ref htmlcontent, "{CustId}", custId);
-            TemplateHandler.Assign(ref htmlcontent, "{Username}", customerInfoViewModel.UserName);
 
             //Chatbot
             var chatbotLink = $"Chatbot/Index?custid={custId}&username={userName}";

@@ -15,6 +15,10 @@
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{CN88HeadlineName}", customerInfoViewModel.RoleId == (int)Role.Headline ? customerInfoViewModel.UserName : customerInfoViewModel.CN88HeadlineName);
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden0}", string.Empty);
+                if (!customerInfoViewModel.HeadlineEnabled)
+                {
+                    TemplateHandler.RemoveBlock(ref uplineboxhtml, "HeadlineLogin");
+                }
             }
             else
             {

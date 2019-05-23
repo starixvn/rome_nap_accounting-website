@@ -18,8 +18,9 @@ function ClearUsername() {
     obj('username').value = "";
     window.location.reload(true);
 }
-function LoginAgent(agentName) {
+function LoginAgent(agentName, roleId) {
     document.AgLoginForm.custName.value = agentName;
+    document.AgLoginForm.roleId.value = roleId;
     document.AgLoginForm.submit();
 }
 function ChangeGivenCredit(ischanging) {
