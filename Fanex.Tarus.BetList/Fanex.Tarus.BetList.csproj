@@ -59,12 +59,25 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="CN88.BetList.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.0-beta19\lib\net461\CN88.BetList.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0-ns04\lib\net461\CN88.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.ESports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.ESports.1.0.0-ns01\lib\net461\CN88.BetList.ESports.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.Keno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Keno.1.0.0-ns02\lib\net461\CN88.BetList.Keno.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0-ns02\lib\net461\CN88.BetList.Lottery.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0-ns03\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0-beta15\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0-ns02\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0-ns09\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
