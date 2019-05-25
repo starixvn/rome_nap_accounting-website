@@ -168,7 +168,8 @@
 
                 WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
                 RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
-                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
+                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                PlayerDiscount = Converter.ToDecimal(r["playerdiscount"])
             };
 
             var betListByCustInfoCriteria = new BetListByCustInfoCriteria
@@ -292,7 +293,8 @@
                 Currency = Converter.ToString2(r["Currency"]),
                 WalletType = Convert.ToByte(r["wallettype"]),
                 RefCode = Convert.ToInt64(r["refcode"]),
-                SettlementStatus = Convert.ToByte(r["SettlementStatus"])
+                SettlementStatus = Convert.ToByte(r["SettlementStatus"]),
+                PlayerDiscount = Converter.ToDecimal(r["playerdiscount"])
             };
 
             List<ITicketData> outputLiveCasino = new List<ITicketData>();
