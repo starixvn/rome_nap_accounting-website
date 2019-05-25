@@ -183,7 +183,7 @@
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
-            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "BetList/GetBetListByCustInfo_DateRange";
+            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
         else {
@@ -508,7 +508,8 @@ function showParlaySubBetsCN88(transId, transIndex, refNo, handicap1, handicap2,
             data: params.join(""),
             success: function (result) {
                 divParlay.html(result).css("display", "block");
-                $("#cn88-betlist-row-"+transId +" .cn88-mix-parlay").addClass("cn88-mix-parlay-collapse");
+                $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").addClass("cn88-mix-parlay-collapse");
+                $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "none");
                 $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
             },
             error: function () {
@@ -522,6 +523,7 @@ function showParlaySubBetsCN88(transId, transIndex, refNo, handicap1, handicap2,
     else {
         divParlay.css("display", "none");
         $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").removeClass("cn88-mix-parlay-collapse");
+        $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "block");
         $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
     }
 }
