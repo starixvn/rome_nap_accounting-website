@@ -53,7 +53,7 @@
 
             return isShowCommision;
         }
-
+                
         public bool IsIMBCMatch(TicketDetail ticketDetail)
         {
             return ticketDetail.Ticket.SuperDiscount < 0 || ticketDetail.Ticket.MasterDiscount < 0 || ticketDetail.Ticket.AgentDiscount < 0;

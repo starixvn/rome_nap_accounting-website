@@ -524,6 +524,7 @@
     <Compile Include="Controller\CN88BetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Controller\ThirdPartyController.cs" />
+    <Compile Include="Core\CN88BetListHelper.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Core\LoggingHandler.cs" />
     <Compile Include="Core\NpoiExcelUtils.cs" />

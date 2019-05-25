@@ -1,9 +1,13 @@
 ﻿@using Fanex.Tarus.BetList.Models.CN88
+@using Fanex.Tarus.BetList.Core
 
 @helper Render(TicketDto ticket)
 {
     <td>
         <div>@ticket.UserName</div>
-        <div class="com-info">@((ticket.UGroup ?? string.Empty).ToUpper()) @((ticket.PlayerDiscount * 100).ToString("#,##0.00"))</div>
+        @if (CN88BetListHelper.IsShowComm(ticket.BetTypeId))
+        {
+            <div class="com-info">@((ticket.UGroup ?? string.Empty).ToUpper()) @((ticket.PlayerDiscount * 100).ToString("#,##0.00"))</div>
+        }
     </td>
 }
