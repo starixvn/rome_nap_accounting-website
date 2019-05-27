@@ -2596,4 +2596,13 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="UnsuspendSingleConfirmMesssage" xml:space="preserve">
     <value>Are you sure you want to change Suspend status for this customer? All affected downlines will be unsuspend as well.</value>
   </data>
+  <data name="UnsuspendedTitleAffectedDownlines" xml:space="preserve">
+    <value>List of downlines whose status are changed after {0} is unsuspended.</value>
+  </data>
+  <data name="UnsuspendedTitleMain" xml:space="preserve">
+    <value>List of downlines' status after {0} is unsuspended.</value>
+  </data>
+  <data name="UnsuspendedTitleRemainUnchangedDownlines" xml:space="preserve">
+    <value>List of downlines whose status are unchanged after {0} is unsuspended.</value>
+  </data>
 </root>

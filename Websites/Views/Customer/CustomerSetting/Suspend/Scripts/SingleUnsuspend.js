@@ -8,6 +8,7 @@
         tabDetail: $('#tab-detail'),
         tabMain: $('#tab-main'),
         informationBox: $('#information-box'),
+        detailHeaderTitle: $('#detail-header-title')
     };
 
     DOMElements.btnUnsuspend.click(function () {
@@ -61,6 +62,7 @@
 
 var GetDownlinesDetailInfo = function (custId, isAffected, downlineRoleId, pageSize, pageIndex) {
     try { parent.BlockUI(); } catch (e) { }
+    $('#detail-header-title').html(isAffected ? LanguageResources.UnsuspendedTitleAffectedDownlines : LanguageResources.UnsuspendedTitleRemainUnchangedDownlines);
     var params = {
         custId: custId,
         isAffected: isAffected,
@@ -84,7 +86,7 @@ var GetDownlinesDetailInfo = function (custId, isAffected, downlineRoleId, pageS
             var endMergedRowIndex = 0;
             var prevLevel = '';
             var currentLevel = '';
-            for (var i = 0 ; i < rowCount; i++) {
+            for (var i = 0; i < rowCount; i++) {
                 var row = { Columns: [] };
                 currentLevel = result.AffectedDownlines[i].LevelName;
                 endMergedRowIndex = i;
@@ -108,26 +110,26 @@ var GetDownlinesDetailInfo = function (custId, isAffected, downlineRoleId, pageS
             }
 
             var gridOptions =
-            {
-                columns: [
-                    { HeaderText: "No", Width: 50, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Level", Width: 100, Name: "Level", HeaderAlign: "center" },
-                    { HeaderText: "Username", Width: 400, Name: "Username", HeaderAlign: "center" }
-                ],
-                bodyRows: bodyRows,
-                gridExpandHeight: 100,
-                showDistinctRow: false,
-                showNumberColumn: true,
-                showPager: true,
-                customPager: true,
-                pagerOption: {
-                    itemsPerPage: pageSize,
-                    currentPage: pageIndex,
-                    itemsPerPageArray: [50, 100, 150, 200],
-                    pagerSelectCallBack: reRenderAfterPaged,
-                    totalItem: result.TotalRows
-                }
-            };
+                {
+                    columns: [
+                        { HeaderText: "No", Width: 50, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+                        { HeaderText: "Level", Width: 100, Name: "Level", HeaderAlign: "center" },
+                        { HeaderText: "Username", Width: 400, Name: "Username", HeaderAlign: "center" }
+                    ],
+                    bodyRows: bodyRows,
+                    gridExpandHeight: 100,
+                    showDistinctRow: false,
+                    showNumberColumn: true,
+                    showPager: true,
+                    customPager: true,
+                    pagerOption: {
+                        itemsPerPage: pageSize,
+                        currentPage: pageIndex,
+                        itemsPerPageArray: [50, 100, 150, 200],
+                        pagerSelectCallBack: reRenderAfterPaged,
+                        totalItem: result.TotalRows
+                    }
+                };
 
             $('#tab-main').fadeOut(function () {
                 $('#tab-detail').fadeIn(function () {

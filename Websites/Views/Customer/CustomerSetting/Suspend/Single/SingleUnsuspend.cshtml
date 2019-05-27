@@ -13,11 +13,11 @@
     <link href="@Url.Content("~/Views/Customer/CreditCustomer/Styles/CustomerSettingCommon.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <div id="successMsg" class="hidden successMsg"></div>
+    <div id="errMsg" class="hidden errMsg"></div>
     <div id="tab-main">
-        <div id="successMsg" class="hidden successMsg"></div>
-        <div id="errMsg" class="hidden errMsg"></div>
         <div>
-            <span id="header-title">List of downlines whose status are changed/unchanged after going to unsuspend @Model.UserName</span>
+            <span id="main-header-title" class="header-title">@string.Format(Resources.Language.UnsuspendedTitleMain, Model.UserName)</span>
             <div class="floatRight"><span id="information-box" class="ml10 infoIcon"></span></div>
         </div>
         <table class="tableInfo" cellpadding="2" cellspacing="0" border="1">
@@ -64,6 +64,9 @@
         </div>
     </div>
     <div id="tab-detail" class="hidden" style="width: 600px; height: 300px;">
+        <div>
+            <span id="detail-header-title" class="header-title"></span>
+        </div>
         <div style="clear:both;"></div>
         <div id="gridContainer" class="grid-container">
             <div id="gridId" class="freegrid"></div>
@@ -87,6 +90,8 @@
             UpdateSuspendSuccess: '@Resources.ErrorMsg.UpdateSuspendSuccess',
             SuspendInfoMessage: '@Html.Raw(Resources.Language.SuspendInfoMessage)',
             UnsuspendSingleConfirmMesssage: '@Resources.Language.UnsuspendSingleConfirmMesssage',
+            UnsuspendedTitleAffectedDownlines: '@string.Format(Resources.Language.UnsuspendedTitleAffectedDownlines, Model.UserName)',
+            UnsuspendedTitleRemainUnchangedDownlines: '@string.Format(Resources.Language.UnsuspendedTitleRemainUnchangedDownlines, Model.UserName)',
         };
     </script>
 </body>
