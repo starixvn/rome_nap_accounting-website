@@ -16,6 +16,7 @@
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
     using Fanex.RemotingRef;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Security.Criteria;
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
@@ -169,7 +170,7 @@
                         htmlcontent = RenderCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderExtraCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
-                        RenderCN88Headline(ref htmlcontent, customerInfoViewModel);
+                        RenderCN88Customer(ref htmlcontent, customerInfoViewModel);
                         RenderCommonInfo(ref htmlcontent, customerInfoViewModel);
                         arrcontent.Add("isba", customerInfoViewModel.RoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
                     }
@@ -370,7 +371,7 @@
             return htmlcontent;
         }
 
-        private void RenderCN88Headline(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        private void RenderCN88Customer(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (customerInfoViewModel.RoleId == (int)Role.Headline)
             {
@@ -381,7 +382,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineVisibleItem");
             }
 
-            if (customerInfoViewModel.CustomerSite == "CN88")
+            if (AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite))
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HiddenItem");
             }

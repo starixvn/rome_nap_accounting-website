@@ -51,8 +51,11 @@
             {
                 var site = Converter.ToString2(customerInfoRow["site"]);
                 if (string.IsNullOrWhiteSpace(site))
-                    return Converter.ToString2(customerInfoRow["membersite"]).ToUpper().Equals("CN88");
-                return site.ToUpper().Equals("CN88");
+                {
+                    site = Converter.ToString2(customerInfoRow["membersite"]);
+                }
+
+                return Fanex.Tarus.Infrastructure.Configurations.AppSettings.IsCN88SiteName(site);
             }
         }
 
