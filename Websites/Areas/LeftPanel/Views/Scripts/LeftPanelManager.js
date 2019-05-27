@@ -139,7 +139,7 @@ var LeftPanelManager = function () {
                     }
                 },
                 complete: function () {
-                    //try { parent.jQuery.unblockUI(); } catch (e) { }
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
                 }
             });
         }

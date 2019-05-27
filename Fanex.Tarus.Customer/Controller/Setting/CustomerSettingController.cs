@@ -79,6 +79,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return View(_creditPopupPath, new CreditRangeViewModel(_customerSetting.GetCreditRangeModel(searchAccountId, roleId == (int)Role.Member), searchAccountId, roleId));
         }
 
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
         public JsonResult UpdateCN88UnlockAccess(int custId)
         {
             return Json(_dataAccessService.ExecuteNonQuery(new CN88UnlockCustomerCriteria
