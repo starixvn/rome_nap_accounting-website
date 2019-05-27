@@ -6,7 +6,7 @@
 
 @model CN88BetListViewModel
 
-<div class="lang-container" id="lang-container">
+<div class="lang-container" id="lang-container" style="display:table">
     <div class="lang-box" id="lang-box">
         <span id="languageCode" class="flag flag-@Model.Languages.CurrentLanguage"></span>
         <span id="languageName">@Language.GetCountryName(Model.Languages.CurrentLanguage)</span>
