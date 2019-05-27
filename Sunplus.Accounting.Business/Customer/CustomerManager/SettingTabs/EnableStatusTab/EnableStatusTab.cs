@@ -79,32 +79,7 @@
                             renderLeftPanelParameter,
                             dynamicSettingtable);
 
-            htmlcontent = RenderCN88CustomerSetting(htmlcontent, customerInfoViewModel);
-
             return renderLeftPanelParameter;
-        }
-
-        private string RenderCN88CustomerSetting(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (customerInfoViewModel.CustomerSite == "CN88")
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HiddenItem");
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88VisibleItem");
-            }
-
-            if(customerInfoViewModel.ManageCustomerAccess)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatusDisabled");
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatus");
-            }
-
-            return htmlcontent;
         }
 
         private string GenSettingControl(

@@ -380,7 +380,26 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineVisibleItem");
             }
+
+            if (customerInfoViewModel.CustomerSite == "CN88")
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HiddenItem");
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88VisibleItem");
+            }
+
+            if (customerInfoViewModel.ManageCustomerAccess)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatusDisabled");
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatus");
+            }
         }
+
         private void RenderCommonInfo(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.Assign(ref htmlcontent, "{ParentId}", customerInfoViewModel.ParentId.ToString());
