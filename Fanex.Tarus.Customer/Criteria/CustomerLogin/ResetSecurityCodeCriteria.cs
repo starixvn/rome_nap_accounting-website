@@ -10,6 +10,8 @@
 
 namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 {
+    using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using System.Diagnostics.CodeAnalysis;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
@@ -25,7 +27,11 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 
         public int RoleId { get; set; }
 
+        [SpParam(Ignored = true)]
         public string Code { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string Site { get; set; }
 
         public string Language
         {
@@ -43,12 +49,15 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 
         public string GetSettingKey()
         {
-            return "DBA_ResetSecurityCode_Agent";
+            return AppSettings.IsCN88SiteName(Site) ? "CS_Customer_SecurityCode_upd" : "DBA_ResetSecurityCode_Agent";
         }
 
         public bool IsValid()
         {
-            return true;
+            return Custid > 0
+                && Userid > 0
+                && RoleId >= 0
+                && !string.IsNullOrWhiteSpace(Securitycode);
         }
     }
 }

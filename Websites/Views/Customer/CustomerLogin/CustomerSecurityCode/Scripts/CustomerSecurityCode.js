@@ -76,6 +76,7 @@ CustomerSecurityCode = function () {
         self.Params.reportParams.Custid = customerId;
         self.Params.reportParams.RoleId = roleId;
         self.Params.reportParams.Code = $('#code').val();
+        self.Params.reportParams.Site = siteName;
     };
     self.ResetSecurityCode = function () {
         try { parent.BlockUI(); } catch (e) { }
