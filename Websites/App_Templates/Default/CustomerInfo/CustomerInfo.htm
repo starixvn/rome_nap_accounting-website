@@ -286,10 +286,12 @@
         <div class="box_05_contents" id="box_05_contents">
             <div id="box_05_content_1">
                 <div class="container">
-                    <!--CN88HeadlineVisibleItem-->
-                    <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
-                        Edit Info
-                    </a>
+                    <div class="col">
+                        <!--CN88HeadlineVisibleItem-->
+                        <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="canchange">
+                            Edit Info
+                        </a>
+                    </div>
                     <!--/CN88HeadlineVisibleItem-->
                     <!--CN88HeadlineHiddenItem-->
                     <!--dangerous-->
@@ -357,7 +359,6 @@
                         Closed {closedCustomer}
                     </div>
                     <!--/CN88HiddenItem-->
-                    
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
@@ -382,6 +383,7 @@
                         </span>
                         <!--/CN88CustomerStatusDisabled-->
                     </div>
+                    <!--/CN88HeadlineHiddenItem-->
                     <!--CN88CustomerUnlock-->
                     <div class="col">
                         <span class="canchange" onclick="leftPanelManager.CN88UnlockCust({CustId});">
@@ -389,6 +391,7 @@
                         </span>
                     </div>
                     <!--/CN88CustomerUnlock-->
+                    <!--CN88HeadlineHiddenItem-->
                     <!--/CN88VisibleItem-->
                     <!--CN88HiddenItem-->
                     {outrightControl}
