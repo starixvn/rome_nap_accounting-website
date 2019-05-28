@@ -86,7 +86,7 @@
 
             if (customerInfoViewModel.ShowSettingLinkKenoCredit)
             {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
+                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/SuperEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>RNG Keno</a>";
             }
 
             if (customerInfoViewModel.ShowSettingLinkGoldDeluxeCredit)
@@ -173,7 +173,7 @@
 
             if (customerInfoViewModel.ShowSettingLinkKenoCredit)
             {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>Keno</a>";
+                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customersetting/KenoSetting/kenosetting/MasterEditMember?custId=" + custId.ToString() + "&userId=" + AppSession.AccId + "\");' target='centerFr'>RNG Keno</a>";
             }
 
             if (customerInfoViewModel.ShowSettingLinkGoldDeluxeCredit)
