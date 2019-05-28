@@ -1,45 +1,38 @@
-﻿<table width="246px" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <!--CN88HiddenItem-->
-        <!--downlinelistbtn-->
-        <td width="82">
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{downlineLink}');">{lblDownline}</div>
-            </div>
-        </td>
-        <!--/downlinelistbtn-->
-        <!--/CN88HiddenItem-->
-        <td width="82">
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{statementLink}');">Statement</div>
-            </div>
-        </td>
-        <td width="82">
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','Transactions/AddTransaction.aspx?CustName={CustName}&CustID={CustID}&IsInternal={IsInternal}');">Add Txn</div>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <!--CN88HiddenItem-->
-        <td width="82">
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','CreditTerm/CreditTermView.aspx');">Credit Term</div>
-            </div>
-        </td>
-        <!--/CN88HiddenItem-->
-        <td width="82">
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','CrossTransfer/Index?fromCustName={fromCustName}&fromCustID={fromCustID}')">Transfer</div>
-            </div>
-        </td>
-        <td width="82">
-            <!--balance-->
-            <div class="buttonLeft_main01">
-                <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{CustomerBalanceURL}');">Balance</div>
-            </div>
-            <!--/balance-->
-        </td>
-    </tr>
-</table>
-
+﻿<div>
+    <!--downlinelistbtn-->
+    <div style="width: 82px; float: left;">
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{downlineLink}');">{lblDownline}</div>
+        </div>
+    </div>
+    <!--/downlinelistbtn-->
+    <div style="width: 82px; float: left;">
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{statementLink}');">Statement</div>
+        </div>
+    </div>
+    <div style="width: 82px; float: left;">
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','Transactions/AddTransaction.aspx?CustName={CustName}&CustID={CustID}&IsInternal={IsInternal}');">Add Txn</div>
+        </div>
+    </div>
+    <!--CN88HiddenItem-->
+    <div style="width: 82px; float: left;">
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','CreditTerm/CreditTermView.aspx');">Credit Term</div>
+        </div>
+    </div>
+    <!--/CN88HiddenItem-->
+    <div style="width: 82px; float: left;">
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','CrossTransfer/Index?fromCustName={fromCustName}&fromCustID={fromCustID}')">Transfer</div>
+        </div>
+    </div>
+    <div style="width: 82px; float: left;">
+        <!--balance-->
+        <div class="buttonLeft_main01">
+            <div class="button" onclick="parent.resetMenu();parent.gotoURL('centerFr','{CustomerBalanceURL}');">Balance</div>
+        </div>
+        <!--/balance-->
+    </div>
+</div>

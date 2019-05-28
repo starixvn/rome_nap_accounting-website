@@ -23,7 +23,6 @@
                 string customerBalanceURL = string.Empty;
                 string lblDownlineList = string.Empty;
                 Globals.AccountType accLevel = (Globals.AccountType)customerInfoViewModel.RoleId;
-
                 string statementLink = string.Empty;
                 if (!customerInfoViewModel.IsInternalUser)
                 {
@@ -33,10 +32,11 @@
                 {
                     statementLink = "CustomerStatement/Index?CustID=" + customerInfoViewModel.CustId + "&CustName={custname}";
                 }
-                TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
 
+                TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
                 bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
-                if (enableDeposit && customerInfoViewModel.IsDeposit && accLevel != Globals.AccountType.Member)
+                if ((enableDeposit && customerInfoViewModel.IsDeposit && accLevel != Globals.AccountType.Member)
+                    || (accLevel != Globals.AccountType.Member && Fanex.Tarus.Infrastructure.Configurations.AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite)))
                 {
                     TemplateHandler.RemoveBlock(ref tplTransLink, "downlinelistbtn");
                 }
@@ -61,7 +61,6 @@
                         TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                         lblDownlineList = "Master List";
                         break;
-
                     case Globals.AccountType.Master:
                         if (!customerInfoViewModel.IsInternalUser)
                         {
@@ -81,7 +80,6 @@
                         TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                         lblDownlineList = "Agent List";
                         break;
-
                     case Globals.AccountType.Agent:
                         if (!customerInfoViewModel.IsInternalUser)
                         {
@@ -99,7 +97,6 @@
                         customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + customerInfoViewModel.CustId.ToString() + "&userName=" + customerInfoViewModel.UserName;
                         lblDownlineList = "Member List";
                         break;
-
                     case Globals.AccountType.Member:
                         downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + customerInfoViewModel.CustId + "&isDeposit=" + customerInfoViewModel.IsDeposit + "&isCN88=" + customerInfoViewModel.IsCN88;
                         lblDownlineList = "Bet List";
@@ -108,7 +105,6 @@
                 }
 
                 TemplateHandler.Assign(ref tplTransLink, "{IsInternal}", customerInfoViewModel.IsInternalUser.ToString().ToLower());
-
                 TemplateHandler.Assign(ref tplTransLink, "{custname}", HttpUtility.UrlEncode(customerInfoViewModel.UserName));
                 if (Permissions.HasPermission(Enumerations.Functions.Customer.CustomerBalance))
                 {
@@ -121,7 +117,6 @@
 
                 TemplateHandler.Assign(ref tplTransLink, "downlineLink", downlineListURL);
                 TemplateHandler.Assign(ref tplTransLink, "lblDownline", lblDownlineList);
-
                 TemplateHandler.Assign(ref htmlcontent, "{TransLinksBox}", tplTransLink);
             }
 

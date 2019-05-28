@@ -76,6 +76,7 @@ body
 	width:248px;
 	margin-left:6px;
 	vertical-align:middle;
+    overflow: hidden;
 }
 .buttonLeft_main01
 {
