@@ -3,5 +3,33 @@
 
 @helper Render(ITicket ticket)
 {
-    <td class="r">@(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+    switch (ticket.Status.ToLower())
+    {
+        case "running":
+        case "waiting":
+            {
+                <td class="r">0.00</td>
+            }
+            break;
+        case "void":
+            {
+                <td class="r">@(ticket.BetTypeId.Equals(500) ? "(NW) 0.00" : "0.00")</td>
+            }
+            break;
+        case "reject":
+            if (ticket.RefCode != 0 &&
+                    (ticket.WalletType == 0 || ticket.WalletType == 1 || ticket.WalletType == 2))
+            {
+                <td class="r">(NW) @(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+            }
+            else
+            {
+                <td class="r">0.00</td>
+            }
+            break;
+        default:
+            <td class="r">@(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+            break;
+    }
+
 }
