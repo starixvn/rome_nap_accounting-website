@@ -57,8 +57,8 @@
     <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Update Live Casino Comm">
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />

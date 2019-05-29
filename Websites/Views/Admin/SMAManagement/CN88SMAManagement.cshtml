@@ -26,10 +26,7 @@
             <div class="filterContent">
                 <div>
                     <table>
-                        <tr>
-                            <td>
-                                <b>Site</b>
-                            </td>                           
+                        <tr>                                                   
                             <td>
                                 <b>Currency</b>
                             </td>
@@ -254,7 +251,8 @@
 <iframe id="frameExportExcel" style="display: none"></iframe>
 <script type="text/javascript">
     window.rootUrl = '@Url.Content("~")';
-    var linkExportExcel = '@Url.Action("ExportSMAGroupHeadlinesToExcel", "CN88SMAManagement")';
+    var linkExportExcel = '@Url.Action("ExportCN88SMAGroupHeadlinesToExcel", "SMAManagement")';
+    var jsonStatuses = @Html.Raw(Json.Encode(Model.Statuses));
     var hostPermission = @Json.Encode(ViewData["HasHostPermission"]); 
     var jsonHeadlineTypes = @Html.Raw(Json.Encode(Model.HeadlineTypes));
 </script>

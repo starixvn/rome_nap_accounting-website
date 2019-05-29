@@ -103,14 +103,7 @@
             }
         };
     }
-
-    function getSelectedSites() {
-        if ($("#ddlSitesHeaderCheckBox").attr("checked")) {
-            return "";
-        }
-
-        return $("#ddlSites").multiSelect("getCheckedItems").join(",");
-    }
+    
 
     function getParams() {
         var username = usernameElement.val().toLowerCase();
@@ -130,7 +123,7 @@
 
         return {          
             currency: currencyElement.val(),
-            isActive: $("#ddlStatusisOpen").prop("checked"),
+            isActive: $("#ddlStatusisActive").prop("checked"),
             isViewOnly: $("#ddlStatusisViewOnly").prop("checked"),
             isSuspended: $("#ddlStatusisSuspended").prop("checked"),
             isInactive: $("#ddlStatusisInactive").prop("checked"),
@@ -184,15 +177,15 @@
             dataType: "json",
             beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
             success: function (rs) {
-                if (!rs || !rs.SMAGroupHeadlines || rs.SMAGroupHeadlines.length === 0) {
+                if (!rs || !rs.CN88SMAGroupHeadlines || rs.CN88SMAGroupHeadlines.length === 0) {
                     assignNoInfo();
                     return;
                 }
 
-                currentSMAGroupHeadlines = rs.SMAGroupHeadlines;
+                currentSMAGroupHeadlines = rs.CN88SMAGroupHeadlines;
                 totalGroups = rs.TotalGroups;
 
-                renderSMAGroupHeadlines(rs.SMAGroupHeadlines);
+                renderSMAGroupHeadlines(rs.CN88SMAGroupHeadlines);
                 initPager(rs.TotalGroups, pageSize, pageIndex - 1);
 
                 exportExcelElement.removeClass("hidden");
@@ -235,15 +228,15 @@
 
     function renderFrozenRows(smaGroup, groupIndex) {
         var html = [];
-        var totalItems = smaGroup ? smaGroup.SMAEntities.length : 0;
+        var totalItems = smaGroup ? smaGroup.CN88SMAEntities.length : 0;
 
         var row, css, rowsSpan, rowHtml;
 
         for (var i = 0; i < totalItems; i++) {
-            row = smaGroup.SMAEntities[i];
+            row = smaGroup.CN88SMAEntities[i];
 
             rowsSpan = "";
-            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
+           
 
             if (i === 0) {
                 rowsSpan = '<td rowspan="' + totalItems + '">\
@@ -257,7 +250,7 @@
             }
 
             rowHtml = '<tr>' + rowsSpan + '\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
                             </tr>';
@@ -270,15 +263,15 @@
 
     function renderScrollRows(smaGroup) {
         var html = [];
-        var totalItems = smaGroup ? smaGroup.SMAEntities.length : 0;
+        var totalItems = smaGroup ? smaGroup.CN88SMAEntities.length : 0;
 
-        var row, css, rowsSpan, rowHtml;
+        var row, rowsSpan, rowHtml;
 
         for (var i = 0; i < totalItems; i++) {
-            row = smaGroup.SMAEntities[i];
+            row = smaGroup.CN88SMAEntities[i];
 
             rowsSpan = "";
-            css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
+           
 
             if (i === 0) {
                 rowsSpan = '<td rowspan="' + totalItems + '">\
@@ -292,19 +285,19 @@
             }
 
             var rowHtml = '<tr>' + rowsSpan + '\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colStatusWidth + 'px; height: 20px; line-height: 20px">' + row.Status + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colSiteWidth + 'px; height: 20px; line-height: 20px">' + row.Site + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colCurrencyWidth + 'px; height: 20px; line-height: 20px">' + row.Currency + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colPositionWidth + 'px; height: 20px; line-height: 20px">' + row.Position + '</div>\
                                 </td>\
                             </tr>';
@@ -322,11 +315,11 @@
         if (totalItems > 0) {
             var i = 0;
             $.each(smaGroup, function () {
-                if (this.SMAEntities != null && this.SMAEntities.length > 0) {
-                    var row = this.SMAEntities[0];
+                if (this.CN88SMAEntities != null && this.CN88SMAEntities.length > 0) {
+                    var row = this.CN88SMAEntities[0];
 
                     var rowsSpan = '';
-                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
+                 
 
                     if (i === 0) {
                         rowsSpan = '<td class="group" rowspan="' + totalItems + '">\
@@ -340,7 +333,7 @@
                                     <div class="c" style="width: ' + colNoWidth + 'px; height: 20px; line-height: 20px">' + groupIndex + '</div>\
                                 </td>' + rowsSpan + '\
 								<td>' + renderOwnerRow(row.CustId, row.Owner) + '</td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px">' + row.Username + '</div>\
                                 </td>\
                             </tr>';
@@ -362,9 +355,8 @@
         if (totalItems > 0) {
             var i = 0;
             $.each(smaGroup, function () {
-                if (this.SMAEntities != null && this.SMAEntities.length > 0) {
-                    var row = this.SMAEntities[0];
-                    var css = getCssFormatForEachRow(row.IsClosed, row.IsSuspend, row.IsEnable, row.ClosedReason);
+                if (this.CN88SMAEntities != null && this.CN88SMAEntities.length > 0) {
+                    var row = this.CN88SMAEntities[0];
                     var rowHtml = '<tr>\
                                 <td>\
                                     <div class="c" style="width: ' + colNoWidth + 'px; line-height: 20px">&nbsp;</div>\
@@ -376,19 +368,19 @@
                                     <div class="c" style="width: ' + colHeadlineTypeWidth + 'px; ">&nbsp;</div>\
                                 </td>\
 								<td>'+ renderOwnerRow(smaGroup.GroupId, row.Owner) + '</td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colUsernameWidth + 'px; line-height: 20px">&nbsp;</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colStatusWidth + 'px; line-height: 20px">' + row.Status + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colSiteWidth + 'px; line-height: 20px">' + row.Site + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colCurrencyWidth + 'px; line-height: 20px">' + row.Currency + '</div>\
                                 </td>\
-                                <td class="' + css + '">\
+                                <td>\
                                     <div class="c" style="width: ' + colPositionWidth + 'px; line-height: 20px">' + row.Position + '</div>\
                                 </td>\
                             </tr>';
@@ -586,23 +578,6 @@
 			});
     }
 
-    function getCssFormatForEachRow(isClosed, isSuspended, isEnable, closedReason) {
-        // The top priority will be Disabled - Closed - Suspended - Open.
-        var css = 'open';
-
-        if (!isEnable) {
-            css = 'disabled';
-        }
-        else if (isClosed) {
-            css = closedReason.ClassName;
-        }
-        else if (isSuspended) {
-            css = 'suspended';
-        }
-
-        return css;
-    }
-
     function sorting(obj, sortCol) {
         if (sortClass === "" || sortClass === "desc") {
             sortClass = "asc";
@@ -636,16 +611,16 @@
             var memberNotAssignedToGroup = [];
 
             $.each(currentSMAGroupHeadlines, function () {
-                if (this.GroupId === 0 && this.SMAEntities && this.SMAEntities.length > 0) {
-                    memberNotAssignedToGroup.push(this.SMAEntities[0]);
+                if (this.GroupId === 0 && this.CN88SMAEntities && this.CN88SMAEntities.length > 0) {
+                    memberNotAssignedToGroup.push(this.CN88SMAEntities[0]);
                 }
                 else {
-                    var smaList = jlinq.from(this.SMAEntities).sort(sortType + "Username").select();
+                    var smaList = jlinq.from(this.CN88SMAEntities).sort(sortType + "Username").select();
                     newGroup.push({
                         GroupId: this.GroupId,
                         GroupName: this.GroupName,
                         Owner: this.Owner,
-                        SMAEntities: smaList
+                        CN88SMAEntities: smaList
                     });
                 }
             });
@@ -657,7 +632,7 @@
                         GroupId: this.GroupId,
                         GroupName: this.GroupName,
                         Owner: this.Owner,
-                        SMAEntities: [this]
+                        CN88SMAEntities: [this]
                     });
                 });
             }
@@ -768,14 +743,14 @@
     }
 
     function updateHeadlineType(headlineId, headlineType) {
-        var url = "SMAManagement/UpdateHeadlineType";
+        var url = "SMAManagement/UpdateCN88HeadlineType";
         var postParams = { headlineId: headlineId, headlineType: headlineType };
 
         postUpdate(url, postParams);
     }
 
     function updateOwner(headlineId, owner) {
-        var url = "SMAManagement/UpdateOwner";
+        var url = "SMAManagement/UpdateCN88Owner";
         var postParams = { headlineId: headlineId, ownerName: owner };
 
         postUpdate(url, postParams);
@@ -813,8 +788,7 @@
         });
     }
 
-    function initialize() {
-        assignSites();
+    function initialize() {     
         assignStatus();
 
         gridOptions = initGridOptions();
