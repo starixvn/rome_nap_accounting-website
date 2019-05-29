@@ -30,9 +30,6 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
         [SpParam(Ignored = true)]
         public string Code { get; set; }
 
-        [SpParam(Ignored = true)]
-        public string Site { get; set; }
-
         public string Language
         {
             get
@@ -49,7 +46,7 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 
         public string GetSettingKey()
         {
-            return AppSettings.IsCN88SiteName(Site) ? "CS_Customer_SecurityCode_upd" : "DBA_ResetSecurityCode_Agent";
+            return "DBA_ResetSecurityCode_Agent";
         }
 
         public bool IsValid()
