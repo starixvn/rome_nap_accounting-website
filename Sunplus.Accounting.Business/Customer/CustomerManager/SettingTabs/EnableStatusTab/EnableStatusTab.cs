@@ -313,7 +313,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.RoleId,
                     8,
-                    "Update Keno Status"));
+                    "Update RNG Keno Status"));
             }
 
             return htmlcontent;

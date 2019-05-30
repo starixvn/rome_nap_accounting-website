@@ -589,7 +589,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 var sport = new Sport()
                 {
                     SportId = Constants.Sport.Keno,
-                    SportName = "Keno",
+                    SportName = "RNG Keno",
                     Bettype = kenoPT.GetBettypeByKeno()
                 };
                 sports.SportsList.Add(sport);
