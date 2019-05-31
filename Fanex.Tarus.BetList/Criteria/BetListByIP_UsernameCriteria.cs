@@ -2,7 +2,7 @@
 {
     using System;
     using Sunplus.Accounting.Core.Common;
-    
+
     public class BetListByIP_UsernameCriteria
     {
         public DateTime FromDate { get; set; }
@@ -12,18 +12,11 @@
         public DateTime MoveBetsDay { get; set; }
 
         public int UserId
-        {
-            get
-            {
-                return AppSession.AccId;
-            }
-        }
+            => AppSession.AccId;
 
-        public byte SiteType { get; set; }
+        public string Permission { get; set; }
 
         public string GetSettingKey()
-        {
-            return "BetList_IP_Username";
-        }
+            => "BetList_IP_Username";
     }
 }

@@ -13,12 +13,13 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
+using Fanex.Tarus.Security.HttpModules.Services;
 
-
-public class EditUsername : IHttpHandler,IRequiresSessionState {
+public class EditUsername : BaseHandler {
     
-    public void ProcessRequest (HttpContext context) {
+    public override void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/html";
+        base.ProcessRequest(context);
         if (context.Session["AccId"] != null)
         {
             context.Response.Write("<html><head></head><body>");
@@ -74,6 +75,22 @@ public class EditUsername : IHttpHandler,IRequiresSessionState {
                 context.Response.Write("</body></html>");
             }
         }
+    }
+
+    protected override bool HasPermission()
+    {
+        var hasPermission = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleClearCredit;
+
+        if (hasPermission)
+        {
+            var username = _context.Request["txtOldUname"];
+            var accId = Convert.ToInt32(_context.Session["AccId"]);
+
+            ICustomerAuthorization customerAuthorization = new CN88CustomerAuthorization();
+            hasPermission = customerAuthorization.CanRead(username, accId).IsOk;
+        }
+
+        return hasPermission;
     }
  
     public bool IsReusable {

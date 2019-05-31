@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using NAP.Framework.Data;
     using System;
 
     public class BetListByRefNoCriteria : CriteriaBase
@@ -13,16 +13,12 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public byte SiteType { get; set; }
+        public string Permission { get; set; }
 
         public override string GetSettingKey()
-        {
-            return "BetList_SelByRefNo";
-        }
+            => "BetList_SelByRefNo";
 
         public override bool IsValid()
-        {
-            return true;
-        }
+            => true;
     }
 }

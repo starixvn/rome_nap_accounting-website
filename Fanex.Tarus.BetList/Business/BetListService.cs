@@ -290,7 +290,7 @@ namespace Fanex.Tarus.BetList.Business
                 MoveBetsDay = betListByProductCriteria.MoveBetsDay,
                 BalanceUpDay = betListByProductCriteria.BalanceUpDay,
                 CustId = custId,
-                SiteType = betListByProductCriteria.SiteType
+                Permission = betListByProductCriteria.Permission
             });
         }
 
@@ -816,7 +816,7 @@ namespace Fanex.Tarus.BetList.Business
             DateTime fromDate,
             int pageSize,
             int pageIndex,
-            byte siteType,
+            string permission,
             ref int quality)
         {
             BetListByIP_UsernameCriteria criteria = new BetListByIP_UsernameCriteria
@@ -824,7 +824,7 @@ namespace Fanex.Tarus.BetList.Business
                 FromDate = fromDate,
                 IP = ip,
                 MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
-                SiteType = siteType
+                Permission = permission
             };
 
             try

@@ -8,6 +8,7 @@ namespace Fanex.Tarus.BetList.Controllers
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
     using Business;
@@ -16,6 +17,7 @@ namespace Fanex.Tarus.BetList.Controllers
     using Fanex.Tarus.BetList.Constants;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
+    using Security.Constants;
     using Security.Services;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
@@ -60,9 +62,9 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetBetListByRefNo(string refno, string language = Language.Default)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
-            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
+            var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read).ToList();
 
-            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
+            if (permissions.Count > 0)
             {
                 BalanceUp balanceUp = ReportService.BalanceUp;
 
@@ -75,7 +77,7 @@ namespace Fanex.Tarus.BetList.Controllers
                         RefNo = Converter.To<long>(refno),
                         MoveBetsDay = balanceUp.MoveBetsDay,
                         BalanceUpDay = balanceUp.BalanceUpDay,
-                        SiteType = siteType
+                        Permission = string.Join(",", permissions)
                     });
                 }
             }
@@ -99,15 +101,15 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
-            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
+            var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read).ToList();
 
-            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
+            if (permissions.Count > 0)
             {
                 BalanceUp balanceUp = ReportService.BalanceUp;
                 betListByProductCriteria.UserId = AppSession.AccId;
                 betListByProductCriteria.MoveBetsDay = balanceUp.MoveBetsDay;
                 betListByProductCriteria.BalanceUpDay = balanceUp.BalanceUpDay;
-                betListByProductCriteria.SiteType = siteType;
+                betListByProductCriteria.Permission = string.Join(",", permissions);
 
                 SetCulture(betListByProductCriteria.Language);
 
@@ -224,12 +226,9 @@ namespace Fanex.Tarus.BetList.Controllers
         {
             var quantity = 0;
             IList<BetListByIP_Username> result = new List<BetListByIP_Username>();
-            var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
 
-            if (!CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
-            {
-                result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, siteType, ref quantity);
-            }
+            var permission = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read);
+            result = _betListService.GetListByIP_Username(ip, fromDate, pageSize, pageIndex, string.Join(",", permission), ref quantity);
 
             var dateTmp = fromDate.ToShortDateString();
             ViewBag.NumberBegining = (pageSize * (pageIndex - 1)) + 1;

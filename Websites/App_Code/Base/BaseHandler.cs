@@ -42,9 +42,15 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
     public virtual void ProcessRequest(HttpContext context)
     {
         _context = context;
-        if (!HasPermission() || !IsValidRequest())
+
+        if (!IsValidRequest())
         {
             RedirectError();
+            context.Response.End();
+        }
+        else if (!HasPermission())
+        {
+            RedirectAccessDenied();
             context.Response.End();
         }
     }
@@ -120,6 +126,14 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
     protected virtual void RedirectSpecialSiteDeny()
     {
         HttpContext.Current.Server.Transfer(Constants.Page.AccessSpecialSiteDenied);
+    }
+
+    protected virtual void RedirectAccessDenied()
+    {
+        _context.Response.Write(
+            "<html><head></head><body><script type='text/javascript'> var wnd; if (top.content.centerFr!=null) wnd=top.content.centerFr; else wnd=window; wnd.location.href='" +
+            FullApplicationPath() + "/AccessDenied.aspx" +
+            "';if (top.content.jQuery.unblockUI) top.content.jQuery.unblockUI();</script></body></html>");
     }
 
     private string FullApplicationPath()

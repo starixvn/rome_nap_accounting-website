@@ -41,16 +41,12 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public byte SiteType { get; set; }
+        public string Permission { get; set; }
 
         public override string GetSettingKey()
-        {
-            return "BetList_SelByProduct";
-        }
+            => "BetList_SelByProduct";
 
         public override bool IsValid()
-        {
-            return true;
-        }
+            => true;
     }
 }

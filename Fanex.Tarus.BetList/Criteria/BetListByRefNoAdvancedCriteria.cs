@@ -44,7 +44,7 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public byte SiteType { get; set; }
+        public string Permission { get; set; }
 
         private string _language;
         public string Language

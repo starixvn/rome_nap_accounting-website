@@ -5,11 +5,11 @@ using System.Web;
 using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-
+using Fanex.Tarus.Security.HttpModules.Services;
 
 public class UpdateChangeGroup : BaseHandler {
-    
-    public override void ProcessRequest (HttpContext context) {        
+
+    public override void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/html";
         base.ProcessRequest(context);
         if (context.Session["AccId"] != null)
@@ -23,18 +23,18 @@ public class UpdateChangeGroup : BaseHandler {
                 string accId = context.Session["accId"].ToString();
                 string uname = context.Request["txtUname"] as string ?? string.Empty;
                 uname = uname.Trim();
-                string strResult = "";              
+                string strResult = "";
                 if (strClear == "1")
                 {
                     strResult = "Clear Credit successfully.";
                     err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(uname, accId);
                 }
                 else
-                {                    
+                {
                     string ugroup = context.Request["listGroup"] as string ?? string.Empty;
                     err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserGroupRpt(uname, ugroup, accId);
                     strResult = "Change User Group successfully.";
-                }                
+                }
                 if (err.IsSuccess())
                 {
                     context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(strResult,AlertMessage.MsgType.Success) + "','errMsg');");
@@ -54,11 +54,22 @@ public class UpdateChangeGroup : BaseHandler {
                 context.Response.Write("</script>");
                 context.Response.Write("</body></html>");
             }
-        }     
+        }
     }
     protected override bool HasPermission()
     {
-        return Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleClearCredit;
+        var hasPermission = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleClearCredit;
+
+        if (hasPermission)
+        {
+            var username = _context.Request["txtUname"];
+            var accId = Convert.ToInt32(_context.Session["accId"]);
+
+            ICustomerAuthorization customerAuthorization = new CN88CustomerAuthorization();
+            hasPermission = customerAuthorization.CanRead(username, accId).IsOk;
+        }
+
+        return hasPermission;
     }
     public bool IsReusable {
         get {
