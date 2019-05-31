@@ -59,7 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="CN88.BetList.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.0-ns04\lib\net461\CN88.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0-ns06\lib\net461\CN88.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.ESports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.ESports.1.0.0-ns01\lib\net461\CN88.BetList.ESports.dll</HintPath>
