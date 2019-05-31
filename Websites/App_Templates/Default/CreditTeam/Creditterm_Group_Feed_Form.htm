@@ -37,6 +37,7 @@
         <td>#</td>
         <td>UserName</td>
         <td style="width:100px;">Currency</td>
+        <td style="width:100px;">Yesterday Balance</td>
         <td style="width:100px;">Total Balance</td>
         <td style="width:100px;">Max Loss</td>
         <td style="width:100px;">Set Headline</td>
@@ -47,6 +48,7 @@
         <td>{No}</td>
         <td class="{headlineclasstext}">{UserName}</td>
         <td class="c">{Currency}</td>
+        <td class="r">{YesterdayTotalBalance}</td>
         <td class="r">{TotalBalance}</td>
         <td class="r">{MaxLoss}</td>
         <td class="c">
@@ -59,7 +61,9 @@
     <tr class="title">
         <td colspan="2" class="r b">Group Total Balance</td>
         <td class="c b">RM</td>
+        <td class="c r">{SumYesterdayTotalBalance}</td>
         <td class="c r">{SumTotalBalance}</td>
+       
         <td></td>
         <td></td>
         <td></td>
@@ -71,7 +75,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="c"><input class="btn" onclick="ExecuteCreditTerm('3');" type="button" value="Remove" name="btnremove"></input></td>
+        <td></td>
+        <td class="c"><input class="btn" onclick="ExecuteCreditTerm('3');" type="button" value="Remove" name="btnremove" /></td>
     </tr>
 </table>
 </div>

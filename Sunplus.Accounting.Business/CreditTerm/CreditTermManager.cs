@@ -302,6 +302,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         CustId = CastAide.AsInt32(drow["custid"]),
                         Username = CastAide.AsString(drow["username"]),
                         Currency = CastAide.AsString(drow["currency"]),
+                        YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(drow["yesterdaytotalbalance"]),
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
                         MaxLoss = GetMaxLossValue(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
@@ -319,6 +320,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         CustId = 0,
                         Username = "Group Total Balance",
                         Currency = "RM",
+                        YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["yesterdaytotalbalance_rm"]),
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
                         MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
                         IsGroupHeadline = false
@@ -378,12 +380,13 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             // set columns width
             int fontWidth = 30;
-            int maxColumnIndex = 4;
+            int maxColumnIndex = 5;
             workSheet.Columns[0].Width = 60 * fontWidth;
             workSheet.Columns[1].Width = 300 * fontWidth;
             workSheet.Columns[2].Width = 120 * fontWidth;
-            workSheet.Columns[3].Width = 120 * fontWidth;
+            workSheet.Columns[3].Width = 180 * fontWidth;
             workSheet.Columns[4].Width = 120 * fontWidth;
+            workSheet.Columns[5].Width = 120 * fontWidth;
 
             // title
             string title = sheetName;
@@ -424,6 +427,11 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
             currentCell.Value = "Currency";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Yesterday Total Balance";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
@@ -491,8 +499,20 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 currentCell.Style = textStyle;
                 currentColumn++;
 
-                // Total Balance & Max Loss.
+                // Yesterday Total Balance & Total Balance & Max Loss.
                 textStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.YesterdayBalance;
+                if (group.YesterdayBalance.StartsWith("-"))
+                {
+                    currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
+                }
+                else
+                {
+                    currentCell.Style = textStyle;
+                }
+                currentColumn++;
 
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = group.TotalBalance;

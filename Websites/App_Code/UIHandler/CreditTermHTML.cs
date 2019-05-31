@@ -155,6 +155,12 @@ namespace Sunplus.Accounting.Presentation
                         TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
                         TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
                         TemplateHandler.Assign(
+                           ref _userrow,
+                           "{YesterdayTotalBalance}",
+                           member.TotalBalance.StartsWith("-") ?
+                               string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
+                               member.YesterdayBalance);
+                        TemplateHandler.Assign(
                             ref _userrow,
                             "{TotalBalance}",
                             member.TotalBalance.StartsWith("-") ?
@@ -170,6 +176,12 @@ namespace Sunplus.Accounting.Presentation
                     }
                     else
                     {
+                        TemplateHandler.Assign(
+                            ref from,
+                            "{SumYesterdayTotalBalance}",
+                            member.YesterdayBalance.StartsWith("-") ?
+                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
+                                member.YesterdayBalance);
                         TemplateHandler.Assign(
                             ref from,
                             "{SumTotalBalance}",
