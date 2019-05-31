@@ -9,6 +9,12 @@
             }
         });
 
+        if ($('#credit').val() == undefined || $('#credit').val() == '') {
+            $('#errMsg').html('Please input a value number!').show();
+            $.unblockUI();
+            return;
+        }
+
         var params = {
             searchAccountId: $('#SearchAccountId').val(),
             roleId: $('#RoleId').val(),
