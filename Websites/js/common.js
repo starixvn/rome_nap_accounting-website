@@ -847,6 +847,25 @@ function AllowNumber(e) {
     return true;
 }
 
+function AllowNumberOnly(e, numOfDecimal) {
+    var code = "";
+    if (e.which)
+        code = e.which;
+    else if (e.keyCode)
+        code = e.keyCode;
+    if (code == 37 || code == 39)
+        return true;
+    if (code == 46 && e.target.value.indexOf('.') == -1)
+        return true;
+    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 9) {
+        return false;
+    }
+
+    var reg = new RegExp('^-?\\d+(?:\\.\\d{0,' + (numOfDecimal == undefined ? 2 : numOfDecimal) + '})?')
+    e.target.value = e.target.value.match(reg)[0]
+    return true;
+}
+
 function getRealTop(el) {
     try {
         if (!$(el)) return 0;
