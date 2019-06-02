@@ -334,7 +334,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 return credit;
             }
 
-            var memberUsedCredit = _customerSettingDataAccess.GetCreditRangeModel(new SelectMemberUsedCreditCriteria(searchAccountId));
+            var memberUsedCredit = _customerSettingDataAccess.GetMemberCreditRangeModel(new SelectMemberUsedCreditCriteria(searchAccountId));
             return new CreditRangeModel(
                 credit.GivenCredit - memberUsedCredit.UsedCredit,
                 credit.UsedCredit,

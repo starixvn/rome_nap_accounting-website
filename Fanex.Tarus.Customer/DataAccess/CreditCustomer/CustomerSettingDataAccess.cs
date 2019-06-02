@@ -226,5 +226,20 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     Utils.ToDecimal(reader["MaxCredit"]));
             }
         }
+
+        public CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                reader.Read();
+                return new CreditRangeModel(
+                    0,
+                    Utils.ToDecimal(reader["TotalBetStake"]),
+                    0,
+                    0);
+            }
+        }
     }
 }

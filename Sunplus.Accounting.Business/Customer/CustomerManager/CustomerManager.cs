@@ -126,20 +126,23 @@
                 if (!string.IsNullOrEmpty(userName))
                 {
                     var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM, checkCustId);
+                    int tableCount = ds != null ? ds.ResultSet.Tables.Count : 0;
                     if (ds.Outputs.Count > 0 && CastAide.AsInt32(ds.Outputs["errcode"]) > 0)
                     {
                         arrcontent.Add("strcontent", AlertMessage.GetMsg(ds.Outputs["errmsg"].ToString(), AlertMessage.MsgType.Error));
                         return arrcontent;
                     }
 
-                    if (ds != null && ds.ResultSet.Tables.Count.Equals(5))
+                    if (ds != null && tableCount >= 5)
                     {
                         DataRow customerInfoRow = ds.ResultSet.Tables[0].Rows[0];
                         DataRow lineInfoRow = ds.ResultSet.Tables[1].Rows[0];
                         DataRow cashRow = ds.ResultSet.Tables[2].Rows[0];
                         DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
-                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable);
+                        DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
+                        DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
+                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, memberCN88CreditRow, memberCN88BetStakeRow);
                         AssignCustomerSession(customerInfoViewModel);
 
                         bool isDenied = smartPunterService.IsDeniedViewSmartPunter(

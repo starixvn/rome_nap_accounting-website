@@ -74,6 +74,7 @@
             <!--/CN88HiddenItem-->
             <!--CN88VisibleItem-->
             <!--AllowGiven-->
+            {GivenCreditCurrency}
             <span id="spanGivenCredit" name="spanGivenCredit" class="{givencreditClass}" onclick="leftPanelManager.CN88EditCustCredit({CustId}, {RoleId}, '{CustName}');">
                 {GivenCredit}
             </span>
@@ -95,6 +96,16 @@
             {BetCredit}
         </td>
     </tr>
+    <!--CN88VisibleItem-->
+    <tr>
+        <td class="dot_left">
+            Yesterday Bet Credit
+        </td>
+        <td class="dot_right b">
+            {GivenCreditCurrency} {YesterdayBetCredit}
+        </td>
+    </tr>
+    <!--/CN88VisibleItem-->
     <!--/betcredit-->
     <tr>
         <td class="dot_left">

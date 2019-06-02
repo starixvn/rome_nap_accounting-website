@@ -4,6 +4,8 @@
     using DNAide.Core;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerInfoViewModel
     {
@@ -25,7 +27,32 @@
 
         public decimal NetPosition { get; private set; }
 
-        public decimal Credit => Converter.ToDecimal(customerInfoRow["credit"]);
+        public decimal Credit
+        {
+            get
+            {
+                if (RoleId == (int)Role.Member && AppSettings.IsCN88SiteName(CustomerSite))
+                {
+                    return Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]);
+                }
+
+                return Utils.ToDecimal(customerInfoRow["credit"]);
+            }
+        }
+        public decimal TotalBetStake => Utils.ToDecimal(memberCN88BetStakeRow["TotalBetStake"]);
+
+        public decimal YesterdayBetCredit
+        {
+            get
+            {
+                if (Utils.ToBoolean(memberCN88CreditRow["IsTodayUpdatedCredit"]))
+                {
+                    return -1;
+                }
+
+                return Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) - Utils.ToDecimal(memberCN88BetStakeRow["YesterdayBetStake"]);
+            }
+        }
 
         public decimal ActualRate => Converter.ToDecimal(customerInfoRow["actualrate"]);
 
@@ -43,7 +70,15 @@
                     AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
                     Cash = Converter.ToDecimal(cashRow["cash"]);
                     NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-                    BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+                    if (AppSettings.IsCN88SiteName(CustomerSite))
+                    {
+                        BetCredit = Credit - TotalBetStake;
+                    }
+                    else
+                    {
+                        BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+                    }
+
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
                     break;
 

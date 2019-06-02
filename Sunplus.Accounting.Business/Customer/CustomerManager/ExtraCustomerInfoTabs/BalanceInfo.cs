@@ -3,6 +3,7 @@
     using Core.Common;
     using Core.Web;
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using Security;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
@@ -102,6 +103,10 @@
                 else
                 {
                     TemplateHandler.Assign(ref balanceinfo, "{BetCredit}", customerInfoViewModel.Currency + " " + Core.Helper.Utils.GetDecimalRoundDown(customerInfoViewModel.BetCredit));
+                    if (AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite))
+                    {
+                        TemplateHandler.Assign(ref balanceinfo, "{YesterdayBetCredit}", customerInfoViewModel.YesterdayBetCredit == -1 ? "N/A" : Core.Helper.Utils.GetDecimalRoundDown(customerInfoViewModel.YesterdayBetCredit));
+                    }
 
                     TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");

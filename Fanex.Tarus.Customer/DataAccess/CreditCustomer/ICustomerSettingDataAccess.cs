@@ -51,5 +51,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 
         CreditRangeModel GetCreditRangeModel(ICriteria criteria);
 
+        CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria);
+
     }
 }

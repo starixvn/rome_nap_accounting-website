@@ -25,18 +25,26 @@
 
         private DataRow headlineInfoRow { get; set; }
 
+        private DataRow memberCN88CreditRow { get; set; }
+
+        private DataRow memberCN88BetStakeRow { get; set; }
+
         public CustomerInfoViewModel(
             DataRow customerInfoRow,
             DataRow lineInfoRow,
             DataRow cashRow,
             DataRow downlineStatusInfoRow,
-            DataTable dynamicSettingtable)
+            DataTable dynamicSettingtable,
+            DataRow memberCN88CreditRow,
+            DataRow memberCN88BetStakeRow)
         {
             this.customerInfoRow = customerInfoRow;
             this.lineInfoRow = lineInfoRow;
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
+            this.memberCN88CreditRow = memberCN88CreditRow;
+            this.memberCN88BetStakeRow = memberCN88BetStakeRow;
 
             JsParam = new Hashtable();
             JsParam.Add("custid", CustId);
