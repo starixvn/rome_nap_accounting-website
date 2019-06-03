@@ -28,7 +28,7 @@
     </div>
     <div class="clear row">
         <label>@Language.Credit</label>
-        <input id="credit" type="text" class="R" onkeyup="return parent.AllowNumberOnly(event, 2)" value="@Model.GivenCredit.ToString("N2")" />
+        <input id="credit" type="text" class="R" onkeyup="return parent.AllowNumberOnly(event, 2)" />
         @if (Model.IsSuper)
         {
             @:[>= @Model.MinCredit.ToString("N2")]
