@@ -119,7 +119,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.0\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.1-beta-01\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
