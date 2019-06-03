@@ -560,3 +560,12 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 .bullfighting-arena .arena-code, .bullfighting-arena .match-no {
     font-weight: bold;
 }
+
+.betbuilder{
+    color:#171717;
+    font-weight:normal;    
+    border-right:2px solid #171717;
+    padding-right:3px;
+    margin: 2px 10px 2px 0px;
+    line-height: 15px;
+}

@@ -12,6 +12,7 @@
         public const int _1stCorrectScore = 30;
         public const int TotalGoal = 6;
         public const int FirstGoalLastGoal = 14;
+        public const int BetBuilder = 38;
 
         public const int MixParlay = 9;
         public const int SystemParlay = 29;

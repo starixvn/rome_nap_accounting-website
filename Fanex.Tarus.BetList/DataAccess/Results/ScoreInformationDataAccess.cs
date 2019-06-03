@@ -12,6 +12,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Criteria.BetBuilder;
     using Fanex.Data;
     using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
@@ -26,7 +27,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The list of SPORTSBOOKS.</returns>
-        public List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria, int handicap2)
+        public List<Sportsbook> GetScoreInformation(GetScoreInformationCriteria criteria, int handicap2)
         {
             var result = new List<Sportsbook>();
 
@@ -36,7 +37,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 {
                     if (reader.Read())
                     {
-                        result.Add(BindSportsbook(reader, ref criteria));
+                        result.Add(BindSportsbook(reader, criteria));
 
                         if (reader.NextResult())
                         {
@@ -50,6 +51,32 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                         if (result[0].GameDetails.Count == 0)
                         {
                             result[0].GameDetails.Add(new GameDetail());
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<Sportsbook> GetScoreInformation(GetResultBetBuilderDetailCriteria criteria)
+        {
+            var result = new List<Sportsbook>();
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                {
+                    if (reader.Read())
+                    {
+                        result.Add(BindSportsbook(reader, criteria));
+
+                        if (reader.NextResult())
+                        {
+                            while (reader.Read())
+                            {
+                                result[0].BetBuilderDetails.Add(BindBetBuilderDetail(reader));
+                            }
                         }
                     }
                 }
@@ -77,6 +104,13 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
             };
         }
 
+        private static BetBuilderDetail BindBetBuilderDetail(IDataReader reader)
+            => new BetBuilderDetail
+            {
+                SelectionType = int.Parse(reader["selectiontype"].ToString()),
+                Result = reader["result"].ToString()
+            };
+
         /// <summary>
         /// Binds the SPORTSBOOK.
         /// </summary>
@@ -85,10 +119,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
         /// <returns>
         /// The object of SPORTSBOOK.
         /// </returns>
-        private static Sportsbook BindSportsbook(IDataReader reader, ref GetScoreInformationCriteria criteria)
+        private static Sportsbook BindSportsbook(IDataReader reader, GetScoreInformationCriteria criteria)
         {
-            criteria.SportType = reader["sporttype"] != DBNull.Value ? Convert.ToInt32(reader["sporttype"]) : 0;
-
             return new Sportsbook()
             {
                 HomeId = reader["homeID"] != DBNull.Value ? Convert.ToInt32(reader["homeID"]) : 0,
@@ -113,6 +145,38 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 Calculate = false,
                 RefNo = string.Empty,
                 BetID = criteria.BetId.ToString(),
+                Bettype = criteria.BetType,
+                GameDetails = new List<GameDetail>(),
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
+            };
+        }
+
+        private static Sportsbook BindSportsbook(IDataReader reader, GetResultBetBuilderDetailCriteria criteria)
+        {
+            return new Sportsbook()
+            {
+                HomeId = reader["homeID"] != DBNull.Value ? Convert.ToInt32(reader["homeID"]) : 0,
+                AwayId = reader["awayID"] != DBNull.Value ? Convert.ToInt32(reader["awayID"]) : 0,
+                HtHomeScore = reader["hthomescore"] != DBNull.Value ? Convert.ToInt32(reader["hthomescore"]) : new int?(),
+                FinalHomeScore = reader["finalhomescore"] != DBNull.Value ? Convert.ToInt32(reader["finalhomescore"]) : new int?(),
+                HtAwayScore = reader["htawayscore"] != DBNull.Value ? Convert.ToInt32(reader["htawayscore"]) : new int?(),
+                FinalAwayScore = reader["finalawayscore"] != DBNull.Value ? Convert.ToInt32(reader["finalawayscore"]) : new int?(),
+                EventStatus = reader["eventstatus"] != DBNull.Value ? Convert.ToString(reader["eventstatus"]) : string.Empty,
+                KickOffTime = reader["kickofftime"] != DBNull.Value ? Convert.ToDateTime(reader["kickofftime"].ToString()) : DateTime.MinValue,
+                EventDate = reader["eventdate"] != DBNull.Value ? Convert.ToDateTime(reader["eventdate"].ToString()) : DateTime.MinValue,
+                IsNeutral = reader["IsNeutral"] != DBNull.Value ? Convert.ToBoolean(reader["IsNeutral"]) : false,
+                BetStatus = reader["betstatus"] != DBNull.Value ? Convert.ToString(reader["betstatus"]) : string.Empty,
+                LeagueId = reader["LeagueID"] != DBNull.Value ? Convert.ToInt32(reader["LeagueID"]) : 0,
+                MatchId = criteria.MatchId,
+                Color = string.Empty,
+                MatchCode = reader["matchcode"] != DBNull.Value ? Convert.ToString(reader["matchcode"]) : string.Empty,
+                GoalRecord = reader["GoalRecord"] != DBNull.Value ? Convert.ToString(reader["GoalRecord"]) : string.Empty,
+                LiveHomeScore = reader["livehomescore"] != DBNull.Value ? Convert.ToInt32(reader["livehomescore"]) : new int?(),
+                LiveAwayScore = reader["liveawayscore"] != DBNull.Value ? Convert.ToInt32(reader["liveawayscore"]) : new int?(),
+                IsHTCal = false,
+                Calculate = false,
+                RefNo = string.Empty,
+                BetID = criteria.MarketId.ToString(),
                 Bettype = criteria.BetType,
                 GameDetails = new List<GameDetail>(),
                 SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
