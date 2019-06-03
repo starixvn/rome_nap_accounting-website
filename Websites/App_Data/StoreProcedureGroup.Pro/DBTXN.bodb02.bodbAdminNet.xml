@@ -98,4 +98,7 @@
     <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="CN88">
+    <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet"  Plain="0" />
+  </Function>
 </Functions>
