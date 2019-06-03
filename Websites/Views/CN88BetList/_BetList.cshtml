@@ -99,62 +99,62 @@
             <table id="tblContent" class="grid-fixed-table col_header_content tbl-betlists ">
                 <thead>
                     <tr>
-                        <th>
-                            <div class="width80 height34 table-cell">
+                        <th class="width80">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.DateTime
                             </div>
                         </th>
-                        <th>
-                            <div class="width120 height34 table-cell">
+                        <th class="width120">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.Member /
                                 <br />
                                 @Resources.NewBetList.Commission
                             </div>
                         </th>
-                        <th>
-                            <div class="width200 height34 table-cell">
+                        <th class="width200">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.BetId /
                                 <br />
                                 @Resources.NewBetList.BetType
                             </div>
                         </th>
-                        <th>
-                            <div class="width300 height34 table-cell">
+                        <th class="width300">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.Details
                             </div>
                         </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
+                        <th class="width50">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.Stake
                             </div>
                         </th>
-                        <th>
-                            <div class="width80 height34 table-cell">
+                        <th class="width80">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.WinLoss
                             </div>
                         </th>
-                        <th>
-                            <div class="width80 height34 table-cell">
+                        <th class="width80">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.Status
                             </div>
                         </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
+                        <th class="width50">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.AgentPercent
                             </div>
                         </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
+                        <th class="width50">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.MAPercent
                             </div>
                         </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
+                        <th class="width50">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.SMAPercent
                             </div>
                         </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
+                        <th class="width50">
+                            <div class="height34 table-cell">
                                 @Resources.NewBetList.CoPercent
                             </div>
                         </th>
@@ -173,10 +173,10 @@
                                 @AlphaNewSite.Stake.Render(ticket)
                                 @AlphaNewSite.WinLoss.Render(ticket)
                                 @AlphaNewSite.Status.Render(ticket, Model.Builder, Model.TicketHelper, Model.BetListData.TicketData, true)
-                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.AgentPositionTaking * 100), "r")
-                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.MasterPositionTaking * 100), "r")
-                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.SuperPositionTaking * 100), "r")
-                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(Model.CompanyPositionTaking(ticket) * 100), "r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.AgentPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.MasterPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.SuperPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(Model.CompanyPositionTaking(ticket) * 100), "width50 r")
                             </tr>
                         }
                     }

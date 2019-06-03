@@ -5,7 +5,7 @@
 
 @helper Render(TicketDto ticket, IBetListCN88HtmlBuilder builder, ITicketHelper helper, GetCachePropertyById getOddsTypeNameFunc)
 {
-    <td>
+    <td class="width200">
         @(new HtmlString(builder.BuildBetInfo(ticket, helper, (obj) => getOddsTypeNameFunc(ConvertByBetType.OddsType(ticket.BetTypeId, ticket.OddsType)))))
     </td>
 }
