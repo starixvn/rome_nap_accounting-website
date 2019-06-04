@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    var oldStatus = $('#Status').val();
     $('#submit').click(function () {
         $('#submit').attr('disabled', null);
         $.blockUI({
@@ -10,7 +11,8 @@
         
         var params = {
             custId: $('#CustId').val(),
-            updStatusId: $('#Status').val()
+            oldStatusID: oldStatus,
+            newStatusID: $('#Status').val()
         };
 
         $.ajax({
@@ -38,6 +40,9 @@
                 }
             },
             error: function () {
+                $('#successMsg').hide();
+                $('#errMsg').html(arguments[0].statusText);
+                $('#errMsg').show();
                 $('#submit').removeAttr('disabled');
                 $.unblockUI();
             },

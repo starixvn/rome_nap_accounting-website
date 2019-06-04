@@ -106,7 +106,7 @@ balloon.OnCreateContentString = function()
 		+ '<img width="' + tt_aV[BALLOONEDGESIZE] + '" height="100%" src="' + aImg[8].src + sImgZ
 		+ '</td>'
 		// Content
-		+ '<td id="bALlO0nBdY" style="position:relative;line-height:normal;'
+		+ '<td id="bALlO0nBdY" style="position:relative;line-height:normal;text-wrap:break-word;'
 		+ ';background-image:url(' + aImg[0].src + ')'
 		+ ';color:' + tt_aV[FONTCOLOR]
 		+ ';font-family:' + tt_aV[FONTFACE]

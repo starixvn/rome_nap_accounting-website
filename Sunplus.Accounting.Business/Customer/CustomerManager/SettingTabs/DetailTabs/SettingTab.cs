@@ -147,8 +147,8 @@
             TemplateHandler.Assign(ref htmlcontent, "{pokerGamesLinkSetting}", string.Format(creditDCSLink, 33));
             TemplateHandler.Assign(ref htmlcontent, "{linkEditSettingCN88}", cn88EditSettingLink);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.Closed ? "Closed" : customerInfoViewModel.Suspend ? "Suspended" : "Open");
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatusId}", customerInfoViewModel.Closed ? 3 : customerInfoViewModel.Suspend ? 2 : 1);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.CN88CustStatusName);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatusId}", customerInfoViewModel.CN88CustStatus);
 
             var editSettingLink = $"MicroGaming/EditSettingView?parentId={renderLeftPanelParameter.ParentId}&custId={renderLeftPanelParameter.CustId}&roleId={renderLeftPanelParameter.RoleId}";
             TemplateHandler.Assign(ref htmlcontent, "{microgamingLinkSetting}", editSettingLink);

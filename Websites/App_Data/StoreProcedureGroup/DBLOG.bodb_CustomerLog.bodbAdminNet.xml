@@ -11,15 +11,15 @@
     <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Log">
-    <Setting Key="GetLogSetting" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogSettingTotal" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogLogin" SpName="Acc_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogLoginTotal" SpName="Acc_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogCredit" SpName="Acc_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogCreditTotal" SpName="Acc_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSettingTotal" SpName="NAP_UserLog_RunSPSelTotalRecords_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogLogin" SpName="NAP_UserLog_LoginSel_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogLoginTotal" SpName="NAP_UserLog_LoginSelTotalRecords_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogCredit" SpName="NAP_UserLog_CreditSel_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogCreditTotal" SpName="NAP_UserLog_CreditSelTotalRecords_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Live Casino - Stake Level Setting">
-    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP_UAT2" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />

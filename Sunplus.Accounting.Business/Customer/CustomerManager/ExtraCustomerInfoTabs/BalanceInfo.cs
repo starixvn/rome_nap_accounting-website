@@ -9,6 +9,14 @@
 
     public partial class CustomerManager
     {
+        private static readonly string _statusCountTooltipCN88 = "Active/View Only/Suspended/Inactive";
+
+        private static readonly string _statusCountTooltipMBC = "Active/Closed/Suspended";
+
+        private static readonly string _statusCountTitleCN88 = "A/V/S/I";
+
+        private static readonly string _statusCountTitleMBC = "A/C/S";
+
         private static string RenderBalanceInfo(
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel)
@@ -53,7 +61,7 @@
 
             if (customerInfoViewModel.RoleId == (int)Role.Headline)
             {
-                balanceinfo = GetDownlineCountingInfo(balanceinfo, customerInfoViewModel);
+                RenderDownlineCountingInfo(ref balanceinfo, customerInfoViewModel);
                 TemplateHandler.Assign(ref balanceinfo, "{CN88HeadlineCurrency}", customerInfoViewModel.Currency);
                 TemplateHandler.Assign(ref balanceinfo, "{superhidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", string.Empty);
@@ -98,7 +106,7 @@
                     TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
 
-                    balanceinfo = GetDownlineCountingInfo(balanceinfo, customerInfoViewModel);
+                    RenderDownlineCountingInfo(ref balanceinfo, customerInfoViewModel);
                 }
                 else
                 {
@@ -121,15 +129,19 @@
             return htmlcontent;
         }
 
-        private static string GetDownlineCountingInfo(string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
+        private static void RenderDownlineCountingInfo(ref string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite))
             {
-                TemplateHandler.Assign(ref balanceInfo, "{superactive}",
-                                    string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
-                                                    customerInfoViewModel.SAgentActive, customerInfoViewModel.SAgentClosed, customerInfoViewModel.SAgentSuspended));
+                RenderDownlineCountingInfoCN88(ref balanceInfo, customerInfoViewModel);
+                return;
             }
 
+            RenderDownlineCountingInfoMBC(ref balanceInfo, customerInfoViewModel);
+        }
+
+        private static void RenderDownlineCountingInfoMBC(ref string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
+        {
             TemplateHandler.Assign(ref balanceInfo, "{masteractive}",
                                     string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
                                                     customerInfoViewModel.MAgentActive, customerInfoViewModel.MAgentClosed, customerInfoViewModel.MAgentSuspended));
@@ -142,11 +154,42 @@
                                     string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
                                                     customerInfoViewModel.MemberActive, customerInfoViewModel.MemberClosed, customerInfoViewModel.MemberSuspended));
 
-            TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 || customerInfoViewModel.RoleId == (int)Role.Headline ? string.Empty : "hidden");
-            TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 || customerInfoViewModel.RoleId == (int)Role.Headline ? string.Empty : "hidden");
-            TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 || customerInfoViewModel.RoleId == (int)Role.Headline ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipMBC);
+            TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleMBC);
+            TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 ? string.Empty : "hidden");
+        }
 
-            return balanceInfo;
+        private static void RenderDownlineCountingInfoCN88(ref string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            {
+                TemplateHandler.Assign(ref balanceInfo, "{superactive}",
+                                    string.Format("<span class='status-count-active'>{0}</span>/<span class='status-count-view-only'>{1}</span>/<span class='status-count-suspended'>{2}</span>/<span class='status-count-inactive'>{3}</span>",
+                                                    customerInfoViewModel.SAgentActive, customerInfoViewModel.SAgentViewOnly, customerInfoViewModel.SAgentSuspended, customerInfoViewModel.SAgentInactive));
+            }
+
+            TemplateHandler.Assign(ref balanceInfo, "{masteractive}",
+                                    string.Format("<span class='status-count-active'>{0}</span>/<span class='status-count-view-only'>{1}</span>/<span class='status-count-suspended'>{2}</span>/<span class='status-count-inactive'>{3}</span>",
+                                                    customerInfoViewModel.MAgentActive, customerInfoViewModel.MAgentViewOnly, customerInfoViewModel.MAgentSuspended, customerInfoViewModel.MAgentInactive));
+
+            TemplateHandler.Assign(ref balanceInfo, "{agentavtive}",
+                                    string.Format("<span class='status-count-active'>{0}</span>/<span class='status-count-view-only'>{1}</span>/<span class='status-count-suspended'>{2}</span>/<span class='status-count-inactive'>{3}</span>",
+                                                    customerInfoViewModel.AgentActive, customerInfoViewModel.AgentViewOnly, customerInfoViewModel.AgentSuspended, customerInfoViewModel.AgentInactive));
+
+            TemplateHandler.Assign(ref balanceInfo, "{memberactive}",
+                                    string.Format("<span class='status-count-active'>{0}</span>/<span class='status-count-view-only'>{1}</span>/<span class='status-count-suspended'>{2}</span>/<span class='status-count-inactive'>{3}</span>",
+                                                    customerInfoViewModel.MemberActive, customerInfoViewModel.MemberViewOnly, customerInfoViewModel.MemberSuspended, customerInfoViewModel.MemberInactive));
+
+            TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipCN88);
+            TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleCN88);
+            if (customerInfoViewModel.RoleId != (int)Role.Headline)
+            {
+                TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 ? string.Empty : "hidden");
+                TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 ? string.Empty : "hidden");
+                TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 ? string.Empty : "hidden");
+            }
         }
     }
 }

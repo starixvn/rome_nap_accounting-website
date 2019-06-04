@@ -1,13 +1,29 @@
 ﻿@using Fanex.Tarus.Customer.ViewModels.CN88;
 @using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Infrastructure.Constants;
+@using Resources;
 @model CN88CustomerStatusViewModel
 @{
-    List<SelectListItem> custStatus = new List<SelectListItem>
+    List<SelectListItem> custStatus = null;
+
+    if (Model.Status == CN88CustomerStatusConstants.Active)
     {
-        new SelectListItem { Text="Open", Value="1" },
-        new SelectListItem { Text="Suspended", Value="2" },
-        new SelectListItem { Text="Closed", Value="3" }
-    };
+        custStatus = new List<SelectListItem>
+        {
+            new SelectListItem { Text="Active", Value="4" },
+            new SelectListItem { Text="View Only", Value="3" },
+            new SelectListItem { Text="Suspended", Value="2" },
+            new SelectListItem { Text="Inactive", Value="1" }
+        };
+    }
+    else
+    {
+        custStatus = new List<SelectListItem>
+        {
+            new SelectListItem { Text="Active", Value="4" },
+            new SelectListItem { Text=CN88CustomerStatusConstants.StatusName(Model.Status), Value=Model.Status.ToString() }
+        };
+    }
 }
 <!DOCTYPE html>
 <html lang="en" class="linen">
@@ -29,14 +45,6 @@
             width: 100px !important;
             font-size: 13px;
         }
-
-        .float-right {
-            float: right;
-        }
-
-        .buttonPopup {
-            font-size: 13px;
-        }
     </style>
 </head>
 <body id="body">
@@ -49,8 +57,8 @@
         @Html.LabelFor(model => model.Status, "Account Status ")
         @Html.DropDownListFor(model => model.Status, custStatus)
     </div>
-    <div class="clear row float-right">
-        <input type="button" id="submit" class="buttonPopup" value="Submit" />
+    <div class="clear row R">
+        <button type="button" id="submit">@Language.Submit</button>
     </div>
     @Html.HiddenFor(model => model.CustId)
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>

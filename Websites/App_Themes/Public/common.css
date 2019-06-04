@@ -326,6 +326,7 @@ span.cannotchangeinternal {
         opacity: 0.7;
         pointer-events: none;
     }
+
 .noteMsg {
     background-color: #ffedc1;
     border-radius: 3px;
@@ -339,7 +340,7 @@ span.cannotchangeinternal {
     vertical-align: middle; /*color: #ff5411;*/
     font-size: 12px;
     clear: both;
-    padding-left: 30px;    
+    padding-left: 30px;
     margin-bottom: 5px;
     border: 1px solid #d2a243;
     min-height: 25px;
@@ -348,6 +349,7 @@ span.cannotchangeinternal {
     overflow: auto;
     color: #ff5411;
 }
+
 .flag {
     background: url(../Images/sprites.png) no-repeat;
     display: inline-block;
@@ -427,3 +429,17 @@ span.cannotchangeinternal {
         .list-lang .lang:hover {
             background-color: #f5f5f5;
         }
+
+.status-count-active{
+    color: #006600;
+}
+
+.status-count-view-only {
+    color: #0000ff;
+}
+.status-count-suspended {
+    color: #000000;
+}
+.status-count-inactive {
+    color: #ff0000;
+}
