@@ -10,6 +10,8 @@
 namespace Fanex.Tarus.BetList.Business.Results
 {
     using System.Collections.Generic;
+    using Criteria.BetBuilder;
+    using CustomerSetting.Module.Core.Constants;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
     using Fanex.Result.Core.Sportsbook.DTO;
@@ -34,33 +36,38 @@ namespace Fanex.Tarus.BetList.Business.Results
             : this(null)
         {
         }
-
-        /// <summary>
-        /// Gets the result.
-        /// </summary>
-        /// <param name="matchId">The match identifier.</param>
-        /// <param name="betType">Type of the bet.</param>
-        /// <param name="betId">The bet identifier.</param>
-        /// <param name="isSupport">If set to <c>true</c> [is support].</param>
-        /// <returns>
-        /// The result for SPORTSBOOK.
-        /// </returns>
-        public string GetResult(int matchId, int betType, long betId, out bool isSupport, int handicap2)
+       
+        public string GetResult(int matchId, int sportType, int betType, long betId, int handicap2)
         {
-            var criteria = GetCriteria(matchId, betType, betId);
-            List<Sportsbook> sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(ref criteria, handicap2);
-
-            if (IsSupport(criteria.SportType))
+            List<Sportsbook> sportsbooks;
+            if (betType == BetList.Constants.BetTypeContants.BetBuilder)
             {
-                isSupport = true;
-                ResultSetting resultSetting = GetFanexResultSetting(criteria);
-                return ResultEngine.HtmlParser(sportsbooks, resultSetting).Replace("original-title", " title ");
+                var criteria = new GetResultBetBuilderDetailCriteria
+                {
+                    MatchId = matchId,
+                    MarketId = int.Parse(betId.ToString()),
+                    BetType = betType
+                };                
+                sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(criteria);
             }
             else
             {
-                isSupport = false;
-                return string.Empty;
+                var criteria = new GetScoreInformationCriteria()
+                {
+                    MatchId = matchId,
+                    BetType = betType,
+                    BetId = betId
+                };
+                sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(criteria, handicap2);
             }
+
+            if(IsSupport(sportType))
+            {
+                ResultSetting resultSetting = GetFanexResultSetting(sportType);
+                return ResultEngine.HtmlParser(sportsbooks, resultSetting).Replace("original-title", " title ");
+            }
+            
+            return string.Empty;
         }
 
         public string GetNG2Result(int matchId)
@@ -101,26 +108,12 @@ namespace Fanex.Tarus.BetList.Business.Results
             return true;
         }
 
-        private static GetScoreInformationCriteria GetCriteria(int matchId, int betType, long betId)
-        {
-            return new GetScoreInformationCriteria()
-            {
-                MatchId = matchId,
-                BetType = betType,
-                BetId = betId
-            };
-        }
-
-        /// <summary>
-        /// Gets the FANEX result setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The object of ResultSetting.</returns>
-        private static ResultSetting GetFanexResultSetting(GetScoreInformationCriteria criteria)
+       
+        private static ResultSetting GetFanexResultSetting(int sportType)
         {
             return new ResultSetting
             {
-                SportType = (SportType)criteria.SportType,
+                SportType = (SportType)sportType,
                 IsOutright = false,
                 IsParlayPopUp = false,
                 IsPopUp = true,

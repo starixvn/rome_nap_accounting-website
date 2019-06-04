@@ -610,3 +610,14 @@ table.happy5 .cl-result {
 table.happy5 .cl-detail-result {
   width: 70px;
 }
+table.fn-rs tbody .cl-total {
+  background: #cccccc;
+}
+table.fn-rs tbody .cl-total .selection {
+  font-size: 12px;
+  text-align: left;
+  padding-left: 3px;
+}
+table.fn-rs tbody .cl-total .result {
+  text-align: center;
+}

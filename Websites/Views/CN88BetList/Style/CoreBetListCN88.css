@@ -1,0 +1,139 @@
+﻿.cn88-live-score, .cn88-bettype-name, .cn88-handicap {
+    color: #0066CC;
+}
+
+.cn88-odds {
+    color: red;
+}
+
+.detail-link {
+    color: #755200;
+    font-weight: bold;
+}
+
+    .detail-link:hover,
+    .detail-link:focus {
+        color: #755200;
+    }
+
+.cn88-more-info {
+    background: url("Images/q_Icon2_1.png") no-repeat scroll left center transparent;
+    color: #755200;
+    display: inline;
+    font-weight: bold;
+    height: 10px;
+    line-height: 20px;
+    padding: 0 1px 0 18px;
+    width: 14px;
+}
+
+    .cn88-more-info:hover {
+        background: url("Images/q_Icon_2.png") no-repeat scroll left center transparent;
+        color: #755200;
+        cursor: pointer;
+        display: inline;
+        font-weight: bold;
+        height: 10px;
+        padding: 0 1px 0 18px;
+        width: 14px;
+    }
+
+.cn88-offername {
+    color: #3a3a3a;
+    font-weight: bold;
+}
+
+.cn88-mix-parlay a {
+    background: url("Images/add.png") no-repeat scroll left center transparent;
+    color: #755200;
+    display: inline;
+    font-weight: bold;
+    height: 10px;
+    line-height: 20px;
+    padding: 0 1px 0 18px;
+    width: 14px;
+}
+
+    .cn88-mix-parlay a:hover {
+        cursor: pointer;
+    }
+
+.cn88-mix-parlay-collapse a {
+    background: url("Images/minus.png") no-repeat scroll left center transparent;
+}
+
+    .cn88-mix-parlay-collapse a:hover {
+        cursor: pointer;
+    }
+
+/*.cn88-live-text {
+    color: #B50000;
+    font-weight: bold !important;
+}*/
+
+
+.tbl-betlists {
+    border-top: 1px solid #c8c8c8;
+}
+
+    .tbl-betlists > thead > tr > th {
+        border-width: 1px;
+        font-weight: normal;
+        padding: 4px 8px;
+    }
+
+    .tbl-betlists .tbl-report > thead > tr > th {
+        border-width: 1px;
+        font-weight: normal;
+        padding: 13px 8px;
+    }
+
+    .tbl-betlists > tbody > tr > td, .tbl-betlists > tfoot > tr > td {
+        padding: 7px 8px;
+    }
+
+        .tbl-betlists > tbody > tr > td.profit-margin span, .tbl-betlists > tfoot > tr > td.profit-margin span {
+            color: #000;
+            padding-left: 10px;
+        }
+
+    .tbl-betlists > thead > tr.total > th {
+        color: #fff;
+        background-color: #2C3E50;
+        padding: 7px 8px;
+        text-transform: uppercase;
+    }
+
+        .tbl-betlists > thead > tr.total > th.winloss font {
+            color: #ffbeb4 !important;
+        }
+
+    .tbl-betlists > tbody > tr.winloss-comm > td {
+        color: #3b3b3b;
+        background-color: #c0cfdd;
+        padding: 7px 8px;
+        font-weight: bold;
+    }
+
+    .tbl-betlists .com-info {
+        line-height: 20px;
+        color: #f4a25e;
+        font-weight: bold;
+    }
+
+    .tbl-betlists .cn88-bettype-name {
+        line-height: 20px;
+    }
+
+    .tbl-betlists .status {
+        text-transform: capitalize;
+    }
+
+    .tbl-betlists .result {
+        line-height: 20px;
+        color: #0072ba;
+    }
+
+        .tbl-betlists .result:hover {
+            cursor: pointer;
+        }

@@ -18,8 +18,9 @@ function ClearUsername() {
     obj('username').value = "";
     window.location.reload(true);
 }
-function LoginAgent(agentName) {
+function LoginAgent(agentName, roleId) {
     document.AgLoginForm.custName.value = agentName;
+    document.AgLoginForm.roleId.value = roleId;
     document.AgLoginForm.submit();
 }
 function ChangeGivenCredit(ischanging) {
@@ -586,7 +587,7 @@ function StatementClick() {
 //document.myFunc = function() { alert('!') } //is called from parent
 
 function DoTransfer(span, value, custName) {
-    if (span.className.indexOf('canchange') == -1) return;   
+    if (span.className.indexOf('canchange') == -1) return;
     var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
     parent.gotoURL('centerFr', url);
     parent.resetMenu();

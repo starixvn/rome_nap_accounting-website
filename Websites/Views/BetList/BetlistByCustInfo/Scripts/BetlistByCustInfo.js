@@ -12,11 +12,13 @@
         custId: null,
         betType: 0,
         pageIndex: 1,
-        pageSize: 100
+        pageSize: 100,
+        language: null
     },
     paramGetBetBetlistbyRefno: {
         customerId: null,
-        transactionId: null
+        transactionId: null,
+        language: null
     },
     paramGetBetlistSystemParlay: {
         customerId: null,
@@ -30,7 +32,7 @@
         fullWidth: true,
         fullHeight: true,
         gridWidth: 970, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 120,
+        gridHeight: 180,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     },
@@ -134,16 +136,25 @@
                     $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                     $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
                     if (!isByDateRange) {
-                        $("a:[id^='hidden']").each(function () {
-                            this.click();
-                            $(this).removeAttr("href");
-                        });
+                        if (isCN88 == "1") {
+                            $(".cn88-mix-parlay a").each(function () {
+                                this.click();
+                                $(this).remove();
+                            });
+                        } else {
+                            $("a:[id^='hidden']").each(function () {
+                                this.click();
+                                $(this).removeAttr("href");
+                            });
+                        }
                     }
 
                     BetListByCustInfo.initPager(_length,
-                    BetListByCustInfo.paramGetBetBetlist.pageSize,
-                    BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
+                        BetListByCustInfo.paramGetBetBetlist.pageSize,
+                        BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
                 }
+
+                $("#lang-container").width($("#BetlistByCustInfo").width())
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -171,14 +182,16 @@
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
-            BetListByCustInfo.URL = "TarusBetList/GetBetListByCustInfo_DateRange";
+            BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
+            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
         else {
             BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _custID;
             BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo').val();
+            BetListByCustInfo.paramGetBetBetlistbyRefno.language = $("#languageCodeHidden").val();
 
-            BetListByCustInfo.URL = "BetList/GetBetListByCustInfo_Refno";
+            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_Refno" : "BetList/GetBetListByCustInfo_Refno";
             return BetListByCustInfo.paramGetBetBetlistbyRefno;
         }
     },
@@ -314,11 +327,11 @@ var Helper = {
             selectOtherMonths: true,
             onSelect: function (selectedDate) {
                 var option = this.id == "exchange_fromdate" ? "minDate" : "maxDate",
-                     instance = $(this).data("datepicker"),
-                     date = $.datepicker.parseDate(
-                         instance.settings.dateFormat ||
-                             $.datepicker._defaults.dateFormat,
-                         selectedDate, instance.settings);
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
             }
         };
@@ -339,11 +352,11 @@ var Helper = {
             selectOtherMonths: true,
             onSelect: function (selectedDate) {
                 var option = this.id == "txtfromdate" ? "minDate" : "maxDate",
-                     instance = $(this).data("datepicker"),
-                     date = $.datepicker.parseDate(
-                         instance.settings.dateFormat ||
-                             $.datepicker._defaults.dateFormat,
-                         selectedDate, instance.settings);
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
                 BetListByCustInfo.getBettyes();
             }
@@ -372,6 +385,9 @@ var Helper = {
     }
 };
 
+function OpenIPInfo(ip) {
+    window.location.href = window.rootUrl + "TarusBetList/BetListByIP?IsLink=True&FromDate=" + BetListByCustInfo.paramGetBetBetlist.fromDate + "&IP=" + ip;
+}
 
 function showCombMPDetail(tranid, date, refno, betid, matchid, betteam) {
     var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
@@ -394,6 +410,40 @@ function showDetail(id) {
     }
 
     $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+}
+
+function showSingleMatchParlayDetail(transid, custid, status, transIndex) {
+    var divEvent = $("#divEvent_" + transid + transIndex);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "GET",
+                url: window.rootUrl + "BetBuilder/ViewDetail",
+                data: "TransactionId=" + transid + "&CustomerId=" + custid + "&Status=" + status,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divEvent.css("display", "");
+            $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+        }
+    }
+    else {
+        divEvent.css("display", "none");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    }
 }
 
 function showMP(transid, refno, custId, transIndex) {
@@ -473,6 +523,41 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
     else {
         divParlay.css("display", "none");
         divCombinationOfferName.toggleClass("hide");
+        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+    }
+}
+
+function showParlaySubBetsCN88(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam, custId) {
+    var divParlay = $("#cn88-sub-tickets-" + transId + "-" + transIndex);
+    var language = $("#languageCodeHidden").val();
+    if (divParlay.css("display") === "none") {
+        try { parent.BlockUI(); } catch (e) { }
+        var params = [
+            "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId, "&language=", language
+        ];
+
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "CN88BetList/GetMixParlayDetail",
+            data: params.join(""),
+            success: function (result) {
+                divParlay.html(result).css("display", "block");
+                $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").addClass("cn88-mix-parlay-collapse");
+                $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "none");
+                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    }
+    else {
+        divParlay.css("display", "none");
+        $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").removeClass("cn88-mix-parlay-collapse");
+        $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "block");
         $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
     }
 }

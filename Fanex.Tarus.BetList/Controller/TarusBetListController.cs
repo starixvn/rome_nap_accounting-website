@@ -56,7 +56,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// <returns></returns>
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult BetListByCustInfo(int CustID, bool isDeposit)
+        public ActionResult BetListByCustInfo(int CustID, bool isDeposit, bool isCN88)
         {
             _smartPunterService.TryLogIfSmartPunter(new CheckSmartPunterCriteria
             {
@@ -75,6 +75,8 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.FromDate = fromDate == dateTmp ? DateTime.Today.AddDays(-1) : fromDate;
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
+            ViewBag.IsCN88 = isCN88;
+
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 

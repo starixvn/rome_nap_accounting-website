@@ -9,6 +9,8 @@ using Sunplus.Accounting.Core.Configurations;
 using System;
 using System.Configuration;
 using Fanex.Tarus.Infrastructure.Configurations.InternalLogin;
+using Fanex.CustomerSetting.Module.Core;
+using Role = Fanex.Tarus.Infrastructure.Common.Enumerations.Role;
 
 public partial class InternalView : System.Web.UI.Page
 {
@@ -17,6 +19,7 @@ public partial class InternalView : System.Web.UI.Page
         var serviceBase = new ServiceBase();
         string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
+        Role roleType = Request["roleId"] == null || Request["roleId"].Equals("undefined", StringComparison.CurrentCultureIgnoreCase) ? Role.Null : (Role)Utils.ToInt32(Request["roleId"]);
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
         var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] });
 
@@ -44,8 +47,7 @@ public partial class InternalView : System.Web.UI.Page
         }
 
         strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-
-        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site) ?? string.Empty;
+        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site, roleType);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),

@@ -4,6 +4,12 @@
 
     public partial class CustomerInfoViewModel
     {
+        public int SAgentActive => Converter.ToInt(downlineStatusInfoRow["SAgentActive"]);
+
+        public int SAgentClosed => Converter.ToInt(downlineStatusInfoRow["SAgentClosed"]);
+
+        public int SAgentSuspended => Converter.ToInt(downlineStatusInfoRow["SAgentSuspended"]);
+
         public int MAgentActive => Converter.ToInt(downlineStatusInfoRow["MAgentActive"]);
 
         public int MAgentClosed => Converter.ToInt(downlineStatusInfoRow["MAgentClosed"]);

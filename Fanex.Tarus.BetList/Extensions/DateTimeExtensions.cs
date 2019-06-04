@@ -8,6 +8,19 @@
     /// </summary>
     public static class DateTimeExtensions
     {
+        public const string ShortDateFormat = "yyyy-MM-dd";
+        private const string LongTime24h = "HH:mm:ss";
+        private const string GlobalShowtime = "yyyy-MM-dd HH:mm";
+
+        public static string ToGlobalShowtime(this DateTime dateTime)
+            => dateTime.ToString(GlobalShowtime);
+
+        public static string ToShortDateFormat(this DateTime date)
+           => date.ToString(ShortDateFormat);
+
+        public static string ToLongTime24h(this DateTime dateTime)
+            => dateTime.ToString(LongTime24h);
+
         public static DateTime FirstDayOfMonth(this DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, 1);

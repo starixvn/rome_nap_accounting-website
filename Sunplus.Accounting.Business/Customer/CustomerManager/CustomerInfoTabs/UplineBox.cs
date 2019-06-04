@@ -3,6 +3,7 @@
     using Core.Web;
     using DNAide.Web;
     using IBCUtils.Objects;
+    using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
     {
@@ -10,7 +11,22 @@
         {
             var uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
 
-            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_SUPER)
+            if (customerInfoViewModel.IsCN88)
+            {
+                TemplateHandler.Assign(ref uplineboxhtml, "{CN88HeadlineName}", customerInfoViewModel.RoleId == (int)Role.Headline ? customerInfoViewModel.UserName : customerInfoViewModel.CN88HeadlineName);
+                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden0}", string.Empty);
+                if (!customerInfoViewModel.HeadlineEnabled)
+                {
+                    TemplateHandler.RemoveBlock(ref uplineboxhtml, "HeadlineLogin");
+                }
+            }
+            else
+            {
+                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden0}", "hidden");
+            }
+
+            if (customerInfoViewModel.RoleId <= (int)Role.Super
+                && customerInfoViewModel.RoleId != (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperId}", customerInfoViewModel.SuperId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperName}", customerInfoViewModel.SuperName);
@@ -25,7 +41,8 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden1}", "hidden");
             }
 
-            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_MASTER)
+            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_MASTER
+                && customerInfoViewModel.RoleId != (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterId}", customerInfoViewModel.MasterId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterName}", customerInfoViewModel.MasterName);
@@ -40,7 +57,8 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden2}", "hidden");
             }
 
-            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_AGENT)
+            if (customerInfoViewModel.RoleId <= UserInfo.ROLE_AGENT
+                && customerInfoViewModel.RoleId != (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentId}", customerInfoViewModel.AgentId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentName}", customerInfoViewModel.AgentName);

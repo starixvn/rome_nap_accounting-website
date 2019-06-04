@@ -1,0 +1,205 @@
+﻿@using Sunplus.Accounting.Core.Common;
+@using Fanex.BetList.Core.Entities;
+@using Fanex.Tarus.BetList.Models;
+@using Fanex.Tarus.BetList.ViewModel;
+@using Fanex.Tarus.BetList.Constants
+
+@model CN88BetListViewModel
+
+<div class="lang-container" id="lang-container" style="display:table">
+    <div class="lang-box" id="lang-box">
+        <span id="languageCode" class="flag flag-@Model.Languages.CurrentLanguage"></span>
+        <span id="languageName">@Language.GetCountryName(Model.Languages.CurrentLanguage)</span>
+        <input type="hidden" id="languageCodeHidden" value="@Model.Languages.CurrentLanguage" />
+        <span class="caret"></span>
+    </div>
+    <ul class="list-lang" id="language-ddl" style="display:none">
+        @foreach (var item in Model.Languages.Data)
+        {
+            <li class="lang">
+                <span class="flag flag-@item.Key" data-language-code="@item.Key" data-language-name="@item.Value"></span>
+                @item.Value
+            </li>
+        }
+    </ul>
+</div>
+
+<div id="BetlistByCustInfo" class="freegrid display-none">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content tbl-betlists">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                @Resources.NewBetList.DateTime
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                @Resources.NewBetList.Member /
+                                <br />
+                                @Resources.NewBetList.Commission
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width200 height34 table-cell">
+                                @Resources.NewBetList.BetId /
+                                <br />
+                                @Resources.NewBetList.BetType
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width300 height34 table-cell">
+                                @Resources.NewBetList.Details
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                @Resources.NewBetList.Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                @Resources.NewBetList.WinLoss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                @Resources.NewBetList.Status
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                @Resources.NewBetList.AgentPercent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                @Resources.NewBetList.MAPercent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                @Resources.NewBetList.SMAPercent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                @Resources.NewBetList.CoPercent
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content tbl-betlists ">
+                <thead>
+                    <tr>
+                        <th class="width80">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.DateTime
+                            </div>
+                        </th>
+                        <th class="width120">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.Member /
+                                <br />
+                                @Resources.NewBetList.Commission
+                            </div>
+                        </th>
+                        <th class="width200">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.BetId /
+                                <br />
+                                @Resources.NewBetList.BetType
+                            </div>
+                        </th>
+                        <th class="width300">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.Details
+                            </div>
+                        </th>
+                        <th class="width50">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.Stake
+                            </div>
+                        </th>
+                        <th class="width80">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.WinLoss
+                            </div>
+                        </th>
+                        <th class="width80">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.Status
+                            </div>
+                        </th>
+                        <th class="width50">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.AgentPercent
+                            </div>
+                        </th>
+                        <th class="width50">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.MAPercent
+                            </div>
+                        </th>
+                        <th class="width50">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.SMAPercent
+                            </div>
+                        </th>
+                        <th class="width50">
+                            <div class="height34 table-cell">
+                                @Resources.NewBetList.CoPercent
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.BetListData.Tickets.Count() > 0)
+                    {
+                        foreach (var ticket in Model.BetListData.Tickets)
+                        {
+                            <tr id="cn88-betlist-row-@ticket.TransId">
+                                @AlphaNewSite.TransDate.Render(ticket)
+                                @AlphaNewSite.Comm.Render(ticket)
+                                @AlphaNewSite.BetID.Render(ticket, Model.CN88Builder, Model.TicketHelper, Model.TicketHelper.GetOddsTypeNameById)
+                                @AlphaNewSite.Details.Render(ticket, Model.CN88Builder, Model.TicketHelper, Model.BetListData.TicketData)
+                                @AlphaNewSite.Stake.Render(ticket)
+                                @AlphaNewSite.WinLoss.Render(ticket)
+                                @AlphaNewSite.Status.Render(ticket, Model.Builder, Model.TicketHelper, Model.BetListData.TicketData, true)
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.AgentPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.MasterPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(ticket.SuperPositionTaking * 100), "width50 r")
+                                @AlphaNewSite.HtmlHelpers.RenderNumberCell((int)(Model.CompanyPositionTaking(ticket) * 100), "width50 r")
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="c">
+                            <td colspan="11" class='r'>
+                                <div class="c b">
+                                    There is no data
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Views/BetList/Scripts/LanguageDropdownList.js?ver=" + AccCommon.Version())" type="text/javascript"></script>
+<script type="text/javascript">
+    var _custid = @Model.CustId;
+    var _length = @Model.BetListData.Total;
+    $(document).ready(function () {
+        BetList.LanguageDropdownList.init(BetListByCustInfo.getBetListByCustInfo);
+    });
+</script>

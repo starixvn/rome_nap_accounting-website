@@ -24,6 +24,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
+    using ViewModels.CN88;
+    using Criteria.CN88;
+    using Requests.CN88;
+    using Resources;
+    using Customer.Entities.CN88;
+    using Sunplus.Accounting.Core.Helper;
+    using static Infrastructure.Common.Enumerations;
 
     /// <summary>
     /// TODO: Update summary.
@@ -317,6 +324,43 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             };
 
             return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
+        }
+
+        public CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember)
+        {
+            var credit = _customerSettingDataAccess.GetCreditRangeModel(new SelectCreditRangeCriteria(searchAccountId));
+            if (!isMember)
+            {
+                return credit;
+            }
+
+            var memberUsedCredit = _customerSettingDataAccess.GetMemberCreditRangeModel(new SelectMemberUsedCreditCriteria(searchAccountId));
+            return new CreditRangeModel(
+                credit.GivenCredit - memberUsedCredit.UsedCredit,
+                credit.UsedCredit,
+                memberUsedCredit.UsedCredit,
+                credit.MaxCredit);
+        }
+
+        public Result UpdateCredit(int searchAccountId, int roleId, decimal updCredit)
+        {
+            var credit = GetCreditRangeModel(searchAccountId, roleId == (int)Role.Member);
+            if (updCredit < credit.MinCredit || (roleId != (int)Role.Super && updCredit > credit.MaxCredit))
+            {
+                return new Result("101", Customer_Labels.InvalidCredit);
+            }
+
+            var command = new UpdateCreditCriteria(
+                    searchAccountId,
+                    updCredit,
+                    AppSession.AccId,
+                    Utils.GetClientIP());
+
+            _customerSettingDataAccess.ExecuteNonQuery(command);
+
+            return command.ErrCode.Equals(0)
+               ? new Result()
+               : new Result(command.ErrCode.ToString(), command.ErrMsg);
         }
     }
 }

@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.BetList.DataAccess.Results
 {
     using System.Collections.Generic;
+    using Criteria.BetBuilder;
     using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
 
@@ -18,6 +19,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     /// </summary>
     public interface IScoreInformationDataAccess
     {
-        List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria, int handicap2);
+        List<Sportsbook> GetScoreInformation(GetScoreInformationCriteria criteria, int handicap2);
+
+        List<Sportsbook> GetScoreInformation(GetResultBetBuilderDetailCriteria criteria);
     }
 }

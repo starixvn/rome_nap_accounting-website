@@ -99,5 +99,8 @@ namespace Fanex.Tarus.BetList.Extensions
             string formatString = "{0:n" + decDigits.ToString() + "}";
             return string.Format(formatString, value);
         }
+
+        public static bool InRange(this int number, int start, int end)
+            => start <= number && number <= end;
     }
 }

@@ -9,7 +9,7 @@ BetList.BetListByRefNo = (function ($) {
         fullWidth: true,
         fullHeight: true,
         gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 170,
+        gridHeight: 250,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     };
@@ -279,6 +279,41 @@ function showDetail(id) {
 
     $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
 }
+
+function showSingleMatchParlayDetail(transid, custid, status,transIndex) {
+    var divEvent = $("#divEvent_" + transid + transIndex);
+
+    if (divEvent.css("display") === "none") {
+        if (divEvent.html() === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "GET",
+                url: window.rootUrl + "BetBuilder/ViewDetail",
+                data: "TransactionId=" + transid + "&CustomerId=" + custid + "&Status=" + status,
+                success: function (result) {
+                    divEvent.html(result);
+                    divEvent.css("display", "");
+                    $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        }
+        else {
+            divEvent.css("display", "");
+            $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+        }
+    }
+    else {
+        divEvent.css("display", "none");
+        $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+    }
+}
+
 
 function showMP(transid, refno, custId, transIndex) {
     transIndex = transIndex == undefined ? "" : transIndex;

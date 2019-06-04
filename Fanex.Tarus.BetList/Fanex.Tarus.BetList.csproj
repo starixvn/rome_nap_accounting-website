@@ -58,6 +58,27 @@
       <HintPath>..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CN88.BetList.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0\lib\net461\CN88.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.ESports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.1\lib\net461\CN88.BetList.ESports.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.Keno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Keno.1.0.0\lib\net461\CN88.BetList.Keno.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0\lib\net461\CN88.BetList.Lottery.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0.1\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
+    </Reference>
+    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
+    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +90,9 @@
     <Reference Include="Fanex.AuthenticationFilter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.AuthenticationFilter.1.0.0.0\lib\net40\Fanex.AuthenticationFilter.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.1\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
@@ -83,16 +107,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.85.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetList.Core.2.86.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.85.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.85.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.Core, Version=2.86.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.86.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -149,13 +171,11 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.RemotingRef, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.RemotingRef.1.3.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.RemotingRef, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.RemotingRef.1.4.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.8\lib\net40\Fanex.Result.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Result.Core, Version=2.1.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.4.0\lib\net40\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
@@ -165,9 +185,8 @@
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.4\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.1.8\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.4.0\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GlobalGaming.1.0.0.2\lib\net40\Fanex.Result.Core.GlobalGaming.dll</HintPath>
@@ -209,12 +228,11 @@
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.2\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.3\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.1.5\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.1\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Voidbridge, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.2\lib\net40\Fanex.Result.Core.Voidbridge.dll</HintPath>
@@ -228,9 +246,8 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.1\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -268,9 +285,8 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MessagePack, Version=1.7.3.4, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
-      <HintPath>..\packages\MessagePack.1.7.3.4\lib\net45\MessagePack.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MessagePack, Version=1.7.3.7, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagePack.1.7.3.7\lib\net45\MessagePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Practices.EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -348,8 +364,8 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.1.9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.2\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -443,10 +459,12 @@
     <Compile Include="Business\BetDetails\BetDetailsExporter.cs" />
     <Compile Include="Business\BetDetails\IBetDetailsExporter.cs" />
     <Compile Include="Business\BetListDetailService.cs" />
+    <Compile Include="Business\CN88BetListService.cs" />
     <Compile Include="Business\BetListService.cs" />
     <Compile Include="Business\ExchangeBetListService.cs" />
     <Compile Include="Business\ExportExcelBetlist.cs" />
     <Compile Include="Business\IBetListDetailService.cs" />
+    <Compile Include="Business\ICN88BetListService.cs" />
     <Compile Include="Business\IBetListService.cs" />
     <Compile Include="Business\IpService.cs" />
     <Compile Include="Business\IResultService.cs" />
@@ -495,15 +513,19 @@
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Controller\BetListController.cs" />
     <Compile Include="Controller\ExchangeBetListController.cs" />
+    <Compile Include="Controller\BetBuilderController.cs" />
     <Compile Include="Controller\Lucky3Controller.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
+    <Compile Include="Controller\CN88BetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Controller\ThirdPartyController.cs" />
+    <Compile Include="Core\CN88BetListHelper.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Core\LoggingHandler.cs" />
     <Compile Include="Core\NpoiExcelUtils.cs" />
     <Compile Include="Core\SessionManager.cs" />
+    <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
@@ -531,6 +553,7 @@
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
+    <Compile Include="Criteria\BetBuilder\GetBetListBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
     <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
@@ -554,6 +577,7 @@
     <Compile Include="DataAccess\IBetListDetailRepository.cs" />
     <Compile Include="DataAccess\IBetListRepository.cs" />
     <Compile Include="DataAccess\ISystemParlayRepository.cs" />
+    <Compile Include="DataAccess\BetBuilder\BetBuilderRepository.cs" />
     <Compile Include="DataAccess\Lucky3\Lucky3Repository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
@@ -592,6 +616,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
+    <Compile Include="Helper\CN88BetListHelpers.cs" />
     <Compile Include="Helper\ReportServices.cs" />
     <Compile Include="Models\BalanceUp.cs" />
     <Compile Include="Models\BetListByIP_Username.cs" />
@@ -600,6 +625,7 @@
     <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\CashOutDetails.cs" />
     <Compile Include="Models\CashOutTicket.cs" />
+    <Compile Include="Models\CN88\BetListData.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventExcel.cs" />
@@ -624,6 +650,7 @@
     <Compile Include="Models\TennisResult\TennisResultEntity.cs" />
     <Compile Include="Models\TennisResult\TennisSetResult.cs" />
     <Compile Include="Models\TicketDetail.cs" />
+    <Compile Include="Models\CN88\TicketDto.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Models\WinLossModel.cs" />
@@ -633,6 +660,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BetListResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CN88MixParlayDetailViewModel.cs" />
+    <Compile Include="ViewModel\CN88BetListViewModel.cs" />
     <Compile Include="ViewModel\LanguageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
