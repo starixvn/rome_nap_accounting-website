@@ -1,14 +1,16 @@
 ﻿namespace Fanex.Tarus.Customer.Controller
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Criteria.Player3rd;
     using DataAccess.Player3rd;
     using Entities.Player3rd;
     using Fanex.Tarus.Web.Controllers;
     using Security.Authenticate;
+    using Security.Constants;
     using Security.Services;
     using Sunplus.Accounting.Core.Common;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     [AuthorizeFunctions("BetListByIP")]
     public class Player3rdController : BaseController
@@ -33,15 +35,18 @@
         [HttpPost]
         public JsonResult Search(SearchPlayer3rdCriteria criteria)
         {
-            criteria.UserId = AppSession.AccId;
-            criteria.SiteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
-            if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(criteria.SiteType))
+            var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read).ToList();
+
+            if (permissions.Count == 0)
             {
                 return Json(new List<Player3rd>());
             }
 
+            criteria.UserId = AppSession.AccId;
+            criteria.Permission = string.Join(",", permissions);
             criteria.PlayerIDs = (criteria.PlayerIDs ?? string.Empty).Trim(',');
             criteria.Usernames = (criteria.Usernames ?? string.Empty).Trim(',');
+
             return Json(_service.Search(criteria));
         }
     }

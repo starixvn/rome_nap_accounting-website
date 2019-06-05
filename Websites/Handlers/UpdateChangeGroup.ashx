@@ -63,13 +63,12 @@ public class UpdateChangeGroup : BaseHandler {
         if (hasPermission)
         {
             var username = _context.Request["txtUname"];
-            var accId = Convert.ToInt32(_context.Session["accId"]);
 
-            ICustomerAuthorization customerAuthorization = new CN88CustomerAuthorization();
-            hasPermission = customerAuthorization.CanRead(username, accId).IsOk;
+            return CheckSpecialPermission(username)
+                && CheckCN88SiteCreditSiteDepositSitePermission(username);
         }
 
-        return hasPermission;
+        return false;
     }
     public bool IsReusable {
         get {

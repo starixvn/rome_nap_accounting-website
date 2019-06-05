@@ -1,10 +1,4 @@
 ﻿using Fanex.NAP.Framework.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 namespace Fanex.Tarus.Customer.Criteria.Player3rd
 {
@@ -12,7 +6,7 @@ namespace Fanex.Tarus.Customer.Criteria.Player3rd
     {
         public int UserId { get; set; }
 
-        public byte SiteType { get; set; }
+        public string Permission { get; set; }
 
         public int ProductId { get; set; }
 
@@ -21,15 +15,11 @@ namespace Fanex.Tarus.Customer.Criteria.Player3rd
         public string Usernames { get; set; }
 
         public override bool IsValid()
-        {
-            return ProductId > 0 
+            => ProductId > 0
                 && (!string.IsNullOrWhiteSpace(PlayerIDs) || !string.IsNullOrWhiteSpace(Usernames))
                 && UserId > 0;
-        }
 
         public override string GetSettingKey()
-        {
-            return "Acc_CustomerSelPlayerId";
-        }
+            => "Acc_CustomerSelPlayerId";
     }
 }

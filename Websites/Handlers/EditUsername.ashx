@@ -15,9 +15,11 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Fanex.Tarus.Security.HttpModules.Services;
 
-public class EditUsername : BaseHandler {
-    
-    public override void ProcessRequest (HttpContext context) {
+public class EditUsername : BaseHandler
+{
+
+    public override void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         base.ProcessRequest(context);
         if (context.Session["AccId"] != null)
@@ -33,38 +35,38 @@ public class EditUsername : BaseHandler {
                 string accId = context.Session["AccId"].ToString();
 
                 int custid = 0;
-                 CustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetCustomerDetail(oldUser);
-                 if (WebSettings.disableCS && custcs.IsCasinoSync)
-                 {
+                CustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetCustomerDetail(oldUser);
+                if (WebSettings.disableCS && custcs.IsCasinoSync)
+                {
 
-                     string errCS = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CHANGE USERNAME");
-                     context.Response.Write("parent.alert_error('" + IBCUtils.Encryption.RemoveSpecialChars(errCS) + "','errMsg');");
-                 }
-                 else
-                 {
-                     IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
+                    string errCS = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CHANGE USERNAME");
+                    context.Response.Write("parent.alert_error('" + IBCUtils.Encryption.RemoveSpecialChars(errCS) + "','errMsg');");
+                }
+                else
+                {
+                    IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
 
-                     bool success = err.IsSuccess();
-                     if (custid != 0 && success) // Have been synchronized casino
-                     {
-                         if (!WebSettings.disableCS && custcs.IsCasinoSync)
-                         {
-                             CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
-                             csCustomer.SiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(custid);
-                             success = csCustomer.UpdateUserName(custid, newUser, context.Request.UserHostAddress, int.Parse(accId), AppSession.Username, 3);
-                         }
-                     }
-                     if (success)
-                     {
-                         context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update CustId successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
-                     }
-                     else
-                     {
-                         context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg(err.ErrorMsg, AlertMessage.MsgType.Error) + "','errMsg');");
-                     }
-                 }
+                    bool success = err.IsSuccess();
+                    if (custid != 0 && success) // Have been synchronized casino
+                    {
+                        if (!WebSettings.disableCS && custcs.IsCasinoSync)
+                        {
+                            CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
+                            csCustomer.SiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(custid);
+                            success = csCustomer.UpdateUserName(custid, newUser, context.Request.UserHostAddress, int.Parse(accId), AppSession.Username, 3);
+                        }
+                    }
+                    if (success)
+                    {
+                        context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update CustId successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
+                    }
+                    else
+                    {
+                        context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg(err.ErrorMsg, AlertMessage.MsgType.Error) + "','errMsg');");
+                    }
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
                 context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Not casino's customer", AlertMessage.MsgType.Error) + "','errMsg');");
@@ -84,17 +86,18 @@ public class EditUsername : BaseHandler {
         if (hasPermission)
         {
             var username = _context.Request["txtOldUname"];
-            var accId = Convert.ToInt32(_context.Session["AccId"]);
 
-            ICustomerAuthorization customerAuthorization = new CN88CustomerAuthorization();
-            hasPermission = customerAuthorization.CanRead(username, accId).IsOk;
+            return CheckSpecialPermission(username)
+                && CheckCN88SiteCreditSiteDepositSitePermission(username);
         }
 
-        return hasPermission;
+        return false;
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

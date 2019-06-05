@@ -432,8 +432,8 @@
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.3\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1.2-CN88SMA-3\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1.2\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -472,7 +472,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2-cn88-03\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -738,8 +738,8 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.0-CN88\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.3, Culture=neutral, processorArchitecture=MSIL">
