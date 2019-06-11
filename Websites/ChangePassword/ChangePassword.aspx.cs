@@ -38,6 +38,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             int custid = DNAide.Core.CastAide.AsInt32(Request["custId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
             string site = Request["Site"];
+            string forceChangePwd = Request["forceChangePwd"];
             string strUsername = Convert.ToString(Session["CustUname"]);
             bool isRequest = false;
 
@@ -71,7 +72,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 str = AlertMessage.GetMsg("Password must have at least 4 characters.", AlertMessage.MsgType.Error);
             else if (!txtPass.Equals(txtConfirmPass))
                 str = AlertMessage.GetMsg("Password was not correctly confirmed.", AlertMessage.MsgType.Error);
-            else if (changePWD(custid, encodepwd, userid, language, site))
+            else if (changePWD(custid, encodepwd, userid, language, site, forceChangePwd == "on"))
             {
                 if (!isRequest)
                 {
@@ -117,7 +118,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
         }
     }
 
-    private bool changePWD(int custid, string userpwd, int userid, string language, string site)
+    private bool changePWD(int custid, string userpwd, int userid, string language, string site, bool forceChangePwd)
     {
         try
         {
