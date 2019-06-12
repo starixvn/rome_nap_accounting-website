@@ -3,9 +3,10 @@ using System;
 using System.Web;
 using System.Web.SessionState;
 using DNAide.Core;
+using Fanex.Tarus.Security.HttpModules.Services;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
-
+using Sunplus.Accounting.Core.Helper;
 
 /// <summary>
 /// Summary description for EmptyHandler
@@ -42,9 +43,15 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
     public virtual void ProcessRequest(HttpContext context)
     {
         _context = context;
-        if (!HasPermission() || !IsValidRequest())
+
+        if (!IsValidRequest())
         {
             RedirectError();
+            context.Response.End();
+        }
+        else if (!HasPermission())
+        {
+            RedirectAccessDenied();
             context.Response.End();
         }
     }
@@ -122,8 +129,32 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
         HttpContext.Current.Server.Transfer(Constants.Page.AccessSpecialSiteDenied);
     }
 
+    protected virtual void RedirectAccessDenied()
+    {
+        _context.Response.Write(
+            "<html><head></head><body><script type=\"text/javascript\">parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("You don't have permission to access.", AlertMessage.MsgType.Error) + "','errMsg');</script></body></html>");
+    }
+
     private string FullApplicationPath()
     {
         return _context.Request.Url.GetLeftPart(UriPartial.Authority) + _context.Request.ApplicationPath;
+    }
+
+    protected virtual bool CheckSpecialPermission(string userNameOrCustIdList)
+    {
+        return CheckPermission(userNameOrCustIdList, "[A]");
+    }
+
+    protected virtual bool CheckCN88SiteCreditSiteDepositSitePermission(string userNameOrCustIdList)
+    {
+        return CheckPermission(userNameOrCustIdList, "[B]");
+    }
+
+    private bool CheckPermission(string userNameOrCustIdList, string type)
+    {
+        var accId = Convert.ToInt32(_context.Session["AccId"]);
+
+        ICustomerAuthorization customerAuthorization = CustomerAuthorizationFactory.GetInstance(type);
+        return customerAuthorization.CanHost(userNameOrCustIdList, accId).IsOk;
     }
 }

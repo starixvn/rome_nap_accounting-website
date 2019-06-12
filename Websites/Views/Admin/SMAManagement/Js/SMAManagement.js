@@ -556,7 +556,7 @@
 
         return '<div class="c " style="width:' + colOwnerWidth + 'px">\
 					<span id="spanOwner' + headlineId + '">' + owner + '</span>\
-					<input type="text" class="hidden" style="width:200px" value="' + owner + '" id="input' + headlineId + '"/>\
+					<input type="text" class="hidden" style="width:200px" value="' + encodeURI(owner) + '" id="input' + headlineId + '"/>\
 					<div style="float:right">\
 						<img style="cursor:pointer" src="../App_Themes/Images/icn_edit.png" title="Edit" alt="Edit" class="edit-owner" data-headlineid="' + headlineId + '">\
 						<div style="float:right" class="hidden">\
@@ -576,8 +576,9 @@
 
 			    $("#spanOwner" + headlineId).addClass("hidden");
 			    $this.addClass("hidden");
-
-			    $("#input" + headlineId)
+			    var textbox = $("#input" + headlineId);                
+			    textbox.val(decodeURI(textbox.val()));
+			    textbox
 					.removeClass("hidden")
 					.focus()
 					.select();
@@ -623,9 +624,10 @@
 			    var $span = $("#spanOwner" + headlineId).removeClass("hidden");
 			    parent.prev().removeClass("hidden");
 
+
 			    $("#input" + headlineId)
 					.addClass("hidden")
-					.val($span.html());
+					.val(encodeURI($span.text()));
 			    parent.addClass("hidden");
 			});
     }
