@@ -133,7 +133,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 // Notes: should be put into 1 transaction later!!!
                 //1
                 bool isCN88 = string.IsNullOrWhiteSpace(site) ? false : AppSettings.IsCN88SiteName(site);
-                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, isCN88);
+                IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, isCN88, forceChangePwd);
                 //2
 
                 if (Request["type"] != "User" && custcs.CasinoSync)
@@ -160,6 +160,11 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 }
                 else
                 {
+                    if (!isCN88)
+                    {
+                        Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.KickoutCustomer(custid);
+                    }
+
                     return true;
                 }
             }
