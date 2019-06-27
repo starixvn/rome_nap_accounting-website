@@ -10,9 +10,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Customer.Entities.CN88;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using Requests.CN88;
+    using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
+    using Fanex.Tarus.Customer.ViewModels.CN88;
     using System.Collections.Generic;
-    using ViewModels.CN88;
 
     /// <summary>
     /// TODO: Update summary.
@@ -79,5 +79,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember);
 
         Result UpdateCredit(int searchAccountId, int roleId, decimal updCredit);
+
+        HeadlinePossessViewModel GetHeadlinePossess(GetHeadlinePossessCriteria criteria, bool isAfterCreateNewSuper);
+
+        CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria);
     }
 }

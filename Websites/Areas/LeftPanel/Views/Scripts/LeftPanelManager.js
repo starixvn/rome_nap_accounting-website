@@ -144,6 +144,15 @@ var LeftPanelManager = function () {
             });
         }
     }
+
+    self.CN88HeadlinePossess = function (custId, isAfterCreateNewSuper) {
+        var param = {
+            custId: custId,
+            isAfterCreateNewSuper: isAfterCreateNewSuper
+        };
+        var url = "CustomerSetting/ViewHeadlinePossessOnSuper?" + $.param(param);
+        parent.OpenNextPopup("CN88HeadlinePossessOnSuper", url, 'Edit Headline Possess on Super', 500, isAfterCreateNewSuper ? 400 : 300, true, false, window, 0, null, null);
+    }
 };
 
 window.top.reloadLeftPanel = function () {

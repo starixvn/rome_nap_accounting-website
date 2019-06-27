@@ -409,6 +409,8 @@
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88UnlockCustomerCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
+    <Compile Include="Criteria\CN88\HeadlinePossess\GetHeadlinePossessCriteria.cs" />
+    <Compile Include="Criteria\CN88\HeadlinePossess\UpdateHeadlinePossessCriteria.cs" />
     <Compile Include="Criteria\CN88\SelectCreditRangeCriteria.cs" />
     <Compile Include="Criteria\CN88\SelectMemberUsedCreditCriteria.cs" />
     <Compile Include="Criteria\CN88\UpdateCreditCriteria.cs" />
@@ -596,6 +598,7 @@
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
+    <Compile Include="ViewModels\CN88\HeadlinePossessViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />

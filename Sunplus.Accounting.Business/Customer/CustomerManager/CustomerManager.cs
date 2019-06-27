@@ -376,31 +376,24 @@
 
         private void RenderCN88Customer(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineHiddenItem");
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HeadlineVisibleItem");
-            }
+            ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Headline, "CN88HeadlineVisibleItem", "CN88HeadlineHiddenItem");
 
-            if (AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite))
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88HiddenItem");
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88VisibleItem");
-            }
+            ShowHideBlock(ref htmlcontent, AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite), "CN88VisibleItem", "CN88HiddenItem");
+            
+            ShowHideBlock(ref htmlcontent, customerInfoViewModel.ManageCustomerAccess, "CN88CustomerStatus", "CN88CustomerStatusDisabled");
 
-            if (customerInfoViewModel.ManageCustomerAccess)
+            ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Super, "CN88HeadlinePossessOnSuper", string.Empty);
+        }
+
+        private void ShowHideBlock(ref string htmlContent, bool isShow, string visibleBlockName, string hiddenBlockName)
+        {
+            if (isShow)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatusDisabled");
+                TemplateHandler.RemoveBlock(ref htmlContent, hiddenBlockName);
             }
             else
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerStatus");
+                TemplateHandler.RemoveBlock(ref htmlContent, visibleBlockName);
             }
         }
 

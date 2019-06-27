@@ -7,29 +7,30 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using CasinoLibrary.Model.UserException;
+    using Criteria.CN88;
     using Criteria.CreditCustomer;
+    using Customer.Entities.CN88;
+    using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
+    using Fanex.Tarus.Customer.ViewModels.CN88;
     using NAP.Framework.Data;
+    using Resources;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
-    using ViewModels.CN88;
-    using Criteria.CN88;
-    using Requests.CN88;
-    using Resources;
-    using Customer.Entities.CN88;
-    using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
     using static Infrastructure.Common.Enumerations;
 
     /// <summary>
@@ -201,9 +202,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 csCustomerInfo.CurrencyName = custDetail.CurrencyName;
                 csCustomerInfo.Fax = customer.Fax;
 
-                csCustomerInfo.Suspend = custDetail.Suspend 
+                csCustomerInfo.Suspend = custDetail.Suspend
                     || customer.StatusSetting.Suspended;
-                csCustomerInfo.Closed = custDetail.Closed 
+                csCustomerInfo.Closed = custDetail.Closed
                     || customer.StatusSetting.Closed;
 
                 csCustomerInfo.IsEnablePT = true;
@@ -362,5 +363,63 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                ? new Result()
                : new Result(command.ErrCode.ToString(), command.ErrMsg);
         }
+
+        public HeadlinePossessViewModel GetHeadlinePossess(GetHeadlinePossessCriteria criteria, bool isAfterCreateNewSuper)
+        {
+            HeadlinePossessViewModel result = new HeadlinePossessViewModel(isAfterCreateNewSuper);
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    var type = Fanex.CustomerSetting.Module.Core.Utils.ToString(reader["Type"]);
+                    var productId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(reader["ProductID"]);
+                    var effectiveDate = Fanex.CustomerSetting.Module.Core.Utils.ToDateTime(reader["EffectiveDate"]);
+                    var extraPT = (int)(100 * Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(reader["ExtraPT"]));
+                    if (type.Equals("Current"))
+                    {
+                        result.CurrentEffectiveDate = effectiveDate;
+                        if (productId == 1)
+                        {
+                            result.CurrentSportbookPossess = result.NewSportbookPossess = extraPT;
+
+                        }
+                        else
+                        {
+                            result.CurrentNonSportPossess = result.NewNonSportPossess = extraPT;
+                        }
+                    }
+                    else
+                    {
+                        result.NewEffectiveDate = effectiveDate;
+                        if (productId == 1)
+                        {
+                            result.NewSportbookPossess = extraPT;
+
+                        }
+                        else
+                        {
+                            result.NewNonSportPossess = extraPT;
+                        }
+                    }
+                }
+
+                reader.Close();
+                var outputs = objDb.GetOuputParams();
+                result.CustId = criteria.CustId;
+                result.UserName = Fanex.CustomerSetting.Module.Core.Utils.ToString(outputs["username"]);
+                result.HasMember = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(outputs["hasmember"]);
+
+                return result;
+            };
+        }
+
+        public CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria)
+        {
+            criteria.UserID = AppSession.AccId;
+            criteria.IP = Utils.GetClientIP();
+            return _customerSettingDataAccess.ExecuteNonQuery(criteria);
+        }
+
     }
 }

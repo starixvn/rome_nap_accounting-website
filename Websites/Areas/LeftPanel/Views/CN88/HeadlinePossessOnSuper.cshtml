@@ -1,0 +1,90 @@
+﻿@using Resources;
+@using Fanex.Tarus.Customer.ViewModels.CN88;
+@using Sunplus.Accounting.Core.Configurations;
+@model HeadlinePossessViewModel
+@{
+    var extraPTSelectListItems = new List<SelectListItem>() {
+new SelectListItem()
+{
+Text = "0%",
+Value = "0"
+},
+new SelectListItem()
+{
+Text = "1%",
+Value = "1"
+},
+new SelectListItem()
+{
+Text = "2%",
+Value = "2"
+},
+new SelectListItem()
+{
+Text = "3%",
+Value = "3"
+}
+};
+}
+<!DOCTYPE html>
+<html lang="en" class="linen">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" />
+    <link rel="stylesheet" href="@Url.Content("~/Areas/LeftPanel/Views/CN88/Styles/HeadlinePossessOnSuper.css?v=" + WebSettings.Version)" />
+</head>
+<body id="body">
+    @if (Model.IsAfterCreateNewSuper)
+    {
+        <div id="warningMsg" class="warningMsg">
+            The default value below have already been applied for this account. Please submit new value if necessary.
+        </div>
+    }
+    <div id="errorMsg" class="errorMsg hidden1"></div>
+    <div id="successMsg" class="successMsg hidden1">@Resources.ErrorMsg._0 </div>
+    <div class="clear row">
+        <table cellspacing="0" cellpadding="5" class="tbl-collapse-no-border">
+            <tr>
+                <td>Username: <span class="b">@Model.UserName</span></td>
+                <td>Current Value</td>
+                <td>New Value</td>
+            </tr>
+            <tr>
+                <td>Sportsbook's Headline Possess</td>
+                <td class="b">@Model.CurrentSportbookPossess%</td>
+                <td>@Html.DropDownListFor(m => m.NewSportbookPossess, extraPTSelectListItems)</td>
+            </tr>
+            <tr>
+                <td>Non-Sports's Headline Possess</td>
+                <td class="b">@Model.CurrentNonSportPossess%</td>
+                <td>@Html.DropDownListFor(m => m.NewNonSportPossess, extraPTSelectListItems)</td>
+            </tr>
+            <tr>
+                <td>Effective Date (from 0:00 AM GMT-4)</td>
+                <td class="b">@Model.CurrentEffectiveDate.ToString("MM/dd/yyyy")</td>
+                <td>@Html.TextBoxFor(m => m.NewEffectiveDate, "{0:MM/dd/yyyy}", new { @readonly = "readonly"})</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="r"><button id="submit" class="buttonPopup" type="button">@Language.Submit</button></td>
+            </tr>
+        </table>
+    </div>
+    @Html.HiddenFor(m => m.CustId)
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js?v=" + WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/LeftPanel/Views/CN88/Scripts/HeadlinePossessOnSuper.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var hasMember = @Html.Raw(Json.Encode(Model.HasMember));
+        var isAfterCreateNewSuper = @Html.Raw(Json.Encode(Model.IsAfterCreateNewSuper));
+        function resolveClientUrl(relativePath) {
+            return '@Url.Content("~/")' + relativePath;
+        }
+    </script>
+</body>
+</html>
