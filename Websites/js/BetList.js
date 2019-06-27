@@ -507,6 +507,18 @@ function showPPDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
+    var voidbridgeParam = {
+        url: "VoidbridgeBetList/BetDetails",
+        title: "Video Poker Details",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(voidbridgeParam);
+}
+
 function showGlobalGaming(transId, winlossDate, custId, transType) {
     var globalGamingParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -778,8 +790,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getAGCasinoParam(refno, bettype);
 
         case 163: // Poker Games.
+        case 165:
             // custId, gameTypeId, transId3rd, viewerLevel
-            return getPokerGamesParam(betcheck, bettype, matchcode);
+            return getPokerGamesParam(betcheck, bettype, sporttype, matchcode);
 
         default:
             return undefined;
@@ -911,14 +924,26 @@ function getAllbetParam(transdesc, betcheck, bettype) {
     };
 }
 
-function getPokerGamesParam(custId, gameTypeId, transId3rd) {
+function getPokerGamesParam(custId, gameTypeId, sportType, transId3rd) {
+    var sportName = sportType == 163 ? "Poker Games" : "RNG Poker Games";
+    var bettypeNames = {};
+    bettypeNames["1401"] = "8 Cards";
+    bettypeNames["1402"] = "Hold'em";
+    bettypeNames["1403"] = "Omaha";
+    bettypeNames["1404"] = "3 Pic Switch";
+    bettypeNames["1405"] = "Shortdeck 6+";
+    bettypeNames["1499"] = "Gems bought";
+    bettypeNames["1901"] = "Video Poker";
+    var betTypeName = bettypeNames[gameTypeId];
+    var title = sportName + " - " + betTypeName;
+
     return {
         url: "../Report/ViewPokerGamesResult.aspx",
-        title: "Poker Games Result",
+        title: title,
         jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
         width: 945,
         height: 500,
-        iframe: "innerFramePokerGamesResult"
+        iframe: "innerFrame" + title.replace(/\s/g, "").replace(/\//g, "")
     };
 }
 
