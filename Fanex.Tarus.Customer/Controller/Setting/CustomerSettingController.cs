@@ -62,14 +62,15 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         }
 
         [HttpPost]
-        public JsonResult UpdateCN88CustomerStatus(int custId, byte updStatusId)
+        public JsonResult UpdateCN88CustomerStatus(int custId, byte oldStatusId, byte newStatusId)
         {
             return Json(_dataAccessService.ExecuteNonQuery(new CN88CustomerSettingCriteria
             {
                 UserId = AppSession.AccId,
                 CustId = custId,
                 IP = Utils.GetClientIP(),
-                UpdStatusId = updStatusId
+                OldStatusID = oldStatusId,
+                NewStatusID = newStatusId
             }));
         }
 

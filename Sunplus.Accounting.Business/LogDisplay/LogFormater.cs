@@ -109,7 +109,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         public static string GetResourceName(string key)
         {
-            var str = string.Empty;
+            var str = key;
             try
             {
                 return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Viewlog, key).ToString();
@@ -117,8 +117,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             catch
             {
                 // missing resource
-                str = key;
-                // get resoi=urce V2
+                // get resource V2
                 try
                 {
                     return ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, key).ToString();

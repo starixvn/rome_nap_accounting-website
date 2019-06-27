@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using DNAide.Core;
 using Fanex.CustomerSetting.Module.Core.Criteria;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
@@ -8,6 +6,8 @@ using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
+using System;
+using System.Collections;
 
 public partial class CustInfo : PageBase
 {

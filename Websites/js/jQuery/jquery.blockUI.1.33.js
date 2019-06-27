@@ -131,7 +131,7 @@
     forceIframe: false,
 
     // z-index for the blocking overlay
-    baseZ: 9999,
+    baseZ: 9999999,
 
     // set these to true to have the message automatically centered
     centerX: true, // <-- only effects element blocking (page block controlled via css above)

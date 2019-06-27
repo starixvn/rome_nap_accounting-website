@@ -1,0 +1,70 @@
+﻿body {
+    line-height: 22px;
+}
+
+.tableInfo {
+    width: 98%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    font-size: 1.2em !important;
+}
+
+td {
+    text-indent: 0px !important;
+    font-size: 0.9em !important;
+}
+
+.c {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.red{
+    color: red;
+}
+
+.center{
+    text-align: center;
+}
+
+.bgTitle {
+    background-image: none;
+    background-repeat: repeat-x;
+    background-position: scroll 0 -30px;
+    background-color: #3c5ea5;
+    color: #fff;
+    font-weight: bold;
+}
+
+.disabledButton {
+    opacity: 0.1;
+}
+
+.successMsg {
+    color:green;
+}
+
+.canchange {
+    color: #0066CC;
+    cursor: pointer;
+}
+
+    .canchange:hover {
+        color: #D66D35;
+        cursor: pointer;
+    }
+
+.header-title{
+    font-size: 1.2em;
+}

@@ -117,9 +117,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.6\lib\net40\Fanex.PTEngine.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.7\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTRacing, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTRacing.1.0.0.5\lib\net40\Fanex.PTRacing.dll</HintPath>
@@ -133,8 +132,8 @@
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.7\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -394,6 +393,7 @@
     <Compile Include="Controller\NG2\SyncCurrencyController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
+    <Compile Include="Controller\Setting\UnsuspendCustomerController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Controller\VirtualRateController.cs" />
     <Compile Include="Criteria\AGCasino\GetAGCasinoAPIResultCriteria.cs" />
@@ -460,6 +460,10 @@
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
+    <Compile Include="Criteria\Suspend\GetSuspendCustomerDetailInfoCriteria.cs" />
+    <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
+    <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\Suspend\GetSingleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
@@ -531,6 +535,7 @@
     <Compile Include="DataAccess\CustomerLogin\ICustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
+    <Compile Include="DataAccess\SettingCustomer\Suspend\SuspendStatusService.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
@@ -577,13 +582,22 @@
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
+    <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
+    <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
+    <Compile Include="Requests\CustomerSetting\Suspend\GetDownlineDetailInfoQuery.cs" />
+    <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
+    <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />

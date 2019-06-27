@@ -11,9 +11,9 @@ namespace Fanex.Tarus.Customer.Criteria.CN88
 
         public int CustId { get; set; }
 
-        public byte UpdStatusId { get; set; }
+        public byte OldStatusID { get; set; }
 
-        public byte SystemId => 1;
+        public byte NewStatusID { get; set; }
 
         public string IP { get; set; }
 
@@ -21,12 +21,17 @@ namespace Fanex.Tarus.Customer.Criteria.CN88
 
         public override bool IsValid()
         {
-            return UserId > 0 && UpdStatusId >= 1 && UpdStatusId <= 3;
+            return CustId > 0
+                && UserId > 0
+                && OldStatusID >= 1
+                && OldStatusID <= 4
+                && NewStatusID >= 1
+                && NewStatusID <= 4;
         }
 
         public override string GetSettingKey()
         {
-            return "CS_Customer_Status_Upd";
+            return "CS_CustomerStatusUpd";
         }
     }
 }
