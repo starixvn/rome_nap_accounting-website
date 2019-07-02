@@ -11,6 +11,7 @@ using System;
 using System.Text;
 using System.Web.Security;
 using AppSettings = Fanex.Tarus.Infrastructure.Configurations.AppSettings;
+using DNAide.Web;
 
 /// <summary>
 /// CITS
@@ -38,10 +39,11 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             int custid = DNAide.Core.CastAide.AsInt32(Request["custId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
             string site = Request["Site"];
+            bool isCN88 = string.IsNullOrWhiteSpace(site) ? false : AppSettings.IsCN88SiteName(site);
             string forceChangePwd = Request["forceChangePwd"];
             string strUsername = Convert.ToString(Session["CustUname"]);
             bool isRequest = false;
-
+            string htmlString = string.Empty;
             string strCustID = "";
             if (Request["custId"] != null)
             {
@@ -60,7 +62,13 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             if (txtPass == null)
             {
                 html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}", "{code}" }, new string[] { strUsername, strCustID, Fanex.Tarus.Security.Services.Encryptor.Code }));
-                content.Text = html.ToString();
+                htmlString = html.ToString();
+
+                if (isCN88)
+                {
+                    TemplateHandler.RemoveBlock(ref htmlString, "ForceChangePwdSection");
+                }
+                content.Text = htmlString;
                 return;
             }
             txtPass = Fanex.Tarus.Security.Services.Encryptor.Decrypt(txtPass, Request.Form["code"]);
@@ -109,7 +117,14 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             }
             string strUname = strUsername;
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}", "{code}" }, new string[] { strUname, strCustID, Fanex.Tarus.Security.Services.Encryptor.Code }));
-            content.Text = html.ToString();
+            htmlString = html.ToString();
+
+            if (isCN88)
+            {
+                TemplateHandler.RemoveBlock(ref htmlString, "ForceChangePwdSection");
+            }
+
+            content.Text = htmlString;
             msg = str;
         }
         catch (Exception ex)
