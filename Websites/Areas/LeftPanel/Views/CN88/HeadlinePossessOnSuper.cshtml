@@ -82,6 +82,7 @@ Value = "3"
     <script type="text/javascript">
         var hasMember = @Html.Raw(Json.Encode(Model.HasMember));
         var isAfterCreateNewSuper = @Html.Raw(Json.Encode(Model.IsAfterCreateNewSuper));
+        var currentEffectiveDate = '@Model.CurrentEffectiveDate.ToString("MM/dd/yyyy")';
         function resolveClientUrl(relativePath) {
             return '@Url.Content("~/")' + relativePath;
         }

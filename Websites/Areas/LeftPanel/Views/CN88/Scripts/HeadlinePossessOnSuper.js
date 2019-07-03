@@ -9,7 +9,7 @@
         buttonImage: resolveClientUrl('App_Themes/Images/calendar.gif'),
         buttonText: '',
         dateFormat: 'mm/dd/yy',
-        minDate: hasMember ? tomorrow : today,
+        minDate: isAfterCreateNewSuper ? today : hasMember ? tomorrow : today,
     });
 
     $('#submit').click(function () {
@@ -20,12 +20,12 @@
                 border: 'none'
             }
         });
-        
+
         var params = {
             custId: $('#CustId').val(),
             SportbookPossess: $('#NewSportbookPossess').val(),
             NonSportPossess: $('#NewNonSportPossess').val(),
-            EffectiveDate: $('#NewEffectiveDate').datepicker('getDate'),
+            EffectiveDate: $('#NewEffectiveDate').datepicker('getDate').toDateString(),
         };
 
         $.ajax({
@@ -34,8 +34,7 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(params),
             success: function (result) {
-                if(result.ErrorCode == 0)
-                {
+                if (result.ErrorCode == 0) {
                     $('#successMsg').show();
                     $('#errorMsg').hide();
                     setTimeout(function () {
@@ -43,8 +42,7 @@
                         parent.$('#dialog-modalCN88HeadlinePossessOnSuper').dialog('destroy');
                     }, 3000)
                 }
-                else
-                {
+                else {
                     $('#successMsg').hide();
                     $('#errorMsg').html(result.ErrorMessage);
                     $('#errorMsg').show();
