@@ -370,7 +370,7 @@ body
 /*Dangerous box*/
 .divLevel {
     background: #BBC7CE none repeat scroll 0%;	            
-    width:50px;
+    width:100px;
     left: 130px;
     position:absolute;		
     z-index:102;            
@@ -385,6 +385,24 @@ body
     position:absolute;		
     z-index:102;            
 }
+
+.tbldangerlevel {
+    line-height:16px;
+    font-weight:bold;
+    cursor: pointer;
+    text-align:center;
+    background-color:#fff;
+    width:100px;
+    border-collapse: collapse;
+   
+}
+.tbldangerlevel td{
+    width: 50%;
+    border: solid 1px #C6D0E3;
+    border-spacing:0px;
+}
+
+
 .pagerbox
 {
 	display:none;

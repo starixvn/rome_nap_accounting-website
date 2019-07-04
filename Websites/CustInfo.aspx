@@ -37,6 +37,15 @@
         .memberDisabled {
             background-color: #A0A97A;
         }
+
+        .circle {
+        background: #f00;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        color:black;
+       text-align:center;   
+    }
     </style>
     <script type="text/javascript">
         function resetCustMenu() {
