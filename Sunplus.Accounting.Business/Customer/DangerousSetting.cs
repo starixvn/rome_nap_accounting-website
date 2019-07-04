@@ -86,7 +86,7 @@ namespace Sunplus.Accounting.Business.Customer
                 case "Original":
                     if ((level == 0 && isBA) || level == 100)
                     {
-                        return "White";
+                        return "background-color:White;color:Black";
                     }
                     else
                     {
