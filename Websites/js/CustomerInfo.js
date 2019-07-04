@@ -10,7 +10,7 @@
         }
     }
 })(jQuery)
-
+var levelcolor = ['Black', 'Black', 'Red', '#ffcc00', 'Blue', '#FF8080', '#BB00BB', '#660000', '#FF6600', '#708090', '#339900', '#FF0000', '#FFFF00', '#8DB4E2', '#9CF1FC', '#CCC0DA', '#CC6600', '#FFA500', '#D8E4BC', '#C4BD97', '#FF66CC', '#3366FF'];
 function GetCustId() {
     return obj('custid').value;
 }
@@ -647,7 +647,7 @@ function isDigitOnly(s) {
 function UpdateDangerousCustomer(typename, type, level) {
     var custId = GetCustId();
     var updateDownline = "0";
-    var levelcolor = ['Black', 'Black', 'Red', '#ffcc00', 'Blue', '#FF8080', '#BB00BB', '#660000', '#FF6600', '#708090', '#339900', '#FF0000', '#FFFF00', '#8DB4E2', '#9CF1FC', '#CCC0DA', '#CC6600', '#FFA500', '#D8E4BC', '#C4BD97', '#FF66CC', '#3366FF'];
+    
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
         alert("This account was disabled");
         $("#" + currlevelbox).css('display', 'none');
@@ -679,7 +679,7 @@ function UpdateDangerousCustomer(typename, type, level) {
                             $(span).html("None");
                         else
                             $(span).html(level);
-                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
+                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;                      
                         if (parseInt(level) > 10) {
                             $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
                             $(span).parent()[0].style.Color = "Black";
@@ -689,7 +689,6 @@ function UpdateDangerousCustomer(typename, type, level) {
                             $(span).parent()[0].style.Color = levelcolor[parseInt(level)];
                         }
                     }
-
                     if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
                         switch (typename) {
                             case "Original":

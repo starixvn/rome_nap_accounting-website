@@ -376,6 +376,14 @@ body
     z-index:102;            
 }
 
+.dangerlevel {
+    border: none 0px;
+    width: 35px;
+    text-align: center;
+    font-weight:bold;
+}
+
+
 #dangerousbox
 {
 	border: solid 1px #C6D0E3;
