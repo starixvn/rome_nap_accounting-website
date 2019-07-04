@@ -122,94 +122,32 @@ namespace Sunplus.Accounting.Business.Customer
                         string levelItem = TemplateHandler.CopyBlock(s_, "LevelItem");
                         TemplateHandler.RemoveBlock(ref s_, "LevelItem");
                         StringBuilder content = new StringBuilder();
-                        switch (names[i].Replace(" ", ""))
+
+                        foreach (DangerousDetail st in dangerSettingOriginal)
                         {
-                            case "Original":
-                                foreach (DangerousDetail st in dangerSettingOriginal)
-                                {
-                                    string row = Convert.ToString(levelItem.Clone());
-                                    TemplateHandler.Assign(ref row, "{level_color}", st.color);
-                                    TemplateHandler.Assign(ref row, "{LevelName}", st.name);
-                                    TemplateHandler.Assign(ref row, "{LevelID}", st.id);
+                            string row = Convert.ToString(levelItem.Clone());
+                            TemplateHandler.Assign(ref row, "{level_color}", st.color);
+                            TemplateHandler.Assign(ref row, "{LevelName}", st.name);
+                            TemplateHandler.Assign(ref row, "{LevelID}", st.id);
 
-                                    TemplateHandler.Assign(ref row, "{level_color2}", st.color2);
-                                    TemplateHandler.Assign(ref row, "{LevelName2}", st.name2);
-                                    TemplateHandler.Assign(ref row, "{LevelID2}", st.id2);
+                            TemplateHandler.Assign(ref row, "{level_color2}", st.color2);
+                            TemplateHandler.Assign(ref row, "{LevelName2}", st.name2);
+                            TemplateHandler.Assign(ref row, "{LevelID2}", st.id2);
 
-                                    TemplateHandler.Assign(ref row, "{type}", names[i]);
-                                    var dangerousTpe = GetDanerousType(names[i]);
-                                    TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
-                                    if (roleId == 1)
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id + ",'" + st.name + "','" + st.color + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id2 + ",'" + st.name2 + "','" + st.color2 + "');");
-                                    }
-                                    else
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id2 + "');");
-                                    }
-                                    content.Append(row);
-                                }
-                                break;
-
-                            case "ABT":
-                                foreach (DangerousDetail st in dangerSettingOriginal)
-                                {
-                                    string row = Convert.ToString(levelItem.Clone());
-                                    TemplateHandler.Assign(ref row, "{level_color}", st.color);
-                                    TemplateHandler.Assign(ref row, "{LevelName}", st.name);
-                                    TemplateHandler.Assign(ref row, "{LevelID}", st.id);
-
-                                    TemplateHandler.Assign(ref row, "{level_color2}", st.color2);
-                                    TemplateHandler.Assign(ref row, "{LevelName2}", st.name2);
-                                    TemplateHandler.Assign(ref row, "{LevelID2}", st.id2);
-
-                                    TemplateHandler.Assign(ref row, "{type}", names[i]);
-                                    var dangerousTpe = GetDanerousType(names[i]);
-                                    TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
-                                    if (roleId == 1)
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id + ",'" + st.name + "','" + st.color + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id2 + ",'" + st.name2 + "','" + st.color2 + "');");
-                                    }
-                                    else
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id2 + "');");
-                                    }
-                                    content.Append(row);
-                                }
-                                break;
-
-                            case "OtherSports":
-                                foreach (DangerousDetail st in dangerSettingOriginal)
-                                {
-                                    string row = Convert.ToString(levelItem.Clone());
-                                    TemplateHandler.Assign(ref row, "{level_color}", st.color);
-                                    TemplateHandler.Assign(ref row, "{LevelName}", st.name);
-                                    TemplateHandler.Assign(ref row, "{LevelID}", st.id);
-
-                                    TemplateHandler.Assign(ref row, "{level_color2}", st.color2);
-                                    TemplateHandler.Assign(ref row, "{LevelName2}", st.name2);
-                                    TemplateHandler.Assign(ref row, "{LevelID2}", st.id2);
-
-                                    TemplateHandler.Assign(ref row, "{type}", names[i]);
-                                    var dangerousTpe = GetDanerousType(names[i]);
-                                    TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
-                                    if (roleId == 1)
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id + ",'" + st.name + "','" + st.color + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id2 + ",'" + st.name2 + "','" + st.color2 + "');");
-                                    }
-                                    else
-                                    {
-                                        TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id + "');");
-                                        TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id2 + "');");
-                                    }
-                                    content.Append(row);
-                                }
-                                break;
+                            TemplateHandler.Assign(ref row, "{type}", names[i]);
+                            var dangerousTpe = GetDanerousType(names[i]);
+                            TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
+                            if (roleId == 1)
+                            {
+                                TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id + ",'" + st.name + "','" + st.color + "');");
+                                TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevel('" + names[i] + "'," + st.id2 + ",'" + st.name2 + "','" + st.color2 + "');");
+                            }
+                            else
+                            {
+                                TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id + "');");
+                                TemplateHandler.Assign(ref row, "{level_onclick2}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.id2 + "');");
+                            }
+                            content.Append(row);
                         }
 
                         TemplateHandler.Assign(ref s_, "{content}", content.ToString());
