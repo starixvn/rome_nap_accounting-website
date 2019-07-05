@@ -177,7 +177,6 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     break;
                 case "dangerous":
-                    //HuyNguyen Modify
                     int level;
                     string name = context.Request["name"].ToString();
                     if (!Int32.TryParse(context.Request["level"] as string ?? string.Empty, out level))
