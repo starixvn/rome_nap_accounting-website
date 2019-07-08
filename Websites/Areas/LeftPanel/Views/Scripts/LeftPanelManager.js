@@ -116,7 +116,7 @@ var LeftPanelManager = function () {
             roleId: roleId
         };
         var url = "CustomerSetting/CreditPopup?" + $.param(param);
-        parent.OpenNextPopup("CN88EditCustCredit", url, 'Update Credit - ' + userName, 400, 250, true, false, window, 0, null, null);
+        parent.OpenNextPopup("CN88EditCustCredit", url, 'Update Credits - ' + userName, 400, 250, true, false, window, 0, null, null);
     }
 
     self.CN88UnlockCust = function (custId) {
