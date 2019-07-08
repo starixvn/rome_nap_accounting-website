@@ -17,6 +17,21 @@
             line-height: 12px;
             font-size: 13px;
         }
+        .float-left{
+            float: left;
+        }
+        .float-right {
+            float: right;
+        }
+        .w100 {
+            width: 100px;
+        }
+        .w260{
+            width: 260px;
+        }
+        .w100percent{
+            width: 100%;
+        }
     </style>
 </head>
 <body id="body">
@@ -27,16 +42,28 @@
         <span class="ui-priority-primary">@(Model.IsMember ? Model.GivenCredit.ToString("N2") : Model.UsedCredit.ToString("N2"))</span>
     </div>
     <div class="clear row">
-        <label>@Language.Credit</label>
-        <input id="credit" type="text" class="R" onkeyup="return parent.AllowNumberOnly(event, 2)" />
-        @if (Model.IsSuper)
-        {
-            @:[>= @Model.MinCredit.ToString("N2")]
-        }
-        else
-        {
-            @:[@Model.MinCredit.ToString("N2"); @Model.MaxCredit.ToString("N2")]
-        }
+        <div class="float-left w100">
+            <label>@Language.Credit</label>
+        </div>
+        <div class="float-left w260">
+            <input id="credit" type="text" class="w100percent R" onkeyup="return parent.AllowNumberOnly(event, 2)" />
+        </div>
+    </div>
+    <div class="clear row">
+        <div class="float-left w100">&nbsp;</div>
+        <div class="float-left w260">
+            <div class="float-left w100">@Language.AvailableCredit</div>
+            <div class="float-right">
+                @if (Model.IsSuper)
+                {
+                    @:>= @Model.MinCredit.ToString("N2")
+                }
+                else
+                {
+                    @Model.MaxCredit.ToString("N2")
+                }
+            </div>
+        </div>
     </div>
     <div class="clear row R">
         <button id="submit" type="button">@Language.Save</button>

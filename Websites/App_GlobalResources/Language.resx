@@ -2605,4 +2605,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="UnsuspendedTitleRemainUnchangedDownlines" xml:space="preserve">
     <value>List of downlines whose status are unchanged after {0} is unsuspended.</value>
   </data>
+  <data name="AvailableCredit" xml:space="preserve">
+    <value>Available Credit</value>
+  </data>
 </root>
