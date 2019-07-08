@@ -1740,25 +1740,25 @@
   <data name="GeneralInfo" xml:space="preserve">
     <value>General Information</value>
   </data>
-  <data name="cn88_bettype_5_inplay_0" xml:space="preserve">
+  <data name="cn88_sport_1_bettype_5_inplay_0" xml:space="preserve">
     <value>1x2,In-Play 1x2</value>
   </data>
   <data name="Comm" xml:space="preserve">
     <value>Commission</value>
   </data>
-  <data name="cn88_bettype_1_inplay_0" xml:space="preserve">
+  <data name="cn88_sport_1_bettype_1_inplay_0" xml:space="preserve">
     <value>Handicap, Over/Under, Odd/Even</value>
   </data>
-  <data name="cn88_bettype_1_inplay_1" xml:space="preserve">
+  <data name="cn88_sport_1_bettype_1_inplay_1" xml:space="preserve">
     <value>In-Play Handicap, In-Play Over/Under, In-Play Odd/Even</value>
   </data>
-  <data name="cn88_bettype_9999_inplay_1" xml:space="preserve">
+  <data name="cn88_sport_1_bettype_9999_inplay_1" xml:space="preserve">
     <value>In-Play Other Bet Types</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max per Bet</value>
   </data>
-  <data name="cn88_bettype_9999_inplay_0" xml:space="preserve">
+  <data name="cn88_sport_1_bettype_9999_inplay_0" xml:space="preserve">
     <value>Other Bet Types</value>
   </data>
   <data name="cn88_1_1_0_GrA" xml:space="preserve">
@@ -2036,5 +2036,41 @@
   </data>
   <data name="Cn88_99_1_1_Comm" xml:space="preserve">
     <value>Commission</value>
+  </data>
+  <data name="cn88_sport_2_bettype_1_inplay_0" xml:space="preserve">
+    <value>Handicap, Over/Under, Odd/Even</value>
+  </data>
+  <data name="cn88_sport_2_bettype_1_inplay_1" xml:space="preserve">
+    <value>In-play Handicap, In-play Over/Under, In-play Odd/Even</value>
+  </data>
+  <data name="cn88_sport_2_bettype_20_inplay_0" xml:space="preserve">
+    <value>Moneyline, In-Play Moneyline</value>
+  </data>
+  <data name="cn88_sport_2_bettype_9999_inplay_0" xml:space="preserve">
+    <value>Other Bet Types</value>
+  </data>
+  <data name="cn88_sport_99_bettype_1_inplay_0" xml:space="preserve">
+    <value>Handicap, Over/Under, Odd/Even</value>
+  </data>
+  <data name="cn88_sport_99_bettype_1_inplay_1" xml:space="preserve">
+    <value>In-play Handicap, In-play Over/Under, In-play Odd/Even</value>
+  </data>
+  <data name="cn88_sport_99_bettype_5_inplay_0" xml:space="preserve">
+    <value>Moneyline, 1X2, In-Play Moneyline, In-Play 1X2</value>
+  </data>
+  <data name="cn88_sport_99_bettype_9999_inplay_0" xml:space="preserve">
+    <value>Other Bet Types</value>
+  </data>
+  <data name="cn88_sport_9999_bettype_10_inplay_0" xml:space="preserve">
+    <value>Outright</value>
+  </data>
+  <data name="cn88_sport_9998_bettype_81_inplay_0" xml:space="preserve">
+    <value>Number Game, Happy 5</value>
+  </data>
+  <data name="cn88_sport_9998_bettype_1501_inplay_0" xml:space="preserve">
+    <value>RNG Keno, Lottery</value>
+  </data>
+  <data name="cn88_sport_9998_bettype_1201_inplay_0" xml:space="preserve">
+    <value>Virtual Sports</value>
   </data>
 </root>

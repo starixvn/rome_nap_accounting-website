@@ -106,7 +106,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         var bettype = ele.Attribute("BT")?.Value;
                         var inplay = ele.Attribute("InPlay")?.Value;
                         trackingNode.N = GetSportName(sporttype);
-                        var groupResourceKey = GetBettypeName(bettype, inplay);
+                        var groupResourceKey = GetSportBettypeName(sporttype, bettype, inplay);
                         var trackingGroup = new TrackingGroup();
                         trackingGroup.N = LogFormater.GetResourceName(groupResourceKey);
                         trackingGroup.Vals = new List<TrackingElement>();
@@ -184,9 +184,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return sportName ?? sport;
         }
 
-        private string GetBettypeName(string bettype, string inplay)
+        private string GetSportBettypeName(string sport, string bettype, string inplay)
         {
-            string bettypeName = GetFromResource($"cn88_bettype_{bettype}_inplay_{inplay}");
+            string bettypeName = GetFromResource($"cn88_sport_{sport}_bettype_{bettype}_inplay_{inplay}");
             return bettypeName ?? bettype;
         }
 
