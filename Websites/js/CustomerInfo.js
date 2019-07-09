@@ -10,7 +10,7 @@
         }
     }
 })(jQuery)
-
+var levelcolor = ['Black', 'Black', 'Red', '#ffcc00', 'Blue', '#FF8080', '#BB00BB', '#660000', '#FF6600', '#708090', '#339900', '#FF0000', '#FFFF00', '#8DB4E2', '#9CF1FC', '#CCC0DA', '#CC6600', '#FFA500', '#D8E4BC', '#C4BD97', '#FF66CC', '#3366FF'];
 function GetCustId() {
     return obj('custid').value;
 }
@@ -28,7 +28,6 @@ function LoginAgent(agentName, roleId) {
 }
 function ChangeGivenCredit(ischanging) {
     try {
-
         if (typeof ischanging != 'undefined' && ischanging) {
             var spanGC = document.getElementById('spanGivenCredit');
             var txtGC = document.getElementById('txtGivenCredit');
@@ -36,7 +35,6 @@ function ChangeGivenCredit(ischanging) {
             spanGC.style.display = 'none';
             txtGC.style.display = ''
             txtGC.focus();
-
         }
         else {
             document.getElementById('spanGivenCredit').style.display = '';
@@ -64,7 +62,6 @@ function checkKeyPress(e) {
         if (typeof e == 'undefined') e = window.event;
         var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
         if (key == 27) {
-
             ChangeGivenCredit();
             return false;
         }
@@ -277,7 +274,7 @@ function ChangeDangerousLevel(typename, level, name, color) {
         return false;
     }
 
-    if (parseInt(level) < 0 || parseInt(level) > 10) {
+    if (level < 0 || level > 21) {
         return false;
     }
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
@@ -402,8 +399,6 @@ function ChangeAbnormalLevel(level) {
                             }
                     }
                 }
-
-
             }
             , error: function (xhr) {
                 if (PTUnBlockUI) PTUnBlockUI();
@@ -431,7 +426,7 @@ function ChangeDangerousLevelAgent(typename, type, level) {
         return false;
     }
 
-    if (parseInt(level) < 0 || parseInt(level) > 10) {
+    if (parseInt(level) < 0 || parseInt(level) > 21) {
         return false;
     }
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
@@ -452,9 +447,7 @@ function ChangeDangerousLevelAgent(typename, type, level) {
             overlay("dangerousAgentoverlay");
         }
     }
-
 }
-
 
 function ChangeAbnormalLevelAgent(level) {
     if (isDigitOnly(level) == false) {
@@ -482,7 +475,6 @@ function ChangeAbnormalLevelAgent(level) {
             overlay("AbnormalAgentoverlay");
         }
     }
-
 }
 function left_Tab1_Click(item) {
     $("#left_tab1 .current").removeClass("current");
@@ -526,16 +518,12 @@ function left_Tab2_Click(item) {
 
     if (item.id.indexOf("_1") >= 0) {
         $("#box_05_content_1").removeClass("hidden");
-
-
     }
     else if (item.id.indexOf("_2") >= 0) {
         $("#box_05_content_2").removeClass("hidden");
-
     }
     else if (item.id.indexOf("_3") >= 0) {
         $("#box_05_content_3").removeClass("hidden");
-
     }
     else {
         $("#box_05_content_4").removeClass("hidden");
@@ -630,7 +618,6 @@ function collapseInfo() {
 
 function changeDisableDangerAgent(type, level) {
     if ($('#disabledDangerchk' + type + "_" + level).attr('checked')) {
-
         $('#disabledangerouschkDL' + type + "_" + level).attr('disabled', false);
         $('#UpdateDangerous' + type + "_" + level).attr("disabled", false);
     }
@@ -642,7 +629,6 @@ function changeDisableDangerAgent(type, level) {
 
 function changeDisableAbnormalAgent(level) {
     if ($('#disabledAbnormalchk' + level).attr('checked')) {
-
         $('#disableAbnormalchkDL' + level).attr('disabled', false);
         $('#UpdateAbnormal' + level).attr("disabled", false);
     }
@@ -661,6 +647,7 @@ function isDigitOnly(s) {
 function UpdateDangerousCustomer(typename, type, level) {
     var custId = GetCustId();
     var updateDownline = "0";
+    
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
         alert("This account was disabled");
         $("#" + currlevelbox).css('display', 'none');
@@ -692,66 +679,16 @@ function UpdateDangerousCustomer(typename, type, level) {
                             $(span).html("None");
                         else
                             $(span).html(level);
-                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
-                        switch (level) {
-                            case "0":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "White";
-                                    break;
-                                }
-                            case "1":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Pink";
-                                    break;
-                                }
-                            case "2":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "yellow";
-                                    break;
-                                }
-                            case "3":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "orange";
-                                    break;
-                                }
-                            case "4":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "green";
-                                    break;
-                                }
-                            case "5":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Red";
-                                    break;
-                                }
-                            case "6":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Purple";
-                                    break;
-                                }
-                            case "7":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Brown";
-                                    break;
-                                }
-                            case "8":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Gray";
-                                    break;
-                                }
-                            case "9":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Lime";
-                                    break;
-                                }
-                            case "10":
-                                {
-                                    $(span).parent()[0].style.backgroundColor = "Aqua";
-                                    break;
-                                }
+                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;                      
+                        if (parseInt(level) > 10) {
+                            $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
+                            $(span).parent()[0].style.Color = "Black";
+                        }
+                        else {
+                            $(span).parent()[0].style.backgroundColor = "White";
+                            $(span).parent()[0].style.Color = levelcolor[parseInt(level)];
                         }
                     }
-
                     if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
                         switch (typename) {
                             case "Original":
@@ -863,7 +800,6 @@ function UpdateAbnormalCustomer(level) {
                                 }
                             case "5":
                                 {
-
                                     document.getElementById('tdvalue').style.backgroundColor = "Red";
                                     break;
                                 }
@@ -893,8 +829,6 @@ function UpdateAbnormalCustomer(level) {
                                     break;
                                 }
                         }
-
-
                     }
 
                     ClosePopUpAbnormal("AbnormalAgentpopup" + level);
