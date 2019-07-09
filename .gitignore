@@ -24,6 +24,7 @@ Thumbs.db
 */Sunplus.Data.DataAbstract/DLL/*
 *.lib
 *.sbr
+*.sh
 _ReSharper*/
 [Tt]est[Rr]esult*
 *Settings.StyleCop
