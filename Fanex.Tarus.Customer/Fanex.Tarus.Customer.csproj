@@ -592,6 +592,11 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Resources\Customer_Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer_Labels.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
@@ -651,11 +656,6 @@
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Enums\SettingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Customer_Labels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Customer_Labels.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\LicenseeDcsSettingLabels1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -675,9 +675,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Customer_Labels.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LicenseeDcsSettingLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
