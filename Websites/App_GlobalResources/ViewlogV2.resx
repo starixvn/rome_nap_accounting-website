@@ -265,7 +265,7 @@
     <value>Min Warrior</value>
   </data>
   <data name="OnexTwoComm" xml:space="preserve">
-    <value>1x2Comm</value>
+    <value>1X2Comm</value>
   </data>
   <data name="v161alivept_89" xml:space="preserve">
     <value>Live Next Combo</value>
@@ -1213,7 +1213,7 @@
     <value>% Odds Comm</value>
   </data>
   <data name="discountonextwo" xml:space="preserve">
-    <value>1x2</value>
+    <value>1X2</value>
   </data>
   <data name="v204discountvalue_commission" xml:space="preserve">
     <value>Commission</value>
@@ -1741,7 +1741,7 @@
     <value>General Information</value>
   </data>
   <data name="cn88_sport_1_bettype_5_inplay_0" xml:space="preserve">
-    <value>1x2,In-Play 1x2</value>
+    <value>1X2,In-Play 1X2</value>
   </data>
   <data name="Comm" xml:space="preserve">
     <value>Commission</value>

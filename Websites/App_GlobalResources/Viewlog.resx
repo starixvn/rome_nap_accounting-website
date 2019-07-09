@@ -253,7 +253,7 @@
     <value>Last name</value>
   </data>
   <data name="discount1x2" xml:space="preserve">
-    <value>discount1x2</value>
+    <value>discount1X2</value>
   </data>
   <data name="DepositUserName" xml:space="preserve">
     <value>DepositUserName</value>
@@ -883,7 +883,7 @@
     <value>Over/Under</value>
   </data>
   <data name="playerdiscount1x2" xml:space="preserve">
-    <value>PlayerDiscount1x2</value>
+    <value>PlayerDiscount1X2</value>
   </data>
   <data name="v99apt_1" xml:space="preserve">
     <value>Handicap</value>
@@ -1390,7 +1390,7 @@
     <value>Correct Score</value>
   </data>
   <data name="isa_smpt_5" xml:space="preserve">
-    <value>FT.1x2</value>
+    <value>FT.1X2</value>
   </data>
   <data name="isa_smpt_6" xml:space="preserve">
     <value>Total Goal</value>
@@ -1675,7 +1675,7 @@
     <value>Max CS</value>
   </data>
   <data name="maxpt_5" xml:space="preserve">
-    <value>Max FT.1x2</value>
+    <value>Max FT.1X2</value>
   </data>
   <data name="maxbv10" xml:space="preserve">
     <value>Max Bet</value>

@@ -529,7 +529,7 @@
     <value>Basketball Position Taking</value>
   </data>
   <data name="CopyFrom1x2" xml:space="preserve">
-    <value>Copy From 1x2</value>
+    <value>Copy From 1X2</value>
   </data>
   <data name="CopyFromHdp" xml:space="preserve">
     <value>Copy From Handicap</value>
@@ -1045,7 +1045,7 @@
     <value>CS</value>
   </data>
   <data name="_5" xml:space="preserve">
-    <value>1x2</value>
+    <value>1X2</value>
   </data>
   <data name="_6" xml:space="preserve">
     <value>TG</value>
@@ -1480,7 +1480,7 @@
     <value>Please synchronize Upline of this customer to Casino first.</value>
   </data>
   <data name="lbl1x2" xml:space="preserve">
-    <value>1x2</value>
+    <value>1X2</value>
   </data>
   <data name="lblCommFor" xml:space="preserve">
     <value>Comm for {0}</value>
@@ -1492,7 +1492,7 @@
     <value>Other Bettypes</value>
   </data>
   <data name="lbl1x2Comm" xml:space="preserve">
-    <value>1x2 Comm</value>
+    <value>1X2 Comm</value>
   </data>
   <data name="lblOpenToteComm" xml:space="preserve">
     <value>UK Tote Comm</value>
