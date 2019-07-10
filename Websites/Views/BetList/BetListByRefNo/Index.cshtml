@@ -1,6 +1,8 @@
 ﻿@using Sunplus.Accounting.Business.Security;
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
+@using System.Configuration;
+     
 @using Fanex.Tarus.Infrastructure.Caching;
 @{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
@@ -21,6 +23,11 @@
     if (productIdPP != 0)
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdPP));
+    }
+    var productIdCardClub = ConfigurationManager.AppSettings["ProductIdCardClub"];
+    if (!string.IsNullOrEmpty(productIdCardClub))
+    {
+        allowedProducts.Append("/").Append(CacheRef.GetProductName(int.Parse(productIdCardClub)));
     }
 
     var productIdPokerGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames;
@@ -139,6 +146,10 @@
                                     @if (productIdPokerGames != 0)
                                     {
                                         <option value="@productIdPokerGames" data-vendor-id="33">@CacheRef.GetProductName(productIdPokerGames)</option>
+                                    }
+                                    @if (!string.IsNullOrEmpty(productIdCardClub))
+                                    {
+                                        <option value="@productIdCardClub" data-vendor-id="33">@CacheRef.GetProductName(int.Parse(productIdCardClub))</option>
                                     }
                                 </select>
                             </td>
