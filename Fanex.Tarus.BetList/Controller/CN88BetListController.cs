@@ -59,7 +59,7 @@
 
             return PartialView(
                 "~/Areas/CN88BetList/Views/MemberBetListReport/_MixParlayDetail.cshtml",
-                new CN88MixParlayDetailViewModel(tickets));
+                new CN88MixParlayDetailViewModel(tickets, language));
         }
 
         private void SetCulture(string language)
