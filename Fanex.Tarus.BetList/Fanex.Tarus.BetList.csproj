@@ -67,14 +67,14 @@
     <Reference Include="CN88.BetList.Lottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Lottery.1.0.0\lib\net461\CN88.BetList.Lottery.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
+    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.1\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0.1\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
+    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0.1\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
