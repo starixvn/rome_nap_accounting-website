@@ -2582,7 +2582,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>The Daily Transfer setting has been applied to this account via the company automated transfer process. You are not allowed to adjust the Weekly Transfer Condition.</value>
   </data>
   <data name="BetCredit" xml:space="preserve">
-    <value>Bet Credit</value>
+    <value>Bet Credits</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
