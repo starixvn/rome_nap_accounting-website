@@ -1,38 +1,23 @@
-﻿using Fanex.RemotingRef;
-using Sunplus.Accounting.Entities.LogDisplay;
-using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Linq;
-
-namespace Sunplus.Accounting.Business.LogDisplay
+﻿namespace Sunplus.Accounting.Business.LogDisplay
 {
+    using Fanex.RemotingRef;
+    using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Xml.Linq;
+
     public class CN88LogFormatter
     {
         private readonly string _resourceClassName = "ViewlogV2";
 
-        private readonly Dictionary<string, string> _groupResourceKeyDictionary = new Dictionary<string, string>() {
-            {"10","HandicapOverUnderOddEven" },
-            {"11","InPlayHandicapOverUnderOddEven" },
-            {"50","1x2InPlay1x2" },
-            {"200","MoneylineInPlayMoneyline" },
-            {"99990","OtherBetType" },
-            {"99991","InPlayOtherBetType" },
-            {"100","Outright" }
-        };
+        private readonly string _CN88LogDetailResource = "CN88LogDetailResource";
 
-        private readonly Dictionary<string, string> _sportResourceKeyDictionary = new Dictionary<string, string>()
-        {
-            {"1","Sportsbook" },
-            {"9998","Non-Sport Products" }
-        };
+        private static readonly Regex CompiledRegex = new Regex(@"\{(.+?)\}", RegexOptions.Compiled);
 
         private readonly IRemotingRefService _remotingRefService;
+
         public CN88LogFormatter() : this(null)
         {
         }
@@ -58,7 +43,21 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return GenerateCommissionAndBetSettingDetail(trackingValue, SPName, actionName);
             }
         }
-        
+
+        public bool IsActionIdUsedCN88LogTemplate(int actionId)
+        {
+            return actionId >= 1200 && actionId < 1400;
+        }
+
+        public string ReplaceLogTemplate(string logDetail)
+            => string.IsNullOrWhiteSpace(logDetail)
+            ? logDetail
+            : CompiledRegex.Replace(logDetail, match =>
+            {
+                var resourceValue = this.GetFromResource(match.Groups[1].Value, _CN88LogDetailResource);
+                return string.IsNullOrWhiteSpace(resourceValue) ? match.Groups[0].Value : resourceValue;
+            });
+
         private bool IsUpdatePTLog(int actionId)
         {
             return actionId >= 100000 && actionId < 120000;
@@ -190,11 +189,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return bettypeName ?? bettype;
         }
 
-        private string GetFromResource(string key)
+        private string GetFromResource(string key, string resourceClassName = "ViewlogV2")
         {
             try
             {
-                return HttpContext.GetGlobalResourceObject(_resourceClassName, key)?.ToString();
+                return HttpContext.GetGlobalResourceObject(resourceClassName, key)?.ToString();
             }
             catch
             {
