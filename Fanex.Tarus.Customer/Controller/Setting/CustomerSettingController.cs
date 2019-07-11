@@ -7,18 +7,18 @@
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
-    using System.Web.Mvc;
+    using Criteria.CN88;
+    using DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
     using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Requests.CN88;
     using Fanex.Tarus.Web.Controllers;
+    using Security.Permission;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
+    using System.Web.Mvc;
     using ViewModels.CN88;
-    using DataAccess;
-    using Criteria.CN88;
-    using Security.Authenticate;
-    using Security.Permission;
-    using Requests.CN88;
     using static Infrastructure.Common.Enumerations;
 
     public class CustomerSettingController : BaseController
@@ -27,6 +27,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         private readonly BaseDataAccess _dataAccessService;
 
         private readonly string _creditPopupPath = "~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerCredit.cshtml";
+        private readonly string _headlinePossessPopupPath = "~/Areas/LeftPanel/Views/CN88/HeadlinePossessOnSuper.cshtml";
 
         public CustomerSettingController()
             : this(null, null)
@@ -95,6 +96,20 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         public JsonResult UpdateCredit(int searchAccountId, int roleId, decimal updCredit)
         {
             return Json(_customerSetting.UpdateCredit(searchAccountId, roleId, updCredit));
+        }
+
+        [HttpGet, CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
+        public ActionResult ViewHeadlinePossessOnSuper(int custId, bool isAfterCreateNewSuper)
+        {
+            var model = _customerSetting.GetHeadlinePossess(new GetHeadlinePossessCriteria() { CustId = custId }, isAfterCreateNewSuper);
+            model.IsAfterCreateNewSuper = isAfterCreateNewSuper;
+            return View(_headlinePossessPopupPath, model);
+        }
+
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
+        public JsonResult UpdateHeadlinePossessOnSuper(UpdateHeadlinePossessCriteria criteria)
+        {
+            return Json(_customerSetting.UpdateHeadlinePossess(criteria));
         }
     }
 }

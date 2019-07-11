@@ -137,3 +137,7 @@
         .tbl-betlists .result:hover {
             cursor: pointer;
         }
+
+.group-sport-bet-types .sport-type {
+    margin-right: 6px;
+}
