@@ -511,7 +511,7 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
         title: "Video Poker Details",
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1030,
         height: 600
     };
@@ -925,7 +925,7 @@ function getAllbetParam(transdesc, betcheck, bettype) {
 }
 
 function getPokerGamesParam(custId, gameTypeId, sportType, transId3rd) {
-    var sportName = sportType == 163 ? "Poker Games" : "RNG Poker Games";
+    var sportName = sportType == 163 ? "Poker Games" : "Card Club";
     var bettypeNames = {};
     bettypeNames["1401"] = "8 Cards";
     bettypeNames["1402"] = "Hold'em";
