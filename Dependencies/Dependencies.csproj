@@ -164,9 +164,8 @@
       <HintPath>..\packages\Fanex.BetList.GoldDeluxe.1.1.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Keno, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Keno.1.1.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.Keno, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Keno.1.2.0-beta1\lib\net40\Fanex.BetList.Keno.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.KenoLottery, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.KenoLottery.1.2.0\lib\net40\Fanex.BetList.KenoLottery.dll</HintPath>
