@@ -1,0 +1,148 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@{
+    Page.Title = "Create new CN88 Headline";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles
+{
+    <link href="@Url.Content("~/Views/Customer/CustomerSetting/CN88/NewCn88Headline/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+@section Scripts
+{
+    <script src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + WebSettings.Version)"></script>
+    <script src="@Url.Content("~/js/encode.js?v=" + WebSettings.Version)"></script>
+    <script src="@Url.Content("~/Views/Customer/CustomerSetting/CN88/NewCn88Headline/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script>
+        var languages = {
+            successMessage: '@Resources.Language.CreateHeadlineSuccess'
+        };
+    </script>
+}
+
+<div class="main">
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL"></td>
+                    <td class="maincontent_headerC">Create new CN88 Headline</td>
+                    <td class="maincontent_headerR"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="divShowInfo" class="maincontent_box">
+        </div>
+        <div class="bg_table" id="divcontainer">
+            <table class="tblcollapse" style="width:750px; margin-bottom: 10px;">
+                <tr class="title">
+                    <td colspan="4">
+                        @Resources.Language.GeneralInfo
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l" width="15%">
+                        @Resources.Language.lblUsername <span class="hilight">*</span>
+                    </td>
+                    <td class="l" width="35%">
+                        <input class="f8 w130" maxlength="30" type="text" id="txtUsername" autocomplete="off" />
+                    </td>
+                    <td class="l" width="15%">
+                        @Resources.Language.Password <span class="hilight">*</span>
+                    </td>
+                    <td class="l" width="35%">
+                        <input type="password" maxlength="30" class="f8 w130" id="txtPwd" autocomplete="off" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l" width="15%">
+                        @Resources.Language.FirstName
+                    </td>
+                    <td class="l" width="35%">
+                        <input class="f8 w130" maxlength="30" type="text" id="txtFirstName" />
+                    </td>
+                    <td class="l" width="15%">
+                        @Resources.Language.LastName
+                    </td>
+                    <td class="l" width="35%">
+                        <input type="text" maxlength="30" class="f8 w130" id="txtLastName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l" width="15%">
+                        @Resources.Language.Phone
+                    </td>
+                    <td class="l" width="35%">
+                        <input class="f8 w130" maxlength="30" type="text" id="txtPhone" />
+                    </td>
+                    <td class="l" width="15%">
+                        @Resources.Language.Mobile @Resources.Language.Phone
+                    </td>
+                    <td class="l" width="35%">
+                        <input type="text" maxlength="30" class="f8 w130" id="txtMobile" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l" width="15%">
+                        @Resources.Language.lblFax
+                    </td>
+                    <td class="l" width="35%">
+                        <input class="f8 w130" maxlength="30" type="text" id="txtFax" />
+                    </td>
+                    <td class="l" width="15%">
+                        @Resources.Language.Currency <span class="hilight">*</span>
+                    </td>
+                    <td class="l" width="35%">
+                        <select id="selCurrency" class="f8 w130">
+                            <option value="0">Select</option>
+                            <option value="81">CY</option>
+                            <option value="20">UUS</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="title">
+                    <td colspan="4">
+                        @Resources.Language.DefaultHLPossess
+                    </td>
+                </tr>
+                <tr>
+                    <td class="l" width="15%">
+                        @Resources.Language.Sportbooks
+                    </td>
+                    <td class="l" width="35%">
+                        <select id="selSportbooksPossess" class="f8 w130">
+                            <option value="0">0%</option>
+                            <option value="0.01">1%</option>
+                            <option value="0.02">2%</option>
+                            <option value="0.03">3%</option>
+                        </select>
+                    </td>
+                    <td class="l" width="15%">
+                        @Resources.Language.NonSports
+                    </td>
+                    <td class="l" width="35%">
+                        <select id="selNonSportsPossess" class="f8 w130">
+                            <option value="0">0%</option>
+                            <option value="0.01">1%</option>
+                            <option value="0.02">2%</option>
+                            <option value="0.03">3%</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
+                <tbody>
+                    <tr>
+                        <td class="custBtn1"></td>
+                        <td id="btnAdd" class="custBtn2 hand">
+                            Add
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
+</div>

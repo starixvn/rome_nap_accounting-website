@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Customer.Entities.CN88;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.Criteria.CN88.Headline;
     using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
     using Fanex.Tarus.Customer.ViewModels.CN88;
     using System.Collections.Generic;
@@ -83,5 +84,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         HeadlinePossessViewModel GetHeadlinePossess(GetHeadlinePossessCriteria criteria, bool isAfterCreateNewSuper);
 
         CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria);
+
+        CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria);
     }
 }

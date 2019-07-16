@@ -410,6 +410,7 @@
     <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
     <Compile Include="Criteria\CN88\HeadlinePossess\GetHeadlinePossessCriteria.cs" />
     <Compile Include="Criteria\CN88\HeadlinePossess\UpdateHeadlinePossessCriteria.cs" />
+    <Compile Include="Criteria\CN88\Headline\AddNewHeadlineCriteria.cs" />
     <Compile Include="Criteria\CN88\SelectCreditRangeCriteria.cs" />
     <Compile Include="Criteria\CN88\SelectMemberUsedCreditCriteria.cs" />
     <Compile Include="Criteria\CN88\UpdateCreditCriteria.cs" />
@@ -589,6 +590,7 @@
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
+    <Compile Include="Requests\CN88\AddNewHeadlineRequest.cs" />
     <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetDownlineDetailInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
