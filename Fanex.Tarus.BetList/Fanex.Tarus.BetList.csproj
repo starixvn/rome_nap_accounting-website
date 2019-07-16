@@ -58,26 +58,26 @@
       <HintPath>..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CN88.BetList.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.0\lib\net461\CN88.BetList.Core.dll</HintPath>
+    <Reference Include="CN88.BetList.Core, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0.3\lib\net461\CN88.BetList.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.ESports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.1\lib\net461\CN88.BetList.ESports.dll</HintPath>
+    <Reference Include="CN88.BetList.ESports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.2\lib\net461\CN88.BetList.ESports.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Keno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Keno.1.0.0\lib\net461\CN88.BetList.Keno.dll</HintPath>
+    <Reference Include="CN88.BetList.Keno, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Keno.1.0.0.1\lib\net461\CN88.BetList.Keno.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0\lib\net461\CN88.BetList.Lottery.dll</HintPath>
+    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0.1\lib\net461\CN88.BetList.Lottery.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.1\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
+      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.2\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0.1\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
+    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.0.5\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0.1\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
+      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0.2\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
@@ -107,14 +107,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.86.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.88.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.86.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.86.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.88.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.88.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -356,9 +356,15 @@
       <HintPath>..\packages\RazorEngine.3.7.0.1\lib\net40\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>

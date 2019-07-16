@@ -1,5 +1,9 @@
-﻿.cn88-live-score, .cn88-bettype-name, .cn88-handicap {
+﻿.cn88-live-score, .cn88-handicap {
     color: #0066CC;
+}
+
+.cn88-bettype-name {
+    color: #003399;
 }
 
 .cn88-odds {
@@ -123,6 +127,8 @@
 
     .tbl-betlists .cn88-bettype-name {
         line-height: 20px;
+        color: #003399;
+        font-weight: bold;
     }
 
     .tbl-betlists .status {
@@ -140,4 +146,9 @@
 
 .group-sport-bet-types .sport-type {
     margin-right: 6px;
+}
+
+.bettype-description {
+    color: #003399;
+    font-weight: normal;
 }

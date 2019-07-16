@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Extensions
 {
-    using Constants;
     using System;
+    using Constants;
 
     /// <summary>
     /// TODO: Update summary.
@@ -12,8 +12,8 @@
         private const string LongTime24h = "HH:mm:ss";
         private const string GlobalShowtime = "yyyy-MM-dd HH:mm";
 
-        public static string ToGlobalShowtime(this DateTime dateTime)
-            => dateTime.ToString(GlobalShowtime);
+        public static string ToGlobalShowtime(this DateTime? dateTime)
+            => dateTime?.ToString(GlobalShowtime);
 
         public static string ToShortDateFormat(this DateTime date)
            => date.ToString(ShortDateFormat);
