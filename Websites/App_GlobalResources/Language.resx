@@ -2623,7 +2623,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="NonSports" xml:space="preserve">
     <value>Non-Sports</value>
   </data>
-  <data name="Sportbooks" xml:space="preserve">
-    <value>Sportbooks</value>
+  <data name="Sportsbook" xml:space="preserve">
+    <value>Sportsbook</value>
   </data>
 </root>
