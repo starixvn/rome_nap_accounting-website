@@ -271,7 +271,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         record.SP = CastAide.AsString(row["spname"]);
                         // replace ip
                         record.IP = LogFormater.ReplaceIP(CastAide.AsString(row["ip"]));
-                        record.Desc = CastAide.AsString(row["doing"]);
+                        record.Desc = _cn88LogFormatter.IsActionIdUsedCN88LogTemplate(record.Aid) ? _cn88LogFormatter.ReplaceLogTemplate(CastAide.AsString(row["doing"])) : CastAide.AsString(row["doing"]);
                         record.Domain = CastAide.AsString(row["domain"], "&nbsp;");
                         record.Browser = CastAide.AsString(row["browser"], "&nbsp;");
                         record.Country = IpManagement.ReplaceCountryName(CastAide.AsString(row["ip"]));
@@ -342,7 +342,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         record.NewVal = String.Format("{0:#,##0.00}", CastAide.AsDouble(row["newvalue"]));
                         // replace ip
                         record.IP = LogFormater.ReplaceIP(CastAide.AsString(row["ip"]));
-                        record.Detail = CastAide.AsString(row["doing"]);
+                        record.Detail = _cn88LogFormatter.IsActionIdUsedCN88LogTemplate(record.Aid) ? _cn88LogFormatter.ReplaceLogTemplate(CastAide.AsString(row["doing"])) : CastAide.AsString(row["doing"]);
                         logResult.Rows.Add(record);
                     }
                 }
