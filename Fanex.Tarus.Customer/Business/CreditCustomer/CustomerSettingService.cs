@@ -11,6 +11,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Criteria.CN88;
     using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
+    using DNAide.Utils;
     using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
@@ -427,6 +428,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         {
             criteria.Creator = AppSession.AccId;
             criteria.IP = Utils.GetClientIP();
+            criteria.Password = Encryption.CfsEnCode(criteria.Password);
             return _customerSettingDataAccess.ExecuteNonQuery(criteria);
         }
     }
