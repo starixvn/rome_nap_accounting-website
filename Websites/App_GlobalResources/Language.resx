@@ -2611,4 +2611,19 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="Credits" xml:space="preserve">
     <value>Credits</value>
   </data>
+  <data name="CreateHeadlineSuccess" xml:space="preserve">
+    <value>Create headline successfully</value>
+  </data>
+  <data name="DefaultHLPossess" xml:space="preserve">
+    <value>Default Headline Possess on Super</value>
+  </data>
+  <data name="GeneralInfo" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="NonSports" xml:space="preserve">
+    <value>Non-Sports</value>
+  </data>
+  <data name="Sportsbook" xml:space="preserve">
+    <value>Sportsbook</value>
+  </data>
 </root>

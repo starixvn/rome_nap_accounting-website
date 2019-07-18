@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
     using Criteria.CN88;
     using DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.Criteria.CN88.Headline;
     using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Requests.CN88;
@@ -28,6 +29,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
         private readonly string _creditPopupPath = "~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerCredit.cshtml";
         private readonly string _headlinePossessPopupPath = "~/Areas/LeftPanel/Views/CN88/HeadlinePossessOnSuper.cshtml";
+        private readonly string _createNewHeadlinePath = "~/Views/Customer/CustomerSetting/CN88/NewCn88Headline/Index.cshtml";
 
         public CustomerSettingController()
             : this(null, null)
@@ -110,6 +112,32 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         public JsonResult UpdateHeadlinePossessOnSuper(UpdateHeadlinePossessCriteria criteria)
         {
             return Json(_customerSetting.UpdateHeadlinePossess(criteria));
+        }
+
+        [HttpGet, CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
+        public ActionResult ViewCreateNewCN88Headline()
+        {
+            return View(_createNewHeadlinePath);
+        }
+
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
+        public JsonResult AddNewCN88Headline(AddNewHeadlineRequest request)
+        {
+            var criteria = new AddNewHeadlineCriteria()
+            {
+                UserName = request.UserName,
+                Password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(request.Password, request.Code),
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Phone = request.Phone,
+                MobilePhone = request.MobilePhone,
+                Fax = request.Fax,
+                Currency = request.Currency,
+                SportbooksPossess = request.SportbooksPossess,
+                NonSportsPossess = request.NonSportsPossess
+            };
+
+            return Json(_customerSetting.AddNewHeadline(criteria));
         }
     }
 }

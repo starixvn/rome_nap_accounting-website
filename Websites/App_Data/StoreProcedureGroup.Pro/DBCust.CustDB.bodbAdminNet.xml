@@ -435,5 +435,6 @@
     <Setting Key="CS_Acc_CustomerUpdUnlockAccess" SpName="CS_Acc_CustomerUpdUnlockAccess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="CS_GroupExtraPT_Sel" SpName="CS_GroupExtraPT_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="CS_GroupExtraPT_Upd" SpName="CS_GroupExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="CS_CustomerIns_Headline" SpName="CS_CustomerIns_Headline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>
