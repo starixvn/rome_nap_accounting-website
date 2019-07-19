@@ -646,12 +646,7 @@ var ViewPT = {
                         <td>Other</td>\
                         <!--1X2-->\
                             <td>1x2</td>\
-                        <!--/1X2-->\
-                        <!--numbergame-->\
-                        {{if ($data.Comm[0].GameComm != null)}}\
-                            <td>Number Game </br> Comm</td>\
-                        {{/if}}\
-                        <!--/numbergame-->\
+                        <!--/1X2-->\                     
                          <!--myanmarodds-->\
                         {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
                             <td>% Odds</td>\
@@ -673,12 +668,7 @@ var ViewPT = {
 			                {{if (OneXTwo != null && OneXTwo.Status)}}\
 				                <td>${OneXTwo.Comm}</td>\
 			                {{/if}}\
-			                <!--/1X2-->\
-			                <!--numbergame-->\
-			                {{if (GameComm != null && GameComm.Status)}}\
-				                <td>${GameComm.Comm}</td>\
-			                {{/if}}\
-			                <!--/numbergame-->\
+			                <!--/1X2-->\			              
                              <!--myanmarodds-->\
 			                {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
 				                <td>${MyanmarOdds.Comm}</td>\

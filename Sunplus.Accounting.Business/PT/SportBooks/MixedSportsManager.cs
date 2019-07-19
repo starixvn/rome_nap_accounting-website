@@ -894,13 +894,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 {
                     param.Add(string.Format("auto_v{0}mpositiontaking_{1}", SportType, BetType), mAuto);
                     param.Add(string.Format("isauto_v{0}mpositiontaking_{1}", SportType, BetType), isAuto);
-                }
-                //just for test, remove it after test
-                if (!param.ContainsKey("minbetv161"))
-                {
-                    param.Add("discountnumber", 0);
-                    new NumberGameManager().AddParamAgentPT(ref param, context, false, false);
-                }
+                }              
 
                 #endregion assign values for parameters
             }

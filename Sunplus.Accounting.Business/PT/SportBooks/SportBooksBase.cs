@@ -167,62 +167,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             throw new NotImplementedException();
         }
 
-        public virtual void GetNumberCom(DataRow dr, int RoleId, bool IsAddNew, ref string strAccInfo)
-        {
-            StringBuilder html = new StringBuilder();
-            try
-            {               
-            double max = 0, current = 0;
-            switch (RoleId)
-            {
-                case 4:
-                    if (IsAddNew)
-                    {
-                        current = 0;
-                        max = 0.0025;
-                    }
-                    else
-                    {
-                        max = CastAide.AsDouble(dr["discountnumber_max"]);
-                        current = CastAide.AsDouble(dr["discountnumber"]);
-                    }
-                    break;
-
-                    case 3:
-                    case 2:
-                        if (IsAddNew)
-                            current = max = CastAide.AsDouble(dr["discountnumber"]);
-                        else
-                        {
-                            max = CastAide.AsDouble(dr["discountnumber_max"]);
-                            current = CastAide.AsDouble(dr["discountnumber"]);
-                        }
-                        break;
-
-                    case 1:
-                        if (IsAddNew)
-                            current = max = CastAide.AsDouble(dr["discountnumber"]);
-                        else
-                        {
-                            max = CastAide.AsDouble(dr["discountnumber"]);
-                            current = CastAide.AsDouble(dr["playerdiscountnumber"]);
-                        }
-                        TemplateHandler.Assign(ref strAccInfo, "DiscountNB", max);
-                        break;
-                }
-
-                html.Append(CustomerUtils.GetListGroup(max, current));
-
-            TemplateHandler.Assign(ref strAccInfo, "listGameCommValue", html.ToString());
-            }
-            catch (Exception ex)
-            {
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-            }
-        }
-
         public virtual void GetMaxPerBall(DataRow dr, int RoleId, bool IsAddNew, ref string strAccInfo)
         {
             //IBCUtils.FormatHandler.FormatNumber1(minbet)

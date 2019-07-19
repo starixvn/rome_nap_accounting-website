@@ -103,7 +103,6 @@ ans.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, commissionSetting.groupD, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, 0);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, commissionSetting.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
 };
 
@@ -152,7 +151,6 @@ ans.checkValidInput = function () {
     }
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
-    commissionSetting.discountNumber = $('#listGameComm').val();
     if (parseBool2(_isShowMyanmarOdds)) {
         commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
     }
