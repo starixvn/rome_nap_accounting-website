@@ -646,7 +646,7 @@ var ViewPT = {
                         <td>Other</td>\
                         <!--1X2-->\
                             <td>1x2</td>\
-                        <!--/1X2-->\                     
+                        <!--/1X2-->\
                          <!--myanmarodds-->\
                         {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
                             <td>% Odds</td>\
@@ -668,7 +668,8 @@ var ViewPT = {
 			                {{if (OneXTwo != null && OneXTwo.Status)}}\
 				                <td>${OneXTwo.Comm}</td>\
 			                {{/if}}\
-			                <!--/1X2-->\			              
+			                <!--/1X2-->\
+			                <!--/numbergame-->\
                              <!--myanmarodds-->\
 			                {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
 				                <td>${MyanmarOdds.Comm}</td>\
@@ -702,7 +703,7 @@ var ViewPT = {
 
         });
     },
-    getProducts: function () {     
+    getProducts: function () {
         $.ajax({
             type: "POST",
             url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/GetProducts",
@@ -710,14 +711,14 @@ var ViewPT = {
             dataType: "json",
             success: function (rs) {
                 if (rs != null) {
-                    var products = '<option value="0">SB/NG</option>';
+                    var products = '<option value="0">SB</option>';
                     $.each(rs, function (i, product) {
                         products += '<option value="' + product.ProductId + '">' + product.ProductName + '</option>';
                     });
                     $("#ddlProduct").append($(products));
                 }
             }
-        });     
+        });
     },
     getBettype: function (ind) {
         var sport = ViewPT.getCurrentSportIndex(ind);
@@ -798,7 +799,7 @@ var ViewPT = {
             case 186: // Virtual Tennis
             case 190: // Virtual Soccer League
             case 191: // Virtual Soccer Nation
-			case 192: // Virtual Soccer World Cup
+            case 192: // Virtual Soccer World Cup
             case 193: // Virtual Basketball
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
                 break;
@@ -1010,7 +1011,7 @@ function ChangeType(rdo) {
     $('#tblPT').css('display', $('#rdoPT').css('display') = 'none' ? '' : 'none');
     $('#tblProducts').css('display', $('#rdoPT').css('display') = 'none' ? 'none' : '');
 
-  
+
     $('#sContent').html('');
 }
 

@@ -8,7 +8,6 @@
 @{
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
-    var enableNumberGame = true;
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
@@ -38,11 +37,7 @@
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    }
-    if (enableNumberGame)
-    {
-        colspanCom++;
-    }
+    } 
 
     var enableRNGCasino = WebSettings.EnableRNGCasino;
     if (enableRNGCasino)
@@ -54,7 +49,6 @@
 
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("enableNumberGame", enableNumberGame);
     hash.Add("disableCasino", disableCasino);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
@@ -332,14 +326,7 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
                 @tmp
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["enableNumberGame"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @superItem.NumberGame
-                </div>
-            </td>
-        }
+      
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @discountMyanmarOdss
@@ -570,16 +557,7 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
                                 </div>
                             </th>
                         }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                      
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 % Odds
@@ -724,17 +702,7 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
                                     Charge Comm
                                 </div>
                             </th>
-                        }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                        }                    
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 % Odds
@@ -772,7 +740,6 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _enableNumberGame = "@enableNumberGame";
     var _userId = @AppSession.AccId;
     var enableRNGCasino=@(enableRNGCasino ? 1 : 0);
 </script>

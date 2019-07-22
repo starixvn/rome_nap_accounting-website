@@ -312,10 +312,7 @@
         }
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }
-        if (_enableNumberGame == "True") {
-            initWidth += 75;
-        }
+        }       
         if (_isParentMyanmarOdds == "True") {
             initWidth -= 150;
         }

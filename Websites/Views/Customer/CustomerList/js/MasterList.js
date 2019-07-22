@@ -346,9 +346,7 @@
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
         }
-        if (_enableNumberGame == "True") {
-            initWidth += 75;
-        }
+      
         if (_directMaster == "True") {
             initWidth += 75;
         }
