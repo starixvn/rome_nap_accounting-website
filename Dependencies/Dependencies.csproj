@@ -57,8 +57,8 @@
     <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Chatbot.Client.1.0.5\lib\net461\Chatbot.Client.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Core, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.0.3\lib\net461\CN88.BetList.Core.dll</HintPath>
+    <Reference Include="CN88.BetList.Core, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Core.1.0.0.4\lib\net461\CN88.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.ESports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.ESports.1.0.0.2\lib\net461\CN88.BetList.ESports.dll</HintPath>
@@ -734,14 +734,8 @@
       <HintPath>..\packages\RazorEngine.3.7.0.1\lib\net40\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
