@@ -489,7 +489,8 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
         title: "Macau Games Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 212, PageSize: 500 },
         width: 1030,
-        height: 600
+        height: 600,
+        resizable: false
     };
 
     openResultsPopUp(voidbridgeParam);
@@ -501,7 +502,8 @@ function showPPDetails(transId, winlossDate, custId, transType) {
         title: "PP Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
         width: 1030,
-        height: 600
+        height: 600,
+        resizable: false
     };
 
     openResultsPopUp(voidbridgeParam);
@@ -513,7 +515,8 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
         title: "Video Poker Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1030,
-        height: 600
+        height: 600,
+        resizable: false
     };
 
     openResultsPopUp(voidbridgeParam);
@@ -1062,6 +1065,7 @@ function openResultsPopUp(resultParam) {
     var width = resultParam.width || 600;
     var height = resultParam.height || 500;
     var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "");
+    var resizable = resultParam.resizable == undefined ? true : resultParam.resizable;
 
     if (resultParam.iframe) {
         $.ajax({
@@ -1077,6 +1081,6 @@ function openResultsPopUp(resultParam) {
             }
         });
     } else {
-        parent.OpenNextPopup(popupName, url, resultParam.title, width, height, true, true, window, 0, null, null);
+        parent.OpenNextPopup(popupName, url, resultParam.title, width, height, true, resizable, window, 0, null, null);
     }
 }
