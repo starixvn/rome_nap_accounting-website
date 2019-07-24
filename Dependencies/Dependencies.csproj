@@ -196,7 +196,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.PokerGames, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PokerGames.1.1.2-beta05\lib\net40\Fanex.BetList.PokerGames.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PokerGames.1.1.2.0\lib\net40\Fanex.BetList.PokerGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PP.1.2.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
@@ -322,7 +322,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Statement.1.0.0.6-FixExportExcel-03\lib\net40\Fanex.Module.Statement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.Statement.1.0.0.6\lib\net40\Fanex.Module.Statement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.NAP.Core.1.0.0.2\lib\net40\Fanex.NAP.Core.dll</HintPath>
@@ -401,7 +401,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.PokerGames, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.PokerGames.1.0.2-beta01\lib\net40\Fanex.Result.Core.PokerGames.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.PokerGames.1.0.2.0\lib\net40\Fanex.Result.Core.PokerGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
