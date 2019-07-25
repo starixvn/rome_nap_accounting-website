@@ -147,21 +147,29 @@
                             ConverterCommon.ToString2(customerInfoRow["membersite"]) :
                             ConverterCommon.ToString2(customerInfoRow["site"]);
 
-                        //var memberOutstandingMBC = 0;
-                        //var memberBalanceMBC = 0;
-                        //var memberNetPositionMBC = 0;
+                        decimal memberOutstandingMBC = 0;
+                        decimal memberBalanceMBC = 0;
+                        decimal memberNetPositionMBC = 0;
 
-                        //if (site == "CN88")
-                        //{
-                        //    memberOutstandingMBC = _customerDAO.ge
-                        //}
+                        if (site != "CN88")
+                        {
+                            var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
+                            memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
+
+                            var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
+                            memberBalanceMBC = memberMBCBalanceModel.Balance;
+                            memberNetPositionMBC = memberMBCBalanceModel.NetPosition;
+                        }
 
                         var customerInfoViewModel = new CustomerInfoViewModel(
                             customerInfoRow, 
                             lineInfoRow, 
                             cashRow, 
                             downlineStatusInfoRow, 
-                            dynamicSettingtable);
+                            dynamicSettingtable,
+                            memberOutstandingMBC,
+                            memberBalanceMBC,
+                            memberNetPositionMBC);
 
                         AssignCustomerSession(customerInfoViewModel);
 

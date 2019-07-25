@@ -60,38 +60,34 @@
 
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
 
-        private void BuildMemberBalanceInfoMBC(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
-        {
-            ParentId = Converter.ToInt(lineInfoRow["agentId"]);
-            DownlineName = string.Empty;
-            AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
-            Cash = Converter.ToDecimal(cashRow["cash"]);
-            NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-            BetCredit = Credit + Cash - AccOutstanding + NetPosition;
-            YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
-        }
-
-        private void BuildMemberBalanceInfoCN88(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
-        {
-            ParentId = Converter.ToInt(lineInfoRow["agentId"]);
-            DownlineName = string.Empty;
-            AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
-            Cash = Converter.ToDecimal(cashRow["cash"]);
-            NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-            BetCredit = Credit + Cash - AccOutstanding + NetPosition;
-            YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
-        }
-
-        private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
+        private void GetExtraCustomerInfo(
+            DataRow customerInfoRow, 
+            DataRow lineInfoRow, 
+            DataRow cashRow,
+            decimal memberOutstandingMBC,
+            decimal memberBalanceMBC,
+            decimal memberNetPositionMBC)
         {
             switch (RoleId)
             {
                 case 1: // member
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     DownlineName = string.Empty;
-                    AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
-                    Cash = Converter.ToDecimal(cashRow["cash"]);
-                    NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
+                    YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
+                    if (CustomerSite == "CN88")
+                    {
+                        AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
+                        Cash = Converter.ToDecimal(cashRow["cash"]);
+                        NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
+                        BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+                    }
+                    else
+                    {
+                        AccOutstanding = memberOutstandingMBC;
+                        Cash = memberBalanceMBC + memberOutstandingMBC;
+                        NetPosition = memberNetPositionMBC;
+                        BetCredit = Credit + memberBalanceMBC + memberNetPositionMBC;
+                    }
                     if (AppSettings.IsCN88SiteName(CustomerSite))
                     {
                         BetCredit = Credit - TotalBetStake;
@@ -101,7 +97,6 @@
                         BetCredit = Credit + Cash - AccOutstanding + NetPosition;
                     }
 
-                    YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
                     break;
 
                 case 2: // agent

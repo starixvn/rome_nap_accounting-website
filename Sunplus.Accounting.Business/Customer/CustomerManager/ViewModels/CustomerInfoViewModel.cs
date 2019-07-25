@@ -36,7 +36,10 @@
             DataRow downlineStatusInfoRow,
             DataTable dynamicSettingtable,
             DataRow memberCN88CreditRow,
-            DataRow memberCN88BetStakeRow)
+            DataRow memberCN88BetStakeRow,
+            decimal memberOutstandingMBC,
+            decimal memberBalanceMBC,
+            decimal memberNetPositionMBC)
         {
             this.customerInfoRow = customerInfoRow;
             this.lineInfoRow = lineInfoRow;
@@ -50,7 +53,7 @@
             JsParam.Add("custid", CustId);
             JsParam.Add("roleid", RoleId);
 
-            GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow);
+            GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow, memberOutstandingMBC, memberBalanceMBC, memberNetPositionMBC);
             GetShowedHiddenProduct(dynamicSettingtable);
         }
 
