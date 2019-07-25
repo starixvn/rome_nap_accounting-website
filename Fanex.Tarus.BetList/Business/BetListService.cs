@@ -1500,6 +1500,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);
             }
+            else if(ReportService.IsCardClub(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.CardClub);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
