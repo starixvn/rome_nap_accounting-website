@@ -74,12 +74,12 @@
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     DownlineName = string.Empty;
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
-                    if (CustomerSite == "CN88")
+                    if (AppSettings.IsCN88SiteName(CustomerSite))
                     {
                         AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
                         Cash = Converter.ToDecimal(cashRow["cash"]);
                         NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-                        BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+                        BetCredit = Credit - TotalBetStake;
                     }
                     else
                     {
@@ -87,14 +87,6 @@
                         Cash = memberBalanceMBC + memberOutstandingMBC;
                         NetPosition = memberNetPositionMBC;
                         BetCredit = Credit + memberBalanceMBC + memberNetPositionMBC;
-                    }
-                    if (AppSettings.IsCN88SiteName(CustomerSite))
-                    {
-                        BetCredit = Credit - TotalBetStake;
-                    }
-                    else
-                    {
-                        BetCredit = Credit + Cash - AccOutstanding + NetPosition;
                     }
 
                     break;

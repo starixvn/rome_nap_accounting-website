@@ -143,6 +143,7 @@
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
                         DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
                         DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
+
                         var site = ConverterCommon.ToInt(customerInfoRow["roleid"]).Equals(1) ?
                             ConverterCommon.ToString2(customerInfoRow["membersite"]) :
                             ConverterCommon.ToString2(customerInfoRow["site"]);
@@ -151,7 +152,7 @@
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
 
-                        if (site != "CN88")
+                        if (!AppSettings.IsCN88SiteName(site))
                         {
                             var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
@@ -167,6 +168,8 @@
                             cashRow, 
                             downlineStatusInfoRow, 
                             dynamicSettingtable,
+                            memberCN88CreditRow,
+                            memberCN88BetStakeRow,
                             memberOutstandingMBC,
                             memberBalanceMBC,
                             memberNetPositionMBC);
