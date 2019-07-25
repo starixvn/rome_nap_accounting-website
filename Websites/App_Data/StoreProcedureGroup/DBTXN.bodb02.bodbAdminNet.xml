@@ -98,5 +98,4 @@
    <Function Name="Account Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel_xtest" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
-
 </Functions>

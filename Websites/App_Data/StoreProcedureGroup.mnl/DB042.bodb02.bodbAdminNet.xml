@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="Account Info">
+    <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+</Functions>
