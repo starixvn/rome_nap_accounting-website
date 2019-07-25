@@ -28,6 +28,7 @@
     using System.Web;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using Result = Entities.Result;
+    using ConverterCommon = Fanex.Common.Converter;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -142,7 +143,26 @@
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
                         DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
                         DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
-                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, memberCN88CreditRow, memberCN88BetStakeRow);
+                        var site = ConverterCommon.ToInt(customerInfoRow["roleid"]).Equals(1) ?
+                            ConverterCommon.ToString2(customerInfoRow["membersite"]) :
+                            ConverterCommon.ToString2(customerInfoRow["site"]);
+
+                        //var memberOutstandingMBC = 0;
+                        //var memberBalanceMBC = 0;
+                        //var memberNetPositionMBC = 0;
+
+                        //if (site == "CN88")
+                        //{
+                        //    memberOutstandingMBC = _customerDAO.ge
+                        //}
+
+                        var customerInfoViewModel = new CustomerInfoViewModel(
+                            customerInfoRow, 
+                            lineInfoRow, 
+                            cashRow, 
+                            downlineStatusInfoRow, 
+                            dynamicSettingtable);
+
                         AssignCustomerSession(customerInfoViewModel);
 
                         bool isDenied = smartPunterService.IsDeniedViewSmartPunter(

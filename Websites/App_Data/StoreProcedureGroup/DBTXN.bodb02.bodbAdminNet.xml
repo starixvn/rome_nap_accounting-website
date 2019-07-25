@@ -95,4 +95,8 @@
   <Function Name="CN88">
     <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet"  Plain="0" />
   </Function>
+   <Function Name="Account Info">
+    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel_xtest" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+  </Function>
+
 </Functions>

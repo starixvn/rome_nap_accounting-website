@@ -60,6 +60,28 @@
 
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
 
+        private void BuildMemberBalanceInfoMBC(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
+        {
+            ParentId = Converter.ToInt(lineInfoRow["agentId"]);
+            DownlineName = string.Empty;
+            AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
+            Cash = Converter.ToDecimal(cashRow["cash"]);
+            NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
+            BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+            YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
+        }
+
+        private void BuildMemberBalanceInfoCN88(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
+        {
+            ParentId = Converter.ToInt(lineInfoRow["agentId"]);
+            DownlineName = string.Empty;
+            AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
+            Cash = Converter.ToDecimal(cashRow["cash"]);
+            NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
+            BetCredit = Credit + Cash - AccOutstanding + NetPosition;
+            YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
+        }
+
         private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
         {
             switch (RoleId)
