@@ -2073,4 +2073,7 @@
   <data name="cn88_sport_9998_bettype_1201_inplay_0" xml:space="preserve">
     <value>Virtual Sports</value>
   </data>
+  <data name="NewManaged" xml:space="preserve">
+    <value>New Managed Account</value>
+  </data>
 </root>
