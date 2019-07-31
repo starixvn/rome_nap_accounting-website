@@ -29,10 +29,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly CN88LogFormatter _cn88LogFormatter;
 
-        public SettingManager(ILogDisplayDAO logDAO, CN88LogFormatter cn88LogFormatter)
+        private readonly NewLicenseeLogFormatter _newLicenseeLogFormatter;
+
+        public SettingManager(ILogDisplayDAO logDAO, CN88LogFormatter cn88LogFormatter, NewLicenseeLogFormatter newLicenseeLogFormatter)
         {
             _logDAO = logDAO;
             _cn88LogFormatter = cn88LogFormatter ?? new CN88LogFormatter();
+            _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -131,9 +134,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get tracking value
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
-                        record.Detail = _cn88LogFormatter.IsCN88LogActionId(actionId)
-                                ? _cn88LogFormatter.GenerateDetail(actionId, trackingvalue, CastAide.AsString(row["SPName"]), CastAide.AsString(row["actionname"]))
-                                : _ParseTrackingValue(trackingvalue, actionId, CastAide.AsString(row["actionname"]), CastAide.AsString(row["SPName"]));
+                        string spName = CastAide.AsString(row["SPName"]);
+                        string actionName = CastAide.AsString(row["actionname"]);
+                        record.Detail = ParseTrackingValue(actionId, trackingvalue, spName, actionName);
                         record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
 
                         logResult.Rows.Add(record);
@@ -352,6 +355,21 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 LogExtensions.ExceptionHandler(ex);
             }
             return logResult;
+        }
+
+        private TrackingLog ParseTrackingValue(int actionId, string trackingValue, string spName, string actionName)
+        {
+            if (_cn88LogFormatter.IsCN88LogActionId(actionId))
+            {
+                return _cn88LogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
+            }
+
+            if (_newLicenseeLogFormatter.IsNewLicenseeActionId(actionId))
+            {
+                return _newLicenseeLogFormatter.GenerateDetail(trackingValue, spName, actionName);
+            }
+
+            return _ParseTrackingValue(trackingValue, actionId, actionName, spName);
         }
 
         private RecordSp _GetLogRecord(DataRow row)

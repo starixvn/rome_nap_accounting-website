@@ -64,13 +64,13 @@
 
         return settingInfoDictionary;
     },
-    self.renderBetSettings = function (custSettings) {
-        self.cachedData.custSettings = custSettings;
-        self.cachedData.roleId = parseInt(self.domElements.roleId.val());
-        var settingInfoDictionary = self.getSettingInfoDictionary(custSettings);
-        self.domElements.tableBetSetting.html('');
-        var htmlTilte =
-            '<tr class="title">\
+        self.renderBetSettings = function (custSettings) {
+            self.cachedData.custSettings = custSettings;
+            self.cachedData.roleId = parseInt(self.domElements.roleId.val());
+            var settingInfoDictionary = self.getSettingInfoDictionary(custSettings);
+            self.domElements.tableBetSetting.html('');
+            var htmlTilte =
+                '<tr class="title">\
                 <td colspan="5" class="bettypeheader">\
                     <span>Bet Setting</span>\
                 </td>\
@@ -90,33 +90,33 @@
                     <span>Status</span>\
                 </td>\
             </tr>';
-        self.domElements.tableBetSetting.append(htmlTilte);
+            self.domElements.tableBetSetting.append(htmlTilte);
 
-        var kenoBetTypesLength = custSettings.KenoBetTypesSettingInfo.length;
-        var bodyHtml = '';
-        for (var i = 0; i < kenoBetTypesLength; i++) {
-            var betType = custSettings.KenoBetTypesSettingInfo[i];
-            var minBetv = "minbetv" + betType.Id;
-            var maxBetv = "maxbetv" + betType.Id;
-            var maxPerMatchv = "maxpermatchv" + betType.Id;
-            var enablev = "enablev" + betType.Id;
+            var kenoBetTypesLength = custSettings.KenoBetTypesSettingInfo.length;
+            var bodyHtml = '';
+            for (var i = 0; i < kenoBetTypesLength; i++) {
+                var betType = custSettings.KenoBetTypesSettingInfo[i];
+                var minBetv = "minbetv" + betType.Id;
+                var maxBetv = "maxbetv" + betType.Id;
+                var maxPerMatchv = "maxpermatchv" + betType.Id;
+                var enablev = "enablev" + betType.Id;
 
-            var minBetVal = parseFloat(settingInfoDictionary[minBetv]).formatMoneyFromVal();
-            var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
-            var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
-            var minBet = parseFloat(settingInfoDictionary[minBetv]);
-            var maxBet = parseFloat(settingInfoDictionary[maxBetv]);
-            var maxPerMatch = parseFloat(settingInfoDictionary[maxPerMatchv]);
+                var minBetVal = parseFloat(settingInfoDictionary[minBetv]).formatMoneyFromVal();
+                var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
+                var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
+                var minBet = parseFloat(settingInfoDictionary[minBetv]);
+                var maxBet = parseFloat(settingInfoDictionary[maxBetv]);
+                var maxPerMatch = parseFloat(settingInfoDictionary[maxPerMatchv]);
 
-            var isFirstSport = i == 0;
-            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
-            var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
-            var isEnable = false;
+                var isFirstSport = kenoBetTypesLength > 1 && i == 0;
+                var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
+                var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
+                var isEnable = false;
 
-            bodyHtml = '<tr>\
+                bodyHtml = '<tr>\
                             <td class="bettypename">\
                                 <span>' + betType.Name + '</span>' + buttonCopyAll +
-                            '</td>\
+                    '</td>\
                             <td>\
                                 <input id="' + minBetv + '"' + copyDirection + ' minbet="true" type="text" class="minbet" value="' + minBetVal + '" />\
                                 <span></span>\
@@ -133,46 +133,46 @@
                                 <input id="' + enablev + '"' + copyDirection + ' type="checkbox" class="button-enable"' + (isEnable ? ' checked="checked"' : '') + ' />\
                             </td>\
                         </tr>';
-            self.domElements.tableBetSetting.append(bodyHtml);
+                self.domElements.tableBetSetting.append(bodyHtml);
 
-            // Upline
-            if (self.cachedData.roleId == 3) {
-                $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv]);
-                $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv]);
-                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv]);
+                // Upline
+                if (self.cachedData.roleId == 3) {
+                    $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv]);
+                    $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv]);
+                    $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv]);
+                }
+                else {
+                    $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
+                    $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
+                    $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
+                }
+
+                if (minBet < ($("#" + minBetv).get(0).uplineVal)) {
+                    $("#" + minBetv).val($("#" + minBetv).get(0).uplineVal.formatMoneyFromVal());
+                }
+
+                if (maxBet > ($("#" + maxBetv).get(0).uplineVal)) {
+                    $("#" + maxBetv).val($("#" + maxBetv).get(0).uplineVal.formatMoneyFromVal());
+                }
+
+                if (maxPerMatch > ($("#" + maxPerMatchv).get(0).uplineVal)) {
+                    $("#" + maxPerMatchv).val($("#" + maxPerMatchv).get(0).uplineVal.formatMoneyFromVal());
+                }
             }
-            else {
-                $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
-                $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
-                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
-            }
 
-            if (minBet < ($("#" + minBetv).get(0).uplineVal)) {
-                $("#" + minBetv).val($("#" + minBetv).get(0).uplineVal.formatMoneyFromVal());
-            }
+            self.triggerDropdownPT(settingInfoDictionary, custSettings);
+            self.domElements.buttonCopySetting = $("#div-kenosport-container .button-copysetting");
+            self.domElements.sourceMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][source]");
+            self.domElements.targetMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][target]");
+            self.domElements.sourceMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][source]");
+            self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
+            self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
+            self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
+            self.domElements.sourceEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][source]");
+            self.domElements.targetEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][target]");
 
-            if (maxBet > ($("#" + maxBetv).get(0).uplineVal)) {
-                $("#" + maxBetv).val($("#" + maxBetv).get(0).uplineVal.formatMoneyFromVal());
-            }
-
-            if (maxPerMatch > ($("#" + maxPerMatchv).get(0).uplineVal)) {
-                $("#" + maxPerMatchv).val($("#" + maxPerMatchv).get(0).uplineVal.formatMoneyFromVal());
-            }
-        }
-
-        self.triggerDropdownPT(settingInfoDictionary, custSettings);
-        self.domElements.buttonCopySetting = $("#div-kenosport-container .button-copysetting");
-        self.domElements.sourceMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][source]");
-        self.domElements.targetMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][target]");
-        self.domElements.sourceMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][source]");
-        self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
-        self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
-        self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
-        self.domElements.sourceEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][source]");
-        self.domElements.targetEnableSettings = self.domElements.sportsContainer.find("input.button-enable[type='checkbox'][target]");
-
-        self.initConstraints();
-    };
+            self.initConstraints();
+        };
 
     self.triggerDropdownPT = function (settingInfoDictionary, custSettings) {
         var uplineValMax, selectedValue;

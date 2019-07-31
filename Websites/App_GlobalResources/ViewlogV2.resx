@@ -2076,4 +2076,13 @@
   <data name="NewManaged" xml:space="preserve">
     <value>New Managed Account</value>
   </data>
+  <data name="BS" xml:space="preserve">
+    <value>Bet Setting</value>
+  </data>
+  <data name="mpb" xml:space="preserve">
+    <value>Max Per Ball</value>
+  </data>
+  <data name="PT" xml:space="preserve">
+    <value>Position Taking</value>
+  </data>
 </root>

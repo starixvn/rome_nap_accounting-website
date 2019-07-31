@@ -98,7 +98,7 @@
             var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
             var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
 
-            var isFirstSport = i == 0;
+            var isFirstSport = kenoBetTypesLength > 1 && i == 0;
             var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
             var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
 

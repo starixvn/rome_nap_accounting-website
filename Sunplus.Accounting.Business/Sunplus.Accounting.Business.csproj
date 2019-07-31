@@ -426,6 +426,7 @@
     <Compile Include="IHelper.cs" />
     <Compile Include="LogDisplay\CN88LogFormatter.cs" />
     <Compile Include="LogDisplay\LoginLogType.cs" />
+    <Compile Include="LogDisplay\NewLicenseeLogFormatter.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
     <Compile Include="PT\ViewPT\KenoPT.cs" />

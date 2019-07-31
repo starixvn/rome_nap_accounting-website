@@ -60,12 +60,12 @@
 
         return settingInfoDictionary;
     },
-    self.renderBetSettings = function (custSettings) {
-        self.cachedData.custSettings = custSettings;
-        var settingInfoDictionary = self.getSettingInfoDictionary(custSettings);
-        self.domElements.tableBetSetting.html('');
-        var htmlTilte =
-            '<tr class="title">\
+        self.renderBetSettings = function (custSettings) {
+            self.cachedData.custSettings = custSettings;
+            var settingInfoDictionary = self.getSettingInfoDictionary(custSettings);
+            self.domElements.tableBetSetting.html('');
+            var htmlTilte =
+                '<tr class="title">\
                 <td colspan="4" class="headercolumn">\
                     <span>Bet Setting</span>\
                 </td>\
@@ -82,28 +82,28 @@
                     <span>Max Per Match</span>\
                 </td>\
             </tr>';
-        self.domElements.tableBetSetting.append(htmlTilte);
+            self.domElements.tableBetSetting.append(htmlTilte);
 
-        var kenoBetTypesLength = custSettings.KenoBetTypesSettingInfo.length;
-        var bodyHtml = '';
-        for (var i = 0; i < kenoBetTypesLength; i++) {
-            var betType = custSettings.KenoBetTypesSettingInfo[i];
-            var minBetv = "minbetv" + betType.Id;
-            var maxBetv = "maxbetv" + betType.Id;
-            var maxPerMatchv = "maxpermatchv" + betType.Id;
+            var kenoBetTypesLength = custSettings.KenoBetTypesSettingInfo.length;
+            var bodyHtml = '';
+            for (var i = 0; i < kenoBetTypesLength; i++) {
+                var betType = custSettings.KenoBetTypesSettingInfo[i];
+                var minBetv = "minbetv" + betType.Id;
+                var maxBetv = "maxbetv" + betType.Id;
+                var maxPerMatchv = "maxpermatchv" + betType.Id;
 
-            var minBetVal = parseFloat(settingInfoDictionary[minBetv]).formatMoneyFromVal();
-            var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
-            var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
+                var minBetVal = parseFloat(settingInfoDictionary[minBetv]).formatMoneyFromVal();
+                var maxBetVal = parseFloat(settingInfoDictionary[maxBetv]).formatMoneyFromVal();
+                var maxPerMacthVal = parseFloat(settingInfoDictionary[maxPerMatchv]).formatMoneyFromVal();
 
-            var isFirstSport = i == 0;
-            var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
-            var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
+                var isFirstSport = kenoBetTypesLength > 1 && i == 0;
+                var buttonCopyAll = isFirstSport ? "<span><input type=\"checkbox\" class=\"button-copysetting\" title=\"Copy all setting from this\" /></span>" : "";
+                var copyDirection = isFirstSport ? "source=\"true\"" : "target=\"true\"";
 
-            bodyHtml += '<tr>\
+                bodyHtml += '<tr>\
                             <td class="bettypename">\
                                 <span>' + betType.Name + '</span>' + buttonCopyAll +
-                            '</td>\
+                    '</td>\
                             <td>\
                                 <input id="' + minBetv + '"' + copyDirection + ' minbet="true" type="text" class="minbet" value="' + minBetVal + '" />\
                             </td>\
@@ -114,24 +114,24 @@
                                 <input id="' + maxPerMatchv + '"' + copyDirection + ' maxpermatch="true" type="text" class="maxpermatch" value="' + maxPerMacthVal + '" />\
                             </td>\
                         </tr>';
-        }
+            }
 
-        self.domElements.tableBetSetting.append(bodyHtml);
+            self.domElements.tableBetSetting.append(bodyHtml);
 
-        var representBetType = kenoPositionTaking_BetTypeRepresentative;
-        var positionTakingValue = settingInfoDictionary["v" + representBetType + "spositiontaking"] ?
-            parseFloat(settingInfoDictionary["v" + representBetType + "spositiontaking"]).formatMoneyFromVal() :
-            0;
-        self.domElements.dropdownPT.removeAttr("selected").find("option[value='" + positionTakingValue + "']").attr("selected", "selected");
+            var representBetType = kenoPositionTaking_BetTypeRepresentative;
+            var positionTakingValue = settingInfoDictionary["v" + representBetType + "spositiontaking"] ?
+                parseFloat(settingInfoDictionary["v" + representBetType + "spositiontaking"]).formatMoneyFromVal() :
+                0;
+            self.domElements.dropdownPT.removeAttr("selected").find("option[value='" + positionTakingValue + "']").attr("selected", "selected");
 
-        self.domElements.buttonCopySetting = $("#div-kenosport-container .button-copysetting");
-        self.domElements.sourceMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][source]");
-        self.domElements.targetMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][target]");
-        self.domElements.sourceMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][source]");
-        self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
-        self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
-        self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
-    };
+            self.domElements.buttonCopySetting = $("#div-kenosport-container .button-copysetting");
+            self.domElements.sourceMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][source]");
+            self.domElements.targetMinBetSettings = self.domElements.sportsContainer.find("input[type='text'][minbet][target]");
+            self.domElements.sourceMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][source]");
+            self.domElements.targetMaxBetSettings = self.domElements.sportsContainer.find("input[type='text'][maxbet][target]");
+            self.domElements.sourceMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][source]");
+            self.domElements.targetMaxPerMatchSettings = self.domElements.sportsContainer.find("input[type='text'][maxpermatch][target]");
+        };
 
     self.showHideSportsContainer = function () {
         var isCurrentlyHide = self.domElements.sportsContainer.hasClass(":visible");
