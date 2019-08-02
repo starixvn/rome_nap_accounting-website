@@ -144,15 +144,14 @@
                         DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
                         DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
 
-                        var site = ConverterCommon.ToInt(customerInfoRow["roleid"]).Equals(1) ?
-                            ConverterCommon.ToString2(customerInfoRow["membersite"]) :
-                            ConverterCommon.ToString2(customerInfoRow["site"]);
-
+                        var roleId = ConverterCommon.ToInt(customerInfoRow["roleid"]);
                         decimal memberOutstandingMBC = 0;
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
 
-                        if (!AppSettings.IsCN88SiteName(site))
+                        if (roleId == (int)Role.Member && 
+                            !AppSettings.IsCN88SiteName(
+                                ConverterCommon.ToString2(customerInfoRow["membersite"])))
                         {
                             var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
