@@ -64,8 +64,8 @@
     <Reference Include="CN88.BetList.Keno, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Keno.1.0.0.1\lib\net461\CN88.BetList.Keno.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0.1\lib\net461\CN88.BetList.Lottery.dll</HintPath>
+    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0.2-lotteryodds-03\lib\net461\CN88.BetList.Lottery.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.2\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
