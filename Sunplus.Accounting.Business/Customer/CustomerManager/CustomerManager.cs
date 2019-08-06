@@ -148,10 +148,12 @@
                         decimal memberOutstandingMBC = 0;
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
+                        var IsInternalUser = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
                         if (roleId == (int)Role.Member && 
                             !AppSettings.IsCN88SiteName(
-                                ConverterCommon.ToString2(customerInfoRow["membersite"])))
+                                ConverterCommon.ToString2(customerInfoRow["membersite"])) &&
+                                !IsInternalUser)
                         {
                             var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
