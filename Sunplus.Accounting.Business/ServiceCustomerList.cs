@@ -232,7 +232,6 @@
                             TemplateHandler.Assign(ref strRow, "{groupd}", FormatHandler.FormatNumber4(dr["groupd"]));
                             TemplateHandler.Assign(ref strRow, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber5(dr["discountcs"]));
-                            TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber5(dr["discountNumber"]));
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
                             TemplateHandler.Assign(ref strRow2, "{currency}", currency);
 
@@ -510,7 +509,6 @@
                             TemplateHandler.Assign(ref strRow, "{groupd}", FormatHandler.FormatNumber4(dr["groupd"]));
                             TemplateHandler.Assign(ref strRow, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber5(dr["discountcs"]));
-                            TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber5(dr["discountnumber"]));
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
 
                             #endregion assign template
@@ -744,7 +742,6 @@
                             TemplateHandler.Assign(ref strRow, "{groupd}", FormatHandler.FormatNumber4(dr["groupd"]));
                             TemplateHandler.Assign(ref strRow, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber5(dr["discountcs"]));
-                            TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber5(dr["discountnumber"]));
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
 
                             TemplateHandler.Assign(ref strRow2, "{link}", "MemberList.aspx?agentId=" + _custid + "&internal=" + isInternal.ToString().ToLower() + "&isSynccasino=" + dr["synccasino"]);
@@ -949,7 +946,6 @@
                             TemplateHandler.Assign(ref strRow, "{groupd}", FormatHandler.FormatNumber4(dr["playerdiscountcs"]));
                             TemplateHandler.Assign(ref strRow, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber4(dr["playerdiscount1x2"]));
-                            TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber4(dr["playerdiscountnumber"]));
 
                             TemplateHandler.Assign(ref strRow2, "{status}", strStatus);
                             TemplateHandler.Assign(ref strRow2, "{uplineid}", agentId);
@@ -970,7 +966,6 @@
                             TemplateHandler.Assign(ref strRow2, "{groupd}", FormatHandler.FormatNumber4(dr["playerdiscountcs"]));
                             TemplateHandler.Assign(ref strRow2, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow2, "{othercom}", FormatHandler.FormatNumber4(dr["playerdiscount1x2"]));
-                            TemplateHandler.Assign(ref strRow2, "{ngcom}", FormatHandler.FormatNumber4(dr["playerdiscountnumber"]));
 
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
                             TemplateHandler.Assign(ref strRow2, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());

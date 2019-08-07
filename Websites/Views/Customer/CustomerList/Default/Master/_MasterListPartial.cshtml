@@ -9,7 +9,6 @@
 
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
-    var enableNumberGame = true;
 
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
@@ -42,10 +41,7 @@
     {
         colspan++;
     }
-    if (enableNumberGame)
-    {
-        colspanCom++;
-    }
+    
     bool isParentMyanmarOdds = false;
     foreach (var masterItem in Model.ListChildren)
     {
@@ -84,7 +80,6 @@
 
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("enableNumberGame", enableNumberGame);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
@@ -382,15 +377,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                     @masterItem.MatchWinnerComm
                 </div>
             </td>
-        }
-        @if (CastAide.AsBoolean(hash["enableNumberGame"]))
-    {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.NumberGame
-                </div>
-            </td>
-        }
+        }       
         @if (CastAide.AsBoolean(hash["directMaster"]) || CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
     {
             <td>
@@ -638,16 +625,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                                 </div>
                             </th>
                         }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                    
                         @if (directMaster || isParentMyanmarOdds)
                         {
                             <th>
@@ -799,16 +777,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                                 </div>
                             </th>
                         }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                       
                         @if (directMaster || isParentMyanmarOdds)
                         {
                             <th>
@@ -851,7 +820,6 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _enableNumberGame = "@enableNumberGame";
     var _directMaster = "@directMaster";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;

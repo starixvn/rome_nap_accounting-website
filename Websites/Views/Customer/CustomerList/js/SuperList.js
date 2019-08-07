@@ -354,10 +354,7 @@
         }
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }
-        if (_enableNumberGame == "True") {
-            initWidth += 75;
-        }
+        }       
 
         if (enableRNGCasino) {
             initWidth += 75;

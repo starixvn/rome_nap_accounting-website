@@ -41,8 +41,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double GroupD { get; set; }
         public double DiscountMyanmarOdds { get; set; }
         public double _1x2 { get; set; }
-        public double Others { get; set; }
-        public double NumberGame { get; set; }
+        public double Others { get; set; }        
         public double MatchWinnerComm { get; set; }
         public double UplineMatchWinnerComm { get; set; }
 

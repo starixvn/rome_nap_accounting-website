@@ -8,7 +8,6 @@
 @{
 
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
-    var enableNumberGame = true;
 
 
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
@@ -30,10 +29,7 @@
     {
         colspan++;
     }
-    if (enableNumberGame)
-    {
-        colspanCom++;
-    }
+  
     bool isParentMyanmarOdds = false;
 
     foreach (var memberItem in Model.ListChildren)
@@ -68,7 +64,6 @@
     Hashtable hash = new Hashtable();
 
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("enableNumberGame", enableNumberGame);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
@@ -353,14 +348,7 @@ var bg = rowCSS(memberItem);
                 </div>
             </td>
         }
-        @if (CastAide.AsBoolean(hash["enableNumberGame"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @memberItem.NumberGame
-                </div>
-            </td>
-        }
+      
         @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
         {
             <td>
@@ -603,16 +591,7 @@ var bg = rowCSS(memberItem);
                                 </div>
                             </th>
                         }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                      
                         @if (isParentMyanmarOdds)
                         {
                             <th>
@@ -759,16 +738,7 @@ var bg = rowCSS(memberItem);
                                 </div>
                             </th>
                         }
-                        @if (enableNumberGame)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Number
-                                    <br />
-                                    Game
-                                </div>
-                            </th>
-                        }
+                      
                         @if (isParentMyanmarOdds)
                         {
                             <th>
@@ -811,7 +781,6 @@ var bg = rowCSS(memberItem);
     var _agentDcom = "@Model.ParentDoubleComm";
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _enableNumberGame = "@enableNumberGame";
     var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
     var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);

@@ -334,8 +334,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
             param.Add("minbetv161", context.Request["txtMinbet" + sporttype]);//money
             param.Add("maxbetv161", context.Request["txtMaxbet" + sporttype]);//money
-            param.Add("maxpermatchv161", context.Request["txtMaxPerMatch" + sporttype]);//money
-            param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+            param.Add("maxpermatchv161", context.Request["txtMaxPerMatch" + sporttype]);//money           
             sporttype = Constants.Sport.NumberGame;
             double s = 0, m = 0, a = 0;
 
@@ -844,8 +843,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 sporttype = Constants.Sport.NumberGame;
                 param.Add("minbetv" + sporttype, minb);
                 param.Add("maxbetv" + sporttype, maxb);
-                param.Add("maxpermatchv" + sporttype, maxpermatch);
-                param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+                param.Add("maxpermatchv" + sporttype, maxpermatch);              
 
                 if (IsUpdate)
                 {
@@ -1400,8 +1398,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 param.Add("minbetv" + sporttype, minb);
                 param.Add("maxbetv" + sporttype, maxb);
                 param.Add("maxpermatchv" + sporttype, maxpermatch);
-                param.Add("updateminmaxbetv" + sporttype, 1);
-                param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+                param.Add("updateminmaxbetv" + sporttype, 1);             
 
                 var Bettypes = new Hashtable();
                 Bettypes = AssignEditParams(NumberGameSection.Level.Agent.ToString());
@@ -1656,8 +1653,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 sporttype = Constants.Sport.NumberGame;
                 param.Add("minbetv" + sporttype, minb);
                 param.Add("maxbetv" + sporttype, maxb);
-                param.Add("maxpermatchv" + sporttype, maxpermatch);
-                param.Add("playerdiscountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+                param.Add("maxpermatchv" + sporttype, maxpermatch);             
                 param.Add("updateminmaxbetv" + sporttype, 1);
                 param.Add("updatepositiontakingv" + sporttype, 1);
 
@@ -2348,9 +2344,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             try
             {
                 string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPTOnMemberComm.htm");
-                double discount = 0, playerdiscount = 0;
-                discount = CastAide.AsDouble(dr["discountnumber"]);
-                playerdiscount = CastAide.AsDouble(dr["playerdiscountnumber"]);
+                double discount = 0, playerdiscount = 0;               
 
                 TemplateHandler.Assign(ref tpl, "discount", discount);
                 TemplateHandler.Assign(ref tpl, "playerdiscount", playerdiscount);
