@@ -148,7 +148,8 @@
                         decimal memberOutstandingMBC = 0;
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
-                        var IsInternalUser = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
+                        var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") && 
+                            Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
                         if (roleId == (int)Role.Member && 
                             !AppSettings.IsCN88SiteName(

@@ -60,9 +60,11 @@
 
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
 
+        private bool IsCN88Site => AppSettings.IsCN88SiteName(CustomerSite);
+
         private void GetExtraCustomerInfo(
-            DataRow customerInfoRow, 
-            DataRow lineInfoRow, 
+            DataRow customerInfoRow,
+            DataRow lineInfoRow,
             DataRow cashRow,
             decimal memberOutstandingMBC,
             decimal memberBalanceMBC,
@@ -74,20 +76,19 @@
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     DownlineName = string.Empty;
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
-                    if (AppSettings.IsCN88SiteName(CustomerSite))
-                    {
-                        AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
-                        Cash = Converter.ToDecimal(cashRow["cash"]);
-                        NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-                        BetCredit = Credit - TotalBetStake;
-                    }
-                    else
-                    {
-                        AccOutstanding = memberOutstandingMBC;
-                        Cash = memberBalanceMBC + memberOutstandingMBC;
-                        NetPosition = memberNetPositionMBC;
-                        BetCredit = Credit + memberBalanceMBC + memberNetPositionMBC;
-                    }
+
+                    AccOutstanding = IsCN88Site || IsInternalUser ? 
+                        Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
+
+                    Cash = IsCN88Site || IsInternalUser ? 
+                        Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC;
+
+                    NetPosition = IsCN88Site || IsInternalUser ?
+                       Converter.ToDecimal(customerInfoRow["netPosition"]) : memberNetPositionMBC;
+
+                    BetCredit = IsCN88Site ? Credit - TotalBetStake :
+                        IsInternalUser ? Credit + Cash - AccOutstanding + NetPosition :
+                        Credit + memberBalanceMBC + memberNetPositionMBC;
 
                     break;
 
