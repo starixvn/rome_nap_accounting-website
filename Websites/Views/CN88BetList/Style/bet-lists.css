@@ -492,3 +492,15 @@ body.phone .from-date-box .bootstrap-datetimepicker-widget.dropdown-menu {
         left: auto;
         right: 7px;
     }
+
+.tbl-betlists .row-abnormal .stake-block {
+    text-decoration: line-through;
+}
+
+.tbl-betlists .row-void .status, .tbl-betlists .row-void .col-winloss,
+.tbl-betlists .row-reject .status, .tbl-betlists .row-reject .col-winloss,
+.tbl-betlists .row-refund .status, .tbl-betlists .row-refund .col-winloss,
+.tbl-betlists .row-abnormal .status, .tbl-betlists .row-abnormal .col-winloss,
+.tbl-betlists .row-invalid .status, .tbl-betlists .row-invalid .col-winloss {
+    color: #B50000;
+}
