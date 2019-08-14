@@ -979,7 +979,8 @@ namespace Fanex.Tarus.BetList.Business
                         if (status != "running" &&
                             status != "waiting" &&
                             status != "void" &&
-                            status != "reject")
+                            status != "reject" &&
+                            status != "pending")
                         {
                             totalComm += commTmp;
                             totalWinLoss += winlostTmp;
@@ -1185,7 +1186,8 @@ namespace Fanex.Tarus.BetList.Business
                         if (status != "running" &&
                             status != "waiting" &&
                             status != "void" &&
-                            status != "reject")
+                            status != "reject" &&
+                            status != "pending")
                         {
                             totalComm += commTmp;
                             totalWinLoss += winlostTmp;
@@ -1500,7 +1502,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);
             }
-            else if(ReportService.IsCardClub(betTypeId))
+            else if (ReportService.IsCardClub(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.CardClub);
             }

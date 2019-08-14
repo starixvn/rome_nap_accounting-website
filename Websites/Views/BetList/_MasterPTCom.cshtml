@@ -20,7 +20,6 @@
     string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
 
 }
-
 @if (betlistHelper.IsHRWinPlaceBettype(betdetail.Ticket.BetTypeId))
 {
     <div class="blue">
@@ -49,8 +48,9 @@ else
         }
     </div>
 }
-
-@if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
+@if (!ticketStatus.Equals("running") &&
+    !ticketStatus.Equals("waiting") &&
+    !ticketStatus.Equals("pending"))
 {
     <div class="@betlistHelper.IsNegative(winlost) margin-top-5">
         @switch (betdetail.Ticket.BetTypeId)
@@ -66,7 +66,6 @@ else
         }
     </div>
 }
-
 @if (betlistHelper.IsShowCommission(betdetail))
 {
     <div class="margin-top-5">
@@ -84,7 +83,9 @@ else
         }
     </div>
 
-    if (!ticketStatus.Equals("running") && !ticketStatus.Equals("waiting"))
+    if (!ticketStatus.Equals("running") &&
+        !ticketStatus.Equals("waiting") &&
+        !ticketStatus.Equals("pending"))
     {
         <div class="margin-top-5">
             @comm.Format(2)
