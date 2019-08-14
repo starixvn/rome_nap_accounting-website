@@ -134,36 +134,6 @@
                     "Lottery");
             }
 
-            if (renderLeftPanelParameter.IsShowLucky3)
-            {
-                superSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    26,
-                    custId,
-                    4, // Super Level.
-                    "Lucky 3");
-            }
-
-            if (renderLeftPanelParameter.IsShowBullfighting)
-            {
-                superSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
-                    custId,
-                    4, // Super Level.
-                    "Bullfighting");
-            }
-
-            if (renderLeftPanelParameter.IsShowPokerGames)
-            {
-                superSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames,
-                    custId,
-                    4, // Super Level.
-                    "Poker Games");
-            }
-
             masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
             
             if (!customerInfoViewModel.HideSettingLinkVirtualSports)
@@ -219,36 +189,6 @@
                     custId,
                     3, // Master Level.
                     "Lottery");
-            }
-
-            if (renderLeftPanelParameter.IsShowLucky3)
-            {
-                masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    26,
-                    custId,
-                    3, // Master Level.
-                    "Lucky 3");
-            }
-
-            if (renderLeftPanelParameter.IsShowBullfighting)
-            {
-                masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting,
-                    custId,
-                    3, // Master Level.
-                    "Bullfighting");
-            }
-
-            if (renderLeftPanelParameter.IsShowPokerGames)
-            {
-                masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames,
-                    custId,
-                    3, // Master Level.
-                    "Poker Games");
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", superSettingTab);

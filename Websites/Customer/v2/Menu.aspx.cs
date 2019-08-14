@@ -59,7 +59,7 @@ public partial class Others_Menu : System.Web.UI.Page
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
-        hideColossusbets = (!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
+        hideColossusbets = !WebSettings.IsShowColossusBets || (roleid < 4 && !CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]));//(!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
 
         hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
         hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
