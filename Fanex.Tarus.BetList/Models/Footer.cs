@@ -12,7 +12,8 @@
             BetStatus.Running,
             BetStatus.Waiting,
             BetStatus.Void,
-            BetStatus.Reject
+            BetStatus.Reject,
+            BetStatus.Pending
         };
 
         public Footer(IList<ITicket> tickets)

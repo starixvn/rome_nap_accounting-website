@@ -44,6 +44,7 @@
             {
                 case BetStatus.Running:
                 case BetStatus.Waiting:
+                case BetStatus.Pending:
                     WinLoss = Hyphen;
                     Comm = string.Empty;
                     break;

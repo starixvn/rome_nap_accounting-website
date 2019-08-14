@@ -70,7 +70,9 @@
         {
             var status = Ticket.Status.ToLowerInvariant();
 
-            return status.Equals(BetStatus.Running) || status.Equals(BetStatus.Waiting);
+            return status.Equals(BetStatus.Running) ||
+                status.Equals(BetStatus.Waiting) ||
+                status.Equals(BetStatus.Pending);
         }
     }
 }
