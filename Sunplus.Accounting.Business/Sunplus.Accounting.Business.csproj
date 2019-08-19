@@ -396,7 +396,6 @@
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\DownlineStatusViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\ColossusBetViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NG2ViewModel.cs" />

@@ -192,8 +192,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmCasino").attr('src', "");
         $("#frmVirtualSports").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
-        $("#frmGoldDleluxe").attr('src', "");
-        $("#frmColossusBets").attr('src', "");
+        $("#frmGoldDleluxe").attr('src', "");       
         $("#frmSportsbook2").attr('src', "");
         $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
@@ -247,15 +246,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
                 break;
-
             case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
                 $scope.loadData("#frmGoldDleluxe", url);
                 $scope.resize("#frmGoldDleluxe");
-                break;
-            case 'tabColossusBets': url += "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + $scope.existedUser.userid + "&UserId=" + adminId + "&ReadOnly=true";
-                $scope.loadData("#frmColossusBets", url);
-                $scope.resize("#frmColossusBets");
-                break;
+                break;          
             case 'tabSportsbook2': url += "DCS/ViewCustomerSetting?productId=16&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmSportsbook2", url);
                 $scope.resize("#frmSportsbook2");
@@ -327,9 +321,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         if (!statusSports.HideGoldDeluxe) {
             $scope.sports.push({ sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' });
         }
-        if (!statusSports.HideColossusBets) {
-            $scope.sports.push({ sportname: 'Colossus Bets', sportvalue: 'tabColossusBets' });
-        }
+
         if (!statusSports.HideSportsbook2) {
             $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
         }

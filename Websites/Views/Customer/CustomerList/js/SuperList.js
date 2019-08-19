@@ -327,11 +327,7 @@
                 , window.rootUrl + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&uplineLevel=0&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=4"
                 , 0, 0, 880, 580, false, 2000, null);
     },
-    colossusBetSetting: function (custId, uplineId) {
-        showPopup("Colossus Bet"
-                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId + "&UserId=" + _adminID
-                , 0, 0, 880, 400, false, 2000, null);
-    },
+    
     asianGamingCasino: function (custId) {
         showPopup("Update AG Casino Setting",
         "AGCasino/EditAGCasinoGameSetting?customerId=" + _userId + "&uplineId=0&roleId=4&exchangeId=0" + _userId,

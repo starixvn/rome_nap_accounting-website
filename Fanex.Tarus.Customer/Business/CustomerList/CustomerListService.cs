@@ -118,7 +118,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         superItem.Others = CastAide.AsDouble(row["discountcs"]);
                         superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
-                        superItem.IsHideColossusBets = !WebSettings.IsShowColossusBets;
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
                         superItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         superItem.IsHideCricket = !WebSettings.IsShowCricket || !superItem.IsIMBCCustomers;
@@ -254,8 +253,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         masterItem.Others = CastAide.AsDouble(row["discountcs"]);
-
-                        masterItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
+                                               
                         masterItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         masterItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         masterItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !masterItem.IsIMBCCustomers;
@@ -357,7 +355,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         agentItem.Others = CastAide.AsDouble(row["discountcs"]);
                         agentItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
-                        agentItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
+                      
                         agentItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         agentItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         agentItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !agentItem.IsIMBCCustomers;
@@ -459,7 +457,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);
                         memberItem.DiscountMyanmarOdds = CastAide.AsDouble(row["playerdiscountMyanmarOdds"]);
-                        memberItem.IsHideColossusBets = !WebSettings.IsShowColossusBets || CastAide.AsBoolean(row["HideColossusBet"]);
+                     
                         memberItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);
                         memberItem.IsIMBCCustomers = CastAide.AsBoolean(row["IsIMBC"]);
                         memberItem.IsHideCricket = !WebSettings.IsShowCricket || CastAide.AsBoolean(row["HideCricket"]) || !memberItem.IsIMBCCustomers;

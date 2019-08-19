@@ -333,11 +333,7 @@
                 , window.rootUrl + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=3"
                 , 0, 0, 880, 580, false, 2000, null);
     },
-    colossusBetSetting: function (custId, uplineId) {
-        showPopup("Colossus Bet"
-                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + custId + "&srecommend=" + uplineId + "&roleid=3" + "&UserId=" + _adminID
-                , 0, 0, 880, 400, false, 2000, null);
-    },
+    
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {

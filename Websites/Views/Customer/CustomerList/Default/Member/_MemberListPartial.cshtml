@@ -160,12 +160,7 @@ string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
                             Gold Deluxe
                         </li>
                     }
-                    @if (!memberItem.IsHideColossusBets)
-                    {
-                        <li class="canchange" onclick="MemberList.colossusBetSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets
-                        </li>
-                    }
+                   
                     @if (!memberItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">

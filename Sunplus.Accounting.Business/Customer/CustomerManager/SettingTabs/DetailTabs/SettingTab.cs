@@ -48,8 +48,7 @@
             var agCasinoLinkSetting = string.Empty;
             var casinoLinkSetting = string.Empty;
 
-            var goldDeluxeLinkSetting = string.Empty;
-            var colossusBetsLinkSetting = string.Empty;
+            var goldDeluxeLinkSetting = string.Empty;          
             var creditDCSLink = string.Empty;
             var cn88EditSettingLink = string.Empty;
             var cn88AddnewDownlineLink = string.Empty;
@@ -68,7 +67,6 @@
                     TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                     casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember?id=" + custId + "&uplineid=" + parentId;
                     goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
-                    colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&recommend={1}&roleid=1&UserId={2}", custId, parentId, AppSession.AccId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=1&uplineId={parentId}&customerId={custId}";
                     break;
@@ -84,7 +82,6 @@
                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(masterId))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                     casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent?id=" + custId + "&uplineid=" + parentId;
                     goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", masterId, AppSession.AccId, custId);
-                    colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&mrecommend={1}&roleid=2&UserId={2}", custId, masterId, AppSession.AccId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=2&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=2&uplineId={parentId}&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=1&uplineId={custId}";
@@ -100,7 +97,6 @@
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                     casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster?id=" + custId + "&uplineid=" + parentId;
                     goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", superId, AppSession.AccId, custId);
-                    colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid={0}&srecommend={1}&roleid=3&UserId={2}", custId, superId, AppSession.AccId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=3&uplineId={parentId}&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=2&uplineId={custId}";
@@ -117,7 +113,6 @@
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                     casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper?id=" + custId + "&uplineid=0";
                     goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
-                    colossusBetsLinkSetting = string.Format("customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custId={0}&roleid=4&UserId={1}", custId, AppSession.AccId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=4&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=3&uplineId={custId}";
@@ -132,7 +127,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
             TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{colossusBetLinkSetting}", colossusBetsLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
             TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", string.Format(creditDCSLink, 20));
             TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", string.Format(creditDCSLink, 21));
@@ -191,12 +185,7 @@
             if (!customerInfoViewModel.ShowSettingLinkGoldDeluxeCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
-            }
-
-            if (customerInfoViewModel.HideSettingLinkColossusBetsCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-ColossusBet");
-            }
+            }            
 
             if (!customerInfoViewModel.ShowSettingLinkAGCasinoDeposit)
             {

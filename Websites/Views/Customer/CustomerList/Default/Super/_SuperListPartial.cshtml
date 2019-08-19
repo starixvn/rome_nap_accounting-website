@@ -156,12 +156,7 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
                             Deluxe
                         </li>
                     }
-                    @if (!superItem.IsHideColossusBets)
-                    {
-                        <li class="canchange" onclick="SuperList.colossusBetSetting('@superItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets
-                        </li>
-                    }
+                   
                     @if (!superItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 16, 'Sportsbook 2');">
