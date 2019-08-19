@@ -7,8 +7,8 @@
     {
         private bool HideColossusBets => !WebSettings.IsShowColossusBets || (RoleId < 4 && Utils.ToBoolean(customerInfoRow["HideColossusBet"]));//(Utils.ToBoolean(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
 
-        public bool ShowEnabledCheckboxColossusBets => !HideColossusBets;
+        public bool ShowEnabledCheckboxColossusBets => IsDeposit;
 
-        public bool HideSettingLinkColossusBetsCredit => HideColossusBets || IsDeposit;
+        public bool HideSettingLinkColossusBetsCredit => true;
     }
 }
