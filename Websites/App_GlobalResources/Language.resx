@@ -1182,9 +1182,7 @@
   <data name="lblHorseRacing" xml:space="preserve">
     <value>Racing</value>
   </data>
-  <data name="DisabledHR" xml:space="preserve">
-    <value>Disabled HR</value>
-  </data>
+
   <data name="lblCommHR" xml:space="preserve">
     <value>Commission</value>
   </data>
@@ -2209,36 +2207,6 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblUpdateP2PSetting" xml:space="preserve">
     <value>Update Poker Setting</value>
   </data>
-  <data name="liveCasinoTitle" xml:space="preserve">
-    <value>Live Casino</value>
-  </data>
-  <data name="UpdateLiveCasinoGameSettingFail" xml:space="preserve">
-    <value>Updated Game Setting {0} fail because {1}.</value>
-  </data>
-  <data name="UpdateLiveCasinoGameSettingSuccess" xml:space="preserve">
-    <value>Updated {0} Game Setting Successfully.</value>
-  </data>
-  <data name="UpdateLiveCasinoGameSettingUnSuccess" xml:space="preserve">
-    <value>Updated Game Setting UnSuccessfully.</value>
-  </data>
-  <data name="UpdateLiveCasinoPTSettingSuccess" xml:space="preserve">
-    <value>Updated Position Taking/Commission successfully.</value>
-  </data>
-  <data name="UpdateLiveCasinoPTSettingUnSuccess" xml:space="preserve">
-    <value>Updated Position Taking/Commission Unsuccessfully.</value>
-  </data>
-  <data name="disableLiveCasino" xml:space="preserve">
-    <value>Disable Live Casino</value>
-  </data>
-  <data name="enableLiveCasino" xml:space="preserve">
-    <value>Live Casino</value>
-  </data>
-  <data name="lblDisabledLCSUpline" xml:space="preserve">
-    <value>Live Casino was disabled at upline</value>
-  </data>
-  <data name="lblDisabledLiveCasinoUpline" xml:space="preserve">
-    <value>Live Casino status has been disabled at upline</value>
-  </data>
   <data name="_101" xml:space="preserve">
     <value>Updated Commission Successfully.</value>
   </data>
@@ -2250,9 +2218,6 @@ The message is ready to be sent with the attached file {2}.</value>
   </data>
   <data name="CS0000" xml:space="preserve">
     <value>Updated successfully.</value>
-  </data>
-  <data name="LiveCasinoGameStatisticReportTiltle" xml:space="preserve">
-    <value>Live Casino Game Statistic Report</value>
   </data>
   <data name="CompanyNetIncome" xml:space="preserve">
     <value>Company net income</value>
@@ -2296,12 +2261,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblP2PPrivateGameComm" xml:space="preserve">
     <value>Private Game</value>
   </data>
-  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
-    <value>Updated Status Successfully.</value>
-  </data>
-  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
-    <value>Updated Status unsuccessfully because Live Casino status has been disabled at upline.</value>
-  </data>
+
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
@@ -2338,9 +2298,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="CompanyTO" xml:space="preserve">
     <value>Company T/O</value>
   </data>
-  <data name="LiveCasinoGameAgencyWinLossReportTitle" xml:space="preserve">
-    <value>Live Casino Game - Agency Win/Loss</value>
-  </data>
+
   <data name="numberBet" xml:space="preserve">
     <value>#Bets</value>
   </data>
@@ -2376,9 +2334,6 @@ The message is ready to be sent with the attached file {2}.</value>
   </data>
   <data name="lblSuspendedAccount" xml:space="preserve">
     <value>This account was suspended</value>
-  </data>
-  <data name="lblNotAllowToMoveCustLiveCasino" xml:space="preserve">
-    <value>Not allow to move because new upline unsynced.</value>
   </data>
   <data name="disableVirtualSports" xml:space="preserve">
     <value>Disable Virtual Sports</value>

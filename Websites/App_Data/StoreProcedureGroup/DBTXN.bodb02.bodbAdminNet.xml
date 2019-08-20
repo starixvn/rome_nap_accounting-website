@@ -30,9 +30,7 @@
     <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Special Delete">
-    <Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransDelSpecial_LiveCS" SpName="Acc_BettransDelSpecial_LiveCS" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.bodb02.bodbAdminNet" /> 
     <Setting Key="Acc_BettransDelSpecial" SpName="Acc_BettransDelSpecial" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransDelSpecialDel_MixParlay" SpName="Acc_BettransDelSpecialDel_MixParlay" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransDelBet" SpName="Acc_BettransDelBet" DbName="DBTXN.bodb02.bodbAdminNet" />

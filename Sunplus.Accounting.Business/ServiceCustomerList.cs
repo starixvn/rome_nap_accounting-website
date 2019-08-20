@@ -80,11 +80,7 @@
                 string strCurrency = selectCurreny as string ?? string.Empty;
                 string close = status as string ?? string.Empty;
 
-                var tplURL = "Customer/AgentList.htm";
-                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-                {
-                    tplURL = "Customer/AgentListExternal.htm";
-                }
+                var tplURL = "Customer/AgentList.htm";               
 
                 contentTpl = WebUtils.LoadTemplateBySystem(tplURL, true);
 

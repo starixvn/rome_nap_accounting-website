@@ -2276,13 +2276,7 @@
   </data>
   <data name="disabledCS" xml:space="preserve">
     <value>DisabledCS</value>
-  </data>
-  <data name="disabledHR" xml:space="preserve">
-    <value>Disabled Racing SA Tote</value>
-  </data>
-  <data name="disableot" xml:space="preserve">
-    <value>Disabled Racing UK Tote</value>
-  </data>
+  </data> 
   <data name="remark" xml:space="preserve">
     <value>Remark</value>
   </data>

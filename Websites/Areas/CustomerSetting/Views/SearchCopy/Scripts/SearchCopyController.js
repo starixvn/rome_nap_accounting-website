@@ -19,7 +19,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         internaluser: false
     };
 
-    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '', IsSyncCasino: 0, IsSyncBingo: 0, IsSyncLiveCasino: 0 };
+    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '', IsSyncCasino: 0 };
     $scope.newUser = {};
     $scope.siteName = '';
 
@@ -190,8 +190,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmRacing").attr('src', "");
         $("#frmRacingMinPT").attr('src', "");
         $("#frmCasino").attr('src', "");
-        $("#frmVirtualSports").attr('src', "");
-        $("#frmLiveCasino").attr('src', "");
+        $("#frmVirtualSports").attr('src', "");      
         $("#frmGoldDleluxe").attr('src', "");       
         $("#frmSportsbook2").attr('src', "");
         $("#frmCricket").attr('src', "");
@@ -470,12 +469,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.maxCredit = (parent.level == "super" ? formatNumber('maxCredit', custInfo.Credit, true) : formatNumber('maxCredit2', custInfo.CreditMax, true));
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
-                $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
-                $scope.existedUser.syncBingo = custInfo.IsSyncBingo;
-                $scope.existedUser.syncLiveCasino = custInfo.IsSyncLiveCasino;
-                $scope.existedUser.disableBingo = custInfo.DisableBingo;
+                $scope.existedUser.syncCasino = custInfo.IsSyncCasino;               
                 $scope.existedUser.disableCasino = custInfo.DisableCasino;
-                $scope.existedUser.disableLiveCasino = custInfo.DisableLiveCasino;
                 $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
                 $scope.existedUser.disableNG2 = custInfo.DisableNG2;
                 $scope.existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
@@ -544,12 +539,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             ExistingCustId: $scope.existedUser.userid,
             Creator: $("#currentUserId").val(),
             CreatorName: adminUsername,
-            IsSyncCasino: $scope.existedUser.syncCasino == "1" ? true : false,
-            IsSyncBingo: $scope.existedUser.syncBingo == "1" ? true : false,
-            IsSyncLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? true : false,
-            DisableBingo: $scope.existedUser.disableBingo,
+            IsSyncCasino: $scope.existedUser.syncCasino == "1" ? true : false,        
+         
             DisableCasino: $scope.existedUser.disableCasino,
-            DisableLiveCasino: $scope.existedUser.disableLiveCasino,
             CustLevel: (parent.level == 'member' ? 1 : 4),
             UplineId: $scope.parentId,
             IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,

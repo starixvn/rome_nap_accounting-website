@@ -2,13 +2,13 @@
 
 namespace Fanex.Tarus.Customer.Controller.CustomerList
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.CustomerList;
     using Fanex.Tarus.Customer.Entities.CustomerList;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Sunplus.Accounting.Core.Common;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public class CustomerListController : BaseController
     {
@@ -29,31 +29,15 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
 
             model = _customerList.GetSuperList(pageSize, pageIndex, null, null, null, null, null);          
             ViewBag.Currencies = _customerList.GetCurrencyList();
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return View("~/Views/Customer/CustomerList/ExternalSite/Super/SuperList.cshtml", model);
-            }
-            else
-            {
-                return View("~/Views/Customer/CustomerList/Default/Super/SuperList.cshtml", model);
-            }
+            return View("~/Views/Customer/CustomerList/Default/Super/SuperList.cshtml", model);
         }
 
         [HttpPost]
         public ActionResult SuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string status)
         {
             CustomerListModel model = new CustomerListModel();
-
             model = _customerList.GetSuperList(pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status);
-
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return PartialView("~/Views/Customer/CustomerList/ExternalSite/Super/_SuperListPartial.cshtml", model);
-            }
-            else
-            {
-                return PartialView("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", model);
-            }
+            return PartialView("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", model);
         }
 
         public ActionResult MasterAgentList(int? superId, string doubleCommSuper)
@@ -66,14 +50,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null, null, doubleCommSuper);
 
             ViewBag.Currencies = _customerList.GetCurrencyList();
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return View("~/Views/Customer/CustomerList/ExternalSite/Master/MasterList.cshtml", model);
-            }
-            else
-            {
-                return View("~/Views/Customer/CustomerList/Default/Master/MasterList.cshtml", model);
-            }
+            return View("~/Views/Customer/CustomerList/Default/Master/MasterList.cshtml", model);
 
         }
 
@@ -84,15 +61,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             ViewBag.synccasinoUpline = synccasinoUpline;
             int UserID = superId ?? 0;
             model = _customerList.GetMasterList(UserID, pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, doubleCommSuper);
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return PartialView("~/Views/Customer/CustomerList/ExternalSite/Master/_MasterListPartial.cshtml", model);
-            }
-            else
-            {
-                return PartialView("~/Views/Customer/CustomerList/Default/Master/_MasterListPartial.cshtml", model);
-            }
-
+            return PartialView("~/Views/Customer/CustomerList/Default/Master/_MasterListPartial.cshtml", model);
         }
 
         public ActionResult AgentList(int masterId, string doubleCommMaster)
@@ -102,14 +71,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int pageIndex = 1;
 
             model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster);
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return View("~/Views/Customer/CustomerList/ExternalSite/Agent/AgentList.cshtml", model);
-            }
-            else
-            {
-                return View("~/Views/Customer/CustomerList/Default/Agent/AgentList.cshtml", model);
-            }
+            return View("~/Views/Customer/CustomerList/Default/Agent/AgentList.cshtml", model);
 
         }
 
@@ -118,16 +80,8 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         {
             CustomerListModel model = new CustomerListModel();
             model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster);
-            ViewBag.synccasinoUpline = synccasinoUpline;
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return PartialView("~/Views/Customer/CustomerList/ExternalSite/Agent/_AgentListPartial.cshtml", model);
-            }
-            else
-            {
-                return PartialView("~/Views/Customer/CustomerList/Default/Agent/_AgentListPartial.cshtml", model);
-            }
-
+            ViewBag.synccasinoUpline = synccasinoUpline;            
+            return PartialView("~/Views/Customer/CustomerList/Default/Agent/_AgentListPartial.cshtml", model);
         }
 
         public ActionResult MemberList(int agentId, string doubleCommAgent)
@@ -135,15 +89,8 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             CustomerListModel model = new CustomerListModel();
             int pageSize = 50;
             int pageIndex = 1;
-            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, doubleCommAgent);
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return View("~/Views/Customer/CustomerList/ExternalSite/Member/MemberList.cshtml", model);
-            }
-            else
-            {
-                return View("~/Views/Customer/CustomerList/Default/Member/MemberList.cshtml", model);
-            }
+            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, doubleCommAgent);   
+            return View("~/Views/Customer/CustomerList/Default/Member/MemberList.cshtml", model);
 
         }
 
@@ -153,14 +100,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             CustomerListModel model = new CustomerListModel();
             model = _customerList.GetMemberList(agentId, pageSize, pageIndex, type, doubleCommAgent);
             ViewBag.synccasinoUpline = synccasinoUpline;
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
-            {
-                return PartialView("~/Views/Customer/CustomerList/ExternalSite/Member/_MemberListPartial.cshtml", model);
-            }
-            else
-            {
-                return PartialView("~/Views/Customer/CustomerList/Default/Member/_MemberListPartial.cshtml", model);
-            }
+            return PartialView("~/Views/Customer/CustomerList/Default/Member/_MemberListPartial.cshtml", model);
 
         }
 

@@ -209,16 +209,7 @@ function changeDisable(obj, type) {
             $("#disabledNumberGamePop .btn:first").removeAttr("disabled");
         } else {
             $("#disabledNumberGamePop .btn:first").attr("disabled", "disabled");
-        }
-
-    if (type == "LCS")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueLiveCasino').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueLiveCasino').val() == '0')) {
-            $("#disabledLCSPop .btn:first").removeAttr("disabled");
-        } else {
-
-            $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
-        }
+        }   
 
     if (type == "VS") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueVirtualSport').val() == '1') ||
@@ -239,15 +230,7 @@ function changeDisable(obj, type) {
 
             $("#disabledESPop .btn:first").attr("disabled", "disabled");
         }
-    }
-    if (type == "LCS")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueLiveCasino').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueLiveCasino').val() == '0')) {
-            $("#disabledLCSPop .btn:first").removeAttr("disabled");
-        } else {
-
-            $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
-        }
+    }   
 
     var productName = "GoldDeluxe";
     if (type == productName) {

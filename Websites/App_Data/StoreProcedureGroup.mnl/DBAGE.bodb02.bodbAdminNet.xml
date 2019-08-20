@@ -224,15 +224,6 @@
   <Function Name="Live Casino - Move Account">
     <Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Live Casino - Special Delete - Recover Bet">
-    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Live Casino - Report">
-    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Login">
     <Setting Key="CustomerSelBelonging" SpName="Age_CustomerSelBelonging" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
