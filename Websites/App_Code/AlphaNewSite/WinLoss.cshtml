@@ -1,8 +1,9 @@
 ﻿@using Fanex.BetList.Core.Entities
 @using Fanex.BetList.Core.Utils
-
+@using Fanex.Tarus.BetList.Helper
 @helper Render(ITicket ticket)
 {
+    var isInvalid = CN88BetListHelpers.IsInvalidTicket(ticket);
     switch (ticket.Status.ToLower())
     {
         case "running":
@@ -14,22 +15,29 @@
             break;
         case "void":
             {
-                <td class="width80 r">@(ticket.BetTypeId.Equals(500) ? "(NW) 0.00" : "0.00")</td>
+                <td class="width80 r col-winloss">@(ticket.BetTypeId.Equals(500) ? "(NW) 0.00" : "-")</td>
             }
             break;
         case "reject":
             if (ticket.RefCode != 0 &&
-                    (ticket.WalletType == 0 || ticket.WalletType == 1 || ticket.WalletType == 2))
+            (ticket.WalletType == 0 || ticket.WalletType == 1 || ticket.WalletType == 2))
             {
-                <td class="width80 r">(NW) @(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+                <td class="width80 r col-winloss">(NW) @(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
             }
             else
             {
-                <td class="width80 r">0.00</td>
+                <td class="width80 r col-winloss">-</td>
             }
             break;
         default:
-            <td class="width80 r">@(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+            if (isInvalid)
+            {
+                <td class="width80 r col-winloss">-</td>
+            }
+            else
+            {
+                <td class="width80 r">@(new HtmlString(ConvertByBetType.Winloss((ticket.Winlost + ticket.PlayerComm))))</td>
+            }
             break;
     }
 

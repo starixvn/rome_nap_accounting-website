@@ -3,9 +3,8 @@
 @using Fanex.Tarus.BetList.Models;
 @using Fanex.Tarus.BetList.ViewModel;
 @using Fanex.Tarus.BetList.Constants
-
+@using Fanex.Tarus.BetList.Helper
 @model CN88BetListViewModel
-
 <div class="lang-container" id="lang-container" style="display:table">
     <div class="lang-box" id="lang-box">
         <span id="languageCode" class="flag flag-@Model.Languages.CurrentLanguage"></span>
@@ -23,7 +22,6 @@
         }
     </ul>
 </div>
-
 <div id="BetlistByCustInfo" class="freegrid display-none">
     <div class="col_header row-headers-background scroll-y">
         <div class="header-container">
@@ -165,7 +163,7 @@
                     {
                         foreach (var ticket in Model.BetListData.Tickets)
                         {
-                            <tr id="cn88-betlist-row-@ticket.TransId">
+                            <tr id="cn88-betlist-row-@ticket.TransId" class="@CN88BetListHelpers.TicketRowClass(ticket)">
                                 @AlphaNewSite.TransDate.Render(ticket)
                                 @AlphaNewSite.Comm.Render(ticket)
                                 @AlphaNewSite.BetID.Render(ticket, Model.CN88Builder, Model.TicketHelper, Model.TicketHelper.GetOddsTypeNameById)
