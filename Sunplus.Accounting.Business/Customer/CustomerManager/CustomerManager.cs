@@ -28,6 +28,7 @@
     using System.Web;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using Result = Entities.Result;
+    using ConverterCommon = Fanex.Common.Converter;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -142,7 +143,39 @@
                         DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
                         DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
                         DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
-                        var customerInfoViewModel = new CustomerInfoViewModel(customerInfoRow, lineInfoRow, cashRow, downlineStatusInfoRow, dynamicSettingtable, memberCN88CreditRow, memberCN88BetStakeRow);
+
+                        var roleId = ConverterCommon.ToInt(customerInfoRow["roleid"]);
+                        decimal memberOutstandingMBC = 0;
+                        decimal memberBalanceMBC = 0;
+                        decimal memberNetPositionMBC = 0;
+                        var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") && 
+                            Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
+
+                        if (roleId == (int)Role.Member && 
+                            !AppSettings.IsCN88SiteName(
+                                ConverterCommon.ToString2(customerInfoRow["membersite"])) &&
+                                !IsInternalUser)
+                        {
+                            var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
+                            memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
+
+                            var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
+                            memberBalanceMBC = memberMBCBalanceModel.Balance;
+                            memberNetPositionMBC = memberMBCBalanceModel.NetPosition;
+                        }
+
+                        var customerInfoViewModel = new CustomerInfoViewModel(
+                            customerInfoRow, 
+                            lineInfoRow, 
+                            cashRow, 
+                            downlineStatusInfoRow, 
+                            dynamicSettingtable,
+                            memberCN88CreditRow,
+                            memberCN88BetStakeRow,
+                            memberOutstandingMBC,
+                            memberBalanceMBC,
+                            memberNetPositionMBC);
+
                         AssignCustomerSession(customerInfoViewModel);
 
                         bool isDenied = smartPunterService.IsDeniedViewSmartPunter(

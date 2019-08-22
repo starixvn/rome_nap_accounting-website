@@ -60,26 +60,36 @@
 
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
 
-        private void GetExtraCustomerInfo(DataRow customerInfoRow, DataRow lineInfoRow, DataRow cashRow)
+        private bool IsCN88Site => AppSettings.IsCN88SiteName(CustomerSite);
+
+        private void GetExtraCustomerInfo(
+            DataRow customerInfoRow,
+            DataRow lineInfoRow,
+            DataRow cashRow,
+            decimal memberOutstandingMBC,
+            decimal memberBalanceMBC,
+            decimal memberNetPositionMBC)
         {
             switch (RoleId)
             {
                 case 1: // member
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     DownlineName = string.Empty;
-                    AccOutstanding = Converter.ToDecimal(cashRow["outstanding"]);
-                    Cash = Converter.ToDecimal(cashRow["cash"]);
-                    NetPosition = Converter.ToDecimal(customerInfoRow["netPosition"]);
-                    if (AppSettings.IsCN88SiteName(CustomerSite))
-                    {
-                        BetCredit = Credit - TotalBetStake;
-                    }
-                    else
-                    {
-                        BetCredit = Credit + Cash - AccOutstanding + NetPosition;
-                    }
-
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
+
+                    AccOutstanding = IsCN88Site || IsInternalUser ? 
+                        Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
+
+                    Cash = IsCN88Site || IsInternalUser ? 
+                        Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC;
+
+                    NetPosition = IsCN88Site || IsInternalUser ?
+                       Converter.ToDecimal(customerInfoRow["netPosition"]) : memberNetPositionMBC;
+
+                    BetCredit = IsCN88Site ? Credit - TotalBetStake :
+                        IsInternalUser ? Credit + Cash - AccOutstanding + NetPosition :
+                        Credit + memberBalanceMBC + memberNetPositionMBC;
+
                     break;
 
                 case 2: // agent
