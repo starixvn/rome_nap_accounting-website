@@ -875,6 +875,10 @@
       <Project>{3c9e433c-4c0d-4ced-8fe7-26bc80894b0f}</Project>
       <Name>Fanex.Tarus.BetList</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.CN88\Fanex.Tarus.CN88.csproj">
+      <Project>{dde8556b-4bd0-4cb0-bab9-d0c812347694}</Project>
+      <Name>Fanex.Tarus.CN88</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
       <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>
       <Name>Fanex.Tarus.Customer</Name>

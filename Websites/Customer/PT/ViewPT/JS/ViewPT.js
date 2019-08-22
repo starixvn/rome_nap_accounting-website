@@ -51,107 +51,107 @@ var ViewPT = {
     TplPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
                     <table class="layout_table ViewPTTable c">\
-	                    <tr class="ViewPTHeader b">\
-		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                    <th width="40">s</th>\
-		                    <th width="40">m</th>\
-		                    <th width="40">a</th>\
-		                    <th width="40">us</th>\
-		                    <th width="40">is</th>\
-		                    <!--AutoMPT-->\
+                        <tr class="ViewPTHeader b">\
+                            <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+                            <th width="40">s</th>\
+                            <th width="40">m</th>\
+                            <th width="40">a</th>\
+                            <th width="40">us</th>\
+                            <th width="40">is</th>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <th width="40">um</th>\
-		                        <th width="40">im</th>\
+                                <th width="40">um</th>\
+                                <th width="40">im</th>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <th width="40">n</th>\
-		                    <th width="40">l</th>\
-	                    </tr>\
-	                    <!--r4-->\
+                            <!--/AutoMPT-->\
+                            <th width="40">n</th>\
+                            <th width="40">l</th>\
+                        </tr>\
+                        <!--r4-->\
                         {{if (Super != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Super [4]</td>\
-		                    <td>${Super.Super}</td>\
-		                    <td>${Super.Master}</td>\
-		                    <td>${Super.Agent}</td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Super [4]</td>\
+                            <td>${Super.Super}</td>\
+                            <td>${Super.Master}</td>\
+                            <td>${Super.Agent}</td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Super.MinPt}</td>\
-		                    <td>${Super.MaxPt}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Super.MinPt}</td>\
+                            <td>${Super.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r4-->\
-	                    <!--r3-->\
+                        <!--/r4-->\
+                        <!--r3-->\
                         {{if (Master != null)}}\
-	                    <tr  class="trbgov" >\
-		                    <td class="ViewPTHeader l">Master [3]</td>\
-		                    <td>${Master.Super}</td>\
-		                    <td>${Master.Master}</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Master.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr  class="trbgov" >\
+                            <td class="ViewPTHeader l">Master [3]</td>\
+                            <td>${Master.Super}</td>\
+                            <td>${Master.Master}</td>\
+                            <td class="disable"></td>\
+                            <td>${Master.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableFlagCss}"></td>\
-		                        <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Master.MinPt}</td>\
-		                    <td>${Master.MaxPt}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Master.MinPt}</td>\
+                            <td>${Master.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r3-->\
-	                    <!--r2-->\
+                        <!--/r3-->\
+                        <!--r2-->\
                         {{if (Agent != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Agent [2]</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Agent.Master}</td>\
-		                    <td>${Agent.Agent}</td>\
-		                    <!--DisableAutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Agent [2]</td>\
+                            <td class="disable"></td>\
+                            <td>${Agent.Master}</td>\
+                            <td>${Agent.Agent}</td>\
+                            <!--DisableAutoMPT-->\
                             {{if (!EnableAutoMaster)}}\
-		                        <td>${Agent.SuperAuto}</td>\
-		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-		                    <!--/DisableAutoMPT-->\
-		                    <!--AutoMPT-->\
+                                <td>${Agent.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+                            <!--/DisableAutoMPT-->\
+                            <!--AutoMPT-->\
                             {{else}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
-		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Agent.MinPt}</td>\
-		                    <td>${Agent.MaxPt}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Agent.MinPt}</td>\
+                            <td>${Agent.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r2-->\
-	                    <!--r1-->\
+                        <!--/r2-->\
+                        <!--r1-->\
                         {{if (Member != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Member [1]</td>\
-		                    <td>${Member.Super}</td>\
-		                    <td>${Member.Master}</td>\
-		                    <td>${Member.Agent}</td>\
-		                    <td>${Member.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Member [1]</td>\
+                            <td>${Member.Super}</td>\
+                            <td>${Member.Master}</td>\
+                            <td>${Member.Agent}</td>\
+                            <td>${Member.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                                <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r1-->\
+                        <!--/r1-->\
                     </table>\
                     <br />\
                     <!--/tbl-->\
@@ -159,62 +159,62 @@ var ViewPT = {
     TplNoAutoPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
                     <table class="layout_table ViewPTTable c">\
-	                    <tr class="ViewPTHeader b">\
-		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                    <th width="40">s</th>\
-		                    <th width="40">m</th>\
-		                    <th width="40">a</th>\
-		                    <th width="40">n</th>\
-		                    <th width="40">l</th>\
-	                    </tr>\
-	                    <!--r4-->\
+                        <tr class="ViewPTHeader b">\
+                            <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+                            <th width="40">s</th>\
+                            <th width="40">m</th>\
+                            <th width="40">a</th>\
+                            <th width="40">n</th>\
+                            <th width="40">l</th>\
+                        </tr>\
+                        <!--r4-->\
                         {{if (Super != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Super [4]</td>\
-		                    <td>${Super.Super}</td>\
-		                    <td>${Super.Master}</td>\
-		                    <td>${Super.Agent}</td>\
-		                    <td>${Super.MinPt}</td>\
-		                    <td>${Super.MaxPt}</td>\
-	                    </tr>\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Super [4]</td>\
+                            <td>${Super.Super}</td>\
+                            <td>${Super.Master}</td>\
+                            <td>${Super.Agent}</td>\
+                            <td>${Super.MinPt}</td>\
+                            <td>${Super.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r4-->\
-	                    <!--r3-->\
+                        <!--/r4-->\
+                        <!--r3-->\
                         {{if (Master != null)}}\
-	                    <tr  class="trbgov" >\
-		                    <td class="ViewPTHeader l">Master [3]</td>\
-		                    <td>${Master.Super}</td>\
-		                    <td>${Master.Master}</td>\
-		                    <td class="disable"></td>\
+                        <tr  class="trbgov" >\
+                            <td class="ViewPTHeader l">Master [3]</td>\
+                            <td>${Master.Super}</td>\
+                            <td>${Master.Master}</td>\
+                            <td class="disable"></td>\
                             <td>${Master.MinPt}</td>\
-		                    <td>${Master.MaxPt}</td>\
-	                    </tr>\
+                            <td>${Master.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r3-->\
-	                    <!--r2-->\
+                        <!--/r3-->\
+                        <!--r2-->\
                         {{if (Agent != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Agent [2]</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Agent.Master}</td>\
-		                    <td>${Agent.Agent}</td>\
-		                    <td>${Agent.MinPt}</td>\
-		                    <td>${Agent.MaxPt}</td>\
-	                    </tr>\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Agent [2]</td>\
+                            <td class="disable"></td>\
+                            <td>${Agent.Master}</td>\
+                            <td>${Agent.Agent}</td>\
+                            <td>${Agent.MinPt}</td>\
+                            <td>${Agent.MaxPt}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r2-->\
-	                    <!--r1-->\
+                        <!--/r2-->\
+                        <!--r1-->\
                         {{if (Member != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Member [1]</td>\
-		                    <td>${Member.Super}</td>\
-		                    <td>${Member.Master}</td>\
-		                    <td>${Member.Agent}</td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-	                    </tr>\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Member [1]</td>\
+                            <td>${Member.Super}</td>\
+                            <td>${Member.Master}</td>\
+                            <td>${Member.Agent}</td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r1-->\
+                        <!--/r1-->\
                     </table>\
                     <br />\
                     <!--/tbl-->\
@@ -248,12 +248,12 @@ var ViewPT = {
                                 <td>${Super.Master}</td>\
                                 <td>${Super.Agent}</td>\
                                 <td class="disable"></td>\
-		                        <td class="disable"></td>\
-		                        <!--AutoMPT-->\
-		                            <td class="disable"></td>\
-		                            <td class="disable"></td>\
-		                        <!--/AutoMPT-->\
-		                        <td>${Super.MinPt}</td>\
+                                <td class="disable"></td>\
+                                <!--AutoMPT-->\
+                                    <td class="disable"></td>\
+                                    <td class="disable"></td>\
+                                <!--/AutoMPT-->\
+                                <td>${Super.MinPt}</td>\
                                 <td>${Super.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -269,11 +269,11 @@ var ViewPT = {
                                 <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto}/></td>\
                                 <!--AutoMPT-->\
                                 {{if (EnableAutoMaster)}}\
-		                            <td class="${DisableFlagCss}"></td>\
-		                            <td class="${DisableFlagCss}"></td>\
+                                    <td class="${DisableFlagCss}"></td>\
+                                    <td class="${DisableFlagCss}"></td>\
                                 {{/if}}\
-		                        <!--/AutoMPT-->\
-		                        <td>${Master.MinPt}</td>\
+                                <!--/AutoMPT-->\
+                                <td>${Master.MinPt}</td>\
                                 <td>${Master.Com}</td>\
                             </tr>\
                         {{/if}}\
@@ -287,19 +287,19 @@ var ViewPT = {
                                 <td>${Agent.Agent}</td>\
                                 <!--DisableAutoMPT-->\
                                 {{if (!EnableAutoMaster)}}\
-		                            <td>${Agent.SuperAuto}</td>\
-		                            <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-		                        <!--/DisableAutoMPT-->\
-		                        <!--AutoMPT-->\
+                                    <td>${Agent.SuperAuto}</td>\
+                                    <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+                                <!--/DisableAutoMPT-->\
+                                <!--AutoMPT-->\
                                 {{else}}\
-		                            <td class="disable"></td>\
-		                            <td class="disable"></td>\
-		                            <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
-		                            <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                                    <td class="disable"></td>\
+                                    <td class="disable"></td>\
+                                    <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+                                    <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
                                 {{/if}}\
-		                        <!--/AutoMPT-->\
-		                        <td>${Agent.MinPt}</td>\
-		                        <td>${Agent.Com}</td>\
+                                <!--/AutoMPT-->\
+                                <td>${Agent.MinPt}</td>\
+                                <td>${Agent.Com}</td>\
                             </tr>\
                         {{/if}}\
                         <!--/r2-->\
@@ -314,12 +314,12 @@ var ViewPT = {
                                 <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto}/></td>\
                                 <!--AutoMPT-->\
                                 {{if (EnableAutoMaster)}}\
-		                            <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
-		                            <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                                    <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+                                    <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
                                 {{/if}}\
-		                        <!--/AutoMPT-->\
-		                        <td class="disable"></td>\
-		                        <td class="disable">${Member.Com}</td>\
+                                <!--/AutoMPT-->\
+                                <td class="disable"></td>\
+                                <td class="disable">${Member.Com}</td>\
                             </tr>\
                         {{/if}}\
                         <!--/r1-->\
@@ -331,107 +331,107 @@ var ViewPT = {
     TplAGCasinoPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
                     <table class="layout_table ViewPTTable c">\
-	                    <tr class="ViewPTHeader b">\
-		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                    <th width="40">s</th>\
-		                    <th width="40">m</th>\
-		                    <th width="40">a</th>\
-		                    <th width="40">us</th>\
-		                    <th width="40">is</th>\
-		                    <!--AutoMPT-->\
+                        <tr class="ViewPTHeader b">\
+                            <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+                            <th width="40">s</th>\
+                            <th width="40">m</th>\
+                            <th width="40">a</th>\
+                            <th width="40">us</th>\
+                            <th width="40">is</th>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <th width="40">um</th>\
-		                        <th width="40">im</th>\
+                                <th width="40">um</th>\
+                                <th width="40">im</th>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <th width="40">n</th>\
-		                    <th width="40">comm</th>\
-	                    </tr>\
-	                    <!--r4-->\
+                            <!--/AutoMPT-->\
+                            <th width="40">n</th>\
+                            <th width="40">comm</th>\
+                        </tr>\
+                        <!--r4-->\
                         {{if (Super != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Super [4]</td>\
-		                    <td>${Super.Super}</td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Super [4]</td>\
+                            <td>${Super.Super}</td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Super.MinPt}</td>\
-		                    <td>${Super.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Super.MinPt}</td>\
+                            <td>${Super.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r4-->\
-	                    <!--r3-->\
+                        <!--/r4-->\
+                        <!--r3-->\
                         {{if (Master != null)}}\
-	                    <tr  class="trbgov" >\
-		                    <td class="ViewPTHeader l">Master [3]</td>\
-		                    <td>${Master.Super}</td>\
-		                    <td>${Master.Master}</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Master.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr  class="trbgov" >\
+                            <td class="ViewPTHeader l">Master [3]</td>\
+                            <td>${Master.Super}</td>\
+                            <td>${Master.Master}</td>\
+                            <td class="disable"></td>\
+                            <td>${Master.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableFlagCss}"></td>\
-		                        <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Master.MinPt}</td>\
-		                    <td>${Master.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Master.MinPt}</td>\
+                            <td>${Master.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r3-->\
-	                    <!--r2-->\
+                        <!--/r3-->\
+                        <!--r2-->\
                         {{if (Agent != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Agent [2]</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Agent.Master}</td>\
-		                    <td>${Agent.Agent}</td>\
-		                    <!--DisableAutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Agent [2]</td>\
+                            <td class="disable"></td>\
+                            <td>${Agent.Master}</td>\
+                            <td>${Agent.Agent}</td>\
+                            <!--DisableAutoMPT-->\
                             {{if (!EnableAutoMaster)}}\
-		                        <td>${Agent.SuperAuto}</td>\
-		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-		                    <!--/DisableAutoMPT-->\
-		                    <!--AutoMPT-->\
+                                <td>${Agent.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+                            <!--/DisableAutoMPT-->\
+                            <!--AutoMPT-->\
                             {{else}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
-		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Agent.MinPt}</td>\
-		                    <td>${Agent.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Agent.MinPt}</td>\
+                            <td>${Agent.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r2-->\
-	                    <!--r1-->\
+                        <!--/r2-->\
+                        <!--r1-->\
                         {{if (Member != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Member [1]</td>\
-		                    <td>${Member.Super}</td>\
-		                    <td>${Member.Master}</td>\
-		                    <td>${Member.Agent}</td>\
-		                    <td>${Member.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Member [1]</td>\
+                            <td>${Member.Super}</td>\
+                            <td>${Member.Master}</td>\
+                            <td>${Member.Agent}</td>\
+                            <td>${Member.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                                <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td class="disable"></td>\
-		                    <td>${Member.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td class="disable"></td>\
+                            <td>${Member.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r1-->\
+                        <!--/r1-->\
                     </table>\
                     <br />\
                     <!--/tbl-->\
@@ -439,107 +439,107 @@ var ViewPT = {
     TplGoldDeluxePtInfo: '{{each(i, pt) PotionTakingDetail}}\
                     <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
                     <table class="layout_table ViewPTTable c">\
-	                    <tr class="ViewPTHeader b">\
-		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                    <th width="40">s</th>\
-		                    <th width="40">m</th>\
-		                    <th width="40">a</th>\
-		                    <th width="40">us</th>\
-		                    <th width="40">is</th>\
-		                    <!--AutoMPT-->\
+                        <tr class="ViewPTHeader b">\
+                            <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+                            <th width="40">s</th>\
+                            <th width="40">m</th>\
+                            <th width="40">a</th>\
+                            <th width="40">us</th>\
+                            <th width="40">is</th>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <th width="40">um</th>\
-		                        <th width="40">im</th>\
+                                <th width="40">um</th>\
+                                <th width="40">im</th>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <th width="40">n</th>\
-		                    <th width="40">comm</th>\
-	                    </tr>\
-	                    <!--r4-->\
+                            <!--/AutoMPT-->\
+                            <th width="40">n</th>\
+                            <th width="40">comm</th>\
+                        </tr>\
+                        <!--r4-->\
                         {{if (Super != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Super [4]</td>\
-		                    <td>${Super.Super}</td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <td class="disable"></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Super [4]</td>\
+                            <td>${Super.Super}</td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <td class="disable"></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Super.MinPt}</td>\
-		                    <td>${Super.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Super.MinPt}</td>\
+                            <td>${Super.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r4-->\
-	                    <!--r3-->\
+                        <!--/r4-->\
+                        <!--r3-->\
                         {{if (Master != null)}}\
-	                    <tr  class="trbgov" >\
-		                    <td class="ViewPTHeader l">Master [3]</td>\
-		                    <td>${Master.Super}</td>\
-		                    <td>${Master.Master}</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Master.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr  class="trbgov" >\
+                            <td class="ViewPTHeader l">Master [3]</td>\
+                            <td>${Master.Super}</td>\
+                            <td>${Master.Master}</td>\
+                            <td class="disable"></td>\
+                            <td>${Master.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableFlagCss}"></td>\
-		                        <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
+                                <td class="${DisableFlagCss}"></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Master.MinPt}</td>\
-		                    <td>${Master.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Master.MinPt}</td>\
+                            <td>${Master.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r3-->\
-	                    <!--r2-->\
+                        <!--/r3-->\
+                        <!--r2-->\
                         {{if (Agent != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Agent [2]</td>\
-		                    <td class="disable"></td>\
-		                    <td>${Agent.Master}</td>\
-		                    <td>${Agent.Agent}</td>\
-		                    <!--DisableAutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Agent [2]</td>\
+                            <td class="disable"></td>\
+                            <td>${Agent.Master}</td>\
+                            <td>${Agent.Agent}</td>\
+                            <!--DisableAutoMPT-->\
                             {{if (!EnableAutoMaster)}}\
-		                        <td>${Agent.SuperAuto}</td>\
-		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
-		                    <!--/DisableAutoMPT-->\
-		                    <!--AutoMPT-->\
+                                <td>${Agent.SuperAuto}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+                            <!--/DisableAutoMPT-->\
+                            <!--AutoMPT-->\
                             {{else}}\
-		                        <td class="disable"></td>\
-		                        <td class="disable"></td>\
-		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                                <td class="disable"></td>\
+                                <td class="disable"></td>\
+                                <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td>${Agent.MinPt}</td>\
-		                    <td>${Agent.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td>${Agent.MinPt}</td>\
+                            <td>${Agent.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r2-->\
-	                    <!--r1-->\
+                        <!--/r2-->\
+                        <!--r1-->\
                         {{if (Member != null)}}\
-	                    <tr class="trbgov" >\
-		                    <td class="ViewPTHeader l">Member [1]</td>\
-		                    <td>${Member.Super}</td>\
-		                    <td>${Member.Master}</td>\
-		                    <td>${Member.Agent}</td>\
-		                    <td>${Member.SuperAuto}</td>\
-		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
-		                    <!--AutoMPT-->\
+                        <tr class="trbgov" >\
+                            <td class="ViewPTHeader l">Member [1]</td>\
+                            <td>${Member.Super}</td>\
+                            <td>${Member.Master}</td>\
+                            <td>${Member.Agent}</td>\
+                            <td>${Member.SuperAuto}</td>\
+                            <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+                            <!--AutoMPT-->\
                             {{if (EnableAutoMaster)}}\
-		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
-		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                                <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+                                <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
                             {{/if}}\
-		                    <!--/AutoMPT-->\
-		                    <td class="disable"></td>\
-		                    <td>${Member.Com}</td>\
-	                    </tr>\
+                            <!--/AutoMPT-->\
+                            <td class="disable"></td>\
+                            <td>${Member.Com}</td>\
+                        </tr>\
                         {{/if}}\
-	                    <!--/r1-->\
+                        <!--/r1-->\
                     </table>\
                     <br />\
                     <!--/tbl-->\
@@ -547,62 +547,62 @@ var ViewPT = {
     TplMicroGamingPtInfo: '{{each(i, pt) PotionTakingDetail}}\
                 <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
                 <table class="layout_table ViewPTTable c">\
-	                <tr class="ViewPTHeader b">\
-		                <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-		                <th width="40">s</th>\
-		                <th width="40">m</th>\
-		                <th width="40">a</th>\
-		                <th width="40">n</th>\
-		                <th width="40">l</th>\
-	                </tr>\
-	                <!--r4-->\
+                    <tr class="ViewPTHeader b">\
+                        <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+                        <th width="40">s</th>\
+                        <th width="40">m</th>\
+                        <th width="40">a</th>\
+                        <th width="40">n</th>\
+                        <th width="40">l</th>\
+                    </tr>\
+                    <!--r4-->\
                     {{if (Super != null)}}\
-	                <tr class="trbgov" >\
-		                <td class="ViewPTHeader l">Super [4]</td>\
-		                <td>${Super.Super}</td>\
-		                <td>${Super.Master}</td>\
-		                <td>${Super.Agent}</td>\
-		                <td>${Super.MinPt}</td>\
-		                <td>${Super.MaxPt}</td>\
-	                </tr>\
+                    <tr class="trbgov" >\
+                        <td class="ViewPTHeader l">Super [4]</td>\
+                        <td>${Super.Super}</td>\
+                        <td>${Super.Master}</td>\
+                        <td>${Super.Agent}</td>\
+                        <td>${Super.MinPt}</td>\
+                        <td>${Super.MaxPt}</td>\
+                    </tr>\
                     {{/if}}\
-	                <!--/r4-->\
-	                <!--r3-->\
+                    <!--/r4-->\
+                    <!--r3-->\
                     {{if (Master != null)}}\
-	                <tr  class="trbgov" >\
-		                <td class="ViewPTHeader l">Master [3]</td>\
-		                <td>${Master.Super}</td>\
-		                <td>${Master.Master}</td>\
-		                <td class="disable"></td>\
+                    <tr  class="trbgov" >\
+                        <td class="ViewPTHeader l">Master [3]</td>\
+                        <td>${Master.Super}</td>\
+                        <td>${Master.Master}</td>\
+                        <td class="disable"></td>\
                         <td>${Master.MinPt}</td>\
-		                <td>${Master.MaxPt}</td>\
-	                </tr>\
+                        <td>${Master.MaxPt}</td>\
+                    </tr>\
                     {{/if}}\
-	                <!--/r3-->\
-	                <!--r2-->\
+                    <!--/r3-->\
+                    <!--r2-->\
                     {{if (Agent != null)}}\
-	                <tr class="trbgov" >\
-		                <td class="ViewPTHeader l">Agent [2]</td>\
-		                <td class="disable"></td>\
-		                <td>${Agent.Master}</td>\
-		                <td>${Agent.Agent}</td>\
-		                <td>${Agent.MinPt}</td>\
-		                <td>${Agent.MaxPt}</td>\
-	                </tr>\
+                    <tr class="trbgov" >\
+                        <td class="ViewPTHeader l">Agent [2]</td>\
+                        <td class="disable"></td>\
+                        <td>${Agent.Master}</td>\
+                        <td>${Agent.Agent}</td>\
+                        <td>${Agent.MinPt}</td>\
+                        <td>${Agent.MaxPt}</td>\
+                    </tr>\
                     {{/if}}\
-	                <!--/r2-->\
-	                <!--r1-->\
+                    <!--/r2-->\
+                    <!--r1-->\
                     {{if (Member != null)}}\
-	                <tr class="trbgov" >\
-		                <td class="ViewPTHeader l">Member [1]</td>\
-		                <td>${Member.Super}</td>\
-		                <td>${Member.Master}</td>\
-		                <td>${Member.Agent}</td>\
-		                <td class="disable"></td>\
-		                <td class="disable"></td>\
-	                </tr>\
+                    <tr class="trbgov" >\
+                        <td class="ViewPTHeader l">Member [1]</td>\
+                        <td>${Member.Super}</td>\
+                        <td>${Member.Master}</td>\
+                        <td>${Member.Agent}</td>\
+                        <td class="disable"></td>\
+                        <td class="disable"></td>\
+                    </tr>\
                     {{/if}}\
-	                <!--/r1-->\
+                    <!--/r1-->\
                 </table>\
                 <br />\
                 <!--/tbl-->\
@@ -655,29 +655,29 @@ var ViewPT = {
                     </tr>\
                     <!--row-->\
                     {{each(i, current) $data.Comm}}\
-		                <tr class="trbgov">\
-			                <td class="tdtitle b">${RoleName}</td>\
-			                <td>${GroupA.Comm}</td>\
+                        <tr class="trbgov">\
+                            <td class="tdtitle b">${RoleName}</td>\
+                            <td>${GroupA.Comm}</td>\
                             {{if (MyanmarOdds != null && !MyanmarOdds.Status)}}\
-				                <td>${GroupB.Comm}</td>\
-			                    <td>${GroupC.Comm}</td>\
-			                    <td>${GroupD.Comm}</td>\
-			                {{/if}}\
-			                <td>${Other.Comm}</td>\
-			                <!--1X2-->\
-			                {{if (OneXTwo != null && OneXTwo.Status)}}\
-				                <td>${OneXTwo.Comm}</td>\
-			                {{/if}}\
-			                <!--/1X2-->\
-			                <!--/numbergame-->\
+                                <td>${GroupB.Comm}</td>\
+                                <td>${GroupC.Comm}</td>\
+                                <td>${GroupD.Comm}</td>\
+                            {{/if}}\
+                            <td>${Other.Comm}</td>\
+                            <!--1X2-->\
+                            {{if (OneXTwo != null && OneXTwo.Status)}}\
+                                <td>${OneXTwo.Comm}</td>\
+                            {{/if}}\
+                            <!--/1X2-->\
+                            <!--/numbergame-->\
                              <!--myanmarodds-->\
-			                {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
-				                <td>${MyanmarOdds.Comm}</td>\
-			                {{/if}}\
-			                <!--/myanmarodds-->\
-		                </tr>\
-	                {{/each}}\
-	                <!--/row-->\
+                            {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
+                                <td>${MyanmarOdds.Comm}</td>\
+                            {{/if}}\
+                            <!--/myanmarodds-->\
+                        </tr>\
+                    {{/each}}\
+                    <!--/row-->\
                 </table>\
             {{/if}}\
             </div>',
@@ -1014,4 +1014,3 @@ function ChangeType(rdo) {
 
     $('#sContent').html('');
 }
-

@@ -1,5 +1,10 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
@@ -21,11 +26,6 @@
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
     using Security;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using Result = Entities.Result;
     using ConverterCommon = Fanex.Common.Converter;
@@ -409,13 +409,17 @@
 
         private void RenderCN88Customer(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
+            var isCN88 = AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite);
+
             ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Headline, "CN88HeadlineVisibleItem", "CN88HeadlineHiddenItem");
-
-            ShowHideBlock(ref htmlcontent, AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite), "CN88VisibleItem", "CN88HiddenItem");
-            
+            ShowHideBlock(ref htmlcontent, isCN88, "CN88VisibleItem", "CN88HiddenItem");
             ShowHideBlock(ref htmlcontent, customerInfoViewModel.ManageCustomerAccess, "CN88CustomerStatus", "CN88CustomerStatusDisabled");
-
             ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Super, "CN88HeadlinePossessOnSuper", string.Empty);
+
+            if (!isCN88 || customerInfoViewModel.RoleId == (int)Role.Headline)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88ViewPT");
+            }
         }
 
         private void ShowHideBlock(ref string htmlContent, bool isShow, string visibleBlockName, string hiddenBlockName)
