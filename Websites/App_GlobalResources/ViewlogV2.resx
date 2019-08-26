@@ -902,9 +902,6 @@
   <data name="a_v154spt_20" xml:space="preserve">
     <value>Money Line</value>
   </data>
-  <data name="hrfixedodds" xml:space="preserve">
-    <value>HR Fixed Odds</value>
-  </data>
   <data name="isa_v154mpt_20" xml:space="preserve">
     <value>Money Line</value>
   </data>
@@ -1153,10 +1150,7 @@
   </data>
   <data name="v204discountvalue_cashinshare" xml:space="preserve">
     <value>Cash-In Share</value>
-  </data>
-  <data name="discounthrfixedodds" xml:space="preserve">
-    <value>HR Fixed Odds</value>
-  </data>
+  </data>  
   <data name="discountmyanmarodds" xml:space="preserve">
     <value>% Odds Comm</value>
   </data>

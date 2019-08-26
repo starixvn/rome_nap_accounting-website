@@ -335,15 +335,10 @@ function HideClosedPop(div) {
 }
 
 function DisabeAllCheckBox() {
-    $("#disabledHRPop .btn:first").attr("disabled", "disabled");
-    $("#disabledHROpenTotePop .btn:first").attr("disabled", "disabled");
-    $("#disabledFinancialPop .btn:first").attr("disabled", "disabled");
-    $("#disabledBingoGamePop .btn:first").attr("disabled", "disabled");
     $("#disabledNumberGamePop .btn:first").attr("disabled", "disabled");
     $("#disabledCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledVSPop .btn:first").attr("disabled", "disabled");
-    $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
     $("#disabledGoldDeluxePop .btn:first").attr("disabled", "disabled");
 };
 

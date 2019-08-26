@@ -1173,15 +1173,6 @@
   <data name="CommissionFinancial" xml:space="preserve">
     <value>Finance Commission</value>
   </data>
-  <data name="CommissionHR" xml:space="preserve">
-    <value>Racing Commission</value>
-  </data>
-  <data name="CommissionUK" xml:space="preserve">
-    <value>UK Meeting</value>
-  </data>
-  <data name="lblHorseRacing" xml:space="preserve">
-    <value>Racing</value>
-  </data>
 
   <data name="lblCommHR" xml:space="preserve">
     <value>Commission</value>
@@ -1204,9 +1195,7 @@
   <data name="lblPhone" xml:space="preserve">
     <value>Phone</value>
   </data>
-  <data name="lblUKMeeting" xml:space="preserve">
-    <value>UK Meeting</value>
-  </data>
+
   <data name="lblUpdate" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -1248,21 +1237,12 @@
   </data>
   <data name="lblInvalidCurrencyHR" xml:space="preserve">
     <value>This customer is not allowed to bet on Racing</value>
-  </data>
-  <data name="lblUpdatedHRSuccessfull" xml:space="preserve">
-    <value>Racing setting was updated successfully</value>
-  </data>
-  <data name="lblHRComm" xml:space="preserve">
-    <value>Comm for {1}</value>
-  </data>
+  </data> 
   <data name="CommissionForCompany" xml:space="preserve">
     <value>Comm for Company</value>
   </data>
   <data name="CommissionForSuper" xml:space="preserve">
     <value>Comm for Super</value>
-  </data>
-  <data name="lblHRSettingTitle" xml:space="preserve">
-    <value>Racing Setting</value>
   </data>
   <data name="lblConfirmEditAgent" xml:space="preserve">
     <value>You have changed this agent not to take auto position taking.&lt;br&gt;Do you want to update all member's position taking to:</value>
@@ -1278,19 +1258,7 @@
   </data>
   <data name="lblMeetingTC" xml:space="preserve">
     <value>Meeting (TC)</value>
-  </data>
-  <data name="lblAlertDisableHR" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Racing on this customer and all downlines?</value>
-  </data>
-  <data name="lblAlertDisableHRMember" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Racing on this customer?</value>
-  </data>
-  <data name="lblAlertEnableHR" xml:space="preserve">
-    <value>Are you sure you want to enable Racing on this customer?</value>
-  </data>
-  <data name="lblAlertEnableHRDownline" xml:space="preserve">
-    <value>Do you want to enable Racing on all downlines?</value>
-  </data>
+  </data> 
   <data name="lblPlace" xml:space="preserve">
     <value>Place</value>
   </data>
@@ -1320,12 +1288,6 @@
   </data>
   <data name="NoOthers" xml:space="preserve">
     <value>th</value>
-  </data>
-  <data name="lblDisabledHRUplineTT" xml:space="preserve">
-    <value>SA Tote status has been disabled at upline</value>
-  </data>
-  <data name="HR" xml:space="preserve">
-    <value>Racing</value>
   </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
@@ -1957,12 +1919,7 @@
   <data name="lblFIComm" xml:space="preserve">
     <value>FI Comm</value>
   </data>
-  <data name="lblRacingGroupDaily" xml:space="preserve">
-    <value>Racing Group Daily</value>
-  </data>
-  <data name="lblRacingGroupDailyForTote" xml:space="preserve">
-    <value>Racing Group Daily For Tote</value>
-  </data>
+  
   <data name="GroupTotalInCome" xml:space="preserve">
     <value>Group Total Income</value>
   </data>
@@ -2014,13 +1971,7 @@
   <data name="lblComm" xml:space="preserve">
     <value>Comm</value>
   </data>
-  <data name="lblRacingGroupDailyMailContent" xml:space="preserve">
-    <value>&lt;i&gt;This is an auto-mail. Please do not reply.&lt;/i&gt;
-&lt;br/&gt;
-Accounting System - Racing Group Daily Report from {0} to {1}.
-&lt;br/&gt;
-The message is ready to be sent with the attached file {2}.</value>
-  </data>
+  
   <data name="lblSendMailFail" xml:space="preserve">
     <value>Send Mail Failed </value>
   </data>
@@ -2036,9 +1987,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblMathWinloss" xml:space="preserve">
     <value>Match Win Loss (2a)</value>
   </data>
-  <data name="titleRacingDailyReportforTote" xml:space="preserve">
-    <value>Racing Daily Report (for Tote)</value>
-  </data>
+  
   <data name="lblCommIncome" xml:space="preserve">
     <value>Comm Income</value>
   </data>
@@ -2063,9 +2012,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="plumelelaTitle" xml:space="preserve">
     <value>Phumelela</value>
   </data>
-  <data name="lblRacingWinlossBySite" xml:space="preserve">
-    <value>Racing Daily Report</value>
-  </data>
+  
   <data name="lblAmountduetoIBC" xml:space="preserve">
     <value>Amount due to IBC</value>
   </data>
@@ -2101,15 +2048,6 @@ The message is ready to be sent with the attached file {2}.</value>
   </data>
   <data name="lblNegativeBalanceReportMailTitle" xml:space="preserve">
     <value>Accounting system - Negative Balance Report</value>
-  </data>
-  <data name="lblRacingGroupDailyContentMail" xml:space="preserve">
-    <value>Dear Mr./ Ms.&lt;br&gt; The report of Racing Group Daily has been sent to you as requested by &lt;b&gt;{0} &lt;/b&gt;on {1}. &lt;br&gt;Please, refer to the attachment for more details.&lt;br&gt;&lt;br&gt; Thanks you. &lt;br&gt;&lt;br&gt;&lt;hr&gt;&lt;i&gt;This email is confidential. If you are not the addressee you may not copy, forward, disclose or use any part of it. If you have received this message in error, please delete it from your system. This is an auto-generated email, please do not reply.&lt;/i&gt;</value>
-  </data>
-  <data name="lblRacingGroupDailyForToteContentMail" xml:space="preserve">
-    <value>Dear Mr./ Ms.&lt;br&gt; The report of Racing Group Daily for Tote has been sent to you as requested by &lt;b&gt;{0}&lt;/b&gt; on {1}. &lt;br&gt;Please, refer to the attachment for more details.&lt;br&gt;&lt;br&gt; Thanks you. &lt;br&gt;&lt;br&gt;&lt;hr&gt;&lt;i&gt;This email is confidential. If you are not the addressee you may not copy, forward, disclose or use any part of it. If you have received this message in error, please delete it from your system. This is an auto-generated email, please do not reply.&lt;/i&gt;</value>
-  </data>
-  <data name="mailTitleRacingGroupDaily" xml:space="preserve">
-    <value>Accounting System - Racing Group Daily Report from {0} to {1}.</value>
   </data>
   <data name="Netball" xml:space="preserve">
     <value>NetBall</value>
@@ -2165,9 +2103,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="BAComm" xml:space="preserve">
     <value>BA Comm</value>
   </data>
-  <data name="RacingRevenue" xml:space="preserve">
-    <value>Racing Revenue</value>
-  </data>
+
   <data name="lblTotalTransactionEurCost" xml:space="preserve">
     <value>Transaction Cost (EUR)</value>
   </data>
@@ -2361,18 +2297,6 @@ The message is ready to be sent with the attached file {2}.</value>
   </data>
   <data name="Unchanged" xml:space="preserve">
     <value>There is no change to update.</value>
-  </data>
-  <data name="lblDisabledHorseRacingFixedOddsUpline" xml:space="preserve">
-    <value>Horse Racing Fixed Odds has been disallowed at upline</value>
-  </data>
-  <data name="lblEnableHorseRacingFixedOdds" xml:space="preserve">
-    <value>HR Fixed Odds</value>
-  </data>
-  <data name="lblHRFixedOddsPrivateGameComm" xml:space="preserve">
-    <value>HR Fixed Odds</value>
-  </data>
-  <data name="HorseRacingFixedOdds" xml:space="preserve">
-    <value>Horse Racing Fixed Odds</value>
   </data>
   <data name="smartPunterAtuthorized" xml:space="preserve">
     <value>You are not authorized to view this page.</value>

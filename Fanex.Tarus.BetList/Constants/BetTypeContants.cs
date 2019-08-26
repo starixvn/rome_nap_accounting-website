@@ -30,15 +30,7 @@
         public const int _30MinOE = 63;
         public const int _45MinOE = 64;
         public const int _60MinOE = 65;
-        public const int EndOfDayOE = 66;
-
-        public const int WinToteOdds = 31;
-        public const int PlateToteOdds = 32;
-        public const int WinPlaceToteOdds = 33;
-
-        public const int WinFixedOdds = 41;
-        public const int PlaceFixedOdds = 42;
-        public const int WinPlaceFixedOdds = 43;
+        public const int EndOfDayOE = 66;       
 
         public const int CasinoGames = 71;
         public const int P2P = 72;

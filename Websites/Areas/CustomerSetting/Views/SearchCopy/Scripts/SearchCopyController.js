@@ -186,9 +186,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.resetFrameSource = function () {
         $("#frmSportbook").attr('src', "");
-        $("#frmSportbookMinPT").attr('src', "");
-        $("#frmRacing").attr('src', "");
-        $("#frmRacingMinPT").attr('src', "");
+        $("#frmSportbookMinPT").attr('src', "");       
         $("#frmCasino").attr('src', "");
         $("#frmVirtualSports").attr('src', "");      
         $("#frmGoldDleluxe").attr('src', "");       

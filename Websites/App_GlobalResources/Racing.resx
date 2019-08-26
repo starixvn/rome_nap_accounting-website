@@ -150,7 +150,4 @@
   <data name="confirmUpdateMember" xml:space="preserve">
     <value>Confirm Update Member's PT</value>
   </data>
-  <data name="noRacingData" xml:space="preserve">
-    <value>There is no Racing PositionTaking data.</value>
-  </data>
 </root>

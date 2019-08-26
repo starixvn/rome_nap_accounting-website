@@ -25,12 +25,6 @@
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="Racing">
-    <Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRComm_Company" SpName="Acc_SelHRComm_Company" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRCommbyPartner" SpName="Acc_SelHRCommbyPartner" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRCommbyPartner_Details" SpName="Acc_SelHRCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Others">
     <Setting Key="Monitor_BettypeSel" SpName="Acc_Rpt_MAMonitor_BettypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Monitor_SportSel" SpName="Acc_Rpt_MAMonitor_SportSel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -178,11 +172,7 @@
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Report - ParlayWon">
-    <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="MixparlayWon" SpName="Acc_Rpt_MixParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CompanyCreditDebit" SpName="Acc_Rpt_CompanyCreditDebit" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
+
   <Function Name="Gold Deluxe - GET PT Setting">
     <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -17,19 +17,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        string GenMasterListContent(string superId, string hr, string searchText, string selectAlpha, string selectCurreny,
-                                    int type, string status, int PageIndex, string synccasinoUpline);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        string GenAgentListContent(string masterId, string hr, int PageIndex, string syncCasinoUpline);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        string GenMemberListContent(string agentId, string hr, string isInternal, int PageIndex, string isSynccasino);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         string GenOperatorListContent(string searchText, string selectAlpha, int PageIndex);
     }
 }

@@ -192,10 +192,6 @@
       <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.2\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Result.Core.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
       <Private>True</Private>
@@ -352,11 +348,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts1\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.6-RemoveInactiveProducts\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.6-RemoveInactiveProducts1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -478,14 +474,10 @@
     <Compile Include="Business\Results\MetricGamingResultService.cs" />
     <Compile Include="Business\Results\IMetricGamingResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
-    <Compile Include="Business\Results\IRacingResultService.cs" />
-    <Compile Include="Business\Results\RacingResultService.cs" />
     <Compile Include="Business\Results\IVirtualRacingResultService.cs" />
     <Compile Include="Business\Results\VirtualRacingResultService.cs" />
     <Compile Include="Business\Results\INumberGamePopupResultService.cs" />
     <Compile Include="Business\Results\NumberGamePopupResultService.cs" />
-    <Compile Include="Business\Results\ILiveCasinoPopupResultService.cs" />
-    <Compile Include="Business\Results\LiveCasinoPopupResultService.cs" />
     <Compile Include="Business\Results\IParlayResultService.cs" />
     <Compile Include="Business\Results\ParlayResultService.cs" />
     <Compile Include="Business\Results\IScoreInformationService.cs" />
@@ -554,8 +546,6 @@
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />
-    <Compile Include="Criteria\Results\GetLiveCasinoPopupResultCriteria.cs" />
-    <Compile Include="Criteria\Results\GetRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMetricGamingResultCriteria.cs" />
@@ -582,14 +572,10 @@
     <Compile Include="DataAccess\Results\MetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IMetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\IRacingResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\RacingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualRacingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualRacingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\INumberGamePopupResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\NumberGamePopupResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\ILiveCasinoPopupResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\LiveCasinoPopupResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IParlayResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\ParlayResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IScoreInformationDataAccess.cs" />
@@ -612,7 +598,6 @@
     <Compile Include="Models\BalanceUp.cs" />
     <Compile Include="Models\BetListByIP_Username.cs" />
     <Compile Include="Models\BetListDetail.cs" />
-    <Compile Include="Models\BetListRacingToteWinLoss.cs" />
     <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\CashOutDetails.cs" />
     <Compile Include="Models\CashOutTicket.cs" />

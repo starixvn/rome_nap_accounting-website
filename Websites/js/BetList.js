@@ -754,10 +754,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getBaseballParam();
 
         case 161: // Number Game.
-            return getNumberGameParam(matchid);
-
-        case 162: // Live Casino.
-            return getLiveCasinoParam(matchid, bettype, league);
+            return getNumberGameParam(matchid);      
 
         case 164: // Happy5
             return getHappy5Param(matchid);
@@ -863,13 +860,6 @@ function getHappy5Param(matchid) {
     };
 }
 
-function getLiveCasinoParam(matchid, bettype, league) {
-    return {
-        url: "LiveCasino/Betlist/BetListLiveCasinoResult.aspx",
-        title: "Live Casino",
-        jsonParam: { matchid: matchid, bettype: bettype, league: league }
-    };
-}
 
 function getVirtualHRParam(matchid, sporttype) {
     var resultParam = {

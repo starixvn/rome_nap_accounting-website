@@ -25,24 +25,9 @@
   <Function Name="Gaming">
     <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="Racing">
-    <Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRComm_Company" SpName="Acc_SelHRComm_Company" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRCommbyPartner" SpName="Acc_SelHRCommbyPartner" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelHRCommbyPartner_Details" SpName="Acc_SelHRCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Others">
     <Setting Key="Monitor_BettypeSel" SpName="Acc_Rpt_MAMonitor_BettypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Monitor_SportSel" SpName="Acc_Rpt_MAMonitor_SportSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Racing - PT Setting">
-    <Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - SMA Turnover Management">
     <Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -195,24 +180,7 @@
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Racing Control">
-    <Setting Key="GetRacingStatus" SpName="Acc_CustomerSelRBStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetSuperMin" SpName="Acc_CustomerSelHRComEditOverride_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Set_HR_ResultSCRSel" SpName="Acc_Set_HR_ResultSCRSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Meeting Comm">
-    <Setting Key="GetPartnerList" SpName="Acc_SelRacingPartner" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="GetPartnerDetail" SpName="Acc_SelRacingCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelMinMaxBetHR" SpName="Acc_CustomerSelMinMaxBetHR" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelCommissionHR" SpName="Acc_CustomerSelCommissionHR" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Report - ParlayWon">
-    <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="MixparlayWon" SpName="Acc_Rpt_MixParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CompanyCreditDebit" SpName="Acc_Rpt_CompanyCreditDebit" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
+ 
   <Function Name="Gold Deluxe - GET PT Setting">
     <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />

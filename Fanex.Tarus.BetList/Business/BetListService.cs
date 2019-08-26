@@ -9,13 +9,6 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     using Constants;
     using Core;
     using Criteria;
@@ -32,6 +25,13 @@ namespace Fanex.Tarus.BetList.Business
     using Models;
     using Resources;
     using Sunplus.Accounting.DataAccess.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
@@ -1211,8 +1211,7 @@ namespace Fanex.Tarus.BetList.Business
 
                 if (betDetails != null)
                 {
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
-                    SessionManager.Set<List<ITicketData>>(BetListConstants.BetListByStatementOutputLiveCasinoSessionKey, outputLiveCasino);
+                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);                  
 
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
