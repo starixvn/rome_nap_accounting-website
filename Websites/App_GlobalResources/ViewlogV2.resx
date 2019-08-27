@@ -2090,4 +2090,13 @@
   <data name="PT" xml:space="preserve">
     <value>Position Taking</value>
   </data>
+   <data name="ReviewStatus" xml:space="preserve">
+    <value>Review Status</value>
+  </data>
+  <data name="SubAcc" xml:space="preserve">
+    <value>Sub Acc Name</value>
+  </data>
+  <data name="AllDownline" xml:space="preserve">
+    <value>Is All Affected Downlines</value>
+  </data>
 </root>
