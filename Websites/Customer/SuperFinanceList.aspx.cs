@@ -36,7 +36,7 @@ public partial class NewCustomer_SuperAgentList : PageBase
         TemplateHandler.Assign(ref strHtml, "{lfrom}", "");        
 
         TemplateHandler.Assign(ref strHtml, "{tblData}", "");
-        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, true, false));
+        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, false));
         TemplateHandler.Assign(ref strHtml, "{listStatus-Val}", Sunplus.Accounting.Core.Common.AccCommon.GenListStatus(""));
         TemplateHandler.RemoveBlock(ref strHtml, "type");
 

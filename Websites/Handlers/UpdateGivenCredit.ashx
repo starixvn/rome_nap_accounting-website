@@ -36,15 +36,6 @@ public class UpdateGivenCredit :BaseHandler {
                 context.Response.Write("<script type='text/javascript'>alert('Invalid Customer!!');</script>");
                 return;
             }
-            //else
-            //{
-            //    if (custDetail.RoleId == 4 && AppSession.SYSTEM.ToLower() != Enumerations.AccountingSystem.Accounting.ToString().ToLower())
-            //    {
-            //        context.Response.Write("<script type='text/javascript'>alert('" + Resources.ErrorMsg._500 +
-            //                               "');</script>");
-            //        return;
-            //    }
-            //}
 
             bool isallowupdategivencredit = Sunplus.Accounting.Business.Security.Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
             if (isallowupdategivencredit == true)
@@ -67,7 +58,7 @@ public class UpdateGivenCredit :BaseHandler {
         }            
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

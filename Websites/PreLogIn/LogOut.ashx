@@ -18,11 +18,7 @@ public class LogOut : IHttpHandler,System.Web.SessionState.IRequiresSessionState
             {
                 accOnId = (int)context.Session["OnAccId"];
             }
-            //#region Remove Cache Item from Cache
-            //((ASP.global_asax)context.ApplicationInstance).RemoveSessionCacheItem(
-            //    DNAide.Core.CastAide.AsString(AppSession.OnAccId),
-            //    AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
-            //#endregion
+            
             Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLogOut(accOnId, AppSession.Username);
             context.Session.Clear();
             FormsAuthentication.SignOut();
@@ -41,7 +37,7 @@ public class LogOut : IHttpHandler,System.Web.SessionState.IRequiresSessionState
         }
     }
  
-    public bool IsReusable {
+    public  bool IsReusable {
         get {
             return false;
         }

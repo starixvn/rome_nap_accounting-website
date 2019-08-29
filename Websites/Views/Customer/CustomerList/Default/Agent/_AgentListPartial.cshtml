@@ -192,14 +192,7 @@ string siteName = agentItem.IsMyanmarOdds ? "766666" : string.Empty;
                     @if (!agentItem.IsHideFishingWorld)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 24, 'Fishing World');">Fishing World</li>
-                    }
-
-                    @if (!agentItem.IsHidePokerGames)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 33, 'Poker Games');">
-                            Poker Games
-                        </li>
-                    }
+                    }                  
                 </ul>
             </div>
         </td>

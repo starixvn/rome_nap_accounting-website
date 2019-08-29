@@ -105,7 +105,7 @@ public class GetDailyTransaction : BaseHandler {
             throw;
         }
     }
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

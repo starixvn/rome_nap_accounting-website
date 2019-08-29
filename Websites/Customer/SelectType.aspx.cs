@@ -142,7 +142,7 @@ public partial class NewCustomer_SelectType : PageBase
                     TemplateHandler.Assign(ref content, "{fInput}", "none");
                     TemplateHandler.Assign(ref content, "{createmaster}", Resources.Language.CreateMasterAgent);
                     TemplateHandler.Assign(ref content, "{listSuperValue}", GetListSuper(AccountingCoreAppSession.SYSTEM));
-                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, false, false));
+                    TemplateHandler.Assign(ref content, "{listCurrValue}", CustomerUtils.GetListCurrencyBySystem(AccountingCoreAppSession.SYSTEM, false, false));
                     TemplateHandler.Assign(ref content, "{listSiteValue}", CustomerUtils.GetListSite(false, AccountingCoreAppSession.SYSTEM));
                     TemplateHandler.Assign(ref content, "{curency}", Resources.Language.Currency);
                     TemplateHandler.Assign(ref content, "{site}", Resources.Language.Site);

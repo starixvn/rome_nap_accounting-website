@@ -256,29 +256,7 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            var isPokerGames = betListByProductCriteria.ProductId == Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames;
-            var needToMapPlayerId3rdToCustId = isPokerGames && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
-
-            var mappedCustId = needToMapPlayerId3rdToCustId
-                ? _betListRepository.MapPlayerIdToCustId(new MapPlayerId3rdToCustIdCriteria
-                {
-                    PlayerId3rd = betListByProductCriteria.PlayerId3rd,
-                    Vendor = betListByProductCriteria.VendorId,
-                    ProductId = betListByProductCriteria.ProductId
-                })
-                : 0;
-
-            if (needToMapPlayerId3rdToCustId
-                && betListByProductCriteria.CustId != 0
-                && mappedCustId != betListByProductCriteria.CustId)
-            {
-                return new List<TicketDetail>();
-            }
-
-            var custId = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
-                ? mappedCustId
-                : betListByProductCriteria.CustId;
-
+            var custId = betListByProductCriteria.CustId;
             return GetBetListBy(new BetListByProductCriteria
             {
                 UserId = betListByProductCriteria.UserId,

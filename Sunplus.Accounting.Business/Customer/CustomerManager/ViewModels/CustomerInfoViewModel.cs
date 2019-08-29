@@ -194,13 +194,7 @@
                                 HideSettingBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (HideBullfighting || HideUplineBullfighting));
                                 break;
-
-                            case "33":
-                                bool HidePokerGames = Utils.ToBoolean(row["IsHidden"]);
-                                bool HideUplinePokerGames = Utils.ToBoolean(row["IsHiddenUpline"]);
-                                HideSettingPokerGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames == 0 ||
-                                    IsDeposit || (SearchAccountRoleId < 4 && (HidePokerGames || HideUplinePokerGames));
-                                break;
+                         
                         }
                     }
                 }

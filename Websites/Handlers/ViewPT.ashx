@@ -622,7 +622,7 @@ public class ViewPT : BaseHandler
         return s;
     }
 
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

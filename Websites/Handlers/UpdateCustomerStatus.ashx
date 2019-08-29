@@ -315,7 +315,7 @@ public class UpdateCustomerStatus : BaseHandler
         }
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

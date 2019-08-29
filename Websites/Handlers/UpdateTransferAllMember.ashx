@@ -2,16 +2,9 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
 using DNAide.Core;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils.DAL;
-using IBCUtils.Web;
-using DNAide.Data;
-
 
 public class UpdateTransferAllMember : BaseHandler
 {
@@ -63,7 +56,7 @@ public class UpdateTransferAllMember : BaseHandler
         return;
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

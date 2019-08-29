@@ -70,7 +70,7 @@ public class UpdateChangeGroup : BaseHandler {
 
         return false;
     }
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

@@ -94,7 +94,7 @@ public class EditUsername : BaseHandler
         return false;
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

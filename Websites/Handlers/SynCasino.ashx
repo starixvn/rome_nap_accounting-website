@@ -30,10 +30,9 @@ public class UpdateCSSetting : BaseHandler
 
         context.Response.Cache.SetNoStore();
         string errmsg = "";
-        //context.Session.Clear();
-        if (AppSession.AccId == null || AppSession.AccId == 0)
+        
+        if (AppSession.AccId == 0)
         {
-            //context.Response.Write("<script>parent.scroll('0', '0'); parent.ShowMessage('You session has been timeout. Please login again.');</script>");
             AuthManager.DoLogout();
             return;
         }
@@ -550,7 +549,7 @@ public class UpdateCSSetting : BaseHandler
         return str.Substring(str.IndexOf(Globals.OPEN_GAMETYPELIST_MARK) + 1, str.IndexOf(Globals.CLOSE_GAMETYPELIST_MARK) - str.IndexOf(Globals.OPEN_GAMETYPELIST_MARK) - 1).Split(new string[] { Globals.SEP_GAMETYPE }, StringSplitOptions.RemoveEmptyEntries);
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {
