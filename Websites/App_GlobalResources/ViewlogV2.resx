@@ -2074,7 +2074,12 @@
     <value>Virtual Sports</value>
   </data>
   <data name="NewManaged" xml:space="preserve">
-    <value>New Managed Account</value>
+    <value>New Managed Account</value></data>
+  <data name="Disable202_1525" xml:space="preserve">
+    <value>Disabled Keno War</value>
+  </data>
+  <data name="Disable202_1526" xml:space="preserve">
+    <value>Disabled Keno War 2</value>
   </data>
   <data name="BS" xml:space="preserve">
     <value>Bet Setting</value>
