@@ -2074,7 +2074,8 @@
     <value>Virtual Sports</value>
   </data>
   <data name="NewManaged" xml:space="preserve">
-    <value>New Managed Account</value></data>
+    <value>New Managed Account</value>
+  </data>
   <data name="Disable202_1525" xml:space="preserve">
     <value>Disabled Keno War</value>
   </data>
@@ -2090,7 +2091,16 @@
   <data name="PT" xml:space="preserve">
     <value>Position Taking</value>
   </data>
-   <data name="ReviewStatus" xml:space="preserve">
+  <data name="FollowAccount" xml:space="preserve">
+    <value>8RM Account</value>
+  </data>
+  <data name="LiveBetAccept" xml:space="preserve">
+    <value>Live Bet Accept (Secs)</value>
+  </data>
+  <data name="SeizeBetTicket" xml:space="preserve">
+    <value>Seize Bet Ticket (%)</value>
+  </data>
+  <data name="ReviewStatus" xml:space="preserve">
     <value>Review Status</value>
   </data>
   <data name="SubAcc" xml:space="preserve">
@@ -2098,5 +2108,17 @@
   </data>
   <data name="AllDownline" xml:space="preserve">
     <value>Is All Affected Downlines</value>
+  </data>
+  <data name="FA" xml:space="preserve">
+    <value>8RM Account</value>
+  </data>
+  <data name="FUL" xml:space="preserve">
+    <value>Follow upper level</value>
+  </data>
+  <data name="LBA" xml:space="preserve">
+    <value>Live Bet Accept (Secs)</value>
+  </data>
+  <data name="SBT" xml:space="preserve">
+    <value>Seize Bet Ticket (%)</value>
   </data>
 </root>
