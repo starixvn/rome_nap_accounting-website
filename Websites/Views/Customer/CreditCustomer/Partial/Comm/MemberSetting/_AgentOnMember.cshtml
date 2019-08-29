@@ -1,20 +1,6 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
-@{
-    bool isShowMyanmarOdds = false;
-    if (Model.IsSuperSetting && Model.IsInsertPage)
-    {
-        isShowMyanmarOdds = true;
-    }
-    else
-    {
-        if (!string.IsNullOrEmpty(Model.SiteName))
-        {
-            isShowMyanmarOdds = Model.SiteName.Equals("766666");
-        }
-    } 
-}
 <table class="tblcollapse" width="100%">
     <!--header-->
     <tr class="title">
@@ -73,25 +59,6 @@
             </select>
         </td>
     </tr>
-    <!--/other-->
+    <!--/other-->   
    
-    @if (isShowMyanmarOdds)
-    {
-        <!--MyanmarOdds-->
-        <tr>
-            <td class="r" style="width: 25%;">
-                % Odds
-            </td>
-            <td>
-                <input class="selectcomm" type="text" id="txtDiscountMyanmarOdds" name="txtDiscountMyanmarOdds"
-                    disabled="disabled" data-bind="value: customer.commissionSetting.discountMyanmarOdds"
-                    style="text-align: right;" />
-            </td>
-            <td>
-                <select class="selectcomm" name="listMyanmarOdds" id="listMyanmarOdds">
-                </select>
-            </td>
-        </tr>
-        <!--/MyanmarOdds-->
-    }
 </table>

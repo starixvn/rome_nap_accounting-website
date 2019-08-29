@@ -346,9 +346,6 @@
         if (_directMaster == "True") {
             initWidth += 75;
         }
-        else if (_isParentMyanmarOdds == "True") {
-            initWidth -= 150;
-        }
 
         if (parentIsIMBCCustomers) {
             initWidth += 75;

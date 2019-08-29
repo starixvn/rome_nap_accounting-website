@@ -40,26 +40,12 @@
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    }
-    
-    bool isParentMyanmarOdds = false;
-    foreach (var masterItem in Model.ListChildren)
-    {
-        if (masterItem.IsMyanmarOdds)
-        {
-            isParentMyanmarOdds = true;
-            break;
-        }
-    }
-    bool isShowMyanmarOdds = directMaster || isParentMyanmarOdds;
+    }   
+  
     if (directMaster)
     {
         colspanCom++;
-    }
-    else if (isParentMyanmarOdds)
-    {
-        colspanCom = colspanCom - 2;
-    }
+    }   
 
     var parentIsIMBCCustomers = false;
     foreach (var agentItem in Model.ListChildren)
@@ -84,7 +70,6 @@
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
@@ -123,7 +108,7 @@
 {
 var bg = rowCSS(masterItem);
 var idAllow = masterItem.ChildID.ToString() + '_' + masterItem.UserName;
-string siteName = masterItem.IsMyanmarOdds ? "766666" : string.Empty;
+string siteName = string.Empty;
 
     <tr name="tr_@masterItem.ChildID" class="@bg">
         <td>
@@ -259,7 +244,6 @@ string siteName = masterItem.IsMyanmarOdds ? "766666" : string.Empty;
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList masterItem, Hashtable hash)
 {
 var bg = rowCSS(masterItem);
-string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@masterItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -292,7 +276,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
             </div>
         </td>
         @if (CastAide.AsBoolean(hash["IsVisibleMaxExposure"]))
-    {
+        {
             <td>
                 <div class="table-cell c" style="width: 80px; height: 18px;">
                     <a onclick="OpenEditMaxEx('@masterItem.ChildID','@masterItem.UserName',@masterItem.MaxExposure,'Master',true,'@Model.ParentId')">@masterItem.MaxExposure</a>
@@ -300,7 +284,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
             </td>
         }
         @if (CastAide.AsBoolean(hash["IsVisibleVirtualRate"]))
-    {
+        {
             <td>
                 <div class="table-cell c" style="width: 60px; height: 18px;">
                     <span title="Edit" onclick="OpenEditVirtualExRate('@masterItem.ChildID','@masterItem.UserName','Master',true,'@Model.ParentId')" class="edit-button edit-virtualrate">
@@ -330,24 +314,21 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                 @masterItem.GroupA
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["directMaster"]) || !CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-    {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupB
-                </div>
-            </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupC
-                </div>
-            </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupD
-                </div>
-            </td>
-        }
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupB
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupC
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupD
+            </div>
+        </td>        
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem._1x2
@@ -365,15 +346,8 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                     @masterItem.MatchWinnerComm
                 </div>
             </td>
-        }       
-        @if (CastAide.AsBoolean(hash["directMaster"]) || CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-    {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @discountMyanmarOdss
-                </div>
-            </td>
-        }
+        }      
+      
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@masterItem.LastLoginIP')">@masterItem.LastLoginIP</a>
@@ -576,25 +550,22 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Group A
                             </div>
+                        </th>                       
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
                         </th>
-                        @if (directMaster || !isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -613,15 +584,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                                 </div>
                             </th>
                         }
-                    
-                        @if (directMaster || isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
+                       
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -729,24 +692,23 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                                 Group A
                             </div>
                         </th>
-                        @if (directMaster || !isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                       
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
+                       
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -766,7 +728,7 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
                             </th>
                         }
                        
-                        @if (directMaster || isParentMyanmarOdds)
+                        @if (directMaster)
                         {
                             <th>
                                 <div class="table-cell" style="width: 70px; height: 38px;">
@@ -809,7 +771,6 @@ string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanm
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _directMaster = "@directMaster";
-    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
     var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

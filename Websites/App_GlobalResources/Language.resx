@@ -2333,10 +2333,7 @@
   </data>
   <data name="enableColossusBet" xml:space="preserve">
     <value>Colossus Bets</value>
-  </data>
-  <data name="MyanmarOdds" xml:space="preserve">
-    <value>MyanmarOdds</value>
-  </data>
+  </data> 
   <data name="lblDisabledColossusBet" xml:space="preserve">
     <value>Colossus Bets</value>
   </data>

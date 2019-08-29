@@ -38,20 +38,7 @@
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    }  
-    bool isParentMyanmarOdds = false;
-    foreach (var agentItem in Model.ListChildren)
-    {
-        if (agentItem.IsMyanmarOdds)
-        {
-            isParentMyanmarOdds = true;
-            break;
-        }
-    }
-    if (isParentMyanmarOdds)
-    {
-        colspanCom = colspanCom - 2;
-    }
+    } 
 
     var parentIsIMBCCustomers = false;
     foreach (var agentItem in Model.ListChildren)
@@ -74,8 +61,7 @@
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
-    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
+    hash.Add("allowKeno", KenoSection.Instance.ShowSetting); 
     hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
@@ -114,7 +100,7 @@
 {
 var bg = rowCSS(agentItem);
 var idAllow = agentItem.ChildID.ToString() + '_' + agentItem.UserName;
-string siteName = agentItem.IsMyanmarOdds ? "766666" : string.Empty;
+string siteName = string.Empty;
     <tr name="tr_@agentItem.ChildID" class="@bg">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -309,24 +295,22 @@ var bg = rowCSS(agentItem);
                 @agentItem.GroupA
             </div>
         </td>
-        @if (!CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @agentItem.GroupB
-                </div>
-            </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @agentItem.GroupC
-                </div>
-            </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @agentItem.GroupD
-                </div>
-            </td>
-        }
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @agentItem.GroupB
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @agentItem.GroupC
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @agentItem.GroupD
+            </div>
+        </td>
+      
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @agentItem._1x2
@@ -344,16 +328,8 @@ var bg = rowCSS(agentItem);
                     @agentItem.MatchWinnerComm
                 </div>
             </td>
-        }
-       
-        @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @agentItem.DiscountMyanmarOdds
-                </div>
-            </td>
-        }
+        }      
+      
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@agentItem.LastLoginIP')">@agentItem.LastLoginIP</a>
@@ -557,24 +533,23 @@ var bg = rowCSS(agentItem);
                                 Group A
                             </div>
                         </th>
-                        @if (!isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                       
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
+                       
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -592,15 +567,7 @@ var bg = rowCSS(agentItem);
                                     Charge Comm
                                 </div>
                             </th>
-                        }                     
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
+                        } 
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -707,25 +674,23 @@ var bg = rowCSS(agentItem);
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Group A
                             </div>
+                        </th>                       
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
                         </th>
-                        @if (!isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
+                      
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -743,16 +708,7 @@ var bg = rowCSS(agentItem);
                                     Charge Comm
                                 </div>
                             </th>
-                        }
-                
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
+                        } 
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -787,7 +743,6 @@ var bg = rowCSS(agentItem);
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
     var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

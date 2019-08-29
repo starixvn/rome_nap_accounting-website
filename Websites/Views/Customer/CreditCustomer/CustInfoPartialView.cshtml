@@ -1,20 +1,7 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
-@{  
-    bool isShowMyanmarOdds = false;
-    if (Model.IsSuperSetting && Model.IsInsertPage)
-    {
-        isShowMyanmarOdds = false;
-    }
-    else
-    {
-        if (!string.IsNullOrEmpty(Model.SiteName))
-        {
-            isShowMyanmarOdds = Model.SiteName.Equals("766666");
-        }
-    } 
-}
+
 @if (Model.IsUpdateMinMaxPt)
 {
     <table class="tblcollapse" style="width:750px; margin-bottom: 10px;">
@@ -449,7 +436,4 @@ else
 </table>
 }
 @Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
-<script language="javascript" type="text/javascript">  
-    var _isShowMyanmarOdds = "@isShowMyanmarOdds";
-</script>
 <script src="~/js/encode.js"></script>

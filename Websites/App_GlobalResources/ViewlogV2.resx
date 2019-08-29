@@ -1151,9 +1151,7 @@
   <data name="v204discountvalue_cashinshare" xml:space="preserve">
     <value>Cash-In Share</value>
   </data>  
-  <data name="discountmyanmarodds" xml:space="preserve">
-    <value>% Odds Comm</value>
-  </data>
+
   <data name="discountonextwo" xml:space="preserve">
     <value>1X2</value>
   </data>

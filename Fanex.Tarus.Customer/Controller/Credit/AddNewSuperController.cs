@@ -75,8 +75,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 GroupC = (decimal)0.0075,
                 GroupD = (decimal)0.01,
                 Discount1x2 = (decimal)0.0025,
-                DiscountCS = (decimal)0.01,
-                DiscountMyanmarOdds = (decimal)0.01
+                DiscountCS = (decimal)0.01
             };
             return customerObject;
         }

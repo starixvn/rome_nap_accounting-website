@@ -308,10 +308,7 @@
         }
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }       
-        if (_isParentMyanmarOdds == "True") {
-            initWidth -= 150;
-        }
+        }   
 
         if (parentIsIMBCCustomers) {
             initWidth += 75;

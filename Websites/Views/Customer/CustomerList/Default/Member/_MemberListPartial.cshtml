@@ -30,21 +30,6 @@
         colspan++;
     }
   
-    bool isParentMyanmarOdds = false;
-
-    foreach (var memberItem in Model.ListChildren)
-    {
-        if (memberItem.IsMyanmarOdds)
-        {
-            isParentMyanmarOdds = true;
-            break;
-        }
-    }
-
-    if (isParentMyanmarOdds)
-    {
-        colspanCom++;
-    }
 
     var parentIsIMBCCustomers = false;
     foreach (var memberItem in Model.ListChildren)
@@ -67,7 +52,6 @@
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
@@ -106,7 +90,7 @@
 {
 var bg = rowCSS(memberItem);
 var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
-string siteName = memberItem.IsMyanmarOdds ? "766666" : string.Empty;
+string siteName = string.Empty;
     <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -333,15 +317,6 @@ var bg = rowCSS(memberItem);
             <td>
                 <div class="table-cell c" style="width: 80px; height: 18px;">
                     @memberItem.MatchWinnerComm
-                </div>
-            </td>
-        }
-      
-        @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @memberItem.DiscountMyanmarOdds
                 </div>
             </td>
         }
@@ -580,14 +555,6 @@ var bg = rowCSS(memberItem);
                             </th>
                         }
                       
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -725,16 +692,7 @@ var bg = rowCSS(memberItem);
                                     P Charge Comm (%)
                                 </div>
                             </th>
-                        }
-                      
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
+                        }                       
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -769,7 +727,6 @@ var bg = rowCSS(memberItem);
     var _agentDcom = "@Model.ParentDoubleComm";
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
     var _userId = @AppSession.AccId;
     var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>
