@@ -1375,11 +1375,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 const int VirtualSports2ProductId = 27;
                 sportName = GetProductName(VirtualSports2ProductId);
-            }
-            else if (ReportService.IsPokerGames(betTypeId))
-            {
-                sportName = ticketHelper.GetSportNameById(SportContants.PokerGames);
-            }
+            }         
             else if (ReportService.IsHappy5Bettype(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);

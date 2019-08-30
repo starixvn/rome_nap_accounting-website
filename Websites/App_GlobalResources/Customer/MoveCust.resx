@@ -139,9 +139,6 @@
     <value>Errors from Casino System: </value>
   </data>
 
-  <data name="lblErrorFromBingo" xml:space="preserve">
-    <value>Errors from Bingo System: </value>
-  </data>
   <data name="lblErrorFromIBC" xml:space="preserve">
     <value>Errors from IBC: </value>
   </data>

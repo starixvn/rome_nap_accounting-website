@@ -3,7 +3,7 @@ using Fanex.Result.Core.PokerGames;
 using Fanex.Result.Core.PokerGames.Models;
 using Fanex.Tarus.Infrastructure.Extensions;
 
-public partial class Report_ViewPokerGamesResult : System.Web.UI.Page
+public partial class Report_ViewCardClubResult : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {

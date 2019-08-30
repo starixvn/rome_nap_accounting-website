@@ -277,12 +277,7 @@
             pageIndex = location.href.split("#")[1];
         }
         showPopup("Update Member Setting", url, "", "", 1000, 650, true, 2000, function () { callAjax(getParams(pageIndex)); });
-    },
-    editSetting: function (custId, roleId) {
-        showPopup("Poker"
-                , "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId + "&roleId=" + roleId
-                , 0, 0, 640, 480, false, 2000, null);
-    },
+    },   
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup("Virtual Sport"
                 , "VirtualSportMemberPT/EditMember?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId

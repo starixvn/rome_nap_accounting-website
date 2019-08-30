@@ -9,9 +9,6 @@
         {{else}} {{if RoleId == 2 && IsDirectMaster}}
         <li class="canchange" onclick="OpenEditTransferTime('${Id}',${IsAgent});">Transfer Condition</li>
         {{/if}} {{/if}}
-        <li class="canchange" onclick="OpenChangePwd('${Id}','${UserName}');">Password</li>
-        {{if VisibleP2PSetting}}
-        <li class="canchange" onclick="editSetting('${Id}', '${RoleId}');">Poker</li>
-        {{/if}}
+        <li class="canchange" onclick="OpenChangePwd('${Id}','${UserName}');">Password</li>      
     </ul>
 </div>

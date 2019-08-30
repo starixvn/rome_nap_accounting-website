@@ -222,11 +222,6 @@
             return 2700 <= betTypeId && betTypeId <= 2899;
         }
 
-        public static bool IsPokerGames(int betTypeId)
-        {
-            return 1401 <= betTypeId && betTypeId <= 1499;
-        }
-
         public static bool IsCardClub(int betTypeId)
         {
             return 1901 <= betTypeId && betTypeId <= 1999;

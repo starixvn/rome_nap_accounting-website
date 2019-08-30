@@ -115,8 +115,6 @@
 
         public bool HideSettingBullfighting { get; private set; } = true;
 
-        public bool HideSettingPokerGames { get; private set; } = true;
-
         public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)

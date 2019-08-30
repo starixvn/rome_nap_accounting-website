@@ -199,7 +199,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmKenoLottery").attr('src', "");
         $("#frmLucky3").attr('src', "");
         $("#frmBullfighting").attr('src', "");
-        $("#frmPokerGames").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -282,11 +281,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabBullfighting': url += "DCS/ViewCustomerSetting?productId=30&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmBullfighting", url);
                 $scope.resize("#frmBullfighting");
-                break;
-            case 'tabPokerGames': url += "DCS/ViewCustomerSetting?productId=33&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmPokerGames", url);
-                $scope.resize("#frmPokerGames");
-                break;
+                break;         
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 

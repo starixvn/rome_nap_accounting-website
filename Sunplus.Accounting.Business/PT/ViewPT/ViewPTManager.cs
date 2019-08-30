@@ -871,7 +871,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         if (currentRoleId == (int)Role.Super)
                         {
-                            ptCurrent.SportName = sportId == Constants.Sport.Casino ? "Casino" : "Bingo";
+                            ptCurrent.SportName = "Casino";
                             ptCurrent.SportType = dr["gamekind"].ToString();
                             ptCurrent.TypeName = dr["gametype"].ToString();
 

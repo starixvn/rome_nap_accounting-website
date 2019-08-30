@@ -664,17 +664,6 @@ function OpenEditCS(id) {
 }
 
 
-//open edit Bingo window
-function OpenEditBI(id, username, roleid) {
-    var url = "Customer/PT/Bingo/";
-    if (roleid == 1) url += "MemberUpdate.aspx";
-    else if (roleid == 2) url += "AgentUpdate.aspx";
-    else if (roleid == 3) url += "MasterUpdate.aspx";
-    else url += "SuperUpdate.aspx";
-    url += "?username=" + username + "&custId=" + id;
-    showPopup("Update Bingo Setting", url, "", "", 900, 520, false, 2000, null);
-}
-
 function PopUpWindow(url, width, height) {
     var top = (screen.height - height) / 2;
     var left = (screen.width - width) / 2;

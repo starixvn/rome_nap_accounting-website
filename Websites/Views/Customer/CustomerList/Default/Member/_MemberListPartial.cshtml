@@ -119,13 +119,7 @@ string siteName = string.Empty;
 
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
                         Password
-                    </li>
-                    @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
-                    {
-                        <li class="canchange" onclick="MemberList.editSetting('@memberItem.ChildID', '1');">
-                            Poker
-                        </li>
-                    }
+                    </li>                
                     @if (!memberItem.IsHideVirtualSports)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">

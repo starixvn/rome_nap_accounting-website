@@ -797,10 +797,7 @@ var ViewPT = {
                 break;
             case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
-                break;
-            case 163: // Poker Games
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 33);
-                break;
+                break;          
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
 
@@ -868,20 +865,7 @@ var ViewPT = {
             }
         });
     },
-    renderPTSetting: function (requestParams, result) {
-        if (result && result.length > 0) {
-            var ptHtmlResult = '';
-            switch (requestParams.SportId) {
-                case 252:
-                    ptHtmlResult = viewPT_Bingo.renderPTSetting(requestParams, result);
-                    break;
-            }
-
-            $('#sContent').append(ptHtmlResult);
-        } else {
-            showAlertMessage("err", "There is no information available.", 1);
-        }
-    },
+    
     getCurrentSportIndex: function (indexValue) {
         var indexArr = indexValue.split('_');
         var sport = null;

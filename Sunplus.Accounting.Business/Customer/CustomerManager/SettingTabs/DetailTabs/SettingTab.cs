@@ -138,7 +138,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting));
-            TemplateHandler.Assign(ref htmlcontent, "{pokerGamesLinkSetting}", string.Format(creditDCSLink, 33));
             TemplateHandler.Assign(ref htmlcontent, "{linkEditSettingCN88}", cn88EditSettingLink);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.CN88CustStatusName);
@@ -235,11 +234,6 @@
             if (customerInfoViewModel.HideSettingBullfighting)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
-            }
-
-            if (customerInfoViewModel.HideSettingPokerGames)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-PokerGames");
             }
 
             // Chatbot

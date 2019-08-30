@@ -581,13 +581,7 @@
   </data>
   <data name="stakelevel5" xml:space="preserve">
     <value>VIP</value>
-  </data>
-  <data name="DisableFunP2Pdownlines" xml:space="preserve">
-    <value>Disable Fun Poker downlines</value>
-  </data>
-  <data name="DisableP2Pdownlines" xml:space="preserve">
-    <value>Disable Poker downlines</value>
-  </data>
+  </data> 
   <data name="is3" xml:space="preserve">
     <value>Is Master Auto PT</value>
   </data>
