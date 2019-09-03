@@ -11,6 +11,8 @@
 
         public DateTime MoveBetsDay { get; set; }
 
+        public DateTime BalanceUpDate { get; set; }
+
         public int UserId
             => AppSession.AccId;
 

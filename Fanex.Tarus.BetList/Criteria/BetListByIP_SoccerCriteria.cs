@@ -12,6 +12,10 @@
 
         public DateTime FromDate { get; set; }
 
+        public DateTime MoveBetsDay { get; set; }
+
+        public DateTime BalanceUpDate { get; set; }
+
         public string GetSettingKey()
         {
             return "BetList_IP_Soccer";
