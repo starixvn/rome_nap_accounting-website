@@ -14,7 +14,7 @@
 
         public DateTime MoveBetsDay { get; set; }
 
-        public DateTime BalanceUpDate { get; set; }
+        public DateTime BalanceUpDay { get; set; }
 
         public string GetSettingKey()
         {

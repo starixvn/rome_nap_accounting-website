@@ -824,7 +824,7 @@ namespace Fanex.Tarus.BetList.Business
                 FromDate = fromDate,
                 IP = ip,
                 MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
-                BalanceUpDate = ReportUtils.BalanceUp.BalanceUpDay,
+                BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay,
                 Permission = permission
             };
 
@@ -945,7 +945,7 @@ namespace Fanex.Tarus.BetList.Business
                         IP = ip,
                         FromDate = fromDate,
                         MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
-                        BalanceUpDate = ReportUtils.BalanceUp.BalanceUpDay
+                        BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay
                     };
 
                     using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -961,7 +961,7 @@ namespace Fanex.Tarus.BetList.Business
                         IP = ip,
                         FromDate = fromDate,
                         MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
-                        BalanceUpDate = ReportUtils.BalanceUp.BalanceUpDay
+                        BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay
                     };
 
                     using (var db = new ObjectDb(criteria.GetSettingKey()))
