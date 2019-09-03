@@ -4,13 +4,6 @@ using Sunplus.Accounting.Core.Common;
 
 namespace Fanex.Tarus.BetList.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web.Mvc;
     using Business;
     using Core;
     using Fanex.Common;
@@ -19,6 +12,14 @@ namespace Fanex.Tarus.BetList.Controllers
     using Models;
     using Security.Constants;
     using Security.Services;
+    using Sunplus.Accounting.DataAccess.Report;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     public class BetListController : Controller
@@ -272,6 +273,8 @@ namespace Fanex.Tarus.BetList.Controllers
                 isSoccer,
                 pageSize,
                 pageIndex,
+                ReportUtils.BalanceUp.MoveBetsDay,
+                ReportUtils.BalanceUp.BalanceUpDay,
                 ref quantity,
                 ref totalComm,
                 ref totalWinLost);
