@@ -1043,14 +1043,13 @@ namespace Fanex.Tarus.BetList.Business
                                 BetCheck = Convert.ToString(r["betcheck"]),
                                 OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
 
-                                OriginalBetType = (r["OriginalBetType"] != System.DBNull.Value) ? Convert.ToInt32(r["OriginalBetType"]) : 0,
+                                OriginalBetType = (r["OriginalBetType"] != DBNull.Value) ? Convert.ToInt32(r["OriginalBetType"]) : 0,
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
-                                WalletType = Convert.ToByte(r["wallettype"]),
-
-                                RefCode = Convert.ToInt64(r["refcode"]),
+                                WalletType = (r["wallettype"] != DBNull.Value) ? Convert.ToByte(r["wallettype"]) : Byte.MinValue,
+                                RefCode = (r["refcode"] != DBNull.Value) ? Convert.ToInt64(r["refcode"]) : 0,
                                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                             },
                             ChoiceHtml = string.Empty,
