@@ -26,6 +26,7 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
+    using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Common;
     using Models;
@@ -1043,13 +1044,13 @@ namespace Fanex.Tarus.BetList.Business
                                 BetCheck = Convert.ToString(r["betcheck"]),
                                 OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
 
-                                OriginalBetType = (r["OriginalBetType"] != DBNull.Value) ? Convert.ToInt32(r["OriginalBetType"]) : 0,
+                                OriginalBetType = Utils.ToInt32(r["OriginalBetType"]),
                                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
-                                WalletType = (r["wallettype"] != DBNull.Value) ? Convert.ToByte(r["wallettype"]) : Byte.MinValue,
-                                RefCode = (r["refcode"] != DBNull.Value) ? Convert.ToInt64(r["refcode"]) : 0,
+                                WalletType = Utils.ToByte(r["wallettype"]),
+                                RefCode = Utils.ToInt64(r["refcode"]),
                                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                             },
                             ChoiceHtml = string.Empty,
