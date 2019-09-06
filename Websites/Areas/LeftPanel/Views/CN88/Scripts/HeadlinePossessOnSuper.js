@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
-    var today = new Date();
-    var tomorrow = new Date();
+    var today = convertToServerTimeZone(new Date());
+    var tomorrow = convertToServerTimeZone(new Date());
     tomorrow.setDate(today.getDate() + 1);
+
 
     $('#NewEffectiveDate').datepicker({
         showOn: 'both',
@@ -59,3 +60,7 @@
         });
     });
 });
+
+var convertToServerTimeZone = function (date) {
+    return new Date(date.getTime() + ((date.getTimezoneOffset() - 240) * 60 * 1000));
+};
