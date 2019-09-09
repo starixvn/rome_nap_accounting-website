@@ -249,6 +249,7 @@
                                 <option value="2">Commission</option>
                                 <option value="3">Bet Setting</option>
                                 <option value="4">General Info</option>
+								<option value="6">Problem Account</option>
                             </select>
                         </span>
                         <input type="hidden" name="tabid" id="tabid" value="" />
