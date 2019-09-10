@@ -46,10 +46,6 @@ namespace Sunplus.Accounting.Business.Statement
             {
                 return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
             }
-            else if (AppSession.CustRoleId == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.REPORT_NOT_AVAILABLE_MSG, AlertMessage.MsgType.Error);
-            }
 
             string tpl = WebUtils.LoadTemplate("Statement/AuditContent.htm");
             string excelTpl = tpl;
@@ -256,10 +252,6 @@ namespace Sunplus.Accounting.Business.Statement
             {
                 return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
             }
-            else if (AppSession.CustRoleId == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.REPORT_NOT_AVAILABLE_MSG, AlertMessage.MsgType.Error);
-            }
 
             string tpl = WebUtils.LoadTemplate("Statement/DetailContent.htm");
             var htmlReport = new StringBuilder();
@@ -374,10 +366,6 @@ namespace Sunplus.Accounting.Business.Statement
                 || AppSession.CustID == 0)
             {
                 return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
-            }
-            else if (AppSession.CustRoleId == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.REPORT_NOT_AVAILABLE_MSG, AlertMessage.MsgType.Error);
             }
 
             //get persmission of logined user

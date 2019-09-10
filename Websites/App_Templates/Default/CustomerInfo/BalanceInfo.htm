@@ -1,4 +1,26 @@
 ﻿<table border="0" align="left" style="width: 240px;" cellspacing="1">
+    <!--CN88HeadlineVisibleItem-->
+    <tr>
+        <td class="dot_left">
+            Yesterday Cash
+        </td>
+        <td class="dot_right b">
+            {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', '{CustName}');">
+                {YesterdayCashBalCur}
+            </span>
+        </td>
+    </tr>
+    <tr class="{hiddenbalance}">
+        <td class="dot_left">
+            Yesterday Balance
+        </td>
+        <td class="dot_right b">
+            {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', '{CustName}');">
+                {YesterdayBalCur}
+            </span>
+        </td>
+    </tr>
+    <!--/CN88HeadlineVisibleItem-->
     <!--CN88HeadlineHiddenItem-->
     <tr>
         <td class="dot_left" style="width: 100px;">
@@ -134,16 +156,6 @@
         </td>
     </tr>
     <!--/CN88HeadlineHiddenItem-->
-    <!--CN88HeadlineVisibleItem-->
-    <tr>
-        <td class="dot_left">
-            Currency
-        </td>
-        <td class="dot_right b">
-            {CN88HeadlineCurrency}
-        </td>
-    </tr>
-    <!--/CN88HeadlineVisibleItem-->
     <tr class="{superhidden}">
         <td class="dot_left" onmouseover="Tip('Total Super {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
             onmouseout="UnTip()">

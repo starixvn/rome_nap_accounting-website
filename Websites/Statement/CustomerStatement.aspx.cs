@@ -177,8 +177,11 @@ public partial class Statement_CustomerStatement : PageBase
             System.Web.HttpUtility.UrlDecode(WebUtils.GetQueryStringValue<string>("custname", string.Empty)));
 
         //remove Audit tab if current user is member
-        if (Session["CustRoleId"] == null || (int)Session["CustRoleId"] < 2)
+        int? custRoleId = Session["CustRoleId"] == null ? new int?() : (int)Session["CustRoleId"];
+        if (custRoleId == null || (custRoleId.Value != 0 && custRoleId.Value < 2))
+        {
             TemplateHandler.RemoveBlock(ref headerHtml, "IsAgent");
+        }
 
         switch (tabId)
         {

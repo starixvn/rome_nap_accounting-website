@@ -112,6 +112,11 @@
                     UsedCredit = IBCUtils.FormatHandler.GetDecimal(cashRow["superUsedCredit"]);
                     break;
 
+                case 0:
+                    YesterdayCash = Converter.ToDecimal(cashRow["YesterdayCash"]);
+                    YesterdayBal = Converter.ToDecimal(cashRow["YesterdayBalance"]);
+                    break;
+
                 default:
                     break;
             }

@@ -41,10 +41,17 @@
             if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.Assign(ref balanceinfo, "{NetPosition}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
+                TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
             }
             else
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "NetPosition");
+
+                TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
+                TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
+                TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", customerInfoViewModel.YesterdayBal));
+                TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayBal)));
+                TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", customerInfoViewModel.Currency + " ");
             }
 
             //Check Given Credit Permission
@@ -62,7 +69,6 @@
             if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 RenderDownlineCountingInfo(ref balanceinfo, customerInfoViewModel);
-                TemplateHandler.Assign(ref balanceinfo, "{CN88HeadlineCurrency}", customerInfoViewModel.Currency);
                 TemplateHandler.Assign(ref balanceinfo, "{superhidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", string.Empty);
@@ -95,15 +101,9 @@
                     TemplateHandler.Assign(ref balanceinfo, "{TotalBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.TotalBal)));
                     TemplateHandler.Assign(ref balanceinfo, "{CurTotalBalCur}", customerInfoViewModel.Currency + " ");
 
-                    TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
-                    TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", customerInfoViewModel.YesterdayBal));
-                    TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayBal)));
-                    TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", customerInfoViewModel.Currency + " ");
-
                     TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.OutStanding)));
                     TemplateHandler.Assign(ref balanceinfo, "{UsedCredit}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.UsedCredit)));
                     TemplateHandler.Assign(ref balanceinfo, "{AgentType}", customerInfoViewModel.DirectDownlineRoleName);
-                    TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
 
                     RenderDownlineCountingInfo(ref balanceinfo, customerInfoViewModel);
@@ -116,7 +116,6 @@
                         TemplateHandler.Assign(ref balanceinfo, "{YesterdayBetCredit}", customerInfoViewModel.YesterdayBetCredit == -1 ? "N/A" : Core.Helper.Utils.GetDecimalRoundDown(customerInfoViewModel.YesterdayBetCredit));
                     }
 
-                    TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");
 
                     TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", "hidden");
