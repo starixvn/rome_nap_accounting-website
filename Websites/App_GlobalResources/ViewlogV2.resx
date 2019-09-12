@@ -2091,6 +2091,39 @@
   <data name="PT" xml:space="preserve">
     <value>Position Taking</value>
   </data>
+  <data name="A_v99mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="A_v99spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Isa_v99mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="V99apt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="V99mpt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="V99spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="A_v99mpt_mem_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Isa_v99mpt_mem_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Isa_v99spt_9999" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Maxv99pt_9999" xml:space="preserve">
+    <value>Max Others</value>
+  </data>
+  <data name="Minv99pt_9999" xml:space="preserve">
+    <value>Min Others</value>
+  </data>
   <data name="FollowAccount" xml:space="preserve">
     <value>8RM Account</value>
   </data>
