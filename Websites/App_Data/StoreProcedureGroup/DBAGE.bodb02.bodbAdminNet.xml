@@ -282,7 +282,7 @@
     <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="View Pt/Comm CN88">
-    <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
