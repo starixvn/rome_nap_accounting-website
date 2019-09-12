@@ -1,0 +1,89 @@
+﻿.display-none {
+    display: none !important;
+}
+
+.result-tbls {
+    overflow: auto;
+    height: auto;
+    width: 96.8%;
+    padding: 5px 20px 20px 20px;
+}
+
+.txt-username {
+    width: 200px;
+}
+
+    .txt-username[disabled] {
+        background-color: #EBEBEB;
+    }
+
+.div-line-info {
+    margin-bottom: 20px;
+}
+
+.tbl-line-info .col-level {
+    text-transform: uppercase;
+}
+
+.tbl-pt {
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+    .tbl-pt th, .tbl-pt .col-level {
+        background-color: #b5c4d0 !important;
+        color: #000;
+    }
+
+    .tbl-pt td, .tbl-pt th {
+        border: solid 1px #7c98a4 !important;
+        line-height: 18px;
+        font-weight: normal;
+    }
+
+    .tbl-pt .col-level {
+        width: 120px;
+    }
+
+    .tbl-pt .col-sportsbook-current, .tbl-pt .col-sportsbook-new {
+        width: 200px;
+    }
+
+    .tbl-pt .col-nonsports-current, .tbl-pt .col-nonsports-new {
+        width: 200px;
+    }
+
+.tbl-comm {
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+    .tbl-comm th, .tbl-comm .col-level {
+        background-color: #b5c4d0 !important;
+        color: #000;
+    }
+
+    .tbl-comm td, .tbl-comm th {
+        border: solid 1px #7c98a4 !important;
+        line-height: 18px;
+        font-weight: normal;
+        padding: 2px;
+    }
+
+    .tbl-comm .col-level {
+        width: 200px;
+    }
+
+    .tbl-comm .col-comm {
+        width: 80px;
+    }
+
+    .tbl-comm .row-sport-title {
+        background-color: #D4E2F4;
+    }
+
+        .tbl-comm .row-sport-title td {
+            font-weight: bold;
+        }

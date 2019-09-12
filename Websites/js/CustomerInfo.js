@@ -593,6 +593,12 @@ function OpenViewPT(username) {
     parent.resetMenu();
 }
 
+function viewPTCommCN88(username) {
+    var url = 'CN88PT/Index?username=' + username;
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
 function OpenViewSuspend(username) {
     var url = 'UnsuspendCustomer/SuspendMatrixView?username=' + username;
     parent.gotoURL('centerFr', url);
@@ -647,7 +653,7 @@ function isDigitOnly(s) {
 function UpdateDangerousCustomer(typename, type, level) {
     var custId = GetCustId();
     var updateDownline = "0";
-    
+
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
         alert("This account was disabled");
         $("#" + currlevelbox).css('display', 'none');
@@ -679,7 +685,7 @@ function UpdateDangerousCustomer(typename, type, level) {
                             $(span).html("None");
                         else
                             $(span).html(level);
-                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;                      
+                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
                         if (parseInt(level) > 10) {
                             $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
                             $(span).parent()[0].style.Color = "Black";
@@ -715,13 +721,13 @@ function UpdateDangerousCustomer(typename, type, level) {
                     }
                     if (PTUnBlockUI) PTUnBlockUI();
                 }
-            , error: function (xhr) {
-                if (PTUnBlockUI) PTUnBlockUI();
-                if (xhr.status === 403) {
-                    var denyObject = $.parseJSON(xhr.responseText);
-                    alert(denyObject.ErrorMessage);
+                , error: function (xhr) {
+                    if (PTUnBlockUI) PTUnBlockUI();
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        alert(denyObject.ErrorMessage);
+                    }
                 }
-            }
             });
         }
         else {
@@ -837,13 +843,13 @@ function UpdateAbnormalCustomer(level) {
                     }
                     if (PTUnBlockUI) PTUnBlockUI();
                 }
-            , error: function (xhr) {
-                if (PTUnBlockUI) PTUnBlockUI();
-                if (xhr.status === 403) {
-                    var denyObject = $.parseJSON(xhr.responseText);
-                    alert(denyObject.ErrorMessage);
+                , error: function (xhr) {
+                    if (PTUnBlockUI) PTUnBlockUI();
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        alert(denyObject.ErrorMessage);
+                    }
                 }
-            }
             });
         }
         else {

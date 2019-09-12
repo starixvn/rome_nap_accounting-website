@@ -63,7 +63,7 @@
   <Function Name="Bet List - Result">
     <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.bodb02.bodbAdminNet" />   
+    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Age_BetList_SelMatchResultFinance" SpName="Age_BetList_SelMatchResultFinance" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -216,7 +216,7 @@
     <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="MixparlayWon" SpName="Acc_Rpt_MixParlayWon" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CompanyCreditDebit" SpName="Acc_Rpt_CompanyCreditDebit" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function> 
+  </Function>
   <Function Name="Gold Deluxe - GET PT Setting">
     <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -321,5 +321,9 @@
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel_Sync_NG2" SpName="Acc_ExchangeSel_Sync_NG2" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_UserName" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="View Pt/Comm CN88">
+    <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
