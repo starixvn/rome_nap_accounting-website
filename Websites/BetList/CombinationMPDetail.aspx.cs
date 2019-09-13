@@ -16,7 +16,7 @@ using System.Web;
 public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 {
     protected void Page_Load(object sender, EventArgs e)
-    {        
+    {
         string refno = CastAide.AsString(Request.QueryString["refno"]);
         string transid = CastAide.AsString(Request.QueryString["transid"]);
         string betid = CastAide.AsString(Request.QueryString["betid"]);
@@ -30,7 +30,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
     private string GenCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday)
     {
         double outStanding = 0;
-        var ds =Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
+        var ds = Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
         if (ds != null && ds.Tables.Count != 2)
         {
             return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
@@ -57,6 +57,16 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
         var note = WebUtils.LoadTemplate("BetList\\CombinationMP\\note.htm");
         string rowTemp = string.Empty;
         var subtotalTemp = string.Empty;
+        var statusOrder = new Dictionary<string, int>
+        {
+            {"",0 },
+            {"WON",1 },
+            {"LOSE",2 },
+            {"DRAW",3 },
+            {"VOID",4 },
+            {"REJECT",5 },
+            {"REFUND",6 }
+        };
 
         var tblDetail = ds.Tables[1];
         var dateRange =
@@ -84,16 +94,12 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
             subtotalTemp = CastAide.AsString(subtotal.Clone());
             var isFirstRows = true;
 
-            #region won
-
-            foreach (DataRow rowMaster in selTrans)
+            foreach (DataRow rowMaster in selTrans.OrderBy(i => statusOrder[i["status"].ToString()]))
             {
                 totalWin += CastAide.AsDecimal(rowMaster["winlost"]);
                 totalWin += CastAide.AsDecimal(rowMaster["playercomm"]);
                 subTotalVal += CastAide.AsDecimal(rowMaster["winlost"]);
                 subTotalVal += CastAide.AsDecimal(rowMaster["playercomm"]);
-
-                if (CastAide.AsInt32(rowMaster["serial"]) == 0) continue;
 
                 status = CastAide.AsString(rowMaster["status"]);
                 rowTemp = CastAide.AsString(row.Clone());
@@ -165,77 +171,6 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 //----------------------------------------------------
                 strBody.Append(rowTemp);
             }
-
-            #endregion won
-
-            #region lose
-
-            foreach (DataRow rowMaster in selTrans)
-            {
-                if (CastAide.AsInt32(rowMaster["serial"]) != 0) continue;
-
-                status = CastAide.AsString(rowMaster["status"]);
-                rowTemp = CastAide.AsString(row.Clone());
-
-                #region date
-
-                if (isFirstRows)
-                {
-                    winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
-                    TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
-                    TemplateHandler.Assign(ref rowTemp, "{row-spans}", string.Format("rowspan={0}", selTrans.Count));
-                    isFirstRows = false;
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref rowTemp, "wldate");
-                }
-
-                #endregion date
-
-                #region event
-
-                TemplateHandler.Assign(ref rowTemp, "{Event}", "Total of losing tickets");
-
-                #endregion event
-
-                #region odds
-
-                if (status.ToLower().Contains("running") || status.ToLower().Contains("lose"))
-                {
-                    TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
-                }
-                else
-                {
-                    TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
-                }
-
-                #endregion odds
-
-                #region stake
-
-                TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
-
-                #endregion stake
-
-                #region win/lost
-
-                TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
-                TemplateHandler.Assign(ref rowTemp, "{wl-color}", "color:red");
-                TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
-
-                #endregion win/lost
-
-                #region status
-
-                TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
-
-                #endregion status
-
-                strBody.Append(rowTemp);
-            }
-
-            #endregion lose
 
             #region subtotal
 
