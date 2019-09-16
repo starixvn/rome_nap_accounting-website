@@ -45,22 +45,7 @@
     if (directMaster)
     {
         colspanCom++;
-    }   
-
-    var parentIsIMBCCustomers = false;
-    foreach (var agentItem in Model.ListChildren)
-    {
-        if (agentItem.IsIMBCCustomers)
-        {
-            parentIsIMBCCustomers = true;
-            break;
-        }
-    }
-
-    if (parentIsIMBCCustomers)
-    {
-        colspanCom++;
-    }
+    }  
 
     Hashtable hash = new Hashtable();
 
@@ -70,7 +55,6 @@
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -175,13 +159,7 @@ string siteName = string.Empty;
                             Sportsbook 2
                         </li>
                     }
-
-                    @if (!masterItem.IsHideCricket)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 20, 'Cricket');">
-                            Cricket
-                        </li>
-                    }
+             
                     @if (!masterItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 21, 'Allbet');">
@@ -338,16 +316,7 @@ var bg = rowCSS(masterItem);
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem.Others
             </div>
-        </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-    {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.MatchWinnerComm
-                </div>
-            </td>
-        }      
-      
+        </td>   
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@masterItem.LastLoginIP')">@masterItem.LastLoginIP</a>
@@ -575,16 +544,7 @@ var bg = rowCSS(masterItem);
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Others
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Charge Comm
-                                </div>
-                            </th>
-                        }
-                       
+                        </th>                       
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -718,15 +678,7 @@ var bg = rowCSS(masterItem);
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Others
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Charge Comm
-                                </div>
-                            </th>
-                        }
+                        </th>                 
                        
                         @if (directMaster)
                         {
@@ -772,5 +724,4 @@ var bg = rowCSS(masterItem);
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _directMaster = "@directMaster";
     var _userId = @AppSession.AccId;
-    var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

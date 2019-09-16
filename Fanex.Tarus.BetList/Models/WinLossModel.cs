@@ -24,9 +24,7 @@
 
         private static bool IsShowComm(ITicket ticket)
         {
-            var isIMBCMatch = ticket.SuperDiscount < 0 || ticket.MasterDiscount < 0 || ticket.AgentDiscount < 0;
-
-            return (ticket.BetTypeId != 501 && !BetTypeContants.IsJackpotContribution(ticket.BetTypeId)) || !isIMBCMatch;
+            return (!BetTypeContants.IsJackpotContribution(ticket.BetTypeId));
         }
 
         private void SetData(ITicket ticket)

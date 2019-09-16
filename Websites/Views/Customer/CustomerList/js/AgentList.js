@@ -303,12 +303,7 @@
         }
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }   
-
-        if (parentIsIMBCCustomers) {
-            initWidth += 75;
-        }
-
+        }         
         AgentList.gridOption.gridWidth = initWidth;
     }
 };

@@ -341,11 +341,7 @@
       
         if (_directMaster == "True") {
             initWidth += 75;
-        }
-
-        if (parentIsIMBCCustomers) {
-            initWidth += 75;
-        }
+        }      
         
         masterList.gridOption.gridWidth = initWidth;
     }

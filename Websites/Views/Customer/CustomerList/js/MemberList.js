@@ -301,11 +301,7 @@
         var initWidth = 1370;
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }
-
-        if (parentIsIMBCCustomers) {
-            initWidth += 170;
-        }
+        }     
 
         MemberList.gridOption.gridWidth = initWidth;
     }

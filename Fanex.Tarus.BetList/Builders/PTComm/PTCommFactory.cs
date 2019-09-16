@@ -15,12 +15,7 @@
             if (ticket.BetTypeId == 500)
             {
                 return new PTComm500(ticket, roleId);
-            }
-
-            if (ticket.BetTypeId == 501)
-            {
-                return new PTComm501(ticket, roleId);
-            }
+            }           
 
             if (ticket.BetTypeId == 71 || ticket.BetTypeId == 73)
             {

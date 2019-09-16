@@ -163,11 +163,7 @@ string siteName = string.Empty;
                             Sportsbook 2
                         </li>
                     }
-
-                    @if (!superItem.IsHideCricket)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 20, 'Cricket');">Cricket</li>
-                    }
+                 
                     @if (!superItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'AllBet');">Allbet</li>
@@ -308,9 +304,7 @@ var bg = rowCSS(superItem);
             </div>
         </td>
         <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @{ var tmp = !superItem.IsIMBCCustomers ? "--" : superItem.MatchWinnerComm.ToString();}
-                @tmp
+            <div class="table-cell c" style="width: 70px; height: 18px;">             
             </div>
         </td>
       

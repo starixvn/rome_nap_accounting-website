@@ -41,7 +41,6 @@
                 IsShowAllBetForCredit = !customerInfoViewModel.HideEnabledCheckBoxAllbet,
                 IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
-                IsHideCricket = customerInfoViewModel.HideCricketCredit,
                 IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
@@ -181,10 +180,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
-
-            TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
-
             TemplateHandler.Assign(ref htmlcontent, "{AllbetId}", "21");
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
             return htmlcontent;
@@ -203,12 +198,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     "Update Sportbook2 Status"));
-            }
-
-            if (customerInfoViewModel.HideCricketCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-            }
+            }         
 
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
             {
@@ -443,23 +433,7 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
-                            break;
-                        case "20":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               CustParent.IsDisableCricket,
-                                               hasDownline,
-                                               "Cricket",
-                                               !renderLeftPanelParameter.IsHideCricket,
-                                               renderLeftPanelParameter,
-                                               "Update Cricket Status",
-                                               20,
-                                               4);
-                            break;
+                            break;                     
                         case "22":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,

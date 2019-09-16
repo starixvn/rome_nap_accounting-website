@@ -79,8 +79,6 @@
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
-        public bool HideCricketCredit { get; private set; } = true;
-
         public bool HideEnableAndEditFishingWorld { get; private set; } = true;
 
         public bool HideKenoLottery { get; private set; } = true;
@@ -135,10 +133,6 @@
 
                             case "16":
                                 HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
-                                break;
-
-                            case "20":
-                                HideCricketCredit = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
                                 break;
 
                             case "21":

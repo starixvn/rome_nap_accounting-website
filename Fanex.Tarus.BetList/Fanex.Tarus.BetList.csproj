@@ -350,8 +350,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts2\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts3\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.6-RemoveInactiveProducts3\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
@@ -441,7 +440,6 @@
     <Compile Include="Builders\PTComm\PTComm2198.cs" />
     <Compile Include="Builders\PTComm\PTComm33.cs" />
     <Compile Include="Builders\PTComm\PTComm500.cs" />
-    <Compile Include="Builders\PTComm\PTComm501.cs" />
     <Compile Include="Builders\PTComm\PTComm71.cs" />
     <Compile Include="Builders\PTComm\PTCommFactory.cs" />
     <Compile Include="Business\AGCasino\AGCasinoService.cs" />

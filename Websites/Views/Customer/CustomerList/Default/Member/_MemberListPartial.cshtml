@@ -29,22 +29,6 @@
     {
         colspan++;
     }
-  
-
-    var parentIsIMBCCustomers = false;
-    foreach (var memberItem in Model.ListChildren)
-    {
-        if (memberItem.IsIMBCCustomers)
-        {
-            parentIsIMBCCustomers = true;
-            break;
-        }
-    }
-
-    if (parentIsIMBCCustomers)
-    {
-        colspanCom += 2;
-    }
 
     Hashtable hash = new Hashtable();
 
@@ -52,7 +36,6 @@
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
-    hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -144,13 +127,7 @@ string siteName = string.Empty;
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">
                             Sportsbook 2
                         </li>
-                    }
-                    @if (!memberItem.IsHideCricket)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 20, 'Cricket');">
-                            Cricket
-                        </li>
-                    }
+                    }               
                     @if (!memberItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 21, 'Allbet');">
@@ -282,15 +259,7 @@ var bg = rowCSS(memberItem);
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupB
             </div>
-        </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 80px; height: 18px;">
-                    @memberItem.UplineMatchWinnerComm
-                </div>
-            </td>
-        }
+        </td>       
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupC
@@ -305,15 +274,7 @@ var bg = rowCSS(memberItem);
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @memberItem.GroupD
             </div>
-        </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 80px; height: 18px;">
-                    @memberItem.MatchWinnerComm
-                </div>
-            </td>
-        }
+        </td>     
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a>
@@ -516,15 +477,7 @@ var bg = rowCSS(memberItem);
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 A Comm 3 (%)
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    A Charge Comm (%)
-                                </div>
-                            </th>
-                        }
+                        </th>                    
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 1 (%)
@@ -539,16 +492,7 @@ var bg = rowCSS(memberItem);
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 3 (%)
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    P Charge Comm (%)
-                                </div>
-                            </th>
-                        }
-                      
+                        </th> 
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -656,14 +600,6 @@ var bg = rowCSS(memberItem);
                                 A Comm 3 (%)
                             </div>
                         </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    A Charge Comm (%)
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 1 (%)
@@ -678,15 +614,7 @@ var bg = rowCSS(memberItem);
                             <div class="table-cell c" style="width: 70px; height: 38px;">
                                 P Comm 3 (%)
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 80px; height: 38px;">
-                                    P Charge Comm (%)
-                                </div>
-                            </th>
-                        }                       
+                        </th>             
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -722,5 +650,4 @@ var bg = rowCSS(memberItem);
     var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _userId = @AppSession.AccId;
-    var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>

@@ -10,11 +10,7 @@
     decimal PT2 = betdetail.AgentPositionTaking2;
 
     decimal discount = betdetail.Ticket.AgentDiscount;
-    decimal comm = betdetail.Ticket.Comm;
-    if (betlistHelper.IsIMBCMatch(betdetail))
-    {
-        discount = -discount;
-    }
+    decimal comm = betdetail.Ticket.Comm;   
 
     decimal winlost = betdetail.Ticket.AgentWinlost;
     string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;

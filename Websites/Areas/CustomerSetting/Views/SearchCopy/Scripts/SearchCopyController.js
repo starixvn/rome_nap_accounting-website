@@ -191,7 +191,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmVirtualSports").attr('src', "");      
         $("#frmGoldDleluxe").attr('src', "");       
         $("#frmSportsbook2").attr('src', "");
-        $("#frmCricket").attr('src', "");
         $("#frmAllbet").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
         $("#frmNG2").attr('src', "");
@@ -265,11 +264,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabKenoLottery': url += "DCS/ViewCustomerSetting?productId=28&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmKenoLottery", url);
                 $scope.resize("#frmKenoLottery");
-                break;
-            case 'tabCricket': url += "DCS/ViewCustomerSetting?productId=20&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmCricket", url);
-                $scope.resize("#frmCricket");
-                break;
+                break;       
             case 'tabNG2': url += "DCS/ViewCustomerSetting?productId=23&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmNG2", url);
                 $scope.resize("#frmNG2");
@@ -316,10 +311,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
         if (!statusSports.HideSportsbook2) {
             $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
-        }
-        if (!statusSports.HideCricket) {
-            $scope.sports.push({ sportname: 'Cricket', sportvalue: 'tabCricket' });
-        }
+        }      
 
         $scope.selectedSport = $scope.sports[0];
     };

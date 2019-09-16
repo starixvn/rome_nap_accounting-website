@@ -128,7 +128,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
-            TemplateHandler.Assign(ref htmlcontent, "{cricketSettingLink}", string.Format(creditDCSLink, 20));
             TemplateHandler.Assign(ref htmlcontent, "{allbetLinkSetting}", string.Format(creditDCSLink, 21));
             TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
             TemplateHandler.Assign(ref htmlcontent, "{ng2LinkSetting}", string.Format(creditDCSLink, 23));
@@ -194,12 +193,7 @@
             if (customerInfoViewModel.HideSportsbook2)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
-            }
-
-            if (customerInfoViewModel.HideCricketCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cricket");
-            }
+            }           
 
             if (customerInfoViewModel.HideSettingLinkAllbet)
             {

@@ -38,21 +38,6 @@
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    } 
-
-    var parentIsIMBCCustomers = false;
-    foreach (var agentItem in Model.ListChildren)
-    {
-        if (agentItem.IsIMBCCustomers)
-        {
-            parentIsIMBCCustomers = true;
-            break;
-        }
-    }
-
-    if (parentIsIMBCCustomers)
-    {
-        colspanCom++;
     }
 
     Hashtable hash = new Hashtable();
@@ -61,8 +46,7 @@
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
-    hash.Add("allowKeno", KenoSection.Instance.ShowSetting); 
-    hash.Add("parentIsIMBCCustomers", parentIsIMBCCustomers);
+    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);   
 
     string[] renderResult = Render(Model, hash);
 }
@@ -162,11 +146,7 @@ string siteName = string.Empty;
                             Sportsbook 2
                         </li>
                     }
-
-                    @if (!agentItem.IsHideCricket)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 20, 'Cricket');">Cricket</li>
-                    }
+                
                     @if (!agentItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 21, 'AllBet');">Allbet</li>
@@ -321,15 +301,6 @@ var bg = rowCSS(agentItem);
                 @agentItem.Others
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["parentIsIMBCCustomers"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @agentItem.MatchWinnerComm
-                </div>
-            </td>
-        }      
-      
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@agentItem.LastLoginIP')">@agentItem.LastLoginIP</a>
@@ -559,15 +530,7 @@ var bg = rowCSS(agentItem);
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Others
                             </div>
-                        </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Charge Comm
-                                </div>
-                            </th>
-                        } 
+                        </th>                    
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -701,14 +664,7 @@ var bg = rowCSS(agentItem);
                                 Others
                             </div>
                         </th>
-                        @if (parentIsIMBCCustomers)
-                        {
-                            <th>
-                                <div class="table-cell c" style="width: 70px; height: 38px;">
-                                    Charge Comm
-                                </div>
-                            </th>
-                        } 
+                      
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -744,5 +700,4 @@ var bg = rowCSS(agentItem);
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
     var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
     var _userId = @AppSession.AccId;
-    var parentIsIMBCCustomers=@(parentIsIMBCCustomers ? 1 : 0);
 </script>
