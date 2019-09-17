@@ -53,7 +53,6 @@
         public const int MicroGamingRNGCasino = 205;
         public const int AGCasino = 250;
         public const int Keno = 202;
-        public const int CockFighting = 206;
 
         public const int RNG_RNGGame = 208;
         public const int RNG_MiniGame = 209;

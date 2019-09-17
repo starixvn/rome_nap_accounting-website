@@ -65,12 +65,7 @@
                 betType == BetTypeContants.ColossusBetsConsolationPrize ||
                 betType == BetTypeContants.ColossusBetsJackpotPrize ||
                 betType == BetTypeContants.ColossusBetsBonusPrize;
-        }
-
-        public static bool IsCockFightingBetType(int betType)
-        {
-            return betType == BetTypeContants.CockFighting;
-        }
+        }       
 
         public string IsNegative(decimal input)
         {

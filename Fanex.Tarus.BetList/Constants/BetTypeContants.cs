@@ -93,8 +93,6 @@
         public const int ColossusBetsJackpotPrize = 18005;
         public const int ColossusBetsBonusPrize = 18006;
 
-        public const int CockFighting = 1003;
-
         public const int FastMarketNext1Minutes = 221;
         public const int FastMarketNext5Minutes = 222;
         public const int FastMarketWhatWillHappenFirstInNext1Minute = 223;
