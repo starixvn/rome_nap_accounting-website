@@ -333,6 +333,8 @@
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\ILicenseeSubsidiaryService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
+    <Compile Include="Business\ManageRobots2\IManageRobots2Service.cs" />
+    <Compile Include="Business\ManageRobots2\ManageRobots2Service.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
@@ -382,6 +384,7 @@
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
     <Compile Include="Controller\LicenseeDcsSettingController.cs" />
     <Compile Include="Controller\LicenseeSubsidiaryController.cs" />
+    <Compile Include="Controller\ManageRobots2Controller.cs" />
     <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -453,6 +456,7 @@
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\CreateLicenseeSubsidiaryCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
@@ -498,6 +502,8 @@
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\ILicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\LicenseeSubsidiaryDataAccess.cs" />
+    <Compile Include="DataAccess\ManageRobots2\IManageRobots2DataAccess.cs" />
+    <Compile Include="DataAccess\ManageRobots2\ManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
