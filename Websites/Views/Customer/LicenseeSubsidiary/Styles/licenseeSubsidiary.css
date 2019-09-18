@@ -1,0 +1,11 @@
+﻿.text-red { color: #ff0000; }
+.text-success { color: #618e11; }
+.mT10 { margin-top: 10px; }
+.mL10 { margin-left: 10px; }
+.maincontent { width: 995px; }
+.filter_table td { padding: 5px 10px 0 10px; }
+.filter_table td input[type=text] { height: 18px; line-height: 18px; padding: 0 5px; }
+.tblcollapse .title_1 th,
+.tblcollapse .title_1 td { background-color: #cadceb; font-weight: bold; }
+.tblcollapse th, .tblcollapse td { padding: 5px 2px; }
+.tblcollapse td textarea { width: 99%; }

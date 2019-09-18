@@ -407,4 +407,8 @@
     <Setting Key="CS_GroupExtraPT_Upd" SpName="CS_GroupExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="CS_CustomerIns_Headline" SpName="CS_CustomerIns_Headline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Create Licensee Subsidiary">
+    <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
