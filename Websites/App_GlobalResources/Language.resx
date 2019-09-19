@@ -1886,25 +1886,12 @@
   <data name="iplogin" xml:space="preserve">
     <value>Last Login IP</value>
   </data>
-  <data name="lblAUTote" xml:space="preserve">
-    <value>Aust Tote</value>
-  </data>
   <data name="lblAUTote51" xml:space="preserve">
     <value>Win.Aust Tote</value>
   </data>
   <data name="lblAUTote52" xml:space="preserve">
     <value>Place.Aust Tote</value>
-  </data>
-  <data name="Greyhound" xml:space="preserve">
-    <value>Greyhound</value>
-  </data>
-  <data name="Harness" xml:space="preserve">
-    <value>Harness</value>
-  </data>
-  <data name="lblFIComm" xml:space="preserve">
-    <value>FI Comm</value>
-  </data>
-  
+  </data>  
   <data name="GroupTotalInCome" xml:space="preserve">
     <value>Group Total Income</value>
   </data>

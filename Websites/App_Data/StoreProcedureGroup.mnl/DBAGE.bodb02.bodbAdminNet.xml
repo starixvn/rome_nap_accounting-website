@@ -220,8 +220,8 @@
   <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="MicroGaming">
-    <Setting Key="BetList_MicroGaming_BetDetails" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
+  <Function Name="RNG Betlist Detail">
+    <Setting Key="Acc_BetList_RNG_Detail" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
