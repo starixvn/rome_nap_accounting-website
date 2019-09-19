@@ -47,6 +47,8 @@
             bool isSoccer,
             int pageSize,
             int pageIndex,
+            DateTime moveBetsDay,
+            DateTime balanceUpDay,
             ref int quanlity,
             ref decimal totalComm,
             ref decimal totalWinlost);
