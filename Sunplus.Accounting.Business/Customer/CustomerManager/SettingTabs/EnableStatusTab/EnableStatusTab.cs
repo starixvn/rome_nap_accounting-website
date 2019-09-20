@@ -320,9 +320,11 @@
 
                     int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
 
+                    DangerousSetting danger = new DangerousSetting();
                     TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+
                     TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
-                        GetSettingControlDangerous(
+                        danger.GenDangerous(
                             customerInfoViewModel.RoleId,
                             customerInfoViewModel.ManageCustomerAccess,
                             dangeruostype,
