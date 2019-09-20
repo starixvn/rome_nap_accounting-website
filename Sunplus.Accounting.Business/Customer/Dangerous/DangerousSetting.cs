@@ -13,7 +13,7 @@ namespace Sunplus.Accounting.Business.Customer
 
     public class DangerousSetting
     {  
-        private IList<DangerousDetail> idxDangerSettingOriginal = new List<DangerousDetail>();       
+        private IList<DangerousDetail> settings = new List<DangerousDetail>();       
 
         public DangerousSetting()
         {
@@ -29,7 +29,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             foreach (XmlNode level in levels)
             {
-                idxDangerSettingOriginal.Add(
+                settings.Add(
                     new DangerousDetail(
                         Convert.ToInt32(level.Attributes["id"].Value), 
                         level.Attributes["name"].Value, 
@@ -38,20 +38,20 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
      
-        public string GetDangerousLevelName(int level, string dangeruostype, bool isBA)
+        private string GetDangerousLevelName(int level, string dangeruostype, bool isBA)
         {
             switch (dangeruostype)
             {
                 case "1":
                 case "Original":
                    return (level == 0 && isBA) || level == 100 ? 
-                        "BA": idxDangerSettingOriginal.Where(item => item.Id == level).FirstOrDefault().Name;
+                        "BA": settings.Where(item => item.Id == level).FirstOrDefault().Name;
                 default:
-                    return idxDangerSettingOriginal.Where(item => item.Id == level).FirstOrDefault().Name;
+                    return settings.Where(item => item.Id == level).FirstOrDefault().Name;
             }
         }
 
-        public string GetDangerousLevelColor(int level, string dangeruostype, bool isBA)
+        private string GetDangerousLevelColor(int level, string dangeruostype, bool isBA)
         {
             string colortype = level > 10 ? "color:Black;background-color:" : "background-color:White;color:";
             switch (dangeruostype)
@@ -60,9 +60,19 @@ namespace Sunplus.Accounting.Business.Customer
                 case "Original":
                     return (level == 0 && isBA) || level == 100 ?
                       "background-color:White;color:Black" :
-                      colortype + idxDangerSettingOriginal.Where(item => item.Id == level).FirstOrDefault().Color;
+                      colortype + settings.Where(item => item.Id == level).FirstOrDefault().Color;
                 default:
-                    return colortype + idxDangerSettingOriginal.Where(item => item.Id == level).FirstOrDefault().Color;
+                    return colortype + settings.Where(item => item.Id == level).FirstOrDefault().Color;
+            }
+        }
+
+        private static int GetDanerousType(string dangerousName)
+        {
+            switch (dangerousName.ToLower())
+            {
+                case "abt": return 2;
+                case "other sports": return 3;
+                default: return 1;
             }
         }
 
@@ -83,14 +93,14 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref s_, "{onmouseout}", string.Empty);
                 TemplateHandler.Assign(ref s_, "{onmouseover}", string.Empty);
 
-                if (isManageCustomerAccess && roleId < 3)
+                if (isManageCustomerAccess)
                 {
                     TemplateHandler.Assign(ref s_, "{onclick}", "OpenCloseMenuDangerous(this,'divLevel" + names[i].Replace(" ", "") + "'," + levels[i].ToString() + ");");
                     string levelItem = TemplateHandler.CopyBlock(s_, "LevelItem");
                     TemplateHandler.RemoveBlock(ref s_, "LevelItem");
                     StringBuilder content = new StringBuilder();
 
-                    foreach (DangerousDetail st in idxDangerSettingOriginal)
+                    foreach (DangerousDetail st in settings)
                     {
                         string row = Convert.ToString(levelItem.Clone());
                         TemplateHandler.Assign(ref row, "{level_color}", st.Color);
@@ -102,14 +112,11 @@ namespace Sunplus.Accounting.Business.Customer
                         var dangerousTpe = GetDanerousType(names[i]);
                         TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
 
-                        if (roleId == 1)
-                        {
-                            TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevel('" + names[i] + "'," + st.Id + ",'" + st.Name + "','" + st.Color + "');");
-                        }
-                        else
-                        {
-                            TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.Id + "');");
-                        }
+                        var levelOnClick = roleId == 1 ?
+                            "return ChangeDangerousLevel('" + names[i] + "'," + st.Id + ",'" + st.Name + "','" + st.Color + "');" :
+                            "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.Id + "');";
+
+                        TemplateHandler.Assign(ref row, "{level_onclick}", levelOnClick);
                         content.Append(row);
                     }
 
@@ -137,16 +144,6 @@ namespace Sunplus.Accounting.Business.Customer
                 GetDangerousLevelName(dangerLevel, dangertype.ToString(), isBA),
                 GetDangerousLevelColor(dangerLevel, dangertype.ToString(), isBA),
                 "#ffffff");
-        }
-
-        private static int GetDanerousType(string dangerousName)
-        {
-            switch (dangerousName.ToLower())
-            {
-                case "abt": return 2;
-                case "other sports": return 3;
-                default: return 1;
-            }
         }
     }
 }

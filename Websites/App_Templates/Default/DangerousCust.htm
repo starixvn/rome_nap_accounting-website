@@ -7,7 +7,7 @@
             <td class="dangerlevel" style="{dangerColor};" id="tdvalue{name}">
                 <span name="{name}" id="spanDangerous{name}">{value}</span>
             </td>
-            <td style="cursor: pointer; border none 0px; width 20px;">
+            <td style="cursor: pointer; border: none 0px; width: 20px;">
                 <!--ImgDropdownLevel-->
                 <img title="Detail" border="0" src="App_themes/images/menu_open_right.gif" style="padding-left:7px;" />
                 <!--/ImgDropdownLevel-->
@@ -19,7 +19,9 @@
 <div id="divLevel{name}" class="divLevel" style="display: none;">
     <div id="popupMenu1" class="tbllayout tbldangerlevel" cellspacing="0">
         <!--LevelItem-->
-        <div id="dangertd" style="width:50%;border-bottom: solid 1px #C6D0E3;display: inline-block;color:{level_color};background-color:{level_background_color}" onclick="{level_onclick}">
+        <div id="dangertd" 
+             style="width:50%;border-bottom: solid 1px #C6D0E3;display: inline-block;color:{level_color};background-color:{level_background_color}" 
+             onclick="{level_onclick}">
             {LevelName}
         </div>
         <div id="dangerousAgentpopup{dangerousType}_{LevelID}" class="Popupsetting" style="top: -40px; left: -80px; width: 170px">

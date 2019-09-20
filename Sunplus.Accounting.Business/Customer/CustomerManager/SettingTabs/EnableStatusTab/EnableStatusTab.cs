@@ -307,31 +307,21 @@
 
         private string RenderDangerousControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (Functions.Settings.IsVisibleDangerous)
-            {
-                if (customerInfoViewModel.RoleId > 2)
-                {
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "edited-dangerous");
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-                    string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
+            TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
+            string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
 
-                    int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
+            int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
 
-                    DangerousSetting danger = new DangerousSetting();
-                    TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+            DangerousSetting danger = new DangerousSetting();
+            TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
 
-                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
-                        danger.GenDangerous(
-                            customerInfoViewModel.RoleId,
-                            customerInfoViewModel.ManageCustomerAccess,
-                            dangeruostype,
-                            currentlevels,
-                            customerInfoViewModel.IsBA));
-                }
-            }
+            TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
+                danger.GenDangerous(
+                    customerInfoViewModel.RoleId,
+                    customerInfoViewModel.ManageCustomerAccess,
+                    dangeruostype,
+                    currentlevels,
+                    customerInfoViewModel.IsBA));
 
             return htmlcontent;
         }
