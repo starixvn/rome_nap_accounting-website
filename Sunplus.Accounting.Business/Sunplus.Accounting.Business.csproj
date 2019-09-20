@@ -416,7 +416,8 @@
     <Compile Include="Customer\CustomerManager\CustomerInfoTabs\TransLinskBox.cs" />
     <Compile Include="Customer\CustomerManager\CustomerInfoTabs\UplineBox.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\BalanceInfo.cs" />
-    <Compile Include="Customer\DangerousSetting.cs" />
+    <Compile Include="Customer\Dangerous\DangerousDetail.cs" />
+    <Compile Include="Customer\Dangerous\DangerousSetting.cs" />
     <Compile Include="Customer\CustomerManager\ICustomerManager.cs" />
     <Compile Include="Customer\IServiceCustomerList.cs" />
     <Compile Include="Customer\MoveCustomer.cs" />

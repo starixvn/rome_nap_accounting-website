@@ -429,6 +429,7 @@ function ChangeDangerousLevelAgent(typename, type, level) {
     if (parseInt(level) < 0 || parseInt(level) > 21) {
         return false;
     }
+
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
         alert("This account was disabled");
         $("#" + currlevelbox).css('display', 'none');
