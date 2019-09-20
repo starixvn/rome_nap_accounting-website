@@ -157,7 +157,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 #region win/lost
 
                 TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
-                TemplateHandler.Assign(ref rowTemp, "{wl-color}", "");
+                TemplateHandler.Assign(ref rowTemp, "{wl-color}", CastAide.AsDouble(rowMaster["winlost"]) < 0 ? "color:red" : "");
                 TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
 
                 #endregion win/lost
