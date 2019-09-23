@@ -2443,7 +2443,7 @@
     <value>Danger1</value>
   </data>
   <data name="Danger2" xml:space="preserve">
-    <value>Non Live</value>
+    <value>ABI</value>
   </data>
   <data name="Danger3" xml:space="preserve">
     <value>Other Sports</value>
@@ -3445,7 +3445,7 @@
     <value>Mix Sport Parlay</value>
   </data>
   <data name="Danger2Old" xml:space="preserve">
-    <value>Non Live (Old)</value>
+    <value>ABI (Old)</value>
   </data>
   <data name="Danger3Old" xml:space="preserve">
     <value>Other Sports (Old)</value>

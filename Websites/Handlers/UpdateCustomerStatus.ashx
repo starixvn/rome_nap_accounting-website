@@ -145,7 +145,7 @@ public class UpdateCustomerStatus : BaseHandler
                             var customerManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                             string CustUserName = customerManager.GetCustName(AppSession.CustRoleId);
                             string accId = AppSession.AccId.ToString();
-                            IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(CustUserName, accId);
+                            IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(CustUserName, accId);
 
                             if (error.ErrorCode > 0)
                             {
@@ -225,7 +225,7 @@ public class UpdateCustomerStatus : BaseHandler
                             break;
                         }
                     }
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
+                   CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
                     //s = "parent.document.getElementById('internalUser').innerHTML ='" + ((status) ? Resources.Language.userInternal : Resources.Language.userBetting) + "';";
                     s = "parent.changeDisplayStatus();";
                     break;
@@ -233,14 +233,14 @@ public class UpdateCustomerStatus : BaseHandler
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
                         throw new AccException("Invalid isupddownline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledNumberGame(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
+                    CustomerUpdateStatus.CustomerUpdateDisabledNumberGame(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "SelectedBetting"://Selected Betting
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
                         throw new AccException("Invalid isupddownline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateSelectedBetting(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
+                    CustomerUpdateStatus.CustomerUpdateSelectedBetting(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "limitperip":
@@ -253,7 +253,7 @@ public class UpdateCustomerStatus : BaseHandler
                     if (!Int32.TryParse(context.Request["limitperid"] as string ?? string.Empty, out limitperid))
                         throw new AccException("Invalid Session");
 
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
+                    CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "disabledVS":

@@ -1,8 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
-    using System.Configuration;
-    using System.Data;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Configurations;
@@ -10,10 +7,11 @@
     using Core.Web;
     using Criteria;
     using DataAccess;
-    using DNAide.Core;
     using DNAide.Web;
     using Entities;
     using Security;
+    using System;
+    using System.Data;
 
     public partial class CustomerManager
     {
