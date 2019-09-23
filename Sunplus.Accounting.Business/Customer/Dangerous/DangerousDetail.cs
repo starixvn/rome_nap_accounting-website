@@ -2,7 +2,7 @@ namespace Sunplus.Accounting.Business.Customer
 {
     public class DangerousDetail
     {
-        public DangerousDetail(int id, string name, string color, string backgroundColor)
+        public DangerousDetail(int id, string name, string color, string backgroundColor = "#ffffff")
         {
             Id = id;
             Name = name;
