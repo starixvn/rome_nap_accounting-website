@@ -396,63 +396,6 @@ function ExportBetListToExcel() {
     // GeneralAjaxCall(urlLink);
 }
 
-function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        TransId: transId,
-        CustId: custId,
-        EventId: eventId,
-        RoleId: 0,
-        AccId: _accId
-    });
-
-    var width = $(window).width();
-    var widthForDetail = 1120;
-    if (width > widthForDetail) {
-        width = widthForDetail;
-    }
-
-    parent.OpenNextPopup(
-        "ColossusBetsDetails",
-        'ColossusBets/BetDetails?' + params,
-        'Ticket details of ' + refno,
-        width,
-        600,
-        true,
-        true,
-        window,
-        0,
-        null,
-        function () {
-            parent.$("#innerFrameColossusBetsDetails").contents().find(".memberchoice-betdetail").addClass("display-none");
-        });
-}
-
-function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        TransType: transType,
-        CustId: custId,
-        SportType: 205,
-        PageSize: 500
-    });
-
-    parent.OpenNextPopup(
-        "MicrogamingDetails",
-        'MicroGamingBetList/BetDetails?' + params,
-        'Microgaming Details',
-        1030,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
-}
-
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
@@ -680,19 +623,6 @@ function ViewVoidbridgeResult(custId, betCheck) {
 
 function ViewFishingWorldResult(custId, betCheck) {
     ViewGlobalGamingResult(custId, betCheck);
-}
-
-// --------------------
-function ViewMicroGamingPopup(custId, siteName, gameId) {
-    var microgamingParam = {
-        url: "Report/ViewMicroGamingResult.aspx",
-        title: "Microgaming Result",
-        jsonParam: { custId: custId, siteName: siteName, gameId: gameId },
-        width: 750,
-        height: 500
-    };
-
-    openResultsPopUp(microgamingParam);
 }
 
 function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {

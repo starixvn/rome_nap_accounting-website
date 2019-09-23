@@ -295,15 +295,6 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Microgaming.
-        /// </summary>
-        public static string Microgaming {
-            get {
-                return ResourceManager.GetString("Microgaming", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {

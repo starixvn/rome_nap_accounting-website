@@ -48,9 +48,7 @@
 
         public const int MuayThai = 44;
         public const int GoldDeluxe = 255;
-
-        public const int MicroGamingLiveCasino = 203;
-        public const int MicroGamingRNGCasino = 205;
+       
         public const int AGCasino = 250;
         public const int Keno = 202;
 

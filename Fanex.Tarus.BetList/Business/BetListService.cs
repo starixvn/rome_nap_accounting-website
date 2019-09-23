@@ -1329,11 +1329,7 @@ namespace Fanex.Tarus.BetList.Business
             else if (ReportService.IsGoldDeluxe(betTypeId))
             {
                 sportName = BetListResources.Gold_Deluxe;
-            }
-            else if (ReportService.IsMicroGaming(betTypeId))
-            {
-                sportName = BetListResources.Microgaming;
-            }
+            }           
             else if (ReportService.IsAGCasino(betTypeId))
             {
                 sportName = BetListResources.AGCasino;

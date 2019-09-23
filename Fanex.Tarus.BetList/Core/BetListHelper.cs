@@ -120,14 +120,7 @@
             builder = builder ?? htmlFactory.CreateBuilder();
 
             IStatus statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
-            Status_Template statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
-
-            if (ticket.SportTypeId == SportContants.MicroGamingLiveCasino ||
-                ticket.SportTypeId == SportContants.MicroGamingRNGCasino)
-            {
-                statusBlock.StatusResult.Clear();
-                statusBlock.StatusResult.Append(BuildMicroGamingResult((int)ticket.CustId, ticket.BetCheck));
-            }
+            Status_Template statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);           
 
             string cashOutDetailsLink = CheckCashOutAndBuildDetails(ticket);
 
@@ -142,18 +135,7 @@
             return statusBlock.ToString();
         }
 
-        private string BuildMicroGamingResult(int custId, string betCheck)
-        {
-            IBetListService betListService = new BetListService();
-            string siteName = betListService.GetSiteNameByCustId(custId);
-
-            return string.Format(
-                "<div class=\"result\" onclick=\"ViewMicroGamingPopup({0},'{1}','{2}');\">{3}</div>",
-                custId,
-                siteName,
-                betCheck,
-                BetListResources.results);
-        }
+       
 
         #region For Cash Out
 
