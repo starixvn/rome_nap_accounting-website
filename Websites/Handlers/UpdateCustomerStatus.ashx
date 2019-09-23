@@ -184,7 +184,7 @@ public class UpdateCustomerStatus : BaseHandler
                     int dangertype;
                     if (name == "Original")
                     { dangertype = 1; }
-                    else if (name == "ABT")
+                    else if (name == "ABI")
                     { dangertype = 2; }
                     else
                     { dangertype = 3; }

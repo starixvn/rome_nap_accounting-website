@@ -306,7 +306,7 @@
         private string RenderDangerousControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-            string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
+            string[] dangeruostype = new string[] { "Original", "ABI", "Other Sports" };
 
             int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
 

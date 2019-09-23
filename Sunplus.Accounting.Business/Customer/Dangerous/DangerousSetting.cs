@@ -70,7 +70,7 @@ namespace Sunplus.Accounting.Business.Customer
         {
             switch (dangerousName.ToLower())
             {
-                case "abt": return 2;
+                case "abi": return 2;
                 case "other sports": return 3;
                 default: return 1;
             }
@@ -85,7 +85,7 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 s_ = (string)s.Clone();
                 TemplateHandler.Assign(ref s_, "{name}", names[i].Replace(" ", ""));
-                TemplateHandler.Assign(ref s_, "{dangername}", names[i].Replace("ABT", "ABI"));
+                TemplateHandler.Assign(ref s_, "{dangername}", names[i]);
                 TemplateHandler.Assign(ref s_, "{value}", GetDangerousLevelName(levels[i], names[i].Replace(" ", ""), isBA));
                 TemplateHandler.Assign(ref s_, "{dangerColor}", GetDangerousLevelColor(levels[i], names[i].Replace(" ", ""), isBA));
                 TemplateHandler.Assign(ref s_, "{currentLevel}", levels[i].ToString());
