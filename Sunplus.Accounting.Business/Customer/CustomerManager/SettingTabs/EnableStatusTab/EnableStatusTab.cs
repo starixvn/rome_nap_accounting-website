@@ -34,7 +34,6 @@
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowEnableCashOut = customerInfoViewModel.ShowEnableCashOutDeposit,
-                IsShowEnableMicrogaming = customerInfoViewModel.ShowEnableMicrogamingDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
@@ -170,9 +169,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
-
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
@@ -218,12 +214,7 @@
             if (!renderLeftPanelParameter.IsShowEnableCashOut)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
-            }
+            }          
 
             if (!renderLeftPanelParameter.IsShowMacau)
             {

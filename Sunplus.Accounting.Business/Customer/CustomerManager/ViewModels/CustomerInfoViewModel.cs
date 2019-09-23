@@ -95,13 +95,9 @@
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
-        public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
-
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
 
         public bool ShowEnableCashOutDeposit => WebSettings.EnableCashOut && SearchAccountRoleId.Equals(4) && IsDeposit;
-
-        public bool ShowEnableMicrogamingDeposit => WebSettings.EnableMicrogaming && IsDeposit;
 
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
 

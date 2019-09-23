@@ -5,7 +5,6 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using Fanex.Tarus.Infrastructure.Configurations.MicroGamingBetTypes;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Resources;
 using Sunplus.Accounting.Business.Security;
@@ -147,28 +146,16 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         return new GoldDeluxePT().ViewPositionTaking(goldDeluxeCriteria);
 
-                    case Constants.Sport.AGCasino:
-                        var agCasinoViewPTCriteria = new ViewMicroGamingPTCriteria
-                        {
-                            Username = userName,
-                            SportId = sportId,
-                            BetType = bettypeId,
-                            IsLive = isLive,
-                            IsAGCasino = true
-                        };
-
-                        return new MicroGamingPTService().ViewPositionTaking(agCasinoViewPTCriteria);
-                    case Constants.Sport.MicroGamingLiveCasino:
-                        var microgamingViewPTCriteria = new ViewMicroGamingPTCriteria
-                        {
-                            Username = userName,
-                            SportId = sportId,
-                            BetType = bettypeId,
-                            IsLive = isLive,
-                            IsMicroGaming = true
-                        };
-
-                        return new MicroGamingPTService().ViewPositionTaking(microgamingViewPTCriteria);
+                    //case Constants.Sport.AGCasino:
+                    //    var agCasinoViewPTCriteria = new ViewMicroGamingPTCriteria
+                    //    {
+                    //        Username = userName,
+                    //        SportId = sportId,
+                    //        BetType = bettypeId,
+                    //        IsLive = isLive,
+                    //        IsAGCasino = true
+                    //    };
+                    //    return new MicroGamingPTService().ViewPositionTaking(agCasinoViewPTCriteria);                  
                 }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
@@ -570,25 +557,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 sports.SportsList.Add(goldDeluxe);
             }
-
-            if (WebSettings.EnableMicrogaming)
-            {
-                var microgaming = new Sport
-                {
-                    SportId = Constants.Sport.MicroGamingLiveCasino,
-                    SportName = Labels.Microgaming,
-                    Bettype = new BettypeDTO
-                    {
-                        BettypeList = (new MicroGamingBetTypesSectionServices()).BetTypes
-                            .Select(betType => new Bettype
-                            {
-                                BettypeId = betType.Id,
-                                BettypeName = string.Format("{0} ({1})", betType.Name, betType.GameType)
-                            }).ToList()
-                    }
-                };
-                sports.SportsList.Add(microgaming);
-            }
+            
 
             if (WebSettings.EnableAGCasino)
             {

@@ -126,8 +126,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts1\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts2\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -235,13 +234,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts4\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts5\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts2\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -331,8 +330,6 @@
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
     <Compile Include="Business\ManageRobots2\IManageRobots2Service.cs" />
     <Compile Include="Business\ManageRobots2\ManageRobots2Service.cs" />
-    <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
-    <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
     <Compile Include="Business\NG2\ISyncCustomerService.cs" />
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
@@ -379,7 +376,6 @@
     <Compile Include="Controller\LicenseeDcsSettingController.cs" />
     <Compile Include="Controller\LicenseeSubsidiaryController.cs" />
     <Compile Include="Controller\ManageRobots2Controller.cs" />
-    <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\GoldDeluxeController.cs" />
@@ -452,8 +448,6 @@
     <Compile Include="Criteria\LicenseeSubsidiary\CreateLicenseeSubsidiaryCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
-    <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
-    <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
@@ -498,8 +492,6 @@
     <Compile Include="DataAccess\LicenseeSubsidiary\LicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\ManageRobots2\IManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\ManageRobots2\ManageRobots2DataAccess.cs" />
-    <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
-    <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NG2\ISyncCustomerRepository.cs" />
@@ -625,9 +617,6 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\ProductViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\SportBetTypeStakeLevel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StatusEntity.cs" />
-    <Compile Include="Entities\MicroGaming\GameTypeModel.cs" />
-    <Compile Include="Entities\MicroGaming\MicroGamingCustomerInfo.cs" />
-    <Compile Include="Entities\MicroGaming\MicroGamingStatus.cs" />
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />

@@ -414,9 +414,7 @@
   <data name="BetTradeStatusUpdatedSuccessfully" xml:space="preserve">
     <value>Bet Trade status updated successfully.</value>
   </data>
-  <data name="MicroGamingStatusUpdatedSuccessfully" xml:space="preserve">
-    <value>Microgming status updated successfully.</value>
-  </data>
+
   <data name="Index" xml:space="preserve">
     <value>Index</value>
   </data>
@@ -431,15 +429,9 @@
   </data>
   <data name="Enable_Downlines" xml:space="preserve">
     <value>Enable Downlines</value>
-  </data>
-  <data name="Enable_Microgaming" xml:space="preserve">
-    <value>Enable Microgaming</value>
-  </data>
+  </data>  
   <data name="Customer_Information" xml:space="preserve">
     <value>Customer Information</value>
-  </data>
-  <data name="Update_Microgamming_Setting" xml:space="preserve">
-    <value>Update Microgaming Setting</value>
   </data>
   <data name="Nick_name" xml:space="preserve">
     <value>Nick name</value>
@@ -465,9 +457,7 @@
   <data name="Error_NoPermissionOnFunction" xml:space="preserve">
     <value>You don't have permission on this function.</value>
   </data>
-  <data name="MicroGaming_UpdateSuccess" xml:space="preserve">
-    <value>Microgaming setting updated successfully</value>
-  </data>
+ 
   <data name="String1" xml:space="preserve">
     <value>There is a problem! Please try again!</value>
   </data>
