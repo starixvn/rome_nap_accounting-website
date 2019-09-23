@@ -884,6 +884,10 @@
       <Project>{3c9e433c-4c0d-4ced-8fe7-26bc80894b0f}</Project>
       <Name>Fanex.Tarus.BetList</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GlobalResources\GlobalResources.csproj">
+      <Project>{17320204-7937-4e80-aa06-c328923b7cd9}</Project>
+      <Name>GlobalResources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{c7eb1617-765a-44e2-9267-96865eb5c096}</Project>
       <Name>Sunplus.Accounting.Business</Name>

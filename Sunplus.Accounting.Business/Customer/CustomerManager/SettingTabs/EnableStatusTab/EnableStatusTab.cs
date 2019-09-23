@@ -9,8 +9,10 @@
     using DataAccess;
     using DNAide.Web;
     using Entities;
+    using GlobalResources;
     using Security;
     using System;
+    using System.Collections.Generic;
     using System.Data;
 
     public partial class CustomerManager
@@ -306,9 +308,13 @@
         private string RenderDangerousControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-            string[] dangeruostype = new string[] { "Original", "ABI", "Other Sports" };
 
-            int[] currentlevels = new int[] { customerInfoViewModel.Danger, customerInfoViewModel.Danger2, customerInfoViewModel.Danger3 };
+            var dangerousTypes = new List<DangerousType>()
+            {
+                new DangerousType(customerInfoViewModel.Danger1, CustomerInfoResources.Danger1),
+                new DangerousType(customerInfoViewModel.Danger2, CustomerInfoResources.Danger2),
+                new DangerousType(customerInfoViewModel.Danger3, CustomerInfoResources.Danger3),
+            };
 
             DangerousSetting danger = new DangerousSetting();
             TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
@@ -317,8 +323,7 @@
                 danger.GenDangerous(
                     customerInfoViewModel.RoleId,
                     customerInfoViewModel.ManageCustomerAccess,
-                    dangeruostype,
-                    currentlevels,
+                    dangerousTypes,
                     customerInfoViewModel.IsBA));
 
             return htmlcontent;

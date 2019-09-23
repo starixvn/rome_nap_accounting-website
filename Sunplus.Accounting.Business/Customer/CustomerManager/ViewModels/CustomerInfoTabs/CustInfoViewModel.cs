@@ -108,7 +108,7 @@
 
         public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);
 
-        public int Danger => Converter.ToInt(customerInfoRow["danger"]);
+        public int Danger1 => Converter.ToInt(customerInfoRow["danger"]);
 
         public int Danger2 => Converter.ToInt(customerInfoRow["danger2"]);
 

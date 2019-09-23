@@ -13,7 +13,14 @@ namespace Sunplus.Accounting.Business.Customer
 
     public class DangerousSetting
     {  
-        private IList<DangerousDetail> settings = new List<DangerousDetail>();       
+        private IList<DangerousDetail> settings = new List<DangerousDetail>();
+
+        private IDictionary<string, byte> dangerTypeDictionary = new Dictionary<string, byte>
+        {
+            { "abi", 2 },
+            { "other sports", 3},
+            { "original", 1}
+        };
 
         public DangerousSetting()
         {
@@ -66,36 +73,26 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private static int GetDanerousType(string dangerousName)
-        {
-            switch (dangerousName.ToLower())
-            {
-                case "abi": return 2;
-                case "other sports": return 3;
-                default: return 1;
-            }
-        }
-
-        public string GenDangerous(int roleId, bool isManageCustomerAccess, string[] names, int[] levels, bool isBA)
+        public string GenDangerous(int roleId, bool isManageCustomerAccess, IList<DangerousType> dangerousTypes, bool isBA)
         {
             string dangerous = string.Empty, s_ = string.Empty;
 
             string s = WebUtils.LoadTemplate("DangerousCust.htm");
-            for (int i = 0; i < names.Length; i++)
+            foreach(var dangerousType in dangerousTypes)
             {
                 s_ = (string)s.Clone();
-                TemplateHandler.Assign(ref s_, "{name}", names[i].Replace(" ", ""));
-                TemplateHandler.Assign(ref s_, "{dangername}", names[i]);
-                TemplateHandler.Assign(ref s_, "{value}", GetDangerousLevelName(levels[i], names[i].Replace(" ", ""), isBA));
-                TemplateHandler.Assign(ref s_, "{dangerColor}", GetDangerousLevelColor(levels[i], names[i].Replace(" ", ""), isBA));
-                TemplateHandler.Assign(ref s_, "{currentLevel}", levels[i].ToString());
+                TemplateHandler.Assign(ref s_, "{name}", dangerousType.Name.Replace(" ", ""));
+                TemplateHandler.Assign(ref s_, "{dangername}", dangerousType.Name);
+                TemplateHandler.Assign(ref s_, "{value}", GetDangerousLevelName(dangerousType.Id, dangerousType.Name.Replace(" ", ""), isBA));
+                TemplateHandler.Assign(ref s_, "{dangerColor}", GetDangerousLevelColor(dangerousType.Id, dangerousType.Name.Replace(" ", ""), isBA));
+                TemplateHandler.Assign(ref s_, "{currentLevel}", dangerousType.Id.ToString());
 
                 TemplateHandler.Assign(ref s_, "{onmouseout}", string.Empty);
                 TemplateHandler.Assign(ref s_, "{onmouseover}", string.Empty);
 
                 if (isManageCustomerAccess)
                 {
-                    TemplateHandler.Assign(ref s_, "{onclick}", "OpenCloseMenuDangerous(this,'divLevel" + names[i].Replace(" ", "") + "'," + levels[i].ToString() + ");");
+                    TemplateHandler.Assign(ref s_, "{onclick}", "OpenCloseMenuDangerous(this,'divLevel" + dangerousType.Name.Replace(" ", "") + "'," + dangerousType.Id.ToString() + ");");
                     string levelItem = TemplateHandler.CopyBlock(s_, "LevelItem");
                     TemplateHandler.RemoveBlock(ref s_, "LevelItem");
                     StringBuilder content = new StringBuilder();
@@ -108,13 +105,13 @@ namespace Sunplus.Accounting.Business.Customer
                         TemplateHandler.Assign(ref row, "{LevelName}", st.Name);
                         TemplateHandler.Assign(ref row, "{LevelID}", st.Id);
 
-                        TemplateHandler.Assign(ref row, "{type}", names[i]);
-                        var dangerousTpe = GetDanerousType(names[i]);
+                        TemplateHandler.Assign(ref row, "{type}", dangerousType.Name);
+                        var dangerousTpe = dangerTypeDictionary[dangerousType.Name.ToLower()];
                         TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
 
                         var levelOnClick = roleId == 1 ?
-                            "return ChangeDangerousLevel('" + names[i] + "'," + st.Id + ",'" + st.Name + "','" + st.Color + "');" :
-                            "return ChangeDangerousLevelAgent('" + names[i] + "'," + dangerousTpe + ",'" + st.Id + "');";
+                            "return ChangeDangerousLevel('" + dangerousType.Name + "'," + st.Id + ",'" + st.Name + "','" + st.Color + "');" :
+                            "return ChangeDangerousLevelAgent('" + dangerousType.Name + "'," + dangerousTpe + ",'" + st.Id + "');";
 
                         TemplateHandler.Assign(ref row, "{level_onclick}", levelOnClick);
                         content.Append(row);
