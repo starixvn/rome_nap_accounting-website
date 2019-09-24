@@ -16,12 +16,14 @@ namespace Sunplus.Accounting.Business.Customer
     {  
         private IList<DangerousDetail> settings;
 
-        private IDictionary<string, byte> dangerTypeDictionary = new Dictionary<string, byte>
+        private IDictionary<string, string> dangerTypeDictionary = new Dictionary<string, string>
         {
-            { CustomerInfoResources.Danger1, 1},
-            { CustomerInfoResources.Danger2, 2 },
-            { CustomerInfoResources.Danger3, 3}
+            { CustomerInfoResources.Danger1, "1"},
+            { CustomerInfoResources.Danger2, "2" },
+            { CustomerInfoResources.Danger3, "3"}
         };
+
+        private DangerousDetail BASetting = new DangerousDetail(-1, "BA", "#000000");
 
         public DangerousSetting()
         {
@@ -46,24 +48,16 @@ namespace Sunplus.Accounting.Business.Customer
                         level.Attributes["background"].Value));
             }
         }
-     
-        private string GetDangerousLevelName(int level, string dangeruostype, bool isBA)
-        {
-            var markedBA = (level == 0 && isBA) || level == 100;
-            if (dangeruostype == CustomerInfoResources.Danger1 && markedBA)
-            {
-                return "BA";
-            }
-
-            return settings.Where(item => item.Id == level).FirstOrDefault().Name;
-        }
 
         private DangerousDetail GetDangerousLevelSetting(int level, string dangeruostype, bool isBA)
         {
-            var markedBA = (level == 0 && isBA) || level == 100;
-            if (dangeruostype == CustomerInfoResources.Danger1 && markedBA)
+            var isMarkedBA = (level == 0 && isBA) || level == 100;
+            var isDanger1 = dangeruostype == CustomerInfoResources.Danger1 || 
+                dangeruostype == dangerTypeDictionary[CustomerInfoResources.Danger1];
+
+            if (isDanger1 && isMarkedBA)
             {
-                return settings[0];
+                return BASetting;
             }
 
             return settings.Where(item => item.Id == level).FirstOrDefault();
@@ -71,17 +65,17 @@ namespace Sunplus.Accounting.Business.Customer
 
         public string GenDangerous(int roleId, bool isManageCustomerAccess, IList<DangerousType> dangerousTypes, bool isBA)
         {
-            string dangerous = string.Empty, s_ = string.Empty;
-
-            string s = WebUtils.LoadTemplate("DangerousCust.htm");
+            string dangerous = string.Empty, 
+                s_ = string.Empty, 
+                s = WebUtils.LoadTemplate("DangerousCust.htm");
             foreach(var dangerousType in dangerousTypes)
             {
-                var dangerLevelSetting = GetDangerousLevelSetting(dangerousType.Id, dangerousType.Name.Replace(" ", ""), isBA);
+                var dangerLevelSetting = GetDangerousLevelSetting(dangerousType.Id, dangerousType.Name, isBA);
 
                 s_ = (string)s.Clone();
                 TemplateHandler.Assign(ref s_, "{name}", dangerousType.Name.Replace(" ", ""));
                 TemplateHandler.Assign(ref s_, "{dangername}", dangerousType.Name);
-                TemplateHandler.Assign(ref s_, "{value}", GetDangerousLevelName(dangerousType.Id, dangerousType.Name, isBA));
+                TemplateHandler.Assign(ref s_, "{value}", dangerLevelSetting.Name);
 
                 TemplateHandler.Assign(ref s_, "{dangerlevel_color}", dangerLevelSetting.Color);
                 TemplateHandler.Assign(ref s_, "{dangerlevel_background_color}", dangerLevelSetting.BackgroundColor);
@@ -135,12 +129,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public DangerousDetail CustomerUpdateDangerous(int accid, int custid, int dangerLevel, int dangertype)
         {
-            bool isBA = CustomerUpdateStatus.CustomerUpdateDangerous(accid, custid, dangerLevel, dangertype);
-
-            return new DangerousDetail(
-                dangerLevel,
-                GetDangerousLevelName(dangerLevel, dangertype.ToString(), isBA),
-                GetDangerousLevelSetting(dangerLevel, dangertype.ToString(), isBA).Color);
+            var isBA = CustomerUpdateStatus.CustomerUpdateDangerous(accid, custid, dangerLevel, dangertype);
+            return GetDangerousLevelSetting(dangerLevel, dangertype.ToString(), isBA);
         }
     }
 }

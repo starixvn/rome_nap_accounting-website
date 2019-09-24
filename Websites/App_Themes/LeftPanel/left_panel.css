@@ -374,15 +374,8 @@ body
     left: 130px;
     position:absolute;		
     z-index:102;            
+    display: none;
 }
-
-.dangerlevel {
-    border: none 0px;
-    width: 35px;
-    text-align: center;
-    font-weight:bold;
-}
-
 
 #dangerousbox
 {
@@ -530,4 +523,58 @@ body
 
 span.canchange {
     width: 100%;
+}
+
+.dangerous-setting {
+    color: #000;
+    cursor: pointer;
+    white-space: nowrap;
+    border: solid 1px #ffffff;
+    text-align: left;
+}
+
+.dangerous-setting table {
+width: 125px;
+line-height: 16px;
+padding: 0px;
+}
+
+.dangerous-setting table {
+width: 135px;
+}
+
+.dangerous-setting table td {
+    cursor: pointer;
+    border: none 0px;
+    line-height: 16px;
+    padding: 0px;
+}
+
+.dangerous-setting table td:first-child {
+    width: 70px;
+}
+
+    .dangerous-setting table td:nth-child(2) {
+        width: 35px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+.dangerous-setting table td:last-child {
+    width: 20px;
+}
+
+.menu-open-right {
+    border: 0px;
+    padding-left: 7px;
+}
+
+.dangerous-level {
+    top: -40px;
+    left: -80px;
+    width: 170px
+}
+
+.dangerous-level span {
+    font-weight: normal;
 }
