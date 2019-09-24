@@ -33,7 +33,7 @@ public partial class Others_Menu : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting;
+        Boolean AllowedCS, hideVirtualSports, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -61,9 +61,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
         hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
         hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedlottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
-        hideLucky3 = !CastAide.AsBoolean(db.Outputs["allowedlucky3"]) || !WebSettings.IsShowLucky3;
-        hideBullfighting = !CastAide.AsBoolean(db.Outputs["allowedbullfighting"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0;
-      
+        hideLucky3 = !CastAide.AsBoolean(db.Outputs["allowedlucky3"]) || !WebSettings.IsShowLucky3;      
 
         string kenoPath = string.Empty;
         string casinoPath = string.Empty;
@@ -113,8 +111,6 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
         this.RenderSettingTab("KenoLottery", "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery), hideKenoLottery);
         this.RenderSettingTab("lucky3", "{lucky3LinkSetting}", string.Format(creditDCSLink, (int)products.lucky3), hideLucky3);
-        this.RenderSettingTab("Bullfighting", "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting), hideBullfighting);
-       
 
         this.sMenu.Text = this.tplMenu;
     }

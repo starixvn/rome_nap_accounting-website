@@ -50,7 +50,6 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
                 IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit,
-                IsShowBullfighting = !customerInfoViewModel.HideSettingBullfighting
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -504,20 +503,6 @@
                                                renderLeftPanelParameter,
                                                "Update Lucky 3 Status",
                                                26);
-                            break;
-
-                        case "30":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Bullfighting",
-                                               renderLeftPanelParameter.IsShowBullfighting,
-                                               renderLeftPanelParameter,
-                                               "Update Bullfighting Status",
-                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting);
                             break;
                     }
                 }

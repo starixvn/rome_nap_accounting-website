@@ -746,9 +746,7 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
             return getMetricGamingParam(matchid, bettype, sporttype, betid);
 
         case 2501 <= bettype && bettype <= 2699:
-            return getNG2Param(matchid);
-        case bettype === 1004:
-            return getBullfightingParam(refno, custId);
+            return getNG2Param(matchid);      
 
         default:
             return undefined;
@@ -882,16 +880,6 @@ function getPPParam(matchcode, betcheck) {
         title: "PP Result",
         jsonParam: { custId: betcheck, gameId: matchcode, productId: 32 },
         width: 945,
-        height: 500
-    };
-}
-
-function getBullfightingParam(refNo, custId) {
-    return {
-        url: "ThirdParty/Result",
-        title: "Bullfighting Result",
-        jsonParam: { custId: custId, gameId: refNo, productId: 30 },
-        width: 870,
         height: 500
     };
 }

@@ -135,8 +135,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
             TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
             TemplateHandler.Assign(ref htmlcontent, "{lucky3LinkSetting}", string.Format(creditDCSLink, 26));
-            TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting));
+            TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);          
             TemplateHandler.Assign(ref htmlcontent, "{linkEditSettingCN88}", cn88EditSettingLink);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.CN88CustStatusName);
@@ -215,12 +214,7 @@
             if (customerInfoViewModel.HideSettingLinkLucky3Credit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Lucky3");
-            }
-
-            if (customerInfoViewModel.HideSettingBullfighting)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bullfighting");
-            }
+            }           
 
             // Chatbot
             if (customerInfoViewModel.IsDeposit || customerInfoViewModel.SearchAccountRoleId == 1)

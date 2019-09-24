@@ -67,8 +67,6 @@
 
         public const int Lucky3 = 160;
 
-        public const int Bullfighting = 207;
-
         public const int CardClub = 165;
     }
 }
