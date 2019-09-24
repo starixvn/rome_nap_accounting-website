@@ -64,7 +64,7 @@ namespace Sunplus.Accounting.Business.Customer
         }
 
         public string GenDangerous(
-            int roleId, 
+            int searchAccountRoleId, 
             bool isManageCustomerAccess, 
             IList<DangerousType> dangerousTypes, 
             bool isBA,
@@ -100,8 +100,13 @@ namespace Sunplus.Accounting.Business.Customer
                     foreach (DangerousDetail setting in settings)
                     {
                         string row = Convert.ToString(levelItem.Clone());
+
+                        TemplateHandler.Assign(ref row, "{UpdateLevelDangerousText}", CustomerInfoResources.UpdateLevelDangerous);
+                        TemplateHandler.Assign(ref row, "{DownlinesSuffixText}", CustomerInfoResources.DownlinesSuffix);
+
                         TemplateHandler.Assign(ref row, "{level_style}",
                             $"style='color:{setting.Color}; background-color:{setting.BackgroundColor}'");
+
                         TemplateHandler.Assign(ref row, "{LevelName}", setting.Name);
                         TemplateHandler.Assign(ref row, "{LevelID}", setting.Id);
 
@@ -109,9 +114,9 @@ namespace Sunplus.Accounting.Business.Customer
                         var dangerousTpe = dangerTypeDictionary[dangerousType.Name];
                         TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
 
-                        var levelOnClick = roleId == 1 ?
-                            $"return ChangeDangerousLevel('{dangerousType.Name}',{setting.Id},'{setting.Name}','{setting.Color}');" :
-                            $"return ChangeDangerousLevelAgent('{dangerousType.Name}',{dangerousTpe},'{setting.Id}');";
+                        var levelOnClick = searchAccountRoleId == 1 ?
+                            $"return ChangeDangerousLevelMember('{dangerousType.Name}',{setting.Id},'{setting.Name}','{setting.Color}');" :
+                            $"return ChangeDangerousLevel('{dangerousType.Name}',{dangerousTpe},'{setting.Id}');";
 
                         TemplateHandler.Assign(ref row, "{level_onclick}", levelOnClick);
                         content.Append(row);

@@ -391,14 +391,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             Regex regx = new Regex("[A]|[B]|[C]|[D]|[E]|[G]|[H]", RegexOptions.IgnoreCase);
             if (regx.IsMatch(trackingVal))
             {
-                string br = "&lt;br/&gt;";
-                trackingVal = trackingVal.Replace("[A]", "- Create Account" + br);
-                trackingVal = trackingVal.Replace("[B]", "- Update Account" + br);
-                trackingVal = trackingVal.Replace("[C]", "- Transfer" + br);
-                trackingVal = trackingVal.Replace("[D]", "- Total Bets/Forecast" + br);
-                trackingVal = trackingVal.Replace("[E]", "- Reports" + br);
-                trackingVal = trackingVal.Replace("[G]", "- View log" + br);
-                trackingVal = trackingVal.Replace("[H]", "- View Member Info" + br);
+                trackingVal = trackingVal.Replace("[A]", "[Create Account] ");
+                trackingVal = trackingVal.Replace("[B]", "[Update Account] ");
+                trackingVal = trackingVal.Replace("[C]", "[Transfer] ");
+                trackingVal = trackingVal.Replace("[D]", "[Total Bets/Forecast] ");
+                trackingVal = trackingVal.Replace("[E]", "[Reports] ");
+                trackingVal = trackingVal.Replace("[G]", "[View log] ");
+                trackingVal = trackingVal.Replace("[H]", "[View Member Info] ");
+                trackingVal = trackingVal.Replace("[L]", "[Bet Lists]");
             }
             return trackingVal;
         }

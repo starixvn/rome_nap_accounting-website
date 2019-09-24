@@ -86,5 +86,23 @@ namespace GlobalResources {
                 return ResourceManager.GetString("Danger3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;s downlines.
+        /// </summary>
+        public static string DownlinesSuffix {
+            get {
+                return ResourceManager.GetString("DownlinesSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Level Dangerous.
+        /// </summary>
+        public static string UpdateLevelDangerous {
+            get {
+                return ResourceManager.GetString("UpdateLevelDangerous", resourceCulture);
+            }
+        }
     }
 }

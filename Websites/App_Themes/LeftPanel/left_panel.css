@@ -578,3 +578,7 @@ width: 135px;
 .dangerous-level span {
     font-weight: normal;
 }
+
+.menu-open-padding-left{
+    padding-left: 3px;
+}

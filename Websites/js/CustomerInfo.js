@@ -269,7 +269,7 @@ function ViewVRHistory(CustID, UserName) {
 function OpenCloseMenuDangerous() {
     $('#divLevel').css('display', ($('#divLevel').css('display') == 'inline') ? 'none' : 'inline');
 }
-function ChangeDangerousLevel(typename, level, name, color) {
+function ChangeDangerousLevelMember(typename, level, name, color) {
     if (isDigitOnly(level) == false) {
         return false;
     }
@@ -420,8 +420,8 @@ function replaceAll(text, strA, strB) {
 }
 
 /* New version */
-// function change dangerous for agent
-function ChangeDangerousLevelAgent(typename, type, level) {
+// function change dangerous for agent/super/master
+function ChangeDangerousLevel(typename, type, level) {
     if (isDigitOnly(level) == false) {
         return false;
     }

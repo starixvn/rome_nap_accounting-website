@@ -1,5 +1,5 @@
 <div class="dangerous-setting" id="td{name}" onclick="{onclick}">
-    <table class="dangerous-setting-table">
+    <table>
         <tr>
             <td>
                 {dangername}
@@ -17,13 +17,13 @@
 </div>
 <!--DropdownLevel-->
 <div id="divLevel{name}" class="divLevel">
-    <div id="popupMenu1" class="tbllayout tbldangerlevel" cellspacing="0">
+    <div id="popupMenu1" class="tbllayout tbldangerlevel">
         <!--LevelItem-->
         <div class="danger-div" {level_style} onclick="{level_onclick}">
             {LevelName}
         </div>
         <div id="dangerousAgentpopup{dangerousType}_{LevelID}" class="Popupsetting dangerous-level">
-            <b>Update Level Dangerous</b><br />
+            <b>{UpdateLevelDangerousText}</b><br />
             <input type="checkbox" name="chkDisabledHRL"
                    onclick="changeDisableDangerAgent('{dangerousType}','{LevelName}')"
                    id="disabledDangerchk{dangerousType}_{LevelName}" value="yes" />&nbsp;{downline_level_name}
@@ -31,7 +31,7 @@
             <span id="disabledCSboxDL">
                 <input type="checkbox" name="disabledCSchkDL" disabled="disabled"
                        id="disabledangerouschkDL{dangerousType}_{LevelName}">
-                {downline_level_name}'s downlines
+                {downline_level_name}{DownlinesSuffixText}
                 <!--/chkdownlineL-->
             </span><br>
             <input id="UpdateDangerous{dangerousType}_{LevelName}"

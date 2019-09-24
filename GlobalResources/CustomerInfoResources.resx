@@ -126,4 +126,10 @@
   <data name="Danger3" xml:space="preserve">
     <value>Other Sports</value>
   </data>
+  <data name="DownlinesSuffix" xml:space="preserve">
+    <value>'s downlines</value>
+  </data>
+  <data name="UpdateLevelDangerous" xml:space="preserve">
+    <value>Update Level Dangerous</value>
+  </data>
 </root>
