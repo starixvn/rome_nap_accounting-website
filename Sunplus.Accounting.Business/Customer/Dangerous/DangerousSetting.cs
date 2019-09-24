@@ -63,16 +63,24 @@ namespace Sunplus.Accounting.Business.Customer
             return settings.Where(item => item.Id == level).FirstOrDefault();
         }
 
-        public string GenDangerous(int roleId, bool isManageCustomerAccess, IList<DangerousType> dangerousTypes, bool isBA)
+        public string GenDangerous(
+            int roleId, 
+            bool isManageCustomerAccess, 
+            IList<DangerousType> dangerousTypes, 
+            bool isBA,
+            string searchAccountRoleName)
         {
             string dangerous = string.Empty, 
                 s_ = string.Empty, 
                 s = WebUtils.LoadTemplate("DangerousCust.htm");
+
             foreach(var dangerousType in dangerousTypes)
             {
                 var dangerLevelSetting = GetDangerousLevelSetting(dangerousType.Id, dangerousType.Name, isBA);
 
                 s_ = (string)s.Clone();
+                TemplateHandler.Assign(ref s_, "{downline_level_name}", searchAccountRoleName);
+
                 TemplateHandler.Assign(ref s_, "{name}", dangerousType.Name.Replace(" ", ""));
                 TemplateHandler.Assign(ref s_, "{dangername}", dangerousType.Name);
                 TemplateHandler.Assign(ref s_, "{value}", dangerLevelSetting.Name);

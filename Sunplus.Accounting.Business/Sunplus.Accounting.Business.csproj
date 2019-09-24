@@ -401,7 +401,7 @@
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NG2ViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\Lucky3ViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\ExtraCustomerInfoTabs\CashViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\BalanceInfoTabs\BalanceInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\CustInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\CasinoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoViewModel.cs" />

@@ -29,13 +29,13 @@
             <b>Update Level Dangerous</b><br />
             <input type="checkbox" name="chkDisabledHRL" 
                    onclick="changeDisableDangerAgent('{dangerousType}','{LevelName}')" 
-                   id="disabledDangerchk{dangerousType}_{LevelName}" value="yes" />&nbsp;Agent
+                   id="disabledDangerchk{dangerousType}_{LevelName}" value="yes" />&nbsp;{downline_level_name}
             <!--chkdownlineL-->
             <span id="disabledCSboxDL">
-            <input type="checkbox" name="disabledCSchkDL" disabled="disabled" 
-                   id="disabledangerouschkDL{dangerousType}_{LevelName}">
-            Agent's downlines
-            <!--/chkdownlineL-->
+                <input type="checkbox" name="disabledCSchkDL" disabled="disabled"
+                       id="disabledangerouschkDL{dangerousType}_{LevelName}">
+                {downline_level_name}'s downlines
+                <!--/chkdownlineL-->
             </span><br>
             <input id="UpdateDangerous{dangerousType}_{LevelName}" 
                    type="button" class="btn" value="Update" disabled="disabled" 

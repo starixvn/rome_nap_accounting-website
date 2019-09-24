@@ -11,7 +11,7 @@
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            switch (customerInfoViewModel.RoleId)
+            switch (customerInfoViewModel.SearchAccountRoleId)
             {
                 case 1: // member
                     htmlcontent = AssignMemberSetting(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
@@ -57,7 +57,7 @@
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
             int custId = customerInfoViewModel.CustId;
-            int roleId = customerInfoViewModel.RoleId;
+            int roleId = customerInfoViewModel.SearchAccountRoleId;
             string userName = customerInfoViewModel.UserName;
             bool isDeposit = customerInfoViewModel.IsDeposit;
             string siteName = customerInfoViewModel.CustomerSite;

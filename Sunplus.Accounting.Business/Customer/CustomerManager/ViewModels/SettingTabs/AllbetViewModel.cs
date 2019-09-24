@@ -11,7 +11,7 @@
         public bool SyncAllbetUpline { get; private set; } = true;
 
         public bool HideEnabledCheckBoxAllbet
-            => !WebSettings.IsShowAllBet || IsDeposit || !SyncAllbetUpline || (RoleId < 4 && (HideAllbetUpline || !SyncAllbet));
+            => !WebSettings.IsShowAllBet || IsDeposit || !SyncAllbetUpline || (SearchAccountRoleId < 4 && (HideAllbetUpline || !SyncAllbet));
 
         public bool HideSettingLinkAllbet
             => !WebSettings.IsShowAllBet || IsDeposit || HideAllbetUpline || !SyncAllbetUpline;

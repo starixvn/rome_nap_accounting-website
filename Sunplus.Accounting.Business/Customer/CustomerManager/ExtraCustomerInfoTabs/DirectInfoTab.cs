@@ -49,10 +49,10 @@
                 TemplateHandler.Assign(ref htmlcontent, "{CurrencyTab}", currencyValue);
                 TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", maxlossValue);
                 TemplateHandler.Assign(ref htmlcontent, "{GroupHeadlineMaxLossTab}", groupHeadlineMaxLoss);
-                TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", customerInfoViewModel.RoleId, customerInfoViewModel.CustId, customerInfoViewModel.UserName));
+                TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", customerInfoViewModel.SearchAccountRoleId, customerInfoViewModel.CustId, customerInfoViewModel.UserName));
             }
 
-            if (customerInfoViewModel.RoleId == 1)
+            if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
             }

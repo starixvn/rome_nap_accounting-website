@@ -17,7 +17,7 @@
 
             var site = new CustSettingMoveSite();
             AppSession.SiteName = customerInfoViewModel.CustomerSite;
-            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.CustId, customerInfoViewModel.RoleId, customerInfoViewModel.CustomerSite, customerInfoViewModel.UserName);
+            var siteName = site.GetSiteNameByCustId(customerInfoViewModel.CustId, customerInfoViewModel.SearchAccountRoleId, customerInfoViewModel.CustomerSite, customerInfoViewModel.UserName);
 
             TemplateHandler.Assign(ref tplLoginDetail, "{createdate}", customerInfoViewModel.Createdate + " " + customerInfoViewModel.Createtime);
             TemplateHandler.Assign(ref tplLoginDetail, "{LastLogin}", customerInfoViewModel.LastLoginDate + customerInfoViewModel.LastLoginTime);
@@ -32,7 +32,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{logindetail}", tplLoginDetail);
             TemplateHandler.Assign(ref htmlcontent, "{last_change_OTP_date}", customerInfoViewModel.LastChangeOTPCodeDate);
 
-            if (customerInfoViewModel.RoleId > 1)
+            if (customerInfoViewModel.SearchAccountRoleId > 1)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{loginoptions}", customerInfoViewModel.NicknameLoginOnly ? "Nickname Only" : "Username/Nickname");
             }

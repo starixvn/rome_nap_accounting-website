@@ -12,7 +12,7 @@
     {
         private static string GenTransLinskBox(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{TransLinksBox}", string.Empty);
             }
@@ -22,7 +22,7 @@
                 string downlineListURL = string.Empty;
                 string customerBalanceURL = string.Empty;
                 string lblDownlineList = string.Empty;
-                Globals.AccountType accLevel = (Globals.AccountType)customerInfoViewModel.RoleId;
+                Globals.AccountType accLevel = (Globals.AccountType)customerInfoViewModel.SearchAccountRoleId;
                 string statementLink = string.Empty;
                 if (!customerInfoViewModel.IsInternalUser)
                 {

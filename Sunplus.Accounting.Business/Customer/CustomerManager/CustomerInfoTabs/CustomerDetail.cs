@@ -16,7 +16,7 @@
             string statusClass = string.Empty;
             string statusTip = string.Empty;
             bool isOpenStatus = true;
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", string.Empty);
                 TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", string.Empty);
@@ -51,7 +51,7 @@
                     statusClass = " ";
                 }
 
-                if (customerInfoViewModel.RoleId == 1)
+                if (customerInfoViewModel.SearchAccountRoleId == 1)
                 {
                     TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
                     TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + customerInfoViewModel.UserName + "');\" ");
@@ -94,7 +94,7 @@
                     }
                 }
 
-                if (customerInfoViewModel.IsDeposit && customerInfoViewModel.RoleId == RoleIdConstants.Member)
+                if (customerInfoViewModel.IsDeposit && customerInfoViewModel.SearchAccountRoleId == RoleIdConstants.Member)
                 {
                     TemplateHandler.Assign(ref htmlcontent, "{exchangeId}", customerInfoViewModel.CustId.ToString("0000000000000000"));
                 }

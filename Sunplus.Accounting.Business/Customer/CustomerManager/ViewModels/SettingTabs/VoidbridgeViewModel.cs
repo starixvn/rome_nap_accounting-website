@@ -11,7 +11,7 @@
         private bool SyncVoidbridgeUpline { get; set; } = true;
 
         public bool HideEnabledCheckBoxVoidbridge 
-            => !WebSettings.IsShowVoidbridge || !SyncVoidbridgeUpline || (RoleId < 4 && (HideVoidbridgeUpline || !SyncVoidbridge));
+            => !WebSettings.IsShowVoidbridge || !SyncVoidbridgeUpline || (SearchAccountRoleId < 4 && (HideVoidbridgeUpline || !SyncVoidbridge));
 
         public bool HideSettingLinkVoidbridge 
             => !WebSettings.IsShowVoidbridge || HideVoidbridgeUpline || !SyncVoidbridgeUpline;
