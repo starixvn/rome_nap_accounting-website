@@ -554,11 +554,11 @@ width: 135px;
     width: 70px;
 }
 
-    .dangerous-setting table td:nth-child(2) {
-        width: 35px;
-        text-align: center;
-        font-weight: bold;
-    }
+.dangerous-setting table td:nth-child(2) {
+    width: 35px;
+    text-align: center;
+    font-weight: bold;
+}
 
 .dangerous-setting table td:last-child {
     width: 20px;

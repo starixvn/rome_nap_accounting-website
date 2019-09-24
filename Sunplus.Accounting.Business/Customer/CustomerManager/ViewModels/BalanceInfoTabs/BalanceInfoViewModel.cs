@@ -27,32 +27,16 @@
 
         public decimal NetPosition { get; private set; }
 
-        public decimal Credit
-        {
-            get
-            {
-                if (SearchAccountRoleId == (int)Role.Member && AppSettings.IsCN88SiteName(CustomerSite))
-                {
-                    return Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]);
-                }
+        public decimal Credit =>
+            SearchAccountRoleId == (int)Role.Member && AppSettings.IsCN88SiteName(CustomerSite) ?
+            Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) :
+            Utils.ToDecimal(customerInfoRow["credit"]);
 
-                return Utils.ToDecimal(customerInfoRow["credit"]);
-            }
-        }
         public decimal TotalBetStake => Utils.ToDecimal(memberCN88BetStakeRow["TotalBetStake"]);
 
-        public decimal YesterdayBetCredit
-        {
-            get
-            {
-                if (Utils.ToBoolean(memberCN88CreditRow["IsTodayUpdatedCredit"]))
-                {
-                    return -1;
-                }
-
-                return Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) - Utils.ToDecimal(memberCN88BetStakeRow["YesterdayBetStake"]);
-            }
-        }
+        public decimal YesterdayBetCredit =>
+            Utils.ToBoolean(memberCN88CreditRow["IsTodayUpdatedCredit"]) ? -1 :
+            Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) - Utils.ToDecimal(memberCN88BetStakeRow["YesterdayBetStake"]);
 
         public decimal ActualRate => Converter.ToDecimal(customerInfoRow["actualrate"]);
 

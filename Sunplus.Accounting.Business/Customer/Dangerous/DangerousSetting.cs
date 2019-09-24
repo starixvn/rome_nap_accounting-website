@@ -85,13 +85,10 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref s_, "{dangername}", dangerousType.Name);
                 TemplateHandler.Assign(ref s_, "{value}", dangerLevelSetting.Name);
 
-                TemplateHandler.Assign(ref s_, "{dangerlevel_color}", dangerLevelSetting.Color);
-                TemplateHandler.Assign(ref s_, "{dangerlevel_background_color}", dangerLevelSetting.BackgroundColor);
+                TemplateHandler.Assign(ref s_, "{danger_level_style}", 
+                    $"style='color:{dangerLevelSetting.Color}; background-color:{dangerLevelSetting.BackgroundColor}'");
 
                 TemplateHandler.Assign(ref s_, "{currentLevel}", dangerousType.Id.ToString());
-
-                TemplateHandler.Assign(ref s_, "{onmouseout}", string.Empty);
-                TemplateHandler.Assign(ref s_, "{onmouseover}", string.Empty);
 
                 if (isManageCustomerAccess)
                 {
@@ -103,8 +100,8 @@ namespace Sunplus.Accounting.Business.Customer
                     foreach (DangerousDetail setting in settings)
                     {
                         string row = Convert.ToString(levelItem.Clone());
-                        TemplateHandler.Assign(ref row, "{level_color}", setting.Color);
-                        TemplateHandler.Assign(ref row, "{level_background_color}", setting.BackgroundColor);
+                        TemplateHandler.Assign(ref row, "{level_style}",
+                            $"style='color:{setting.Color}; background-color:{setting.BackgroundColor}'");
                         TemplateHandler.Assign(ref row, "{LevelName}", setting.Name);
                         TemplateHandler.Assign(ref row, "{LevelID}", setting.Id);
 

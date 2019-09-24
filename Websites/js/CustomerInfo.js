@@ -705,7 +705,7 @@ function UpdateDangerousCustomer(typename, type, level) {
                                 }
                             case "ABI":
                                 {
-                                    resetLevelLabel(document.getElementById("spanDangerousABT"), level);
+                                    resetLevelLabel(document.getElementById("spanDangerousABI"), level);
                                     break;
                                 }
                             case "Other Sports":

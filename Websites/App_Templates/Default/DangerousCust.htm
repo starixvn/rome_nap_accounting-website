@@ -4,13 +4,12 @@
             <td>
                 {dangername}
             </td>
-            <td style="color:{dangerlevel_color};background-color:{dangerlevel_background_color}" 
-                id="tdvalue{name}">
+            <td {danger_level_style} id="tdvalue{name}">
                 <span name="{name}" id="spanDangerous{name}">{value}</span>
             </td>
             <td>
                 <!--ImgDropdownLevel-->
-                <img title="Detail" src="App_themes/images/menu_open_right.gif" class="menu-open-right"/>
+                <img title="Detail" src="App_themes/images/menu_open_right.gif" class="menu-open-right" />
                 <!--/ImgDropdownLevel-->
             </td>
         </tr>
@@ -20,15 +19,13 @@
 <div id="divLevel{name}" class="divLevel">
     <div id="popupMenu1" class="tbllayout tbldangerlevel" cellspacing="0">
         <!--LevelItem-->
-        <div class="danger-div"
-             style="color:{level_color};background-color:{level_background_color}" 
-             onclick="{level_onclick}">
+        <div class="danger-div" {level_style} onclick="{level_onclick}">
             {LevelName}
         </div>
         <div id="dangerousAgentpopup{dangerousType}_{LevelID}" class="Popupsetting dangerous-level">
             <b>Update Level Dangerous</b><br />
-            <input type="checkbox" name="chkDisabledHRL" 
-                   onclick="changeDisableDangerAgent('{dangerousType}','{LevelName}')" 
+            <input type="checkbox" name="chkDisabledHRL"
+                   onclick="changeDisableDangerAgent('{dangerousType}','{LevelName}')"
                    id="disabledDangerchk{dangerousType}_{LevelName}" value="yes" />&nbsp;{downline_level_name}
             <!--chkdownlineL-->
             <span id="disabledCSboxDL">
@@ -37,11 +34,11 @@
                 {downline_level_name}'s downlines
                 <!--/chkdownlineL-->
             </span><br>
-            <input id="UpdateDangerous{dangerousType}_{LevelName}" 
-                   type="button" class="btn" value="Update" disabled="disabled" 
+            <input id="UpdateDangerous{dangerousType}_{LevelName}"
+                   type="button" class="btn" value="Update" disabled="disabled"
                    onclick="UpdateDangerousCustomer('{type}','{dangerousType}','{LevelName}')" />&nbsp;
-            <input type="button" class="btn" value="Cancel" 
-                    onclick="ClosePopUpDanger('dangerousAgentpopup{dangerousType}_{LevelID}');" />
+            <input type="button" class="btn" value="Cancel"
+                   onclick="ClosePopUpDanger('dangerousAgentpopup{dangerousType}_{LevelID}');" />
         </div>
         <!--/LevelItem-->
         {content}
