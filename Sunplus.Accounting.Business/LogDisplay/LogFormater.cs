@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (attr != null)
             {
                 elm.P = prefixP + attr.Name.ToString();
-                var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name == attr.Name.ToString().ToLower()).SingleOrDefault<ParamElement>();
+                var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name.ToLower().Equals(attr.Name.ToString().ToLower())).SingleOrDefault<ParamElement>();
                 elm.Val = HttpUtility.HtmlEncode(attr.Value);
                 if (logFormater != null && CastAide.AsInt32(logFormater.Value, 0) > 0)
                 {
@@ -71,7 +71,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     break;
 
                 case 3:
-                    strVal = Convert.ToDouble(val).ToString("N0");
+                    strVal = string.IsNullOrWhiteSpace(val) ? val : Convert.ToDouble(val).ToString("N0");
+                    break;
+                case 4:
+                    strVal = GetResourceName(val);
                     break;
                 default:
                     break;

@@ -51,10 +51,20 @@
 
             int[] columnsWidth = new int[] { 200, 300, 120, 120, 120, 150 };
             string[] columnsName = new string[] { "Date", "Event", "Odds", "Stake", "Win Loss", "Status" };
+            var statusOrder = new Dictionary<string, int>
+            {
+                { "",0 },
+                {"WON",1 },
+                {"LOSE",2 },
+                {"DRAW",3 },
+                {"VOID",4 },
+                {"REJECT",5 },
+                {"REFUND",6 }
+            };
 
             RenderTitle("Combination details", columnsWidth);
             RenderHeader(columnsName);
-            RenderCombinationDetails(model.EventList);
+            RenderCombinationDetails(model.EventList.OrderBy(i => statusOrder[i.Status]).ToList());
             RenderCombinationDetailsSubTotal(model.SubTotal, "Sub total");
 
             _workbook.Write(stream);
@@ -74,10 +84,20 @@
 
             int[] columnsWidth = new int[] { 150, 300, 120, 120, 120, 150 };
             string[] columnsName = new string[] { "Date", "Event", "Odds", "Stake", "Win Loss", "Status" };
+            var statusOrder = new Dictionary<string, int>
+            {
+                { "",0 },
+                {"WON",1 },
+                {"LOSE",2 },
+                {"DRAW",3 },
+                {"VOID",4 },
+                {"REJECT",5 },
+                {"REFUND",6 }
+            };
 
             RenderTitle("System Parlay Details", columnsWidth);
             RenderHeader(columnsName);
-            RenderSystemParlayDetails(model.Events);
+            RenderSystemParlayDetails(model.Events.OrderBy(i => statusOrder[i.Status]).ToList());
 
             RenderCombinationDetailsSubTotal(model.Outstanding, "Outstanding");
             _currentRowIndex++;
