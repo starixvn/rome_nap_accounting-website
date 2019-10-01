@@ -1,0 +1,109 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@{
+    Layout = null;
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/common.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/input.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/table.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/Views/Customer/LicenseeSubsidiary/Styles/licenseeSubsidiary.css?v=" + version)">
+</head>
+<body>
+    <div class="maincontent">
+        <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">@LicenseeSubsidiaryLabels.PageTitle</td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+        <div id="sectionMessage" class="hide"></div>
+        <div class="bg_table mT5">
+            @using (Html.BeginForm("Generate", "LicenseeSubsidiary", FormMethod.Post, new { id = "formGenerate" }))
+            {
+                <table border="0" class="filter_table">
+                    <tr>
+                        <td class="b">@LicenseeSubsidiaryLabels.CopyFromAgent</td>
+                        <td class="w200">
+                            <input type="text" class="fullwidth" id="txtAgent" name="agent" autocomplete="off" autofocus />
+                        </td>
+                        <td class="b mL10">@LicenseeSubsidiaryLabels.Number</td>
+                        <td class="w80">
+                            <input type="text" class="fullwidth" id="txtNumber" name="number" autocomplete="off" maxlength="3" />
+                        </td>
+                        <td class="text-red">
+                            * @LicenseeSubsidiaryLabels.MaxSubAgents
+                        </td>
+                        <td>
+                            <button type="submit" class="btn" id="btnGenerate">&nbsp;@LicenseeSubsidiaryLabels.Generate&nbsp;</button>
+                        </td>
+                    </tr>
+                </table>
+            }
+            <table class="tblcollapse mT10">
+                <thead>
+                    <tr class="title">
+                        <th>@LicenseeSubsidiaryLabels.CopiedAccounts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="l">
+                            @LicenseeSubsidiaryLabels.AgentUsernamesSeparatedBy
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea rows="10" placeholder="@LicenseeSubsidiaryLabels.AgentUsernamesPlaceHolder" id="txtAgentUsernames"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn" id="btnSubmit">&nbsp;&nbsp;&nbsp;@LicenseeSubsidiaryLabels.Submit&nbsp;&nbsp;&nbsp;</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @using (Html.BeginForm("Create", "LicenseeSubsidiary", FormMethod.Post, new { id = "formCreate" }))
+            {
+                <table class="tblcollapse mT10" id="tablePreview">
+                    <thead>
+                        <tr class="title_1">
+                            <th class="w40">#</th>
+                            <th class="w350">@LicenseeSubsidiaryLabels.CopiedAccount</th>
+                            <th class="w80">@LicenseeSubsidiaryLabels.Selected</th>
+                            <th>@LicenseeSubsidiaryLabels.Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button type="submit" class="update-setting-button mT5" id="btnCreate">&nbsp;&nbsp;&nbsp;&nbsp;@LicenseeSubsidiaryLabels.CreateAccount</button>
+            }
+        </div>
+    </div>
+    <script type="text/javascript">
+        var rootUrl = "@Url.Content("~")";
+        var resources = {
+            sourceAgentRequiredError: "@LicenseeSubsidiaryLabels.SourceAgentRequiredError",
+            sourceAgentNotFoundError: "@LicenseeSubsidiaryLabels.SourceAgentNotFoundError",
+            numberRequiredError: "@LicenseeSubsidiaryLabels.NumberRequiredError",
+            overMaxNumberError: "@LicenseeSubsidiaryLabels.OverMaxNumberError",
+            agentUsernamesRequiredError: "@LicenseeSubsidiaryLabels.AgentUsernamesRequiredError",
+            duplicatedAgentUsernamesError: "@LicenseeSubsidiaryLabels.DuplicatedAgentUsernamesError",
+            notCreated: "@LicenseeSubsidiaryLabels.NotCreated",
+            inprogress: "@LicenseeSubsidiaryLabels.Inprogress",
+            created: "@LicenseeSubsidiaryLabels.Created"
+        };
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/LicenseeSubsidiary/Scripts/licenseeSubsidiary.js?v=" + version)"></script>
+</body>
+</html>

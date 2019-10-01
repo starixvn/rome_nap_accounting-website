@@ -259,7 +259,7 @@
                         for (var j = 0; j < total1; j++) {
                             if (CheckIsMenuIgnore(sub1[j].Name) == false) {
                                 if (sub1[j].SubMenu == null || sub1[j].SubMenu.length == 0) {
-                                    accMenu[arr].push(sub1[j].Name + "|" + trimSpace(sub1[j].Url));
+                                    accMenu[arr].push(sub1[j].Name + "|" + trimSpace(sub1[j].Url) + "|" + sub1[j].Target);
                                 }
                                 else {
                                     accMenu[arr].push(sub1[j].Name + "|sMenu" + mainid + "_" + sub1[j].Id);

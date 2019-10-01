@@ -26,15 +26,17 @@
                 }
             }
             else {
-
-                if (menu[1].indexOf('sMenu') != -1)
-                    result += '<li ><a onmouseover="smenuover(\'' + subid + '\');" onmouseout="smenuout(\'' + subid + '\');" id="' +
-                        subid + '"  href="javascript:void(0)" >' + menu[0] + '</a>';
-                else {
-                    result += '<li ><a onmouseover="smenuover(\'' + subid + '\');" onmouseout="smenuout(\'' + subid + '\');" id="' +
-                    subid + '"  href="javascript:void(0)"  onclick="activeParentMenu(this);Submenu_Click(\'' + menu[1] + '\');">' + menu[0] + '</a>';
+                if (menu[2] && menu[2].length > 0 && menu[2] === "_blank") {
+                    result += '<li><a onmouseover="smenuover(\'' + subid + '\');" onmouseout="smenuout(\'' + subid + '\');" target="_blank" href="' + menu[1] + '">' + menu[0] + '</a>';
+                } else {
+                    if (menu[1].indexOf('sMenu') != -1)
+                        result += '<li ><a onmouseover="smenuover(\'' + subid + '\');" onmouseout="smenuout(\'' + subid + '\');" id="' +
+                            subid + '"  href="javascript:void(0)" >' + menu[0] + '</a>';
+                    else {
+                        result += '<li ><a onmouseover="smenuover(\'' + subid + '\');" onmouseout="smenuout(\'' + subid + '\');" id="' +
+                        subid + '"  href="javascript:void(0)"  onclick="activeParentMenu(this);Submenu_Click(\'' + menu[1] + '\');">' + menu[0] + '</a>';
+                    }
                 }
-
             }
             //Contain sub menu
             if (is3thmenu && subaccMenu[menu[1]] != null) {

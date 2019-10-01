@@ -2121,4 +2121,10 @@
   <data name="SBT" xml:space="preserve">
     <value>Seize Bet Ticket (%)</value>
   </data>
+  <data name="ExistedCustID" xml:space="preserve">
+    <value>Copied From CustID</value>
+  </data>
+  <data name="ExistedUsername" xml:space="preserve">
+    <value>Copied From Username</value>
+  </data>
 </root>

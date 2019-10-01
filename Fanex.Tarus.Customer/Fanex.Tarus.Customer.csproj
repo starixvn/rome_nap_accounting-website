@@ -331,6 +331,8 @@
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
+    <Compile Include="Business\LicenseeSubsidiary\ILicenseeSubsidiaryService.cs" />
+    <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
@@ -379,6 +381,7 @@
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
     <Compile Include="Controller\LicenseeDcsSettingController.cs" />
+    <Compile Include="Controller\LicenseeSubsidiaryController.cs" />
     <Compile Include="Controller\MicroGamingController.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -449,6 +452,8 @@
     <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSubsidiary\CreateLicenseeSubsidiaryCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\EditSettingCriteria.cs" />
     <Compile Include="Criteria\MicroGaming\GetSettingCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
@@ -491,6 +496,8 @@
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeSubsidiary\ILicenseeSubsidiaryDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeSubsidiary\LicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
@@ -596,6 +603,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Customer_Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\LicenseeSubsidiaryLabels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LicenseeSubsidiaryLabels.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
@@ -681,6 +693,10 @@
     <EmbeddedResource Include="Resources\LicenseeDcsSettingLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LicenseeDcsSettingLabels1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LicenseeSubsidiaryLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseeSubsidiaryLabels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
