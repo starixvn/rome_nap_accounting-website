@@ -5,7 +5,7 @@ function trimSpace(str) {
 function submitSearch(username) {
     txtusername = $('#txtuserName');
     if (username == null || username == "") {
-        username = encodeURIComponent(escape(jQuery.trim(txtusername.val())));        
+        username = encodeURIComponent(escape(jQuery.trim(txtusername.val())));
 
         if (username != "") {
             $('#leftPanel').attr({ src: 'CustInfo.aspx?username=' + username });
@@ -19,29 +19,29 @@ function submitSearch(username) {
         }
     }
     else {
-        
+
         username = username.replace("&amp;", "&");
         Set_Cookie(accid + "_custname", username);
         $('#leftPanel').attr({ src: 'CustInfo.aspx?username=' + jQuery.trim(escape(username)) });
     }
 
     if (!showleft) {
-        leftright(); 
+        leftright();
     }
     txtusername.val("");
 }
 
 
 function gotoURL(frmName, url) {
-    if (url.toString().indexOf("_blank")!=-1) {
+    if (url.toString().indexOf("_blank") != -1) {
         window.open(url, "_blank");
-     }
+    }
     else {
         $('#' + frmName).attr({ src: encodeURI(url) });
     }
 }
- 
-function BlockUI(msg) {    
+
+function BlockUI(msg) {
     if (msg == null || msg == "") {
         jQuery.blockUI({
             message: '<table class="blockUI"><tr><td class="tdloading"></td></tr></table>',
@@ -80,58 +80,64 @@ function MainMenu_Click(item, url) {
 
 function Submenu_Click(url) {
     //if (url.indexOf(".aspx") > 0) {
-        gotoURL('centerFr', url);
+    gotoURL('centerFr', url);
     //}
 }
-    function KeyPress(e) {
-        e = (e) ? e : window.event;
-        var key = (e.keyCode) ? e.keyCode : e.which;
-        if (key == 13) {
-            submitSearch();
-        }
-        return;
+function KeyPress(e) {
+    KeyPressEnterCallback(e, submitSearch)
+}
+
+function KeyPressEnterCallback(e, callback) {
+    e = (e) ? e : window.event;
+    var key = (e.keyCode) ? e.keyCode : e.which;
+    if (key == 13) {
+        if (typeof callback === 'function')
+            callback();
     }
 
-    function overlay(id) {
-        el = $("#" + id);
-        el.css("display", el.css("display") == "inline" ? "none" : "inline");
+    return;
+}
+
+function overlay(id) {
+    el = $("#" + id);
+    el.css("display", el.css("display") == "inline" ? "none" : "inline");
+}
+
+
+function changeiconleftright(showlefticon) {
+    var btnleftright = $("#btnleftright");
+    if (showlefticon) {
+        btnleftright.removeClass("leftright");
+        btnleftright.addClass("rightleft");
     }
-
-
-    function changeiconleftright(showlefticon) {
-        var btnleftright = $("#btnleftright");
-        if (showlefticon) {
-            btnleftright.removeClass("leftright");
-            btnleftright.addClass("rightleft");
-        }
-        else {
-            btnleftright.removeClass("rightleft");
-            btnleftright.addClass("leftright");
-        }
+    else {
+        btnleftright.removeClass("rightleft");
+        btnleftright.addClass("leftright");
     }
+}
 
-    function leftright() {
-        var leftpanel = $('.leftcontent');
-        var rightpanel = $('.rightcontent');
+function leftright() {
+    var leftpanel = $('.leftcontent');
+    var rightpanel = $('.rightcontent');
 
-        if (showleft) {
-            leftcontent = 0;
-            contentwidth = fullwidth - leftcontent;
-            leftpanel.css("width", leftcontent + "px");
-            rightpanel.css("width", contentwidth + "px");
-            leftpanel.hide();
-        }
-        else {
-            leftcontent = 273;
-            contentwidth = fullwidth - leftcontent;
-            leftpanel.css("width", leftcontent + "px");
-            rightpanel.css("width", (contentwidth-3) + "px");
-            leftpanel.show();
-        }
-        showleft = !showleft;
-        changeiconleftright(showleft);
+    if (showleft) {
+        leftcontent = 0;
+        contentwidth = fullwidth - leftcontent;
+        leftpanel.css("width", leftcontent + "px");
+        rightpanel.css("width", contentwidth + "px");
+        leftpanel.hide();
     }
-
-    function update_online_status() {
-        UpdateOnlineStatus.location.href = "Handlers/OnlineUpd.ashx";
+    else {
+        leftcontent = 273;
+        contentwidth = fullwidth - leftcontent;
+        leftpanel.css("width", leftcontent + "px");
+        rightpanel.css("width", (contentwidth - 3) + "px");
+        leftpanel.show();
     }
+    showleft = !showleft;
+    changeiconleftright(showleft);
+}
+
+function update_online_status() {
+    UpdateOnlineStatus.location.href = "Handlers/OnlineUpd.ashx";
+}

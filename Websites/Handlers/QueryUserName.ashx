@@ -22,8 +22,8 @@ public class QueryUserName : IHttpHandler, System.Web.SessionState.IRequiresSess
     public void ProcessRequest(HttpContext context)
     {
         //context.Response.ContentType = "text/plain";
-   context.Response.ContentType = "application/json";
-        
+        context.Response.ContentType = "application/json";
+
         string query = CastAide.AsString(context.Request.QueryString["query"], String.Empty);
         int userid = AppSession.AccId;
 
