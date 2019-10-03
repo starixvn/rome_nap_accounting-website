@@ -5,8 +5,10 @@
     using System;
 
     public class BetListByCustInfoCriteria : CriteriaBase
-    {
+    {        
         private DateTime _fromDate;
+
+        public string StatusIdList { get; set; }
 
         [SpParam(SqlParamName = "CustID")]
         public int CustId { get; set; }
@@ -30,17 +32,15 @@
 
         public DateTime MoveBetsDay { get; set; }
 
+        public DateTime BalanceUpDay { get; set; }
+
         [SpParam(SqlParamName = "Bettype")]
         public int BetType { get; set; }
 
         public override string GetSettingKey()
-        {
-            return "BetList_CustInfo";
-        }
+            => "Acc_BetList_Mem";
 
         public override bool IsValid()
-        {
-            return true;
-        }
+            => FromDate <= ToDate && CustId > 0;
     }
 }

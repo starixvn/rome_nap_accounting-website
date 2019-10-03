@@ -56,6 +56,40 @@
         current_page: 1
     },
 
+    BuildTicketStatusDropdownlist: function () {
+        var multiselectData = [];
+        for (var i = 0; i < ticketStatus.length; i++) {
+            multiselectData.push({
+                Id: "selecteStatus" + ticketStatus[i].Value,
+                Value: ticketStatus[i].Value,
+                Text: ticketStatus[i].Text,
+                Checked: true,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        }
+        $("#ddlStatus").multiSelect({
+            minWidth: 150,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: multiselectData,
+            onCheck: function () {
+                if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
+                    $("#err").innerHTML = "<div class='alertboxscc'><div>Please choose Status!</div></div>";
+                }
+                else {
+                    $("#err").empty();
+                }
+            },
+            noItemText: "No Status found."
+        })
+    },
+
     getBetListSystemParlay: function () {
         BetListByCustInfo.paramGetBetlistSystemParlay.customerId = _custID;
         BetListByCustInfo.paramGetBetlistSystemParlay.transactionId = $('#txtRefNoSystemParaly').val();
@@ -164,6 +198,9 @@
             }
         });
     },
+    getSelectedStatus: function () {
+        return $("#ddlStatus").multiSelect("getCheckedItems").join(",");
+    },
 
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-2") {
@@ -182,6 +219,7 @@
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
+            BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus();
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
             BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
@@ -566,6 +604,7 @@ head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
     Helper.renderExchangeCalendarFromTo();
     Helper.range_date();
+    BetListByCustInfo.BuildTicketStatusDropdownlist();
     BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");
