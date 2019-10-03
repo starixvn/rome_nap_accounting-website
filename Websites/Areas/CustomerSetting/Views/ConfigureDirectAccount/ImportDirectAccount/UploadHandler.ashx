@@ -2,8 +2,6 @@
 
 using System;
 using System.Web;
-using Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover;
-using Fanex.Tarus.Customer.Criteria.SMATurnover;
 using DNAide.Core;
 using System.Web.Mvc;
 using Newtonsoft.Json;

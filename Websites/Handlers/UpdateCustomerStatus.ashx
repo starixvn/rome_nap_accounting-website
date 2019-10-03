@@ -256,14 +256,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledVS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    new CustomerUpdateStatus().CustomerUpdateDisabledVirtualSports(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;              
                 case "disabledEsports":
                     if (Permissions.GetHostPermission(Enumerations.Functions.Customer.EnableEsports))
                     {

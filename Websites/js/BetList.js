@@ -396,6 +396,39 @@ function ExportBetListToExcel() {
     // GeneralAjaxCall(urlLink);
 }
 
+function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
+    var params = $.param({
+        Refno: refno,
+        WinLossDate: winlossDate,
+        TransId: transId,
+        CustId: custId,
+        EventId: eventId,
+        RoleId: 0,
+        AccId: _accId
+    });
+
+    var width = $(window).width();
+    var widthForDetail = 1120;
+    if (width > widthForDetail) {
+        width = widthForDetail;
+    }
+
+    parent.OpenNextPopup(
+        "ColossusBetsDetails",
+        'ColossusBets/BetDetails?' + params,
+        'Ticket details of ' + refno,
+        width,
+        600,
+        true,
+        true,
+        window,
+        0,
+        null,
+        function () {
+            parent.$("#innerFrameColossusBetsDetails").contents().find(".memberchoice-betdetail").addClass("display-none");
+        });
+}
+
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);

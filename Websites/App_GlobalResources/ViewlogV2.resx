@@ -656,40 +656,7 @@
   </data>
   <data name="us1" xml:space="preserve">
     <value>Super Auto PT</value>
-  </data>
-  <data name="acc_customerupdagentvs_minmaxbet" xml:space="preserve">
-    <value>Update Virtual Sports Bet Setting for Agent</value>
-  </data>
-  <data name="acc_customerupdagentvs_positiontaking" xml:space="preserve">
-    <value>Update Virtual Sports Position Taking for Agent</value>
-  </data>
-  <data name="acc_customerupdmastervs_minmaxbet" xml:space="preserve">
-    <value>Update Virtual Sports Bet Setting for Master</value>
-  </data>
-  <data name="acc_customerupdmastervs_positiontaking" xml:space="preserve">
-    <value>Update Virtual Sports Position Taking for Master</value>
-  </data>
-  <data name="acc_customerupdmembervs_mag" xml:space="preserve">
-    <value>Update Master's Virtual Sports Position Taking at Member</value>
-  </data>
-  <data name="acc_customerupdmembervs_minmaxbet" xml:space="preserve">
-    <value>Update Virtual Sports Bet Setting for Member</value>
-  </data>
-  <data name="acc_customerupdmembervs_positiontaking" xml:space="preserve">
-    <value>Update Virtual Sports Position Taking for Member</value>
-  </data>
-  <data name="acc_customerupdmembervs_sag" xml:space="preserve">
-    <value>Update Super's Virtual Sports Position Taking at Member</value>
-  </data>
-  <data name="acc_customerupdsupervs_minmaxbet" xml:space="preserve">
-    <value>Update Virtual Sports Bet Setting for Super</value>
-  </data>
-  <data name="acc_customerupdsupervs_positiontaking" xml:space="preserve">
-    <value>Update Virtual Sports Position Taking for Super</value>
-  </data>
-  <data name="acc_custoverrideupdvs" xml:space="preserve">
-    <value>Update Virtual Sports Min/Max Position Taking</value>
-  </data>
+  </data> 
   <data name="disabledownlinesvs" xml:space="preserve">
     <value>Apply to all downlines</value>
   </data>

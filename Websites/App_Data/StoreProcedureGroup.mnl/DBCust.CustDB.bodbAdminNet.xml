@@ -71,21 +71,6 @@
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Virtual Sport">
-    <Setting Key="Acc_CustomerUpdAgentVS_MinMaxBet" SpName="Acc_CustomerUpdAgentVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgentVS_PositionTaking" SpName="Acc_CustomerUpdAgentVS_PositionTaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_MinMaxBet" SpName="Acc_CustomerUpdMasterVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_Positiontaking" SpName="Acc_CustomerUpdMasterVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MAg" SpName="Acc_CustomerUpdMemberVS_MAg" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MinMaxBet" SpName="Acc_CustomerUpdMemberVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_SAg" SpName="Acc_CustomerUpdMemberVS_SAg" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_Positiontaking" SpName="Acc_CustomerUpdSuperVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -126,7 +111,6 @@
     <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -202,16 +186,6 @@
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="PJUnitPriceUpd" SpName="Acc_Exchange_PJUnitPrice_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Finance">
-    <Setting Key="Acc_CustOverrideUpdFI" SpName="Acc_CustOverrideUpdFI" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_All" SpName="Acc_CustomerUpdMemberFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAgentFI_All" SpName="Acc_CustomerUpdAgentFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMasterFI_All" SpName="Acc_CustomerUpdMasterFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperFI_All" SpName="Acc_CustomerUpdSuperFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableFI" SpName="Acc_CustomerUpdDisableFI" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />

@@ -5,16 +5,6 @@
     <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
     <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
-  <Function Name="Balance Report">
-    <Setting Key="masterbalance" SpName="Acc_Rpt_Balance_Master" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="masterbalanceyesterday" SpName="Acc_Rpt_Balance_Master_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="agentbalance" SpName="Acc_Rpt_Balance_Agent" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="agentbalanceyesterday" SpName="Acc_Rpt_Balance_Agent_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="memberbalance" SpName="Acc_Rpt_Balance_Member" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="memberbalanceyesterday" SpName="Acc_Rpt_Balance_Member_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Credit Term">
     <Setting Key="CreditTerm" SpName="Acc_Rpt_CreditTerm" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="InstallAmount" SpName="Acc_Rpt_InstallAmount" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -56,20 +46,11 @@
     <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Special delete - Ticket Listing">
-    <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Customer - Update Live Casino Comm">
-    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Special Delete - Batch MSG">
-    <Setting Key="BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="TicketsListing" SpName="Acc_Rpt_TicketsListing" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Statement">
     <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -77,10 +58,6 @@
     <Setting Key="AllStatementCompany" SpName="Acc_Rpt_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Balance Movement">
-    <Setting Key="Acc_Rpt_OriginalBalMovement_SAg" SpName="Acc_Rpt_OriginalBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Rpt_BaseBalMovement_SAg" SpName="Acc_Rpt_BaseBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Reset Winning">
     <Setting Key="Acc_ResetWinning_Sel" SpName="Acc_ResetWinning_Sel" DbName="DBACC.bodb02.bodbAdminNet" />

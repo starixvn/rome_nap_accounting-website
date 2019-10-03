@@ -126,7 +126,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -234,10 +234,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts5\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
@@ -351,8 +351,6 @@
     <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\SettingCustomer\AbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
-    <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
-    <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
     <Compile Include="Business\VirtualRate\UploadRate\IUploadVirtualRateService.cs" />
@@ -451,10 +449,6 @@
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
-    <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
-    <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
-    <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
-    <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
@@ -501,8 +495,6 @@
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
-    <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
-    <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
     <Compile Include="Controller\Credit\AddNewMasterController.cs" />
     <Compile Include="Controller\Credit\AddNewMemberController.cs" />
@@ -521,7 +513,6 @@
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
-    <Compile Include="Controller\Setting\SMATurnoverController.cs" />
     <Compile Include="Criteria\CustomerLogin\ResetSecurityCodeCriteria.cs" />
     <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\CustomerSettingDataAccess.cs" />
@@ -629,11 +620,6 @@
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SelectResult.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\AddSMAListResult.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\League.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
     <Compile Include="Entities\ViewPT\PostionTakingInfo.cs" />
     <Compile Include="Entities\VirtualRate\BetTypeModel.cs" />
     <Compile Include="Entities\VirtualRate\CustomerVirtualRateModel.cs" />
