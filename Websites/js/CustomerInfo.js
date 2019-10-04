@@ -689,11 +689,11 @@ function UpdateDangerousCustomer(typename, type, level) {
                         document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
                         if (parseInt(level) > 10) {
                             $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
-                            $(span).parent()[0].style.Color = "Black";
+                            $(span).parent()[0].style.color = "Black";
                         }
                         else {
                             $(span).parent()[0].style.backgroundColor = "White";
-                            $(span).parent()[0].style.Color = levelcolor[parseInt(level)];
+                            $(span).parent()[0].style.color = levelcolor[parseInt(level)];
                         }
                     }
                     if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
