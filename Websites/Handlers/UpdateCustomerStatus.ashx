@@ -192,7 +192,8 @@ public class UpdateCustomerStatus : BaseHandler
                     DangerousSetting danger = new DangerousSetting();
                     DangerousDetail dangerDetail = danger.CustomerUpdateDangerous(_accid, _custid, level, dangertype);
                     result.Append("parent.document.getElementById('spanDangerous" + name + "').innerHTML ='" + dangerDetail.Name + "';");
-                    result.Append("parent.document.getElementById('tdvalue" + name + "').style ='" + dangerDetail.Color + "';");
+                    result.Append("parent.document.getElementById('tdvalue" + name + "').style.color ='" + dangerDetail.Color + "';");
+                    result.Append("parent.document.getElementById('tdvalue" + name + "').style.backgroundColor ='" + dangerDetail.BackgroundColor + "';");
                     result.Append("parent.document.getElementById('currentLevel" + name + "').value ='" + level + "';");
 
                     s = result.ToString();
