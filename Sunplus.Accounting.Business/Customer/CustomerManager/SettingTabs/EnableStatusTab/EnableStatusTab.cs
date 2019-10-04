@@ -307,25 +307,35 @@
 
         private string RenderDangerousControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-
-            var dangerousTypes = new List<DangerousType>()
+            if (Functions.Settings.IsVisibleDangerous)
             {
-                new DangerousType(customerInfoViewModel.Danger1, CustomerInfoResources.Danger1),
-                new DangerousType(customerInfoViewModel.Danger2, CustomerInfoResources.Danger2),
-                new DangerousType(customerInfoViewModel.Danger3, CustomerInfoResources.Danger3),
-            };
+                if (customerInfoViewModel.IsDeposit && customerInfoViewModel.SearchAccountRoleId > 2)
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "edited-dangerous");
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
 
-            DangerousSetting danger = new DangerousSetting();
-            TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+                    var dangerousTypes = new List<DangerousType>()
+                    {
+                        new DangerousType(customerInfoViewModel.Danger1, CustomerInfoResources.Danger1),
+                        new DangerousType(customerInfoViewModel.Danger2, CustomerInfoResources.Danger2),
+                        new DangerousType(customerInfoViewModel.Danger3, CustomerInfoResources.Danger3)
+                    };
 
-            TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
-                danger.GenDangerous(
-                    customerInfoViewModel.SearchAccountRoleId,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    dangerousTypes,
-                    customerInfoViewModel.IsBA,
-                    customerInfoViewModel.SearchAccountRoleName));
+                    DangerousSetting danger = new DangerousSetting();
+                    TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+
+                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
+                        danger.GenDangerous(
+                            customerInfoViewModel.SearchAccountRoleId,
+                            customerInfoViewModel.ManageCustomerAccess,
+                            dangerousTypes,
+                            customerInfoViewModel.IsBA,
+                            customerInfoViewModel.SearchAccountRoleName));
+                }
+            }
 
             return htmlcontent;
         }
@@ -759,7 +769,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
             TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
-        }        
+        }
 
         private string RenderOutrightControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
