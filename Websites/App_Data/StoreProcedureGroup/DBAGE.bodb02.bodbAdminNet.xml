@@ -89,12 +89,10 @@
     <Setting Key="CustomerSelMemberSearch_AutoSuspend" SpName="Acc_CustomerSelMemberSearch_AutoSuspend" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelIsDirectMaster" SpName="Acc_CustomerSelIsDirectMaster" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMatchLimit" SpName="Acc_CustomerSelMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="SelCustomerGivenCredit" SpName="Acc_SelCustomerGivenCredit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserSearch" SpName="Acc_CustomerSelUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustGroupIns" SpName="Acc_CustGroupIns" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User Control">
     <Setting Key="OperatorSel" SpName="Acc_OperatorSel" DbName="DBCust.CustDB.bodbAdminNet" />

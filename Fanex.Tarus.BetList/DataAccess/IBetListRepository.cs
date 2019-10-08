@@ -27,7 +27,5 @@
         CombinationParlay BetList_SelDetailCombinationMP(ICriteria criteria);
 
         string GetSiteNameByCustId(ICriteria criteria);
-
-        int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
     }
 }
