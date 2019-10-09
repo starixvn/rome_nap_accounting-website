@@ -38,7 +38,7 @@
             TemplateHandler.Assign(ref balanceinfo, "{CustName}", customerInfoViewModel.UserName);
 
             TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.AccOutstanding)));
-            if (customerInfoViewModel.RoleId == 1)
+            if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.Assign(ref balanceinfo, "{NetPosition}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
             }
@@ -59,7 +59,7 @@
                 TemplateHandler.RemoveBlock(ref balanceinfo, "AllowGiven");
             }
 
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 RenderDownlineCountingInfo(ref balanceinfo, customerInfoViewModel);
                 TemplateHandler.Assign(ref balanceinfo, "{CN88HeadlineCurrency}", customerInfoViewModel.Currency);
@@ -75,7 +75,7 @@
                 var virtualRateOnclick =
                     "return OpenEditVirtualExRate(" + customerInfoViewModel.CustId + ",'" +
                         customerInfoViewModel.UserName + "','" +
-                        AccCommon.GetRoleName(customerInfoViewModel.RoleId) + "');";
+                        AccCommon.GetRoleName(customerInfoViewModel.SearchAccountRoleId) + "');";
                 var virtualRateTitle = "Click to Edit";
 
                 TemplateHandler.Assign(ref balanceinfo, "{superhidden}", "hidden");
@@ -86,7 +86,7 @@
 
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", customerInfoViewModel.Currency + " ");
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", customerInfoViewModel.Credit));
-                if (customerInfoViewModel.RoleId > 1)
+                if (customerInfoViewModel.SearchAccountRoleId > 1)
                 {
                     TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
 
@@ -102,7 +102,7 @@
 
                     TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.OutStanding)));
                     TemplateHandler.Assign(ref balanceinfo, "{UsedCredit}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.UsedCredit)));
-                    TemplateHandler.Assign(ref balanceinfo, "{AgentType}", customerInfoViewModel.DownlineName);
+                    TemplateHandler.Assign(ref balanceinfo, "{AgentType}", customerInfoViewModel.DirectDownlineRoleName);
                     TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
 
@@ -156,14 +156,14 @@
 
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipMBC);
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleMBC);
-            TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 ? string.Empty : "hidden");
-            TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 ? string.Empty : "hidden");
-            TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.SearchAccountRoleId > 3 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.SearchAccountRoleId > 1 ? string.Empty : "hidden");
         }
 
         private static void RenderDownlineCountingInfoCN88(ref string balanceInfo, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref balanceInfo, "{superactive}",
                                     string.Format("<span class='status-count-active'>{0}</span>/<span class='status-count-view-only'>{1}</span>/<span class='status-count-suspended'>{2}</span>/<span class='status-count-inactive'>{3}</span>",
@@ -184,11 +184,11 @@
 
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipCN88);
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleCN88);
-            if (customerInfoViewModel.RoleId != (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId != (int)Role.Headline)
             {
-                TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.RoleId > 3 ? string.Empty : "hidden");
-                TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.RoleId > 2 ? string.Empty : "hidden");
-                TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.RoleId > 1 ? string.Empty : "hidden");
+                TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.SearchAccountRoleId > 3 ? string.Empty : "hidden");
+                TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
+                TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.SearchAccountRoleId > 1 ? string.Empty : "hidden");
             }
         }
     }

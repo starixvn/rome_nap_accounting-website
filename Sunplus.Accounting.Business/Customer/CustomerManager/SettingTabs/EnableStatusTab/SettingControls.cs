@@ -7,7 +7,6 @@
     using DNAide.Web;
     using Entities;
     using Security;
-    using System;
 
     public partial class CustomerManager
     {
@@ -116,25 +115,6 @@
             }
 
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSelectedBetting"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, statusName);
-        }
-
-        private string GetSettingControlDangerous(
-            int roleId,
-            bool isManageCustomerAccess,
-            string[] dangeroustype,
-            int[] levels,
-            bool isBA)
-        {
-            try
-            {
-                DangerousSetting danger = new DangerousSetting();
-                return danger.GenDangerous(roleId, isManageCustomerAccess, dangeroustype, levels, isBA);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw;
-            }
         }
 
         private SettingControl GetSettingControlSuspended(

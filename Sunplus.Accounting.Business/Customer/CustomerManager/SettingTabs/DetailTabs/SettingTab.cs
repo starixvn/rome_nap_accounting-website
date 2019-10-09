@@ -32,7 +32,7 @@
         {
             string userName = customerInfoViewModel.UserName;
             int parentId = customerInfoViewModel.ParentId;
-            int roleId = customerInfoViewModel.RoleId;
+            int roleId = customerInfoViewModel.SearchAccountRoleId;
             int custId = customerInfoViewModel.CustId;
             var agentId = customerInfoViewModel.AgentId;
             var superId = customerInfoViewModel.SuperId;
@@ -254,7 +254,7 @@
             }
 
             // Chatbot
-            if (customerInfoViewModel.IsDeposit || customerInfoViewModel.RoleId == 1)
+            if (customerInfoViewModel.IsDeposit || customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "chatbot");
             }

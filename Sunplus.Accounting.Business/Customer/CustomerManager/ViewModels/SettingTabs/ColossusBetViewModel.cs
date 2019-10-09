@@ -5,7 +5,7 @@
 
     public partial class CustomerInfoViewModel
     {
-        private bool HideColossusBets => !WebSettings.IsShowColossusBets || (RoleId < 4 && Utils.ToBoolean(customerInfoRow["HideColossusBet"]));//(Utils.ToBoolean(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
+        private bool HideColossusBets => !WebSettings.IsShowColossusBets || (SearchAccountRoleId < 4 && Utils.ToBoolean(customerInfoRow["HideColossusBet"]));//(Utils.ToBoolean(customerInfoRow["HideColossusBet"]) || !WebSettings.IsShowColossusBets) && (RoleId < 4);
 
         public bool ShowEnabledCheckboxColossusBets => IsDeposit;
 

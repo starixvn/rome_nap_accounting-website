@@ -208,7 +208,7 @@
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
                         RenderCN88Customer(ref htmlcontent, customerInfoViewModel);
                         RenderCommonInfo(ref htmlcontent, customerInfoViewModel);
-                        arrcontent.Add("isba", customerInfoViewModel.RoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
+                        arrcontent.Add("isba", customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
                     }
                 }
 
@@ -388,7 +388,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerUnlock");
             }
 
-            if (customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", "Customer/EditCustomerInfo.aspx?custId=" + customerInfoViewModel.CustId + "&type=Headline");
                 htmlcontent = GenLoginDetail(htmlcontent, customerInfoViewModel);
@@ -411,12 +411,12 @@
         {
             var isCN88 = AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite);
 
-            ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Headline, "CN88HeadlineVisibleItem", "CN88HeadlineHiddenItem");
+            ShowHideBlock(ref htmlcontent, customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline, "CN88HeadlineVisibleItem", "CN88HeadlineHiddenItem");
             ShowHideBlock(ref htmlcontent, isCN88, "CN88VisibleItem", "CN88HiddenItem");
             ShowHideBlock(ref htmlcontent, customerInfoViewModel.ManageCustomerAccess, "CN88CustomerStatus", "CN88CustomerStatusDisabled");
-            ShowHideBlock(ref htmlcontent, customerInfoViewModel.RoleId == (int)Role.Super, "CN88HeadlinePossessOnSuper", string.Empty);
+            ShowHideBlock(ref htmlcontent, customerInfoViewModel.SearchAccountRoleId == (int)Role.Super, "CN88HeadlinePossessOnSuper", string.Empty);
 
-            if (!isCN88 || customerInfoViewModel.RoleId == (int)Role.Headline)
+            if (!isCN88 || customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "CN88ViewPT");
             }
@@ -437,17 +437,17 @@
         private void RenderCommonInfo(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             TemplateHandler.Assign(ref htmlcontent, "{ParentId}", customerInfoViewModel.ParentId.ToString());
-            TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.RoleId.ToString());
+            TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.SearchAccountRoleId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
             TemplateHandler.Assign(ref htmlcontent, "{Username}", customerInfoViewModel.UserName);
         }
 
         private void AssignCustomerSession(CustomerInfoViewModel customerInfoViewModel)
         {
-            AppSession.CustRoleId = customerInfoViewModel.RoleId;
+            AppSession.CustRoleId = customerInfoViewModel.SearchAccountRoleId;
             AppSession.CustID = customerInfoViewModel.CustId;
             AppSession.CustUName = customerInfoViewModel.UserName;
-            if (customerInfoViewModel.RoleId != (int)Role.Headline)
+            if (customerInfoViewModel.SearchAccountRoleId != (int)Role.Headline)
             {
                 AppSession.MemberID = customerInfoViewModel.MemberId;
                 AppSession.MemberUserName = customerInfoViewModel.MemberName;

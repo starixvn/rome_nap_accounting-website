@@ -269,7 +269,7 @@ function ViewVRHistory(CustID, UserName) {
 function OpenCloseMenuDangerous() {
     $('#divLevel').css('display', ($('#divLevel').css('display') == 'inline') ? 'none' : 'inline');
 }
-function ChangeDangerousLevel(typename, level, name, color) {
+function ChangeDangerousLevelMember(typename, level, name, color) {
     if (isDigitOnly(level) == false) {
         return false;
     }
@@ -284,7 +284,7 @@ function ChangeDangerousLevel(typename, level, name, color) {
     }
     else {
         var curLevel = document.getElementById('currentLevel' + typename.replace(/ /, "")).value;
-        if (curLevel == level || !confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + name + "' for this customer?")) {
+        if (curLevel == level || !confirm("Are you sure you want to change " + typename + " dangerous level to '" + name + "' for this customer?")) {
             if (currlevelbox != "") {
                 $("#" + currlevelbox).css('display', 'none');
             }
@@ -420,8 +420,8 @@ function replaceAll(text, strA, strB) {
 }
 
 /* New version */
-// function change dangerous for agent
-function ChangeDangerousLevelAgent(typename, type, level) {
+// function change dangerous for agent/super/master
+function ChangeDangerousLevel(typename, type, level) {
     if (isDigitOnly(level) == false) {
         return false;
     }
@@ -429,6 +429,7 @@ function ChangeDangerousLevelAgent(typename, type, level) {
     if (parseInt(level) < 0 || parseInt(level) > 21) {
         return false;
     }
+
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
         alert("This account was disabled");
         $("#" + currlevelbox).css('display', 'none');
@@ -667,10 +668,10 @@ function UpdateDangerousCustomer(typename, type, level) {
         var param = { "custId": custId, "updateDownline": updateDownline, "dangerType": type, "dangerLevel": level };
         var resultDialog = false;
         if (updateDownline == "0") {
-            resultDialog = confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + level + "' for this customer?");
+            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer?");
         }
         else {
-            resultDialog = confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + level + "' for this customer and all downlines?");
+            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer and all downlines?");
         }
         if (resultDialog) {
             if (PTBlockUI) PTBlockUI();
@@ -688,11 +689,11 @@ function UpdateDangerousCustomer(typename, type, level) {
                         document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
                         if (parseInt(level) > 10) {
                             $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
-                            $(span).parent()[0].style.Color = "Black";
+                            $(span).parent()[0].style.color = "Black";
                         }
                         else {
                             $(span).parent()[0].style.backgroundColor = "White";
-                            $(span).parent()[0].style.Color = levelcolor[parseInt(level)];
+                            $(span).parent()[0].style.color = levelcolor[parseInt(level)];
                         }
                     }
                     if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
@@ -702,9 +703,9 @@ function UpdateDangerousCustomer(typename, type, level) {
                                     resetLevelLabel(document.getElementById("spanDangerousOriginal"), level);
                                     break;
                                 }
-                            case "ABT":
+                            case "ABI":
                                 {
-                                    resetLevelLabel(document.getElementById("spanDangerousABT"), level);
+                                    resetLevelLabel(document.getElementById("spanDangerousABI"), level);
                                     break;
                                 }
                             case "Other Sports":

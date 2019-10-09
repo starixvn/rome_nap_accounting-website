@@ -5,13 +5,24 @@
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Constants;
     using System;
+    using System.Collections.Generic;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerInfoViewModel
     {
+        private IDictionary<int, string> LevelNames = new Dictionary<int, string>
+        {
+            { 4, "Super"},
+            { 3, "Master"},
+            { 2, "Agent"},
+            { 1, "Member"}
+        };
+
         public int CustId => Converter.ToInt(customerInfoRow["custid"]);
 
-        public int RoleId => Converter.ToInt(customerInfoRow["roleid"]);
+        public int SearchAccountRoleId => Converter.ToInt(customerInfoRow["roleid"]);
+
+        public string SearchAccountRoleName => LevelNames[SearchAccountRoleId];
 
         public string UserName => Converter.ToString2(customerInfoRow["username"]);
 
@@ -23,7 +34,7 @@
 
         public string Fullname => $"{Firstname} - {Lastname}";
 
-        public string DownlineName { get; private set; }
+        public string DirectDownlineRoleName => SearchAccountRoleId == 1 ? string.Empty : LevelNames[SearchAccountRoleId -1];
 
         public bool Important => Utils.ToBoolean(customerInfoRow["important"]);
 
@@ -60,7 +71,7 @@
             }
         }
 
-        public bool IsHeadline => RoleId == (int)Role.Headline;
+        public bool IsHeadline => SearchAccountRoleId == (int)Role.Headline;
 
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
 
@@ -68,7 +79,7 @@
 
         public string LastIp => Converter.ToString2(customerInfoRow["lastloginip"]);
 
-        public string CustomerSite => RoleId.Equals(1) ? Converter.ToString2(customerInfoRow["membersite"]) : Converter.ToString2(customerInfoRow["site"]);
+        public string CustomerSite => SearchAccountRoleId.Equals(1) ? Converter.ToString2(customerInfoRow["membersite"]) : Converter.ToString2(customerInfoRow["site"]);
 
         public string Createdate => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["createdate"]).ToShortDateString();
 
@@ -78,9 +89,9 @@
 
         public string PwdExpiryTime => Convert.IsDBNull(customerInfoRow["pwdexpiry"]) ? string.Empty : $" {Converter.ToDateTime(customerInfoRow["pwdexpiry"]).ToShortTimeString()}";
 
-        public string LastTxnDate => (this.RoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : Converter.ToDateTime(cashRow["lastTxn"]).ToShortDateString();
+        public string LastTxnDate => (this.SearchAccountRoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : Converter.ToDateTime(cashRow["lastTxn"]).ToShortDateString();
 
-        public string LastTxnTime => (this.RoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : $" {Converter.ToDateTime(cashRow["lastTxn"]).ToShortTimeString()}";
+        public string LastTxnTime => (this.SearchAccountRoleId == (int)Role.Headline || Convert.IsDBNull(cashRow["lastTxn"])) ? string.Empty : $" {Converter.ToDateTime(cashRow["lastTxn"]).ToShortTimeString()}";
 
         public string Phone => Converter.ToString2(customerInfoRow["phone"]);
 
@@ -100,7 +111,7 @@
 
         public string LastChangeSecurityCodeDate => Converter.ToString2(customerInfoRow["LastChangedSecurityCodeDate"]);
 
-        public string LastChangeOTPCodeDate => this.RoleId != (int)Role.Headline ? Converter.ToString2(customerInfoRow["OTPCreateDate"]) : string.Empty;
+        public string LastChangeOTPCodeDate => this.SearchAccountRoleId != (int)Role.Headline ? Converter.ToString2(customerInfoRow["OTPCreateDate"]) : string.Empty;
 
         public int Groupheadlineid => Converter.ToInt(customerInfoRow["groupheadlineid"]);
 
@@ -108,7 +119,7 @@
 
         public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);
 
-        public int Danger => Converter.ToInt(customerInfoRow["danger"]);
+        public int Danger1 => Converter.ToInt(customerInfoRow["danger"]);
 
         public int Danger2 => Converter.ToInt(customerInfoRow["danger2"]);
 
