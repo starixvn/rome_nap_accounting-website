@@ -49,7 +49,6 @@
                 AccId = AppSession.AccId,
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
-                IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit,
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -489,20 +488,6 @@
                                                renderLeftPanelParameter,
                                                "Update Lottery Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
-                            break;
-
-                        case "26":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Lucky3",
-                                               renderLeftPanelParameter.IsShowLucky3,
-                                               renderLeftPanelParameter,
-                                               "Update Lucky 3 Status",
-                                               26);
                             break;
                     }
                 }

@@ -65,8 +65,6 @@
 
         public const int KenoLottery = 220;
 
-        public const int Lucky3 = 160;
-
         public const int CardClub = 165;
     }
 }

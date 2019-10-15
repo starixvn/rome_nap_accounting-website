@@ -534,11 +534,6 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
-function showLucky3Details(transId, custId) {
-    var width = 830;
-    parent.OpenNextPopup("Lucky3Details", 'Lucky3/ViewDetail?TransactionId=' + transId + '&CustomerId=' + custId, '', width, 500, true, false, window, 0, null, null);
-}
-
 function ShowBonusDetails(refCode, transId) {
     var url = "BetList/ViewBonusDetails?refCode=" + refCode + "&transId=" + transId;
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
@@ -764,10 +759,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
-            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);     
-
-        case 1600 <= bettype && bettype <= 1610: // Lucky 3.
-            return getLucky3Param(matchid);
+            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);      
 
         case bettype === 1701 || bettype === 1702 || bettype === 1703 || bettype === 1704 || bettype === 1705: // Gold Deluxe.
             return getGoldDeluxeParam(bettype, refno);
@@ -935,17 +927,6 @@ function getSystemParlayParam(matchid, refno, bettype, betid) {
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
         height: 500
-    };
-}
-
-
-function getLucky3Param(matchId) {
-    return {
-        url: "Report/ViewLucky3Result.aspx",
-        title: "Lucky 3",
-        jsonParam: { matchId: matchId },
-        width: 750,
-        height: 200
     };
 }
 

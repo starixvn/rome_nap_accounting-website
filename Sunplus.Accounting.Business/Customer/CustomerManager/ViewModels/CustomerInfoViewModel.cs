@@ -167,12 +167,7 @@
 
                                 HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
-                                break;
-
-                            case "26":
-                                HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowLucky3;
-                                HideLucky3Upline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                break;                         
+                                break;                    
                         }
                     }
                 }
