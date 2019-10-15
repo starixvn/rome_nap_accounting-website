@@ -1,13 +1,10 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-    using Sunplus.Accounting.DataAccess.Report;
     using System;
+    using Fanex.NAP.Framework.Data;
 
     public class BetListByCustInfoCriteria : CriteriaBase
     {        
-        private DateTime _fromDate;
-
         public string StatusIdList { get; set; }
 
         [SpParam(SqlParamName = "CustID")]
@@ -15,18 +12,7 @@
 
         public bool IsCN88 { get; set; }
 
-        public DateTime FromDate
-        {
-            get
-            {
-                return _fromDate;
-            }
-
-            set
-            {
-                _fromDate = ((value >= ReportUtils.BalanceUp.BalanceUpDay) ? value : ReportUtils.BalanceUp.BalanceUpDay);
-            }
-        }
+        public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
 
