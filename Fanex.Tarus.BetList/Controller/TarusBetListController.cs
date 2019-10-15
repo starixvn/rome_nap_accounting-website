@@ -23,6 +23,7 @@ namespace Fanex.Tarus.BetList.Controller
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
+    using Fanex.Tarus.BetList.Resources;
 
     public class TarusBetListController : Controller
     {
@@ -77,7 +78,7 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
             ViewBag.IsCN88 = isCN88;
-            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = i.Value, Value = i.Key.ToString()});
+            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString()});
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 

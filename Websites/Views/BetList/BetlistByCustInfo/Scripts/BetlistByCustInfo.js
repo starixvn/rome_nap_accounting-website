@@ -78,6 +78,8 @@
             showFooter: false,
             checkAllText: "All",
             listData: multiselectData,
+            isUsedCustomCheckAllText: true,
+            customCheckAllText: 'All',
             onCheck: function () {
                 if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
                     $("#err").innerHTML = "<div class='alertboxscc'><div>Please choose Status!</div></div>";

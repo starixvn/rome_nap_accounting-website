@@ -19,17 +19,17 @@ namespace Fanex.Tarus.BetList.Constants
 
         public static IDictionary<int, string> List { get; } = new Dictionary<int, string>
         {
-            [Running] = nameof(Running),
             [Waiting] = nameof(Waiting),
             [Reject] = nameof(Reject),
-            [Void] = nameof(Void),
-            [Refund] = nameof(Refund),
-            [Draw] = nameof(Draw),
-            [Won] = nameof(Won),
-            [Lose] = nameof(Lose),
+            [Running] = nameof(Running),
+            [Pending] = nameof(Pending),
             [ResultPending] = nameof(ResultPending),
             [UnderSettlement] = nameof(UnderSettlement),
-            [Pending] = nameof(Pending),
+            [Won] = nameof(Won),
+            [Lose] = nameof(Lose),
+            [Draw] = nameof(Draw),
+            [Refund] = nameof(Refund),
+            [Void] = nameof(Void),
             [AbnormalBets] = nameof(AbnormalBets),
         };
     }

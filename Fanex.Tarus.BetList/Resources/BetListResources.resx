@@ -120,8 +120,8 @@
   <data name="Pending" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="running" xml:space="preserve">
-    <value>running</value>
+  <data name="Running" xml:space="preserve">
+    <value>Running</value>
   </data>
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned</value>
@@ -314,5 +314,26 @@
   </data>
   <data name="win" xml:space="preserve">
     <value>Win</value>
+  </data>
+  <data name="AbnormalBets" xml:space="preserve">
+    <value>Abnormal Bet</value>
+  </data>
+  <data name="Draw" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="ResultPending" xml:space="preserve">
+    <value>Result Pending</value>
+  </data>
+  <data name="UnderSettlement" xml:space="preserve">
+    <value>Under Settlement</value>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>Void</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Waiting</value>
   </data>
 </root>
