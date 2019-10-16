@@ -15,27 +15,28 @@ namespace Fanex.Tarus.Customer.Business.CustomerLogin
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using DNAide.Core;
-    using Fanex.Security;
     using Fanex.Tarus.Customer.Criteria.CustomerLogin;
     using Fanex.Tarus.Customer.DataAccess.CustomerLogin;
     using Fanex.Tarus.Customer.Entities;
-    using IBCUtils;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Agent.Utilities;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class CustomerSecurityCodeService : ICustomerSecurityCodeService
     {
         private readonly ICustomerSecurityCodeDataAccess _reportRepository;
+        private readonly Encryptor _encryptor;
 
         public CustomerSecurityCodeService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerSecurityCodeService(ICustomerSecurityCodeDataAccess reportRepository)
+        public CustomerSecurityCodeService(ICustomerSecurityCodeDataAccess reportRepository, Encryptor encryptor)
         {
-            this._reportRepository = reportRepository ?? new CustomerSecurityCodeDataAccess();
+            _reportRepository = reportRepository ?? new CustomerSecurityCodeDataAccess();
+            _encryptor = encryptor ?? new EncryptorImpl();
         }
 
         public Result ResetSecurityCode(ResetSecurityCodeCriteria criteria)
@@ -47,12 +48,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerLogin
                 var plainSecurityCode = criteria.Securitycode;
                 if (criteria.RoleId == 1) // member
                 {
-                    criteria.Securitycode = Encryption.CfsEnCode(plainSecurityCode);
+                    criteria.Securitycode = IBCUtils.Encryption.CfsEnCode(plainSecurityCode);
                 }
                 else
                 {
-                    var md5 = Cryptography.ComputeHash("MD5", criteria.Custid.ToString(), "1qaw3+{:P)");
-                    criteria.Securitycode = Cryptography.ComputeHash("SHA1", plainSecurityCode, md5);
+                    var md5 = _encryptor.ComputeHash("MD5", criteria.Custid.ToString(), "1qaw3+{:P)");
+                    criteria.Securitycode = _encryptor.ComputeHash("SHA1", plainSecurityCode, md5);
                 }
 
                 Hashtable outputParams = new Hashtable();

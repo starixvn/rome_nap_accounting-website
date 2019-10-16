@@ -189,8 +189,8 @@
       <HintPath>..\packages\Fanex.Tarus.Caching.1.0.0404.95\lib\net40\Fanex.Caching.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -239,7 +239,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.6.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.5-RemoveInactiveProducts\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.5-RemoveInactiveProducts01\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
@@ -291,16 +292,16 @@
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.7\lib\net40\Fanex.Module.Statement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.NAP.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.NAP.Core.1.0.0.2\lib\net40\Fanex.NAP.Core.dll</HintPath>
+    <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Core.Client.1.2.1.6\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Nap.SSO, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.6\lib\net40\Fanex.Nap.SSO.dll</HintPath>
+    <Reference Include="Fanex.Nap.SSO, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.7-beta1\lib\net40\Fanex.Nap.SSO.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
@@ -610,8 +611,8 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">

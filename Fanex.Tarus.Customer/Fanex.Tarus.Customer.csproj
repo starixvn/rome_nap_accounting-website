@@ -58,8 +58,8 @@
     <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Chatbot.Client.1.0.5\lib\net461\Chatbot.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Couchbase">
-      <HintPath>..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Couchbase.dll</HintPath>
+    <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\CouchbaseNetClient.1.2.6.2\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="DNAide">
@@ -70,16 +70,16 @@
       <HintPath>..\packages\EasyNetQ.0.53.6.418\lib\net45\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Enyim.Caching">
-      <HintPath>..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Enyim.Caching.dll</HintPath>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\CouchbaseNetClient.1.2.6.2\lib\net40\Enyim.Caching.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ExcelUtil">
       <HintPath>..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
@@ -244,6 +244,10 @@
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
