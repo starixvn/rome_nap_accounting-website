@@ -110,13 +110,7 @@
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="P2P Control">
-    <Setting Key="GetSuperSetting" SpName="Acc_CustomerSelP2PSuper_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="GetMasterSetting" SpName="Acc_CustomerSelP2PMaster_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="GetAgentSetting" SpName="Acc_CustomerSelP2PAgent_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="GetMemberSetting" SpName="Acc_CustomerSelP2PMember_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelectDisableP2P" SpName="Acc_CustomerSelP2PStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SelectDefaultSettingP2P" SpName="Acc_P2PSelDefaultSetting" DbName="DBCust.CustDB.bodbAdminNet" />
+  <Function Name="P2P Control">   
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
