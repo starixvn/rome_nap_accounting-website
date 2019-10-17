@@ -313,7 +313,7 @@
             if (o.showHeader) {
                 $header.find('input').click(function (e) {
                     var $this = $(this);
-                    if ($this.attr('checked') === 'checked') {
+                    if ($this.attr('checked') === 'checked' || $this.attr('checked') === true) {
                         $options.find('label').not('.ui-multiselect-state-disabled').find('input').attr('checked', 'checked');
                     }
                     else {
@@ -506,7 +506,7 @@
                 var $this = $(this);
                 //handle group checkbox click event
                 $this.prev().children().not('span.collapseClass').find('input').click(function () {
-                    if ($(this).attr('checked') === 'checked') {
+                    if ($(this).attr('checked') === 'checked' || $(this).attr('checked') == true) {
                         $(this).parent().parent().next().find('input:not(:disabled)').attr('checked', 'checked');
                         checkCheckAll();
                     }
@@ -519,16 +519,17 @@
                 });
                 //handler chilren checkbox event
                 $this.find('input').click(function () {
-                    if (typeof $(this).attr('checked') === 'undefined') {
+                    if (typeof $(this).attr('checked') === 'undefined' || $(this).attr('checked') == false) {
                         $(this).removeAttr('checked');
-                        if ($this.prev().find('input').attr('checked') === 'checked') {//true) {
+                        if ($this.prev().find('input').attr('checked') === 'checked' || $this.prev().find('input').attr('checked') == true) {//true) {
                             $this.prev().find('input').removeAttr('checked');
                             $("#" + id + "HeaderCheckBox").removeAttr('checked');
                         }
                     }
-                    if ($(this).attr('checked') === 'checked') {
+                    if ($(this).attr('checked') === 'checked' || $(this).attr('checked') == true) {
                         $(this).attr('checked', 'checked');
-                        if ($this.find('input:not(:disabled)').length === ($this.find('input[checked]').length)) {
+                        if ($this.find('input:not(:disabled)').length === ($this.find('input[checked]').length) ||
+                            $this.find('input:not(:disabled)').length === ($this.find('input:checked').length)) {
                             $this.prev().find('input').attr('checked', 'checked');
                         }
                         checkCheckAll();

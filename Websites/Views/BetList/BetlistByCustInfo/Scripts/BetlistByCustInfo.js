@@ -80,9 +80,10 @@
             listData: multiselectData,
             isUsedCustomCheckAllText: true,
             customCheckAllText: 'All',
+            noneSelectedText: "Select Statuses",
             onCheck: function () {
                 if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
-                    $("#err").innerHTML = "<div class='alertboxscc'><div>Please choose Status!</div></div>";
+                    showAlertMessage("err", "Please choose Status!", 1);
                 }
                 else {
                     $("#err").empty();
@@ -158,6 +159,9 @@
 
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
+        if (params.statusIds === "") {
+            return;
+        }
         var isByDateRange = $('input[name=type]:checked').val() == "-2";
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -280,15 +284,20 @@
             $("#txttodate").removeAttr("disabled", "disabled");
             $("#txtfromdate").removeAttr("disabled", "disabled");
             $("#ddlBettype").removeAttr("disabled", "disabled");
+            BetListByCustInfo.BuildTicketStatusDropdownlist();
             $infoMsg.addClass("hide");
         }
         else {
             $("#txttodate").attr("disabled", "disabled");
             $("#txtfromdate").attr("disabled", "disabled");
             $("#ddlBettype").attr("disabled", "disabled");
+            $("#ddlStatus").multiSelect({
+                "disabled": true
+            });
 
             $("#txtRefNo").removeAttr("disabled", "disabled");
             $infoMsg.removeClass("hide");
+            $("#err").empty();
         }
     },
     initPager: function (total_items, items_per_page, current_page) {
