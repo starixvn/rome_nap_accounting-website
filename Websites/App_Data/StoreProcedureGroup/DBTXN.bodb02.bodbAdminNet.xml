@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="UserControl">
-    <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminIns" SpName="Acc_AccAdminIns" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminInsFromExisted" SpName="Acc_AccAdminInsFromExisted" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Finance">
     <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>

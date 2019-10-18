@@ -61,51 +61,7 @@ namespace Sunplus.Accounting.Business
                 listSiteDTO.Add(licenseSite);
 
             return listSiteDTO;
-        }
-
-        public List<SiteDTO> GetSites_Report_Licensee(Enumerations.AccountingSystem system)
-        {
-            var listSiteDTO = new List<SiteDTO>();
-            var licenseSite = new SiteDTO();
-            licenseSite.Name = "Licensee";
-            var creditSite = new SiteDTO();
-            creditSite.Name = "Credit";
-            var result = _helperDao.GetSites_Report_Licensee(system);
-            //throw new NotImplementedException();
-            var listLicense = new List<Site>();
-            var listCredit = new List<Site>();
-            foreach (DataRow row in result.Rows)
-            {
-                if (row["islicensee"].ToString() == "True")
-                {
-                    var license = new Site();
-                    license.Id = int.Parse(row[0].ToString());
-                    license.Name = row[1].ToString();
-                    listLicense.Add(license);
-                }
-                else
-                {
-                    var credit = new Site();
-                    credit.Id = int.Parse(row[0].ToString());
-                    credit.Name = row[1].ToString();
-                    listCredit.Add(credit);
-                }
-            }
-
-            licenseSite.Sites = listLicense;
-            creditSite.Sites = listCredit;
-            if (creditSite.Sites.Count != 0)
-            {
-                listSiteDTO.Add(creditSite);
-            }
-
-            if (licenseSite.Sites.Count != 0)
-            {
-                listSiteDTO.Add(licenseSite);
-            }
-
-            return listSiteDTO;
-        }
+        }       
 
         public List<Site> GetSiteLicensee()
         {

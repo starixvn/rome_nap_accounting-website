@@ -24,10 +24,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<SiteDTO> GetSiteList();
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<SiteDTO> GetSiteList_Report_Licensee();
+        List<SiteDTO> GetSiteList();      
     }
 }
