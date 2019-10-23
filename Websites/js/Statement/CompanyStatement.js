@@ -42,11 +42,7 @@ function GetDataReport() {
     }
     });   
 }
-function SBD(transtype,fdate)
-{
-    url = 'StatementByDay.aspx?transtype=' + transtype + '&fdate=' + fdate;
-    document.location.href = url;
-}
+
 function VBL(fdate)
 {
     url = '../BetList/BetList.aspx?bltype=2&fdate=' + fdate;

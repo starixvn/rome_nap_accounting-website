@@ -108,9 +108,8 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8-RemoveInactiveProduct001\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3-beta1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -152,7 +151,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -242,7 +241,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
@@ -288,14 +286,13 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts5\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts6\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts5\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts6\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
@@ -394,8 +391,6 @@
     <Compile Include="Customer\AbnormalSetting.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
-    <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupManager.cs" />
-    <Compile Include="Customer\ConsolidatedGroup\IConsolidatedGroupManager.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\OnlineList.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\DownlineStatusViewModel.cs" />
@@ -441,8 +436,6 @@
     <Compile Include="PT\ViewPT\ViewPTManager.cs" />
     <Compile Include="Report\Other\VirtualRateHistory.cs" />
     <Compile Include="Report\Reports.cs" />
-    <Compile Include="ResetWinning\IResetWinningManager.cs" />
-    <Compile Include="ResetWinning\ResetWinningManager.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

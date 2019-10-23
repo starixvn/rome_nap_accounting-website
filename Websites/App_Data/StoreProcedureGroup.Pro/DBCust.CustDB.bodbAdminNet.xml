@@ -46,8 +46,7 @@
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />   
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>  
@@ -122,9 +121,7 @@
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />  
   </Function>
   <Function Name="Customer - Move Site">
     <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -142,13 +139,9 @@
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Admin-AutoFollowBet">
+  <Function Name="Admin - BA Customer">
+    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />   
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Select" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Delete" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Update" SpName="Acc_AutoFollowBetUpdRate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet">
@@ -160,8 +153,7 @@
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />  
     <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -178,7 +170,6 @@
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -232,7 +223,6 @@
       <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelStatusGoldDeluxe" SpName="Acc_CustomerSelStatusGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />  
       <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
@@ -323,9 +313,6 @@
   </Function>
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-   <Function Name="Bet List By Ref No">
-    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />

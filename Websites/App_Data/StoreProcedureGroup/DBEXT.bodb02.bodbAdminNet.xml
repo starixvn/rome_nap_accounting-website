@@ -9,12 +9,6 @@
   <Function Name="Betlist">
     <Setting Key="GetCurrency" SpName="Acc_BA_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="ResetWinning">
-    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Customer NewLicensee">
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />

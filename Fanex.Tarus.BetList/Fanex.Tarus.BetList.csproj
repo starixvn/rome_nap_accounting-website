@@ -221,7 +221,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -301,7 +301,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
@@ -343,11 +342,10 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts5\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts6\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2-RemoveInactiveProducts2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
@@ -468,8 +466,6 @@
     <Compile Include="Business\Results\ParlayResultService.cs" />
     <Compile Include="Business\Results\IScoreInformationService.cs" />
     <Compile Include="Business\Results\ScoreInformationService.cs" />
-    <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
-    <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Business\SystemParlayExcel.cs" />
     <Compile Include="Constants\BetListConstants.cs" />
     <Compile Include="Constants\BetTypeContants.cs" />
@@ -517,8 +513,6 @@
     <Compile Include="Criteria\GetCashOutDetailCriteria.cs" />
     <Compile Include="Criteria\GetLicenseeBonusDetailCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
-    <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
-    <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="Criteria\BetBuilder\GetBetListBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
@@ -529,7 +523,6 @@
     <Compile Include="Criteria\Results\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\Results\GetParlayResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMetricGamingResultCriteria.cs" />
-    <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\BetListDetailRepository.cs" />
@@ -556,12 +549,9 @@
     <Compile Include="DataAccess\Results\ParlayResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IScoreInformationDataAccess.cs" />
     <Compile Include="DataAccess\Results\ScoreInformationDataAccess.cs" />
-    <Compile Include="DataAccess\SportingSolutions\ISportingSolutionsDataAccess.cs" />
-    <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
     <Compile Include="DataAccess\SystemParlayRepository.cs" />
     <Compile Include="Entities\BetList\BetDetail.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
-    <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />
