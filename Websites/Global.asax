@@ -19,7 +19,6 @@
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
-<%@ Import Namespace="Fanex.Logging.Extensions.Web" %>
 <%@ Import Namespace="Fanex.ProductStatus.Setting.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate.ProductStatus" %>
 <%@ Import Namespace="CasinoLibrary.Model.UserException" %>
@@ -40,6 +39,9 @@
 
     void Application_Start(object sender, EventArgs e)
     {
+        Fanex.Tarus.ActivityTracking.Web.LoggingConfig.Init(
+            new[] { "txtPass", "txtConfirmPass", "Securitycode", "ConfirmSecurityCode", "password", "confirm", "txtPwd" },
+            getDbExceptionInfo: Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
         // Code that runs on application startup
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
@@ -64,12 +66,12 @@
 
         AutoMapperConfiguration.Configure();
 
-        Fanex.Logging.Extensions.Web.ExceptionHandler
-            .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
-            .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
-            .GetHttpHeaderInfo()
-            .GetHttpSessionInfo())
-            .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
+        //Fanex.Logging.Extensions.Web.ExceptionHandler
+        //    .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
+        //    .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
+        //    .GetHttpHeaderInfo()
+        //    .GetHttpSessionInfo())
+        //    .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
         var productStatusConfig = new ProductStatusConfiguration()
             .UseAuthorizeService(new ProductStatusAuthorizeService())
             .UseProductStatusActor(new ProductStatusActor())
@@ -78,7 +80,7 @@
         Fanex.RemotingRef.RefDataTypeContainer
             .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
             .FromApplication("NAP Accounting");
-            
+
         BetListManager.RegisterRemotingRef(new CacheRef());
         ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
 
@@ -139,24 +141,17 @@
 
     void Application_Error(object sender, EventArgs e)
     {
-        //Phuong.Nguyen, handler system error
-        // Code that runs when an unhandled error occurs
         Exception ex = Server.GetLastError().GetBaseException();
-        Fanex.Logging.LogService.Debug(ex.Message);
+
         if (ex.GetType() != typeof(HttpException))
         {
-            var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
-            Fanex.Logging.LogService.Debug("DownTime = " + downTimeInfo.IsDowntime.ToString());
-            if (!downTimeInfo.IsDowntime)
+            if (ex.GetType() == typeof(ErrorException))
             {
-                if (ex.GetType() == typeof(ErrorException))
-                {
-                    LogExtensions.CasinoExceptionHandler(ex);
-                }
-                else
-                {
-                    LogExtensions.ExceptionHandler(ex);
-                }
+                LogExtensions.CasinoExceptionHandler(ex);
+            }
+            else
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
         }
         else
@@ -236,7 +231,7 @@
         if (!url.Contains("BetList/GetBetListByRefNo") &&
             !url.Contains("BetList/GetBetListByProduct") &&
             !url.Contains("BetList/GetMixParlayDetail") &&
-            !url.Contains("/CN88BetList/")&&
+            !url.Contains("/CN88BetList/") &&
             Thread.CurrentThread.CurrentCulture.Name != Language.Default)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);
@@ -296,7 +291,7 @@
             byte roleId = Convert.ToByte(temp[2]);
             Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLogOut(onUserId, username);
         }
-    }    
+    }
 
     #endregion
     //Temporarily deny U3 account from access un-limited pages
