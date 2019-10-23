@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CustInfo.aspx.cs" Inherits="CustInfo"
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CustInfo.aspx.cs" Inherits="CustInfo"
     Async="true" %>
 
 <%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
@@ -20,7 +20,8 @@
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/common.js?v=<%= AccCommon.Version() %>"></script>
-    <script type="text/javascript" src="js/CustomerInfo.js?v=<%= AccCommon.Version() %>"></script>
+    <%--<script type="text/javascript" src="js/CustomerInfo.js?v=<%= AccCommon.Version() %>"></script>--%>
+    <script type="text/javascript" src="js/CustomerInfo.js"></script>
     <script type="text/javascript" src="js/CustSetting.js?v=<%= AccCommon.Version() %>"></script>
     <script src="js/jscookies.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
     <script src="js/showhidepopup.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
@@ -30,22 +31,22 @@
     <script src="js/jQuery/message/jquery.msg.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
     <script src="Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
     <style type="text/css">
-        
         .memberSuspended {
             background-color: #F8DED7;
         }
+
         .memberDisabled {
             background-color: #A0A97A;
         }
 
         .circle {
-        background: #f00;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        color:black;
-       text-align:center;   
-    }
+            background: #f00;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            color: black;
+            text-align: center;
+        }
     </style>
     <script type="text/javascript">
         function resetCustMenu() {
@@ -57,38 +58,40 @@
         var totalPage = 1;
 
         $(document).ready(
-          function init() {
+            function init() {
 
-              $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-              if (custid != null && roleid != null) {
-                  ajaxGetDownlinelist(custid, roleid, 1);
-                  window.setTimeout(function () {
-                      ajaxOnlinelist(custid);
-                  }, 5000);
+                $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
+                if (custid != null && roleid != null) {
+                    ajaxGetDownlinelist(custid, roleid, 1);
+                    window.setTimeout(function () {
+                        ajaxOnlinelist(custid);
+                    }, 5000);
 
-              }
-              try { parent.jQuery.unblockUI(); } catch (e) { }
-              $('.button_left02').click(function () {
-                  $('.button_left02_active').removeClass("button_left02_active");
-                  $(this).addClass("button_left02_active");
-                  //Reset main menu
-                  if (parent.resetMenu) {
-                      parent.resetMenu();
-                  }
-              });
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+                $('.button_left02').click(function () {
+                    $('.button_left02_active').removeClass("button_left02_active");
+                    $(this).addClass("button_left02_active");
+                    //Reset main menu
+                    if (parent.resetMenu) {
+                        parent.resetMenu();
+                    }
+                });
 
-              //Johnny Add: User info hide or show is store in cookie.
-              //alert(Get_Cookie("coUserInfo"));
-              var className = Get_Cookie("coUserInfo");
-              var curr = $("#btnupdownCustInfo");
-              var tmp = $("#custInfoDetal");
-              if (className == "show") {
-                  tmp.removeClass("hidden");
-                  curr.attr("title", "Hide Detail");
-                  curr.html('<img src="App_Themes/Images/icon_down.gif" class="imgDownUp" />');
-              }
-          }
-          );
+                //Johnny Add: User info hide or show is store in cookie.
+                //alert(Get_Cookie("coUserInfo"));
+                var className = Get_Cookie("coUserInfo");
+                var curr = $("#btnupdownCustInfo");
+                var tmp = $("#custInfoDetal");
+                if (className == "show") {
+                    tmp.removeClass("hidden");
+                    curr.attr("title", "Hide Detail");
+                    curr.html('<img src="App_Themes/Images/icon_down.gif" class="imgDownUp" />');
+                }
+
+                loadRobotInfo();
+            }
+        );
 
         var currlevelbox = "";
         function OpenCloseMenuDangerous(obj, divid, isBA, currentLevel) {
@@ -239,7 +242,29 @@
             //alert(isUpdateDownline + "|" + limitPerIP);
             updateLimitPerIP(limitPerIP, isUpdateDownline);
         }
-         
+
+        function loadRobotInfo() {
+            $(".ico-robot").each(function () {
+                var $this = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "ManageRobots2/CheckIsRobot",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({ username: $this.attr("data-username") }),
+                    success: function (rs) {
+                        if (rs) {
+                            $this.removeClass("hide");
+                        }
+                    },
+                    error: function (xhr, status) {
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        }
+
     </script>
     <script language="javascript" type="text/javascript">
         function showhideP2PStatus(id, roleids) {
@@ -306,8 +331,8 @@
             else if (TabName == "Credit")
                 parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Credit&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
         }
-       
-        
+
+
     </script>
     <script type="text/javascript" src="js/ToolTip/wz_tooltip/wz_tooltip.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/ToolTip/wz_tooltip/tip_balloon.js?v=<%= AccCommon.Version() %>"></script>
