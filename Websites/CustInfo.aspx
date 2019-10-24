@@ -20,8 +20,7 @@
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/common.js?v=<%= AccCommon.Version() %>"></script>
-    <%--<script type="text/javascript" src="js/CustomerInfo.js?v=<%= AccCommon.Version() %>"></script>--%>
-    <script type="text/javascript" src="js/CustomerInfo.js"></script>
+    <script type="text/javascript" src="js/CustomerInfo.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript" src="js/CustSetting.js?v=<%= AccCommon.Version() %>"></script>
     <script src="js/jscookies.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
     <script src="js/showhidepopup.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>

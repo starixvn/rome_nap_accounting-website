@@ -501,6 +501,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
+    <Compile Include="Constants\SystemParlayConstants.cs" />
     <Compile Include="Controller\BetListController.cs" />
     <Compile Include="Controller\ExchangeBetListController.cs" />
     <Compile Include="Controller\BetBuilderController.cs" />

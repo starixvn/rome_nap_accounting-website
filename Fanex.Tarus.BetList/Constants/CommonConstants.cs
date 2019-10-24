@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.BetList.Constants
+﻿using System.Collections.Generic;
+
+namespace Fanex.Tarus.BetList.Constants
 {
     public static class CommonConstants
     {

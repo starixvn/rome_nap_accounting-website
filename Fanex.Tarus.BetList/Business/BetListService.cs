@@ -789,18 +789,7 @@ namespace Fanex.Tarus.BetList.Business
                         }
                     }
 
-                    var statusOrder = new Dictionary<string, int>
-                    {
-                        { "",0 },
-                        {"WON",1 },
-                        {"LOSE",2 },
-                        {"DRAW",3 },
-                        {"VOID",4 },
-                        {"REJECT",5 },
-                        {"REFUND",6 }
-                    };
-
-                    systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => statusOrder[i.Status]).ToList();
+                    systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
 
                     return systempParlayModel;
                 }
