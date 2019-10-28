@@ -245,22 +245,25 @@
         function loadRobotInfo() {
             $(".ico-robot").each(function () {
                 var $this = $(this);
-                $.ajax({
-                    type: "POST",
-                    url: "ManageRobots2/CheckIsRobot",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify({ username: $this.attr("data-username") }),
-                    success: function (rs) {
-                        if (rs) {
-                            $this.removeClass("hide");
+                var username = $this.attr("data-username");
+                if (username) {
+                    $.ajax({
+                        type: "GET",
+                        url: "ManageRobots2/CheckIsRobot?" + $.param({ username: username }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: null,
+                        success: function (rs) {
+                            if (rs) {
+                                $this.removeClass("hide");
+                            }
+                        },
+                        error: function (xhr, status) {
+                        },
+                        complete: function () {
                         }
-                    },
-                    error: function (xhr, status) {
-                    },
-                    complete: function () {
-                    }
-                });
+                    });
+                }
             });
         }
 

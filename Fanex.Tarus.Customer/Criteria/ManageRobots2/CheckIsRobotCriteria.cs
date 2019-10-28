@@ -12,5 +12,10 @@
         {
             return "Acc_CustomerRobotStatus_Sel";
         }
+
+        public override bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(Username);
+        }
     }
 }
