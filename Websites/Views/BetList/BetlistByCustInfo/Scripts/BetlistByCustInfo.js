@@ -213,10 +213,11 @@
             var fromDateTmp = $('#txtfromdate').val();
             var toDateTmp = $('#txttodate').val();
             var bettypeTmp = $('#ddlBettype').val() == null ? 0 : $('#ddlBettype').val();
-
+            var statusIds = BetListByCustInfo.getSelectedStatus();
             if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
                 BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
-                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp) {
+                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp ||
+                BetListByCustInfo.paramGetBetBetlist.statusIds != statusIds) {
                 BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
                 BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
             }
