@@ -66,5 +66,6 @@
         public const int KenoLottery = 220;
 
         public const int CardClub = 165;
+        public const int Spadegaming = 247;
     }
 }
