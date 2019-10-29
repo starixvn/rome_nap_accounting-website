@@ -17,7 +17,7 @@
             this.service = service ?? new ManageRobots2Service();
         }
 
-        [HttpPost]
+        [HttpGet]
         public JsonResult CheckIsRobot(string username)
         {
             return Json(service.CheckIsRobot(username), JsonRequestBehavior.AllowGet);

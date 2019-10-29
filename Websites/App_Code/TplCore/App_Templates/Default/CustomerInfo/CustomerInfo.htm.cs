@@ -31,7 +31,7 @@ namespace Fanex.Agent.UI
 			public string memberClass = "{memberClass}";
 			protected static string s8 = "\">";
 			public string UserName = "{UserName}";
-			protected static string s9 = "</span><span class=\"ico-robot hide\" data-username=\"";
+			protected static string s9 = "</span><span class=\"ico-robot hide\" data-user-name=\"";
 			protected string t0_FullUserName;
 			protected static string s10 = "\" title=\"This is a robot account.\"></span>&nbsp;<span id=\"btnupdownCustInfo\" name=\"btnupdownCustInfo\" onclick=\"collapseInfo();\" title=\"Show Detail\"><img src=\"";
 			protected static string s11{get{return AbsoluteUrl("App_Templates/Default/CustomerInfo/App_Themes/Images/icon_down.gif");}}
@@ -109,13 +109,13 @@ namespace Fanex.Agent.UI
 			public string linkSettingInfo = "{linkSettingInfo}";
 			protected static string s48 = "');return false;\" class=\"canchange\">Edit Info</a></div><!--/CN88HeadlineVisibleItem--><!--CN88HeadlineHiddenItem--><!--dangerous--><div class=\"col\">Dangerous</div><!--/dangerous--><!--edited-dangerous--><div class=\"col\"><span class=\"canchange\" style=\"font-weight: bold;\" onclick=\"OpenCloseMenuDangerous1();\">Dangerous<img title=\"Detail\" border=\"0\" src=\"";
 			protected static string s49{get{return AbsoluteUrl("App_Templates/Default/CustomerInfo/App_themes/Images/menu_open.gif");}}
-			protected static string s50 = "\" /></span><br /><div id=\"dangerousbox\" style=\"position: absolute; display: none; background-color: #BBC7CE;color: #4D4E4E;\">";
+			protected static string s50 = "\" class=\"menu-open-padding-left\" /></span><br /><div id=\"dangerousbox\" style=\"position: absolute; display: none; background-color: #BBC7CE;color: #4D4E4E;\">";
 			public string dangerousCustomer = "{dangerousCustomer}";
 			protected static string s51 = "</div></div><!--/edited-dangerous--><div class=\"col limit-per-ip\"><span class=\"pull-left\">Limit Per IP</span>";
 			public string LimitPerIP = "{LimitPerIP}";
 			protected static string s52 = "</div><!--AbnormalSession--><!--Abnormal--><div class=\"col\">Abnormal</div><!--/Abnormal--><!--edit-Abnormal--><div class=\"col\"><span class=\"canchange\" style=\"font-weight: bold;\" onclick=\"OpenCloseMenuAbnormal()\">Abnormal<img title=\"Detail\" border=\"0\" src=\"";
 			protected static string s53{get{return AbsoluteUrl("App_Templates/Default/CustomerInfo/App_themes/Images/menu_open.gif");}}
-			protected static string s54 = "\" /></span><br /><div id=\"abnormalbox\" style=\"position: absolute; display: none; background-color: #BBC7CE;color: #4D4E4E;\">";
+			protected static string s54 = "\" class=\"menu-open-padding-left\" /></span><br /><div id=\"abnormalbox\" style=\"position: absolute; display: none; background-color: #BBC7CE;color: #4D4E4E;\">";
 			public string AbnormalCustomer = "{AbnormalCustomer}";
 			protected static string s55 = "</div></div><!--/edit-Abnormal--><!--/AbnormalSession--><!--autosuspendstatus--><div class=\"col\"><span class=\"canchange\" onclick=\"updateAutoSuspendStatus(";
 			public string CustId = "{CustId}";

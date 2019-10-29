@@ -39,6 +39,7 @@
             else
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden1}", "hidden");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "SuperInfo");
             }
 
             if (customerInfoViewModel.SearchAccountRoleId <= UserInfo.ROLE_MASTER
@@ -46,7 +47,6 @@
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterId}", customerInfoViewModel.MasterId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterName}", customerInfoViewModel.MasterName);
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden2}", string.Empty);
                 if (!customerInfoViewModel.MasterEnabled)
                 {
                     TemplateHandler.RemoveBlock(ref uplineboxhtml, "MasterLogin");
@@ -54,7 +54,7 @@
             }
             else
             {
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden2}", "hidden");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "MasterInfo");
             }
 
             if (customerInfoViewModel.SearchAccountRoleId <= UserInfo.ROLE_AGENT
@@ -62,7 +62,6 @@
             {
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentId}", customerInfoViewModel.AgentId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentName}", customerInfoViewModel.AgentName);
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden3}", string.Empty);
                 if (!customerInfoViewModel.AgentEnabled)
                 {
                     TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentLogin");
@@ -70,7 +69,7 @@
             }
             else
             {
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden3}", "hidden");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentInfo");
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{UplineBox}", uplineboxhtml);

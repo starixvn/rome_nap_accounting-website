@@ -12,13 +12,14 @@
             <!--/HeadlineLogin-->
         </td>
     </tr>
-    <tr class="{IsHidden1}">
+    <!--SuperInfo-->
+    <tr class="">
         <td width="25%" class="dot_left">
             Super
         </td>
         <td width="65%" class="dot_left">
             <a href="javascript:parent.submitSearch('{SuperName}');" class="text_blueLink">{SuperName}</a>
-            <span class="ico-robot hide" data-username="{SuperName}" title="This is a robot account."></span>
+            <span class="ico-robot hide" data-user-name="{SuperName}" title="This is a robot account."></span>
         </td>
         <td align="center" class="dot_left">
             <!--SuperLogin-->
@@ -26,13 +27,15 @@
             <!--/SuperLogin-->
         </td>
     </tr>
-    <tr class="{IsHidden2}">
+    <!--/SuperInfo-->
+    <!--MasterInfo-->
+    <tr class="">
         <td class="dot_left">
             Master
         </td>
         <td class="dot_left">
             <a href="javascript:parent.submitSearch('{MasterName}');" class="text_blueLink">{MasterName}</a>
-            <span class="ico-robot hide" data-username="{MasterName}" title="This is a robot account."></span>
+            <span class="ico-robot hide" data-user-name="{MasterName}" title="This is a robot account."></span>
         </td>
         <td align="center" class="dot_left">
             <!--MasterLogin-->
@@ -40,13 +43,15 @@
             <!--/MasterLogin-->
         </td>
     </tr>
-    <tr class="{IsHidden3}">
+    <!--/MasterInfo-->
+    <!--AgentInfo-->
+    <tr class="">
         <td class="dot_left">
             Agent
         </td>
         <td class="dot_left">
             <a href="javascript:parent.submitSearch('{AgentName}');" class="text_blueLink">{AgentName}</a>
-            <span class="ico-robot hide" data-username="{AgentName}" title="This is a robot account."></span>
+            <span class="ico-robot hide" data-user-name="{AgentName}" title="This is a robot account."></span>
         </td>
         <td class="dot_left">
             <!--AgentLogin-->
@@ -54,4 +59,5 @@
             <!--/AgentLogin-->
         </td>
     </tr>
+    <!--/AgentInfo-->
 </table>
