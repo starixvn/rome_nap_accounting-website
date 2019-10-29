@@ -16,9 +16,9 @@
             this.dataAccess = dataAccess ?? new ManageRobots2DataAccess();
         }
 
-        public bool CheckIsRobot(string username)
+        public bool CheckIsRobot(int custId)
         {
-            return dataAccess.CheckIsRobot(new CheckIsRobotCriteria { Username = username });
+            return dataAccess.CheckIsRobot(new CheckIsRobotCriteria { CustId = custId });
         }
     }
 }

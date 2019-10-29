@@ -4,7 +4,7 @@
 
     public class CheckIsRobotCriteria : CriteriaBase
     {
-        public string Username { get; set; }
+        public int CustId { get; set; }
 
         public bool IsRobot { get; set; }
 
@@ -15,7 +15,7 @@
 
         public override bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(Username);
+            return CustId > 0;
         }
     }
 }

@@ -18,9 +18,9 @@
         }
 
         [HttpGet]
-        public JsonResult CheckIsRobot(string username)
+        public JsonResult CheckIsRobot(int custId)
         {
-            return Json(service.CheckIsRobot(username), JsonRequestBehavior.AllowGet);
+            return Json(service.CheckIsRobot(custId), JsonRequestBehavior.AllowGet);
         }
     }
 }

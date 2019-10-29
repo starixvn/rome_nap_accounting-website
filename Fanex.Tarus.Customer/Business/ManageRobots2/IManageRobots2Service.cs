@@ -2,6 +2,6 @@
 {
     public interface IManageRobots2Service
     {
-        bool CheckIsRobot(string username);
+        bool CheckIsRobot(int custId);
     }
 }

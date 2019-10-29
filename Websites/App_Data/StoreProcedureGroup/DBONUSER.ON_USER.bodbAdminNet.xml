@@ -14,6 +14,6 @@
     <Setting Key="CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbAdminNet" />
   </Function>
   <Function Name="Manage Robots 2">
-    <Setting Key="Acc_CustomerRobotStatus_Sel" SpName="Acc_CustomerRobotStatus_Sel" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="Acc_CustomerRobotStatus_Sel" SpName="Acc_CustomerRobotStatus_Sel_xtest" DbName="DBONUSER.ON_USER.bodbAdminNet" />
   </Function>
 </Functions>

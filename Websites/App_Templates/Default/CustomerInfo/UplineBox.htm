@@ -19,7 +19,7 @@
         </td>
         <td width="65%" class="dot_left">
             <a href="javascript:parent.submitSearch('{SuperName}');" class="text_blueLink">{SuperName}</a>
-            <span class="ico-robot hide" data-user-name="{SuperName}" title="This is a robot account."></span>
+            <span class="ico-robot hide ico-robot-{SuperId}" title="This is a robot account."></span>
         </td>
         <td align="center" class="dot_left">
             <!--SuperLogin-->
@@ -35,7 +35,7 @@
         </td>
         <td class="dot_left">
             <a href="javascript:parent.submitSearch('{MasterName}');" class="text_blueLink">{MasterName}</a>
-            <span class="ico-robot hide" data-user-name="{MasterName}" title="This is a robot account."></span>
+            <span class="ico-robot hide ico-robot-{MasterId}" title="This is a robot account."></span>
         </td>
         <td align="center" class="dot_left">
             <!--MasterLogin-->
@@ -51,7 +51,7 @@
         </td>
         <td class="dot_left">
             <a href="javascript:parent.submitSearch('{AgentName}');" class="text_blueLink">{AgentName}</a>
-            <span class="ico-robot hide" data-user-name="{AgentName}" title="This is a robot account."></span>
+            <span class="ico-robot hide ico-robot-{AgentId}" title="This is a robot account."></span>
         </td>
         <td class="dot_left">
             <!--AgentLogin-->
@@ -60,4 +60,9 @@
         </td>
     </tr>
     <!--/AgentInfo-->
+    <tr class="hide">
+        <td>
+            <input id="txt-robot-ids" type="hidden" value="{RobotIds}" />
+        </td>
+    </tr>
 </table>

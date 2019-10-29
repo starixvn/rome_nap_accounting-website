@@ -14,7 +14,7 @@
         {
             if (!criteria.IsValid())
             {
-                ExceptionHandler.Handle(new Exception("Check Is Robot - Username is null or whitespace"), TraceEventType.Warning);
+                ExceptionHandler.Handle(new Exception("Check Is Robot - CustId <= 0"), TraceEventType.Warning);
                 return false;
             }
 
