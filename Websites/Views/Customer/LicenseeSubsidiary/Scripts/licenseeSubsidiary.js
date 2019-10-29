@@ -225,7 +225,7 @@ $.fn.forceNumber = function (keyupCallback) {
             disableFormControls(true);
 
             var username = agentUsernames.shift();
-            var rowAccount = $("#row" + username);
+            var rowAccount = $('[id="row' + username + '"]');
             rowAccount.addClass("b").html(resources.inprogress);
 
             $.post(
