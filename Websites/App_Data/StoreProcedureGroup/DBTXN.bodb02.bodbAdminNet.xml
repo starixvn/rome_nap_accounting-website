@@ -14,13 +14,12 @@
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-  
   </Function>
   <Function Name="Reset Winning">
     <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype_UAT4" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gold deluxe win limit">
     <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbAdminNet" />
@@ -36,9 +35,9 @@
     <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="CN88">
-    <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet"  Plain="0" />
+    <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
-   <Function Name="Account Info">
+  <Function Name="Account Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>
