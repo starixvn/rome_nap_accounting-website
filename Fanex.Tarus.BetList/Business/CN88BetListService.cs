@@ -167,8 +167,8 @@
 
                 Currency = Converter.ToString2(r["Currency"]),
 
-                WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
+                WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
+                RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
                 PlayerDiscount = Converter.ToDecimal(r["playerdiscount"])
             };
