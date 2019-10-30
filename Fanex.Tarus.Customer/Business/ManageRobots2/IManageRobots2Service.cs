@@ -1,7 +1,10 @@
-﻿namespace Fanex.Tarus.Customer.Business.ManageRobots2
+﻿using System.Collections.Generic;
+using Fanex.Tarus.Customer.Entities.ManageRobots2;
+
+namespace Fanex.Tarus.Customer.Business.ManageRobots2
 {
     public interface IManageRobots2Service
     {
-        bool CheckIsRobot(int custId);
+        IEnumerable<RobotStatus> CheckRobots(string custIds);
     }
 }

@@ -248,24 +248,23 @@
                 return;
             }
 
-            var robotIds = txtRobotIds.val().split(",");
-            robotIds.forEach(function (item, index) {
-                $.ajax({
-                    type: "GET",
-                    url: "ManageRobots2/CheckIsRobot?" + $.param({ custId: item }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: null,
-                    success: function (rs) {
-                        if (rs) {
-                            $(".ico-robot-" + item).removeClass("hide");
-                        }
-                    },
-                    error: function (xhr, status) {
-                    },
-                    complete: function () {
+            $.ajax({
+                type: "GET",
+                url: "ManageRobots2/CheckRobots?" + $.param({ custIds: txtRobotIds.val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: null,
+                success: function (rs) {
+                    if (rs && rs.length > 0) {
+                        $.each(rs, function (index, item) {
+                            item.IsRobot && $(".ico-robot-" + item.CustId).removeClass("hide");
+                        });
                     }
-                });
+                },
+                error: function (xhr, status) {
+                },
+                complete: function () {
+                }
             });
         }
 

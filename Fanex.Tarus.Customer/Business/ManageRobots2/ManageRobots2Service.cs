@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Tarus.Customer.Business.ManageRobots2
 {
+    using System.Collections.Generic;
     using Fanex.Tarus.Customer.Criteria.ManageRobots2;
     using Fanex.Tarus.Customer.DataAccess.ManageRobots2;
+    using Fanex.Tarus.Customer.Entities.ManageRobots2;
 
     public class ManageRobots2Service : IManageRobots2Service
     {
@@ -16,9 +18,9 @@
             this.dataAccess = dataAccess ?? new ManageRobots2DataAccess();
         }
 
-        public bool CheckIsRobot(int custId)
+        public IEnumerable<RobotStatus> CheckRobots(string custIds)
         {
-            return dataAccess.CheckIsRobot(new CheckIsRobotCriteria { CustId = custId });
+            return dataAccess.CheckRobots(new CheckIsRobotCriteria(custIds));
         }
     }
 }
