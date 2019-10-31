@@ -39,7 +39,7 @@
                 .Where(t => t.Stake > 0)
                 .OrderBy(t => t.MatchId)
                 .ToList();
-            if(combinationTypeComboTickets.Any())
+            if (combinationTypeComboTickets.Any())
             {
                 var result = new StringBuilder();
                 TicketDto ticketDetail;
@@ -98,6 +98,7 @@
             DateTime fromDate,
             DateTime toDate,
             int betType,
+            string statusIds,
             int pageSize,
             int pageIndex)
         {
@@ -160,61 +161,39 @@
                 BetCheck = Convert.ToString(r["betcheck"]),
                 OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
 
-                OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
+                OriginalBetType = Converter.ToInt(r["OriginalBetType"]),
                 BetdaqId = Convert.ToInt64(r["BetdaqId"]),
                 ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                 Currency = Converter.ToString2(r["Currency"]),
 
-                WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
+                WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
+                RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
                 PlayerDiscount = Converter.ToDecimal(r["playerdiscount"])
             };
 
-            var betListByCustInfoCriteria = new BetListByCustInfoCriteria
+            var criteria = new BetListByCustInfoCriteria
             {
                 CustId = custId,
                 FromDate = fromDate,
                 ToDate = toDate,
                 BetType = betType,
                 MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                StatusIdList = statusIds,
                 IsCN88 = true
             };
 
-            var betListByCustInfoCriteria_Old = new BetListByCustInfoCriteria_Old
-            {
-                CustId = custId,
-                FromDate = fromDate,
-                ToDate = toDate,
-                BetType = betType,
-                IsCN88 = true
-            };
-
-            List<ITicketData> outputLiveCasino = new List<ITicketData>();
-            List<ITicketData> outputLiveCasino_Old = new List<ITicketData>();
-            IList<TicketDto> betDetails = new List<TicketDto>();
-            IList<TicketDto> betDetailsOld = new List<TicketDto>();
-
-            if (toDate >= ReportService.BalanceUp.BalanceUpDay)
-            {
-                betDetails = _betListRepository.Fetch<TicketDto>(betListByCustInfoCriteria, mapTicketObjectFunction, ref outputLiveCasino);
-            }
-
-            if (fromDate < ReportService.BalanceUp.BalanceUpDay)
-            {
-                betDetailsOld = _betListRepository.Fetch<TicketDto>(betListByCustInfoCriteria_Old, mapTicketObjectFunction, ref outputLiveCasino_Old);
-            }
-
-            var betDetailsMerge = betDetails.Concat(betDetailsOld).OrderBy(x => x.TransDate);
-            var outputLiveCasino_Merge = outputLiveCasino.Concat(outputLiveCasino_Old);
+            var ticketData = new List<ITicketData>();
+            var betDetails = _betListRepository.Fetch<TicketDto>(criteria, mapTicketObjectFunction, ref ticketData);
 
             var from = pageSize * (pageIndex - 1);
 
             return new BetListData(
-                betDetailsMerge.Skip(from).Take(pageSize),
-                outputLiveCasino_Merge,
-                betDetailsMerge.Count());
+                betDetails.Skip(from).Take(pageSize),
+                ticketData,
+                betDetails.Count());
         }
 
         public BetListData GetBetListByCustInfo_Refno(string transactionId, int customerId)

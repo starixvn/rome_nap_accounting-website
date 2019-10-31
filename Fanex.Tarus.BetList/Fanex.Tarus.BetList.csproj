@@ -498,6 +498,7 @@
     <Compile Include="Constants\CurrencyContants.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
     <Compile Include="Constants\Language.cs" />
+    <Compile Include="Constants\TicketStatusConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
@@ -522,8 +523,6 @@
     <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
-    <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />
-    <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_UsernameCriteria.cs" />

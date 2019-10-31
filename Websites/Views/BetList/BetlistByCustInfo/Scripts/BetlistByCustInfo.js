@@ -56,6 +56,43 @@
         current_page: 1
     },
 
+    BuildTicketStatusDropdownlist: function () {
+        var multiselectData = [];
+        for (var i = 0; i < ticketStatus.length; i++) {
+            multiselectData.push({
+                Id: "selecteStatus" + ticketStatus[i].Value,
+                Value: ticketStatus[i].Value,
+                Text: ticketStatus[i].Text,
+                Checked: true,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        }
+        $("#ddlStatus").multiSelect({
+            minWidth: 150,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: multiselectData,
+            isUsedCustomCheckAllText: true,
+            customCheckAllText: 'All',
+            noneSelectedText: "Select Statuses",
+            onCheck: function () {
+                if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
+                    showAlertMessage("err", "Please choose Status!", 1);
+                }
+                else {
+                    $("#err").empty();
+                }
+            },
+            noItemText: "No Status found."
+        })
+    },
+
     getBetListSystemParlay: function () {
         BetListByCustInfo.paramGetBetlistSystemParlay.customerId = _custID;
         BetListByCustInfo.paramGetBetlistSystemParlay.transactionId = $('#txtRefNoSystemParaly').val();
@@ -122,6 +159,9 @@
 
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
+        if (params.statusIds === "") {
+            return;
+        }
         var isByDateRange = $('input[name=type]:checked').val() == "-2";
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -164,16 +204,20 @@
             }
         });
     },
+    getSelectedStatus: function () {
+        return $("#ddlStatus").multiSelect("getCheckedItems").join(",");
+    },
 
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-2") {
             var fromDateTmp = $('#txtfromdate').val();
             var toDateTmp = $('#txttodate').val();
             var bettypeTmp = $('#ddlBettype').val() == null ? 0 : $('#ddlBettype').val();
-
+            var statusIds = BetListByCustInfo.getSelectedStatus();
             if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
                 BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
-                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp) {
+                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp ||
+                BetListByCustInfo.paramGetBetBetlist.statusIds != statusIds) {
                 BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
                 BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
             }
@@ -182,6 +226,7 @@
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
+            BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus();
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
             BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
@@ -240,15 +285,20 @@
             $("#txttodate").removeAttr("disabled", "disabled");
             $("#txtfromdate").removeAttr("disabled", "disabled");
             $("#ddlBettype").removeAttr("disabled", "disabled");
+            BetListByCustInfo.BuildTicketStatusDropdownlist();
             $infoMsg.addClass("hide");
         }
         else {
             $("#txttodate").attr("disabled", "disabled");
             $("#txtfromdate").attr("disabled", "disabled");
             $("#ddlBettype").attr("disabled", "disabled");
+            $("#ddlStatus").multiSelect({
+                "disabled": true
+            });
 
             $("#txtRefNo").removeAttr("disabled", "disabled");
             $infoMsg.removeClass("hide");
+            $("#err").empty();
         }
     },
     initPager: function (total_items, items_per_page, current_page) {
@@ -566,6 +616,7 @@ head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
     Helper.renderExchangeCalendarFromTo();
     Helper.range_date();
+    BetListByCustInfo.BuildTicketStatusDropdownlist();
     BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");

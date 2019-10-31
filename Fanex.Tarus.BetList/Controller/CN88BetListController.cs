@@ -22,11 +22,11 @@
 
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_DateRange(int custId, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, string language = Language.Default)
+        public ActionResult GetBetListByCustInfo_DateRange(int custId, DateTime FromDate, DateTime ToDate, string statusIds, int Bettype, int PageSize, int PageIndex, string language = Language.Default)
         {
             SetCulture(language);
             PageIndex = PageIndex <= 0 ? 1 : PageIndex;
-            var result = _cn88BetListService.GetBetListByCustInfo_DateRange(custId, FromDate, ToDate, Bettype, PageSize, PageIndex);
+            var result = _cn88BetListService.GetBetListByCustInfo_DateRange(custId, FromDate, ToDate, Bettype, statusIds, PageSize, PageIndex);
 
             return PartialView("~/Views/CN88BetList/_BetList.cshtml", new CN88BetListViewModel(custId, language, result));
         }

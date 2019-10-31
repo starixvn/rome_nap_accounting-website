@@ -22,6 +22,7 @@
             DateTime fromDate,
             DateTime toDate,
             int betType,
+            string statusIds,
             int pageSize,
             int pageIndex);
 

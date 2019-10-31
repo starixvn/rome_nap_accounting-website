@@ -19,7 +19,7 @@ namespace Fanex.Tarus.BetList.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class BetListResources {
@@ -57,6 +57,15 @@ namespace Fanex.Tarus.BetList.Resources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abnormal Bet.
+        /// </summary>
+        public static string AbnormalBets {
+            get {
+                return ResourceManager.GetString("AbnormalBets", resourceCulture);
             }
         }
         
@@ -219,6 +228,15 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string Details {
             get {
                 return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw.
+        /// </summary>
+        public static string Draw {
+            get {
+                return ResourceManager.GetString("Draw", resourceCulture);
             }
         }
         
@@ -403,6 +421,24 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string Reject {
+            get {
+                return ResourceManager.GetString("Reject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result Pending.
+        /// </summary>
+        public static string ResultPending {
+            get {
+                return ResourceManager.GetString("ResultPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string results {
@@ -421,11 +457,11 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to running.
+        ///   Looks up a localized string similar to Running.
         /// </summary>
-        public static string running {
+        public static string Running {
             get {
-                return ResourceManager.GetString("running", resourceCulture);
+                return ResourceManager.GetString("Running", resourceCulture);
             }
         }
         
@@ -565,6 +601,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Under Settlement.
+        /// </summary>
+        public static string UnderSettlement {
+            get {
+                return ResourceManager.GetString("UnderSettlement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to USD.
         /// </summary>
         public static string USD {
@@ -579,6 +624,24 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string Virtual_Sports {
             get {
                 return ResourceManager.GetString("Virtual_Sports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Void.
+        /// </summary>
+        public static string Void {
+            get {
+                return ResourceManager.GetString("Void", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting.
+        /// </summary>
+        public static string Waiting {
+            get {
+                return ResourceManager.GetString("Waiting", resourceCulture);
             }
         }
         

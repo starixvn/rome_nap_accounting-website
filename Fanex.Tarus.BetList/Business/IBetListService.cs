@@ -23,10 +23,10 @@
             DateTime fromDate,
             DateTime toDate,
             int betType,
+            string statusIds,
             int pageSize,
             int pageIndex,
-            ref int quantity,
-            bool isLimitForU3 = false);
+            ref int quantity);
 
         IList<TicketDetail> GetBetListByCustInfo_Refno(string transactionId, int customerId);
 

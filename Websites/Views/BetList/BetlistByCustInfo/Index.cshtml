@@ -1,6 +1,8 @@
 ﻿@{
     var isCredit = (bool)ViewBag.IsCredit;
     var isCN88 = (bool)ViewBag.IsCN88;
+    var ticketStatus = (IEnumerable<SelectListItem>)ViewBag.TicketStatus;
+
 }
 <html>
 <head>
@@ -9,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
     <link rel="stylesheet" type="text/css" href="~/Views/CN88BetList/Style/CoreBetListCN88.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
     <link rel="stylesheet" type="text/css" href="~/Views/CN88BetList/Style/bet-lists.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
@@ -58,6 +61,11 @@
                     <span class="b" style="padding-left: 5px">To</span>
                     <span style="padding-left: 5px">
                         <input id="txttodate" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span style="padding-left: 10px">Status</span>
+                    <span style="padding-left: 5px">
+                        <span id="ddlStatus" class="multiselect" multiple="multiple">
+                        </span>
                     </span>
                     <span id="divBettype" class="hidden" style="padding-left: 5px">
                         <span>Bettypes </span>
@@ -118,6 +126,7 @@
     </div>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
+        var ticketStatus = @Html.Raw(Json.Encode(ticketStatus))
         var isCN88='@(isCN88?1:0)'
         var _today = '@DateTime.Today.ToShortDateString()';
         var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
@@ -136,6 +145,7 @@
                 "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
                 "@Url.Content("~/js/BlockUI.js")",
                 "@Url.Content("~/js/common.js")",
+                "@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/MicroGaming/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",

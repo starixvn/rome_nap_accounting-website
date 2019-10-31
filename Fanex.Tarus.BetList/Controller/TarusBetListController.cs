@@ -8,6 +8,7 @@
 namespace Fanex.Tarus.BetList.Controller
 {
     using System;
+    using System.Linq;
     using System.Collections;
     using System.Web.Mvc;
     using Business;
@@ -22,6 +23,7 @@ namespace Fanex.Tarus.BetList.Controller
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
+    using Fanex.Tarus.BetList.Resources;
 
     public class TarusBetListController : Controller
     {
@@ -76,7 +78,7 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
             ViewBag.IsCN88 = isCN88;
-
+            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString()});
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 
@@ -92,11 +94,11 @@ namespace Fanex.Tarus.BetList.Controller
         /// <returns></returns>
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex)
+        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int Bettype, int PageSize, int PageIndex)
         {
             int quantity = 0;
             PageIndex = PageIndex <= 0 ? 1 : PageIndex;
-            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity);
+            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, statusIds, PageSize, PageIndex, ref quantity);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
 
