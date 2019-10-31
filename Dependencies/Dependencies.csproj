@@ -425,9 +425,8 @@
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.User, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.User.1.0.0.4\lib\net40\Fanex.Tarus.User.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.User, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.User.1.0.0.5\lib\net40\Fanex.Tarus.User.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
