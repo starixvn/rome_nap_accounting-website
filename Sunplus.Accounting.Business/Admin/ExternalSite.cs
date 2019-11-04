@@ -206,10 +206,6 @@ namespace Sunplus.Accounting.Business.Admin
                     {
                         _externalSiteDAO.InitSuperInfo(superName);
                     }
-                    if (IsInsertGroupSuccess(errCode))
-                    {
-                        _externalSiteDAO.InitSuperInfo(superName);
-                    }
                 }
 
                 if (successHash.Count > 0)
