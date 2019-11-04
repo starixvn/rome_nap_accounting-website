@@ -194,14 +194,16 @@ namespace Sunplus.Accounting.Business.Admin
                         else
                         {
                             successHash.Add(groupName, 1);
-                        }
-
-                        _externalSiteDAO.InitSuperInfo(superName);
+                        }                        
                     }
                     else
                     {
                         results.Add(
                             new Result(errCode, $"{groupName} - {item.Attribute("SuperName").Value}: {item.Attribute("ErrMsg").Value}"));
+                    }
+                    if (errCode == 0 || errCode == 106)
+                    {
+                        _externalSiteDAO.InitSuperInfo(superName);
                     }
                 }
 
