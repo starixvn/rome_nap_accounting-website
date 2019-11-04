@@ -201,7 +201,8 @@ namespace Sunplus.Accounting.Business.Admin
                         results.Add(
                             new Result(errCode, $"{groupName} - {item.Attribute("SuperName").Value}: {item.Attribute("ErrMsg").Value}"));
                     }
-                    if (errCode == 0 || errCode == 106)
+                
+                    if (IsInsertGroupSuccess(errCode))
                     {
                         _externalSiteDAO.InitSuperInfo(superName);
                     }
