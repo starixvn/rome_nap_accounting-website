@@ -13,6 +13,8 @@
 
     public partial class CustomerInfoViewModel
     {
+        private CustomerDetail customerDetail;
+
         private DataRow customerInfoRow { get; set; }
 
         private DataRow lineInfoRow { get; set; }
@@ -22,8 +24,6 @@
         private DataRow downlineStatusInfoRow { get; set; }
 
         private DataTable dynamicSettingtable { get; set; }
-
-        private DataRow headlineInfoRow { get; set; }
 
         private DataRow memberCN88CreditRow { get; set; }
 
@@ -107,7 +107,18 @@
 
         public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
-        public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
+        public CustomerDetail CustParent
+        {
+            get
+            {
+                if (customerDetail == null)
+                {
+                    customerDetail = ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
+                }
+
+                return customerDetail;
+            }
+        }
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
         {
