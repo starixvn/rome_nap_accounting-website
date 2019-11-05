@@ -194,14 +194,17 @@ namespace Sunplus.Accounting.Business.Admin
                         else
                         {
                             successHash.Add(groupName, 1);
-                        }
-
-                        _externalSiteDAO.InitSuperInfo(superName);
+                        }                        
                     }
                     else
                     {
                         results.Add(
                             new Result(errCode, $"{groupName} - {item.Attribute("SuperName").Value}: {item.Attribute("ErrMsg").Value}"));
+                    }
+                
+                    if (IsInsertGroupSuccess(errCode))
+                    {
+                        _externalSiteDAO.InitSuperInfo(superName);
                     }
                 }
 
@@ -214,6 +217,11 @@ namespace Sunplus.Accounting.Business.Admin
             }
 
             return results;
+        }
+
+        private static bool IsInsertGroupSuccess(int errCode)
+        {
+            return errCode == 0 || errCode == 106;
         }
     }
 }

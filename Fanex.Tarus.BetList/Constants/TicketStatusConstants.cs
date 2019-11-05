@@ -21,8 +21,7 @@ namespace Fanex.Tarus.BetList.Constants
         {
             [Waiting] = nameof(Waiting),
             [Reject] = nameof(Reject),
-            [Running] = nameof(Running),
-            [Pending] = nameof(Pending),
+            [Running] = nameof(Running),         
             [ResultPending] = nameof(ResultPending),
             [UnderSettlement] = nameof(UnderSettlement),
             [Won] = nameof(Won),
