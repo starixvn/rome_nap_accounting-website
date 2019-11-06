@@ -243,26 +243,27 @@
         }
 
         function loadRobotInfo() {
-            $(".ico-robot").each(function () {
-                var $this = $(this);
-                var username = $this.attr("data-user-name");
-                if (username) {
-                    $.ajax({
-                        type: "GET",
-                        url: "ManageRobots2/CheckIsRobot?" + $.param({ username: username }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        data: null,
-                        success: function (rs) {
-                            if (rs) {
-                                $this.removeClass("hide");
-                            }
-                        },
-                        error: function (xhr, status) {
-                        },
-                        complete: function () {
-                        }
-                    });
+            var txtRobotIds = $("#txt-robot-ids");
+            if (txtRobotIds.length == 0 || txtRobotIds.val() == "") {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "ManageRobots2/CheckRobots?" + $.param({ custIds: txtRobotIds.val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: null,
+                success: function (rs) {
+                    if (rs && rs.length > 0) {
+                        $.each(rs, function (index, item) {
+                            item.IsRobot && $(".ico-robot-" + item.CustId).removeClass("hide");
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                },
+                complete: function () {
                 }
             });
         }
@@ -332,7 +333,7 @@
                 parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Status&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
             else if (TabName == "Credit")
                 parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Credit&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
-}
+        }
 
 
     </script>

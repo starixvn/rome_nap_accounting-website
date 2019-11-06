@@ -4,18 +4,15 @@
 
     public class CheckIsRobotCriteria : CriteriaBase
     {
-        public string Username { get; set; }
-
-        public bool IsRobot { get; set; }
-
-        public override string GetSettingKey()
+        public CheckIsRobotCriteria(string custIds)
         {
-            return "Acc_CustomerRobotStatus_Sel";
+            CustIds = custIds;
         }
 
-        public override bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(Username);
-        }
+        public string CustIds { get; }
+
+        public override string GetSettingKey() => "Acc_CustomerRobotStatus_Sel";
+
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(CustIds);
     }
 }
