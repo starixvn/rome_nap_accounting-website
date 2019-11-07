@@ -62,6 +62,7 @@
   <Function Name="Report">
     <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ticket To Group Headline">
     <Setting Key="Acc_TicketGroupHeadline_ProductSel" SpName="Acc_TicketGroupHeadline_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
