@@ -592,6 +592,7 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />

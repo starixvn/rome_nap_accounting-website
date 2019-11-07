@@ -16,7 +16,7 @@
             <div style="padding-top:2px">
                 <div id="" style="float: left; line-height:22px;" class="{statusClass}">
                     <span id="box_02_headertext" style="{enabledbg}" onmouseover="{enabledtooltipover}"
-                          onmouseout="{enabledtooltipout}" {onclickUName} title="{FullUserName}" class="{memberClass}">{UserName}</span><span class="ico-robot hide" data-user-name="{FullUserName}" title="This is a robot account."></span>&nbsp;<span id="btnupdownCustInfo" name="btnupdownCustInfo" onclick="collapseInfo();" title="Show Detail"><img src="App_Themes/Images/icon_down.gif" class="imgDownUp" /></span>
+                          onmouseout="{enabledtooltipout}" {onclickUName} title="{FullUserName}" class="{memberClass}">{UserName}</span><span class="ico-robot hide ico-robot-{CustId}" title="This is a robot account."></span>&nbsp;<span id="btnupdownCustInfo" name="btnupdownCustInfo" onclick="collapseInfo();" title="Show Detail"><img src="App_Themes/Images/icon_down.gif" class="imgDownUp" /></span>
                 </div>
                 <div style="float: right;">
                     [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span>
@@ -135,13 +135,11 @@
         <!--end customer detail-->
         <div class="spacing">
         </div>
-        <!--CN88HeadlineHiddenItem-->
         <!--start button-->
         <div class="button_Lpane">
             {TransLinksBox}
         </div>
         <!--end button-->
-        <!--/CN88HeadlineHiddenItem-->
         <div class="spacing">
         </div>
         <!--box balnace - downline list--direct info-->
