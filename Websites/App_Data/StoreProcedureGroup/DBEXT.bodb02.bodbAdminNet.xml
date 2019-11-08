@@ -27,5 +27,4 @@
     <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
- 
 </Functions>
