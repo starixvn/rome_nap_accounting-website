@@ -223,8 +223,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3-beta1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.1.7\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
@@ -292,7 +291,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.8-RemoveInactiveProducts\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.8\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.7\lib\net40\Fanex.Module.Statement.dll</HintPath>
@@ -313,7 +312,7 @@
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9-RemoveInactiveProducts\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -395,8 +394,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.0-RemoveInactiveProducts\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
@@ -419,7 +417,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>

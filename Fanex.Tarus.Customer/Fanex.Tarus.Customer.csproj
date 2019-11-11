@@ -84,8 +84,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3-beta1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
@@ -112,18 +111,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9-RemoveInactiveProducts\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.0-RemoveInactiveProducts\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
