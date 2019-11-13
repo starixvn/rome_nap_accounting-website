@@ -427,6 +427,7 @@ var Helper = {
         var fd = new Date(td.getTime() - dayNoReset * 24 * 60 * 60 * 1000);
         document.getElementById(fdateId).value = (fd.getMonth() + 1) + "/" + fd.getDate() + "/" + fd.getFullYear();
         document.getElementById(tdateId).value = (td.getMonth() + 1) + "/" + td.getDate() + "/" + td.getFullYear();
+        BetListByCustInfo.BuildTicketStatusDropdownlist();
         BetListByCustInfo.getBettyes();
     },
     range_date: function () {
