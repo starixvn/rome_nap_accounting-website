@@ -25,7 +25,7 @@
 
     <script src="../js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="../UserGuide/js/userGuide.js"></script>
+    <script type="text/javascript" src="../UserGuide/js/userGuide.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript" src="../UserGuide/js/centreIt-1.1.5.js"></script>
 
     <script type="text/javascript">
