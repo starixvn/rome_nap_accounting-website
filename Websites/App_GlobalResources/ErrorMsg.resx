@@ -140,19 +140,7 @@
   </data>
   <data name="-108" xml:space="preserve">
     <value>Enable/Disable Financial status  updated successfully</value>
-  </data>
-  <data name="-109" xml:space="preserve">
-    <value>Enable/Disable SA Racing status  updated successfully</value>
-  </data>
-  <data name="-110" xml:space="preserve">
-    <value>Enable/Disable UK/Irish Racing status updated successfully</value>
-  </data>
-  <data name="-111" xml:space="preserve">
-    <value>UK/Irish Racing Bet Setting updated successfully</value>
-  </data>
-  <data name="-112" xml:space="preserve">
-    <value>SA Racing Bet Setting updated successfully</value>
-  </data>
+  </data> 
   <data name="betdaq_NoMatch" xml:space="preserve">
     <value>New match has not been created yet!</value>
   </data>
@@ -203,31 +191,7 @@
   </data>
   <data name="error_CreateFinanceAccountPermission" xml:space="preserve">
     <value>You're not authorized to create Finance (Internal) account.</value>
-  </data>
-  <data name="-113" xml:space="preserve">
-    <value>Enable/Disable Aust Racing status updated successfully</value>
-  </data>
-  <data name="-114" xml:space="preserve">
-    <value>Enable/Disable UK/Irish Greyhounds status updated successfully</value>
-  </data>
-  <data name="-115" xml:space="preserve">
-    <value>Enable/Disable Aust Greyhound status updated successfully</value>
-  </data>
-  <data name="-116" xml:space="preserve">
-    <value>Enable/Disable Aust Harness status updated successfully</value>
-  </data>
-  <data name="-117" xml:space="preserve">
-    <value>Aust Racing Bet Setting updated successfully</value>
-  </data>
-  <data name="-118" xml:space="preserve">
-    <value>UK/Irish Greyhounds Bet Setting updated successfully</value>
-  </data>
-  <data name="-119" xml:space="preserve">
-    <value>Aust Greyhound Bet Setting updated successfully</value>
-  </data>
-  <data name="-120" xml:space="preserve">
-    <value>Aust Harness Bet Setting updated successfully</value>
-  </data>
+  </data>  
   <data name="0" xml:space="preserve">
     <value>Updated successfully.</value>
   </data>

@@ -9,13 +9,6 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     using Constants;
     using Core;
     using Criteria;
@@ -32,6 +25,13 @@ namespace Fanex.Tarus.BetList.Business
     using Models;
     using Resources;
     using Sunplus.Accounting.DataAccess.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
@@ -256,29 +256,7 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            var isPokerGames = betListByProductCriteria.ProductId == Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames;
-            var needToMapPlayerId3rdToCustId = isPokerGames && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
-
-            var mappedCustId = needToMapPlayerId3rdToCustId
-                ? _betListRepository.MapPlayerIdToCustId(new MapPlayerId3rdToCustIdCriteria
-                {
-                    PlayerId3rd = betListByProductCriteria.PlayerId3rd,
-                    Vendor = betListByProductCriteria.VendorId,
-                    ProductId = betListByProductCriteria.ProductId
-                })
-                : 0;
-
-            if (needToMapPlayerId3rdToCustId
-                && betListByProductCriteria.CustId != 0
-                && mappedCustId != betListByProductCriteria.CustId)
-            {
-                return new List<TicketDetail>();
-            }
-
-            var custId = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
-                ? mappedCustId
-                : betListByProductCriteria.CustId;
-
+            var custId = betListByProductCriteria.CustId;
             return GetBetListBy(new BetListByProductCriteria
             {
                 UserId = betListByProductCriteria.UserId,
@@ -1211,8 +1189,7 @@ namespace Fanex.Tarus.BetList.Business
 
                 if (betDetails != null)
                 {
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
-                    SessionManager.Set<List<ITicketData>>(BetListConstants.BetListByStatementOutputLiveCasinoSessionKey, outputLiveCasino);
+                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);                  
 
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
@@ -1352,11 +1329,7 @@ namespace Fanex.Tarus.BetList.Business
             else if (ReportService.IsGoldDeluxe(betTypeId))
             {
                 sportName = BetListResources.Gold_Deluxe;
-            }
-            else if (ReportService.IsMicroGaming(betTypeId))
-            {
-                sportName = BetListResources.Microgaming;
-            }
+            }           
             else if (ReportService.IsAGCasino(betTypeId))
             {
                 sportName = BetListResources.AGCasino;
@@ -1398,11 +1371,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 const int VirtualSports2ProductId = 27;
                 sportName = GetProductName(VirtualSports2ProductId);
-            }
-            else if (ReportService.IsPokerGames(betTypeId))
-            {
-                sportName = ticketHelper.GetSportNameById(SportContants.PokerGames);
-            }
+            }         
             else if (ReportService.IsHappy5Bettype(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);

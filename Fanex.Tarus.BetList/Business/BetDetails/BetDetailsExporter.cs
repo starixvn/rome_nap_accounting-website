@@ -27,11 +27,7 @@
     public class BetDetailsExporter : IBetDetailsExporter
     {
         public string GetFileNameWithoutExtension(int sportType)
-        {
-            if (sportType == SportContants.MicroGamingRNGCasino)
-            {
-                return "MicrogamingRNGCasino_Details";
-            }
+        {          
 
             if (sportType == SportContants.AllBet)
             {
@@ -73,11 +69,7 @@
             long refNo,
             int custId,
             byte transType)
-        {
-            if (sportType == SportContants.MicroGamingRNGCasino)
-            {
-                return GetMicrogamingRNGTickets(refNo, custId, transType);
-            }
+        {          
 
             if (sportType == SportContants.AllBet)
             {
@@ -277,25 +269,6 @@
 
             return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
         }
-
-        private static IEnumerable<TicketDetail> GetMicrogamingRNGTickets(long refNo, int custId, byte transType)
-        {
-            var criteria = new GetMicroGamingBetDetailsCriteria
-            {
-                Refno = refNo,
-                CustId = custId,
-                TransType = transType,
-                PageIndex = 1,
-                PageSize = int.MaxValue
-            };
-
-            IMicroGamingRepository repository = new MicroGamingRepository();
-
-            return repository.BetDetails(criteria);
-        }
-
-
-
         #endregion
     }
 }

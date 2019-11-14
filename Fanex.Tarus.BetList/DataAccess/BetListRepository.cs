@@ -527,20 +527,6 @@
             return null;
         }
 
-        public int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria)
-        {
-            var custId = 0;
-
-            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputs = db.GetOuputParams();
-                custId = Converter.ToInt(outputs["custid"]);
-            }
-
-            return custId;
-        }
-
         public string GetSiteNameByCustId(ICriteria criteria)
         {
             string siteName = string.Empty;

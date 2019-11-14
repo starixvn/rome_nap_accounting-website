@@ -28,7 +28,6 @@
             Volleyball: 6,
             Badminton: 9,
             Squash: 30,
-            HorseRacing: 151,
             NumberGame: 161,
             VirtualSoccer: 180,
             Darts: 25

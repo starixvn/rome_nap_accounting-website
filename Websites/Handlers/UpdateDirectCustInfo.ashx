@@ -95,7 +95,7 @@ public class UpdateDirectCustInfo : BaseHandler
         }
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

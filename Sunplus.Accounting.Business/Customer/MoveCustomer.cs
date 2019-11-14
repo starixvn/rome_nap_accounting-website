@@ -62,24 +62,13 @@ namespace Sunplus.Accounting.Business.Customer
             downlineUser = downlineUser.Trim();
             uplineUser = uplineUser.Trim();
 
-            if (WebSettings.IsApplySplitingDepositeCustomer)
+            if (IsDeposit(downlineUser))
             {
-                if (IsDeposit(uplineUser) || IsDeposit(downlineUser))
-                {
-                    if (!IsDeposit(downlineUser))
-                    {
-                        return StringUtils.ParseToJSMsg(downlineUser + " is not deposit customer. So, you can not move to " + uplineUser);
-                    }
-                    if (!IsDeposit(uplineUser))
-                    {
-                        return StringUtils.ParseToJSMsg(uplineUser + " is not deposit customer. So, you can not move " + downlineUser + " to " + uplineUser);
-                    }
-                }
-
-                if (IsDeposit(uplineUser) && IsDeposit(downlineUser))
-                {
-                    return MoveDepositCustomer(custType, downlineUser, uplineUser, AppSession.AccId);
-                }
+                return StringUtils.ParseToJSMsg(downlineUser + " is deposit customer. So, you can not move to " + uplineUser);
+            }
+            if (IsDeposit(uplineUser))
+            {
+                return StringUtils.ParseToJSMsg(uplineUser + " is deposit customer. So, you can not move " + downlineUser + " to " + uplineUser);
             }
 
             _downlineDetail = IBCProvider.IBCCustomer.GetCustomerDetail(downlineUser);
@@ -111,18 +100,6 @@ namespace Sunplus.Accounting.Business.Customer
         private static string NotSync(string username)
         {
             return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ErrCustomerNotSync"), username));
-        }
-
-        private string MoveDepositCustomer(MoveType custType, string downlineUser, string uplineUser, int accId)
-        {
-            if (custType == MoveType.Master)
-            {
-                return Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.MoveMasterDepositCustomer(downlineUser, uplineUser, accId);
-            }
-            else
-            {
-                return Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.MoveAgentDepositCustomer(downlineUser, uplineUser, accId);
-            }
         }
 
         private string ExecuteMove(MoveType custType, string downlineUser, string uplineUser, int accId)

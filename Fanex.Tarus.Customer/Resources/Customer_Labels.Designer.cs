@@ -376,15 +376,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Microgaming.
-        /// </summary>
-        public static string Enable_Microgaming {
-            get {
-                return ResourceManager.GetString("Enable_Microgaming", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Enabled {
@@ -660,24 +651,6 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Message_NoInfo {
             get {
                 return ResourceManager.GetString("Message_NoInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Microgaming setting updated successfully.
-        /// </summary>
-        public static string MicroGaming_UpdateSuccess {
-            get {
-                return ResourceManager.GetString("MicroGaming_UpdateSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Microgming status updated successfully..
-        /// </summary>
-        public static string MicroGamingStatusUpdatedSuccessfully {
-            get {
-                return ResourceManager.GetString("MicroGamingStatusUpdatedSuccessfully", resourceCulture);
             }
         }
         
@@ -966,15 +939,6 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update Microgaming Setting.
-        /// </summary>
-        public static string Update_Microgamming_Setting {
-            get {
-                return ResourceManager.GetString("Update_Microgamming_Setting", resourceCulture);
             }
         }
         

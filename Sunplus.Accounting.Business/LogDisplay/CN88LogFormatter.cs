@@ -9,9 +9,7 @@
     using System.Xml.Linq;
 
     public class CN88LogFormatter
-    {
-        private readonly string _resourceClassName = "ViewlogV2";
-
+    {        
         private readonly string _CN88LogDetailResource = "CN88LogDetailResource";
 
         private static readonly Regex CompiledRegex = new Regex(@"\{(.+?)\}", RegexOptions.Compiled);

@@ -27,21 +27,17 @@ ans.initForKnockout = function () {
         };
     };
     ko.applyBindings(new CustomerModel(customer));
-    $('#myanmarOddsDiv').hide();
+  
     $("#listSite").change(function () {
-        if ($('#listSite').val() == "766666") {
-            $('#myanmarOddsDiv').show();
+        if ($('#listSite').val() == "766666") {          
             $('#groupBDiv').hide();
             $('#groupCDiv').hide();
-            $('#groupDDiv').hide();
-            _isShowMyanmarOdds = true;
+            $('#groupDDiv').hide();          
         }
-        else {
-            $('#myanmarOddsDiv').hide();
+        else {          
             $('#groupBDiv').show();
             $('#groupCDiv').show();
             $('#groupDDiv').show();
-            _isShowMyanmarOdds = false;
         }
     });
 };
@@ -103,7 +99,6 @@ ans.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroupD'), 0, commissionSetting.groupD, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupD);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, commissionSetting.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
 };
 
 // check valid user input
@@ -144,16 +139,13 @@ ans.checkValidInput = function () {
     //get commision
     var commissionSetting = customer.commissionSetting;
     commissionSetting.groupA = $('#listGroupA').val();
-    if (!parseBool2(_isShowMyanmarOdds)) {
-        commissionSetting.groupB = $('#listGroupB').val();
-        commissionSetting.groupC = $('#listGroupC').val();
-        commissionSetting.groupD = $('#listGroupD').val();
-    }
+    commissionSetting.groupB = $('#listGroupB').val();
+    commissionSetting.groupC = $('#listGroupC').val();
+    commissionSetting.groupD = $('#listGroupD').val();
+   
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
-    if (parseBool2(_isShowMyanmarOdds)) {
-        commissionSetting.discountMyanmarOdds = $('#listMyanmarOdds').val();
-    }
+   
     //get pt setting
     customer.ptSetting = ptGrid.Save();
 

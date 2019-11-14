@@ -122,15 +122,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         BetTypeId = BetType.FirstMoneyLine,
                         VirtualRateString = "40"
                     },
-                    null,
-                    //new ImportVirtualRateResult
-                    //{
-                    //    SportName = "Cricket",
-                    //    LiveTypeName = "Non-Live",
-                    //    BetTypeId = BetType.SetXWinner,
-                    //    VirtualRateString = "40"
-                    //},
-                   null
+                    null,                  
+                    null
                 }
             });
 
@@ -158,14 +151,7 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate.UploadRate
                         LiveTypeName = "Non-Live",
                         BetTypeId = BetType.OneXTwo,
                         VirtualRateString = "20"
-                    },
-                    //new ImportVirtualRateResult
-                    //{
-                    //    SportName = "Cricket",
-                    //    LiveTypeName = "Non-Live",
-                    //    BetTypeId = BetType.SetXWinner,
-                    //    VirtualRateString = "40"
-                    //},
+                    },                  
                    null
                 }
             });

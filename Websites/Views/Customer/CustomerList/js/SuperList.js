@@ -302,12 +302,7 @@
             pageIndex = location.href.split("#")[1];
         }
         showPopup("Update Super Setting", url, "", "", 1000, 650, false, 2000, function () { callAjax(getParams(pageIndex)); });
-    },
-    editSetting: function (custId, roleId) {
-        showPopup(""
-                , "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId + "&roleId=" + roleId
-                , 0, 0, 640, 480, false, 2000, null);
-    },
+    },   
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup(""
                 , "VirtualSportSuperPT/EditSuper?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
@@ -327,11 +322,7 @@
                 , window.rootUrl + "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&uplineLevel=0&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=4"
                 , 0, 0, 880, 580, false, 2000, null);
     },
-    colossusBetSetting: function (custId, uplineId) {
-        showPopup("Colossus Bet"
-                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?roleid=4&custid=" + custId + "&UserId=" + _adminID
-                , 0, 0, 880, 400, false, 2000, null);
-    },
+    
     asianGamingCasino: function (custId) {
         showPopup("Update AG Casino Setting",
         "AGCasino/EditAGCasinoGameSetting?customerId=" + _userId + "&uplineId=0&roleId=4&exchangeId=0" + _userId,

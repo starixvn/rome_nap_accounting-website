@@ -120,9 +120,6 @@
   <data name="agentPTcomm" xml:space="preserve">
     <value>AgentPT/ &lt;br/&gt;Comm</value>
   </data>
-  <data name="bingo" xml:space="preserve">
-    <value>Bingo</value>
-  </data>
   <data name="casinoGame" xml:space="preserve">
     <value>Casino Games</value>
   </data>

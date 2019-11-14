@@ -155,12 +155,6 @@ function ViewCustomerStatement(reportNo) {
     window.location.href = url;
 }
 
-function SBD(transtype, fdate) {
-    url = 'StatementByDay.aspx?transtype='
-        + transtype + '&fdate=' + fdate
-    + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
-    document.location.href = url;
-}
 function VBL(fdate) {
     url = '../BetList/BetList.aspx?bltype=2&fdate=' + fdate
     + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));

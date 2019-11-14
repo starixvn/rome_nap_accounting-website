@@ -2,14 +2,9 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
-using Fanex.Tarus.Security.Criteria;
-using Fanex.CustomerSetting.Module.Core.Services.Impl;
-using Fanex.CustomerSetting.Module.Core.Criteria;
 
 public class UpdateMoveCust : BaseHandler
 {
@@ -29,7 +24,6 @@ public class UpdateMoveCust : BaseHandler
 
                 }
                 string type = context.Request["agent"] as string ?? string.Empty;
-                string strAgent = "";
                 string recommendId = "";
                 string custUname = "";
 
@@ -59,7 +53,7 @@ public class UpdateMoveCust : BaseHandler
         }
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

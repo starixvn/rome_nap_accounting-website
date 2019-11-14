@@ -173,7 +173,7 @@ userGuide.bottom = function(popup) {
 
 userGuide.getAppPath = function() {
     var baseURL = location.href;
-    var rootURL = baseURL.substring(0, baseURL.indexOf('/', 7));
+    var rootURL = baseURL.substring(0, baseURL.indexOf('/', 8));
     
     return rootURL + baseURL.substring(baseURL.indexOf('/', 8), baseURL.indexOf('/', baseURL.indexOf('/', 8)+1)) + "/";        
     

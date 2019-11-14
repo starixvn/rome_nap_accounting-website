@@ -46,17 +46,6 @@
 
         public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Utils.ToBoolean(customerInfoRow["IsDeposit"]);
 
-        public bool IsIMBC
-        {
-            get
-            {
-                var site = Converter.ToString2(customerInfoRow["site"]);
-                if (string.IsNullOrWhiteSpace(site))
-                    return Converter.ToString2(customerInfoRow["membersite"]).ToUpper().Equals("IMBC");
-                return site.ToUpper().Equals("IMBC");
-            }
-        }
-
         public bool IsCN88
         {
             get

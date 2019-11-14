@@ -477,12 +477,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     }
 
                     #endregion sporttypes
-
-                    #region limit new member
-
-                    trackingVal = ReplaceUnlimited(trackingVal);
-
-                    #endregion
+                    
 
                     #region SystemId
 
@@ -932,17 +927,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
             }
             return custId;
-        }
-
-        private string ReplaceUnlimited(string log)
-        {
-            if (culture.CompareInfo.IndexOf(log, "acc_customermaxnewmemperday_sag", CompareOptions.IgnoreCase) > 0)
-            {
-                log = ReplaceIgnoreCase(log, "newvalue=\"-1\"", "newvalue=\"Unlimited\"");
-                log = ReplaceIgnoreCase(log, "oldvalue=\"-1\"", "oldvalue=\"Unlimited\"");
-            }
-
-            return log;
         }
 
         private bool IsGoldDeluxeGameType(string fieldName, string gameTypeId)

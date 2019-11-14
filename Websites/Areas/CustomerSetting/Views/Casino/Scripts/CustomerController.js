@@ -73,7 +73,7 @@ function CustomerController($scope, $element) {
         $.ajax({
             url: toUrl('CasinoCustomer/GetCurrentWinLimit'),
             data: {
-                id: $scope.CustomerModel.iBCCustID,
+                id: $scope.CustomerModel.ibcCustID,
                 groupName: parent.$('#selectedGroupName').html()
             }
         }).success(function (result) {
@@ -189,7 +189,7 @@ function CustomerController($scope, $element) {
     }
 
     var UpdateWinLossLimit = function () {
-        var custId = $scope.CustomerModel.iBCCustID;
+        var custId = $scope.CustomerModel.ibcCustID;
         var username = $scope.CustomerModel.userName;
         var winLossLimit = JSON.stringify($scope.CustomerModel.memberWinLimit);
         var roleId = $scope.CustomerModel.roleId;

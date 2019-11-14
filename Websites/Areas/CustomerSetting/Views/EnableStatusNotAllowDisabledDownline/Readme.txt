@@ -18,7 +18,7 @@ URL to call get and update:
 		"custId": customer id,
 		"uplineId": upline customer id,
 		"userId": admin id or upline id,
-		"productId": name of product, such as "livecasino", "casino", ...,
+		"productId": name of product, such as "casino", ...,
 		"subAccId": sub account id,
 		"language": Language key,
 		"level": super/master/agent/member or 4/3/2/1

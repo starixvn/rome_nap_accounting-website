@@ -18,15 +18,13 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowEnableCashOut { get; set; }
 
-        public bool IsShowEnableMicrogaming { get; set; }
-
         public bool IsShowMacau { get; set; }
 
         public bool IsShowKeno { get; set; }
 
         public bool IsShowGoldDeluxeForCredit { get; set; }
 
-        public bool IsShowColossusBetsForCredit { get; set; }
+        public bool IsShowColossusBetsForDeposit { get; set; }
 
         public bool IsShowAllBetForCredit { get; set; }
 
@@ -52,16 +50,8 @@ namespace Sunplus.Accounting.Business.Customer
 
         public int AccId { get; set; }
 
-        public bool IsHideCricket { get; set; }
-
         public bool IsShowNG2 { get; internal set; }
 
         public bool IsShowKenoLottery { get; set; }
-
-        public bool IsShowLucky3 { get; set; }
-
-        public bool IsShowBullfighting { get; set; }
-
-        public bool IsShowPokerGames { get; set; }
     }
 }

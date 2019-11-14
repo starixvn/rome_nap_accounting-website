@@ -35,29 +35,8 @@ public class GetData : IHttpHandler, IRequiresSessionState  {
         DateTime tdate = CastAide.AsDateTime(context.Request["tdate"]);        
         
         switch (mode)
-        {            
-            case "3": // update remark of CustAccount bi custid
-                Hashtable hash = new Hashtable();
-                hash.Add("accountremark", HttpUtility.HtmlEncode(context.Request["remark"].ToString()));
-                hash.Add("custid", custid);
-                hash.Add("errcode", 0);
-                hash.Add("errmsg", "");
-                hash.Add("accountremarkdate", DateTime.Now);
-                hash.Add("userid", CastAide.AsInt32(context.Session["AccId"],0));
-                var rs = AccountReport.Acc_CreditTermUpdRemark(hash);
-                if (rs.ErrorCode > 0)
-                    context.Response.Write("no|" + CastAide.AsString(rs.ErrorMessage));
-                else
-                {
-                    string accountremarkdate = CastAide.AsString(rs.ErrorHandler[0]);
-                    accountremarkdate = Reports.datevalue(accountremarkdate);
-                    context.Response.Write("ok|" + accountremarkdate);
-                }
-                break;
-            case "4"://get credit term                
-                context.Response.Write(Reports.GetCreditTerm_1());
-                break;                
-         
+        { 
+           
             case "9":// Credit Term
                 string groupMaxLoss = "N/A";
                 o.Add(new JProperty("CreditTerm", CreditTermHTML.GetContentCreditTerm(context, ref groupMaxLoss)));

@@ -117,13 +117,6 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 AppSession.RoleID = roleId;
                 AppSession.AccPwd = IBCUtils.Encryption.CfsEnCode(password);
 
-                if (!AuthManager.IsValidRequestUrl(context.Request.Url.Host, AppSession.CurrentSystemName))
-                {
-                    context.Session.Clear();
-                    FormsAuthentication.SignOut();
-                    context.Response.Write("parent.signIn.loginError('Invalid Login');\n");
-                    goto end;
-                }
                 AuthManager.AssignRoles(custId);
                 if (AppSession.RoleAccess.Count < 1) //limit user have no permission access 
                 {

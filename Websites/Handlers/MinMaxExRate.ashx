@@ -65,7 +65,7 @@ public class MinMaxExRate : BaseHandler  {
         
     }
  
-    public bool IsReusable {
+    public override bool IsReusable {
         get {
             return false;
         }

@@ -46,25 +46,10 @@
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerMaxNewMemPerDay" SpName="Acc_CustomerMaxNewMemPerDay_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />   
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Live Casino">
-    <Setting Key="Acc_CustomerUpdAgentLiveCS_All" SpName="Acc_CustomerUpdAgentLiveCS_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMasterLiveCS_All" SpName="Acc_CustomerUpdMasterLiveCS_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="UpdateSuperLiveCSComm" SpName="Acc_CustomerUpdSuperLiveCS_CommissionForAllLevels" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TP_User_Customer_AutoInsertAccountFromExisting" SpName="TP_User_Customer_AutoInsertAccountFromExisting" DbName="LV_BackupDB" Plain="1" />
-  </Function>
+  </Function>  
   <Function Name="Gold Deluxe">
     <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -76,44 +61,12 @@
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Customer Status">
-    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+  <Function Name="Customer Status">   
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_Dep_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="Pocker">
-    <Setting Key="Acc_CustomerUpdDisableP2P" SpName="Acc_CustomerUpdDisableP2P" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PAgent_Commission" SpName="Acc_CustomerUpdP2PAgent_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PAgent_GameSetting" SpName="Acc_CustomerUpdP2PAgent_GameSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PAgent_MaxTransfer" SpName="Acc_CustomerUpdP2PAgent_MaxTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMaster_Commission" SpName="Acc_CustomerUpdP2PMaster_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMaster_GameSetting" SpName="Acc_CustomerUpdP2PMaster_GameSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMaster_MaxTransfer" SpName="Acc_CustomerUpdP2PMaster_MaxTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMember_Commission" SpName="Acc_CustomerUpdP2PMember_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMember_GameSetting" SpName="Acc_CustomerUpdP2PMember_GameSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PMember_MaxTransfer" SpName="Acc_CustomerUpdP2PMember_MaxTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PSuper_Commission" SpName="Acc_CustomerUpdP2PSuper_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+  </Function> 
   <Function Name="RNG Casino">
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Virtual Sport">
-    <Setting Key="Acc_CustomerUpdAgentVS_MinMaxBet" SpName="Acc_CustomerUpdAgentVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgentVS_PositionTaking" SpName="Acc_CustomerUpdAgentVS_PositionTaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_MinMaxBet" SpName="Acc_CustomerUpdMasterVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_Positiontaking" SpName="Acc_CustomerUpdMasterVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MAg" SpName="Acc_CustomerUpdMemberVS_MAg" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MinMaxBet" SpName="Acc_CustomerUpdMemberVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_SAg" SpName="Acc_CustomerUpdMemberVS_SAg" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_Positiontaking" SpName="Acc_CustomerUpdSuperVS_Positiontaking" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -131,10 +84,6 @@
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Bingo">
-    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Virtual Rate">
     <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -159,7 +108,6 @@
     <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -173,9 +121,7 @@
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />  
   </Function>
   <Function Name="Customer - Move Site">
     <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -193,13 +139,9 @@
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Admin-AutoFollowBet">
+  <Function Name="Admin - BA Customer">
+    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />   
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Select" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Delete" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Update" SpName="Acc_AutoFollowBetUpdRate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet">
@@ -211,8 +153,7 @@
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />  
     <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -229,22 +170,11 @@
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="PJUnitPriceUpd" SpName="Acc_Exchange_PJUnitPrice_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Finance">
-    <Setting Key="Acc_CustOverrideUpdFI" SpName="Acc_CustOverrideUpdFI" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_All" SpName="Acc_CustomerUpdMemberFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAgentFI_All" SpName="Acc_CustomerUpdAgentFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMasterFI_All" SpName="Acc_CustomerUpdMasterFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperFI_All" SpName="Acc_CustomerUpdSuperFI_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableFI" SpName="Acc_CustomerUpdDisableFI" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
@@ -280,15 +210,8 @@
     <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Colossus Bet Setting">
-    <Function Name="Get Setting">
-      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-    </Function>
-    <Function Name="Update Setting">
-      <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
+  <Function Name="Colossus Bet Setting">  
+    <Function Name="Update Setting">     
       <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_Dep_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
@@ -300,21 +223,13 @@
       <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelStatusGoldDeluxe" SpName="Acc_CustomerSelStatusGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
   <Function Name="Casino Single Wallet - Member Win Limit">
     <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Casino Single Wallet - Member Win Limit">
-    <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Cricket - IMBC restriction">
-    <Setting Key="Acc_CustSetting_SettingRestrictionUpdate" SpName="Acc_CustSetting_SettingRestrictionUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_SettingRestrictionSelect" SpName="Acc_CustSetting_SettingRestrictionSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+  <Function Name="Customer Select Site">   
     <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="SMA Management">
@@ -330,9 +245,7 @@
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SyncGameStatusSelect" SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_SyncAPICustomerProfileSelect_CustID" SpName="Acc_CustSetting_SyncAPICustomerProfileSelect_CustID" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_SyncGameStatusUpd_Multiple" SpName="Acc_CustSetting_SyncGameStatusUpd_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_SyncGameStatusUpd_Multiple" SpName="Acc_CustSetting_SyncGameStatusUpd_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />   
   </Function>
   <Function Name="OTP">
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -401,9 +314,6 @@
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-   <Function Name="Bet List By Ref No">
-    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -416,8 +326,7 @@
     <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Left Panel - Customer Info">
-    <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBCust.CustDB.bodbAdminNet" />
+  <Function Name="Left Panel - Customer Info">   
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="SuperLimitDate">

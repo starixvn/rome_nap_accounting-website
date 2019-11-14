@@ -91,8 +91,8 @@
       <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.53.6.418, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EasyNetQ.0.53.6.418\lib\net45\EasyNetQ.dll</HintPath>
+    <Reference Include="EasyNetQ, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyNetQ.2.3.3\lib\net451\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
@@ -118,23 +118,17 @@
     <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.1\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetDetails.Lucky3, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetDetails.Lucky3.1.0.0.1\lib\Fanex.BetDetails.Lucky3.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.AGCasino, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.AGCasino.1.1.0\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.AGCasino, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.AGCasino.1.0.0.5\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetList.Allbet, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.1.2.0\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
+    <Reference Include="Fanex.BetList.Allbet, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Allbet.1.3.0\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.95.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.97.0\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Bullfighting, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Bullfighting.1.2.0\lib\net40\Fanex.BetList.Bullfighting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.CardClub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.CardClub.1.0.0\lib\net40\Fanex.BetList.CardClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.CashOut, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.CashOut.1.0.0.7\lib\net40\Fanex.BetList.CashOut.dll</HintPath>
@@ -144,8 +138,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.95.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.95.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.97.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.97.0\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.1.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -158,9 +152,8 @@
       <HintPath>..\packages\Fanex.BetList.GlobalGaming.1.0.0.7\lib\net40\Fanex.BetList.GlobalGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.GoldDeluxe.1.1.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.GoldDeluxe, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.GoldDeluxe.1.2.0\lib\net40\Fanex.BetList.GoldDeluxe.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Keno, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Keno.1.2.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
@@ -169,19 +162,8 @@
       <HintPath>..\packages\Fanex.BetList.KenoLottery.1.2.0\lib\net40\Fanex.BetList.KenoLottery.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Lucky3, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Lucky3.1.1.0\lib\net40\Fanex.BetList.Lucky3.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.1.0\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.BetList.Microgaming, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Microgaming.2.0.0.7\lib\net40\Fanex.BetList.Microgaming.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetList.MyanmarOdds, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.MyanmarOdds.1.1.0\lib\net40\Fanex.BetList.MyanmarOdds.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.NG2, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NG2.1.0.4\lib\net40\Fanex.BetList.NG2.dll</HintPath>
@@ -190,9 +172,6 @@
     <Reference Include="Fanex.BetList.NumberGame, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NumberGame.1.2.0\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.BetList.PokerGames, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PokerGames.1.1.2.0\lib\net40\Fanex.BetList.PokerGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PP.1.2.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
@@ -211,8 +190,8 @@
       <HintPath>..\packages\Fanex.Tarus.Caching.1.0.0404.95\lib\net40\Fanex.Caching.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -223,33 +202,28 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.1\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.2\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Matrix.1.0.1.5\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.CloneSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.CloneSetting.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.CloneSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1.6\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBetSetting.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.1.7\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
@@ -262,8 +236,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.6.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.4\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.6.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.5\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
@@ -285,8 +259,8 @@
       <HintPath>..\packages\Fanex.HttpModule.NG2.UM.1.0.0.1\lib\net40\Fanex.HttpModule.NG2.UM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -300,6 +274,14 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.RabbitMQ.1.0.1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Sentry.RavenClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Sentry.RavenClient.1.0.1\lib\net461\Fanex.Logging.Sentry.RavenClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
       <Private>True</Private>
@@ -308,31 +290,29 @@
       <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.7\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.8\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.7\lib\net40\Fanex.Module.Statement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.NAP.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.NAP.Core.1.0.0.2\lib\net40\Fanex.NAP.Core.dll</HintPath>
+    <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Core.Client.1.2.1.6\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Nap.SSO, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.6\lib\net40\Fanex.Nap.SSO.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Nap.SSO, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.7\lib\net40\Fanex.Nap.SSO.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.1\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.8\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -346,7 +326,7 @@
       <HintPath>..\packages\Fanex.RemotingRef.1.4.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.1.9.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.8.1\lib\net40\Fanex.Result.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.0\lib\net40\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
@@ -355,8 +335,11 @@
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.7\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.2.8.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.2.8.1\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.0\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.CardClub, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.CardClub.1.0.1.0\lib\net40\Fanex.Result.Core.CardClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GlobalGaming.1.0.0.2\lib\net40\Fanex.Result.Core.GlobalGaming.dll</HintPath>
@@ -370,28 +353,13 @@
       <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.LiveCasino, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-LiveCasino.1.0.2\lib\net40\Fanex.Result.Core.LiveCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Result.Core.Lucky3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Lucky3.1.0.0.0\lib\net40\Fanex.Result.Core.Lucky3.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Result.Core.MetricGaming, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-MetricGaming.1.0.1\lib\net40\Fanex.Result.Core.MetricGaming.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Result.Core.MicroGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-MicroGaming.1.0.0.2\lib\net40\Fanex.Result.Core.MicroGaming.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.3\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Result.Core.PokerGames, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.PokerGames.1.0.2.0\lib\net40\Fanex.Result.Core.PokerGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
@@ -401,8 +369,8 @@
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.3\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.4\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.2\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
@@ -411,13 +379,11 @@
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.2\lib\net40\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.3\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.4\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1.2\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.1.3\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.API.1.0.0\lib\net40\Fanex.Tarus.API.dll</HintPath>
@@ -428,8 +394,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
@@ -451,8 +416,8 @@
       <HintPath>..\packages\Fanex.Tarus.Finance.1.0.0.9\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.7\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.1.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -474,9 +439,8 @@
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.6\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.6\lib\net461\bin\Fanex.Voidbridge.BetDetail.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.7\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FanexOneyed.RobotTrap.1.0.0.0\lib\net40\FanexOneyed.RobotTrap.dll</HintPath>
@@ -518,28 +482,12 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LVAPIDBLibrary, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPIDBLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVAPILibrary, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPILibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVAPILibrary_GameRule, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPILibrary_GameRule.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVCasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVCasinoSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVCasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVCasinoUtility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MessagePack, Version=1.7.3.7, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
       <HintPath>..\packages\MessagePack.1.7.3.7\lib\net45\MessagePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Practices.EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -669,12 +617,8 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NotifyPropertyChanged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\NotifyPropertyChanged.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
@@ -704,12 +648,8 @@
       <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Onelab.Sb.Admin.LiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\Onelab.Sb.Admin.LiveCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RabbitMQ.Client, Version=3.5.7.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\packages\RabbitMQ.Client.3.5.7\lib\net40\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorEngine, Version=3.7.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
@@ -719,19 +659,21 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.2.1\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.2.8\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
@@ -756,24 +698,21 @@
       <HintPath>..\packages\Sunplus.Libraries.APILogger.2.0.0.1\lib\net40\Sunplus.Libraries.APILogger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.RemoteBetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\Sunplus.RemoteBetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sunplus.Shared.ViewLogLib, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Shared.ViewLogLib.1.3.0.1\lib\net40\Sunplus.Shared.ViewLogLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SunplusBettingLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\SunplusBettingLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
@@ -791,10 +730,6 @@
     </Reference>
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Threading, Version=1.0.2873.22603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.1.0.2873.22603\lib\net40\System.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -840,9 +775,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.2.2\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.2.4\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
     </Reference>
     <Reference Include="TplCore, Version=1.0.4854.17253, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TplCore.1.0.4854.17254\lib\net40\TplCore.dll</HintPath>

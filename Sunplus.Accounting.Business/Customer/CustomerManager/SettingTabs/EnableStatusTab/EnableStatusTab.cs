@@ -34,26 +34,21 @@
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowEnableCashOut = customerInfoViewModel.ShowEnableCashOutDeposit,
-                IsShowEnableMicrogaming = customerInfoViewModel.ShowEnableMicrogamingDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
-                IsShowColossusBetsForCredit = customerInfoViewModel.ShowEnabledCheckboxColossusBets,
+                IsDeposit = customerInfoViewModel.IsDeposit,
+                IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
                 IsShowAllBetForCredit = !customerInfoViewModel.HideEnabledCheckBoxAllbet,
                 IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
-                IsHideCricket = customerInfoViewModel.HideCricketCredit,
                 IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
-                CustId = customerInfoViewModel.CustId,
-                IsDeposit = customerInfoViewModel.IsDeposit,
+                CustId = customerInfoViewModel.CustId,                
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
-                IsShowLucky3 = !customerInfoViewModel.HideEnabledCheckBoxLucky3Credit,
-                IsShowBullfighting = !customerInfoViewModel.HideSettingBullfighting,
-                IsShowPokerGames = !customerInfoViewModel.HideSettingPokerGames
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -172,19 +167,12 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMicrogaming}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{microGamingId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMicrogaming);
-
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
-
-
-            TemplateHandler.Assign(ref htmlcontent, "{CricketId}", "20");
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCricket}", "1");
 
             TemplateHandler.Assign(ref htmlcontent, "{AllbetId}", "21");
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
@@ -204,12 +192,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     "Update Sportbook2 Status"));
-            }
-
-            if (customerInfoViewModel.HideCricketCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCricket");
-            }
+            }         
 
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
             {
@@ -229,12 +212,7 @@
             if (!renderLeftPanelParameter.IsShowEnableCashOut)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableMicrogaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Microgaming");
-            }
+            }          
 
             if (!renderLeftPanelParameter.IsShowMacau)
             {
@@ -254,21 +232,6 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     21,
                     "Update Allbet Status"));
-            }
-
-            if (customerInfoViewModel.HideSettingPokerGames)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnablePokerGames");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{PokerGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    33,
-                    "Update Poker Games Status"));
             }
 
             return htmlcontent;
@@ -459,23 +422,7 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
-                            break;
-                        case "20":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               CustParent.IsDisableCricket,
-                                               hasDownline,
-                                               "Cricket",
-                                               !renderLeftPanelParameter.IsHideCricket,
-                                               renderLeftPanelParameter,
-                                               "Update Cricket Status",
-                                               20,
-                                               4);
-                            break;
+                            break;                     
                         case "22":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -542,34 +489,6 @@
                                                "Update Lottery Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
                             break;
-
-                        case "26":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Lucky3",
-                                               renderLeftPanelParameter.IsShowLucky3,
-                                               renderLeftPanelParameter,
-                                               "Update Lucky 3 Status",
-                                               26);
-                            break;
-
-                        case "30":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Bullfighting",
-                                               renderLeftPanelParameter.IsShowBullfighting,
-                                               renderLeftPanelParameter,
-                                               "Update Bullfighting Status",
-                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting);
-                            break;
                     }
                 }
             }
@@ -594,7 +513,7 @@
                CustParent.IsDisableColossusBets,
                hasDownline,
                "ColossusBet",
-               renderLeftPanelParameter.IsShowColossusBetsForCredit,
+               renderLeftPanelParameter.IsShowColossusBetsForDeposit,
                renderLeftPanelParameter,
                "Update Colossus Bets Status",
                15);

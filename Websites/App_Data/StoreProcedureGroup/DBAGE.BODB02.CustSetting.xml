@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="Customer - Sportsbook-NG-Bingo Settings">
+  <Function Name="Customer - Sportsbook-NG Settings">
     <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -12,8 +12,7 @@ namespace Sunplus.Accounting.Business
     {
         public enum AccountingSystem
         {
-            Accounting = 1,
-            EXTERNAL = 2,
+            Accounting = 1,           
         }
         public static string SYSTEM
         {

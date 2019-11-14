@@ -22,21 +22,17 @@ public partial class Others_Menu : System.Web.UI.Page
     {
         virtualsport = 5,
         sportsbook2 = 16,
-        cricket = 20,
         allbet = 21,
         voidbridge = 22,
         ng2 = 23,
         fishingworld = 24,
-        lottery = 28,
-        lucky3 = 26
+        lottery = 28
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideColossusbets, hideCricket,
-            hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideLucky3, hideBullfighting,
-            hidePokerGames;
+        Boolean AllowedCS, hideVirtualSports, hideAllbet, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -58,31 +54,24 @@ public partial class Others_Menu : System.Web.UI.Page
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
-        hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
-        hideColossusbets = true;//!WebSettings.IsShowColossusBets || (roleid < 4 && !CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]));//(!CastAide.AsBoolean(db.Outputs["allowedcolossusbets"]) || !WebSettings.IsShowColossusBets) && (roleid < 4);
-
-        hideCricket = !CastAide.AsBoolean(db.Outputs["allowedcricket"]) || !WebSettings.IsShowCricket;
+        hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;     
         hideAllbet = !CastAide.AsBoolean(db.Outputs["allowedallbet"]) || !WebSettings.IsShowAllBet;
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideNG2 = !CastAide.AsBoolean(db.Outputs["allowedng2"]) || !WebSettings.IsShowNG2;
         hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
         hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedlottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
-        hideLucky3 = !CastAide.AsBoolean(db.Outputs["allowedlucky3"]) || !WebSettings.IsShowLucky3;
-        hideBullfighting = !CastAide.AsBoolean(db.Outputs["allowedbullfighting"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0;
-        hidePokerGames = !CastAide.AsBoolean(db.Outputs["allowedpokergames"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames == 0;
 
         string kenoPath = string.Empty;
         string casinoPath = string.Empty;
         string goldDeluxePath = string.Empty;
         string creditDCSLink = string.Empty;
-        string colossusBetPath = Page.ResolveUrl("~/customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?");
+       
 
         if (roleid == 1)
         {
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
-            colossusBetPath += "custid=" + custID + "&recommend=" + uplineId + "&roleid=1&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
         }
         else if (roleid == 2)
@@ -90,7 +79,6 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
-            colossusBetPath += "custid=" + custID + "&mrecommend=" + uplineId + "&roleid=2&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
         }
         else if (roleid == 3)
@@ -98,7 +86,6 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster?id=" + custID + "&uplineid=" + uplineId);
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
-            colossusBetPath += "custid=" + custID + "&srecommend=" + uplineId + "&roleid=3&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
         }
         else
@@ -107,7 +94,6 @@ public partial class Others_Menu : System.Web.UI.Page
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
             casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper?id=" + custID + "&uplineid=0");
             goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
-            colossusBetPath += "custid=" + custID + "&roleid=4&UserId=" + AppSession.AccId;
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
@@ -116,19 +102,12 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);
         this.RenderSettingTab("GoldDeluxe", "{urlgolddeluxe}", goldDeluxePath, !WebSettings.IsShowGoldDeluxeSettingForCredit);
-        this.RenderSettingTab("ColossusBet", "{urlColossusBet}", colossusBetPath, hideColossusbets);
-        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
-
-        this.RenderSettingTab("cricket", "{cricketLinkSetting}", string.Format(creditDCSLink, (int)products.cricket), hideCricket);
+        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);     
         this.RenderSettingTab("allbet", "{allbetLinkSetting}", string.Format(creditDCSLink, (int)products.allbet), hideAllbet);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("ng2", "{ng2LinkSetting}", string.Format(creditDCSLink, (int)products.ng2), hideNG2);
         this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
-        this.RenderSettingTab("KenoLottery", "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery), hideKenoLottery);
-        this.RenderSettingTab("lucky3", "{lucky3LinkSetting}", string.Format(creditDCSLink, (int)products.lucky3), hideLucky3);
-        this.RenderSettingTab("Bullfighting", "{bullfightingLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting), hideBullfighting);
-        this.RenderSettingTab("PokerGames", "{pokerGamesLinkSetting}", string.Format(creditDCSLink, 33), hidePokerGames);
-
+        this.RenderSettingTab("KenoLottery", "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery), hideKenoLottery);  
         this.sMenu.Text = this.tplMenu;
     }
 

@@ -473,60 +473,6 @@ table.racing .cl-placing {
 table.racing .cl-engine-no {
   width: 48px;
 }
-table.lucky3 .lottoBall {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  font-size: 12px;
-  color: #000;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 31px;
-  text-align: center;
-  background-image: url(images/lotto_ball.png);
-  background-repeat: no-repeat;
-}
-table.lucky3 .lottoBall.red {
-  background-position: 0 0;
-}
-table.lucky3 .lottoBall.blue {
-  background-position: 0 -30px;
-}
-table.lucky3 .lottoBall.disable {
-  color: #999;
-  background-position: 0 -60px;
-}
-table.lucky3 .lotto-bets .button i {
-  display: block;
-  width: 9px;
-  height: 19px;
-  background-image: url(images/icon_bets.png);
-}
-table.lucky3 .lotto-bets .button + .button {
-  margin-right: 0;
-}
-table.lucky3 .lotto-bets .min {
-  background-position: 0 -19px;
-}
-table.lucky3 .lotto-bets .minus {
-  background-position: -10px -19px;
-}
-table.lucky3 .lotto-bets .plus {
-  background-position: -20px -19px;
-}
-table.lucky3 .lotto-bets .max {
-  background-position: -30px -19px;
-}
-table.lucky3 .lotto-bets input {
-  float: left;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-top: 0;
-  padding-bottom: 0;
-  width: 16px;
-  height: 17px;
-  text-align: center;
-}
 table .row-noinfo {
   border: 1px solid #cbc9ca;
   border-top: 0;

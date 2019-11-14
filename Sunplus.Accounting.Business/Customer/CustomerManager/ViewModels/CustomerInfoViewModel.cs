@@ -13,6 +13,8 @@
 
     public partial class CustomerInfoViewModel
     {
+        private CustomerDetail customerDetail;
+
         private DataRow customerInfoRow { get; set; }
 
         private DataRow lineInfoRow { get; set; }
@@ -22,8 +24,6 @@
         private DataRow downlineStatusInfoRow { get; set; }
 
         private DataTable dynamicSettingtable { get; set; }
-
-        private DataRow headlineInfoRow { get; set; }
 
         private DataRow memberCN88CreditRow { get; set; }
 
@@ -79,8 +79,6 @@
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
-        public bool HideCricketCredit { get; private set; } = true;
-
         public bool HideEnableAndEditFishingWorld { get; private set; } = true;
 
         public bool HideKenoLottery { get; private set; } = true;
@@ -97,13 +95,9 @@
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
-        public bool ShowMicrogamingSettingLinkDeposit => WebSettings.EnableMicrogaming && IsDeposit;
-
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
 
         public bool ShowEnableCashOutDeposit => WebSettings.EnableCashOut && SearchAccountRoleId.Equals(4) && IsDeposit;
-
-        public bool ShowEnableMicrogamingDeposit => WebSettings.EnableMicrogaming && IsDeposit;
 
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
 
@@ -113,11 +107,18 @@
 
         public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
-        public bool HideSettingBullfighting { get; private set; } = true;
+        public CustomerDetail CustParent
+        {
+            get
+            {
+                if (customerDetail == null)
+                {
+                    customerDetail = ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
+                }
 
-        public bool HideSettingPokerGames { get; private set; } = true;
-
-        public CustomerDetail CustParent => ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
+                return customerDetail;
+            }
+        }
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
         {
@@ -137,10 +138,6 @@
 
                             case "16":
                                 HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
-                                break;
-
-                            case "20":
-                                HideCricketCredit = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowCricket || !IsIMBC || IsDeposit;
                                 break;
 
                             case "21":
@@ -181,26 +178,7 @@
 
                                 HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
-                                break;
-
-                            case "26":
-                                HideLucky3 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowLucky3;
-                                HideLucky3Upline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                break;
-
-                            case "30":
-                                bool HideBullfighting = Utils.ToBoolean(row["IsHidden"]);
-                                bool HideUplineBullfighting = Utils.ToBoolean(row["IsHiddenUpline"]);
-                                HideSettingBullfighting = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBullfighting == 0 ||
-                                    IsDeposit || (SearchAccountRoleId < 4 && (HideBullfighting || HideUplineBullfighting));
-                                break;
-
-                            case "33":
-                                bool HidePokerGames = Utils.ToBoolean(row["IsHidden"]);
-                                bool HideUplinePokerGames = Utils.ToBoolean(row["IsHiddenUpline"]);
-                                HideSettingPokerGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPokerGames == 0 ||
-                                    IsDeposit || (SearchAccountRoleId < 4 && (HidePokerGames || HideUplinePokerGames));
-                                break;
+                                break;                    
                         }
                     }
                 }

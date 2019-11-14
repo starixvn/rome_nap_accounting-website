@@ -4,11 +4,9 @@ using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.Admin;
 using Sunplus.Accounting.Business.CreditTerm;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
 using Sunplus.Accounting.Business.ExChangeRate;
 using Sunplus.Accounting.Business.LogDisplay;
 using Sunplus.Accounting.Business.PT.ViewPT;
-using Sunplus.Accounting.Business.Report.ResetWinning;
 using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
@@ -18,7 +16,6 @@ using Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.DataAccess.ILogDisplay;
-using Sunplus.Accounting.DataAccess.Report.ResetWinning;
 
 namespace Sunplus.Accounting.Business.BootStrappers
 {
@@ -44,7 +41,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IUserDAO, UserDAO>()
                 .RegisterType<IUserService, UserService>()
                 .RegisterType<IMenuManager, MenuManager>()
-                .RegisterType<IExchangeRateDAO, ExchangeRateDAO>()
                 .RegisterType<IExchangeRateService, ExchangeRateManager>()     
                 .RegisterType<IHelperDAO, HelperDAO>()
                 .RegisterType<IHelper, Helper>()
@@ -57,13 +53,10 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IViewPtManager, ViewPTManager>()            
                 .RegisterType<ILogDisplayDAO, LogDisplayDAO>()
                 .RegisterType<ISettingManager, SettingManager>()
-                .RegisterType<IServiceDailyTran, DailyTransManager>()
-                .RegisterType<IResetWinningDAO, ResetWinningDAO>()
-                .RegisterType<IResetWinningManager, ResetWinningManager>()
+                .RegisterType<IServiceDailyTran, DailyTransManager>()             
                 ;
           
-            RegisterPT(container);                  
-            RegisterAgencyGroup(container);           
+            RegisterPT(container);         
         }
 
         private static void RegisterType<T1, T2>()
@@ -75,12 +68,5 @@ namespace Sunplus.Accounting.Business.BootStrappers
         {
             container.RegisterType<PT.Casino.ICasinoManager, PT.Casino.CasinoManager>();
         }
-
-        private static void RegisterAgencyGroup(IUnityContainer container)
-        {
-            container
-                .RegisterType<IConsolidatedGroupManager, ConsolidatedGroupManager>();
-        }
-
     }
 }

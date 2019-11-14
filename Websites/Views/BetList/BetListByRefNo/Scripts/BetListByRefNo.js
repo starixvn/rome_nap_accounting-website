@@ -124,14 +124,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var isPokerGames = selProductValue === "33";
-        if (isPokerGames && $playerId3rd.val().trim() === "" &&
-            $playerId.val().trim() === "" && $username.val().trim() === "") {
-            showError("PlayerID or PlayerID (3rd) or Username is required");
-            return false;
-        }
-
-        if (!isPokerGames && $playerId.val().trim() === "" && $username.val().trim() === "") {
+        if ($playerId.val().trim() === "" && $username.val().trim() === "") {
             showError("Either PlayerID or Username is required");
             return false;
         }
@@ -141,7 +134,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        if ((selProductValue === "22" || selProductValue === "24" || selProductValue === "32" || isPokerGames)
+        if ((selProductValue === "22" || selProductValue === "24" || selProductValue === "32")
             && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;

@@ -53,8 +53,7 @@
                 DataSet dataSet = new DataSet();
 
                 betDetails = AccBetListCore.SessionManager.Get<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey);
-                outputLiveCasino = AccBetListCore.SessionManager.Get<List<ITicketData>>(BetListConstants.BetListByStatementOutputLiveCasinoSessionKey);
-
+               
                 IList<TicketDetail> getCache = AccBetListCore.SessionManager.Get<IList<TicketDetail>>("Bet list statement");
 
                 if (outputLiveCasino == null && outputLiveCasino.Count == 0)

@@ -58,10 +58,10 @@ jQuery.fn.ForceCurrencyOnly = function() {
                 || key == 35 //end
                 || key == 37 //left arrow
                 || key == 38 //up arrow
-                || key == 39//right arrow
-                || key == 40//down arrow
-                || key == 109//-
-                key == 189 //-
+                || key == 39 //right arrow
+                || key == 40 //down arrow
+                || key == 109 //-
+                || key == 189 //-
                 ) {
                 return true;
             }

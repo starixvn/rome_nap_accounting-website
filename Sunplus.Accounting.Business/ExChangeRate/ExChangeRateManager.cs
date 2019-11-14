@@ -23,15 +23,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExchangeRateManager : IExchangeRateService
     {
-        private readonly Sunplus.Accounting.DataAccess.IExchangeRateDAO _exchangeRateDAO;
-
         public ExchangeRateManager()
-        { }
-
-        public ExchangeRateManager(IExchangeRateDAO exchangeRateDAO)
-        {
-            _exchangeRateDAO = exchangeRateDAO;
-        }
+        { }     
 
         #region GenHeader
 

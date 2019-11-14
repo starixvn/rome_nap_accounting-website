@@ -1,5 +1,4 @@
 ﻿///// <reference path="jquery-ui-1.8.6.custom.min.js" />
-/// <reference path="../CRM/Feedback/Styles/ui-start/jquery-ui-1.8.6.custom.css" />
 var currentExecFrame = null;
 function OpenPopup(url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose) {
     $("#dialog-modal").dialog("destroy").remove();

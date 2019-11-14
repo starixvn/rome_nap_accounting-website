@@ -134,13 +134,7 @@
                 betTypeId == BetTypeContants.GoldDeluxeRoulette ||
                 betTypeId == BetTypeContants.Sicbo ||
                 betTypeId == BetTypeContants.Bidme;
-        }
-
-        public static bool IsMicroGaming(int betTypeId)
-        {
-            return BetTypeContants.MicroGamingBaccarat <= betTypeId &&
-                betTypeId <= BetTypeContants.MicroGamingEndBetType;
-        }
+        }        
 
         public static bool IsAGCasino(int betTypeId)
         {
@@ -220,11 +214,6 @@
         public static bool IsVirtualSports2(int betTypeId)
         {
             return 2700 <= betTypeId && betTypeId <= 2899;
-        }
-
-        public static bool IsPokerGames(int betTypeId)
-        {
-            return 1401 <= betTypeId && betTypeId <= 1499;
         }
 
         public static bool IsCardClub(int betTypeId)

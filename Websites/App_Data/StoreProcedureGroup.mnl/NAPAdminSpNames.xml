@@ -56,7 +56,6 @@
   </Function>
   <Function Name="Cust">
     <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-    <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-    <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />   
   </Function>
 </Functions>

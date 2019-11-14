@@ -7,16 +7,13 @@ using System.Text;
 namespace Fanex.Tarus.BetList.Helper
 {
     using Fanex.Tarus.BetList.Business.NumberGame;
-using Fanex.Tarus.BetList.Business.SportingSolutions;
 
     public static class ChoiceHelper
     {
         private static INumberWheelService _numberWheelService;
-        private static ISportingSolutionsService _sportingSolutionsService;
         static ChoiceHelper()
         {
-            _numberWheelService = new NumberWheelService();
-            _sportingSolutionsService = new SportingSolutionsService();
+            _numberWheelService = new NumberWheelService();         
         }
 
         public static string GetNumberWheelChoice(int hdp1, int betTeam)
@@ -24,9 +21,5 @@ using Fanex.Tarus.BetList.Business.SportingSolutions;
             return _numberWheelService.GetChoiceName(hdp1, betTeam);
         }
 
-        public static string GetSportingSolutionsChoice(int bettypeId, string resourceId, string betteam, int hdp1, int hdp2, string home, string away)
-        {
-            return _sportingSolutionsService.GetChoice(bettypeId, resourceId, betteam, hdp1, hdp2, home, away);
-        }
     }
 }

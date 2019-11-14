@@ -543,70 +543,7 @@ var ViewPT = {
                     </table>\
                     <br />\
                     <!--/tbl-->\
-                {{/each}}',
-    TplMicroGamingPtInfo: '{{each(i, pt) PotionTakingDetail}}\
-                <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
-                <table class="layout_table ViewPTTable c">\
-                    <tr class="ViewPTHeader b">\
-                        <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
-                        <th width="40">s</th>\
-                        <th width="40">m</th>\
-                        <th width="40">a</th>\
-                        <th width="40">n</th>\
-                        <th width="40">l</th>\
-                    </tr>\
-                    <!--r4-->\
-                    {{if (Super != null)}}\
-                    <tr class="trbgov" >\
-                        <td class="ViewPTHeader l">Super [4]</td>\
-                        <td>${Super.Super}</td>\
-                        <td>${Super.Master}</td>\
-                        <td>${Super.Agent}</td>\
-                        <td>${Super.MinPt}</td>\
-                        <td>${Super.MaxPt}</td>\
-                    </tr>\
-                    {{/if}}\
-                    <!--/r4-->\
-                    <!--r3-->\
-                    {{if (Master != null)}}\
-                    <tr  class="trbgov" >\
-                        <td class="ViewPTHeader l">Master [3]</td>\
-                        <td>${Master.Super}</td>\
-                        <td>${Master.Master}</td>\
-                        <td class="disable"></td>\
-                        <td>${Master.MinPt}</td>\
-                        <td>${Master.MaxPt}</td>\
-                    </tr>\
-                    {{/if}}\
-                    <!--/r3-->\
-                    <!--r2-->\
-                    {{if (Agent != null)}}\
-                    <tr class="trbgov" >\
-                        <td class="ViewPTHeader l">Agent [2]</td>\
-                        <td class="disable"></td>\
-                        <td>${Agent.Master}</td>\
-                        <td>${Agent.Agent}</td>\
-                        <td>${Agent.MinPt}</td>\
-                        <td>${Agent.MaxPt}</td>\
-                    </tr>\
-                    {{/if}}\
-                    <!--/r2-->\
-                    <!--r1-->\
-                    {{if (Member != null)}}\
-                    <tr class="trbgov" >\
-                        <td class="ViewPTHeader l">Member [1]</td>\
-                        <td>${Member.Super}</td>\
-                        <td>${Member.Master}</td>\
-                        <td>${Member.Agent}</td>\
-                        <td class="disable"></td>\
-                        <td class="disable"></td>\
-                    </tr>\
-                    {{/if}}\
-                    <!--/r1-->\
-                </table>\
-                <br />\
-                <!--/tbl-->\
-            {{/each}}',
+                {{/each}}',    
     TplPt: '<div style="padding-left: 20px;">\
             {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
             <div style="padding-left: 20px;">\
@@ -617,15 +554,11 @@ var ViewPT = {
                     {{if ($data.IsGoldDeluxe)}}\
                         {{tmpl($data) ViewPT.TplGoldDeluxePtInfo}}\
                     {{else}}\
-                        {{if ($data.IsMicroGaming)}}\
-                            {{tmpl($data) ViewPT.TplMicroGamingPtInfo}}\
-                        {{else}}\
-                            {{if ($data.IsAGCasino)}}\
+                        {{if ($data.IsAGCasino)}}\
                                 {{tmpl($data) ViewPT.TplAGCasinoPtInfo}}\
                             {{else}}\
                                 {{tmpl($data) ViewPT.TplPtInfo}}\
                             {{/if}}\
-                        {{/if}}\
                     {{/if}}\
                 {{/if}}\
             {{/if}}\
@@ -638,31 +571,22 @@ var ViewPT = {
                     <tr class="ViewPTHeader b">\
                         <td width="60">&nbsp;</td>\
                         <td >Group A</td>\
-                        {{if ($data.Comm[0].MyanmarOdds != null && !$data.Comm[0].MyanmarOdds.Status)}}\
-                            <td>Group B</td>\
-                            <td>Group C</td>\
-                            <td>Group D</td>\
-                        {{/if}}\
+                        <td>Group B</td>\
+                        <td>Group C</td>\
+                        <td>Group D</td>\
                         <td>Other</td>\
                         <!--1X2-->\
                             <td>1x2</td>\
                         <!--/1X2-->\
-                         <!--myanmarodds-->\
-                        {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
-                            <td>% Odds</td>\
-                        {{/if}}\
-                        <!--/myanmarodds-->\
                     </tr>\
                     <!--row-->\
                     {{each(i, current) $data.Comm}}\
                         <tr class="trbgov">\
                             <td class="tdtitle b">${RoleName}</td>\
                             <td>${GroupA.Comm}</td>\
-                            {{if (MyanmarOdds != null && !MyanmarOdds.Status)}}\
-                                <td>${GroupB.Comm}</td>\
-                                <td>${GroupC.Comm}</td>\
-                                <td>${GroupD.Comm}</td>\
-                            {{/if}}\
+				            <td>${GroupB.Comm}</td>\
+			                <td>${GroupC.Comm}</td>\
+			                <td>${GroupD.Comm}</td>\
                             <td>${Other.Comm}</td>\
                             <!--1X2-->\
                             {{if (OneXTwo != null && OneXTwo.Status)}}\
@@ -670,11 +594,6 @@ var ViewPT = {
                             {{/if}}\
                             <!--/1X2-->\
                             <!--/numbergame-->\
-                             <!--myanmarodds-->\
-                            {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
-                                <td>${MyanmarOdds.Comm}</td>\
-                            {{/if}}\
-                            <!--/myanmarodds-->\
                         </tr>\
                     {{/each}}\
                     <!--/row-->\
@@ -811,10 +730,7 @@ var ViewPT = {
                 break;
             case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
-                break;
-            case 163: // Poker Games
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 33);
-                break;
+                break;          
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
 
@@ -882,20 +798,7 @@ var ViewPT = {
             }
         });
     },
-    renderPTSetting: function (requestParams, result) {
-        if (result && result.length > 0) {
-            var ptHtmlResult = '';
-            switch (requestParams.SportId) {
-                case 252:
-                    ptHtmlResult = viewPT_Bingo.renderPTSetting(requestParams, result);
-                    break;
-            }
-
-            $('#sContent').append(ptHtmlResult);
-        } else {
-            showAlertMessage("err", "There is no information available.", 1);
-        }
-    },
+    
     getCurrentSportIndex: function (indexValue) {
         var indexArr = indexValue.split('_');
         var sport = null;

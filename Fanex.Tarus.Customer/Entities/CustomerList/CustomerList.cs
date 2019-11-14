@@ -39,18 +39,11 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double GroupB { get; set; }
         public double GroupC { get; set; }
         public double GroupD { get; set; }
-        public double DiscountMyanmarOdds { get; set; }
         public double _1x2 { get; set; }
-        public double Others { get; set; }        
-        public double MatchWinnerComm { get; set; }
-        public double UplineMatchWinnerComm { get; set; }
-
-        public string LastLoginIP { get; set; }
-        public bool IsMyanmarOdds { get; set; }
-        public bool IsSynCasinoUpline { get; set; }
-        public bool IsHideColossusBets { get; set; }
-        public bool IsHideSportsbook2 { get; set; }
-        public bool IsHideCricket { get; set; }
+        public double Others { get; set; }   
+        public string LastLoginIP { get; set; }      
+        public bool IsSynCasinoUpline { get; set; }      
+        public bool IsHideSportsbook2 { get; set; }       
         public bool IsHideAllBet { get; set; }
         public bool IsHideVoidbridge { get; set; }
         public bool IsHideFishingWorld { get; set; }
@@ -58,9 +51,6 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public int ParentMasterDirect { get; set; } // just for Direct Master
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }
-        public bool IsIMBCCustomers { get; set; }
-        public bool IsHidePokerGames { get; set; }
-
         public CustomerClosedReason ClosedReason { get; set; }
     }
 

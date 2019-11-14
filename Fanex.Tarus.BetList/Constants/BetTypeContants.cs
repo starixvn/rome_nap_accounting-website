@@ -30,15 +30,7 @@
         public const int _30MinOE = 63;
         public const int _45MinOE = 64;
         public const int _60MinOE = 65;
-        public const int EndOfDayOE = 66;
-
-        public const int WinToteOdds = 31;
-        public const int PlateToteOdds = 32;
-        public const int WinPlaceToteOdds = 33;
-
-        public const int WinFixedOdds = 41;
-        public const int PlaceFixedOdds = 42;
-        public const int WinPlaceFixedOdds = 43;
+        public const int EndOfDayOE = 66;       
 
         public const int CasinoGames = 71;
         public const int P2P = 72;
@@ -88,10 +80,7 @@
         public const int MetricGamingEndBetType = 899;
         public const int BetTradeSold = 901;
         public const int BetTradeBought = 902;
-        public const int BetTradeCommision = 903;
-
-        public const int MicroGamingBaccarat = 2001;
-        public const int MicroGamingEndBetType = 2009;
+        public const int BetTradeCommision = 903;      
 
         public const int ColossusBetsSummary = 18000;
         public const int ColossusBetsPoolBet = 18001;
@@ -100,8 +89,6 @@
         public const int ColossusBetsConsolationPrize = 18004;
         public const int ColossusBetsJackpotPrize = 18005;
         public const int ColossusBetsBonusPrize = 18006;
-
-        public const int CockFighting = 1003;
 
         public const int FastMarketNext1Minutes = 221;
         public const int FastMarketNext5Minutes = 222;

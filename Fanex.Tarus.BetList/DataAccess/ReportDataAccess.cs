@@ -19,18 +19,13 @@ namespace Fanex.Tarus.BetList.DataAccess
     using Microsoft.Practices.EnterpriseLibrary.Caching.Expirations;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Data;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class ReportDataAccess
     {
-        private static StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = ReportSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
+       
 
         public static class BalanceUp
         {

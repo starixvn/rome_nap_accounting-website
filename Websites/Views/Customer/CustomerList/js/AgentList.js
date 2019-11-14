@@ -275,12 +275,7 @@
             pageIndex = location.href.split("#")[1];
         }
         showPopup("Update Agent Setting", url, "", "", 1000, 650, false, 2000, function () { callAjax(getParams(pageIndex)); });
-    },
-    editSetting: function (custId, roleId) {
-        showPopup("Poker"
-                , "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId + "&roleId=" + roleId
-                , 0, 0, 640, 480, false, 2000, null);
-    },
+    },    
     virtualSportsSetting: function (custId, uplineId, roleId) {
         showPopup("Virtual Sport"
                 , "VirtualSportAgentPT/EditAgent?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
@@ -300,11 +295,7 @@
                 , "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=2"
                 , 0, 0, 880, 580, false, 2000, null);
     },
-    colossusBetSetting: function (custId, uplineId) {
-        showPopup("Colossus Bet"
-                , "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + custId + "&mrecommend=" + uplineId + "&roleid=2" + "&UserId=" + _adminID
-                , 0, 0, 880, 400, false, 2000, null);
-    },
+  
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {
@@ -312,15 +303,7 @@
         }
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
-        }       
-        if (_isParentMyanmarOdds == "True") {
-            initWidth -= 150;
-        }
-
-        if (parentIsIMBCCustomers) {
-            initWidth += 75;
-        }
-
+        }         
         AgentList.gridOption.gridWidth = initWidth;
     }
 };

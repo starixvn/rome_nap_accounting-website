@@ -45,20 +45,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary
 
                 listSite = helper.GetSites((Enumerations.AccountingSystem)objSystem);
             }
-
-            return listSite;
-        }
-
-        public List<SiteDTO> GetSiteList_Report_Licensee()
-        {
-            var objSystem = SessionExtension.GetSession(HttpContext.Current.Session, "CurrentSystem");
-            var listSite = new List<SiteDTO>();
-            if (objSystem != null)
-            {
-                var helper = CommonBootStrapper.Locator.GetInstance<IHelper>();
-                listSite = helper.GetSites_Report_Licensee((Enumerations.AccountingSystem)objSystem);
-            }
-
             return listSite;
         }
 

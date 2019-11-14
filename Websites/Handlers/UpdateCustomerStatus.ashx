@@ -256,29 +256,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledVS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    new CustomerUpdateStatus().CustomerUpdateDisabledVirtualSports(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledEsports":
-                    if (Permissions.GetHostPermission(Enumerations.Functions.Customer.EnableEsports))
-                    {
-                        isUpdDownline = false;
-                        if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                            throw new AccException("Invalid isupddonwline parameters");
-                        new CustomerUpdateStatus().CustomerUpdateDisabledEsport(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                        s = "parent.changeDisplayStatus();";
-                    }
-                    else
-                    {
-                        context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert("You are not authorized on this function.") +
-                                   "</script>");
-                    }
-                    break;
+                    break; 
                 case "disabledGoldDeluxe":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -315,7 +293,7 @@ public class UpdateCustomerStatus : BaseHandler
         }
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

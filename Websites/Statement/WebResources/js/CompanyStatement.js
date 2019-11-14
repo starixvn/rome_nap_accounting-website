@@ -39,11 +39,6 @@ function GetDataReport() {
     });
 }
 
-function SBD(transtype, fdate) {
-    url = 'StatementByDay.aspx?transtype=' + transtype + '&fdate=' + fdate;
-    document.location.href = url;
-}
-
 function ShowByDayAndType(transtype, date) {
     url = 'StatementByDay.aspx?transtype=' + transtype + '&fdate=' + date;
     document.location.href = url;

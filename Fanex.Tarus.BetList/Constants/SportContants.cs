@@ -48,12 +48,9 @@
 
         public const int MuayThai = 44;
         public const int GoldDeluxe = 255;
-
-        public const int MicroGamingLiveCasino = 203;
-        public const int MicroGamingRNGCasino = 205;
+       
         public const int AGCasino = 250;
         public const int Keno = 202;
-        public const int CockFighting = 206;
 
         public const int RNG_RNGGame = 208;
         public const int RNG_MiniGame = 209;
@@ -63,14 +60,10 @@
         public const int Voidbridge = 212;
         public const int FishingWorld = 219;
         public const int PP = 248;
-        public const int PokerGames = 163;
+
         public const int Happy5 = 164;
 
         public const int KenoLottery = 220;
-
-        public const int Lucky3 = 160;
-
-        public const int Bullfighting = 207;
 
         public const int CardClub = 165;
     }

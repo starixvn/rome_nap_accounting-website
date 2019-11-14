@@ -92,7 +92,7 @@
 {
 var bg = rowCSS(superItem);
 var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
-string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
+string siteName = string.Empty;
 
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
@@ -156,23 +156,14 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
                             Deluxe
                         </li>
                     }
-                    @if (!superItem.IsHideColossusBets)
-                    {
-                        <li class="canchange" onclick="SuperList.colossusBetSetting('@superItem.ChildID', '@Model.ParentId');">
-                            Colossus Bets
-                        </li>
-                    }
+                   
                     @if (!superItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 16, 'Sportsbook 2');">
                             Sportsbook 2
                         </li>
                     }
-
-                    @if (!superItem.IsHideCricket)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 20, 'Cricket');">Cricket</li>
-                    }
+                 
                     @if (!superItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'AllBet');">Allbet</li>
@@ -184,13 +175,6 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
                     @if (!superItem.IsHideFishingWorld)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 24, 'Fishing World');">Fishing World</li>
-                    }
-
-                    @if (!superItem.IsHidePokerGames)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 33, 'Poker Games');">
-                            Poker Games
-                        </li>
                     }
                 </ul>
             </div>
@@ -224,7 +208,6 @@ string siteName = superItem.IsMyanmarOdds ? "766666" : string.Empty;
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
 {
 var bg = rowCSS(superItem);
-string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -321,21 +304,17 @@ string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmar
             </div>
         </td>
         <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @{ var tmp = !superItem.IsIMBCCustomers ? "--" : superItem.MatchWinnerComm.ToString();}
-                @tmp
+            <div class="table-cell c" style="width: 70px; height: 18px;">             
             </div>
         </td>
       
         <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">
-                @discountMyanmarOdss
-            </div>
-        </td>
-        <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@superItem.LastLoginIP')">@superItem.LastLoginIP</a>
             </div>
+        </td>
+        <td>
+          
         </td>
     </tr>
 }

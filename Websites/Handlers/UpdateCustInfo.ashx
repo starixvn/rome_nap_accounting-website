@@ -8,12 +8,10 @@ using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using IBCUtils;
 using DNAide.Core;
 using Sunplus.Accounting.Entities.Customer;
-
 
 public class UpdateCustInfo : BaseHandler
 {
@@ -154,7 +152,7 @@ public class UpdateCustInfo : BaseHandler
         }
     }
 
-    public bool IsReusable
+    public override bool IsReusable
     {
         get
         {

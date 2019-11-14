@@ -61,12 +61,7 @@ function UpdateSettingStatus(chk1, chk2, type) {
         if ($("#" + chk1).attr('checked') == false && type == "disabledCS" && roleid != 1) {
 
             alert('Casino downlines will be disabled as well');
-        }
-
-        if ($("#" + chk1).attr('checked') == false && type == "disabledBingoGame" && roleid != 1) {
-
-            alert('Bingo downlines will be disabled as well');
-        }
+        }      
 
         if (type == 'SelectedBetting') {
             yes = $("#" + chk1).attr('checked');
@@ -162,18 +157,8 @@ function changeDisable(obj, type) {
         }
     }
 
-    var chk1 = obj.id;
-    //    alert((chk1));
-    //    alert($("#" + chk1).attr('checked'));
-    //    alert($('#chkOldValueNumberGame').val());
-
-    if (type == "HR")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueSATote').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueSATote').val() == '0')) {
-            $("#disabledHRPop .btn:first").removeAttr("disabled");
-        } else {
-            $("#disabledHRPop .btn:first").attr("disabled", "disabled");
-        }
+    var chk1 = obj.id;   
+  
     if (type == "CS")
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueCasino').val() == '1') ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueCasino').val() == '0')) {
@@ -181,44 +166,15 @@ function changeDisable(obj, type) {
         } else {
 
             $("#disabledCSPop .btn:first").attr("disabled", "disabled");
-        }
-    if (type == "OpenTote")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueUKTote').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueUKTote').val() == '0')) {
-            $("#disabledHROpenTotePop .btn:first").removeAttr("disabled");
-        } else {
-            $("#disabledHROpenTotePop .btn:first").attr("disabled", "disabled");
-        }
-    if (type == "FI")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueFinance').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueFinance').val() == '0')) {
-            $("#disabledFinancialPop .btn:first").removeAttr("disabled");
-        } else {
-            $("#disabledFinancialPop .btn:first").attr("disabled", "disabled");
-        }
-    if (type == "BI")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueBingo').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueBingo').val() == '0')) {
-            $("#disabledBingoGamePop .btn:first").removeAttr("disabled");
-        } else {
-            $("#disabledBingoGamePop .btn:first").attr("disabled", "disabled");
-        }
+        } 
+    
     if (type == "NumberGame")
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueNumberGame').val() == "1") ||
         ($("#" + chk1).attr('checked') == false && $('#chkOldValueNumberGame').val() == "0")) {
             $("#disabledNumberGamePop .btn:first").removeAttr("disabled");
         } else {
             $("#disabledNumberGamePop .btn:first").attr("disabled", "disabled");
-        }
-
-    if (type == "LCS")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueLiveCasino').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueLiveCasino').val() == '0')) {
-            $("#disabledLCSPop .btn:first").removeAttr("disabled");
-        } else {
-
-            $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
-        }
+        }   
 
     if (type == "VS") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueVirtualSport').val() == '1') ||
@@ -230,6 +186,7 @@ function changeDisable(obj, type) {
             $("#disabledVSPop .btn:first").attr("disabled", "disabled");
         }
     }
+
     if (type == "ES") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueEsport').val() == '1') ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueEsport').val() == '0')) {
@@ -239,15 +196,7 @@ function changeDisable(obj, type) {
 
             $("#disabledESPop .btn:first").attr("disabled", "disabled");
         }
-    }
-    if (type == "LCS")
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueLiveCasino').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueLiveCasino').val() == '0')) {
-            $("#disabledLCSPop .btn:first").removeAttr("disabled");
-        } else {
-
-            $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
-        }
+    }   
 
     var productName = "GoldDeluxe";
     if (type == productName) {
@@ -352,15 +301,10 @@ function HideClosedPop(div) {
 }
 
 function DisabeAllCheckBox() {
-    $("#disabledHRPop .btn:first").attr("disabled", "disabled");
-    $("#disabledHROpenTotePop .btn:first").attr("disabled", "disabled");
-    $("#disabledFinancialPop .btn:first").attr("disabled", "disabled");
-    $("#disabledBingoGamePop .btn:first").attr("disabled", "disabled");
     $("#disabledNumberGamePop .btn:first").attr("disabled", "disabled");
     $("#disabledCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledLCSPop .btn:first").attr("disabled", "disabled");
     $("#disabledVSPop .btn:first").attr("disabled", "disabled");
-    $("#enableHorseRacingFixedOddsPop .btn:first").attr("disabled", "disabled");
     $("#disabledGoldDeluxePop .btn:first").attr("disabled", "disabled");
 };
 

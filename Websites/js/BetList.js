@@ -429,30 +429,6 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         });
 }
 
-function showMicroGamingRnGBetsDetails(refno, winlossDate, custId, transType) {
-    var params = $.param({
-        Refno: refno,
-        WinLossDate: winlossDate,
-        TransType: transType,
-        CustId: custId,
-        SportType: 205,
-        PageSize: 500
-    });
-
-    parent.OpenNextPopup(
-        "MicrogamingDetails",
-        'MicroGamingBetList/BetDetails?' + params,
-        'Microgaming Details',
-        1030,
-        600,
-        true,
-        false,
-        window,
-        0,
-        null,
-        null);
-}
-
 function showNG2Details(transId, refno, custId) {
     var width = 660;
     parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
@@ -556,11 +532,6 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
     };
 
     openResultsPopUp(params);
-}
-
-function showLucky3Details(transId, custId) {
-    var width = 830;
-    parent.OpenNextPopup("Lucky3Details", 'Lucky3/ViewDetail?TransactionId=' + transId + '&CustomerId=' + custId, '', width, 500, true, false, window, 0, null, null);
 }
 
 function ShowBonusDetails(refCode, transId) {
@@ -682,19 +653,6 @@ function ViewFishingWorldResult(custId, betCheck) {
     ViewGlobalGamingResult(custId, betCheck);
 }
 
-// --------------------
-function ViewMicroGamingPopup(custId, siteName, gameId) {
-    var microgamingParam = {
-        url: "Report/ViewMicroGamingResult.aspx",
-        title: "Microgaming Result",
-        jsonParam: { custId: custId, siteName: siteName, gameId: gameId },
-        width: 750,
-        height: 500
-    };
-
-    openResultsPopUp(microgamingParam);
-}
-
 function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -754,10 +712,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getBaseballParam();
 
         case 161: // Number Game.
-            return getNumberGameParam(matchid);
-
-        case 162: // Live Casino.
-            return getLiveCasinoParam(matchid, bettype, league);
+            return getNumberGameParam(matchid);      
 
         case 164: // Happy5
             return getHappy5Param(matchid);
@@ -792,10 +747,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 250: // AGCasino.
             return getAGCasinoParam(refno, bettype);
 
-        case 163: // Poker Games.
         case 165:
             // custId, gameTypeId, transId3rd, viewerLevel
-            return getPokerGamesParam(betcheck, bettype, sporttype, matchcode);
+            return getCardClubParam(betcheck, bettype, sporttype, matchcode);
 
         default:
             return undefined;
@@ -805,14 +759,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
-            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
-
-        case bettype === 31 || bettype === 32 || bettype === 33 ||
-            bettype === 41 || bettype === 42 || bettype === 43: // Horse Racing.
-            return getHRParam(matchid);
-
-        case 1600 <= bettype && bettype <= 1610: // Lucky 3.
-            return getLucky3Param(matchid);
+            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);      
 
         case bettype === 1701 || bettype === 1702 || bettype === 1703 || bettype === 1704 || bettype === 1705: // Gold Deluxe.
             return getGoldDeluxeParam(bettype, refno);
@@ -824,9 +771,7 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
             return getMetricGamingParam(matchid, bettype, sporttype, betid);
 
         case 2501 <= bettype && bettype <= 2699:
-            return getNG2Param(matchid);
-        case bettype === 1004:
-            return getBullfightingParam(refno, custId);
+            return getNG2Param(matchid);      
 
         default:
             return undefined;
@@ -863,13 +808,6 @@ function getHappy5Param(matchid) {
     };
 }
 
-function getLiveCasinoParam(matchid, bettype, league) {
-    return {
-        url: "LiveCasino/Betlist/BetListLiveCasinoResult.aspx",
-        title: "Live Casino",
-        jsonParam: { matchid: matchid, bettype: bettype, league: league }
-    };
-}
 
 function getVirtualHRParam(matchid, sporttype) {
     var resultParam = {
@@ -927,8 +865,8 @@ function getAllbetParam(transdesc, betcheck, bettype) {
     };
 }
 
-function getPokerGamesParam(custId, gameTypeId, sportType, transId3rd) {
-    var sportName = sportType == 163 ? "Poker Games" : "Card Club";
+function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
+    var sportName = "Card Club";
     var bettypeNames = {};
     bettypeNames["1401"] = "8 Cards";
     bettypeNames["1402"] = "Hold'em";
@@ -941,7 +879,7 @@ function getPokerGamesParam(custId, gameTypeId, sportType, transId3rd) {
     var title = sportName + " - " + betTypeName;
 
     return {
-        url: "../Report/ViewPokerGamesResult.aspx",
+        url: "../Report/ViewCardClubResult.aspx",
         title: title,
         jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
         width: 945,
@@ -971,16 +909,6 @@ function getPPParam(matchcode, betcheck) {
     };
 }
 
-function getBullfightingParam(refNo, custId) {
-    return {
-        url: "ThirdParty/Result",
-        title: "Bullfighting Result",
-        jsonParam: { custId: custId, gameId: refNo, productId: 30 },
-        width: 870,
-        height: 500
-    };
-}
-
 function getFishingWorldParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewGlobalGamingResult.aspx",
@@ -999,24 +927,6 @@ function getSystemParlayParam(matchid, refno, bettype, betid) {
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
         height: 500
-    };
-}
-
-function getHRParam(matchId) {
-    return {
-        url: "Report/HRRaceResult.aspx",
-        title: "Race Result",
-        jsonParam: { matchId: matchId }
-    };
-}
-
-function getLucky3Param(matchId) {
-    return {
-        url: "Report/ViewLucky3Result.aspx",
-        title: "Lucky 3",
-        jsonParam: { matchId: matchId },
-        width: 750,
-        height: 200
     };
 }
 
