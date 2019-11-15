@@ -114,10 +114,13 @@
                                     {
                                         var match = eventTmp.MatchList[j];
                                         <div>
-                                            <span>@ticketHelper.GetTeamNameById(match.HomeID) </span>- <span>
+                                            <span>@ticketHelper.GetTeamNameById(match.HomeID) </span>
+                                            @(match.IsNeutral ? "(N) " : " ")
+                                            -
+                                            <span>
                                                 @ticketHelper.GetTeamNameById(match.AwayID)
-                                        </span>
-                                    </div>
+                                            </span>
+                                        </div>
                                     }
                                 </div>
                             </td>

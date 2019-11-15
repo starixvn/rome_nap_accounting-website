@@ -119,8 +119,9 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 {
                     string homename = CacheRef.GetTeamName(rowDetail["homeid"]);
                     string awayname = CacheRef.GetTeamName(rowDetail["awayid"]);
+                    var neutral = CastAide.AsBoolean(rowDetail["isneutral"]) ? " (N)" : string.Empty;
 
-                    lstEvent.Add("<span>" + homename + " -vs- " + awayname + "</span>");
+                    lstEvent.Add("<span>" + homename + neutral + " -vs- " + awayname + "</span>");
                 }
                 TemplateHandler.Assign(ref rowTemp, "{Event}", string.Join("<br/>", lstEvent.ToArray()));
 

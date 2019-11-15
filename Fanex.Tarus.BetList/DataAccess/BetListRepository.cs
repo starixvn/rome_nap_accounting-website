@@ -401,7 +401,8 @@
                                     matchList.Add(new Match
                                     {
                                         HomeID = Converter.To<int>(row["homeid"]),
-                                        AwayID = Converter.To<int>(row["awayid"])
+                                        AwayID = Converter.To<int>(row["awayid"]),
+                                        IsNeutral = Converter.To<bool>(row["isneutral"])
                                     });
                                 }
                             }
