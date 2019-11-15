@@ -85,4 +85,7 @@
     <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_TicketResult_BetBuilder " SpName="Acc_TicketResult_BetBuilder" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Permission - Detect Customer Id">
+    <Setting Key="Acc_CustomerDetectCustId" SpName="Acc_CustomerDetectCustId" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>
