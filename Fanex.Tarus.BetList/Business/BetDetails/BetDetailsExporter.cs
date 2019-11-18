@@ -54,6 +54,11 @@
                 return "CardClub_Details";
             }
 
+            if (sportType == SportContants.Spadegaming)
+            {
+                return "Spadegaming_Details";
+            }
+
             if (sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile)
@@ -78,7 +83,8 @@
 
             if (sportType == SportContants.Voidbridge ||
                 sportType == SportContants.PP ||
-                sportType == SportContants.CardClub)
+                sportType == SportContants.CardClub ||
+                sportType == SportContants.Spadegaming)
             {
                 return GetMacauGamesTickets(refNo, custId, transType);
             }
