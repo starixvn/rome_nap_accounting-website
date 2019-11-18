@@ -343,7 +343,7 @@
       <HintPath>..\packages\Fanex.Result.Core.CardClub.1.0.1.0\lib\net40\Fanex.Result.Core.CardClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.Casino.1.0.0.0-Spadegaming-01\lib\Fanex.Result.Core.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.Casino.1.0.0.0-Spadegaming-03\lib\Fanex.Result.Core.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GlobalGaming.1.0.0.2\lib\net40\Fanex.Result.Core.GlobalGaming.dll</HintPath>

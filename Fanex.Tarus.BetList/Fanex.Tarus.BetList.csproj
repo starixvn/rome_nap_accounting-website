@@ -130,11 +130,10 @@
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
-      </Reference>
+    </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0-beta2\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
     </Reference>
-
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -177,7 +176,7 @@
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.7\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.Casino.1.0.0.0-Spadegaming-01\lib\Fanex.Result.Core.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.Casino.1.0.0.0-Spadegaming-03\lib\Fanex.Result.Core.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GlobalGaming.1.0.0.2\lib\net40\Fanex.Result.Core.GlobalGaming.dll</HintPath>
