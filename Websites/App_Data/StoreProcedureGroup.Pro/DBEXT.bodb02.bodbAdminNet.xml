@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Customer - New Licensee">
-    <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -10,21 +10,18 @@
     <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin-BACustomer">
-    <Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="DBEXT.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Betlist">
-    <Setting Key="GetCurrency" SpName="Acc_BA_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer NewLicensee">
-    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
-    <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 
   <Function Name="Exchange">
-    <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBEXT.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
