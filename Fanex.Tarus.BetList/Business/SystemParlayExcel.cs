@@ -128,8 +128,10 @@
                 for (int j = 0, max = eventObject.MatchList.Count; j < max; j++)
                 {
                     matchObject = eventObject.MatchList[j];
+                    var neutral = matchObject.IsNeutral ? " (N)" : string.Empty;
                     matchBuilder
                         .Append(ticketHelper.GetTeamNameById(matchObject.HomeID))
+                        .Append(neutral)
                         .Append(" - ")
                         .Append(ticketHelper.GetTeamNameById(matchObject.AwayID));
 
@@ -254,8 +256,10 @@
                 for (int j = 0, max = eventObject.Matches.Count; j < max; j++)
                 {
                     matchObject = eventObject.Matches[j];
+                    var neutral = matchObject.IsNeutral ? " (N)" : string.Empty;
                     matchBuilder
                         .Append(ticketHelper.GetTeamNameById(matchObject.HomeID))
+                        .Append(neutral)
                         .Append(" - ")
                         .Append(ticketHelper.GetTeamNameById(matchObject.AwayID));
 

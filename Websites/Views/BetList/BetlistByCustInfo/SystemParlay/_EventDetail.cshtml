@@ -39,7 +39,7 @@
                             </div>
                         </th>
                         <th>
-                            <div class="width50 height34 table-cell">
+                            <div class="width100 height34 table-cell">
                                 Stake
                             </div>
                         </th>
@@ -79,7 +79,7 @@
                             </div>
                         </th>
                         <th>
-                            <div class="width50 height34 table-cell">
+                            <div class="width100 height34 table-cell">
                                 Stake
                             </div>
                         </th>
@@ -114,10 +114,13 @@
                                     {
                                         var match = eventTmp.MatchList[j];
                                         <div>
-                                            <span>@ticketHelper.GetTeamNameById(match.HomeID) </span>- <span>
+                                            <span>@ticketHelper.GetTeamNameById(match.HomeID) </span>
+                                            @(match.IsNeutral ? "(N) " : " ")
+                                            -
+                                            <span>
                                                 @ticketHelper.GetTeamNameById(match.AwayID)
-                                        </span>
-                                    </div>
+                                            </span>
+                                        </div>
                                     }
                                 </div>
                             </td>
@@ -127,7 +130,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="width50 height34 table-cell r">
+                                <div class="width100 height34 table-cell r">
                                     @eventTmp.Stake.Format(2)
                                 </div>
                             </td>

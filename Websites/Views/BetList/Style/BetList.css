@@ -570,3 +570,13 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     position: relative;
     top: 2px;
 }
+
+.nph-promotion-icon {
+    background: url(Images/nphPromotion.png) no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    position: relative;
+    top: 4px;
+    margin-right: 2px;
+}
