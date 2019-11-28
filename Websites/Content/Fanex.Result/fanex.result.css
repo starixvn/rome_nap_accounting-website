@@ -442,6 +442,13 @@ table.casino .cl-match .red {
 table.casino .cl-match .black {
   color: #000000;
 }
+table.badminton .cl-result.home {
+    color: #6678e0;
+}
+
+table.badminton .cl-result.away {
+    color: #008d95;
+}
 table.racing {
   /* Header */
   /* Body */
