@@ -10,13 +10,22 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using System;
 using Role = Fanex.Tarus.Infrastructure.Common.Enumerations.Role;
+using Fanex.Tarus.User.Entities;
+using Newtonsoft.Json;
 
 public partial class InternalView : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         var serviceBase = new ServiceBase();
-        string strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
+        var internalLoginModel = new InternalLoginModel
+        {
+            AdminId = int.Parse(Request["accId"]),
+            AdminName = Request["custName"],
+            TimeTick = Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks,
+            SystemLogin = "NAP"
+        };
+
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         Role roleType = Request["roleId"] == null || Request["roleId"].Equals("undefined", StringComparison.CurrentCultureIgnoreCase) ? Role.Null : (Role)Utils.ToInt32(Request["roleId"]);
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
@@ -44,8 +53,17 @@ public partial class InternalView : System.Web.UI.Page
                 return;
             }
         }
+        string strParams = string.Empty;
+        if (checkCustomerBelongToSpecialSiteResult.Site.IndexOf("CN88") >= 0)
+        {
+            strParams = AccountingCoreUtils.EncryptString(JsonConvert.SerializeObject(internalLoginModel), 1024, strPath);
+        }
+        else
+        {
+            strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
+            strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
+        }
 
-        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
         string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site, roleType);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
