@@ -477,7 +477,7 @@ function showPPDetails(transId, winlossDate, custId, transType) {
         url: "VoidbridgeBetList/BetDetails",
         title: "PP Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
-        width: 1030,
+        width: 1070,
         height: 600,
         resizable: false
     };
