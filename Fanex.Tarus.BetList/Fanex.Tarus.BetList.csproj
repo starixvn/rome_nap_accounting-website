@@ -121,9 +121,8 @@
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.1.0\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.PP, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PP.1.2.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.PP, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PP.1.3.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.1.1.0\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
