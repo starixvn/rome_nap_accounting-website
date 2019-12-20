@@ -62,7 +62,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
                     var currencies = syncCurrencyService.SyncCurrencies().Currencies;
 
-                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy);
+                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy, Code);
                     if (errMsg.Length == 0)
                     {
                         var allowedCurrency = false;
