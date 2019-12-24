@@ -2462,4 +2462,7 @@
   <data name="CN88_MoveSuper_ConfirmSubmit" xml:space="preserve">
     <value>Are you sure you want to move this Super to new Headline?</value>
   </data>
+  <data name="lblDisabledVirtualGamesUpline" xml:space="preserve">
+    <value>Virtual Games has been disabled at upline</value>
+  </data>
 </root>
