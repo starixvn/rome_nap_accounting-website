@@ -2443,7 +2443,9 @@
     <value>Sportsbook</value>
   </data>
   <data name="InvalidHeadline" xml:space="preserve">
-    <value>Invalid Headline.</value>
+    <value>Invalid Headline.</value></data>
+  <data name="enableVirtualGames" xml:space="preserve">
+    <value>Virtual Games</value>
   </data>
   <data name="HeadlineUsername" xml:space="preserve">
     <value>Headline Username</value>

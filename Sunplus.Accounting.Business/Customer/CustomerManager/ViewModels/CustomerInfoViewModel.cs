@@ -81,6 +81,8 @@
 
         public bool HideEnableAndEditFishingWorld { get; private set; } = true;
 
+        public bool HideVirtualGames { get; private set; } = true;
+
         public bool HideKenoLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
@@ -178,7 +180,11 @@
 
                                 HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
-                                break;                    
+                                break;
+                            case "38":
+                                bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
+                                HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames ;
+                                break;
                         }
                     }
                 }

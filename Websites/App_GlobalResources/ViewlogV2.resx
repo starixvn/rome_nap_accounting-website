@@ -2062,7 +2062,9 @@
     <value>Monitor Status</value>
   </data>
   <data name="IsViewAllPeriod" xml:space="preserve">
-    <value>View all Periods</value>
+    <value>View all Periods</value></data>
+  <data name="Disable245_4601" xml:space="preserve">
+    <value>Disabled Virtual Games</value>
   </data>
   <data name="NonSportsPossess" xml:space="preserve">
     <value>Non-Sport Possess</value>

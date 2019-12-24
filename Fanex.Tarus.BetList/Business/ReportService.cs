@@ -224,6 +224,11 @@
             return 1901 <= betTypeId && betTypeId <= 1999;
         }
 
+        public static bool IsVirtualGames(int betTypeId)
+        {
+            return 4601 <= betTypeId && betTypeId <= 4900;
+        }
+
         public static bool IsHappy5Bettype(int bettypeId)
             => bettypeId >= 8101 && bettypeId <= 8105;
         #endregion StaticMethods

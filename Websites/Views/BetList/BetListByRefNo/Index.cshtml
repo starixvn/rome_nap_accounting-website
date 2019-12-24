@@ -29,6 +29,11 @@
     {
         allowedProducts.Append("/").Append("SG");
     }
+    var productIdVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames;
+    if (productIdVirtualGames != 0)
+    {
+        allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdVirtualGames));
+    }
 }
 <html>
 <head>
@@ -144,6 +149,10 @@
                                     @if (!string.IsNullOrEmpty(productIdSG))
                                     {
                                         <option value="@productIdSG" data-vendor-id="36">SG</option>
+                                    }
+                                    @if (productIdVirtualGames != 0)
+                                    {
+                                        <option value="@productIdVirtualGames">@CacheRef.GetProductName(productIdVirtualGames)</option>
                                     }
                                 </select>
                             </td>
