@@ -37,7 +37,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
             return _externalSiteService.RemoveSuperFromGroup(custId, groupName);
         }
 
-        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
+        public ExternalSiteExtraPTGroup GetExtraPTGroups(int custId)
         {
             return _externalSiteService.GetExtraPTGroups(custId);
         }

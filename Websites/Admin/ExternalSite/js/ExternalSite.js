@@ -259,7 +259,7 @@ var changeGroupService = (function ($, ajaxService) {
         currentEffectiveDate = "";
         var html = [];
 
-        $.each(extraPTGroups, function (index, group) {
+        $.each(extraPTGroups.Entities, function (index, group) {
             var isNoExtraPT = group.GroupName === "No Extra PT";
 
             html.push("<tr>");
@@ -309,23 +309,11 @@ var changeGroupService = (function ($, ajaxService) {
 
     function changePrimaryGroup(reloadSuperListHandler) {
         $changeGroupErrorMsg.empty();
-
         var newEffectiveDate = $effectiveDate.val();
-
-        if (newEffectiveDate === today) {
-            var sayYes = confirm("Changing the Primary Extra PT group which take effect from today might have impact on the reset amounts\nin the Reset Winning report. Are you sure you want to change?");
-
-            if (!sayYes) {
-                return;
-            }
-        }
-
         var newPrimaryGroup = $table.find('input[name=isPrimary]:checked').val();
-
         var changeGroupSuccess = function (result) {
             if (result.ErrorCode === 0) {
                 showAlertMessage("changeGroupErrorMsg", "Changed Primary Group Successfully", 0);
-
                 setTimeout(function () {
                     $changeGroupDialog.addClass("hidden").dialog("close");
                     reloadSuperListHandler();
@@ -355,15 +343,14 @@ var changeGroupService = (function ($, ajaxService) {
         });
     };
 
-    self.showDialog = function (custId, superName, effectiveDate) {
+    self.showDialog = function (custId, superName) {
         $changeGroupErrorMsg.empty();
         $spanSuperName.html(superName);
-        $effectiveDate.datepicker("setDate", effectiveDate);
         superId = custId;
 
         ajaxService.getExtraPTGroups(superId, function (data) {
             assignGridBodyRows(data);
-
+            $effectiveDate.datepicker("setDate", data.NoOfMember > 0 ? tomorrow: today);
             $changeGroupDialog.removeClass("hidden").dialog("open");
 
             $grid.reRenderScroller(320, 184, true);
@@ -577,7 +564,7 @@ var changeGroupService = (function ($, ajaxService) {
                     .unbind("click")
                     .bind("click", function () {
                         var $this = $(this);
-                        changeGroupService.showDialog($this.attr("data-custid"), $this.attr("data-username"), tomorrow);
+                        changeGroupService.showDialog($this.attr("data-custid"), $this.attr("data-username"));
                     });
 
                 $(".removeSuper")

@@ -1,7 +1,8 @@
 ﻿@using Fanex.Tarus.Customer.Entities.ExtraPtGroup
 @model AddGroupByProductViewModel
 @{
-    string minDate = DateTime.Today.ToString("yyyyMMdd");
+    var minDate = DateTime.Today.AddDays(1);
+    var toDay = DateTime.Today;
 }
 <html>
 <head>
@@ -54,24 +55,25 @@
             <td>Effective Date <span class="asterisk">*</span></td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                minDate,
+                minDate.ToString("yyyyMMdd"),
                 "99991231",
                 "effdate",
                 "../",
                 "fdateTrigger",
-                DateTime.Now.ToString("MM/dd/yyyy"),
+                minDate.ToString("MM/dd/yyyy"),
                 false,
                 false,
                 string.Empty,
                 string.Empty,
-                string.Empty))
+                string.Empty,
+                false))
             </td>
         </tr>
         <tr>
             <td>End Date</td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                minDate,
+                minDate.ToString("yyyyMMdd"),
                 "99991231",
                 "enddate",
                 "../",
@@ -81,7 +83,8 @@
                 false,
                 string.Empty,
                 string.Empty,
-                string.Empty))
+                string.Empty,
+                false))
             </td>
         </tr>
         <tr>
@@ -97,6 +100,7 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
     <script src="@Url.Content("~/Views/Admin/ExtraPtGroup/Scripts/ExtraPtGroup.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
     <script type="text/javascript">
+        var toDay = '@toDay.ToString("MM/dd/yyyy")';
         function resolveClientUrl(relativePath) {
             return '@Url.Content("~/")' + relativePath;
         }
