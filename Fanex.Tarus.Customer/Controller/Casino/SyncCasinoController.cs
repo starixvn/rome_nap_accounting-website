@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
+using Fanex.Tarus.Customer.Criteria.Casino;
+using Fanex.Tarus.Customer.Requests.Casino;
 
 namespace Fanex.Tarus.Customer.Controller.Casino
 {
@@ -25,9 +27,9 @@ namespace Fanex.Tarus.Customer.Controller.Casino
         }
 
         [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Read)]
-        public ActionResult UnsyncedList()
+        public ActionResult UnsyncedList(GetUnsyncedListRequest request)
         {
-            var result = _service.GetUnsyncedCustomers();
+            var result = _service.GetUnsyncedCustomers(new GetUnsyncedListCriteria { FromDate = request.FromDate, ToDate = request.ToDate });
 
             return Json(result);
         }
