@@ -71,6 +71,17 @@ function setvalue(check)
     }
 }
 
+function ConfirmRemoveHeadLine() {
+    var isHeadLine = document.getElementById('groupheadline').checked;
+    if (isHeadLine)
+    { 
+        return true;
+    }
+    else {
+        return confirm('The group has only 1 member (is Headline). Are you sure you want to remove this group?');
+    }
+}
+
 function SetChecker(elemt, check) {
     //elemt.checked=!elemt.checked;
 
