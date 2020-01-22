@@ -126,20 +126,28 @@ namespace Sunplus.Accounting.Presentation
                     string title = string.Empty;
                     string roweven = "evenrow";
                     int index = 0;
-
+                    var removeUserFunction = "ExecuteCreditTerm('3', 0, false)";
                     foreach (var member in memberList)
                     {
                         if (member.CustId > 0)
                         {
-                            _userrow = (string)userrow.Clone();
-
-                            if (member.IsGroupHeadline && totalmember > 2)
+                            _userrow = (string)userrow.Clone();                            
+                            if (member.IsGroupHeadline)
                             {
                                 jsheadline = string.Empty;
                                 headline = "(HEAD LINE)";
                                 headlineclass = "../App_Themes/Images/headlineH.gif";
                                 headlineclasstext = "headlinetext";
-                                removeitem = string.Empty;
+                                if (totalmember == 2)
+                                {
+                                    removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
+                                            "' name='chkuser' id='chkuser' />";
+                                    removeUserFunction = "ExecuteCreditTerm('3', 0, true)";
+                                }
+                                else {
+                                    removeitem = string.Empty;
+                                }
+
                                 title = "Headline user";
                             }
                             else
@@ -199,7 +207,7 @@ namespace Sunplus.Accounting.Presentation
                             groupMaxLoss = member.MaxLoss;
                         }
                     }
-
+                    TemplateHandler.Assign(ref formHtml, "{removeUserFunction}", removeUserFunction);
                     TemplateHandler.Assign(ref formHtml, "{UserRowList}", userrows.ToString());
                 }
 
