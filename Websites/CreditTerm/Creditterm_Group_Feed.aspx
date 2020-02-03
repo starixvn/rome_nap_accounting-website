@@ -111,11 +111,18 @@
 
                     function GetJSONResult(resContent) {
                         var reportInfo = $.evalJSON(resContent);
-                        var sData = reportInfo.CreditTerm;
-
+                        var sData = reportInfo.CreditTerm;                       
                         $("#sContent").html(sData);
-                        try{parent.jQuery.unblockUI();}catch(e){}
+                        try {
+                            setTimeout(function () { parent.jQuery.unblockUI(); }, 2000);                          
+                        } catch (e) { }
 
+                    }
+
+                    function RedirectToGroupList() {
+                        setTimeout(function () {
+                            window.location.href = "../CreditTerm/CreditTermGroupView.aspx"; 
+                        }, 3000)
                     }
 
                     function ExportToExcel(groupid) {

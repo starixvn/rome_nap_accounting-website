@@ -110,9 +110,11 @@ namespace Sunplus.Accounting.Presentation
                 if (totalmember <= 1)
                 {
                     TemplateHandler.RemoveBlock(ref formHtml, "DataContent");
+                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", "<script>RedirectToGroupList();</script>");                    
                 }
                 else
                 {
+                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", string.Empty);
                     string userrow = TemplateHandler.CopyBlock(formHtml, "UserRow");
                     TemplateHandler.RemoveBlock(ref formHtml, "UserRow");
 
