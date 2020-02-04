@@ -19,7 +19,7 @@
     <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype_UAT1" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Gold deluxe win limit">
     <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbAdminNet" />
