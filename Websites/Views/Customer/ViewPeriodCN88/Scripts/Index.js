@@ -6,9 +6,17 @@
             btnSearch: $('#btnSearch'),
             gridContainer: $('#gridContainer'),
             mainGrid: $('#main-grid'),
-            sectionMessage: $('#sectionMessage')
+            sectionMessage: $('#sectionMessage'),
+            noteMsg: $('.noteMsg')
         }
+
         viewPeriodCN88.DOMElements.btnSearch.click(viewPeriodCN88.Search);
+        viewPeriodCN88.DOMElements.txtHeadlineUsername.keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                viewPeriodCN88.Search();
+            }
+        });
     },
     Search: function () {
         parent.BlockUI();
@@ -23,7 +31,7 @@
                         { Name: 'FirstName', Value: currentRow.FirstName },
                         { Name: 'LastName', Value: currentRow.LastName },
                         { Name: 'Currency', Value: currentRow.Currency },
-                        { Name: 'IsViewAllPeriods', Value: '<span class="' + (currentRow.IsViewAllPeriods ? 'chkchecked' : 'chkuncheck') + '" onclick="viewPeriodCN88.chkIsViewAllPeriods_OnClick(this)" data-headline-id="' + currentRow.HeadlineId + '" ></span>' }
+                        { Name: 'IsViewAllPeriods', Value: '<span data-headline-username="' + currentRow.HeadlineUsername +'" class="' + (currentRow.IsViewAllPeriods ? 'chkchecked' : 'chkuncheck') + '" onclick="viewPeriodCN88.chkIsViewAllPeriods_OnClick(this)" data-headline-id="' + currentRow.HeadlineId + '" ></span>' }
                     ]
                 });
             }
@@ -41,6 +49,7 @@
             };
 
             viewPeriodCN88.DOMElements.gridContainer.removeClass('hide').show();
+            viewPeriodCN88.DOMElements.noteMsg.removeClass('hide').show();
             viewPeriodCN88.DOMElements.mainGrid.fanexGrid(gridOption);
         }).always(function () { parent.jQuery.unblockUI() });
     },
@@ -62,7 +71,8 @@
     },
     chkIsViewAllPeriods_OnClick: function (element) {
         var $this = $(element);
-        if (confirm($this.hasClass('chkchecked') ? resources.ConfirmUncheckViewAllPeriods : resources.ConfirmCheckViewAllPeriods)) {
+        var headlineUsername = $this.attr('data-headline-username');
+        if (confirm($this.hasClass('chkchecked') ? resources.ConfirmUncheckViewAllPeriods.replace('{0}', headlineUsername) : resources.ConfirmCheckViewAllPeriods.replace('{0}', headlineUsername))) {
             $this.toggleClass('chkchecked chkuncheck');
             viewPeriodCN88.UpdatePeriod($this.attr('data-headline-id'), $this.hasClass('chkchecked'));
         }

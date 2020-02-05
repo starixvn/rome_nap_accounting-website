@@ -40,15 +40,5 @@
         }
 
         public Result UpdatePeriod(UpdateHeadlinePeriodCriteria criteria) => ExecuteNonQuery(criteria);
-
-        private List<HeadlinePeriods> FakeData()
-        {
-            var result = new List<HeadlinePeriods>();
-            for (int i = 0; i < 100; i++)
-            {
-                result.Add(new HeadlinePeriods() { HeadlineId = i, Currency = "UUS", FirstName = "FirstName" + i, LastName = "LastName" + i, HeadlineUsername = "Headline" + i, IsViewAllPeriods = true });
-            }
-            return result;
-        }
     }
 }

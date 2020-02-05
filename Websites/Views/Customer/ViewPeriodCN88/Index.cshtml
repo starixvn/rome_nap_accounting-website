@@ -16,8 +16,8 @@
     <script src="@Url.Content("~/Views/Customer/ViewPeriodCN88/Scripts/Index.js?v=" + WebSettings.Version)"></script>
     <script>
         var resources = {
-            ConfirmCheckViewAllPeriods: 'Are you sure you want to check "View all Periods" for this Headline?',
-            ConfirmUncheckViewAllPeriods:'Are you sure you want to uncheck "View all Periods" for this Headline?'
+            ConfirmCheckViewAllPeriods: 'Are you sure you want to check "View all Periods" for Headline {0} ?',
+            ConfirmUncheckViewAllPeriods:'Are you sure you want to uncheck "View all Periods" for Headline {0} ?'
         };
     </script>
 }
@@ -45,7 +45,7 @@
             </table>
         </div>
         <div style="clear: both"></div>
-        <div class="noteMsg">
+        <div class="noteMsg hide">
             Check on "View all Periods": Allow Headline to view all Periods except current period and current period - 1 on Old Report.
             <br />
             Uncheck on "View all Periods":  Headline view only data last period - 1 and last period - 2 on Old Report.
