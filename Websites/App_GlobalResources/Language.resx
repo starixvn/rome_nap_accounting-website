@@ -1173,7 +1173,6 @@
   <data name="CommissionFinancial" xml:space="preserve">
     <value>Finance Commission</value>
   </data>
-
   <data name="lblCommHR" xml:space="preserve">
     <value>Commission</value>
   </data>
@@ -1195,7 +1194,6 @@
   <data name="lblPhone" xml:space="preserve">
     <value>Phone</value>
   </data>
-
   <data name="lblUpdate" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -1237,7 +1235,7 @@
   </data>
   <data name="lblInvalidCurrencyHR" xml:space="preserve">
     <value>This customer is not allowed to bet on Racing</value>
-  </data> 
+  </data>
   <data name="CommissionForCompany" xml:space="preserve">
     <value>Comm for Company</value>
   </data>
@@ -1258,7 +1256,7 @@
   </data>
   <data name="lblMeetingTC" xml:space="preserve">
     <value>Meeting (TC)</value>
-  </data> 
+  </data>
   <data name="lblPlace" xml:space="preserve">
     <value>Place</value>
   </data>
@@ -1807,7 +1805,7 @@
   </data>
   <data name="winterSports" xml:space="preserve">
     <value>Winter Sports</value>
-  </data> 
+  </data>
   <data name="lblDisabledNumberGame" xml:space="preserve">
     <value>Number Game</value>
   </data>
@@ -1891,7 +1889,7 @@
   </data>
   <data name="lblAUTote52" xml:space="preserve">
     <value>Place.Aust Tote</value>
-  </data>  
+  </data>
   <data name="GroupTotalInCome" xml:space="preserve">
     <value>Group Total Income</value>
   </data>
@@ -1943,7 +1941,6 @@
   <data name="lblComm" xml:space="preserve">
     <value>Comm</value>
   </data>
-  
   <data name="lblSendMailFail" xml:space="preserve">
     <value>Send Mail Failed </value>
   </data>
@@ -1959,7 +1956,6 @@
   <data name="lblMathWinloss" xml:space="preserve">
     <value>Match Win Loss (2a)</value>
   </data>
-  
   <data name="lblCommIncome" xml:space="preserve">
     <value>Comm Income</value>
   </data>
@@ -1984,7 +1980,6 @@
   <data name="plumelelaTitle" xml:space="preserve">
     <value>Phumelela</value>
   </data>
-  
   <data name="lblAmountduetoIBC" xml:space="preserve">
     <value>Amount due to IBC</value>
   </data>
@@ -2047,7 +2042,7 @@
   </data>
   <data name="lblGame" xml:space="preserve">
     <value>Game</value>
-  </data> 
+  </data>
   <data name="companycommbase" xml:space="preserve">
     <value>Company Comm Base (RM)</value>
   </data>
@@ -2072,7 +2067,6 @@
   <data name="BAComm" xml:space="preserve">
     <value>BA Comm</value>
   </data>
-
   <data name="lblTotalTransactionEurCost" xml:space="preserve">
     <value>Transaction Cost (EUR)</value>
   </data>
@@ -2154,11 +2148,9 @@
   <data name="CheckSynchronize" xml:space="preserve">
     <value>If moved Master/Agent is already Synced Live Casino and new Super/Master is UnSynced then not allow to move</value>
   </data>
-  
   <data name="lblP2PPrivateGameComm" xml:space="preserve">
     <value>Private Game</value>
   </data>
-
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
@@ -2195,7 +2187,6 @@
   <data name="CompanyTO" xml:space="preserve">
     <value>Company T/O</value>
   </data>
-
   <data name="numberBet" xml:space="preserve">
     <value>#Bets</value>
   </data>
@@ -2294,7 +2285,7 @@
   </data>
   <data name="enableColossusBet" xml:space="preserve">
     <value>Colossus Bets</value>
-  </data> 
+  </data>
   <data name="lblDisabledColossusBet" xml:space="preserve">
     <value>Colossus Bets</value>
   </data>
@@ -2450,5 +2441,17 @@
   </data>
   <data name="Sportsbook" xml:space="preserve">
     <value>Sportsbook</value>
+  </data>
+  <data name="InvalidHeadline" xml:space="preserve">
+    <value>Invalid Headline.</value>
+  </data>
+  <data name="InvalidSuper" xml:space="preserve">
+    <value>Invalid Super.</value>
+  </data>
+  <data name="MoveSuperSuccess" xml:space="preserve">
+    <value>Move Super successfully.</value>
+  </data>
+  <data name="CN88_MoveSuper_ConfirmSubmit" xml:space="preserve">
+    <value>Are you sure you want to move this Super to new Headline?</value>
   </data>
 </root>

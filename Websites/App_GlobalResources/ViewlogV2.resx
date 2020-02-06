@@ -2064,4 +2064,10 @@
   <data name="MonitorPT" xml:space="preserve">
     <value>Monitor Status</value>
   </data>
+  <data name="NonSportsPossess" xml:space="preserve">
+    <value>Non-Sport Possess</value>
+  </data>
+  <data name="SportsbookPossess" xml:space="preserve">
+    <value>Sportsbook Possess</value>
+  </data>
 </root>
