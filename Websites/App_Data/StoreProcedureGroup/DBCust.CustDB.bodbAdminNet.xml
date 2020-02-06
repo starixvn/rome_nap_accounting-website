@@ -151,9 +151,9 @@
   </Function>
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User control">
@@ -351,7 +351,7 @@
     <Setting Key="CS_HeadlineUsernameSuggestion" SpName="CS_HeadlineUsernameSuggestion" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="CN88 - MoveSuper">
-    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess_xpre" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline_xpre" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>

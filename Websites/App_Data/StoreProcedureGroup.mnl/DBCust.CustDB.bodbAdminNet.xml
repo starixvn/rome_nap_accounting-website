@@ -354,7 +354,7 @@
     <Setting Key="CS_HeadlineUsernameSuggestion" SpName="CS_HeadlineUsernameSuggestion" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="CN88 - MoveSuper">
-    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess_xpre" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline_xpre" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>

@@ -5,6 +5,7 @@ using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Data;
 using Fanex.Logging.Extensions.Web;
+using Fanex.Tarus.Customer.Criteria.Casino;
 using Fanex.Tarus.Customer.Entities.NG2;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Entities.Casino;
@@ -54,16 +55,14 @@ namespace Fanex.Tarus.Customer.DataAccess.Casino
             return result;
         }
 
-        public SyncCustomerModel GetUnsyncedCustomers()
+        public SyncCustomerModel GetUnsyncedCustomers(GetUnsyncedListCriteria criteria)
         {
             var result = new SyncCustomerModel();
             SyncCustomerEntity entity = null;
 
-            using (var db = new ObjectDb("Acc_CustomerSelUnSyncRNG"))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                var param = new Hashtable();
-
-                using (var reader = db.ExecuteReader(param))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     if (reader != null)
                     {
@@ -169,8 +168,8 @@ namespace Fanex.Tarus.Customer.DataAccess.Casino
         }
 
         private static string GetRoleName(int roleId) =>
-            roleId == 4 ? "Super" : 
-            roleId == 3 ? "Master" : 
+            roleId == 4 ? "Super" :
+            roleId == 3 ? "Master" :
             roleId == 2 ? "Agent" : "Member";
     }
 }

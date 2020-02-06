@@ -393,6 +393,7 @@
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
+    <Compile Include="Criteria\Casino\GetUnsyncedListCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88UnlockCustomerCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
     <Compile Include="Criteria\CN88\HeadlinePossess\GetHeadlinePossessCriteria.cs" />
@@ -578,6 +579,7 @@
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
+    <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
     <Compile Include="Requests\CN88\AddNewHeadlineRequest.cs" />
     <Compile Include="Requests\CN88\MoveSuper\MoveSuperRequest.cs" />
     <Compile Include="Requests\CN88\UpdateCreditParam.cs" />

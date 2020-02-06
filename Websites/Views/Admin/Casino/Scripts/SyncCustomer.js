@@ -2,6 +2,27 @@
 
 angular.element($('#ng-app')).ready(function () {
     $('#ng-app').show();
+
+    $('#txtFromDate').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        minDate: new Date(minDay),
+        defaultDate: currentDay,
+        onSelect: function (dateText, inst) {
+            var maxDate = new Date(dateText);
+            maxDate.setDate(maxDate.getDate() + 6);
+            $('#txtToDate').datepicker("option", "minDate", dateText);
+            $('#txtToDate').datepicker("option", "maxDate", maxDate);
+        }
+    }).datepicker('setDate', currentDay);
+
+    $('#txtToDate').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        minDate: currentDay,
+        maxDate: sevenDaysFromToday,
+        defaultDate: currentDay
+    }).datepicker("setDate", currentDay);
 });
 
 function SyncCustomerController($scope, $compile) {
@@ -58,6 +79,7 @@ function SyncCustomerController($scope, $compile) {
         $.ajax({
             type: "POST",
             url: "UnsyncedList",
+            data: { fromDate: $('#txtFromDate').val(), toDate: $('#txtToDate').val() },
             success: function (rs) {
                 $scope.RegenerateData(rs);
             },

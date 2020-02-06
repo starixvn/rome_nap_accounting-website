@@ -1,12 +1,11 @@
-﻿using Fanex.CustomerSetting.Module.Core.Models;
-using Fanex.Tarus.Customer.DataAccess.Casino;
-using Fanex.Tarus.Customer.Entities.NG2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Fanex.Tarus.Customer.Business.Casino
+﻿namespace Fanex.Tarus.Customer.Business.Casino
 {
+    using Fanex.Tarus.Customer.Criteria.Casino;
+    using Fanex.Tarus.Customer.DataAccess.Casino;
+    using Fanex.Tarus.Customer.Entities.NG2;
+    using System;
+    using System.Linq;
+
     public class SyncCasinoService : ISyncCasinoService
     {
         private readonly ISyncCasinoRepository _repository = new SyncCasinoRepository();
@@ -27,8 +26,8 @@ namespace Fanex.Tarus.Customer.Business.Casino
             return model;
         }
 
-        public SyncCustomerModel GetUnsyncedCustomers()
-            => _repository.GetUnsyncedCustomers();
+        public SyncCustomerModel GetUnsyncedCustomers(GetUnsyncedListCriteria criteria)
+            => _repository.GetUnsyncedCustomers(criteria);
 
         public SyncCustomerModel SyncCustomers(SyncCustomerModel model)
         {
