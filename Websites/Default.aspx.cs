@@ -7,6 +7,7 @@ public partial class _Default : System.Web.UI.Page
 {
     public string accUsername = "";
     public string listMenuIgnore = string.Empty;
+    public string Env = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -22,6 +23,7 @@ public partial class _Default : System.Web.UI.Page
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
+            Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
         }
     }
 }

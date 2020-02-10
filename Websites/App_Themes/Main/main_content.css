@@ -72,6 +72,18 @@ input[type="file"] >input[type="button"]::-moz-focus-inner{border:none}
 	background:url(../images/banner/bg_menu.jpg) repeat-x;
 	height: 43px;
 }
+.dev {
+    background: url(../images/banner/bg_menu_dev.jpg) !important;   
+}
+.uat {
+    background: url(../images/banner/bg_menu_uat.jpg) !important;
+}
+.sit {
+    background: url(../images/banner/bg_menu_sit.jpg) !important;
+}
+.mnl {
+    background: url(../images/banner/bg_menu_mnl.jpg) !important;
+}
 
 /*end layout*/
 

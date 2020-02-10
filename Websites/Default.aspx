@@ -41,7 +41,7 @@
     <div>
         <div class="bannerbox">
             <!--Banner-->
-            <div class="top_banner2">
+            <div class="top_banner2 <%=Env%>">
                 <div id="left_topbanner2" style="float: left;">
                     <div class="welcomebox">
                         Welcome <span class="text_org">
