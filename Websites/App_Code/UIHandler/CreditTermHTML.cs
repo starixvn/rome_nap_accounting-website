@@ -50,11 +50,11 @@ namespace Sunplus.Accounting.Presentation
         public static string GetContentCreditTerm(HttpContext context, ref string groupMaxLoss)
         {
             html = WebUtils.LoadTemplate("CreditTeam/Creditterm_Group_Feed_Form.htm");
-            string from = html;
+            string formHtml = html;
 
             try
             {
-                TemplateHandler.RemoveBlock(ref from, "Filter");
+                TemplateHandler.RemoveBlock(ref formHtml, "Filter");
                 int groupId = 0;
 
                 if (!string.IsNullOrEmpty(context.Request["groupid"]))
@@ -81,19 +81,19 @@ namespace Sunplus.Accounting.Presentation
 
                 if (type == 1)
                 {
-                    AddUsersToGroup(ref from, groupId, username, userid);
+                    AddUsersToGroup(ref formHtml, groupId, username, userid);
                 }
                 else if (type == 3) // 3 - Remove Selected Users from This Group
                 {
-                    RemoveSelectedUsersFromGroup(ref from, groupId, userid, listname, ref username_selected, ref custid_selected, ref msg, ref count_normal_user_selected);
+                    RemoveSelectedUsersFromGroup(ref formHtml, groupId, userid, listname, ref username_selected, ref custid_selected, ref msg, ref count_normal_user_selected);
                 }
                 else if (type == 2) // 2 - Set Selected User to Headline
                 {
-                    SetSelectedUserToBeGroupHeadline(ref from, groupId, userid, listname);
+                    SetSelectedUserToBeGroupHeadline(ref formHtml, groupId, userid, listname);
                 }
                 else
                 {
-                    TemplateHandler.Assign(ref from, "{msg}", "");
+                    TemplateHandler.Assign(ref formHtml, "{msg}", "");
                 }
 
                 if (type > 0)
@@ -106,102 +106,122 @@ namespace Sunplus.Accounting.Presentation
                 var creditTermService = new CreditTermService();
                 var memberList = creditTermService.GetMemberByGroupId(groupId);
 
-                string userrow = TemplateHandler.CopyBlock(from, "UserRow");
-                TemplateHandler.RemoveBlock(ref from, "UserRow");
-
-                var userrows = new StringBuilder();
-                string headline = string.Empty;
-                string _userrow = string.Empty;
-                string headlineclass = string.Empty;
-                string headlineclasstext = string.Empty;
-                string removeitem = string.Empty;
-                string jsheadline = string.Empty;
-                string title = string.Empty;
-                string roweven = "evenrow";
-                int index = 0;
-
-                foreach (var member in memberList)
+                int totalmember = memberList.Count;
+                if (totalmember <= 1)
                 {
-                    if (member.CustId > 0)
-                    {
-                        _userrow = (string)userrow.Clone();
+                    TemplateHandler.RemoveBlock(ref formHtml, "DataContent");
+                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", "<script>RedirectToGroupList();</script>");                    
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", string.Empty);
+                    string userrow = TemplateHandler.CopyBlock(formHtml, "UserRow");
+                    TemplateHandler.RemoveBlock(ref formHtml, "UserRow");
 
-                        if (member.IsGroupHeadline)
+                    var userrows = new StringBuilder();
+                    string headline = string.Empty;
+                    string _userrow = string.Empty;
+                    string headlineclass = string.Empty;
+                    string headlineclasstext = string.Empty;
+                    string removeitem = string.Empty;
+                    string jsheadline = string.Empty;
+                    string title = string.Empty;
+                    string roweven = "evenrow";
+                    int index = 0;
+                    var removeUserFunction = "ExecuteCreditTerm('3', 0, false)";
+                    foreach (var member in memberList)
+                    {
+                        if (member.CustId > 0)
                         {
-                            jsheadline = string.Empty;
-                            headline = "(HEAD LINE)";
-                            headlineclass = "../App_Themes/Images/headlineH.gif";
-                            headlineclasstext = "headlinetext";
-                            removeitem = string.Empty;
-                            title = "Headline user";
+                            _userrow = (string)userrow.Clone();                            
+                            if (member.IsGroupHeadline)
+                            {
+                                jsheadline = string.Empty;
+                                headline = "(HEAD LINE)";
+                                headlineclass = "../App_Themes/Images/headlineH.gif";
+                                headlineclasstext = "headlinetext";
+                                if (totalmember == 2)
+                                {
+                                    removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
+                                            "' name='chkuser' id='chkuser' />";
+                                    removeUserFunction = "ExecuteCreditTerm('3', 0, true)";
+                                }
+                                else {
+                                    removeitem = string.Empty;
+                                }
+
+                                title = "Headline user";
+                            }
+                            else
+                            {
+                                title = "Set this user to headline";
+                                headlineclass = "../App_Themes/Images/headline.gif";
+                                headlineclasstext = string.Empty;
+                                headline = string.Empty;
+                                removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
+                                             "' name='chkuser' id='chkuser' />";
+                                jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                            }
+
+                            roweven = roweven == string.Empty ? "evenrow" : string.Empty;
+
+                            TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
+                            TemplateHandler.Assign(ref _userrow, "{No}", ++index);
+                            TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
+                            TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
+                            TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
+                            TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
+                            TemplateHandler.Assign(
+                               ref _userrow,
+                               "{YesterdayTotalBalance}",
+                               member.TotalBalance.StartsWith("-") ?
+                                   string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
+                                   member.YesterdayBalance);
+                            TemplateHandler.Assign(
+                                ref _userrow,
+                                "{TotalBalance}",
+                                member.TotalBalance.StartsWith("-") ?
+                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
+                                    member.TotalBalance);
+                            TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
+                            TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
+                            TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
+                            TemplateHandler.Assign(ref _userrow, "{jsaddheadline}", jsheadline);
+                            TemplateHandler.Assign(ref _userrow, "{title}", title);
+
+                            userrows.Append(_userrow);
                         }
                         else
                         {
-                            title = "Set this user to headline";
-                            headlineclass = "../App_Themes/Images/headline.gif";
-                            headlineclasstext = string.Empty;
-                            headline = string.Empty;
-                            removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
-                                         "' name='chkuser' id='chkuser' />";
-                            jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                            TemplateHandler.Assign(
+                                ref formHtml,
+                                "{SumYesterdayTotalBalance}",
+                                member.YesterdayBalance.StartsWith("-") ?
+                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
+                                    member.YesterdayBalance);
+                            TemplateHandler.Assign(
+                                ref formHtml,
+                                "{SumTotalBalance}",
+                                member.TotalBalance.StartsWith("-") ?
+                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
+                                    member.TotalBalance);
+
+                            groupMaxLoss = member.MaxLoss;
                         }
-
-                        roweven = roweven == string.Empty ? "evenrow" : string.Empty;
-
-                        TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
-                        TemplateHandler.Assign(ref _userrow, "{No}", ++index);
-                        TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
-                        TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
-                        TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
-                        TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
-                        TemplateHandler.Assign(
-                           ref _userrow,
-                           "{YesterdayTotalBalance}",
-                           member.TotalBalance.StartsWith("-") ?
-                               string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
-                               member.YesterdayBalance);
-                        TemplateHandler.Assign(
-                            ref _userrow,
-                            "{TotalBalance}",
-                            member.TotalBalance.StartsWith("-") ?
-                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
-                                member.TotalBalance);
-                        TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
-                        TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
-                        TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
-                        TemplateHandler.Assign(ref _userrow, "{jsaddheadline}", jsheadline);
-                        TemplateHandler.Assign(ref _userrow, "{title}", title);
-
-                        userrows.Append(_userrow);
                     }
-                    else
-                    {
-                        TemplateHandler.Assign(
-                            ref from,
-                            "{SumYesterdayTotalBalance}",
-                            member.YesterdayBalance.StartsWith("-") ?
-                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
-                                member.YesterdayBalance);
-                        TemplateHandler.Assign(
-                            ref from,
-                            "{SumTotalBalance}",
-                            member.TotalBalance.StartsWith("-") ?
-                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
-                                member.TotalBalance);
-
-                        groupMaxLoss = member.MaxLoss;
-                    }
+                    TemplateHandler.Assign(ref formHtml, "{removeUserFunction}", removeUserFunction);
+                    TemplateHandler.Assign(ref formHtml, "{UserRowList}", userrows.ToString());
                 }
 
-                TemplateHandler.Assign(ref from, "{UserRowList}", userrows.ToString());
+               
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                TemplateHandler.Assign(ref from, "{UserRowList}", "<tr><td colspan='3' class='c'>" + ex.Message + "</td></tr>");
+                TemplateHandler.Assign(ref formHtml, "{UserRowList}", "<tr><td colspan='3' class='c'>" + ex.Message + "</td></tr>");
             }
 
-            return from;
+            return formHtml;
         }
 
         private static void RemoveSelectedUsersFromGroup(ref string from, int groupid, int userid, string listname, ref string username_selected, ref string custid_selected, ref string msg, ref int count_normal_user_selected)

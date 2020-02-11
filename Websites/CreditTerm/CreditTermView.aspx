@@ -1,5 +1,6 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="CreditTermView.aspx.cs" Inherits="CreditTerm_CreditTermView" %>
 
+<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -10,7 +11,7 @@
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="../js/Controls/StyledCheckbox/form[1].css" rel="stylesheet" type="text/css" />
     <script src="../js/Controls/StyledCheckbox/custom-form-elements.js" type="text/javascript"></script>
-    <script src="../js/CreditTerm.js" type="text/javascript"></script>
+    <script src="../js/CreditTerm.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
     <script src="../js/common.js" type="text/javascript"></script>
    
 </head>

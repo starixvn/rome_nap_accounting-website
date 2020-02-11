@@ -47,14 +47,14 @@
                     function checkall() {
                         $("input[name=chkuser]").attr("checked", $("#chkcheckall").attr("checked"));
                     }
-                    function ExecuteCreditTerm(type, userid) {
+                    function ExecuteCreditTerm(type, userid, isshowConfirm) {
                         $("#errMsg,#errMsg1").html('');
                         var listuser="";
                         switch (type) {
                             case '1':
                                 var usernamesValue = $('#txtuser').val();
                                 if (usernamesValue.trim().length == 0) {
-                                    showAlertMessage("errMsg","Please enter Username.",1);
+                                    showAlertMessage("errMsg", "Please enter Username.", 1);
                                     return;
                                 }
 
@@ -78,41 +78,51 @@
                                 break;
                             case '3':
                                 $('input[name=chkuser]:checked').each(
-                                function() {
-                                listuser += $(this).val() + ",";
-                                });
-
+                                    function () {
+                                        listuser += $(this).val() + ",";
+                                    });
                                 if (listuser == "") {
-                                    showAlertMessage("errMsg", "Please select user.",1);
+                                    showAlertMessage("errMsg", "Please select user.", 1);
                                     return;
+                                    break;
                                 }
-                                break;
                         }
+                        if (type == 3 && isshowConfirm && !confirm('The group has only 1 member (is Headline). Are you sure you want to remove this group?')) {
+                            return;
+                        }
+                        else {
+                            try { parent.BlockUI(); } catch (e) { }
 
-                        try{parent.BlockUI();}catch(e){}
-
-                        var param = '';
-                        param += '&mode=9';
-                        param += '&type=' + type;
-                        param += '&username=' + $('#txtuser').val();
-                        param += '&lstlistname=' + listuser;
-                        $.ajax(
-                             {
-                                 type: "POST",
-                                 url: "../Report/GetData.ashx",
-                                 data: param,
-                                 success: GetJSONResult
-                             }
-                         );
+                            var param = '';
+                            param += '&mode=9';
+                            param += '&type=' + type;
+                            param += '&username=' + $('#txtuser').val();
+                            param += '&lstlistname=' + listuser;
+                            $.ajax(
+                                {
+                                    type: "POST",
+                                    url: "../Report/GetData.ashx",
+                                    data: param,
+                                    success: GetJSONResult
+                                }
+                            );
+                        }
                     }
 
                     function GetJSONResult(resContent) {
                         var reportInfo = $.evalJSON(resContent);
-                        var sData = reportInfo.CreditTerm;
-
+                        var sData = reportInfo.CreditTerm;                       
                         $("#sContent").html(sData);
-                        try{parent.jQuery.unblockUI();}catch(e){}
+                        try {
+                            setTimeout(function () { parent.jQuery.unblockUI(); }, 2000);                          
+                        } catch (e) { }
 
+                    }
+
+                    function RedirectToGroupList() {
+                        setTimeout(function () {
+                            window.location.href = "../CreditTerm/CreditTermGroupView.aspx"; 
+                        }, 3000)
                     }
 
                     function ExportToExcel(groupid) {
