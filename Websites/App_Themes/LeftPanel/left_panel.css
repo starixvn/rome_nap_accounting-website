@@ -512,6 +512,12 @@ body {
     background-color: #fff;
     width: 100px;
     border-collapse: collapse;
+    height: 200px;
+    overflow: auto;
+}
+
+#divLevelABI {
+    border: 1px solid #C6D0E3;
 }
 
 .danger-div {
@@ -520,6 +526,9 @@ body {
     display: inline-block;
 }
 
+.danger-div:first-of-type {
+    width: 100%;
+}
 
 .pagerbox {
     display: none;

@@ -1,35 +1,79 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dangerous>
   <level id="0" name="None" color="#000000" background="#ffffff"/>
-  <level id="11" name="11" color="#000000" background="#FF0000" />
   
   <level id="1" name="1" color="#000000" background="#ffffff"/>
-  <level id="12" name="12" color="#000000" background="#FFFF00" />
-  
+  <level id="26" name="26" color="#FFFFFF" background="#CC6600" />
+
   <level id="2" name="2" color="#FF0000" background="#ffffff"/>
-  <level id="13" name="13" color="#000000" background="#8DB4E2" />
-  
+  <level id="27" name="27" color="#FFFFFF" background="#FFA500" />
+
   <level id="3" name="3" color="#ffcc00" background="#ffffff"/>
-  <level id="14" name="14" color="#000000" background="#9CF1FC"/>
-  
+  <level id="28" name="28" color="#FFFFFF" background="#808080" />
+
   <level id="4" name="4" color="#0000FF" background="#ffffff"/>
-  <level id="15" name="15" color="#000000" background="#CCC0DA"/>
-  
+  <level id="29" name="29" color="#FFFFFF" background="#C4BD97"/>
+
   <level id="5" name="5" color="#FF8080" background="#ffffff"/>
-  <level id="16" name="16" color="#000000" background="#CC6600"/>
-  
+  <level id="30" name="30" color="#FFFFFF" background="#FF66CC"/>
+
   <level id="6" name="6" color="#BB00BB" background="#ffffff"/>
-  <level id="17" name="17" color="#000000" background="#FFA500"/>
-  
+  <level id="31" name="31" color="#149DFF" background="#00FF00"/>
+
   <level id="7" name="7" color="#660000" background="#ffffff"/>
-  <level id="18" name="18" color="#000000" background="#D8E4BC"/>
-  
+  <level id="32" name="32" color="#149DFF" background="#FFFF00"/>
+
   <level id="8" name="8" color="#FF6600" background="#ffffff"/>
-  <level id="19" name="19" color="#000000" background="#C4BD97"/>
-  
+  <level id="33" name="33" color="#149DFF" background="#8DB4E2"/>
+
   <level id="9" name="9" color="#708090" background="#ffffff"/>
-  <level id="20" name="20" color="#000000" background="#FF66CC"/>
-  
+  <level id="34" name="34" color="#149DFF" background="#9CF1FC"/>
+
   <level id="10" name="10" color="#339900" background="#ffffff"/>
-  <level id="21" name="21" color="#000000" background="#3366FF"/>
+  <level id="35" name="35" color="#149DFF" background="#CCC0DA"/>
+
+  <level id="11" name="11" color="#000000" background="#FF0000" />
+  <level id="36" name="36" color="#149DFF" background="#FF7F66"/>
+
+  <level id="12" name="12" color="#000000" background="#FFFF00" />
+  <level id="37" name="37" color="#149DFF" background="#FFA500" />
+
+  <level id="13" name="13" color="#000000" background="#8DB4E2" />
+  <level id="38" name="38" color="#149DFF" background="#D8E4BC" />
+
+  <level id="14" name="14" color="#000000" background="#9CF1FC"/>
+  <level id="39" name="39" color="#149DFF" background="#C4BD97" />
+
+  <level id="15" name="15" color="#000000" background="#CCC0DA"/>
+  <level id="40" name="40" color="#149DFF" background="#FF66CC"/>
+
+  <level id="16" name="16" color="#000000" background="#CC6600"/>
+  <level id="41" name="41" color="#FF277F" background="#FFCD2F"/>
+
+  <level id="17" name="17" color="#000000" background="#FFA500"/>
+  <level id="42" name="42" color="#FF277F" background="#8DB4E2"/>
+
+  <level id="18" name="18" color="#000000" background="#D8E4BC"/>
+  <level id="43" name="43" color="#FF277F" background="#FFFF00"/>
+
+  <level id="19" name="19" color="#000000" background="#C4BD97"/>
+  <level id="44" name="44" color="#FF277F" background="#9CF1FC"/>
+
+  <level id="20" name="20" color="#000000" background="#FF66CC"/>
+  <level id="45" name="45" color="#FF277F" background="#CCC0DA"/>
+
+  <level id="21" name="21" color="#FFFFFF" background="#3366FF"/>
+  <level id="46" name="46" color="#FF277F" background="#00FF00"/>
+
+  <level id="22" name="22" color="#FFFFFF" background="#FF0000"/>
+  <level id="47" name="47" color="#FF277F" background="#FFA500"/>
+
+  <level id="23" name="23" color="#FFFFFF" background="#8DB4E2"/>
+  <level id="48" name="48" color="#FF277F" background="#D8E4BC"/>
+
+  <level id="24" name="24" color="#FFFFFF" background="#70AD47"/>
+  <level id="49" name="49" color="#FF277F" background="#C4BD97"/>
+
+  <level id="25" name="25" color="#FFFFFF" background="#CCC0DA"/>
+  <level id="50" name="50" color="#FF277F" background="#000000"/>
 </dangerous>

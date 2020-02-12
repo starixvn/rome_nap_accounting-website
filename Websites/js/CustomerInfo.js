@@ -274,7 +274,7 @@ function ChangeDangerousLevelMember(typename, level, name, color) {
         return false;
     }
 
-    if (level < 0 || level > 21) {
+    if (level < 0 || level > 50) {
         return false;
     }
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
@@ -426,7 +426,7 @@ function ChangeDangerousLevel(typename, type, level) {
         return false;
     }
 
-    if (parseInt(level) < 0 || parseInt(level) > 21) {
+    if (parseInt(level) < 0 || parseInt(level) > 50) {
         return false;
     }
 
