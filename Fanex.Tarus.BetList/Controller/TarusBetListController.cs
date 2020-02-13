@@ -50,6 +50,14 @@ namespace Fanex.Tarus.BetList.Controller
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
         }
 
+        [AuthorizeFunctions("ViewInfo")]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        public ActionResult Portal_BetListByCustInfo(int CustID, bool isDeposit, bool isCN88)
+        {
+            GetBetListByCustInfo(CustID, isDeposit, isCN88);
+            ViewBag.IsFromPortal = true;
+            return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
+        }
 
         /// <summary>
         /// Call Main Page Belist for Customer Info
@@ -59,6 +67,12 @@ namespace Fanex.Tarus.BetList.Controller
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByCustInfo(int CustID, bool isDeposit, bool isCN88)
+        {
+            GetBetListByCustInfo(CustID, isDeposit, isCN88);
+            return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
+        }
+
+        private void GetBetListByCustInfo(int CustID, bool isDeposit, bool isCN88)
         {
             _smartPunterService.TryLogIfSmartPunter(new CheckSmartPunterCriteria
             {
@@ -78,8 +92,26 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
             ViewBag.IsCN88 = isCN88;
-            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString()});
-            return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
+            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString() });
+
+        }
+
+        [AuthorizeFunctions("ViewInfo")]
+        [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
+        public ActionResult Portal_GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int Bettype, int PageSize, int PageIndex)
+        {
+            int quantity = 0;
+            PageIndex = PageIndex <= 0 ? 1 : PageIndex;
+            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, statusIds, PageSize, PageIndex, ref quantity);
+            ViewBag.Quantity = quantity;
+            ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
+
+            Hashtable paramHastable = new Hashtable();
+            paramHastable.Add("custId", CustID);
+
+            TempData["paramHastable"] = paramHastable;
+
+            return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
         /// <summary>

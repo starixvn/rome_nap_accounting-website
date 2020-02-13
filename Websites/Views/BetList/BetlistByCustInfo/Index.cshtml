@@ -1,6 +1,7 @@
 ﻿@{
     var isCredit = (bool)ViewBag.IsCredit;
     var isCN88 = (bool)ViewBag.IsCN88;
+    var isFromPortal = ViewBag.IsFromPortal == null ? false : (bool)ViewBag.IsFromPortal;
     var ticketStatus = (IEnumerable<SelectListItem>)ViewBag.TicketStatus;
 
 }
@@ -28,31 +29,40 @@
                                 <span>Bet list</span>
                             </a>
                         </li>
-                        <li class="" id="Li2" onclick="BetListByCustInfo.viewSystemParlayTab();">
-                            <a href="javascript:;">
-                                <span>System parlay</span>
-                            </a>
-                        </li>
-                        @if (isCredit)
+                        @if (!isFromPortal)
                         {
-                            <li class="" id="Li3" onclick="BetListByCustInfo.viewExchangeTab();">
+                            <li class="" id="Li2" onclick="BetListByCustInfo.viewSystemParlayTab();">
                                 <a href="javascript:;">
-                                    <span>Exchange</span>
+                                    <span>System parlay</span>
                                 </a>
                             </li>
+                            if (isCredit)
+                            {
+                                <li class="" id="Li3" onclick="BetListByCustInfo.viewExchangeTab();">
+                                    <a href="javascript:;">
+                                        <span>Exchange</span>
+                                    </a>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
             </div>
             <div id="maincontent_betlist" class="maincontent_box" style="width: 100%;">
                 <div>
-                    <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByRef" value="-1" name="type" />
-                    <label style="font-weight: bold" for="rdByRef">By Ref No:</label>
-                    <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;" autocomplete="off" onkeypress="return KeyPress(event);" />
-                    <div id="info-msg" class="info-msg hide">For Sportbook, the search result includes the related Bonus/Cash tickets.</div>
+                    @if (!isFromPortal)
+                    {
+                        <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByRef" value="-1" name="type" />
+                        <label style="font-weight: bold" for="rdByRef">By Ref No:</label>
+                        <input id="txtRefNo" type="text" maxlength="19" style="background-color: #fff; width: 100px;" autocomplete="off" onkeypress="return KeyPress(event);" />
+                        <div id="info-msg" class="info-msg hide">For Sportbook, the search result includes the related Bonus/Cash tickets.</div>
+                    }
                 </div>
                 <div>
-                    <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2" name="type" checked="checked" />
+                    @if (!isFromPortal)
+                    {
+                        <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2" name="type" checked="checked" />
+                    }
                     <label style="font-weight: bold" for="rdByUser">Advance (Event Date):</label>
                     <span style="font-weight: bold">From </span>
                     <span style="padding-left: 5px">
@@ -126,15 +136,16 @@
     </div>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-        var ticketStatus = @Html.Raw(Json.Encode(ticketStatus))
-        var isCN88='@(isCN88?1:0)'
-        var _today = '@DateTime.Today.ToShortDateString()';
-        var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
-        var _custID = '@ViewBag.CustID';
-        var _fromDate = '@ViewBag.FromDate';
-        var _toDate = '@ViewBag.ToDate';
-        var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
-        head.js("@Url.Content("~/js/jQuery/jquery.js")",
+                    var ticketStatus = @Html.Raw(Json.Encode(ticketStatus));
+                    var isCN88 = '@(isCN88?1:0)';
+                    var isFromPortal = @Json.Encode(isFromPortal);
+                    var _today = '@DateTime.Today.ToShortDateString()';
+                    var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
+                    var _custID = '@ViewBag.CustID';
+                    var _fromDate = '@ViewBag.FromDate';
+                    var _toDate = '@ViewBag.ToDate';
+                    var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
+                    head.js("@Url.Content("~/js/jQuery/jquery.js")",
                 "@Url.Content("~/js/json2.js")",
                 "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js")",
                 "@Url.Content("~/js/jQuery/gridscroller.js")",
@@ -147,7 +158,7 @@
                 "@Url.Content("~/js/common.js")",
                 "@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",                
+                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/ExchangeBetlist.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
