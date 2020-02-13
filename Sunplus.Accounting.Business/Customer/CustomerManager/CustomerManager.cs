@@ -29,24 +29,27 @@
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using Result = Entities.Result;
     using ConverterCommon = Fanex.Common.Converter;
+    using System.Linq;
 
     public partial class CustomerManager : ICustomerManager
     {
         private CustomerService customerService;
         private ISmartPunterService smartPunterService;
         private ICustomerDAO _customerDAO;
+        private IHelper helper;
         private readonly IRemotingRefService _remotingRefService;
         private readonly RenderLeftPanelManager _renderLeftPanelService;
         private readonly ConfigureDirectAccountService _configureDirectAccountService;
 
         public CustomerManager()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerManager(ICustomerDAO customerDAO)
+        public CustomerManager(ICustomerDAO customerDAO, IHelper helper)
         {
             _customerDAO = customerDAO ?? new CustomerDAO();
+            this.helper = helper ?? new Helper();
 
             customerService = new CustomerService();
             smartPunterService = new SmartPunterService();
@@ -265,7 +268,7 @@
             return result;
         }
 
-        public Result UpdateDangerousCustomer(int custId, int updateDownline, int dangerType, int dangerLevel)
+        public DangerousDetail UpdateDangerousCustomer(int custId, int updateDownline, int dangerType, int dangerLevel)
         {
             var result = new Result();
             try
@@ -276,13 +279,16 @@
                 }
                 result = _customerDAO.UpdateLevelDangerous(custId, updateDownline, dangerType, dangerLevel, AppSession.AccId,
                                                            HttpContext.Current.Request.UserHostAddress);
+
+                var settings = helper.GetDangerSettingOriginal();
+                return settings.ToList().FirstOrDefault(setting => setting.Id.Equals(dangerLevel));
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return result;
+            return new DangerousDetail(-1, "Failed", "white");
         }
 
         public CustomerExRate SelectCustomerExRate(string username)

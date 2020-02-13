@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Web;
+using System.Xml;
 using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess;
@@ -83,6 +86,27 @@ namespace Sunplus.Accounting.Business
             string[] result = listStandardCurrencyList.ToArray();
             Array.Sort(result);
             return result;
+        }
+
+        public IList<DangerousDetail> GetDangerSettingOriginal()
+        {
+            string configFileName = HttpContext.Current.Server.MapPath("~/App_Data/DangerousSetting.xml");
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(configFileName);
+            XmlNodeList levels = xmlDoc.GetElementsByTagName("level");
+
+            IList<DangerousDetail> settings = new List<DangerousDetail>();
+            foreach (XmlNode level in levels)
+            {
+                settings.Add(
+                    new DangerousDetail(
+                        Convert.ToInt32(level.Attributes["id"].Value),
+                        level.Attributes["name"].Value,
+                        level.Attributes["color"].Value,
+                        level.Attributes["background"].Value));
+            }
+
+            return settings;
         }
     }
 }

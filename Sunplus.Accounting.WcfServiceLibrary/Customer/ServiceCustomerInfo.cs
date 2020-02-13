@@ -75,12 +75,14 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             return result;
         }
 
-        public Result UpdateDangerousCustomerSer(int custId, int updateDownline, int dangerType, int dangerLevel)
+        public DangerousDetail UpdateDangerousCustomerSer(
+            int custId, 
+            int updateDownline, 
+            int dangerType, 
+            int dangerLevel)
         {
-            var result = new Result();
             var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
-            result = customerManager.UpdateDangerousCustomer(custId, updateDownline, dangerType, dangerLevel);
-            return result;
+            return customerManager.UpdateDangerousCustomer(custId, updateDownline, dangerType, dangerLevel);
         }
 
         public Sunplus.Accounting.Entities.Customer.CustomerExRate SelectCustomerExRate(string username)
