@@ -29,12 +29,7 @@ public partial class Statement_CustomerStatement : PageBase
         try
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
-
-            Uri uri = HttpContext.Current.Request.Url;
-            rootUrl = (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + Request.Headers["Host"] + (Request.ApplicationPath + "/").Replace("//", "/");
-
             WebUtils.SetNoCache();
-
             int reportNo = 1;
             reportNo = CastAide.AsInt32(Request.QueryString["repno"], 1);
             var tabId = CastAide.AsInt32(Request.QueryString["repno"], 1);

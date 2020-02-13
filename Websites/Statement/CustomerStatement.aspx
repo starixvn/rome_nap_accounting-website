@@ -66,12 +66,12 @@
     <script src="WebResources/js/CustomerStatement.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
-        window.rootUrl = '<%=rootUrl%>'; 
+        window.rootUrl = '<%=Page.ResolveUrl("~/")%>'; 
         var isInternalCustomer = <%=isInternalCustomer%>;
         var balanceUpDay = '<%=balanceUpDay%>';
         var moveBetsDay = '<%=moveBetsDay%>'; 
         var newLayoutDate = '<%=newLayoutDate%>';
-        var domain =  window.rootUrl;
+        var domain = window.rootUrl;
         var isNewStatementTab = '<%=isNewStatementTab%>';
         var statementResources = {
             Invalid_Date_Range: '<%=Labels.Invalid_Date_Range%>',
