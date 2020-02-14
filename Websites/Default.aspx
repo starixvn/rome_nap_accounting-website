@@ -24,7 +24,7 @@
             font-size: 12px;  
             text-transform: uppercase;
             font-weight:bold;
-            margin-left: 190px;
+            margin-left: 226px;
             margin-top: -3px;
         }
     </style>
