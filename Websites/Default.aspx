@@ -16,6 +16,17 @@
             background: none #fff;
             opacity: 0.1;
         }
+        div.env
+        {
+            position:absolute;
+            color: #ffffff;
+            font-family: Tahoma;
+            font-size: 12px;  
+            text-transform: uppercase;
+            font-weight:bold;
+            margin-left: 190px;
+            margin-top: -3px;
+        }
     </style>
     <script src="js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
@@ -43,6 +54,7 @@
             <!--Banner-->
             <div class="top_banner2 <%=Env%>">
                 <div id="left_topbanner2" style="float: left;">
+                     <%=EnvTheme%>
                     <div class="welcomebox">
                         Welcome <span class="text_org">
                             <%=accUsername%></span>
