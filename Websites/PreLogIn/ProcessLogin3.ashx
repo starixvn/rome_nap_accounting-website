@@ -56,41 +56,41 @@ public class ProcessLogin3 : IHttpHandler, IRequiresSessionState
 
                     int roleId = Convert.ToInt32(ds.ResultSet.Tables[0].Rows[0]["roleid"]);
                     string pwd = ds.ResultSet.Tables[0].Rows[0]["userpwd"] + "";
-                    int onUserId = UserController.AccLoginAdminOnuser(custIdInt, Sunplus.Accounting.Core.Configurations.WebSettings.ServerId, context.Request.UserHostAddress);
+                    //int onUserId = UserController.AccLoginAdminOnuser(custIdInt, Sunplus.Accounting.Core.Configurations.WebSettings.ServerId, context.Request.UserHostAddress);
                     FormsAuthentication.SetAuthCookie(username, false);
                     AppSession.Username = username;//context.Session["Username"] = username;
                     AppSession.AccUserName = username;
                     AppSession.AccId = custIdInt;//context.Session["AccId"] = custIdInt;
                     AppSession.CurrentSystemNAME = Enumerations.AccountingSystem.Accounting;
                     AppSession.SYSTEM = Enumerations.AccountingSystem.Accounting.ToString();
-                    AppSession.OnAccId = onUserId;//context.Session["OnAccId"] = onUserId;
+                    //AppSession.OnAccId = onUserId;//context.Session["OnAccId"] = onUserId;
                     AppSession.RoleID = roleId;//context.Session["roleId"] = roleId;
                     AppSession.AccPwd = pwd;
                     AuthManager.AssignRoles(custIdInt);
                     succ = true;
 
-                    IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
-                    menuService.GetUserMenu();
+                    //IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
+                    //menuService.GetUserMenu();
 
-                    bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
-                    if (isShowNap)
-                    {
-                        AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO
-                        {
-                            Id = 0,
-                            Name = "Nap",
-                            Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
-                            System = "accounting",
-                            ParentId = 0,
-                            FunctionName = "",
-                            Target = "_blank",
-                            IsHide = false
-                        });
-                    }
+                    //bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
+                    //if (isShowNap)
+                    //{
+                    //    AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO
+                    //    {
+                    //        Id = 0,
+                    //        Name = "Nap",
+                    //        Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
+                    //        System = "accounting",
+                    //        ParentId = 0,
+                    //        FunctionName = "",
+                    //        Target = "_blank",
+                    //        IsHide = false
+                    //    });
+                    //}
 
                     // Progressive Bonus
-                    Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custIdInt;
-                    Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
+                    //Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custIdInt;
+                    //Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
                 }
             }
 
@@ -106,12 +106,12 @@ public class ProcessLogin3 : IHttpHandler, IRequiresSessionState
                 }
                 else
                 {
-                    var isCredit = Utils.ToBoolean(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["credit"]);
+                    var isDeposit = Utils.ToBoolean(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["isDeposit"]);
                     var roleid = Utils.ToInt32(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["roleid"]);
                     var site = roleid != 1 ? Utils.ToString(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["site"]) : Utils.ToString(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["membersite"]);
                     var isCN88 = AppSettings.IsCN88SiteName(site);
                     context.Response.Write("<html><head><script type='text/javascript'>\n");
-                    context.Response.Write("window.location.href='../TarusBetList/Portal_BetListByCustInfo?custId=" + Converter.ToInt(context.Request["targetCustId"]) + "&isDeposit=" + !isCredit + "&isCN88=" + isCN88 + "';\n");
+                    context.Response.Write("window.location.href='../TarusBetList/BetListByCustInfo?custId=" + Converter.ToInt(context.Request["targetCustId"]) + "&isDeposit=" + isDeposit + "&isCN88=" + isCN88 + "';\n");
                     context.Response.Write("\n</script></head><body></body>");
                 }
             }

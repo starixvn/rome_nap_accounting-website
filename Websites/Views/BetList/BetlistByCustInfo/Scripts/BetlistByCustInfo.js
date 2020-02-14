@@ -209,7 +209,7 @@
     },
 
     getParams: function () {
-        if ($('input[name=type]:checked').val() == "-2" || $('input[name=type]:checked').val() == undefined) {
+        if ($('input[name=type]:checked').val() == "-2") {
             var fromDateTmp = $('#txtfromdate').val();
             var toDateTmp = $('#txttodate').val();
             var bettypeTmp = $('#ddlBettype').val() == null ? 0 : $('#ddlBettype').val();
@@ -228,8 +228,7 @@
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
             BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus();
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
-            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" :
-                isFromPortal ? "TarusBetList/Portal_GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
+            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
         else {
