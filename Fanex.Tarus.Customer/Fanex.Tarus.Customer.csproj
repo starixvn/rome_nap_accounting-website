@@ -372,6 +372,7 @@
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
     <Compile Include="Controller\LicenseeDcsSettingController.cs" />
     <Compile Include="Controller\LicenseeSubsidiaryController.cs" />
+    <Compile Include="Controller\LockUnsuspendController.cs" />
     <Compile Include="Controller\ManageRobots2Controller.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
@@ -446,6 +447,8 @@
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\CreateLicenseeSubsidiaryCriteria.cs" />
+    <Compile Include="Criteria\LockUnsuspend\SearchCustomerCriteria.cs" />
+    <Compile Include="Criteria\LockUnsuspend\UpdateCustomerCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
@@ -487,6 +490,7 @@
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\ILicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\LicenseeSubsidiaryDataAccess.cs" />
+    <Compile Include="DataAccess\LockUnsuspend\LockUnsuspendService.cs" />
     <Compile Include="DataAccess\ManageRobots2\IManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\ManageRobots2\ManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
@@ -573,6 +577,7 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
@@ -658,6 +663,7 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\PTViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StatusViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
+    <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
