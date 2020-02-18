@@ -707,6 +707,9 @@ function UpdateDangerousCustomer(typename, type, level) {
                                 }
                         }
                     }
+                    else {
+                        alert(rs.Color);
+                    }
 
                     ClosePopUpDanger("dangerousAgentpopup" + type + "_" + level);
                     if (currlevelbox != "") {
