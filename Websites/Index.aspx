@@ -4,7 +4,7 @@
 <head>
     <title>Accounting Admin System</title>
 </head>
-<frameset rows="*,14px"  frameborder="no" framespacing="0" border="0"  >
+<frameset rows="*,16px"  frameborder="no" framespacing="0" border="0"  >
     <frame name="content" id="content" frameborder="0" noresize="noresize" scrolling="auto" src="Default.aspx<%=ToParams %>" />
     <frame name="footer" src="footer.aspx" noresize="noresize" scrolling="no"  >
 </frameset> 

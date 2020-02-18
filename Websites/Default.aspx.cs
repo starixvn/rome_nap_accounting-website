@@ -7,6 +7,8 @@ public partial class _Default : System.Web.UI.Page
 {
     public string accUsername = "";
     public string listMenuIgnore = string.Empty;
+    public string Env = "";
+    public string EnvTheme = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -21,6 +23,11 @@ public partial class _Default : System.Web.UI.Page
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();            
+            if (!string.IsNullOrEmpty(Env))
+            {
+                EnvTheme = "<div class='env'>(" + Env + ")</div>";
             }
         }
     }
