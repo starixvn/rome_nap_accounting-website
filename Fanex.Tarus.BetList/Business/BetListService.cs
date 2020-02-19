@@ -1380,6 +1380,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.CardClub);
             }
+            else if(ReportService.IsSpadegaming(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.Spadegaming);
+            }
 
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

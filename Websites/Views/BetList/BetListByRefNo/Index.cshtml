@@ -23,6 +23,12 @@
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(int.Parse(productIdCardClub)));
     }
+
+    var productIdSG = ConfigurationManager.AppSettings["ProductIdSG"];
+    if (!string.IsNullOrEmpty(productIdSG))
+    {
+        allowedProducts.Append("/").Append("SG");
+    }
 }
 <html>
 <head>
@@ -134,6 +140,10 @@
                                     @if (!string.IsNullOrEmpty(productIdCardClub))
                                     {
                                         <option value="@productIdCardClub" data-vendor-id="33">@CacheRef.GetProductName(int.Parse(productIdCardClub))</option>
+                                    }
+                                    @if (!string.IsNullOrEmpty(productIdSG))
+                                    {
+                                        <option value="@productIdSG" data-vendor-id="36">SG</option>
                                     }
                                 </select>
                             </td>

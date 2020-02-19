@@ -121,6 +121,9 @@
             }
         }
 
+        public static bool IsSpadegaming(int betTypeId)
+            => BetTypeContants.FishingGod <= betTypeId && betTypeId <= BetTypeContants.TigerWarrior;
+
         public static bool IsVirtualSportBetType(int betTypeId)
         {
             return BetTypeContants.MinVirtualSportBetType <= betTypeId &&
