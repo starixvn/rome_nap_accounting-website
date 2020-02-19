@@ -22,7 +22,7 @@ namespace Sunplus.Accounting.Business.Customer
             { CustomerInfoResources.Danger3, "3"}
         };
 
-        private DangerousDetail BASetting = new DangerousDetail(-1, "BA", "#000000");
+        private DangerousDetail BASetting = new DangerousDetail(0, "BA", "#000000");
 
         public DangerousSetting()
            : this(null)

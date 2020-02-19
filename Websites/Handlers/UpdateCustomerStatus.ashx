@@ -57,7 +57,6 @@ public class UpdateCustomerStatus : BaseHandler
                             context.Response.Write("<script type='text/javascript'>" +
                                                    StringUtils.JS_Alert(StringUtils.ParseToJSMsg(lockUpdate)) + "</script>");
                             return;
-
                         }
                     }
                     catch (Exception ex)
