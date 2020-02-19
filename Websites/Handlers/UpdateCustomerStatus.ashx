@@ -188,15 +188,18 @@ public class UpdateCustomerStatus : BaseHandler
                     { dangertype = 2; }
                     else
                     { dangertype = 3; }
-                    StringBuilder result = new StringBuilder();
+
                     DangerousSetting danger = new DangerousSetting();
                     DangerousDetail dangerDetail = danger.CustomerUpdateDangerous(_accid, _custid, level, dangertype);
-                    result.Append("parent.document.getElementById('spanDangerous" + name + "').innerHTML ='" + dangerDetail.Name + "';");
-                    result.Append("parent.document.getElementById('tdvalue" + name + "').style.color ='" + dangerDetail.Color + "';");
-                    result.Append("parent.document.getElementById('tdvalue" + name + "').style.backgroundColor ='" + dangerDetail.BackgroundColor + "';");
-                    result.Append("parent.document.getElementById('currentLevel" + name + "').value ='" + level + "';");
-
-                    s = result.ToString();
+                    if (dangerDetail.Id != -1)
+                    {
+                        StringBuilder result = new StringBuilder();
+                        result.Append("parent.document.getElementById('spanDangerous" + name + "').innerHTML ='" + dangerDetail.Name + "';");
+                        result.Append("parent.document.getElementById('tdvalue" + name + "').style.color ='" + dangerDetail.Color + "';");
+                        result.Append("parent.document.getElementById('tdvalue" + name + "').style.backgroundColor ='" + dangerDetail.BackgroundColor + "';");
+                        result.Append("parent.document.getElementById('currentLevel" + name + "').value ='" + level + "';");
+                        s = result.ToString();
+                    }
 
                     break;
                 /*Phuong.Nguyen
@@ -226,7 +229,7 @@ public class UpdateCustomerStatus : BaseHandler
                             break;
                         }
                     }
-                   CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
+                    CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
                     //s = "parent.document.getElementById('internalUser').innerHTML ='" + ((status) ? Resources.Language.userInternal : Resources.Language.userBetting) + "';";
                     s = "parent.changeDisplayStatus();";
                     break;
@@ -256,7 +259,7 @@ public class UpdateCustomerStatus : BaseHandler
 
                     CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break; 
+                    break;
                 case "disabledGoldDeluxe":
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
@@ -275,17 +278,8 @@ public class UpdateCustomerStatus : BaseHandler
         }
         catch (AccException ex)
         {
-            string type = context.Request["type"] as string ?? string.Empty;
-            if (type != "dangerous")
-            {
-                context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(ex.Message) +
+           context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(ex.Message) +
                                        "</script>");
-            }
-            else
-            {
-                context.Response.Write("<script type='text/javascript'>parent.$.msg({ content: '" + ex.Message +
-                                       "', timeOut: 5000, fadeIn: 500, fadeOut: 200 });</script>");
-            }
         }
         catch (Exception ex)
         {
