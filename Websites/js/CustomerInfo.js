@@ -10,7 +10,7 @@
         }
     }
 })(jQuery)
-var levelcolor = ['Black', 'Black', 'Red', '#ffcc00', 'Blue', '#FF8080', '#BB00BB', '#660000', '#FF6600', '#708090', '#339900', '#FF0000', '#FFFF00', '#8DB4E2', '#9CF1FC', '#CCC0DA', '#CC6600', '#FFA500', '#D8E4BC', '#C4BD97', '#FF66CC', '#3366FF'];
+
 function GetCustId() {
     return obj('custid').value;
 }
@@ -274,7 +274,7 @@ function ChangeDangerousLevelMember(typename, level, name, color) {
         return false;
     }
 
-    if (level < 0 || level > 21) {
+    if (level < 0 || level > 50) {
         return false;
     }
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
@@ -426,7 +426,7 @@ function ChangeDangerousLevel(typename, type, level) {
         return false;
     }
 
-    if (parseInt(level) < 0 || parseInt(level) > 21) {
+    if (parseInt(level) < 0 || parseInt(level) > 50) {
         return false;
     }
 
@@ -681,39 +681,34 @@ function UpdateDangerousCustomer(typename, type, level) {
                 data: $.toJSON(param),
                 contentType: "application/json; charset=utf-8",
                 success: function (rs) {
-                    var resetLevelLabel = function (span, level) {
-                        if (level == "0")
-                            $(span).html("None");
-                        else
-                            $(span).html(level);
-                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = level;
-                        if (parseInt(level) > 10) {
-                            $(span).parent()[0].style.backgroundColor = levelcolor[parseInt(level)];
-                            $(span).parent()[0].style.color = "Black";
-                        }
-                        else {
-                            $(span).parent()[0].style.backgroundColor = "White";
-                            $(span).parent()[0].style.color = levelcolor[parseInt(level)];
-                        }
+                    var resetLevelLabel = function (span, rs) {
+                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = rs.Name;
+
+                        $(span).parent()[0].style.backgroundColor = rs.BackgroundColor;
+                        $(span).parent()[0].style.color = rs.Color;
+                        $(span).html(rs.Name)
                     }
-                    if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
+                    if (rs && rs.Id !== -1) {
                         switch (typename) {
                             case "Original":
                                 {
-                                    resetLevelLabel(document.getElementById("spanDangerousOriginal"), level);
+                                    resetLevelLabel(document.getElementById("spanDangerousOriginal"), rs);
                                     break;
                                 }
                             case "ABI":
                                 {
-                                    resetLevelLabel(document.getElementById("spanDangerousABI"), level);
+                                    resetLevelLabel(document.getElementById("spanDangerousABI"), rs);
                                     break;
                                 }
                             case "Other Sports":
                                 {
-                                    resetLevelLabel(document.getElementById("spanDangerousOtherSports"), level);
+                                    resetLevelLabel(document.getElementById("spanDangerousOtherSports"), rs);
                                     break;
                                 }
                         }
+                    }
+                    else {
+                        alert(rs.Color);
                     }
 
                     ClosePopUpDanger("dangerousAgentpopup" + type + "_" + level);

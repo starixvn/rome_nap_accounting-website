@@ -2,6 +2,10 @@ namespace Sunplus.Accounting.Business.Customer
 {
     public class DangerousDetail
     {
+        public DangerousDetail()
+        {
+        }
+
         public DangerousDetail(int id, string name, string color, string backgroundColor = "#ffffff")
         {
             Id = id;
@@ -21,6 +25,10 @@ namespace Sunplus.Accounting.Business.Customer
 
     public class DangerousType
     {
+        public DangerousType()
+        {
+        }
+
         public DangerousType(int id, string name)
         {
             Id = id;

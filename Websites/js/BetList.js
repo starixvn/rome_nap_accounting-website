@@ -485,6 +485,20 @@ function showPPDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showSGDetails(transId, winlossDate, custId, transType) {
+    var voidbridgeParam = {
+        url: "VoidbridgeBetList/BetDetails",
+        title: "Spadegaming Details",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 247, PageSize: 500 },
+        width: 1030,
+        height: 600,
+        resizable: false
+    };
+
+    openResultsPopUp(voidbridgeParam);
+}
+
+
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
@@ -741,6 +755,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 219: // Fishing World.
             return getFishingWorldParam(matchcode, betcheck);
 
+        case 247: //Spadegaming
+            return getSpadegamingParam(matchcode, betcheck);
+
         case 248: //PP
             return getPPParam(matchcode, betcheck);
 
@@ -896,6 +913,16 @@ function getMacauGamesParam(matchcode, betcheck) {
         width: 945,
         height: 500,
         iframe: "innerFrameMacauGamesResult"
+    };
+}
+
+function getSpadegamingParam(matchcode, betcheck) {
+    return {
+        url: "ThirdParty/Result",
+        title: "Spadegaming Result",
+        jsonParam: { custId: betcheck, gameId: matchcode, productId: 36 },
+        width: 945,
+        height: 500
     };
 }
 

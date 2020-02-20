@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
@@ -38,7 +39,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result UpdateDangerousCustomerSer(int custId, int updateDownline, int dangerType, int dangerLevel);
+        DangerousDetail UpdateDangerousCustomerSer(int custId, int updateDownline, int dangerType, int dangerLevel);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
