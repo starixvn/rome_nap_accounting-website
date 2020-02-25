@@ -1,0 +1,31 @@
+﻿.chkuncheck {
+    background: url(../../../../App_Themes/Images/Buttons/uncheck.jpg);
+    width: 13px;
+    height: 13px;
+    display: block;
+    position: relative;
+    top: 4px;
+}
+
+    .chkuncheck:hover {
+        background: url(../../../../App_Themes/Images/Buttons/uncheck_hover.jpg);
+    }
+
+.chkchecked {
+    background: url(../../../../App_Themes/Images/Buttons/check.jpg);
+    display: block;
+    width: 13px;
+    height: 13px;
+    position: relative;
+    top: 4px;
+}
+
+    .chkchecked:hover {
+        background: url(../../../../App_Themes/Images/Buttons/check_hover.jpg);
+    }
+
+.noteMsg {
+    margin-top: 5px;
+    width: 97%;
+    padding: 4px 2px 4px 32px;
+}

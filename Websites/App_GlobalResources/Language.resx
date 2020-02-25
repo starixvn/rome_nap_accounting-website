@@ -2445,8 +2445,14 @@
   <data name="InvalidHeadline" xml:space="preserve">
     <value>Invalid Headline.</value>
   </data>
+  <data name="HeadlineUsername" xml:space="preserve">
+    <value>Headline Username</value>
+  </data>
   <data name="InvalidSuper" xml:space="preserve">
     <value>Invalid Super.</value>
+  </data>
+  <data name="ViewPeriodsCN88" xml:space="preserve">
+    <value>View Periods - CN88</value>
   </data>
   <data name="MoveSuperSuccess" xml:space="preserve">
     <value>Move Super successfully.</value>

@@ -581,7 +581,7 @@
   </data>
   <data name="stakelevel5" xml:space="preserve">
     <value>VIP</value>
-  </data> 
+  </data>
   <data name="is3" xml:space="preserve">
     <value>Is Master Auto PT</value>
   </data>
@@ -656,7 +656,7 @@
   </data>
   <data name="us1" xml:space="preserve">
     <value>Super Auto PT</value>
-  </data> 
+  </data>
   <data name="disabledownlinesvs" xml:space="preserve">
     <value>Apply to all downlines</value>
   </data>
@@ -672,11 +672,9 @@
   <data name="doublecommlosing" xml:space="preserve">
     <value>Double Comm</value>
   </data>
-
   <data name="Fromsite" xml:space="preserve">
     <value>From Site</value>
   </data>
- 
   <data name="v180apt" xml:space="preserve">
     <value>Agent PT</value>
   </data>
@@ -1111,8 +1109,7 @@
   </data>
   <data name="v204discountvalue_cashinshare" xml:space="preserve">
     <value>Cash-In Share</value>
-  </data>  
-
+  </data>
   <data name="discountonextwo" xml:space="preserve">
     <value>1X2</value>
   </data>
@@ -2063,6 +2060,9 @@
   </data>
   <data name="MonitorPT" xml:space="preserve">
     <value>Monitor Status</value>
+  </data>
+  <data name="IsViewAllPeriod" xml:space="preserve">
+    <value>View all Periods</value>
   </data>
   <data name="NonSportsPossess" xml:space="preserve">
     <value>Non-Sport Possess</value>

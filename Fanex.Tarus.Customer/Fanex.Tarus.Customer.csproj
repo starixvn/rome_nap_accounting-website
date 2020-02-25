@@ -332,6 +332,7 @@
     <Compile Include="Business\NG2\ISyncCustomerService.cs" />
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
     <Compile Include="Business\NG2\SyncCustomerService.cs" />
+    <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
     <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
@@ -457,6 +459,8 @@
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSingleSuspendCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\ViewPeriodsCN88\SearchHeadlineCriteria.cs" />
+    <Compile Include="Criteria\ViewPeriodsCN88\UpdateHeadlinePeriodCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
@@ -530,6 +534,7 @@
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\Suspend\SuspendStatusService.cs" />
+    <Compile Include="DataAccess\ViewPeriodsCN88\ViewPeriodsCN88DataAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
@@ -582,6 +587,7 @@
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
+    <Compile Include="Entities\ViewPeriodsCN88\HeadlinePeriods.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
@@ -664,6 +670,7 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\StatusViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
     <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
+    <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
@@ -695,7 +702,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Requests\ViewPeriodsCN88\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
