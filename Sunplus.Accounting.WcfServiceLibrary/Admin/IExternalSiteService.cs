@@ -28,7 +28,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Admin
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
+        ExternalSiteExtraPTGroup GetExtraPTGroups(int custId);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

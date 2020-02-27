@@ -114,7 +114,7 @@ namespace Sunplus.Accounting.Business.Admin
             }
         }
 
-        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
+        public ExternalSiteExtraPTGroup GetExtraPTGroups(int custId)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Sunplus.Accounting.Business.Admin
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return new List<ExternalSiteExtraPTGroup>();
+            return new ExternalSiteExtraPTGroup();
         }
 
         public Result ChangePrimaryGroup(int custId, string groupName, string effectiveDate)
