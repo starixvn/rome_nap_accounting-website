@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="ResetWinning">
-    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
     <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -73,7 +73,7 @@
     <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="External - Admin">
-    <Setting Key="Acc_CustGroupSelExtraPTGroupByCustID" SpName="Acc_CustGroupSelExtraPTGroupByCustID_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustGroupSelExtraPTGroupByCustID" SpName="Acc_CustGroupSelExtraPTGroupByCustID" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Jackpot Details">
     <Setting Key="Acc_BetList_Jackpot_Detail" SpName="Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
