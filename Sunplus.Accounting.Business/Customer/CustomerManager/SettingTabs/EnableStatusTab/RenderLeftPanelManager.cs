@@ -411,8 +411,8 @@ namespace Sunplus.Accounting.Business.Customer
             int productId,
             string title)
         {
-            var jsFunction = productId == 21
-                ? GetProductStatusJSFunctionForAllbet(isDeposit)
+            var jsFunction = productId == 41
+                ? GetProductStatusJSFunctionForLiveCasino(isDeposit)
                 : GetProductStatusJSFunction(isDeposit);
 
             return string.Format(jsFunction, custId, userName, roleId, productId, title);
@@ -425,7 +425,7 @@ namespace Sunplus.Accounting.Business.Customer
                 : "leftPanelManager.viewProductStatusSetting({0}, '{1}', {2}, {3}, '{4}')";
         }
 
-        private string GetProductStatusJSFunctionForAllbet(bool isDeposit)
+        private string GetProductStatusJSFunctionForLiveCasino(bool isDeposit)
         {
             return isDeposit
                 ? "leftPanelManager.updateThirdPartyProductStatus({0}, '{1}', {2}, {3}, '{4}')"

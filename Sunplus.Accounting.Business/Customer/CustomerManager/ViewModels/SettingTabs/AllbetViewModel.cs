@@ -4,16 +4,16 @@
 
     public partial class CustomerInfoViewModel
     {
-        private bool HideAllbetUpline { get; set; } = true;
+        private bool HideLiveCasinoUpline { get; set; } = true;
 
-        private bool SyncAllbet { get; set; } = true;
+        private bool SyncLiveCasino { get; set; } = true;
 
-        public bool SyncAllbetUpline { get; private set; } = true;
+        public bool SyncLiveCasinoUpline { get; private set; } = true;
 
-        public bool HideEnabledCheckBoxAllbet
-            => !WebSettings.IsShowAllBet || IsDeposit || !SyncAllbetUpline || (SearchAccountRoleId < 4 && (HideAllbetUpline || !SyncAllbet));
+        public bool HideEnabledCheckBoxLiveCasino
+            => !WebSettings.IsShowLiveCasino || IsDeposit || !SyncLiveCasinoUpline || (SearchAccountRoleId < 4 && (HideLiveCasinoUpline || !SyncLiveCasino));
 
-        public bool HideSettingLinkAllbet
-            => !WebSettings.IsShowAllBet || IsDeposit || HideAllbetUpline || !SyncAllbetUpline;
+        public bool HideSettingLinkLiveCasino
+            => !WebSettings.IsShowLiveCasino || IsDeposit || HideLiveCasinoUpline || !SyncLiveCasinoUpline;
     }
 }

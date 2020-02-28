@@ -128,10 +128,10 @@ string siteName = string.Empty;
                             Sportsbook 2
                         </li>
                     }
-                    @if (!memberItem.IsHideAllBet)
+                    @if (!memberItem.IsHideLiveCasino)
                     {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 21, 'Allbet');">
-                            Allbet
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 41, 'Live Casino');">
+                            Live Casino
                         </li>
                     }
                     @if (!memberItem.IsHideVoidbridge)

@@ -164,13 +164,13 @@ string siteName = string.Empty;
                         </li>
                     }
 
-                    @if (!superItem.IsHideAllBet)
+                    @if (!superItem.IsHideLiveCasino)
                     {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'AllBet');">Allbet</li>
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 41, 'Live Casino');">Live Casino</li>
                     }
                     @if (!superItem.IsHideVoidbridge)
                     {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 21, 'Macau Games');">Macau Games</li>
+                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 22, 'Macau Games');">Macau Games</li>
                     }
                     @if (!superItem.IsHideFishingWorld)
                     {

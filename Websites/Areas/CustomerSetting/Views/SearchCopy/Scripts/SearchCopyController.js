@@ -191,7 +191,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmVirtualSports").attr('src', "");      
         $("#frmGoldDleluxe").attr('src', "");       
         $("#frmSportsbook2").attr('src', "");
-        $("#frmAllbet").attr('src', "");
+        $("#frmLiveCasino").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
         $("#frmNG2").attr('src', "");
         $("#frmFishingWorld").attr('src', "");
@@ -247,9 +247,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmSportsbook2", url);
                 $scope.resize("#frmSportsbook2");
                 break;
-            case 'tabAllbet': url += "DCS/ViewCustomerSetting?productId=21&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmAllbet", url);
-                $scope.resize("#frmAllbet");
+            case 'tabLiveCasino': url += "DCS/ViewCustomerSetting?productId=41&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmLiveCasino", url);
+                $scope.resize("#frmLiveCasino");
                 break;
             case 'tabVoidbridge': url += "DCS/ViewCustomerSetting?productId=22&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVoidbridge", url);

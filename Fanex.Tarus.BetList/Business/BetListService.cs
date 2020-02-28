@@ -1351,9 +1351,9 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.RNG_Mobile);
             }
-            else if (ReportService.IsAllBet(betTypeId))
+            else if (ReportService.IsLiveCasino(betTypeId))
             {
-                sportName += ticketHelper.GetSportNameById(SportContants.AllBet);
+                sportName += ticketHelper.GetSportNameById(SportContants.LiveCasino);
             }
             else if (ReportService.IsVoidbridge(betTypeId))
             {

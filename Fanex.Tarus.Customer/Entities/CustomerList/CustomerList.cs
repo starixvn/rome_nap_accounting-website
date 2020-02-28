@@ -44,7 +44,7 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public string LastLoginIP { get; set; }      
         public bool IsSynCasinoUpline { get; set; }      
         public bool IsHideSportsbook2 { get; set; }       
-        public bool IsHideAllBet { get; set; }
+        public bool IsHideLiveCasino { get; set; }
         public bool IsHideVoidbridge { get; set; }
         public bool IsHideFishingWorld { get; set; }
         public bool IsHideVirtualSports { get; set; }

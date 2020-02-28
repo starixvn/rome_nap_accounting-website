@@ -144,10 +144,10 @@
                                 HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
                                 break;
 
-                            case "21":
-                                SyncAllbet = Utils.ToBoolean(row["IsSync"]);
-                                HideAllbetUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                SyncAllbetUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
+                            case "41":
+                                SyncLiveCasino = Utils.ToBoolean(row["IsSync"]);
+                                HideLiveCasinoUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
+                                SyncLiveCasinoUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
                             case "22":

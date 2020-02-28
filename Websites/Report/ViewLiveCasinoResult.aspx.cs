@@ -2,7 +2,7 @@
 using Fanex.Result.Core.AllBetCasino;
 using Fanex.Tarus.Infrastructure.Extensions;
 
-public partial class Report_ViewAllBetResult : System.Web.UI.Page
+public partial class Report_ViewLiveCasinoResult : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewAllBetResult.aspx.cs" Inherits="Report_ViewAllBetResult" Theme="" Async="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewLiveCasinoResult.aspx.cs" Inherits="Report_ViewLiveCasinoResult" Theme="" Async="true" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 

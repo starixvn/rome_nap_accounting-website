@@ -2301,11 +2301,11 @@
   <data name="enableCricket" xml:space="preserve">
     <value>Cricket</value>
   </data>
-  <data name="enableAllBet" xml:space="preserve">
-    <value>Allbet</value>
+  <data name="enableLiveCasino" xml:space="preserve">
+    <value>Live Casino</value>
   </data>
-  <data name="lblDisabledAllBetUpline" xml:space="preserve">
-    <value>AllBet status has been disabled at upline</value>
+  <data name="lblDisabledLiveCasinoUpline" xml:space="preserve">
+    <value>Live Casino status has been disabled at upline</value>
   </data>
   <data name="lblDisabledVoidbridgeUpline" xml:space="preserve">
     <value>Macau Games has been disabled at upline</value>

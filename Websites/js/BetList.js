@@ -527,7 +527,7 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
-        title: "Allbet - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "LiveCasino - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 211, PageSize: 500 },
         width: 1040,
         height: 600
@@ -747,7 +747,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
         case 211: // Allbet.
-            return getAllbetParam(transdesc, matchcode, bettype);
+        case 244: // LiveCasino.
+            return getLiveCasinoParam(transdesc, matchcode, bettype);
 
         case 212: // Macau Games.
             return getMacauGamesParam(matchcode, betcheck);
@@ -875,10 +876,10 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
     };
 }
 
-function getAllbetParam(transdesc, betcheck, bettype) {
+function getLiveCasinoParam(transdesc, betcheck, bettype) {
     return {
-        url: "Report/ViewAllBetResult.aspx",
-        title: "Allbet Result",
+        url: "Report/ViewLiveCasinoResult.aspx",
+        title: "Live Casino Result",
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500

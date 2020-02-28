@@ -696,9 +696,10 @@ var ViewPT = {
 
         switch (sportId) {
             case 43: // esport
-            case 44: //Sportsbook 2           
+            case 44: // Sportsbook 2           
             case 50: // Cricket
             case 211: // Allbet
+            case 244: // LiveCasino
             case 213: // NG2            
             case 214:
             case 215:

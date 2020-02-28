@@ -29,9 +29,10 @@
         public string GetFileNameWithoutExtension(int sportType)
         {          
 
-            if (sportType == SportContants.AllBet)
+            if (sportType == SportContants.AllBet ||
+                sportType == SportContants.LiveCasino)
             {
-                return "Allbet_Details";
+                return "LiveCasino_Details";
             }
 
             if (sportType == SportContants.Voidbridge)
@@ -76,9 +77,10 @@
             byte transType)
         {          
 
-            if (sportType == SportContants.AllBet)
+            if (sportType == SportContants.AllBet ||
+                sportType == SportContants.LiveCasino)
             {
-                return GetAllBetTickets(refNo, custId, transType);
+                return GetLiveCasinoTickets(refNo, custId, transType);
             }
 
             if (sportType == SportContants.Voidbridge ||
@@ -174,7 +176,7 @@
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.No), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 1200);
 
-            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
+            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.LiveCasino ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 5400);
 
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Choice), headerStyle);
@@ -224,7 +226,7 @@
 
         #region Get Data functions
 
-        private static IEnumerable<TicketDetail> GetAllBetTickets(long refNo, int custId, byte transType)
+        private static IEnumerable<TicketDetail> GetLiveCasinoTickets(long refNo, int custId, byte transType)
         {
             var criteria = new GetAGCasinoBetDetailsCriteria
             {

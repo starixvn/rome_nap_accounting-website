@@ -159,9 +159,9 @@
             return (2301 <= betTypeId && betTypeId <= 2399) || (2901 <= betTypeId && betTypeId <= 2999);
         }
 
-        public static bool IsAllBet(int betTypeId)
+        public static bool IsLiveCasino(int betTypeId)
         {
-            return 2401 <= betTypeId && betTypeId <= 2499;
+            return (2401 <= betTypeId && betTypeId <= 2499) || (3001 <= betTypeId && betTypeId <= 3099);
         }
 
         public static bool IsVoidbridge(int betTypeId)

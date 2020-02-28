@@ -37,7 +37,7 @@
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
-                IsShowAllBetForCredit = !customerInfoViewModel.HideEnabledCheckBoxAllbet,
+                IsShowLiveCasinoForCredit = !customerInfoViewModel.HideEnabledCheckBoxLiveCasino,
                 IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
                 IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
@@ -175,8 +175,8 @@
             TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
-            TemplateHandler.Assign(ref htmlcontent, "{AllbetId}", "21");
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusAllbet}", "1");
+            TemplateHandler.Assign(ref htmlcontent, "{livecasino}", "41");
+            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusLiveCasino}", "1");
             return htmlcontent;
         }
 
@@ -220,19 +220,19 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (customerInfoViewModel.HideEnabledCheckBoxAllbet)
+            if (customerInfoViewModel.HideEnabledCheckBoxLiveCasino)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableAllbet");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableLiveCasino");
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{AllbetOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                TemplateHandler.Assign(ref htmlcontent, "{liveCasinoOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
                     customerInfoViewModel.IsDeposit,
                     customerInfoViewModel.CustId,
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
-                    21,
-                    "Update Allbet Status"));
+                    41,
+                    "Update LiveCasino Status"));
             }
 
             return htmlcontent;
