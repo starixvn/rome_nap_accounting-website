@@ -726,7 +726,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getBaseballParam();
 
         case 161: // Number Game.
-            return getNumberGameParam(matchid);      
+            return getNumberGameParam(matchid);
 
         case 164: // Happy5
             return getHappy5Param(matchid);
@@ -755,6 +755,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 219: // Fishing World.
             return getFishingWorldParam(matchcode, betcheck);
 
+        case 245: //Virtual Games
+            return getVirtualGamesParam(refno);
+
         case 247: //Spadegaming
             return getSpadegamingParam(matchcode, betcheck);
 
@@ -776,7 +779,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
-            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);      
+            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
         case bettype === 1701 || bettype === 1702 || bettype === 1703 || bettype === 1704 || bettype === 1705: // Gold Deluxe.
             return getGoldDeluxeParam(bettype, refno);
@@ -788,7 +791,7 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
             return getMetricGamingParam(matchid, bettype, sporttype, betid);
 
         case 2501 <= bettype && bettype <= 2699:
-            return getNG2Param(matchid);      
+            return getNG2Param(matchid);
 
         default:
             return undefined;
@@ -925,6 +928,17 @@ function getSpadegamingParam(matchcode, betcheck) {
         height: 500
     };
 }
+
+function getVirtualGamesParam(betcheck) {
+    return {
+        url: "ThirdParty/VirtualGamesResult",
+        title: "Virtual Games Result",
+        jsonParam: { productId: 38, gameId: betcheck },
+        width: 945,
+        height: 500
+    };
+}
+
 
 function getPPParam(matchcode, betcheck) {
     return {
