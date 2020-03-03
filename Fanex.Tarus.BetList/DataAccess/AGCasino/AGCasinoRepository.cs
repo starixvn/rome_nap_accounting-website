@@ -56,7 +56,8 @@
                                 SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
 
                                 MatchCode = Converter.ToString2(reader["matchcode"]),
-                                BetCheck = Converter.ToString2(reader["betcheck"])
+                                BetCheck = Converter.ToString2(reader["betcheck"]),
+                                BetTeam = Converter.ToString2(reader["BetTeam"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
