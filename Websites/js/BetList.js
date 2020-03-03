@@ -527,8 +527,20 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
-        title: "LiveCasino - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "Allbet - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 211, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showSAGamingDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "SA Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 244, PageSize: 500 },
         width: 1040,
         height: 600
     };
@@ -879,7 +891,7 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
 function getLiveCasinoParam(transdesc, betcheck, bettype) {
     return {
         url: "Report/ViewLiveCasinoResult.aspx",
-        title: "Live Casino Result",
+        title: (bettype == 211 ? "Allbet Result" : "SA Gaming Result"),
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
