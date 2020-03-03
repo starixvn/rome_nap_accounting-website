@@ -1353,7 +1353,7 @@ namespace Fanex.Tarus.BetList.Business
             }
             else if (ReportService.IsLiveCasino(betTypeId))
             {
-                sportName += ticketHelper.GetSportNameById(SportContants.LiveCasino);
+                sportName += ticketHelper.GetSportNameById(SportContants.SaGaming);
             }
             else if (ReportService.IsVoidbridge(betTypeId))
             {

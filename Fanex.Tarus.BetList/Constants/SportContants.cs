@@ -57,7 +57,7 @@
         public const int RNG_Mobile = 210;
 
         public const int AllBet = 211;
-        public const int LiveCasino = 244;
+        public const int SaGaming = 244;
         public const int Voidbridge = 212;
         public const int FishingWorld = 219;
         public const int PP = 248;

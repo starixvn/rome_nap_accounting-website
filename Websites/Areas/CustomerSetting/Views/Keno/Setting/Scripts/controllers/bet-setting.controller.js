@@ -5,7 +5,7 @@ KenoModule.controller('betSettingController', function ($scope, kenoRepositories
         $scope.roleId = $scope.$parent.customerInformation.roleId;
         $scope.isValid = false;
 
-        $scope.copyLiveCasinoSetting = function (isCopy, betTypeId) {
+        $scope.copyAllBetSetting = function (isCopy, betTypeId) {
             $scope.betSettingCopyAll.betTypeId = isCopy == true ? betTypeId : -1;
             $scope.betSettingCopyAll.isCopiedAll = isCopy;
 
