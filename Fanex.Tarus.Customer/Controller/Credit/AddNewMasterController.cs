@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
     /// <summary>
@@ -136,6 +137,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             }
             catch (Exception ex)
             {
+                LogExtensions.ExceptionHandler(ex);
                 result = new Fanex.PTEngine.BusinessObjects.Result
                 {
                     ErrorCode = "1000",
