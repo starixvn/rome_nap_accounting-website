@@ -84,7 +84,7 @@ public partial class CustomerBalance : PageBase
         try
         {
             Boolean isDisCheckAll = false;
-            DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerSelectClearBalance(_custid);
+            DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerSelectClearBalance(_custid, AppSession.AccId);
             strcontent.Append("<script>datarows=[");
             int cnt = 0;
             DataRowCollection rows = ds.ResultSet.Tables[0].Rows;
