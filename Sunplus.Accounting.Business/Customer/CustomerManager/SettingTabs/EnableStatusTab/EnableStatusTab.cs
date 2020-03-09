@@ -232,7 +232,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     41,
-                    "Update LiveCasino Status"));
+                    "Update Live Casino Status"));
             }
 
             return htmlcontent;
