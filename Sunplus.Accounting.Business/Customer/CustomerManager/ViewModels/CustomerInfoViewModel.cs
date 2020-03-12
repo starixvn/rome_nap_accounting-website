@@ -75,6 +75,8 @@
 
         public bool AllDayBalTransfer => Utils.ToBoolean(customerInfoRow["isalldaybaltransfer"]);
 
+        public bool IsShowAllDayBalTransfer => Utils.ToBoolean(customerInfoRow["IsShowAllDayBalTransfer"]);
+
         public bool DisableAutoMPT => Utils.ToBoolean(cashRow["DisableAutoMPT"]);
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
