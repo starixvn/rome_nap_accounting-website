@@ -121,7 +121,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsHideAllBet = !WebSettings.IsShowAllBet;
                         superItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge;
                         superItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld;
-                        superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;                       
+                        superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;
+                        superItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames;
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                    
 
                         superItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
@@ -256,7 +257,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                           !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
                           CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         masterItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                          CastAide.AsBoolean(row["HideVirtualSportsUpline"]);  
+                          CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        masterItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
+                          CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
                         masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                    
 
                         masterItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
@@ -346,7 +349,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                             !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
                             CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         agentItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);                       
+                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        agentItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
+                           CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
                         agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                     
 
                         agentItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
@@ -437,7 +442,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                             !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
                             CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         memberItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);                                   
+                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
+                        memberItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
+                            CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
                       
 

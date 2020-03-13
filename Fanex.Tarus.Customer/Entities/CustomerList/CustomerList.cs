@@ -48,6 +48,10 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public bool IsHideVoidbridge { get; set; }
         public bool IsHideFishingWorld { get; set; }
         public bool IsHideVirtualSports { get; set; }
+
+        public bool IsHideVirtualGames { get; set; }
+
+
         public int ParentMasterDirect { get; set; } // just for Direct Master
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }

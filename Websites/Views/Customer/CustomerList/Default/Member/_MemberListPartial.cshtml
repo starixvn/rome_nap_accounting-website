@@ -102,7 +102,7 @@ string siteName = string.Empty;
 
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
                         Password
-                    </li>                
+                    </li>
                     @if (!memberItem.IsHideVirtualSports)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">
@@ -121,13 +121,13 @@ string siteName = string.Empty;
                             Gold Deluxe
                         </li>
                     }
-                   
+
                     @if (!memberItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">
                             Sportsbook 2
                         </li>
-                    }               
+                    }
                     @if (!memberItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 21, 'Allbet');">
@@ -144,6 +144,12 @@ string siteName = string.Empty;
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 24, 'Fishing World');">
                             Fishing World
+                        </li>
+                    }
+                    @if (!memberItem.IsHideVirtualGames)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 38, 'Virtual Games');">
+                            Virtual Games
                         </li>
                     }
                 </ul>
