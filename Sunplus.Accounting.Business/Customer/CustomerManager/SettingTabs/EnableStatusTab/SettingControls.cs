@@ -418,7 +418,7 @@
 
             if (isManageCustomerAccess)
             {
-                if (roleId == 4)
+                if (roleId == 4 || roleId == 3)
                 {
                     classname = "canchange";
                     jsonclick = "return ChangeAllDayBalTransfer(this);";

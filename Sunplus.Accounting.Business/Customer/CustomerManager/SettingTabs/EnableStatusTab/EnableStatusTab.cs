@@ -628,7 +628,8 @@
 
         private string RenderAllDayBalTransferControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.SearchAccountRoleId == 4)
+            if (customerInfoViewModel.SearchAccountRoleId == 4 || 
+                (customerInfoViewModel.IsShowAllDayBalTransfer && customerInfoViewModel.SearchAccountRoleId == 3))
             {
                 var allDayBalTransferControlSettingGroup = new SettingGroup();
 
