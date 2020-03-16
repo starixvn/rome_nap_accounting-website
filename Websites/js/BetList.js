@@ -502,7 +502,7 @@ function showSGDetails(transId, winlossDate, custId, transType) {
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
-        title: "Video Poker Details",
+        title: "Card Club - Bet List - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1030,
         height: 600,
