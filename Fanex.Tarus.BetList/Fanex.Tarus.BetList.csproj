@@ -230,7 +230,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.2.0\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.5-betlimit001\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.5-betlimit002\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.7\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
