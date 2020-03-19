@@ -152,14 +152,14 @@ string siteName = string.Empty;
                             Gold Deluxe
                         </li>
                     }
-                   
+
                     @if (!masterItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 16, 'Sportsbook 2');">
                             Sportsbook 2
                         </li>
                     }
-             
+
                     @if (!masterItem.IsHideAllBet)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 21, 'Allbet');">
@@ -177,7 +177,14 @@ string siteName = string.Empty;
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 24, 'Fishing World');">
                             Fishing World
                         </li>
-                    }                  
+                    }
+
+                    @if (!masterItem.IsHideVirtualGames)
+                    {
+                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 38, 'Virtual Games');">
+                            Virtual Games
+                        </li>
+                    }
                 </ul>
             </div>
         </td>

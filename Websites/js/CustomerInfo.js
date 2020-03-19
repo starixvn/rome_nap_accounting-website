@@ -904,7 +904,7 @@ function updateDoubleCommLosing(hasDownLine) {
 }
 
 function ChangeAllDayBalTransfer() {
-    if (confirm("Are you sure you want to change Transfer Mode for this line?")) {
+    if (confirm("Are you sure you want to change Transfer Mode for " + GetCustName() +" ?")) {
         var yes = ($("#AllDayBalTransfer").attr("class").indexOf("chkuncheck") > -1);
         $.ajax({
             type: "POST",

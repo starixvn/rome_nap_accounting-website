@@ -44,11 +44,12 @@
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
-                CustId = customerInfoViewModel.CustId,                
+                CustId = customerInfoViewModel.CustId,
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
+                IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -192,7 +193,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     "Update Sportbook2 Status"));
-            }         
+            }
 
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
             {
@@ -212,7 +213,7 @@
             if (!renderLeftPanelParameter.IsShowEnableCashOut)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
-            }          
+            }
 
             if (!renderLeftPanelParameter.IsShowMacau)
             {
@@ -422,7 +423,7 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
-                            break;                     
+                            break;
                         case "22":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -488,6 +489,19 @@
                                                renderLeftPanelParameter,
                                                "Update Lottery Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
+                            break;
+                        case "38":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "VirtualGames",
+                                               renderLeftPanelParameter.IsShowVirtualGames,
+                                               renderLeftPanelParameter,
+                                               "Update Virtual Games Status",
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames);
                             break;
                     }
                 }
@@ -614,7 +628,8 @@
 
         private string RenderAllDayBalTransferControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.SearchAccountRoleId == 4)
+            if (customerInfoViewModel.SearchAccountRoleId == 4 || 
+                (customerInfoViewModel.IsShowAllDayBalTransfer && customerInfoViewModel.SearchAccountRoleId == 3))
             {
                 var allDayBalTransferControlSettingGroup = new SettingGroup();
 

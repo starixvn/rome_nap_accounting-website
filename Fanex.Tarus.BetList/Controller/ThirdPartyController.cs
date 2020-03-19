@@ -2,6 +2,8 @@
 {
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
+    using Fanex.Result.Core.VirtualGames;
+    using Fanex.Result.ThirdParty.Models;
     using Infrastructure.Caching;
     using Logging;
     using RestSharp;
@@ -26,6 +28,15 @@
             var result = productService.GetDetailLink(message);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, result));
+        }
+
+        public ActionResult VirtualGamesResult(int productId, string gameId)
+        {
+            var productName = CacheRef.GetProductName(productId);
+            var service = new VirtualGamesResult();
+            var result = service.GetDetailResult(gameId, "d");
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }
     }
 }

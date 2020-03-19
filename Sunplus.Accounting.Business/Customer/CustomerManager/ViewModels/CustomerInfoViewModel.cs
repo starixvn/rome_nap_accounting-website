@@ -75,11 +75,15 @@
 
         public bool AllDayBalTransfer => Utils.ToBoolean(customerInfoRow["isalldaybaltransfer"]);
 
+        public bool IsShowAllDayBalTransfer => Utils.ToBoolean(customerInfoRow["IsShowAllDayBalTransfer"]);
+
         public bool DisableAutoMPT => Utils.ToBoolean(cashRow["DisableAutoMPT"]);
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
         public bool HideEnableAndEditFishingWorld { get; private set; } = true;
+
+        public bool HideVirtualGames { get; private set; } = true;
 
         public bool HideKenoLottery { get; private set; } = true;
 
@@ -178,7 +182,11 @@
 
                                 HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
-                                break;                    
+                                break;
+                            case "38":
+                                bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
+                                HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames ;
+                                break;
                         }
                     }
                 }

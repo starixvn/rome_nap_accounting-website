@@ -130,6 +130,16 @@
                     "Lottery");
             }
 
+            if (renderLeftPanelParameter.IsShowVirtualGames)
+            {
+                superSettingTab += string.Format(
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames,
+                    custId,
+                    4, // Super Level.
+                    "Virtual Games");
+            }
+
             masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
             
             if (!customerInfoViewModel.HideSettingLinkVirtualSports)
@@ -180,6 +190,16 @@
                     custId,
                     3, // Master Level.
                     "Lottery");
+            }
+
+            if (renderLeftPanelParameter.IsShowVirtualGames)
+            {
+                masterSettingTab += string.Format(
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames,
+                    custId,
+                    3, // Master Level.
+                    "Virtual Games");
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", superSettingTab);

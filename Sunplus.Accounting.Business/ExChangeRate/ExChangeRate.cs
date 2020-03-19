@@ -139,7 +139,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 if (msg.Length == 0)
                 {
                     BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
+                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
                 }
             }
             catch (ErrorException casinoEx)
@@ -257,7 +257,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region UpdateEditExChangeRate
 
-        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy)
+        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy, string Code)
         {
             string msg = "";
             try
@@ -289,7 +289,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 if (msg.Length == 0)
                 {
                     BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate));
+                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
