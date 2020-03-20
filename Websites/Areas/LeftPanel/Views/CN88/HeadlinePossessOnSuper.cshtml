@@ -4,27 +4,12 @@
 @model HeadlinePossessViewModel
 @{
     var extraPTSelectListItems = new List<SelectListItem>() {
-new SelectListItem()
-{
-Text = "0%",
-Value = "0"
-},
-new SelectListItem()
-{
-Text = "1%",
-Value = "1"
-},
-new SelectListItem()
-{
-Text = "2%",
-Value = "2"
-},
-new SelectListItem()
-{
-Text = "3%",
-Value = "3"
-}
-};
+        new SelectListItem() { Text = "0%", Value = "0" },
+        new SelectListItem() { Text = "1%", Value = "1" },
+        new SelectListItem() { Text = "2%", Value = "2" },
+        new SelectListItem() { Text = "3%", Value = "3" },
+        new SelectListItem() { Text = "4%", Value = "4" },
+        new SelectListItem() { Text = "5%", Value = "5" } };
 }
 <!DOCTYPE html>
 <html lang="en" class="linen">
@@ -65,7 +50,7 @@ Value = "3"
             <tr>
                 <td>Effective Date (from 0:00 AM GMT-4)</td>
                 <td class="b">@Model.CurrentEffectiveDate.ToString("MM/dd/yyyy")</td>
-                <td style="width: 102px;">@Html.TextBoxFor(m => m.NewEffectiveDate, "{0:MM/dd/yyyy}", new { @readonly = "readonly"})</td>
+                <td style="width: 102px;">@Html.TextBoxFor(m => m.NewEffectiveDate, "{0:MM/dd/yyyy}", new { @readonly = "readonly" })</td>
             </tr>
             <tr>
                 <td></td>
@@ -76,7 +61,7 @@ Value = "3"
     </div>
     @Html.HiddenFor(m => m.CustId)
     <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery-1.7.2.min.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js?v=" + WebSettings.Version)" ></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/LeftPanel/Views/CN88/Scripts/HeadlinePossessOnSuper.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript">
