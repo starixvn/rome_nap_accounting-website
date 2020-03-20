@@ -50,6 +50,7 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
+                IsShowSabaclub = !customerInfoViewModel.HideSabaclub
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);

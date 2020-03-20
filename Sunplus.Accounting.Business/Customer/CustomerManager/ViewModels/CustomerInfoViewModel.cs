@@ -89,6 +89,8 @@
 
         public bool HideVirtualSports2 { get; private set; } = true;
 
+        public bool HideSabaclub { get; private set; } = true;
+
         public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
 
         public bool ShowSettingLinkGoldDeluxeCredit => WebSettings.IsShowGoldDeluxeSettingForCredit && !IsDeposit;
@@ -186,6 +188,11 @@
                             case "38":
                                 bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
                                 HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames ;
+                                break;
+                            case "42":
+                                SyncSabaclub = Utils.ToBoolean(row["IsSync"]);
+                                HideSabaclubUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
+                                SyncSabaclubUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
                         }
                     }
