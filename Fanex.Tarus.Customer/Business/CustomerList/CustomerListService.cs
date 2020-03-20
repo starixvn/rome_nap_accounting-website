@@ -247,9 +247,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                                                
                         masterItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);                       
 
-                        masterItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino ||
-                            !CastAide.AsBoolean(row["SyncedLiveCasinoUpline"]) ||
-                            CastAide.AsBoolean(row["HideLiveCasinoUpline"]);
+                        masterItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
                         masterItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
@@ -339,9 +337,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                       
                         agentItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);                       
 
-                        agentItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino ||
-                            !CastAide.AsBoolean(row["SyncedLiveCasinoUpline"]) ||
-                            CastAide.AsBoolean(row["HideLiveCasinoUpline"]);
+                        agentItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
                         agentItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
@@ -432,9 +428,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                      
                         memberItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);                       
 
-                        memberItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino ||
-                            !CastAide.AsBoolean(row["SyncedLiveCasinoUpline"]) ||
-                            CastAide.AsBoolean(row["HideLiveCasinoUpline"]);
+                        memberItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
                         memberItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
@@ -560,6 +554,19 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 strVirRate = "--";
             }
             return strVirRate;
+        }
+
+        private static bool IsHideLiveCasino(DataRow row)
+            => IsNotSyncedLiveCasino(row) || IsHiddenLiveCasino(row);
+
+        private static bool IsNotSyncedLiveCasino(DataRow row)
+        {
+            return !CastAide.AsBoolean(row["SyncedAllbetUpline"]) && !CastAide.AsBoolean(row["SyncedSAGamingUpline"]);
+        }
+
+        private static bool IsHiddenLiveCasino(DataRow row)
+        {
+            return CastAide.AsBoolean(row["HideAllbetUpline"]) && CastAide.AsBoolean(row["HideSAGamingUpline"]);
         }
     }
 }
