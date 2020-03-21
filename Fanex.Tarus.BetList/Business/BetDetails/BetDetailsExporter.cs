@@ -27,51 +27,23 @@
     public class BetDetailsExporter : IBetDetailsExporter
     {
         public string GetFileNameWithoutExtension(int sportType)
-        {          
-
-            if (sportType == SportContants.AllBet)
+        {
+            var fileNameMapper = new Dictionary<int, string>
             {
-                return "Allbet_Details";
-            }
+                {SportContants.AllBet, "Allbet_Details"},
+                {SportContants.SaGaming, "SAGaming_Details"},
+                {SportContants.SexyGaming, "SexyGaming_Details"},
+                {SportContants.Voidbridge, "MacauGames_Details"},
+                {SportContants.FishingWorld, "FishingWorld_Details"},
+                {SportContants.PP, "PP_Details"},
+                {SportContants.CardClub, "CardClub_Details"},
+                {SportContants.Spadegaming, "Spadegaming_Details"},
+                {SportContants.RNG_RNGGame, "RNGCasino_Details"},
+                {SportContants.RNG_MiniGame, "RNGCasino_Details"},
+                {SportContants.RNG_Mobile, "RNGCasino_Details"}
+            };
 
-            if (sportType == SportContants.SaGaming)
-            {
-                return "SAGaming_Details";
-            }
-
-            if (sportType == SportContants.Voidbridge)
-            {
-                return "MacauGames_Details";
-            }
-
-            if (sportType == SportContants.FishingWorld)
-            {
-                return "FishingWorld_Details";
-            }
-
-            if (sportType == SportContants.PP)
-            {
-                return "PP_Details";
-            }
-
-            if (sportType == SportContants.CardClub)
-            {
-                return "CardClub_Details";
-            }
-
-            if (sportType == SportContants.Spadegaming)
-            {
-                return "Spadegaming_Details";
-            }
-
-            if (sportType == SportContants.RNG_RNGGame ||
-                sportType == SportContants.RNG_MiniGame ||
-                sportType == SportContants.RNG_Mobile)
-            {
-                return "RNGCasino_Details";
-            }
-
-            return null;
+            return fileNameMapper.ContainsKey(sportType) ? fileNameMapper[sportType] : null;
         }
 
         public IEnumerable<TicketDetail> GetTicketDetails(
@@ -79,7 +51,7 @@
             long refNo,
             int custId,
             byte transType)
-        {          
+        {
 
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming)

@@ -200,7 +200,7 @@
   </data>
   <data name="username" xml:space="preserve">
     <value>Username</value>
-  </data>  
+  </data>
   <data name="a_v11mpt_1" xml:space="preserve">
     <value>Handicap</value>
   </data>
@@ -485,7 +485,7 @@
   </data>
   <data name="maxv5pt_2" xml:space="preserve">
     <value>Max OE</value>
-  </data> 
+  </data>
   <data name="maxv2pt_8" xml:space="preserve">
     <value>Max 1st OU</value>
   </data>
@@ -518,7 +518,7 @@
   </data>
   <data name="maxv8pt_3" xml:space="preserve">
     <value>Max OU</value>
-  </data> 
+  </data>
   <data name="UMMBv201" xml:space="preserve">
     <value>Update Min-Max Bet</value>
   </data>
@@ -584,7 +584,7 @@
   </data>
   <data name="transferoption" xml:space="preserve">
     <value>Transfer Option</value>
-  </data> 
+  </data>
   <data name="MPMv201" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
@@ -615,7 +615,6 @@
   <data name="GroupID" xml:space="preserve">
     <value>GroupID</value>
   </data>
- 
   <data name="NewAgentId" xml:space="preserve">
     <value>New AgentID</value>
   </data>
@@ -636,7 +635,7 @@
   </data>
   <data name="lblMobilePhone" xml:space="preserve">
     <value>Mobile phone</value>
-  </data>  
+  </data>
   <data name="a_mpt_10" xml:space="preserve">
     <value>Outright</value>
   </data>
@@ -645,7 +644,7 @@
   </data>
   <data name="OddsType" xml:space="preserve">
     <value>OddsType</value>
-  </data>  
+  </data>
   <data name="a_v201spt_2" xml:space="preserve">
     <value>Odd/Even</value>
   </data>
@@ -657,7 +656,7 @@
   </data>
   <data name="a_v201mpt_3" xml:space="preserve">
     <value>Over/Under</value>
-  </data> 
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -670,7 +669,6 @@
   <data name="othercomm" xml:space="preserve">
     <value>othercomm</value>
   </data>
- 
   <data name="minMaxPT" xml:space="preserve">
     <value>Min-Max Position Taking</value>
   </data>
@@ -1093,7 +1091,7 @@
   </data>
   <data name="mpm" xml:space="preserve">
     <value>Max Per Match</value>
-  </data> 
+  </data>
   <data name="iam" xml:space="preserve">
     <value>Is Master Auto Position Taking on Agent</value>
   </data>
@@ -1144,7 +1142,7 @@
   </data>
   <data name="discountcs" xml:space="preserve">
     <value>DiscountCS</value>
-  </data> 
+  </data>
   <data name="masterName" xml:space="preserve">
     <value>Master Name</value>
   </data>
@@ -1180,7 +1178,7 @@
   </data>
   <data name="agentID" xml:space="preserve">
     <value>agentID</value>
-  </data> 
+  </data>
   <data name="isa_v5smpt_3" xml:space="preserve">
     <value>Over/Under</value>
   </data>
@@ -1207,14 +1205,13 @@
   </data>
   <data name="isa_v5mpt_20" xml:space="preserve">
     <value>Money Line</value>
-  </data> 
+  </data>
   <data name="MaxBv201" xml:space="preserve">
     <value>Max Bet</value>
   </data>
   <data name="NewAgentName" xml:space="preserve">
     <value>New Agent name</value>
   </data>
-
   <data name="closedOnly" xml:space="preserve">
     <value>ClosedOnly</value>
   </data>
@@ -1799,7 +1796,7 @@
   </data>
   <data name="v2spt_20" xml:space="preserve">
     <value>Money Line</value>
-  </data> 
+  </data>
   <data name="isa_v10smpt_20" xml:space="preserve">
     <value>Money Line</value>
   </data>
@@ -1883,7 +1880,7 @@
   </data>
   <data name="toName" xml:space="preserve">
     <value>To name</value>
-  </data> 
+  </data>
   <data name="disablefinancial" xml:space="preserve">
     <value>Disable Financial</value>
   </data>
@@ -1928,7 +1925,7 @@
   </data>
   <data name="v3spt_3" xml:space="preserve">
     <value>Over/Under</value>
-  </data> 
+  </data>
   <data name="ugroup" xml:space="preserve">
     <value>Update Group</value>
   </data>
@@ -2096,10 +2093,10 @@
   </data>
   <data name="minb" xml:space="preserve">
     <value>Min Bet</value>
-  </data>  
+  </data>
   <data name="maxb" xml:space="preserve">
     <value>Max Bet</value>
-  </data>  
+  </data>
   <data name="city" xml:space="preserve">
     <value>City</value>
   </data>
@@ -2129,7 +2126,7 @@
   </data>
   <data name="disabledCS" xml:space="preserve">
     <value>DisabledCS</value>
-  </data> 
+  </data>
   <data name="remark" xml:space="preserve">
     <value>Remark</value>
   </data>
@@ -2552,7 +2549,7 @@
   </data>
   <data name="isa_v99mpt_mem_3" xml:space="preserve">
     <value>Over/Under</value>
-  </data>  
+  </data>
   <data name="MaxBv161" xml:space="preserve">
     <value>Max Bet</value>
   </data>
@@ -2690,8 +2687,7 @@
   </data>
   <data name="lblSystem" xml:space="preserve">
     <value>System</value>
-  </data> 
-  
+  </data>
   <data name="lblAddToSystem" xml:space="preserve">
     <value>Add the customer to External Group</value>
   </data>
@@ -3237,5 +3233,11 @@
   </data>
   <data name="Disable244_3001" xml:space="preserve">
     <value>Disabled SA Gaming</value>
+  </data>
+  <data name="SexyGaming" xml:space="preserve">
+    <value>Sexy Gaming</value>
+  </data>
+  <data name="Disable243_3101" xml:space="preserve">
+    <value>Disabled Sexy Gaming</value>
   </data>
 </root>

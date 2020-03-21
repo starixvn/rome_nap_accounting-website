@@ -1351,9 +1351,17 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.RNG_Mobile);
             }
-            else if (ReportService.IsLiveCasino(betTypeId))
+            else if (ReportService.IsAllBet(betTypeId))
+            {
+                sportName += ticketHelper.GetSportNameById(SportContants.AllBet);
+            }
+            else if (ReportService.IsSAGamng(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.SaGaming);
+            }
+            else if (ReportService.IsSexyGamng(betTypeId))
+            {
+                sportName += ticketHelper.GetSportNameById(SportContants.SexyGaming);
             }
             else if (ReportService.IsVoidbridge(betTypeId))
             {
@@ -1384,7 +1392,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Spadegaming);
             }
-	    else if (ReportService.IsVirtualGames(betTypeId))
+	        else if (ReportService.IsVirtualGames(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.VirtualGames);
             }

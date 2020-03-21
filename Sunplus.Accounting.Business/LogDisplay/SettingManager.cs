@@ -551,6 +551,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return LogFormater.GetResourceName("SAGaming");
             }
 
+            if (Converter.To<int>(bettype) == 3101)
+            {
+                return LogFormater.GetResourceName("SexyGaming");
+            }
+
             return CacheRef.GetBettype(bettype);
         }
 
