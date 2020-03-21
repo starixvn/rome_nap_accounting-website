@@ -190,6 +190,7 @@
                                 HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames ;
                                 break;
                             case "42":
+                                HideSabaclub = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaclub;
                                 SyncSabaclub = Utils.ToBoolean(row["IsSync"]);
                                 HideSabaclubUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncSabaclubUpline = Utils.ToBoolean(row["IsSyncedUpline"]);

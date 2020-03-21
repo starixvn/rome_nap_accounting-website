@@ -236,6 +236,21 @@
                     "Update Allbet Status"));
             }
 
+            if (customerInfoViewModel.HideSabaclub)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableSabaclub");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{SabaclubOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.SearchAccountRoleId,
+                    42,
+                    "Update Saba.club Status"));
+            }
+
             return htmlcontent;
         }
 

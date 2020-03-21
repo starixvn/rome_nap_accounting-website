@@ -90,6 +90,10 @@
 
         public string Nickname => Converter.ToString2(customerInfoRow["username2"]);
 
+        public string SabaclubPlayer3rdID => customerInfoRow["SabaClubPlayerID3rd"] != null &&
+            customerInfoRow["SabaClubPlayerID3rd"] != DBNull.Value ? 
+            Converter.ToString2(customerInfoRow["SabaClubPlayerID3rd"]) : string.Empty;
+
         public bool Enabled => Utils.ToBoolean(customerInfoRow["Enabled"]);
 
         public string ClosedReason => Converter.ToString2(customerInfoRow["closedreason"]);
