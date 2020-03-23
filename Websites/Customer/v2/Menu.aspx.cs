@@ -32,7 +32,7 @@ public partial class Others_Menu : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery;
+        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideVirtualGames;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
