@@ -17,7 +17,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         decimal GetPositionTaking(int productId, int superId);
 
-        IEnumerable<BetSettingEntity>[] GetBetSettings(int productId, int superId, int agentId);
+        IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId);
 
         StatusEntity GetStatus(int productId, int custId);
 

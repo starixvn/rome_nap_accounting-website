@@ -23,16 +23,32 @@ namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
         {
             get
             {
-                return CacheRef.GetSportName(SportType);
+                var sportName = CacheRef.GetSportName(SportType);
+                return string.IsNullOrWhiteSpace(sportName) ? SportType.ToString() : sportName;
             }
         }
 
         public int BetType { get; set; }
 
+        public string BetTypeName
+        {
+            get
+            {
+                var bettypeName = CacheRef.GetBettype(BetType);
+                return string.IsNullOrWhiteSpace(bettypeName) ? BetType.ToString() : bettypeName;
+            }
+        }
+
         public decimal MinBet { get; set; }
+
+        public decimal SuperMinBet { get; set; }
 
         public decimal MaxBet { get; set; }
 
+        public decimal SuperMaxBet { get; set; }
+
         public decimal MaxPerMatch { get; set; }
+
+        public decimal SuperMaxPerMatch { get; set; }
     }
 }

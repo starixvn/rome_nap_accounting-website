@@ -9,8 +9,6 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 
         public bool IsAgentOnly { get; set; }
 
-        public IDictionary<int, BetSettingEntity> SuperBetSettings { get; set; }
-
         public IEnumerable<BetSettingEntity> BetSettings { get; set; }
     }
 }

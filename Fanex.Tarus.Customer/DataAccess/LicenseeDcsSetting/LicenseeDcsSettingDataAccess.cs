@@ -32,7 +32,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             return entities == null || !entities.Any() ? 0 : entities.First();
         }
 
-        public IEnumerable<BetSettingEntity>[] GetBetSettings(ICriteria criteria)
+        public IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria)
         {
             IList<BetSettingEntity> supers = new List<BetSettingEntity>();
             IList<BetSettingEntity> agents = new List<BetSettingEntity>();
@@ -56,7 +56,22 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 }
             }
 
-            return new[] { supers, agents };
+            var result = from super in supers
+                    join agent in agents
+                    on new { super.SportType, super.BetType }
+                    equals new { agent.SportType, agent.BetType }
+                    select new BetSettingEntity() {
+                        SportType = super.SportType,
+                        BetType = super.BetType,
+                        MinBet = agent.MinBet,
+                        SuperMinBet = super.MinBet,
+                        MaxBet = agent.MaxBet,
+                        SuperMaxBet = super.MaxBet,
+                        MaxPerMatch = agent.MaxPerMatch,
+                        SuperMaxPerMatch = super.MaxPerMatch
+                    };
+
+            return result.ToList();
         }
 
         public StatusEntity GetStatus(ICriteria criteria)

@@ -38,7 +38,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             return 0 <= pt && pt <= 100 ? pt / 100 : pt;
         }
 
-        public IEnumerable<BetSettingEntity>[] GetBetSettings(int productId, int superId, int agentId)
+        public IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId)
             => _settingDataAccess.GetBetSettings(
                 new GetBetSettingCriteria(productId, superId, agentId));
 
