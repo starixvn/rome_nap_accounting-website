@@ -536,6 +536,18 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "Sexy Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 243, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showSAGamingDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -759,8 +771,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
         case 211: // Allbet.
-        case 244: // LiveCasino.
-            return getLiveCasinoParam(transdesc, matchcode, bettype);
+        case 243: // SexyGaming.
+        case 244: // SaGaming.
+            return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
 
         case 212: // Macau Games.
             return getMacauGamesParam(matchcode, betcheck);
@@ -888,10 +901,14 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
     };
 }
 
-function getLiveCasinoParam(transdesc, betcheck, bettype) {
+function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
+    var sporttypes = {};
+    sporttypes["211"] = "Allbet Result";
+    sporttypes["243"] ="Sexy Gaming Result";
+    sporttypes["244"] ="SA Gaming Result";
     return {
         url: "Report/ViewLiveCasinoResult.aspx",
-        title: (bettype == 211 ? "Allbet Result" : "SA Gaming Result"),
+        title: sporttype[sporttype],
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
