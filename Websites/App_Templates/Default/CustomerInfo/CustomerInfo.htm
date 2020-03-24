@@ -59,6 +59,16 @@
                         <span id="Span1" class="text_red" title="{NickName}">{NickName}&nbsp;</span>
                     </td>
                 </tr>
+                <!--SabaclubPlayer3rd-->
+                <tr>
+                    <td class="dot_left">
+                        Saba.club Player ID:
+                    </td>
+                    <td class="dot_left">
+                        <span id="Span1" class="text_red" title="{SabaclubPlayer3rdID}">{SabaclubPlayer3rdID}&nbsp;</span>
+                    </td>
+                </tr>
+                <!--/SabaclubPlayer3rd-->
                 <tr>
                     <td class="dot_left">
                         Fax:
@@ -431,7 +441,7 @@
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--/BetTrade-->                  
+                    <!--/BetTrade-->
                     <!--Macau-->
                     <div class="col">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true,  {uplineStatusMacau}, true, 'Update Macau Status','Macau', {macauId})">
@@ -448,6 +458,14 @@
                         </span>
                     </div>
                     <!--/Sportsbook2-->
+                    <!--EnableSabaclub-->
+                    <div class="col">
+                        <span class="canchange" onclick="{SabaclubOnClickFunction}">
+                            Saba.club
+                            <span class="icon-list"></span>
+                        </span>
+                    </div>
+                    <!--/EnableSabaclub-->
                     <!--EnableAllbet-->
                     <div class="col">
                         <span class="canchange" onclick="{AllbetOnClickFunction}">
@@ -463,7 +481,7 @@
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--/EnableCashOut-->                  
+                    <!--/EnableCashOut-->
                     {settingcontrol}
                     <!--/CN88HiddenItem-->
                     <!--/CN88HeadlineHiddenItem-->
@@ -628,6 +646,11 @@
                                 Virtual Games
                             </a><br />
                             <!--/edit-VirtualGames-->
+                            <!--edit-Sabaclub-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sabaclubLinkSetting}');">
+                                Saba.club
+                            </a><br />
+                            <!--/edit-Sabaclub-->
                             <!--/CN88HiddenItem-->
                             <!-- Detail menu -->
                         </div>
