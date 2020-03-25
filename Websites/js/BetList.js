@@ -561,7 +561,7 @@ function showSAGamingDetails(refno, winlossDate, custId, transType) {
 }
 
 function showAGCasinoDetails(refno, winlossDate, custId, transType) {
-    var agCasinoParam = {
+    var params = {
         url: "AGCasinoBetList/BetDetails",
         title: "AG Casino Details",
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType },
@@ -570,6 +570,18 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
     };
 
     openResultsPopUp(params);
+}
+
+function showSabaClubDetails(refno, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Sabaclub Details",
+        jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
 }
 
 function ShowBonusDetails(refCode, transId) {
