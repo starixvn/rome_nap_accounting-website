@@ -421,7 +421,7 @@
                 if (roleId == 4 || roleId == 3)
                 {
                     classname = "canchange";
-                    jsonclick = "return ChangeAllDayBalTransfer(this);";
+                    jsonclick = "return ChangeAllDayBalTransfer(" + roleId + ");";
                     jsonmouseout = "UnTip()";
                     jsonmouseover = "Tip('Check to allow All-Day Balance Transfer mode', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
                 }
@@ -432,6 +432,6 @@
             }
 
             return new SettingControl("All-Day Bal Transfer", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
-        }               
+        }
     }
 }

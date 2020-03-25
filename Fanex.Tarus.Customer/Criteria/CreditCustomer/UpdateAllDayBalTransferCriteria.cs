@@ -8,6 +8,8 @@ namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
 
         public bool IsAllDayBalTransfer { get; set; }
 
+        public bool IsIncludedDownline { get; set; }
+
         public string IP { get; set; }
 
         public int UserId { get; set; }

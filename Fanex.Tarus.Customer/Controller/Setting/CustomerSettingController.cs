@@ -52,9 +52,9 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         }
 
         [HttpPost]
-        public JsonResult UpdateAllDayBalTransfer(int custId, bool status)
+        public JsonResult UpdateAllDayBalTransfer(int custId, bool status, bool isIncludedDownline)
         {
-            var result = _customerSetting.UpdateAllDayBalTransfer(custId, status, AppSession.AccId, Utils.GetClientIP());
+            var result = _customerSetting.UpdateAllDayBalTransfer(custId, status, isIncludedDownline, AppSession.AccId, Utils.GetClientIP());
 
             return Json(result, JsonRequestBehavior.DenyGet);
         }
