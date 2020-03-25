@@ -270,7 +270,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabVirtualGames': url += "DCS/ViewCustomerSetting?productId=38&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualGames", url);
                 $scope.resize("#frmVirtualGames");
-                break;  
+                break;
+            case 'tabSabaclub': url += "DCS/ViewCustomerSetting?productId=42&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmSabaclub", url);
+                $scope.resize("#frmSabaclub");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 

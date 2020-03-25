@@ -391,6 +391,7 @@
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\OnlineList.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\DownlineStatusViewModel.cs" />
+    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\SabaclubViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />

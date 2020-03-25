@@ -2465,4 +2465,7 @@
   <data name="lblDisabledVirtualGamesUpline" xml:space="preserve">
     <value>Virtual Games has been disabled at upline</value>
   </data>
+  <data name="enableSabaclub" xml:space="preserve">
+    <value>Saba.club</value>
+  </data>
 </root>

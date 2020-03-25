@@ -26,13 +26,14 @@ public partial class Others_Menu : System.Web.UI.Page
         voidbridge = 22,
         ng2 = 23,
         fishingworld = 24,
-        lottery = 28
+        lottery = 28,
+        sabaclub = 42
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideVirtualGames;
+        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideKenoLottery, hideVirtualGames, hideSabaclub;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -61,6 +62,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
         hideKenoLottery = !CastAide.AsBoolean(db.Outputs["allowedlottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0;
         hideVirtualGames = !CastAide.AsBoolean(db.Outputs["allowedvirtualgames"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0;
+        hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
 
         string kenoPath = string.Empty;
         string casinoPath = string.Empty;
@@ -110,6 +112,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
         this.RenderSettingTab("KenoLottery", "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery), hideKenoLottery);
         this.RenderSettingTab("virtualGames", "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames), hideVirtualGames);
+        this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);
         this.sMenu.Text = this.tplMenu;
     }
 

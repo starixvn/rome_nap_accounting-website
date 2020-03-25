@@ -135,6 +135,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
             TemplateHandler.Assign(ref htmlcontent, "{kenoLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery));
             TemplateHandler.Assign(ref htmlcontent, "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames));
+            TemplateHandler.Assign(ref htmlcontent, "{sabaclubLinkSetting}", string.Format(creditDCSLink, 42));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);          
             TemplateHandler.Assign(ref htmlcontent, "{linkEditSettingCN88}", cn88EditSettingLink);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
@@ -214,6 +215,11 @@
             if (customerInfoViewModel.HideVirtualGames)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualGames");
+            }
+
+            if (customerInfoViewModel.HideSabaclub)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Sabaclub");
             }
 
             // Chatbot
