@@ -1355,11 +1355,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.AllBet);
             }
-            else if (ReportService.IsSAGamng(betTypeId))
+            else if (ReportService.IsSAGaming(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.SaGaming);
             }
-            else if (ReportService.IsSexyGamng(betTypeId))
+            else if (ReportService.IsSexyGaming(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.SexyGaming);
             }

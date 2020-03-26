@@ -58,7 +58,7 @@
 
         public const int AllBet = 211;
         public const int SaGaming = 244;
-        public const int SexyGaming = 245;
+        public const int SexyGaming = 243;
         public const int Voidbridge = 212;
         public const int FishingWorld = 219;
         public const int PP = 248;

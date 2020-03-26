@@ -164,12 +164,12 @@
             return (2401 <= betTypeId && betTypeId <= 2499) || (3001 <= betTypeId && betTypeId <= 3099);
         }
 
-        public static bool IsSAGamng(int betTypeId)
+        public static bool IsSAGaming(int betTypeId)
         {
             return (3001 <= betTypeId && betTypeId <= 3099);
         }
 
-        public static bool IsSexyGamng(int betTypeId)
+        public static bool IsSexyGaming(int betTypeId)
         {
             return (3101 <= betTypeId && betTypeId <= 3199);
         }
