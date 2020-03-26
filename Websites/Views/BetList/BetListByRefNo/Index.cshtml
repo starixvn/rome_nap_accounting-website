@@ -2,7 +2,7 @@
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
 @using System.Configuration;
-     
+
 @using Fanex.Tarus.Infrastructure.Caching;
 @{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
@@ -38,6 +38,7 @@
     {
         allowedProducts.Append("/Saba.club");
     }
+    allowedProducts.Append("/Indo 4D");
 }
 <html>
 <head>
@@ -239,7 +240,7 @@
                 "@Url.Content("~/js/dialogbox.js")",
                 "@Url.Content("~/js/common.js")",
                 "@Url.Content("~/js/BetList.js?v=")@WebSettings.Version",
-                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@WebSettings.Version",               
+                "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetListByRefNo/Scripts/BetListByRefNo.js?ver=")@WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@WebSettings.Version");
     </script>
