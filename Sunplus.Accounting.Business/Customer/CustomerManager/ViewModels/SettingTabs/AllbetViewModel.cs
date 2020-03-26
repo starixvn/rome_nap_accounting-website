@@ -4,6 +4,8 @@
 
     public partial class CustomerInfoViewModel
     {
+        private bool HideLiveCasino { get; set; } = true;
+
         private bool HideLiveCasinoUpline { get; set; } = true;
 
         private bool SyncLiveCasino { get; set; } = true;
@@ -11,9 +13,9 @@
         public bool SyncLiveCasinoUpline { get; private set; } = true;
 
         public bool HideEnabledCheckBoxLiveCasino
-            => !WebSettings.IsShowLiveCasino || IsDeposit || !SyncLiveCasinoUpline || (SearchAccountRoleId < 4 && (HideLiveCasinoUpline || !SyncLiveCasino));
+            => !WebSettings.IsShowLiveCasino || IsDeposit || HideLiveCasinoUpline || HideLiveCasino;
 
         public bool HideSettingLinkLiveCasino
-            => !WebSettings.IsShowLiveCasino || IsDeposit || HideLiveCasinoUpline || !SyncLiveCasinoUpline;
+            => !WebSettings.IsShowLiveCasino || IsDeposit || HideLiveCasinoUpline || HideLiveCasino;
     }
 }

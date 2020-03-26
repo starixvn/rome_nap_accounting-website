@@ -147,9 +147,10 @@
                                 break;
 
                             case "41":
-                                SyncLiveCasino = Utils.ToBoolean(row["IsSync"]);
-                                HideLiveCasinoUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                SyncLiveCasinoUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
+                                //SyncLiveCasino = Utils.ToBoolean(row["IsSync"]);
+                                HideLiveCasinoUpline = HideLiveCasinoUpline && Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
+                                HideLiveCasino = HideLiveCasino && Utils.ToBoolean(row["IsHidden"]);
+                                //SyncLiveCasinoUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
                             case "22":
@@ -187,7 +188,7 @@
                                 break;
                             case "38":
                                 bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
-                                HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames ;
+                                HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames;
                                 break;
                             case "42":
                                 HideSabaclub = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaclub;
