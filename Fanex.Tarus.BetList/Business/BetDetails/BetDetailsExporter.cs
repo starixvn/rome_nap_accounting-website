@@ -40,7 +40,8 @@
                 {SportContants.Spadegaming, "Spadegaming_Details"},
                 {SportContants.RNG_RNGGame, "RNGCasino_Details"},
                 {SportContants.RNG_MiniGame, "RNGCasino_Details"},
-                {SportContants.RNG_Mobile, "RNGCasino_Details"}
+                {SportContants.RNG_Mobile, "RNGCasino_Details"},
+                {SportContants.Sabaclub, "Sabaclub_Details"}
             };
 
             return fileNameMapper.ContainsKey(sportType) ? fileNameMapper[sportType] : null;
@@ -71,7 +72,8 @@
             if (sportType == SportContants.FishingWorld ||
                 sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
-                sportType == SportContants.RNG_Mobile)
+                sportType == SportContants.RNG_Mobile ||
+                sportType == SportContants.Sabaclub)
             {
                 return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType);
             }
