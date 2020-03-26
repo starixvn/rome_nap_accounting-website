@@ -54,7 +54,8 @@
         {
 
             if (sportType == SportContants.AllBet ||
-                sportType == SportContants.SaGaming)
+                sportType == SportContants.SaGaming ||
+                sportType == SportContants.SexyGaming)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
