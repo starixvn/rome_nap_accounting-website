@@ -234,4 +234,7 @@
   <data name="UpdateStatusSuccessfully" xml:space="preserve">
     <value>Update Status successfully</value>
   </data>
+  <data name="Bettype" xml:space="preserve">
+    <value>Bettype</value>
+  </data>
 </root>

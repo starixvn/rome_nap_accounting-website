@@ -18,7 +18,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 
         decimal GetPositionTaking(ICriteria criteria);
 
-        IEnumerable<BetSettingEntity>[] GetBetSettings(ICriteria criteria);
+        IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria);
 
         StatusEntity GetStatus(ICriteria criteria);
 

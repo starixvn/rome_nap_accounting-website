@@ -92,8 +92,7 @@ namespace Fanex.Tarus.Customer.Controller
             var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
 
             var betSettings = _settingService.GetBetSettings(model.ProductId, model.SuperId, agentId);
-            model.SuperBetSettings = betSettings[0].ToDictionary(s => s.SportType, s => s);
-            model.BetSettings = betSettings[1];
+            model.BetSettings = betSettings;
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSetting.cshtml", model);
         }

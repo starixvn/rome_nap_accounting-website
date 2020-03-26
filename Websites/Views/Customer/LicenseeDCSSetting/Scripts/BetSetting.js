@@ -198,6 +198,7 @@
                 SportType: sportType,
                 SportTypeName: tableRow.data("sporttypename"),
                 BetType: tableRow.data("bettype"),
+                BetTypeName: tableRow.data("bettypename"),
                 MinBet: minBet,
                 MaxBet: maxBet,
                 MaxPerMatch: maxPerMatch,
@@ -229,6 +230,9 @@
             html.push('<td class="l">');
             html.push(setting.SportTypeName);
             html.push("</td>");
+            html.push('<td class="l">');
+            html.push(setting.BetTypeName);
+            html.push("</td>");
             html.push('<td class="r">');
             html.push(setting.MinBet.toLocaleString("en-US"));
             html.push("</td>");
@@ -242,7 +246,7 @@
             html.push(setting.Updated ? "X" : "");
             html.push("</td>");
             html.push('<td class="l"><div id="message_');
-            html.push(setting.SportType);
+            html.push(setting.SportType + '_' + setting.BetType);
             html.push('"></div></td>');
             html.push("</tr>");
         }
@@ -300,7 +304,7 @@
         var selectedAgentIds = getSelectedAgents().AgentIds;
 
         $.each(updatedArray, function (i, item) {
-            var messageDiv = $("#message_" + item.SportType);
+            var messageDiv = $('#message_' + item.SportType + '_' + item.BetType);
             messageDiv.html('<span class="btnRefresh"></span> Updating ...');
 
             $.ajax({

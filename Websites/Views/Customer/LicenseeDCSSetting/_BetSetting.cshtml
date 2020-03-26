@@ -15,7 +15,7 @@
     <table class="tblcollapse betsetting_table mT5" id="betsetting_table">
         <thead>
             <tr class="title">
-                <th colspan="5">@LicenseeDcsSettingLabels.BetSetting <span>(@superOrAgentNames)</span></th>
+                <th colspan="6">@LicenseeDcsSettingLabels.BetSetting <span>(@superOrAgentNames)</span></th>
             </tr>
             <tr class="title_1">
                 <th>
@@ -31,6 +31,9 @@
                         <span title="@LicenseeDcsSettingLabels.CopyBetSettingFrom1stRow" class="icon-copy-setting" id="copy_setting_icon" data-sporttype="@Model.BetSettings.First().SportType"></span>
                     }
                 </th>
+                <th>
+                    @LicenseeDcsSettingLabels.Bettype
+                </th>
                 <th>@LicenseeDcsSettingLabels.MinBet</th>
                 <th>@LicenseeDcsSettingLabels.MaxBet</th>
                 <th>@LicenseeDcsSettingLabels.MaxPerMatch</th>
@@ -39,16 +42,12 @@
         <tbody>
             @foreach (var item in Model.BetSettings)
             {
-                BetSettingEntity superBetSetting;
-                if (!Model.SuperBetSettings.TryGetValue(item.SportType, out superBetSetting))
-                {
-                    superBetSetting = new BetSettingEntity(item.SportType, item.BetType, 0, 0, 0);
-                }
-                <tr data-sporttype="@item.SportType" data-bettype="@item.BetType" data-sporttypename="@item.SportTypeName">
+                <tr data-sporttype="@item.SportType" data-bettype="@item.BetType" data-sporttypename="@item.SportTypeName" data-bettypename="@item.BetTypeName">
                     <td>
                         <input type="checkbox" class="sporttype-checkbox" data-sporttype="@item.SportType" />
                     </td>
                     <td class="l">@item.SportTypeName</td>
+                    <td class="l">@item.BetTypeName</td>
                     <td class="l">
                         <input type="text"
                                disabled="disabled"
@@ -57,7 +56,7 @@
                                data-oldvalue="@item.MinBet"
                                value="@item.MinBet.ToString("N0")"
                                id="minbet_@item.SportType">
-                        <span>@superBetSetting.MinBet.ToString("N0")</span>
+                        <span>@item.SuperMinBet.ToString("N0")</span>
                     </td>
                     <td class="l">
                         <input type="text"
@@ -67,7 +66,7 @@
                                data-oldvalue="@item.MaxBet"
                                value="@item.MaxBet.ToString("N0")"
                                id="maxbet_@item.SportType">
-                        <span>@superBetSetting.MaxBet.ToString("N0")</span>
+                        <span>@item.SuperMaxBet.ToString("N0")</span>
                     </td>
                     <td class="l">
                         <input type="text"
@@ -77,7 +76,7 @@
                                data-oldvalue="@item.MaxPerMatch"
                                value="@item.MaxPerMatch.ToString("N0")"
                                id="maxpermatch_@item.SportType">
-                        <span>@superBetSetting.MaxPerMatch.ToString("N0")</span>
+                        <span>@item.SuperMaxPerMatch.ToString("N0")</span>
                     </td>
                 </tr>
             }
@@ -92,10 +91,11 @@
     <table class="tblcollapse reviewsetting_table mT5" id="reviewsetting_table">
         <thead>
             <tr class="title">
-                <td colspan="6">@LicenseeDcsSettingLabels.ReviewBetSetting <span>@Model.ProductName</span> <span>(@superOrAgentNames)</span></td>
+                <td colspan="7">@LicenseeDcsSettingLabels.ReviewBetSetting <span>@Model.ProductName</span> <span>(@superOrAgentNames)</span></td>
             </tr>
             <tr class="title_1">
                 <th>@LicenseeDcsSettingLabels.AllSports</th>
+                <th>@LicenseeDcsSettingLabels.Bettype</th>
                 <th>@LicenseeDcsSettingLabels.MinBet</th>
                 <th>@LicenseeDcsSettingLabels.MaxBet</th>
                 <th>@LicenseeDcsSettingLabels.MaxPerMatch</th>
