@@ -5,7 +5,10 @@
     using Fanex.Data;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
+    using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
 
     public class AGCasinoRepository : IAGCasinoRepository
     {
@@ -57,7 +60,7 @@
 
                                 MatchCode = Converter.ToString2(reader["matchcode"]),
                                 BetCheck = Converter.ToString2(reader["betcheck"]),
-                                BetTeam = Converter.ToString2(reader["BetTeam"])
+                                BetTeam = HasColumn(reader, "BetTeam") ? Converter.ToString2(reader["BetTeam"]) : string.Empty
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -70,6 +73,19 @@
             }
 
             return result;
+        }
+
+        private bool HasColumn(IDataRecord dataRecord, string columnName)
+        {
+            for (int i = 0; i < dataRecord.FieldCount; i++)
+            {
+                if (dataRecord.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
