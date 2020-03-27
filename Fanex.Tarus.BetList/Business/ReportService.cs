@@ -161,7 +161,7 @@
 
         public static bool IsAllBet(int betTypeId)
         {
-            return (2401 <= betTypeId && betTypeId <= 2499) || (3001 <= betTypeId && betTypeId <= 3099);
+            return (2401 <= betTypeId && betTypeId <= 2499);
         }
 
         public static bool IsSAGaming(int betTypeId)
