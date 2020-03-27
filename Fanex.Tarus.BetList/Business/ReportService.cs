@@ -241,6 +241,11 @@
 
         public static bool IsHappy5Bettype(int bettypeId)
             => bettypeId >= 8101 && bettypeId <= 8105;
+
+        public static bool IsSabaclub(int betTypeId)
+        {
+            return 1611 <= betTypeId && betTypeId <= 1699;
+        }
         #endregion StaticMethods
     }
 }

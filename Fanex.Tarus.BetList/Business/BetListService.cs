@@ -42,6 +42,7 @@ namespace Fanex.Tarus.BetList.Business
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
+        private const int SabaclubProductId = 42;
 
         public BetListService()
         {
@@ -256,7 +257,29 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            var custId = betListByProductCriteria.CustId;
+            var isSabaclub = betListByProductCriteria.ProductId == SabaclubProductId;
+            var needToMapPlayerId3rdToCustId = isSabaclub && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
+
+            var mappedCustId = needToMapPlayerId3rdToCustId
+                ? _betListRepository.MapPlayerIdToCustId(new MapPlayerId3rdToCustIdCriteria
+                {
+                    PlayerId3rd = betListByProductCriteria.PlayerId3rd,
+                    Vendor = betListByProductCriteria.VendorId,
+                    ProductId = betListByProductCriteria.ProductId
+                })
+                : 0;
+
+            if (needToMapPlayerId3rdToCustId
+                && betListByProductCriteria.CustId != 0
+                && mappedCustId != betListByProductCriteria.CustId)
+            {
+                return new List<TicketDetail>();
+            }
+
+            var custId = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
+                ? mappedCustId
+                : betListByProductCriteria.CustId;
+
             return GetBetListBy(new BetListByProductCriteria
             {
                 UserId = betListByProductCriteria.UserId,
@@ -1379,7 +1402,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 const int VirtualSports2ProductId = 27;
                 sportName = GetProductName(VirtualSports2ProductId);
-            }         
+            }
+            else if (ReportService.IsSabaclub(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.Sabaclub);
+            }
             else if (ReportService.IsHappy5Bettype(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Happy5);
