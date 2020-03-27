@@ -34,7 +34,7 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{SuperName}", customerInfoViewModel.SuperName);
                 TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden1}", string.Empty);
                 robotIds.Add(customerInfoViewModel.SuperId);
-                if (!customerInfoViewModel.SuperEnabled)
+                if (customerInfoViewModel.IsInternalUser || !customerInfoViewModel.SuperEnabled)
                 {
                     TemplateHandler.RemoveBlock(ref uplineboxhtml, "SuperLogin");
                 }
@@ -51,7 +51,7 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterId}", customerInfoViewModel.MasterId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{MasterName}", customerInfoViewModel.MasterName);
                 robotIds.Add(customerInfoViewModel.MasterId);
-                if (!customerInfoViewModel.MasterEnabled)
+                if (customerInfoViewModel.IsInternalUser || !customerInfoViewModel.MasterEnabled)
                 {
                     TemplateHandler.RemoveBlock(ref uplineboxhtml, "MasterLogin");
                 }
@@ -67,7 +67,7 @@
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentId}", customerInfoViewModel.AgentId);
                 TemplateHandler.Assign(ref uplineboxhtml, "{AgentName}", customerInfoViewModel.AgentName);
                 robotIds.Add(customerInfoViewModel.AgentId);
-                if (!customerInfoViewModel.AgentEnabled)
+                if (customerInfoViewModel.IsInternalUser || !customerInfoViewModel.AgentEnabled)
                 {
                     TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentLogin");
                 }
