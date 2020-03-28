@@ -258,51 +258,52 @@ var changeGroupService = (function ($, ajaxService) {
     function assignGridBodyRows(extraPTGroups) {
         currentEffectiveDate = "";
         var html = [];
+        if (extraPTGroups.Entities != null) {
+            $.each(extraPTGroups.Entities, function (index, group) {
+                var isNoExtraPT = group.GroupName === "No Extra PT";
 
-        $.each(extraPTGroups.Entities, function (index, group) {
-            var isNoExtraPT = group.GroupName === "No Extra PT";
+                html.push("<tr>");
+                html.push('<td><div class="w40 c">');
+                html.push(index + 1);
+                html.push("</div></td>");
+                html.push('<td><div class="w180');
 
-            html.push("<tr>");
-            html.push('<td><div class="w40 c">');
-            html.push(index + 1);
-            html.push("</div></td>");
-            html.push('<td><div class="w180');
-
-            if (isNoExtraPT) {
-                html.push(' noExtraPT');
-            }
-
-            if (group.IsPrimary) {
-                if (group.EffectiveDate) {
-                    currentEffectiveDate = formatDate(group.EffectiveDate);
+                if (isNoExtraPT) {
+                    html.push(' noExtraPT');
                 }
 
-                html.push(' b');
-            }
+                if (group.IsPrimary) {
+                    if (group.EffectiveDate) {
+                        currentEffectiveDate = formatDate(group.EffectiveDate);
+                    }
 
-            html.push('">');
-            html.push(group.GroupName);
+                    html.push(' b');
+                }
 
-            if (group.IsPrimary && currentEffectiveDate.length !== 0) {
-                html.push(" (");
-                html.push(currentEffectiveDate);
-                html.push(")");
-            }
+                html.push('">');
+                html.push(group.GroupName);
 
-            html.push("</div></td>");
-            html.push('<td><div class="w120 c">');
-            html.push('<input type="radio" name="isPrimary" value="');
-            html.push(group.GroupName);
-            html.push('"');
+                if (group.IsPrimary && currentEffectiveDate.length !== 0) {
+                    html.push(" (");
+                    html.push(currentEffectiveDate);
+                    html.push(")");
+                }
 
-            if (group.IsPrimary) {
-                html.push(' checked="checked"');
-            }
+                html.push("</div></td>");
+                html.push('<td><div class="w120 c">');
+                html.push('<input type="radio" name="isPrimary" value="');
+                html.push(group.GroupName);
+                html.push('"');
 
-            html.push(" />");
-            html.push("</div></td>");
-            html.push("</tr>");
-        });
+                if (group.IsPrimary) {
+                    html.push(' checked="checked"');
+                }
+
+                html.push(" />");
+                html.push("</div></td>");
+                html.push("</tr>");
+            });
+        }        
 
         $table.html(html.join(""));
     }
