@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="104" SiteName="NAP - Accounting">
+  <Function Name="Manage Bettype">
+    <Setting Key="Acc_Bettype_Sel" SpName="Acc_Bettype_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Bettype_Upd" SpName="Acc_Bettype_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Bettype_Ins" SpName="Acc_Bettype_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage Sporttype">
+    <Setting Key="Acc_Sporttype_Sel" SpName="Acc_Sporttype_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Sporttype_Upd" SpName="Acc_Sporttype_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Sporttype_Ins" SpName="Acc_Sporttype_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
+</Functions>

@@ -1,0 +1,92 @@
+﻿<style>
+    textarea{
+        resize: none;
+    }
+
+    label{
+        font-weight: bold;
+    }
+</style>
+<form id="edit-form" style="display: none;">
+    <div id="updateErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="TypeId">TypeID</label></td>
+            <td><span id="TypeId" /></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamee">TypeNameE</label></td>
+            <td><textarea id="TypeNamee" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameVN">TypeNameVN</label></td>
+            <td><textarea id="TypeNameVN" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamec">TypeNameC</label></td>
+            <td><textarea id="TypeNamec" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameEL">TypeNameEL</label></td>
+            <td><textarea id="TypeNameEL" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeDesc">TypeDesc</label></td>
+            <td><textarea id="TypeDesc" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNamee_Eu">TypeNamee_EU</label></td>
+            <td><textarea id="TypeNamee_Eu" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamec_uni">TypeNameC_Uni</label></td>
+            <td><textarea id="TypeNamec_uni" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameRU">TypeNameRU</label></td>
+            <td><textarea id="TypeNameRU" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamej">TypeNameJ</label></td>
+            <td><textarea id="TypeNamej" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameID">TypeNameID</label></td>
+            <td><textarea id="TypeNameID" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamcn">TypeNamcn</label></td>
+            <td><textarea id="TypeNamcn" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNamePT">TypeNamePT</label></td>
+            <td><textarea id="TypeNamePT" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNamecn">TypeNameCN</label></td>
+            <td><textarea id="TypeNamecn" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameFR">TypeNameFR</label></td>
+            <td><textarea id="TypeNameFR" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNameth">TypeNameTH</label></td>
+            <td><textarea id="TypeNameth" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="ParentTypeid">ParentTypeId</label></td>
+            <td><textarea id="ParentTypeid" rows="1" cols="40" maxlength="10"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNameit">TypeNameIT</label></td>
+            <td><textarea id="TypeNameit" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameMMR">TypeNameMMR</label></td>
+            <td><textarea id="TypeNameMMR" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNameko">TypeNameKO</label></td>
+            <td><textarea id="TypeNameko" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="TypeNameHI">TypeNameHI</label></td>
+            <td><textarea id="TypeNameHI" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="TypeNameES">TypeNameES</label></td>
+            <td><textarea id="TypeNameES" rows="2" cols="40" maxlength="128"></textarea></td>
+            <td><label for="DisplayedTypeID">DisplayedTypeId</label></td>
+            <td><textarea id="DisplayedTypeID" rows="1" cols="40" maxlength="10"></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <input class="btn" type="button" value="Submit" onclick="Update();" />
+            </td>
+        </tr>
+    </table>
+</form>
