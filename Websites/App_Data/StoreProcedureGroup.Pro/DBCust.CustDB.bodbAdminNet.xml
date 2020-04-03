@@ -366,4 +366,7 @@
   <Function Name="Betlist by product">
     <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Customer - Finance permission">
+    <Setting Key="Acc_SelFIPermission" SpName="Acc_SelFIPermission" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>

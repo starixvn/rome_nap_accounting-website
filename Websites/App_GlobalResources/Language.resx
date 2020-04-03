@@ -2468,4 +2468,7 @@
   <data name="enableSabaclub" xml:space="preserve">
     <value>Saba.club</value>
   </data>
+  <data name="FinanceAccessDenied" xml:space="preserve">
+    <value>You are not authorized to view this account</value>
+  </data>
 </root>
