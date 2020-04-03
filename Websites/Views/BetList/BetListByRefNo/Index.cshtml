@@ -36,7 +36,7 @@
     }
     if (hasNG2Permission)
     {
-        allowedProducts.Append("/Saba.club");
+        allowedProducts.Append("/").Append(CacheRef.GetProductName(42));
     }
     allowedProducts.Append("/Indo 4D");
 }
@@ -161,6 +161,10 @@
                                     {
                                         <option value="@productIdVirtualGames">@CacheRef.GetProductName(productIdVirtualGames)</option>
                                     }
+                                    @if (hasNG2Permission)
+	                                {
+                                        <option value="42">@CacheRef.GetProductName(42)</option>
+	                                }
                                 </select>
                             </td>
                             <td style="min-width: 65px">

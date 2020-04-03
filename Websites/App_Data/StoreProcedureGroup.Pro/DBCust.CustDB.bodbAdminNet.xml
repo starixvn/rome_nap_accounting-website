@@ -363,4 +363,7 @@
     <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Betlist by product">
+    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
