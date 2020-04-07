@@ -89,8 +89,8 @@ var LeftPanelManager = function () {
         var height = 270;
         if (productId === 8) {
             height = 520;
-        } else if (productId === 21) {
-            height = 320;
+        } else if (productId === 41) {
+            height = 360;
             width = 800;
         } else if (productId === 33) {
             height = 400;
