@@ -76,6 +76,7 @@ common.resetValues = function () {
     $("#tbxDummyMasterName").val("");
     $("#tbxDummyAgentName").val("");
     $("#tbxDummyMemberName").val("");
+    $("#tbxDummyMemberArchive").val("");
 
     $("#divSBNGContainer").find("input[type='text']").val("0");
     $("#divSBNGContainer").find("select").find("option[value='0']").attr("selected", "selected");
