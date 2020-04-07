@@ -903,21 +903,30 @@ function updateDoubleCommLosing(hasDownLine) {
     });
 }
 
-function ChangeAllDayBalTransfer() {
-    if (confirm("Are you sure you want to change Transfer Mode for " + GetCustName() +" ?")) {
-        var yes = ($("#AllDayBalTransfer").attr("class").indexOf("chkuncheck") > -1);
-        $.ajax({
-            type: "POST",
-            url: "CustomerSetting/UpdateAllDayBalTransfer",
-            data: JSON.stringify({ custid: GetCustId(), status: yes }),
-            contentType: "application/json; charset=utf-8",
-            success: function (rs) {
-                changeDisplayStatus();
-                if (PTUnBlockUI) PTUnBlockUI();
-            },
-            error: function (e) {
-                if (PTUnBlockUI) PTUnBlockUI();
-            }
-        });
+function ChangeAllDayBalTransfer(roleId) {
+    var checked = $("#AllDayBalTransfer").hasClass("chkchecked");
+    if (roleId == 4 && !checked) {
+        ShowDisablePop(document.getElementById('AllDayBalTransfer'));
     }
+    else {
+        if (confirm("Are you sure you want to change Transfer Mode for " + GetCustName() + " ?")) {
+            UpdateAllDayBalTransfer({ custid: GetCustId(), status: !checked, isIncludedDownline: true });
+        }
+    }
+}
+
+function UpdateAllDayBalTransfer(params) {
+    $.ajax({
+        type: "POST",
+        url: "CustomerSetting/UpdateAllDayBalTransfer",
+        data: JSON.stringify(params),
+        contentType: "application/json; charset=utf-8",
+        success: function (rs) {
+            changeDisplayStatus();
+            if (PTUnBlockUI) PTUnBlockUI();
+        },
+        error: function (e) {
+            if (PTUnBlockUI) PTUnBlockUI();
+        }
+    });
 }

@@ -75,7 +75,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         string GetRNGSiteNameByCustId(int custId);
 
-        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, int userId, string ip);
+        Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip);
 
         CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember);
 
