@@ -120,14 +120,14 @@
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Fishing World</a>";
             }
 
-            if (renderLeftPanelParameter.IsShowKenoLottery)
+            if (renderLeftPanelParameter.IsShowRNGLottery)
             {
                 superSettingTab += string.Format(
                     "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery,
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
                     custId,
                     4, // Super Level.
-                    "Lottery");
+                    "RNG Lottery");
             }
 
             if (renderLeftPanelParameter.IsShowVirtualGames)
@@ -187,14 +187,14 @@
                 masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?language=en-US&productId=24&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Fishing World</a>";
             }
 
-            if (renderLeftPanelParameter.IsShowKenoLottery)
+            if (renderLeftPanelParameter.IsShowRNGLottery)
             {
                 masterSettingTab += string.Format(
                     "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery,
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
                     custId,
                     3, // Master Level.
-                    "Lottery");
+                    "RNG Lottery");
             }
 
             if (renderLeftPanelParameter.IsShowVirtualGames)

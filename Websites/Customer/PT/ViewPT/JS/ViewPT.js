@@ -543,7 +543,7 @@ var ViewPT = {
                     </table>\
                     <br />\
                     <!--/tbl-->\
-                {{/each}}',    
+                {{/each}}',
     TplPt: '<div style="padding-left: 20px;">\
             {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
             <div style="padding-left: 20px;">\
@@ -710,6 +710,7 @@ var ViewPT = {
             case 218:
             case 220:
             case 207:
+            case 222: // Table Games
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer 
@@ -807,7 +808,7 @@ var ViewPT = {
             }
         });
     },
-    
+
     getCurrentSportIndex: function (indexValue) {
         var indexArr = indexValue.split('_');
         var sport = null;

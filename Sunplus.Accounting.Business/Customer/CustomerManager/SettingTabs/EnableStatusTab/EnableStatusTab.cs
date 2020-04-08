@@ -48,7 +48,7 @@
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
-                IsShowKenoLottery = !customerInfoViewModel.HideKenoLottery,
+                IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub
             };
@@ -249,6 +249,24 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     42,
                     "Update Saba.club Status"));
+            }
+
+            if (customerInfoViewModel.HideRNGLottery)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableRNGLottery");
+            }
+            else
+            {
+                TemplateHandler.Assign(
+                    ref htmlcontent,
+                    "{RNGLotteryOnClickFunction}",
+                    _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.SearchAccountRoleId,
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
+                    "Update RNG Lottery Status"));
             }
 
             return htmlcontent;
@@ -493,19 +511,6 @@
                                                27);
                             break;
 
-                        case "28":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Lottery",
-                                               renderLeftPanelParameter.IsShowKenoLottery,
-                                               renderLeftPanelParameter,
-                                               "Update Lottery Status",
-                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery);
-                            break;
                         case "38":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,

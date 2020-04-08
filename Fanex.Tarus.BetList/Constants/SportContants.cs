@@ -72,5 +72,7 @@
         public const int VirtualGames = 245;
 
         public const int Sabaclub = 200;
+
+        public const int TableGames = 222;
     }
 }

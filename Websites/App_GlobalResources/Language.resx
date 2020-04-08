@@ -2367,8 +2367,8 @@
   <data name="enableBetradarVirtualSports" xml:space="preserve">
     <value>Betradar Virtual Sports</value>
   </data>
-  <data name="enableLottery" xml:space="preserve">
-    <value>Lottery</value>
+  <data name="enableRNGLottery" xml:space="preserve">
+    <value>RNG Lottery</value>
   </data>
   <data name="lblDisabledLotteryUpline" xml:space="preserve">
     <value>Lottery has been disabled at upline</value>
@@ -2443,7 +2443,8 @@
     <value>Sportsbook</value>
   </data>
   <data name="InvalidHeadline" xml:space="preserve">
-    <value>Invalid Headline.</value></data>
+    <value>Invalid Headline.</value>
+  </data>
   <data name="enableVirtualGames" xml:space="preserve">
     <value>Virtual Games</value>
   </data>
