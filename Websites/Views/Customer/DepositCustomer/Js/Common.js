@@ -71,11 +71,12 @@ common.resetValues = function () {
     $("#tbxSuperName").val("");
     $("#tbxMasterName").val("");
     $("#tbxAgentName").val("");
+    $("#tbxMemberName").val("");
     $("#tbxUserNameAddNew").val("");
-
     $("#tbxDummyMasterName").val("");
     $("#tbxDummyAgentName").val("");
     $("#tbxDummyMemberName").val("");
+   
 
     $("#divSBNGContainer").find("input[type='text']").val("0");
     $("#divSBNGContainer").find("select").find("option[value='0']").attr("selected", "selected");

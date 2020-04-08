@@ -54,6 +54,20 @@ newLic.verifyData = function () {
         return false;
     }
 
+
+    var memberName = $("#tbxMemberName").val();
+    if (common.isEmpty(memberName)) {
+        common.showErr("Please input Member's Username!");
+        return false;
+    }
+
+    var memberNameList = memberName.split(',');
+    if (!common.validateUserName(memberName) ||
+        $.inArray("", memberNameList) != -1) {
+        common.showErr("Member's Usernames is invalid!");
+        return false;
+    }
+
     var dummyMasterName = $("#tbxDummyMasterName").val();
     if (common.isEmpty(dummyMasterName)) {
         common.showErr("Please input Dummy Master's Username!");
@@ -88,6 +102,8 @@ newLic.verifyData = function () {
         common.showErr("Dummy Member's Usernames is invalid!");
         return false;
     }
+
+  
 
     return true;
 };
@@ -235,6 +251,7 @@ newLic.getPostParam = function () {
             SuperName: $("#tbxSuperName").val(),
             MasterName: $("#tbxMasterName").val(),
             AgentName: $("#tbxAgentName").val(),
+            MemberName: $("#tbxMemberName").val(),
             DummyMasterName: $("#tbxDummyMasterName").val(),
             DummyAgentName: $("#tbxDummyAgentName").val(),
             DummyMemberName: $("#tbxDummyMemberName").val(),
@@ -302,17 +319,20 @@ newLic.GenerateSampleName = function () {
     var superName = $("#tbxSuperName").val();
     var masterName = $("#tbxMasterName").val();
     var agentName = $("#tbxAgentName").val();
+    var memberName = $("#tbxMemberName").val();
     var dummyMasterName = $("#tbxDummyMasterName").val();
     var dummyAgentName = $("#tbxDummyAgentName").val();
-    var dummyMemberName = $("#tbxDummyMemberName").val();
+    var dummyMemberName = $("#tbxDummyMemberName").val();    
 
     var suffix = "";
     if (!common.isEmpty(superName) ||
         !common.isEmpty(masterName) ||
         !common.isEmpty(agentName) ||
+        !common.isEmpty(memberName) ||
         !common.isEmpty(dummyMasterName) ||
         !common.isEmpty(dummyAgentName) ||
-        !common.isEmpty(dummyMemberName)) {
+        !common.isEmpty(dummyMemberName))
+    {
         return;
     }
 
@@ -326,18 +346,25 @@ newLic.GenerateSampleName = function () {
     var dummyMemberName = siteName + "Transfer" + currencyName + suffix + "," +
                           siteName + "Charges" + currencyName + suffix + "," +
                           siteName + "Bonus" + currencyName + suffix + "," +
+                          siteName + "Bonus02" + currencyName + "," +
+                          siteName + "Dummy3rd" + currencyName + "," +
                           siteName + "Withdrawal" + currencyName + suffix;
+
     $("#tbxDummyMemberName").val(dummyMemberName);
+
+    var memberName = siteName + currencyName + "01ClearBal";
+
+    $("#tbxMemberName").val(memberName);
 };
 
 newLic.ResetUsenName = function () {
     $("#tbxSuperName").val('');
     $("#tbxMasterName").val('');
     $("#tbxAgentName").val('');
-
+    $("#tbxMemberName").val('');
     $("#tbxDummyMasterName").val('');
     $("#tbxDummyAgentName").val('');
-    $("#tbxDummyMemberName").val('');
+    $("#tbxDummyMemberName").val('');    
 };
 
 $(document).ready(function () {
