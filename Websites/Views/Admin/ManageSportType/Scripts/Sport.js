@@ -100,6 +100,7 @@ function Update() {
     $.ajax({
         url: 'Update',
         type: 'POST',
+        dataType: 'json',
         data: {
             SportType: $('#SportType').text(),
             SportName: $('#SportName').val(),
@@ -131,8 +132,7 @@ function Update() {
             }
         },
         error: function (xhr) {
-            if (xhr.status == 500)
-                showAlertMessage('updateErrMsg', xhr.statusText, 1);
+            showAlertMessage('updateErrMsg', 'Internal Server Error.', 1);
         },
         complete: function () {
             parent.jQuery.unblockUI();
