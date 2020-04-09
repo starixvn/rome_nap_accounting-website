@@ -699,6 +699,7 @@ var ViewPT = {
             case 44: // Sportsbook 2           
             case 50: // Cricket
             case 211: // Allbet
+            case 241: // BBIN
             case 243: // Sexy Gaming
             case 244: // SA Gaming            
             case 213: // NG2            
