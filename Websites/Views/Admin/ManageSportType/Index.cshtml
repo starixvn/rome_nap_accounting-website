@@ -1,0 +1,72 @@
+﻿@using Fanex.Tarus.Security.Services;
+@using Sunplus.Accounting.Core.Common;
+@using Sunplus.Accounting.Core.Configurations;
+@{
+    var hasHostPermission = PermissionService.CheckHostPermission("ManageSportType/Insert", AppSession.AccId);
+}
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/LeftPanel/left_panel.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <style>
+        .floatLeft {
+            float: left;
+            padding: 10px;
+        }
+
+        .filterBox {
+            min-height: 100%;
+            margin-top: 4px;
+            padding-top: 4px;
+            padding-bottom: 5px;
+            background: url('../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
+            border: 1px solid #7C98A4;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="err">
+    </div>
+    <div class="main">
+        <div class="maincontent">
+            <div id="divMainHeader" style="height:27px; background-color:#fff; position:fixed; width:100%; margin-top:-4px; padding-top:10px;">
+
+                <div class="box_header" style="width: 100%;">
+                    <div class="left_tab" style="width: 100%">
+                        <ul id="tabs">
+                            <li id="tab_1" class="current"><a href="javascript:SwitchTab('tab_1', 'tab_content_1');"><span>Upload Sport Type</span></a></li>
+                            <li id="tab_2"><a href="javascript:SwitchTab('tab_2', 'tab_content_2');"><span>Sport Type</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_content_1" style="margin-top:38px; margin-bottom:2px">
+                @Html.Partial("~/Views/Admin/ManageSportType/_UploadSport.cshtml")
+            </div>
+            <div id="tab_content_2" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageSportType/_Sport.cshtml")
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Admin/ManageSportType/_UpdateSport.cshtml")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageSportType/Scripts/UploadSport.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageSportType/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageSportType/Scripts/Sport.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var hasHostPermission = @Json.Encode(hasHostPermission);
+    </script>
+</body>
+</html>
