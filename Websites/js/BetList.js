@@ -583,6 +583,18 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(rngCasinoParam);
 }
 
+function showBBINBetDetails(refno, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "BBinBetList/BetDetails",
+        title: "BBIN - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, Refno: refno, CustId: custId, TransType: transType, SportType: 241, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
+}
+
 function ShowBonusDetails(refCode, transId) {
     var url = "BetList/ViewBonusDetails?refCode=" + refCode + "&transId=" + transId;
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
@@ -784,6 +796,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 211: // Allbet.
             return getAllbetParam(transdesc, matchcode, bettype);
 
+        case 241: // BBIN
+            return getBBinParam(transdesc, matchcode, bettype);
+
         case 243: // SexyGaming.
             return getSexyGamingParam(transdesc, matchcode, bettype);
 
@@ -939,6 +954,15 @@ function getSAGamingParam(transdesc, betcheck, bettype) {
     };
 }
 
+function getBBinParam(transdesc, betcheck, bettype) {
+    return {
+        url: "Report/ViewBBinResult.aspx",
+        title: "BBIN Result",
+        jsonParam: { transDesc: transdesc, betcheck: betcheck},
+        width: 945,
+        height: 500
+    };
+}
 function getSexyGamingParam(transdesc, betcheck, bettype) {
     return {
         url: "Report/ViewSexyGamingResult.aspx",

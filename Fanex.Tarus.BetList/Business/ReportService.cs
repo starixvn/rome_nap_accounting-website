@@ -239,6 +239,11 @@
             return 4601 <= betTypeId && betTypeId <= 4900;
         }
 
+        public static bool IsBBin(int betTypeId)
+        {
+            return 3300 == betTypeId || betTypeId == 21008 || betTypeId == 21009;
+        }
+
         public static bool IsHappy5Bettype(int bettypeId)
             => bettypeId >= 8101 && bettypeId <= 8105;
 

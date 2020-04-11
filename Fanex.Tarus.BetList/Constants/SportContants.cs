@@ -70,7 +70,7 @@
         public const int CardClub = 165;
         public const int Spadegaming = 247;
         public const int VirtualGames = 245;
-
+        public const int BBin = 241;
         public const int Sabaclub = 200;
 
         public const int TableGames = 222;

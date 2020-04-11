@@ -12,7 +12,7 @@
     using Models;
     using System.Collections.Generic;
 
-    public class AGCasinoService : IAGCasinoService
+    public class AGCasinoService : IBBinService
     {
         private readonly IAGCasinoRepository _agCasinoRepository;
 
@@ -27,6 +27,32 @@
         }
 
         public IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria)
+        {
+            var detailsTickets = _agCasinoRepository.BetDetails(criteria);
+            if (detailsTickets != null)
+            {
+                ITicketHelper ticketHelper = new TicketHelper();
+                BetListHTMLFactory factory = new BetListHTMLFactory();
+                BetListHTMLBuilder builder = factory.CreateBuilder();
+                BetListHelper betListHelper = new BetListHelper();
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
+
+                List<ITicketData> outputLiveCasino = new List<ITicketData>();
+                foreach (TicketDetail betDetail in detailsTickets)
+                {
+                    ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                    betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
+                    betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                    betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                }
+            }
+
+            return detailsTickets;
+        }
+
+        public IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria)
         {
             var detailsTickets = _agCasinoRepository.BetDetails(criteria);
             if (detailsTickets != null)

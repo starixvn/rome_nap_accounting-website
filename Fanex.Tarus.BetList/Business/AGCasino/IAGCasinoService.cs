@@ -4,8 +4,10 @@
     using Models;
     using System.Collections.Generic;
 
-    public interface IAGCasinoService
+    public interface IBBinService
     {
         IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria);
+
+        IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria);        
     }
 }

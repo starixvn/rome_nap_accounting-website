@@ -97,7 +97,7 @@ BetList.BetListByRefNo = (function ($) {
         }
         else if (selProductValue === "22" || selProductValue === "24" || selProductValue === "32" || selProductValue === "36") {
             $gameId.attr("disabled", "disabled");
-        } else if (selProductValue === "33" || selProductValue === "42") {
+        } else if (selProductValue === "33" || selProductValue === "42" || selProductValue === "47") {
             $gameId.attr("disabled", "disabled");
             $playerId3rd.removeAttr("disabled");
         } else if (selProductValue === "38") {
@@ -138,7 +138,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30" || || selProductValue === "47") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }

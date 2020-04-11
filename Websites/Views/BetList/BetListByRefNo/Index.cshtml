@@ -8,7 +8,7 @@
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
-    allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/SA Gaming/Sexy Gaming")
+    allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/SA Gaming/Sexy Gaming/BBin")
         .Append(ng2Text)
         .Append("/Fishing World")
         .Append("/Lottery/Table Game");
@@ -144,6 +144,7 @@
                                     <option value="21">Allbet</option>
                                     <option value="39">SA Gaming</option>
                                     <option value="45">Sexy Gaming</option>
+                                    <option value="47">BBin</option>
                                     <option value="24">Fishing World</option>
                                     @if (productIdPP != 0)
                                     {
