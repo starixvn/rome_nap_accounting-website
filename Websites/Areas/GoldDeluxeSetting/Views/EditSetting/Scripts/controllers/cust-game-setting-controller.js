@@ -10,23 +10,10 @@
             var uplineUncheckedAllMsg = '';
 
             $scope.getGameSetting = function () {
-                if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
-                    for (var i = 0; i < $scope.gameSetting.length; i++) {
-                        var gameType = $scope.gameSetting[i];
-                        for (var j = 0; j < gameType.BettingLimit.length; j++) {
-                            var bettingLimit = gameType.BettingLimit[j];
-                            bettingLimit.IsChecked = bettingLimit.Id === parseInt(gameType.CheckedStakeLevelId);
-                        }
-                    }
-                }
-
                 return $scope.gameSetting;
             };
 
             $scope.updateGameSetting = function () {
-
-                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
-
                 customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
             };
 
