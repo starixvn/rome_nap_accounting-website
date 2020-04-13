@@ -138,7 +138,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30" || || selProductValue === "47") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30" || selProductValue === "47") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
