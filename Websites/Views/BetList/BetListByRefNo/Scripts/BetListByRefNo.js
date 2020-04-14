@@ -97,7 +97,7 @@ BetList.BetListByRefNo = (function ($) {
         }
         else if (selProductValue === "22" || selProductValue === "24" || selProductValue === "32" || selProductValue === "36") {
             $gameId.attr("disabled", "disabled");
-        } else if (selProductValue === "33" || selProductValue === "42" || selProductValue === "47") {
+        } else if (selProductValue === "33" || selProductValue === "42") {
             $gameId.attr("disabled", "disabled");
             $playerId3rd.removeAttr("disabled");
         } else if (selProductValue === "38") {
