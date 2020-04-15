@@ -23,9 +23,18 @@
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Common;
+    using Fanex.RemotingRef;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
+
+        private readonly IRemotingRefService _remotingRefService;
+
+        public BetDetailsExporter()
+        {
+            _remotingRefService = new RemotingRefService();
+        }
+
         public string GetFileNameWithoutExtension(int sportType)
         {
             var fileNameMapper = new Dictionary<int, string>
@@ -44,7 +53,9 @@
                 {SportContants.Sabaclub, "Sabaclub_Details"}
             };
 
-            return fileNameMapper.ContainsKey(sportType) ? fileNameMapper[sportType] : null;
+            return fileNameMapper.ContainsKey(sportType) ?
+                fileNameMapper[sportType] :
+                $"{_remotingRefService.GetSportName(sportType.ToString(), "en-US")}_Details";
         }
 
         public IEnumerable<TicketDetail> GetTicketDetails(
@@ -59,6 +70,11 @@
                 sportType == SportContants.SexyGaming)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
+            }
+
+            if(sportType == SportContants.BBin)
+            {
+                return GetBBinTickets(refNo, custId, transType);
             }
 
             if (sportType == SportContants.Voidbridge ||
@@ -208,6 +224,22 @@
         private static IEnumerable<TicketDetail> GetLiveCasinoTickets(long refNo, int custId, byte transType)
         {
             var criteria = new GetAGCasinoBetDetailsCriteria
+            {
+                Refno = refNo,
+                CustId = custId,
+                TransType = transType,
+                PageIndex = 1,
+                PageSize = int.MaxValue
+            };
+
+            IAGCasinoRepository repository = new AGCasinoRepository();
+
+            return repository.BetDetails(criteria);
+        }
+
+        private static IEnumerable<TicketDetail> GetBBinTickets(long refNo, int custId, byte transType)
+        {
+            var criteria = new GetBBinBetDetailsCriteria
             {
                 Refno = refNo,
                 CustId = custId,
