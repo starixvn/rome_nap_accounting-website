@@ -20,6 +20,7 @@
             $scope.isEditDirect = (settingViewModel.UpLineLevel - settingViewModel.Level === 1);
             $scope.isUpdateWinLimitPartial = !((settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Super || settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Master) && settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member);
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
+            $scope.isEditAgent = settingViewModel.Level == 2;
 
             $scope.validateAndUpdateSetting = function (updateType) {
                 $scope.isUpdateAllSetting = true;
