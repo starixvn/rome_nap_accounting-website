@@ -129,3 +129,9 @@
 	min-width: 350px;
 	max-width:680px;
 }
+
+.noinformation {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #b1b1b1
+}
