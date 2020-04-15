@@ -9,7 +9,7 @@ BetList.BetListByRefNo = (function ($) {
         fullWidth: true,
         fullHeight: true,
         gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 250,
+        gridHeight: 260,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     };
