@@ -11,7 +11,7 @@
     allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/SA Gaming/Sexy Gaming")
         .Append(ng2Text)
         .Append("/Fishing World")
-        .Append("/Lottery/Table Games");
+        .Append("/Lottery/Table Game");
 
     var productIdPP = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPP;
     if (productIdPP != 0)
@@ -162,9 +162,9 @@
                                         <option value="@productIdVirtualGames">@CacheRef.GetProductName(productIdVirtualGames)</option>
                                     }
                                     @if (hasNG2Permission)
-	                                {
+                                    {
                                         <option value="42">@CacheRef.GetProductName(42)</option>
-	                                }
+                                    }
                                 </select>
                             </td>
                             <td style="min-width: 65px">
