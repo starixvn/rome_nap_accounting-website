@@ -2062,7 +2062,8 @@
     <value>Monitor Status</value>
   </data>
   <data name="IsViewAllPeriod" xml:space="preserve">
-    <value>View all Periods</value></data>
+    <value>View all Periods</value>
+  </data>
   <data name="Disable245_4601" xml:space="preserve">
     <value>Disabled Virtual Games</value>
   </data>
@@ -2074,5 +2075,8 @@
   </data>
   <data name="Disable200_1611" xml:space="preserve">
     <value>Disabled Saba.club</value>
-  </data>  
+  </data>
+  <data name="Disable222_4901" xml:space="preserve">
+    <value>Disabled Table Games</value>
+  </data>
 </root>

@@ -1423,6 +1423,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.VirtualGames);
             }
+            else if (ReportService.IsTableGames(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.TableGames);
+            }
             
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }

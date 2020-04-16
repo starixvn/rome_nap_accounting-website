@@ -85,7 +85,7 @@
 
         public bool HideVirtualGames { get; private set; } = true;
 
-        public bool HideKenoLottery { get; private set; } = true;
+        public bool HideRNGLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
 
@@ -179,12 +179,12 @@
                                 HideVirtualSports2 = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
                                 break;
 
-                            case "28": // We do NOT have Unsync case for Keno Lottery.
-                                bool isHideKenoLottery = Utils.ToBoolean(row["IsHidden"]);
-                                bool isHideUplineKenoLottery = Utils.ToBoolean(row["IsHiddenUpline"]);
+                            case "44": // We do NOT have Unsync case for RNG Lottery.
+                                bool isHideRNGLottery = Utils.ToBoolean(row["IsHidden"]);
+                                bool isHideUplineRNGLottery = Utils.ToBoolean(row["IsHiddenUpline"]);
 
-                                HideKenoLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdKenoLottery == 0 ||
-                                    IsDeposit || (SearchAccountRoleId < 4 && (isHideKenoLottery || isHideUplineKenoLottery));
+                                HideRNGLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0 ||
+                                    IsDeposit || (SearchAccountRoleId < 4 && (isHideRNGLottery || isHideUplineRNGLottery));
                                 break;
                             case "38":
                                 bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);

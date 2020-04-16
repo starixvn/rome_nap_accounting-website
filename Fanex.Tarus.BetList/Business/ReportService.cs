@@ -246,6 +246,10 @@
         {
             return 1611 <= betTypeId && betTypeId <= 1699;
         }
+
+        public static bool IsTableGames(int betTypeId)
+            => 4901 <= betTypeId && betTypeId <= 5000;
+
         #endregion StaticMethods
     }
 }
