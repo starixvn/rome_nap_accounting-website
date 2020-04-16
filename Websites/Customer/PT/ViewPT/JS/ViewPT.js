@@ -619,7 +619,6 @@ var ViewPT = {
                     $("#btnSubmit").removeAttr("disabled", false);
                 }
             }
-
         });
     },
     getProducts: function () {
@@ -696,13 +695,13 @@ var ViewPT = {
 
         switch (sportId) {
             case 43: // esport
-            case 44: // Sportsbook 2           
+            case 44: // Sportsbook 2
             case 50: // Cricket
             case 211: // Allbet
             case 241: // BBIN
             case 243: // Sexy Gaming
-            case 244: // SA Gaming            
-            case 213: // NG2            
+            case 244: // SA Gaming
+            case 213: // NG2
             case 214:
             case 215:
             case 216:
@@ -710,11 +709,11 @@ var ViewPT = {
             case 218:
             case 220:
             case 207:
-            case 222: // Table Games
+            case 222: // Table Game
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
-            case 180: // Virtual Soccer 
-            case 181: // Virtual Horse Racing 
+            case 180: // Virtual Soccer
+            case 181: // Virtual Horse Racing
             case 182: // Virtual Greyhounds
             case 183: // Virtual Speedway
             case 184: // Virtual Motorsports
@@ -743,7 +742,6 @@ var ViewPT = {
                 break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
-
         }
     },
     viewPTBasedOnKindOfCustomer: function (userName, sportId, betTypeId, isLive, productId) {
@@ -835,7 +833,6 @@ var ViewPT = {
         parent.jQuery.unblockUI();
     },
     viewComm: function () {
-
         $("#err").html("");
         $("#sContent").html("");
 
@@ -923,7 +920,6 @@ function ChangeType(rdo) {
 
     $('#tblPT').css('display', $('#rdoPT').css('display') = 'none' ? '' : 'none');
     $('#tblProducts').css('display', $('#rdoPT').css('display') = 'none' ? 'none' : '');
-
 
     $('#sContent').html('');
 }
