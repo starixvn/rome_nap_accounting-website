@@ -794,16 +794,12 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
         case 211: // Allbet.
-            return getAllbetParam(transdesc, matchcode, bettype);
-
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
         case 243: // SexyGaming.
-            return getSexyGamingParam(transdesc, matchcode, bettype);
-
         case 244: // SaGaming.
-            return getSAGamingParam(transdesc, matchcode, bettype);
+            return getLiveCasinoParam(transdesc, matchcode, bettype);
 
         case 212: // Macau Games.
             return getMacauGamesParam(matchcode, betcheck);
@@ -930,24 +926,15 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
     };
 }
 
-function getAllbetParam(transdesc, betcheck, bettype) {
+function getLiveCasinoParam(transdesc, betcheck, bettype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
+    sporttypes["242"] = "GT Casino Result";
     sporttypes["243"] = "Sexy Gaming Result";
     sporttypes["244"] = "SA Gaming Result";
     return {
         url: "Report/ViewAllbetCasinoResult.aspx",
         title: "Allbet Result",
-        jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
-        width: 945,
-        height: 500
-    };
-}
-
-function getSAGamingParam(transdesc, betcheck, bettype) {
-    return {
-        url: "Report/ViewSAGamingResult.aspx",
-        title: "SA Gaming Result",
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
@@ -963,16 +950,6 @@ function getBBinParam(transdesc, betcheck, bettype) {
         height: 500
     };
 }
-function getSexyGamingParam(transdesc, betcheck, bettype) {
-    return {
-        url: "Report/ViewSexyGamingResult.aspx",
-        title: "Sexy Gaming Result",
-        jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
-        width: 945,
-        height: 500
-    };
-}
-
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Card Club";
     var bettypeNames = {};

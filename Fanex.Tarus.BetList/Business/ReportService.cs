@@ -1,7 +1,5 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
-    using System;
-    using System.Collections.Generic;
     using Constants;
     using Core;
     using Fanex.Common.Extensions;
@@ -9,6 +7,8 @@
     using Fanex.Tarus.Infrastructure.Caching;
     using Models;
     using Resources;
+    using System;
+    using System.Collections.Generic;
 
     public static class ReportService
     {
@@ -112,10 +112,13 @@
             {
                 case CurrencyContants.EUR:
                     return BetListResources.EUR;
+
                 case CurrencyContants.MYR:
                     return BetListResources.RM;
+
                 case CurrencyContants.USD:
                     return BetListResources.USD;
+
                 default:
                     return string.Empty;
             }
@@ -137,7 +140,7 @@
                 betTypeId == BetTypeContants.GoldDeluxeRoulette ||
                 betTypeId == BetTypeContants.Sicbo ||
                 betTypeId == BetTypeContants.Bidme;
-        }        
+        }
 
         public static bool IsAGCasino(int betTypeId)
         {
@@ -172,6 +175,11 @@
         public static bool IsSexyGaming(int betTypeId)
         {
             return (3101 <= betTypeId && betTypeId <= 3199);
+        }
+
+        public static bool IsGTCasino(int betTypeId)
+        {
+            return (3201 <= betTypeId && betTypeId <= 3299);
         }
 
         public static bool IsVoidbridge(int betTypeId)

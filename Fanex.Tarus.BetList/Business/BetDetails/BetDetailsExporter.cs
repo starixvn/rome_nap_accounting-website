@@ -42,6 +42,7 @@
                 {SportContants.AllBet, "Allbet_Details"},
                 {SportContants.SaGaming, "SAGaming_Details"},
                 {SportContants.SexyGaming, "SexyGaming_Details"},
+                {SportContants.GTCasino, "GTCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
                 {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
@@ -64,10 +65,10 @@
             int custId,
             byte transType)
         {
-
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
-                sportType == SportContants.SexyGaming)
+                sportType == SportContants.SexyGaming ||
+                sportType == SportContants.GTCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
@@ -288,6 +289,7 @@
 
             return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
         }
-        #endregion
+
+        #endregion Get Data functions
     }
 }

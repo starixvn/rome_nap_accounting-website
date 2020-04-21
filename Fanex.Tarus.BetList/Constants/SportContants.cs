@@ -48,7 +48,7 @@
 
         public const int MuayThai = 44;
         public const int GoldDeluxe = 255;
-       
+
         public const int AGCasino = 250;
         public const int Keno = 202;
 
@@ -57,6 +57,7 @@
         public const int RNG_Mobile = 210;
 
         public const int AllBet = 211;
+        public const int GTCasino = 242;
         public const int SaGaming = 244;
         public const int SexyGaming = 243;
         public const int Voidbridge = 212;
