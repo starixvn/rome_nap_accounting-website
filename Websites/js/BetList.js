@@ -498,7 +498,6 @@ function showSGDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
-
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
@@ -870,7 +869,6 @@ function getHappy5Param(matchid) {
     };
 }
 
-
 function getVirtualHRParam(matchid, sporttype) {
     var resultParam = {
         url: "Report/GetVirtualHRPopup.aspx",
@@ -920,8 +918,8 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
 function getAllbetParam(transdesc, betcheck, bettype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
-    sporttypes["243"] ="Sexy Gaming Result";
-    sporttypes["244"] ="SA Gaming Result";
+    sporttypes["243"] = "Sexy Gaming Result";
+    sporttypes["244"] = "SA Gaming Result";
     return {
         url: "Report/ViewAllbetCasinoResult.aspx",
         title: "Allbet Result",
@@ -940,7 +938,6 @@ function getSAGamingParam(transdesc, betcheck, bettype) {
         height: 500
     };
 }
-
 
 function getSexyGamingParam(transdesc, betcheck, bettype) {
     return {
@@ -964,6 +961,7 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     bettypeNames["1901"] = "Video Poker";
     bettypeNames["1902"] = "Tai Xiu";
     bettypeNames["1903"] = "Xoc Dia";
+    bettypeNames["1904"] = "3D Lottery";
     var betTypeName = bettypeNames[gameTypeId];
     var title = sportName + " - " + betTypeName;
 
@@ -1007,7 +1005,6 @@ function getVirtualGamesParam(betcheck) {
         height: 500
     };
 }
-
 
 function getPPParam(matchcode, betcheck) {
     return {
