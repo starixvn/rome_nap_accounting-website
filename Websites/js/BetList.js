@@ -932,9 +932,18 @@ function getLiveCasinoParam(transdesc, betcheck, bettype) {
     sporttypes["242"] = "GT Casino Result";
     sporttypes["243"] = "Sexy Gaming Result";
     sporttypes["244"] = "SA Gaming Result";
+    var resultPageBySportTypes = {};
+    resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
+    resultPageBySportTypes["242"] = "Report/ViewGTCasinoResult.aspx";
+    resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
+    resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
+
+    var title = sporttypes[bettype];
+    var url = resultPageBySportTypes[bettype];
+
     return {
-        url: "Report/ViewAllbetCasinoResult.aspx",
-        title: "Allbet Result",
+        url: url,
+        title: title,
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
