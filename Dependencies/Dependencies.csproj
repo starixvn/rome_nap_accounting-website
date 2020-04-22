@@ -160,6 +160,10 @@
     <Reference Include="Fanex.BetList.Indo4D, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Indo4D.1.0.0.4\lib\net40\Fanex.BetList.Indo4D.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.GTCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.GTCasino.1.0.0-beta02\lib\net40\Fanex.BetList.GTCasino.dll</HintPath>
+    </Reference>
+    </Reference>
     <Reference Include="Fanex.BetList.Keno, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Keno.1.2.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
     </Reference>
@@ -862,6 +866,9 @@
       <Project>{2426f40b-b40e-420e-bd14-80814b949055}</Project>
       <Name>Sunplus.Accounting.WcfServiceLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GTCasino.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
