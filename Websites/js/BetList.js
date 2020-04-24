@@ -929,7 +929,7 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
 function getLiveCasinoParam(transdesc, betcheck, bettype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
-    sporttypes["242"] = "GT Casino Result";
+    sporttypes["242"] = "IBCBet Live Casino Result";
     sporttypes["243"] = "Sexy Gaming Result";
     sporttypes["244"] = "SA Gaming Result";
     var resultPageBySportTypes = {};

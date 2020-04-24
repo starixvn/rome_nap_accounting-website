@@ -8,7 +8,7 @@
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
-    allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/SA Gaming/Sexy Gaming/GT Casino")
+    allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/SA Gaming/Sexy Gaming/IBCBet Live Casino")
         .Append(ng2Text)
         .Append("/Fishing World")
         .Append("/Lottery/Table Game");
@@ -124,7 +124,7 @@
                             <td class="text-left" colspan="8">
                                 <div id="ref-no-info-msg" class="info-msg">
                                     @allowedProducts.ToString() tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
-                                    For Allbet/SA Gaming/Sexy Gaming/GT Casino/BBIN, the search result includes the related tickets with the same GameID.<br />
+                                    For Allbet/SA Gaming/Sexy Gaming/IBCBet Live Casino/BBIN, the search result includes the related tickets with the same GameID.<br />
                                     For Sportbook, the search result includes the related Bonus/Cash tickets.
                                 </div>
                             </td>
@@ -145,7 +145,7 @@
                                     <option value="39">SA Gaming</option>
                                     <option value="45">Sexy Gaming</option>
                                     <option value="47">BBIN</option>
-                                    <option value="46">GT Casino</option>
+                                    <option value="46">IBCBet Live Casino</option>
                                     <option value="24">Fishing World</option>
                                     @if (productIdPP != 0)
                                     {
