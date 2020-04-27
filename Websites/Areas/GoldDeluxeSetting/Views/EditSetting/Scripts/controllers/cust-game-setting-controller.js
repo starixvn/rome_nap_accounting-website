@@ -71,3 +71,9 @@
 else {
     alert('Missing fanex.goldDeluxeSetting!');
 }
+$(document).ready(function () {
+    var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+    angular.forEach(gameSettingScope.gameSetting, function (gameType) {
+        gameSettingScope.checkToDisable(gameType.Id);
+    });
+});
