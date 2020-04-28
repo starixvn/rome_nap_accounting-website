@@ -368,6 +368,7 @@
     <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
@@ -454,6 +455,7 @@
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
@@ -503,6 +505,7 @@
     <Compile Include="DataAccess\NG2\ISyncCurrencyRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCustomerRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCurrencyRepository.cs" />
+    <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
@@ -584,6 +587,7 @@
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
     <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
+    <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />

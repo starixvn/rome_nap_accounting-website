@@ -334,7 +334,7 @@
     <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Others - PlayerID (3rd)">
-    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
