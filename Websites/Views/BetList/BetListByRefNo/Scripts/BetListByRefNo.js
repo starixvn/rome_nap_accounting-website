@@ -1,7 +1,6 @@
 ﻿var BetList = BetList || {};
 
 BetList.BetListByRefNo = (function ($) {
-
     var gridOpts = {
         tblContentId: 'tblContent',
         manualCopyHeader: true,
@@ -70,7 +69,7 @@ BetList.BetListByRefNo = (function ($) {
                 $toDate.datepicker("option", "minDate", dateText);
             }
         }, options))
-        .datepicker("option", "minDate", $fromdate.data("balance-up-day")).datepicker("setDate", new Date());
+            .datepicker("option", "minDate", $fromdate.data("balance-up-day")).datepicker("setDate", new Date());
 
         $toDate.datepicker(options).datepicker("option", "minDate", new Date()).datepicker("setDate", new Date());
     };
@@ -138,7 +137,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30" || selProductValue === "47") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if ((selProductValue === "12" || selProductValue === "21" || selProductValue === "30" || selProductValue === "46" || selProductValue === "47") && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
@@ -191,14 +190,13 @@ BetList.BetListByRefNo = (function ($) {
                 playerId3rd: $playerId3rd.val(),
                 vendorId: $selectedProduct.find("option:selected").attr("data-vendor-id")
             },
-        window.rootUrl + "BetList/GetBetListByProduct");
+            window.rootUrl + "BetList/GetBetListByProduct");
     };
 
     function getBetList() {
         if ($searchByRefNo.attr("checked")) {
             clearError();
             searchByRef();
-
         } else if ($searchByProduct.attr("checked")) {
             if (validateSearchByProduct() === true) {
                 clearError();
@@ -249,7 +247,7 @@ BetList.BetListByRefNo = (function ($) {
 
         $submit.click(function () {
             getBetList();
-        });        
+        });
     };
 
     return {
@@ -257,7 +255,6 @@ BetList.BetListByRefNo = (function ($) {
         getBetList: getBetList,
         gridOpts: gridOpts
     }
-
 })(jQuery);
 
 $(document).ready(function () {
@@ -287,7 +284,7 @@ function showDetail(id) {
     $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
 }
 
-function showSingleMatchParlayDetail(transid, custid, status,transIndex) {
+function showSingleMatchParlayDetail(transid, custid, status, transIndex) {
     var divEvent = $("#divEvent_" + transid + transIndex);
 
     if (divEvent.css("display") === "none") {
@@ -320,7 +317,6 @@ function showSingleMatchParlayDetail(transid, custid, status,transIndex) {
         $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
     }
 }
-
 
 function showMP(transid, refno, custId, transIndex) {
     transIndex = transIndex == undefined ? "" : transIndex;
@@ -359,7 +355,6 @@ function showMP(transid, refno, custId, transIndex) {
 }
 
 function showCombMP(transId, transIndex, refNo, custId) {
-
     showMP(transId, refNo, custId, transIndex);
 }
 
