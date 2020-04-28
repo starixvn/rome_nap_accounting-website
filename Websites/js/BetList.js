@@ -812,7 +812,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
-            return getLiveCasinoParam(transdesc, matchcode, bettype);
+            return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
 
         case 212: // Macau Games.
             return getMacauGamesParam(matchcode, betcheck);
@@ -939,7 +939,7 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
     };
 }
 
-function getLiveCasinoParam(transdesc, betcheck, bettype) {
+function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
     sporttypes["242"] = "IBCBet Live Casino Result";
@@ -951,8 +951,8 @@ function getLiveCasinoParam(transdesc, betcheck, bettype) {
     resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
     resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
 
-    var title = sporttypes[bettype];
-    var url = resultPageBySportTypes[bettype];
+    var title = sporttypes[sporttype];
+    var url = resultPageBySportTypes[sporttype];
 
     return {
         url: url,
