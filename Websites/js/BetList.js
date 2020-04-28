@@ -809,6 +809,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
+        case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
             return getLiveCasinoParam(transdesc, matchcode, bettype);
