@@ -7,7 +7,8 @@
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
-            var uplineUncheckedAllMsg = '';
+            $scope.isCrossLevelOrNotMember = settingViewModel.Level !== fanex.goldDeluxeSetting.customerLevel.Member
+                || settingViewModel.UpLineLevel - settingViewModel.Level > 1;
 
             $scope.getGameSetting = function () {
                 return $scope.gameSetting;
@@ -42,6 +43,10 @@
             };
 
             $scope.checkToDisable = function (gameIndex) {
+                if ($scope.isCrossLevelOrNotMember) {
+                    return;
+                }
+                
                 var gameTypes = document.getElementsByClassName('game' + gameIndex);
                 var checkedCount = 0;
                 for (var i = 0; i < gameTypes.length; i++) {
