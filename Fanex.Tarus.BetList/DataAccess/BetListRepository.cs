@@ -333,7 +333,7 @@
                                 BetTypeId = 29,
                                 Handicap1 = Converter.ToDecimal(r["hdp1"]),
                                 Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                                BetCheck = Converter.ToString2(r["BetCheck"])
+                                BetCheck = Converter.ToString2(r["BetCheck"])                                
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -371,7 +371,8 @@
                                 Currency = Converter.ToString2(r["Currency"]),
                                 IsLive = Converter.ToBool(r["liveindicator"]),
                                 EventDate = Converter.ToDateTime(r["eventdate"]),
-                                Status = Converter.ToString2(r["status"])
+                                Status = Converter.ToString2(r["status"]),
+                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
