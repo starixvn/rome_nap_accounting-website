@@ -10,11 +10,20 @@
             $scope.isCrossLevelOrNotMember = settingViewModel.Level !== fanex.goldDeluxeSetting.customerLevel.Member
                 || settingViewModel.UpLineLevel - settingViewModel.Level > 1;
 
+            $scope.init = function () {
+                $scope.checkShowWarningUncheckedAll();
+            };
+
             $scope.getGameSetting = function () {
                 return $scope.gameSetting;
             };
 
             $scope.updateGameSetting = function () {
+                $scope.checkShowWarningUncheckedAll();
+                if ($scope.mainResult.Warning.IsShowV3) {
+                    return;
+                }
+
                 customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
             };
 
@@ -35,9 +44,11 @@
                     }
                 });
 
-                var message = language.getString('WarningUncheckAllStakeLevelMsg');
+                var isWarningV3 = settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member && isShowWarning;
+                var message = language.getString(isWarningV3 ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' : 'WarningUncheckAllStakeLevelMsg');
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
+                    IsShowV3: isWarningV3,
                     Message: message
                 };
             };

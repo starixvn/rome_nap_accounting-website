@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow || isEditAgent">
+    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow || mainResult.Warning.IsShowV3 || isEditAgent">
         <div class="sub-message-icon sub-icon-warning">
         </div>
         <div data-ng-show="isEditAgent">
@@ -72,7 +72,7 @@
                 @GoldDeluxeLang.WarningEditAgentAllStakeLevels
             </div>
         </div>
-        <div data-ng-show="mainResult.Warning.IsShow" class="message-content message-content-warning">
+        <div data-ng-show="mainResult.Warning.IsShow || mainResult.Warning.IsShowV3" class="message-content message-content-warning">
             {{mainResult.Warning.Message}}
         </div>
     </div>

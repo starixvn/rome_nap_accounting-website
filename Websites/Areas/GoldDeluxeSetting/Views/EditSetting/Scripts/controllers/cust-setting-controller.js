@@ -23,6 +23,12 @@
             $scope.isEditAgent = settingViewModel.Level == 2;
 
             $scope.validateAndUpdateSetting = function (updateType) {
+                var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+                gameSettingScope.checkShowWarningUncheckedAll();
+                if ($scope.mainResult.Warning.IsShowV3) {
+                    return;
+                }
+
                 $scope.isUpdateAllSetting = true;
                 var ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
 
