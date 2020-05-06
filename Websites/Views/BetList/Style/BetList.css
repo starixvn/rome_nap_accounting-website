@@ -640,3 +640,10 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 .bbin-bet-type-name {
     color: #696969;
 }
+.bettype > .bet-id {
+    color: #bbb;
+}
+
+.leagueName > .bet-type-name {
+    color: #696969;
+}

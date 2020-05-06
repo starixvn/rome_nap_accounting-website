@@ -523,6 +523,19 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showIONCasinoBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "ION Live Casino - Bet List - Detail Tickets - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
+        width: 1030,
+        height: 600,
+        resizable: false
+    };
+
+    openResultsPopUp(param);
+}
+
 function showGlobalGaming(transId, winlossDate, custId, transType) {
     var globalGamingParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -819,11 +832,13 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 224: //RNG War
             return getRNGWarCasinoParam(matchcode, betcheck);
+        case 225: // ION Casino
+            return getIONCasinoParam(matchcode, betcheck);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
-        case 211: // Allbet.
+        case 211: // Allbet.        
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
@@ -1033,6 +1048,16 @@ function getMacauGamesParam(matchcode, betcheck) {
         width: 945,
         height: 500,
         iframe: "innerFrameMacauGamesResult"
+    };
+}
+
+function getIONCasinoParam(matchcode, betcheck) {
+    return {
+        url: "ThirdParty/Result",
+        title: "ION Live Casino Result",
+        jsonParam: { custId: betcheck, gameId: matchcode, productId: 52 },
+        width: 945,
+        height: 500
     };
 }
 

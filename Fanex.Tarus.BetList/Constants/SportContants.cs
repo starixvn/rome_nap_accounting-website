@@ -76,5 +76,6 @@
 
         public const int TableGames = 222;
         public const int RNGWar = 224;
+        public const int IonCasino = 225;
     }
 }
