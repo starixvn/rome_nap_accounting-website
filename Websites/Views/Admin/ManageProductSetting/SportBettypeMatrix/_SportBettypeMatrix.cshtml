@@ -1,0 +1,25 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+
+<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
+    <div class="filterContent">
+        <input id="PageSBMSize" name="PageSize" type="hidden" value="50" />
+        <input id="PageSBMIndex" name="PageIndex" type="hidden" value="1" />
+        <div id="errSportBettypeMatrixMsg"></div>
+        <div class="floatLeft"><label for="txtSBMSportType">SportType</label></div>
+        <div class="floatLeft"><input id="txtSBMSportType" type="text" /></div>
+        <div class="floatLeft"><label for="txtSBMBetType">BetType</label></div>
+        <div class="floatLeft"><input id="txtSBMBetType" type="text" /></div>
+        <div class="floatLeft"><label for="txtSBMProductId">ProductId</label></div>
+        <div class="floatLeft"><input id="txtSBMProductId" type="text" /></div>
+        <div class="floatLeft"><label for="txtSBMEventType">EventType</label></div>
+        <div class="floatLeft"><input id="txtSBMEventType" type="text" /></div>
+        <div class="floatLeft"><label for="txtSBMRefTable">RefTable</label></div>
+        <div class="floatLeft"><input id="txtSBMRefTable" type="text" /></div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSBM()" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridSBMContainer" class="grid-container">
+    <div id="gridSBMId" class="freegrid"></div>
+</div>

@@ -1,14 +1,48 @@
 ﻿var form;
 $(document).ready(function () {
-    ajax_form($('#mainForm'), function (result) {
-        showAlertMessage('errMsg', result.ErrorCode == 0 ? 'Insert successfully.' : result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-        try { parent.jQuery.unblockUI(); } catch (e) { }
-    });
-
     form = $('#mainForm');
+    form.submit(function (e) {
+        var action = "";
+        switch (cachedTabId) {
+            case "tab_1":
+                action = 'InsertProduct';
+                break;
+            case "tab_2":
+                action = 'InsertSport';
+                break;
+            case "tab_3":
+                action = 'InsertBettype';
+                break;
+        }
+        var formData = new FormData(form[0]);
+        $.ajax({
+            url: action,
+            type: 'POST',
+            datatype: 'json',
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            data: formData,
+            success: function (result) {
+                showAlertMessage('errMsg', result.ErrorCode == 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
+                if (result.ErrorCode == 0) {
+                    setTimeout(function () {
+                        $('#insert-setting').dialog('close');
+                        Search();
+                    }, 3000);
+                }
+            },
+            error: function (xhr) {
+                showAlertMessage('errMsg', 'Internal Server Error.', 1);
+            },
+            complete: function () {
+                parent.jQuery.unblockUI();
+            }
+        });
+    });
 });
 
-var InsertBettypes = function () {
+var InsertSetting = function () {
     if (!ValidateUploadFile()) {
         return;
     }
@@ -36,7 +70,6 @@ function ValidateUploadFile() {
     }
 
     if (!hasHostPermission) {
-
         showAlertMessage('errMsg', "You're not authorized on this function", 1);
         return false;
     }

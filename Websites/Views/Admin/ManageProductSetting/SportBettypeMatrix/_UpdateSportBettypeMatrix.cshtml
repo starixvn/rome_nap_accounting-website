@@ -1,0 +1,62 @@
+﻿<style>
+    .setting-edit {
+        width: 180px;
+        height: 18px;
+    }
+
+    label {
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+    .hint-note {
+        line-height: 10px !important;
+    }
+</style>
+<form id="edit-sbm-form" style="display: none;">
+    <div id="updateSBMErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="SBMProductId">ProductId</label></td>
+            <td><span id="SBMProductId" /></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label for="SBMSportType">SportType</label></td>
+            <td><input class="setting-edit" id="SBMSportType" maxlength="128"></td>
+            <td><label for="SBMBetType">BetType</label></td>
+            <td><input class="setting-edit" id="SBMBetType" maxlength="128"></td>
+        </tr>
+        <tr>
+            <td><label for="SBMIsLive">IsLive</label></td>
+            <td><input class="setting-edit" id="SBMIsLive" maxlength="128"></td>
+            <td><label for="SBMEnabled">Enabled</label></td>
+            <td><input class="setting-edit" id="SBMEnabled" maxlength="128"></td>
+        </tr>
+        <tr>
+            <td><label for="SBMIsTest">IsTest</label></td>
+            <td><input class="setting-edit" id="SBMIsTest" maxlength="128"></td>
+            <td><label for="SBMSubProduct">SubProduct</label></td>
+            <td><input class="setting-edit" id="SBMSubProduct" maxlength="128"></td>
+        </tr>
+        <tr>
+            <td style="display:block;"><label for="SBMEventType">EventType</label></td>
+            <td>
+                <input class="setting-edit" id="SBMEventType" maxlength="128"><br />
+                <small class="hint-note">Value for EventType 0: Can't join with any table, 1: Match, 2: Outright, 3: VSOutright/VSRaceInfo, 4: DW, 5: Match3rd</small>
+            </td>
+            <td style="display:block;"><label for="SBMRefTable">RefTable</label></td>
+            <td>
+                <input class="setting-edit" id="SBMRefTable" maxlength="128"><br />
+                <small class="hint-note">Value for RefTable 0 : Bettrans, 1: BettransRNG, 2: BettransLC, 3: translog</small>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <input class="btn" type="button" value="Submit" onclick="UpdateSBM();" />
+            </td>
+        </tr>
+    </table>
+</form>

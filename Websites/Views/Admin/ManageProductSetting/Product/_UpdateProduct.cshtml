@@ -1,0 +1,92 @@
+﻿<style>
+    .setting-edit {
+        width: 180px;
+        height: 18px;
+    }
+
+    .setting-calendar {
+        width: 160px;
+        height: 18px;
+    }
+
+    .setting-textarea {
+        width: 180px;
+    }
+
+    label {
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+    .hint-note {
+        line-height: 10px !important;
+    }
+</style>
+<form id="edit-product-form" style="display: none;">
+    <div id="updateProductErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="ProductId">ProductID</label></td>
+            <td><span id="ProductId" /></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label for="ProductName">ProductName</label></td>
+            <td><input class="setting-edit" id="ProductName" type="text" /></td>
+            <td><label for="Description">Description</label></td>
+            <td><textarea class="setting-textarea" id="Description" rows="2" cols="40" maxlength="128"></textarea></td>
+        </tr>
+        <tr>
+            <td><label for="ProductPrefix">ProductPrefix</label></td>
+            <td><input class="setting-edit" id="ProductPrefix" rows="2" cols="40" maxlength="128"></td>
+            <td><label for="Enabled">Enabled</label></td>
+            <td><input class="setting-edit" id="Enabled" maxlength="128"></td>
+        </tr>
+        <tr>
+            <td><label for="EndOfSupportDate ">EndOfSupportDate </label></td>
+            <td>
+                <input class="setting-calendar" id="EndOfSupportDate" type="text" maxlength="128" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="EndOfSupportDate_Trigger" title="Date selector"
+                       width="18" height="17" src="../../App_Themes/Images/calendar.gif" type="image" />
+            </td>
+            <td><label for="IsOfferPlayForFun">IsOfferPlayForFun</label></td>
+            <td><input class="setting-edit" id="IsOfferPlayForFun"></td>
+        </tr>
+        <tr>
+            <td><label for="SubProductBalanceType">SubProductBalanceType</label></td>
+            <td><textarea class="setting-textarea" id="SubProductBalanceType" rows="2" cols="40"></textarea></td>
+            <td style="display:block;"><label for="GroupType">GroupType</label></td>
+            <td>
+                <input class="setting-edit" id="GroupType" maxlength="128"><br />
+                <small class="hint-note">Value for GroupType 0 :All , 1 :Setting Only</small>
+            </td>
+        </tr>
+        <tr>
+            <td style="display:block;"><label for="CasinoType">CasinoType</label></td>
+            <td>
+                <input class="setting-edit" id="CasinoType"><br />
+                <small class="hint-note">Value for CasinoType 1: Casino, 2 : LiveCasino, 0: Others</small>
+            </td>
+            <td style="display:block;">
+                <label for="BalanceType">BalanceType</label>
+            </td>
+            <td>
+                <input class="setting-edit" id="BalanceType"><br />
+                <small class="hint-note">Value for BalanceType 1: SportsBook, 2: Transfers, 3: Casino, 4: Others</small>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="VendorId">VendorId</label></td>
+            <td><input class="setting-edit" id="VendorId" maxlength="128"></td>
+            <td><label for="OrderNo">OrderNo</label></td>
+            <td><input class="setting-edit" id="OrderNo" maxlength="128"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <input class="btn" type="button" value="Submit" onclick="UpdateProduct();" />
+            </td>
+        </tr>
+    </table>
+</form>
