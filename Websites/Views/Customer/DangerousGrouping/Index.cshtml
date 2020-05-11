@@ -1,0 +1,39 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="err">
+    </div>
+    <div>
+        <link rel="stylesheet" href="../../App_Themes/Public/common.css" />
+        <table>
+            <tr>
+                <td class="b">
+                    &nbsp;&nbsp;Select Mode:&nbsp;
+                </td>
+                <td class="b">
+                    <select id="selectOption">
+                        <option value="tab_content_multiple">Multiple Accounts</option>
+                        <option value="tab_content_single">Single Account</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div class="mainContent">
+            <div id="tab_content_multiple" style="margin-top:38px; margin-bottom:2px">
+                @Html.Partial("~/Views/Customer/DangerousGrouping/MultipleAccounts/_MultipleAccounts.cshtml")
+            </div>
+            <div id="tab_content_single" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Customer/DangerousGrouping/SingleAccount/_SingleAccount.cshtml")
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Admin/ManageSportType/_UpdateSport.cshtml")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+</body>
+</html>

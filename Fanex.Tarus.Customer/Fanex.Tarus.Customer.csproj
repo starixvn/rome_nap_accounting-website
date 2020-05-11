@@ -472,6 +472,7 @@
     <Compile Include="Criteria\VirtualRate\UploadRate\UpdateImportRateCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewHistoryLogCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewVirtualRateCriteria.cs" />
+    <Compile Include="DangerousGrouping\DangerousGroupingController.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
