@@ -1,0 +1,120 @@
+﻿@using Fanex.Tarus.Admin.Resource;
+@using Fanex.Tarus.Admin.ManageUsernamePrefix.Models;
+@using Sunplus.Accounting.Core.Configurations;
+@model IndexViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/Statement/Views/Guideline/Styles/Guideline.less?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Report/reportgrid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Admin/ManageUsernamePrefix/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+@section Scripts
+{
+    <script type="text/javascript">
+        var isHost = @(Model.IsHost ? 1: 0);
+        function resolveClientUrl(relativePath) {
+            return '/' + relativePath;
+        }
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageUsernamePrefix/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
+}
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL"></td>
+            <td class="maincontent_headerC">Manage Username Prefix</td>
+            <td class="maincontent_headerR"></td>
+        </tr>
+    </table>
+    <div class="maincontent_box">
+        <form id="frmFilter">
+            <table border="0">
+                <tr>
+                    <td>
+                        <label for="GroupName">External Group </label>
+                    </td>
+                    <td>
+                        <select id="GroupName" name="GroupName" style="width: 102px; border: 1px solid Black"></select>
+                    </td>
+                    <td style="padding-left: 15px">
+                        <label for="Prefix">Prefix </label>
+                    </td>
+                    <td>
+                        <input type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
+                    </td>
+                    <td style="padding-left: 15px">
+                        <label for="AllowNewSuper">New Super Allowed? </label>
+                    </td>
+                    <td>
+                        <select id="AllowNewSuper" name="AllowNewSuper" style="width: 50px; border: 1px solid Black">
+                            <option value="">All</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                    <td style="padding-left: 15px">
+                        <button type="button" class="btn" id="btnSearch">Search</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn" id="btnAdd" hidden="@(!Model.IsHost)">Add New</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div style="clear: both"></div>
+    <div class="grid-content">
+        <table class="tbl-body-scroll" style="border-left: 1px solid #7c98a4; line-height: 18px">
+            <thead>
+                <tr class="group-header-bg">
+                    <td class="c b" style="width: 50px">#</td>
+                    <td class="c b" style="width: 80px">Prefix</td>
+                    <td class="c b" style="width: 120px">New Super Allowed</td>
+                    <td class="c b" style="width: 80px">Action</td>
+                </tr>
+            </thead>
+            <tbody id="tblBody"></tbody>
+        </table>
+    </div>
+</div>
+<div id="dialogAddNew" title="Add New Prefix" style="display: none">
+    <div id="msgAdd" class="errMsg">
+    </div>
+    <form id="frmAdd">
+        <table>
+            <tbody>
+                <tr>
+                    <td>External Group:</td>
+                    <td>
+                        <select id="GroupName_AddNew" name="GroupName" style="width: 102px; border: 1px solid Black"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prefix:</td>
+                    <td>
+                        <input type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="button" class="btn" id="btnSubmitAdd">Submit</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div id="dialogDelete" title="Delete Prefix" style="display: none">
+    <div id="msgDelete" class="errMsg">
+    </div>
+    <p>Do you want to delete the selected prefix?</p>
+</div>
