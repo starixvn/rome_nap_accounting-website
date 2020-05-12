@@ -111,7 +111,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", customerInfoViewModel.Fullname);
             TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", customerInfoViewModel.Fullname);
             TemplateHandler.Assign(ref htmlcontent, "{NickName}", customerInfoViewModel.Nickname);
-            if (!customerInfoViewModel.IsSpecialSite || customerInfoViewModel.SearchAccountRoleId > 1)
+            if (customerInfoViewModel.SearchAccountRoleId > 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "SabaclubPlayer3rd");
             }
