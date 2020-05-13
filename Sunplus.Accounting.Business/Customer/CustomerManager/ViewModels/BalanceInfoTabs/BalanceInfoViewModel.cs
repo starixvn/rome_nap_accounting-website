@@ -46,10 +46,6 @@
 
         private bool IsCN88Site => AppSettings.IsCN88SiteName(CustomerSite);
 
-        public bool IsSpecialSite => CustomerSite.Equals("789y", System.StringComparison.OrdinalIgnoreCase);
-
-        public bool IsIndoSite => CustomerSite.IndexOf("indo", System.StringComparison.OrdinalIgnoreCase) != -1;
-
         private void GetExtraCustomerInfo(
             DataRow customerInfoRow,
             DataRow lineInfoRow,
