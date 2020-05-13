@@ -333,7 +333,7 @@
   <data name="Waiting" xml:space="preserve">
     <value>Waiting</value>
   </data>
-  <data name="DelayPayout" xml:space="preserve">
-    <value>Delay Payout</value>
+  <data name="DelayedPayout" xml:space="preserve">
+    <value>Delayed Payout</value>
   </data>
 </root>
