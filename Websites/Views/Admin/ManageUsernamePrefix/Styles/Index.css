@@ -22,3 +22,7 @@
 #dialogAddNew td {
     padding: 3px;
 }
+
+.capitalize {
+    text-transform: uppercase;
+}

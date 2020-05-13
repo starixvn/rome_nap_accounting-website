@@ -28,6 +28,16 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
 }
+@helper GroupNameSelectFor789y(string header)
+{
+    <select name="GroupName" style="width: 102px; border: 1px solid Black">
+        <option value="" selected="selected">@header</option>
+        <option value="ACCUT">ACCUT</option>
+        <option value="ACCYEN789">ACCYEN789</option>
+        <option value="ACCYEN889">ACCYEN889</option>
+        <option value="ACCTEST">ACCTEST</option>
+    </select>
+}
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
         <tr>
@@ -41,16 +51,16 @@
             <table border="0">
                 <tr>
                     <td>
-                        <label for="GroupName">External Group </label>
+                        <label>External Group </label>
                     </td>
                     <td>
-                        <select id="GroupName" name="GroupName" style="width: 102px; border: 1px solid Black"></select>
+                        @GroupNameSelectFor789y("All")
                     </td>
                     <td style="padding-left: 15px">
                         <label for="Prefix">Prefix </label>
                     </td>
                     <td>
-                        <input type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
+                        <input class="capitalize" type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
                     </td>
                     <td style="padding-left: 15px">
                         <label for="AllowNewSuper">New Super Allowed? </label>
@@ -96,13 +106,13 @@
                 <tr>
                     <td>External Group:</td>
                     <td>
-                        <select id="GroupName_AddNew" name="GroupName" style="width: 102px; border: 1px solid Black"></select>
+                        @GroupNameSelectFor789y("Please select")
                     </td>
                 </tr>
                 <tr>
                     <td>Prefix:</td>
                     <td>
-                        <input type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
+                        <input class="capitalize" type="text" id="Prefix" name="Prefix" style="width: 50px" maxlength="2">
                     </td>
                 </tr>
                 <tr>

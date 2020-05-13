@@ -6,25 +6,17 @@
         type: "POST",
         contentType: "application/json; charset=utf-8",
         beforeSend: function () {
-            parent.jQuery.blockUI();
+            parent.BlockUI && parent.BlockUI();
         },
         error: function (xhr, status, error) {
             alert(error);
         },
         complete: function () {
-            parent.jQuery.unblockUI();
+            parent.jQuery.unblockUI && parent.jQuery.unblockUI();
         }
     });
 
     var api = {
-        getGroups: function (callback) {
-            $.ajax({
-                url: "../../Admin/ExternalSite/Service/ExternalSiteService.svc/GetGroupNames",
-                success: function (data) {
-                    callback(data);
-                }
-            });
-        },
         query: function (data, callback) {
             $.ajax({
                 url: "Query",
@@ -60,7 +52,11 @@
         $('#btnSubmitAdd').click(submitAdd);
         $('#btnYesDelete').click(remove);
         $('#btnNoDelete').click(closeDeleteDialog);
-        loadGroups();
+        $('input[name="Prefix"]').bind('keyup blur', function () {
+            var node = $(this);
+            node.val($.trim(node.val().replace(/[^a-zA-Z0-9]/g, '')).toUpperCase());
+        });
+        search();
     }
 
     function getFormData($form) {
@@ -68,18 +64,15 @@
         var indexed_array = {};
 
         $.map(unindexed_array, function (n, i) {
-            indexed_array[n['name']] = $.trim(n['value']);
+            var value = $.trim(n['value']);
+            if ($.isNumeric(value)) {
+                indexed_array[n['name']] = parseFloat(value);
+            } else {
+                indexed_array[n['name']] = value;
+            }
         });
 
         return indexed_array;
-    }
-
-    function loadGroups() {
-        api.getGroups(function (groups) {
-            $('#GroupName').html(generateGroupSelectHtml(groups, "All"));
-            $('#GroupName_AddNew').html(generateGroupSelectHtml(groups, "Please select"));
-            search();
-        });
     }
 
     function generateGroupSelectHtml(groups, firstOptionText) {
@@ -103,31 +96,36 @@
 
     function searchWithParams(params) {
         api.query(params, function (rows) {
-            var groupNames = [];
-            for (var row of rows) {
-                if (groupNames.indexOf(row.GroupName) === -1) {
-                    groupNames.push(row.GroupName);
-                }
-            }
-
             var html = [];
-            for (var groupName of groupNames) {
-                html.push('<tr><td colspan="4" class="b bg group-header-bg">' + groupName + '</td></tr>');
-                html.push('<tr>');
-                var index = 1;
+            if (rows.length === 0) {
+                html.push('<tr><td class="c" colspan="4">There is no data</td></tr>');
+            } else {
+                var groupNames = [];
                 for (var row of rows) {
-                    if (row.GroupName === groupName) {
-                        html.push('<td class="c">' + index + '</td>');
-                        html.push('<td class="c">' + row.Prefix + '</td>');
-                        html.push('<td class="c">' + (row.AllowNewSuper ? 'Yes' : 'No') + '</td>');
-                        if (isHost && row.AllowNewSuper) {
-                            html.push('<td class="c"><img data-group-name="' + row.GroupName + '" data-prefix="' + row.Prefix + '" src="' + resolveClientUrl('App_Themes/Images/icn_del.png') + '" style="cursor:pointer" title="Delete"></td>');
-                        } else {
-                            html.push('<td></td>');
+                    if (groupNames.indexOf(row.GroupName) === -1) {
+                        groupNames.push(row.GroupName);
+                    }
+                }
+
+                for (var groupName of groupNames) {
+                    html.push('<tr><td colspan="4" class="b bg group-header-bg">' + groupName + '</td></tr>');
+                    var index = 1;
+                    for (var row of rows) {
+                        if (row.GroupName === groupName) {
+                            html.push('<tr>');
+                            html.push('<td class="c">' + index + '</td>');
+                            html.push('<td class="c">' + row.Prefix + '</td>');
+                            html.push('<td class="c">' + (row.AllowNewSuper ? 'Yes' : 'No') + '</td>');
+                            if (isHost && row.AllowNewSuper) {
+                                html.push('<td class="c"><img data-group-name="' + row.GroupName + '" data-prefix="' + row.Prefix + '" src="' + resolveClientUrl('App_Themes/Images/icn_del.png') + '" style="cursor:pointer" title="Delete"></td>');
+                            } else {
+                                html.push('<td></td>');
+                            }
+                            html.push('</tr>');
+                            index++;
                         }
                     }
                 }
-                html.push('</tr>');
             }
 
             $('#tblBody').html(html.join(''));
@@ -143,34 +141,10 @@
         });
     }
 
-    function submitAdd() {
-        var msgId = "msgAdd";
-        var params = getFormData($('#frmAdd'));
-        if (!params.GroupName) {
-            showAlertMessage(msgId, "Please select an External Group", 1);
-            return;
-        }
-
-        var prefixRegex = /^[a-zA-Z0-9]{2,2}$/
-        if (!params.Prefix && prefixRegex.test(params.Prefix)) {
-            showAlertMessage(msgId, "Please input a prefix of 2 letters (only a-z; 0-9)", 1);
-            return;
-        }
-
-        api.insert(params, function (data) {
-            if (data.ErrorCode === 0) {
-                showAlertMessage(msgId, "The new prefix has been successfully created", 0);
-                setTimeout(function () {
-                    searchWithParams(queryParams);
-                    closeAddDialog();
-                }, 3000);
-            } else {
-                showAlertMessage(msgId, data.ErrorMessage, 1);
-            }
-        });
-    }
-
     function openAddDialog() {
+        var msgId = "msgAdd";
+        hideAlertMessage(msgId);
+        $('#frmAdd').trigger("reset");
         $('#dialogAddNew').dialog({
             resizable: false,
             height: "auto",
@@ -183,7 +157,36 @@
         $('#dialogAddNew').dialog('close');
     }
 
+    function submitAdd() {
+        var msgId = "msgAdd";
+        var params = getFormData($('#frmAdd'));
+        if (!params.GroupName) {
+            showAlertMessage(msgId, "Please select an External Group", 1);
+            return;
+        }
+
+        var prefixRegex = /^[a-zA-Z0-9]{2,2}$/;
+        if (!params.Prefix || !prefixRegex.test(params.Prefix)) {
+            showAlertMessage(msgId, "Please input a prefix of 2 letters (only a-z; 0-9)", 1);
+            return;
+        }
+
+        api.insert(params, function (data) {
+            if (data.ErrorCode === 0) {
+                showAlertMessage(msgId, "The new prefix has been successfully created", 0);
+                searchWithParams(queryParams);
+                setTimeout(function () {
+                    closeAddDialog();
+                }, 3000);
+            } else {
+                showAlertMessage(msgId, data.ErrorMessage, 1);
+            }
+        });
+    }
+
     function openDeleteDialog() {
+        var msgId = "msgDelete";
+        hideAlertMessage(msgId);
         $('#dialogDelete').dialog({
             resizable: false,
             height: "auto",
@@ -207,9 +210,9 @@
         var msgId = "msgDelete";
         api.delete(deleteParams, function (data) {
             if (data.ErrorCode === 0) {
-                showAlertMessage(msgId, "The new prefix has been successfully created", 0);
+                showAlertMessage(msgId, "The new prefix has been successfully deleted", 0);
+                searchWithParams(queryParams);
                 setTimeout(function () {
-                    searchWithParams(queryParams);
                     closeDeleteDialog();
                 }, 3000);
             } else {
