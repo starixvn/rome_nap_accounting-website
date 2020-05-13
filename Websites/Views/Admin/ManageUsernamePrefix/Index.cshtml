@@ -18,8 +18,8 @@
 {
     <script type="text/javascript">
         var isHost = @(Model.IsHost ? 1: 0);
-        function resolveClientUrl(relativePath) {
-            return '/' + relativePath;
+        function resolveClientUrl(relativePath){
+            return '@Url.Content("~/")' + relativePath;
         }
     </script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
