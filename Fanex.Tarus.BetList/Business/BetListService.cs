@@ -42,7 +42,6 @@ namespace Fanex.Tarus.BetList.Business
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
-        private const int SabaclubProductId = 42;
 
         public BetListService()
         {
@@ -258,43 +257,42 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            var isSabaclub = betListByProductCriteria.ProductId == SabaclubProductId;
-            var needToMapPlayerId3rdToCustId = isSabaclub && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
+            var needToMapPlayerId3rdToCustId = !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
 
-            var mappedCustId = needToMapPlayerId3rdToCustId
+            var mappedCustIds = needToMapPlayerId3rdToCustId
                 ? _betListRepository.MapPlayerIdToCustId(new MapPlayerId3rdToCustIdCriteria
                 {
                     PlayerId3rd = betListByProductCriteria.PlayerId3rd,
                     Vendor = betListByProductCriteria.VendorId,
                     ProductId = betListByProductCriteria.ProductId
                 })
-                : 0;
+                : Enumerable.Empty<int>();
 
-            if (needToMapPlayerId3rdToCustId
-                && betListByProductCriteria.CustId != 0
-                && mappedCustId != betListByProductCriteria.CustId)
+            var custIds = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
+                ? mappedCustIds
+                : new List<int> { betListByProductCriteria.CustId };
+
+            var result = Enumerable.Empty<TicketDetail>();
+            foreach (var custId in custIds)
             {
-                return new List<TicketDetail>();
+                result = result.Concat(GetBetListBy(new BetListByProductCriteria
+                {
+                    UserId = betListByProductCriteria.UserId,
+                    ProductId = betListByProductCriteria.ProductId,
+                    Username = betListByProductCriteria.Username,
+                    GameId = betListByProductCriteria.GameId,
+                    BetId = betListByProductCriteria.BetId,
+                    FromDate = betListByProductCriteria.FromDate,
+                    ToDate = betListByProductCriteria.ToDate,
+                    MoveBetsDay = betListByProductCriteria.MoveBetsDay,
+                    BalanceUpDay = betListByProductCriteria.BalanceUpDay,
+                    CustId = custId,
+                    Permission = betListByProductCriteria.Permission
+                }));
             }
+            
 
-            var custId = needToMapPlayerId3rdToCustId && betListByProductCriteria.CustId == 0
-                ? mappedCustId
-                : betListByProductCriteria.CustId;
-
-            return GetBetListBy(new BetListByProductCriteria
-            {
-                UserId = betListByProductCriteria.UserId,
-                ProductId = betListByProductCriteria.ProductId,
-                Username = betListByProductCriteria.Username,
-                GameId = betListByProductCriteria.GameId,
-                BetId = betListByProductCriteria.BetId,
-                FromDate = betListByProductCriteria.FromDate,
-                ToDate = betListByProductCriteria.ToDate,
-                MoveBetsDay = betListByProductCriteria.MoveBetsDay,
-                BalanceUpDay = betListByProductCriteria.BalanceUpDay,
-                CustId = custId,
-                Permission = betListByProductCriteria.Permission
-            });
+            return result.ToList();
         }
 
         /// <summary>
