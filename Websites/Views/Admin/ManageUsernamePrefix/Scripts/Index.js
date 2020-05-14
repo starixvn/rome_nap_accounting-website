@@ -95,10 +95,11 @@
     }
 
     function searchWithParams(params) {
+        var colSpan = isHost ? 4 : 3;
         api.query(params, function (rows) {
             var html = [];
             if (rows.length === 0) {
-                html.push('<tr><td class="c" colspan="4">There is no data</td></tr>');
+                html.push('<tr><td class="c" colspan="' + colSpan + '">There is no data</td></tr>');
             } else {
                 var groupNames = [];
                 for (var row of rows) {
@@ -108,7 +109,7 @@
                 }
 
                 for (var groupName of groupNames) {
-                    html.push('<tr><td colspan="4" class="b bg group-header-bg">' + groupName + '</td></tr>');
+                    html.push('<tr><td colspan="' + colSpan + '" class="b bg group-header-bg">' + groupName + '</td></tr>');
                     var index = 1;
                     for (var row of rows) {
                         if (row.GroupName === groupName) {
@@ -116,10 +117,12 @@
                             html.push('<td class="c">' + index + '</td>');
                             html.push('<td class="c">' + row.Prefix + '</td>');
                             html.push('<td class="c">' + (row.AllowNewSuper ? 'Yes' : 'No') + '</td>');
-                            if (isHost && row.AllowNewSuper) {
-                                html.push('<td class="c"><img data-group-name="' + row.GroupName + '" data-prefix="' + row.Prefix + '" src="' + resolveClientUrl('App_Themes/Images/icn_del.png') + '" style="cursor:pointer" title="Delete"></td>');
-                            } else {
-                                html.push('<td></td>');
+                            if (isHost) {
+                                if (row.AllowNewSuper) {
+                                    html.push('<td class="c"><img data-group-name="' + row.GroupName + '" data-prefix="' + row.Prefix + '" src="' + resolveClientUrl('App_Themes/Images/icn_del.png') + '" style="cursor:pointer" title="Delete"></td>');
+                                } else {
+                                    html.push('<td></td>');
+                                }
                             }
                             html.push('</tr>');
                             index++;

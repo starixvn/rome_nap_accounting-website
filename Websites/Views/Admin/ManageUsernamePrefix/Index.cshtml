@@ -90,7 +90,10 @@
                     <td class="c b" style="width: 50px">#</td>
                     <td class="c b" style="width: 80px">Prefix</td>
                     <td class="c b" style="width: 120px">New Super Allowed</td>
-                    <td class="c b" style="width: 80px">Action</td>
+                    @if (Model.IsHost)
+                    {
+                        <td class="c b" style="width: 80px">Action</td>
+                    }
                 </tr>
             </thead>
             <tbody id="tblBody"></tbody>
