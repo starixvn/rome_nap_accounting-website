@@ -443,11 +443,10 @@ table.casino .cl-match .black {
   color: #000000;
 }
 table.badminton .cl-result.home {
-    color: #6678e0;
+  color: #6678e0;
 }
-
 table.badminton .cl-result.away {
-    color: #008d95;
+  color: #008d95;
 }
 table.racing {
   /* Header */
@@ -497,80 +496,19 @@ table .row-noinfo {
   font-weight: bold;
   text-align: center;
 }
+.width-40 {
+  width: 40%;
+}
+.width-30 {
+  width: 30%;
+}
 .sicbo-result {
-    padding: 6px 0px;
+  padding: 6px 0px;
 }
 .sicbo-result span {
-    margin: 0px 5px;
-    font-size: 50px;
+  margin: 0px 5px;
+  font-size: 50px;
 }
-
-	
-.lottoBall {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  font-size: 12px;
-  color: #000;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 31px;
-  text-align: center;
-  background-image: url(images/lotto_ball.png);
-  background-repeat: no-repeat;
-}
-.lottoBall.red {
-  background-position: 0 0;
-}
-.lottoBall.blue {
-  background-position: 0 -30px;
-}
-.lottoBall.disable {
-  color: #999;
-  background-position: 0 -60px;
-}
-
-.lotto-bets .button + .button {
-  margin-right: 0;
-}
-.lotto-bets .min {
-  background-position: 0 -19px;
-}
-.lotto-bets .minus {
-  background-position: -10px -19px;
-}
-.lotto-bets .plus {
-  background-position: -20px -19px;
-}
-.lotto-bets .max {
-  background-position: -30px -19px;
-}
-.lotto-bets input {
-  float: left;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-top: 0;
-  padding-bottom: 0;
-  width: 16px;
-  height: 17px;
-  text-align: center;
-}
-
-
-table.happy5 .cl-result {
-  width: 250px;
-}
-table.happy5 .cl-detail-result {
-  width: 70px;
-}
-table.fn-rs tbody .cl-total {
-  background: #cccccc;
-}
-table.fn-rs tbody .cl-total .selection {
-  font-size: 12px;
-  text-align: left;
-  padding-left: 3px;
-}
-table.fn-rs tbody .cl-total .result {
-  text-align: center;
+.color-blue {
+  color: #4169E1;
 }

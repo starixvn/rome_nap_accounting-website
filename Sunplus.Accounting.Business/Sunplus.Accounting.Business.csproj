@@ -103,9 +103,8 @@
     <Reference Include="Fanex.BetList.Core, Version=2.110.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.2.110.5\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.ESports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.ESports.1.0.0\lib\net40\Fanex.BetList.ESports.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.ESports, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.ESports.1.0.1-esport3-03\lib\net40\Fanex.BetList.ESports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
