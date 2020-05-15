@@ -30,16 +30,16 @@ function Search() {
 function UpdateSampleUrl() {
     switch (cachedTabId) {
         case "tab_1":
-            $('#sampleSettingLink').prop("href", "/Views/Admin/ManageProductSetting/Product/Product.xls");
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product/Product.xls");
             break;
         case "tab_2":
-            $('#sampleSettingLink').prop("href", "/Views/Admin/ManageProductSetting/Sport/SportType.xls");
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
             break;
         case "tab_3":
-            $('#sampleSettingLink').prop("href", "/Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
             break;
-        case "tab_3":
-            $('#sampleSettingLink').prop("href", "/Views/Admin/ManageProductSetting/SportBettypeMatrix/Bettype.xls");
+        case "tab_4":
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
             break;
     }
 }
