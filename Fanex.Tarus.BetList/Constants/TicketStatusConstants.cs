@@ -12,7 +12,7 @@ namespace Fanex.Tarus.BetList.Constants
         public const int Draw = 111;
         public const int Won = 112;
         public const int Lose = 113;
-        public const int ResultPending = 2;
+        public const int DelayedPayout = 2;
         public const int UnderSettlement = 3;
         public const int Pending = 4;
         public const int AbnormalBets = 99;
@@ -21,8 +21,8 @@ namespace Fanex.Tarus.BetList.Constants
         {
             [Waiting] = nameof(Waiting),
             [Reject] = nameof(Reject),
-            [Running] = nameof(Running),         
-            [ResultPending] = nameof(ResultPending),
+            [Running] = nameof(Running),
+            [DelayedPayout] = nameof(DelayedPayout),
             [UnderSettlement] = nameof(UnderSettlement),
             [Won] = nameof(Won),
             [Lose] = nameof(Lose),

@@ -254,7 +254,7 @@
   </data>
   <data name="Gold_Deluxe" xml:space="preserve">
     <value>Gold Deluxe</value>
-  </data> 
+  </data>
   <data name="Number_Game" xml:space="preserve">
     <value>Number Game</value>
   </data>
@@ -332,5 +332,8 @@
   </data>
   <data name="Waiting" xml:space="preserve">
     <value>Waiting</value>
+  </data>
+  <data name="DelayedPayout" xml:space="preserve">
+    <value>Delayed Payout</value>
   </data>
 </root>

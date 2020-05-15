@@ -223,6 +223,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delayed Payout.
+        /// </summary>
+        public static string DelayedPayout {
+            get {
+                return ResourceManager.GetString("DelayedPayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string Details {
