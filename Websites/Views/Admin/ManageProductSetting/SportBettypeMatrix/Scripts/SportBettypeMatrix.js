@@ -34,10 +34,10 @@ function RenderSBMData(data) {
         var row = { Columns: [] };
         row.Columns.push({ Name: 'SportType', Value: data.SportBettypeMatrixEntities[i].SportType });
         row.Columns.push({ Name: 'BetType', Value: data.SportBettypeMatrixEntities[i].BetType });
-        row.Columns.push({ Name: 'IsLive', Value: data.SportBettypeMatrixEntities[i].IsLive === true ? 1 : 0 });
+        row.Columns.push({ Name: 'IsLive', Value: data.SportBettypeMatrixEntities[i].IsLive });
         row.Columns.push({ Name: 'ProductId', Value: data.SportBettypeMatrixEntities[i].ProductId });
-        row.Columns.push({ Name: 'Enabled', Value: data.SportBettypeMatrixEntities[i].Enabled === true ? 1 : 0 });
-        row.Columns.push({ Name: 'IsTest', Value: data.SportBettypeMatrixEntities[i].IsTest === true ? 1 : 0 });
+        row.Columns.push({ Name: 'Enabled', Value: data.SportBettypeMatrixEntities[i].Enabled });
+        row.Columns.push({ Name: 'IsTest', Value: data.SportBettypeMatrixEntities[i].IsTest });
         row.Columns.push({ Name: 'EventType', Value: data.SportBettypeMatrixEntities[i].EventType });
         row.Columns.push({ Name: 'SubProduct', Value: data.SportBettypeMatrixEntities[i].SubProduct });
         row.Columns.push({ Name: 'RefTable', Value: data.SportBettypeMatrixEntities[i].RefTable });
@@ -91,9 +91,9 @@ function EditSBM(index) {
     $('#SBMProductId').text(cachedSBMData.SportBettypeMatrixEntities[index].ProductId);
     $('#SBMSportType').val(cachedSBMData.SportBettypeMatrixEntities[index].SportType);
     $('#SBMBetType').val(cachedSBMData.SportBettypeMatrixEntities[index].BetType);
-    $('#SBMIsLive').val(cachedSBMData.SportBettypeMatrixEntities[index].IsLive === true ? 1 : 0);
-    $('#SBMEnabled').val(cachedSBMData.SportBettypeMatrixEntities[index].Enabled === true ? 1 : 0);
-    $('#SBMIsTest').val(cachedSBMData.SportBettypeMatrixEntities[index].IsTest === true ? 1 : 0);
+    $('#SBMIsLive').val(cachedSBMData.SportBettypeMatrixEntities[index].IsLive);
+    $('#SBMEnabled').val(cachedSBMData.SportBettypeMatrixEntities[index].Enabled);
+    $('#SBMIsTest').val(cachedSBMData.SportBettypeMatrixEntities[index].IsTest);
     $('#SBMEventType').val(cachedSBMData.SportBettypeMatrixEntities[index].EventType);
     $('#SBMSubProduct').val(cachedSBMData.SportBettypeMatrixEntities[index].SubProduct);
     $('#SBMRefTable').val(cachedSBMData.SportBettypeMatrixEntities[index].RefTable);
@@ -115,9 +115,9 @@ function UpdateSBM() {
             ProductId: $('#SBMProductId').text(),
             SportType: $('#SBMSportType').val(),
             BetType: $('#SBMBetType').val(),
-            IsLive: $('#SBMIsLive').val() === '1' ? true : false,
-            Enabled: $('#SBMEnabled').val() === '1' ? true : false,
-            IsTest: $('#SBMIsTest').val() === '1' ? true : false,
+            IsLive: $('#SBMIsLive').val(),
+            Enabled: $('#SBMEnabled').val(),
+            IsTest: $('#SBMIsTest').val(),
             EventType: $('#SBMEventType').val(),
             SubProduct: $('#SBMSubProduct').val(),
             RefTable: $('#SBMRefTable').val()

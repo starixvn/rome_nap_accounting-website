@@ -2,6 +2,7 @@
 $(document).ready(function () {
     form = $('#mainForm');
     form.submit(function (e) {
+        e.preventDefault();
         var action = "";
         switch (cachedTabId) {
             case "tab_1":
@@ -12,6 +13,9 @@ $(document).ready(function () {
                 break;
             case "tab_3":
                 action = 'InsertBettype';
+                break;
+            case "tab_4":
+                action = 'InsertSportBettypeMatrix';
                 break;
         }
         var formData = new FormData(form[0]);

@@ -31,13 +31,13 @@ function RenderProductData(data) {
         row.Columns.push({ Name: 'ProductName', Value: data.ProductEntities[i].ProductName });
         row.Columns.push({ Name: 'Description', Value: data.ProductEntities[i].Description });
         row.Columns.push({ Name: 'ProductPrefix', Value: data.ProductEntities[i].ProductPrefix });
-        row.Columns.push({ Name: 'Enabled', Value: data.ProductEntities[i].Enabled === true ? 1 : 0 });
+        row.Columns.push({ Name: 'Enabled', Value: data.ProductEntities[i].Enabled });
         row.Columns.push({ Name: 'EndOfSupportDate', Value: data.ProductEntities[i].EndOfSupportDate });
         row.Columns.push({ Name: 'BalanceType', Value: data.ProductEntities[i].BalanceType });
         row.Columns.push({ Name: 'SubProductBalanceType', Value: data.ProductEntities[i].SubProductBalanceType.replace(/</g, '&lt;') });
         row.Columns.push({ Name: 'GroupType', Value: data.ProductEntities[i].GroupType });
         row.Columns.push({ Name: 'CasinoType', Value: data.ProductEntities[i].CasinoType });
-        row.Columns.push({ Name: 'IsOfferPlayForFun', Value: data.ProductEntities[i].IsOfferPlayForFun === true ? 1 : 0 });
+        row.Columns.push({ Name: 'IsOfferPlayForFun', Value: data.ProductEntities[i].IsOfferPlayForFun });
         row.Columns.push({ Name: 'VendorId', Value: data.ProductEntities[i].VendorId });
         row.Columns.push({ Name: 'OrderNo', Value: data.ProductEntities[i].OrderNo });
         row.Columns.push({
@@ -95,13 +95,13 @@ function EditProduct(index) {
     $('#ProductName').val(cachedProductData.ProductEntities[index].ProductName);
     $('#Description').val(cachedProductData.ProductEntities[index].Description);
     $('#ProductPrefix').val(cachedProductData.ProductEntities[index].ProductPrefix);
-    $('#Enabled').val(cachedProductData.ProductEntities[index].Enabled === true ? 1 : 0);
+    $('#Enabled').val(cachedProductData.ProductEntities[index].Enabled);
     $('#EndOfSupportDate').val(cachedProductData.ProductEntities[index].EndOfSupportDate);
     $('#BalanceType').val(cachedProductData.ProductEntities[index].BalanceType);
     $('#SubProductBalanceType').val(cachedProductData.ProductEntities[index].SubProductBalanceType);
     $('#GroupType').val(cachedProductData.ProductEntities[index].GroupType);
     $('#CasinoType').val(cachedProductData.ProductEntities[index].CasinoType);
-    $('#IsOfferPlayForFun').val(cachedProductData.ProductEntities[index].IsOfferPlayForFun === true ? 1 : 0);
+    $('#IsOfferPlayForFun').val(cachedProductData.ProductEntities[index].IsOfferPlayForFun);
     $('#VendorId').val(cachedProductData.ProductEntities[index].VendorId);
     $('#OrderNo').val(cachedProductData.ProductEntities[index].OrderNo);
     $('#edit-product-form').dialog({
@@ -124,13 +124,13 @@ function UpdateProduct() {
             ProductName: $('#ProductName').val(),
             Description: $('#Description').val(),
             ProductPrefix: $('#ProductPrefix').val(),
-            Enabled: $('#Enabled').val() === '1' ? true : false,
+            Enabled: $('#Enabled').val(),
             EndOfSupportDate: $('#EndOfSupportDate ').val(),
             BalanceType: $('#BalanceType').val(),
             SubProductBalanceType: encodeURI($('#SubProductBalanceType').val()),
             GroupType: $('#GroupType').val(),
             CasinoType: $('#CasinoType').val(),
-            IsOfferPlayForFun: $('#IsOfferPlayForFun').val() === '1' ? true : false,
+            IsOfferPlayForFun: $('#IsOfferPlayForFun').val(),
             VendorId: $('#VendorId').val(),
             OrderNo: $('#OrderNo').val(),
         },
