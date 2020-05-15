@@ -28,6 +28,6 @@
 
         string GetSiteNameByCustId(ICriteria criteria);
 
-        IEnumerable<int> MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
+        int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
     }
 }

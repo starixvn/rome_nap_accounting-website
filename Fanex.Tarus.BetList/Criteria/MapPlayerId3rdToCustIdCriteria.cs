@@ -12,6 +12,8 @@
         [SpParam(SqlParamName = "PlayerId")]
         public string PlayerId3rd { get; set; }
 
+        public int CustId { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_CustomerSelByPlayerId";

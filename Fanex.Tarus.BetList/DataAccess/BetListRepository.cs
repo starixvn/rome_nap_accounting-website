@@ -547,22 +547,18 @@
             return siteName;
         }
 
-        public IEnumerable<int> MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria)
+        public int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria)
         {
-            var custIds = new List<int>();
+            var custId = 0;
 
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader!= null && reader.Read())
-                    {
-                        custIds.Add(Convert.ToInt32(reader["CustId"]));
-                    }
-                }
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = db.GetOuputParams();
+                custId = Converter.ToInt(outputs["custid"]);
             }
 
-            return custIds;
+            return custId;
         }
     }
 }
