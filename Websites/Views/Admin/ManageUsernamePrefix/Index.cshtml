@@ -1,4 +1,4 @@
-﻿@using Fanex.Tarus.Admin.Resource;
+﻿@using Fanex.Tarus.Admin.ManageUsernamePrefix;
 @using Fanex.Tarus.Admin.ManageUsernamePrefix.Models;
 @using Sunplus.Accounting.Core.Configurations;
 @model IndexViewModel
@@ -32,10 +32,10 @@
 {
     <select name="GroupName" style="width: 102px; border: 1px solid Black">
         <option value="" selected="selected">@header</option>
-        <option value="ACCUT">ACCUT</option>
-        <option value="ACCYEN789">ACCYEN789</option>
-        <option value="ACCYEN889">ACCYEN889</option>
-        <option value="ACCTEST">ACCTEST</option>
+        @foreach (var group in Constants.ListOf789yGroups)
+        {
+            <option value="@group">@group</option>
+        }
     </select>
 }
 <div class="maincontent">
