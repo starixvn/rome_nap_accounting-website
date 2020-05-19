@@ -213,7 +213,7 @@
         var msgId = "msgDelete";
         api.delete(deleteParams, function (data) {
             if (data.ErrorCode === 0) {
-                showAlertMessage(msgId, "The new prefix has been successfully deleted", 0);
+                showAlertMessage(msgId, "The prefix has been successfully deleted", 0);
                 searchWithParams(queryParams);
                 setTimeout(function () {
                     closeDeleteDialog();

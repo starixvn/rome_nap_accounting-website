@@ -87,12 +87,18 @@
         <table class="tbl-body-scroll" style="border-left: 1px solid #7c98a4; line-height: 18px">
             <thead>
                 <tr class="group-header-bg">
-                    <td class="c b" style="width: 50px">#</td>
-                    <td class="c b" style="width: 80px">Prefix</td>
-                    <td class="c b" style="width: 120px">New Super Allowed</td>
                     @if (Model.IsHost)
                     {
-                        <td class="c b" style="width: 80px">Action</td>
+                        <td class="c b" style="width: 98px">#</td>
+                        <td class="c b" style="width: 160px">Prefix</td>
+                        <td class="c b" style="width: 160px">New Super Allowed</td>
+                        <td class="c b" style="width: 160px">Action</td>
+                    }
+                    else
+                    {
+                        <td class="c b" style="width: 100px">#</td>
+                        <td class="c b" style="width: 210px">Prefix</td>
+                        <td class="c b" style="width: 210px">New Super Allowed</td>
                     }
                 </tr>
             </thead>
