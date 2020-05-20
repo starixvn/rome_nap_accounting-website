@@ -11,6 +11,7 @@
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Module.RNGCasino.Criteria;
     using Fanex.Module.RNGCasino.Repositories;
+    using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Voidbridge.BetDetail.Criteria;
@@ -21,13 +22,11 @@
     using NPOI.SS.Util;
     using Resources;
     using Sunplus.Accounting.Business;
-    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Common;
-    using Fanex.RemotingRef;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
-
         private readonly IRemotingRefService _remotingRefService;
 
         public BetDetailsExporter()
@@ -42,7 +41,7 @@
                 {SportContants.AllBet, "Allbet_Details"},
                 {SportContants.SaGaming, "SAGaming_Details"},
                 {SportContants.SexyGaming, "SexyGaming_Details"},
-                {SportContants.GTCasino, "GTCasino_Details"},
+                {SportContants.GTCasino, "IBCBetLiveCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
                 {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
@@ -73,7 +72,7 @@
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
 
-            if(sportType == SportContants.BBin)
+            if (sportType == SportContants.BBin)
             {
                 return GetBBinTickets(refNo, custId, transType);
             }
