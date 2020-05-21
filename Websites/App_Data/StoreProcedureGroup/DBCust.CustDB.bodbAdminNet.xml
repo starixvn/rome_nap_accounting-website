@@ -369,8 +369,8 @@
     <Setting Key="Acc_SelFIPermission" SpName="Acc_SelFIPermission" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Admin - Manage Username Prefix">
-    <Setting Key="Acc_SuperPefixByGroupSel" SpName="Acc_SuperPefixByGroupSel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_SuperPefixDel" SpName="Acc_SuperPefixDel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_SuperPefixIns" SpName="Acc_SuperPefixIns_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_SuperPrefixDel" SpName="Acc_SuperPrefixDel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_SuperPrefixIns" SpName="Acc_SuperPrefixIns_xtest" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>
