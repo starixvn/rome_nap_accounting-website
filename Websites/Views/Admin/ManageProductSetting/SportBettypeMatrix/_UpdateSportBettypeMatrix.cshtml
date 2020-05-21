@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model IEnumerable<SelectListItem> 
+<style>
     .setting-edit {
         width: 180px;
         height: 18px;
@@ -18,44 +19,62 @@
     </div>
     <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
         <tr>
-            <td><label for="SBMProductId">ProductId</label></td>
-            <td><span id="SBMProductId" /></td>
+            <td><label for="SBMProduct">Product</label></td>
+            <td>
+                @Html.DropDownList("SBMProductId", Model, new { id = "SBMProductId", @class = "setting-edit" })
+            </td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <td><label for="SBMSportType">SportType</label></td>
-            <td><input class="setting-edit" id="SBMSportType" maxlength="128"></td>
+            <td><span id="SBMSportType"></span></td>
+            <td><label for="SBMSportTypeName">SportTypeName</label></td>
+            <td><span id="SBMSportTypeName"></span></td>
+        </tr>
+        <tr>
             <td><label for="SBMBetType">BetType</label></td>
-            <td><input class="setting-edit" id="SBMBetType" maxlength="128"></td>
+            <td><span id="SBMBetType"></span></td>
+            <td><label for="SBMBetTypeName">BetTypeName</label></td>
+            <td><span id="SBMBetTypeName"></span></td>
         </tr>
         <tr>
             <td><label for="SBMIsLive">IsLive</label></td>
-            <td><input class="setting-edit" id="SBMIsLive" maxlength="128"></td>
+            <td><input id="SBMIsLive" type="checkbox" disabled /></td>
             <td><label for="SBMEnabled">Enabled</label></td>
-            <td><input class="setting-edit" id="SBMEnabled" maxlength="128"></td>
+            <td><input id="SBMEnabled" type="checkbox" /></td>
         </tr>
         <tr>
             <td><label for="SBMIsTest">IsTest</label></td>
-            <td><input class="setting-edit" id="SBMIsTest" maxlength="128"></td>
-            <td><label for="SBMSubProduct">SubProduct</label></td>
-            <td><input class="setting-edit" id="SBMSubProduct" maxlength="128"></td>
+            <td><input id="SBMIsTest" type="checkbox" /></td>
+            <td><label for="SBMProduct">EventType</label></td>
+            <td>
+                <select id="SBMEventType" class="setting-edit">
+                    <option value="0">[0] Can't join with any table</option>
+                    <option value="1">[1] Match</option>
+                    <option value="2">[2] Outright</option>
+                    <option value="3">[3] VSOutright/VSRaceInfo</option>
+                    <option value="4">[4] DW</option>
+                    <option value="5">[5] Match3rd</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td style="display:block;"><label for="SBMEventType">EventType</label></td>
+            <td><label for="SBMSubProduct">SubProduct</label></td>
+            <td><input id="SBMSubProduct" type="text" class="setting-edit" maxlength="500" /></td>
+            <td><label for="SBMRefTable">RefTable</label></td>
             <td>
-                <input class="setting-edit" id="SBMEventType" maxlength="128"><br />
-                <small class="hint-note">Value for EventType 0: Can't join with any table, 1: Match, 2: Outright, 3: VSOutright/VSRaceInfo, 4: DW, 5: Match3rd</small>
-            </td>
-            <td style="display:block;"><label for="SBMRefTable">RefTable</label></td>
-            <td>
-                <input class="setting-edit" id="SBMRefTable" maxlength="128"><br />
-                <small class="hint-note">Value for RefTable 0 : Bettrans, 1: BettransRNG, 2: BettransLC, 3: translog</small>
+                <select id="SBMRefTable" class="setting-edit">
+                    <option value="0">[0] Bettrans</option>
+                    <option value="1">[1] BettransRNG</option>
+                    <option value="2">[2] BettransLC</option>
+                    <option value="3">[3] translog</option>
+                </select>
             </td>
         </tr>
         <tr>
             <td colspan="4" style="text-align: center">
-                <input class="btn" type="button" value="Submit" onclick="UpdateSBM();" />
+                <input id="btnSBMUpdate" class="btn" type="button" value="Submit" />
             </td>
         </tr>
     </table>

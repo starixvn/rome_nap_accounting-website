@@ -1,6 +1,6 @@
 ﻿var cachedProductData;
 
-function SearchProduct() {
+function SearchProduct(pageSize, pageIndex) {
     parent.BlockUI();
     $.ajax({
         url: 'SelectProduct',
@@ -9,12 +9,12 @@ function SearchProduct() {
             ProductId: $('#txtProductId').val(),
             ProductName: $('#txtProductName').val(),
             ProductPrefix: $('#txtProductPrefix').val(),
-            PageSize: $('#PageProductSize').val(),
-            PageIndex: $('#PageProductIndex').val()
+            PageSize: pageSize,
+            PageIndex: pageIndex
         },
         success: function (data) {
             cachedProductData = data;
-            RenderProductData(data);
+            RenderProductData(data, pageSize, pageIndex);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -22,7 +22,7 @@ function SearchProduct() {
     });
 }
 
-function RenderProductData(data) {
+function RenderProductData(data, pageSize, pageIndex) {
     var bodyRows = [];
     var rowCount = data.ProductEntities.length;
     for (i = 0; i < rowCount; i++) {
@@ -31,14 +31,20 @@ function RenderProductData(data) {
         row.Columns.push({ Name: 'ProductName', Value: data.ProductEntities[i].ProductName });
         row.Columns.push({ Name: 'Description', Value: data.ProductEntities[i].Description });
         row.Columns.push({ Name: 'ProductPrefix', Value: data.ProductEntities[i].ProductPrefix });
-        row.Columns.push({ Name: 'Enabled', Value: data.ProductEntities[i].Enabled });
+        row.Columns.push({
+            Name: 'Enabled',
+            Value: '<input type="checkbox" disabled="disabled" ' + (data.ProductEntities[i].Enabled === 'True' ? 'checked' : '') + ' />'
+        });
         row.Columns.push({ Name: 'EndOfSupportDate', Value: data.ProductEntities[i].EndOfSupportDate });
         row.Columns.push({ Name: 'BalanceType', Value: data.ProductEntities[i].BalanceType });
         row.Columns.push({ Name: 'SubProductBalanceType', Value: data.ProductEntities[i].SubProductBalanceType.replace(/</g, '&lt;') });
         row.Columns.push({ Name: 'GroupType', Value: data.ProductEntities[i].GroupType });
         row.Columns.push({ Name: 'CasinoType', Value: data.ProductEntities[i].CasinoType });
-        row.Columns.push({ Name: 'IsOfferPlayForFun', Value: data.ProductEntities[i].IsOfferPlayForFun });
-        row.Columns.push({ Name: 'VendorId', Value: data.ProductEntities[i].VendorId });
+        row.Columns.push({
+            Name: 'IsOfferPlayForFun',
+            Value: '<input type="checkbox" disabled="disabled" ' + (data.ProductEntities[i].IsOfferPlayForFun === 'True' ? 'checked' : '') + ' />'
+        });
+        row.Columns.push({ Name: 'VendorId', Value: data.ProductEntities[i].VendorID });
         row.Columns.push({ Name: 'OrderNo', Value: data.ProductEntities[i].OrderNo });
         row.Columns.push({
             Name: 'Edit',
@@ -48,45 +54,43 @@ function RenderProductData(data) {
     }
 
     var gridOptions =
-    {
-        columns: [
-            { HeaderText: "ProductID", Width: 50, Name: "ProductID", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "ProductName", Width: 200, Name: "ProductName", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Description", Width: 200, Name: "Description", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "ProductPrefix", Width: 100, Name: "ProductPrefix", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Enabled", Width: 50, Name: "Enabled", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "EndOfSupportDate", Width: 100, Name: "EndOfSupportDate", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "BalanceType", Width: 50, Name: "BalanceType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "SubProductBalanceType", Width: 200, Name: "SubProductBalanceType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "GroupType", Width: 50, Name: "GroupType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "CasinoType", Width: 50, Name: "CasinoType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "IsOfferPlayForFun", Width: 100, Name: "IsOfferPlayForFun", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "VendorId", Width: 50, Name: "VendorId", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "OrderNo", Width: 50, Name: "OrderNo", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
-        ],
-        bodyRows: bodyRows,
-        gridExpandHeight: 200,
-        showPager: true,
-        customPager: true,
-        showDistinctRow: false,
-        pagerOption: {
-            itemsPerPage: parseInt($('#PageProductSize').val()),
-            currentPage: parseInt($('#PageProductIndex').val()) - 1,
-            itemsPerPageArray: [50, 100, 150, 200],
-            pagerSelectCallBack: reRenderProductAfterPaged,
-            totalItem: data.TotalRows
-        }
-    };
+        {
+            columns: [
+                { HeaderText: "ProductID", Width: 50, Name: "ProductID", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "ProductName", Width: 200, Name: "ProductName", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Description", Width: 200, Name: "Description", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "ProductPrefix", Width: 100, Name: "ProductPrefix", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Enabled", Width: 50, Name: "Enabled", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "EndOfSupportDate", Width: 100, Name: "EndOfSupportDate", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "BalanceType", Width: 50, Name: "BalanceType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "SubProductBalanceType", Width: 200, Name: "SubProductBalanceType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "GroupType", Width: 50, Name: "GroupType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "CasinoType", Width: 50, Name: "CasinoType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "IsOfferPlayForFun", Width: 100, Name: "IsOfferPlayForFun", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "VendorId", Width: 50, Name: "VendorId", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "OrderNo", Width: 50, Name: "OrderNo", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
+            ],
+            bodyRows: bodyRows,
+            gridExpandHeight: 200,
+            showPager: true,
+            customPager: true,
+            showDistinctRow: false,
+            pagerOption: {
+                itemsPerPage: pageSize,
+                currentPage: pageIndex - 1,
+                itemsPerPageArray: [50, 100, 150, 200],
+                pagerSelectCallBack: reRenderProductAfterPaged,
+                totalItem: data.TotalRows
+            }
+        };
 
     $('#gridProductId').fanexGrid(gridOptions);
 }
 
 function reRenderProductAfterPaged(currentPageIndex, itemsPerPage) {
-    $('#PageProductSize').val(itemsPerPage);
-    $('#PageProductIndex').val(currentPageIndex + 1);
     parent.BlockUI();
-    SearchProduct();
+    SearchProduct(itemsPerPage, currentPageIndex + 1);
 }
 
 function EditProduct(index) {
@@ -95,20 +99,20 @@ function EditProduct(index) {
     $('#ProductName').val(cachedProductData.ProductEntities[index].ProductName);
     $('#Description').val(cachedProductData.ProductEntities[index].Description);
     $('#ProductPrefix').val(cachedProductData.ProductEntities[index].ProductPrefix);
-    $('#Enabled').val(cachedProductData.ProductEntities[index].Enabled);
+    $('#Enabled').prop('checked', cachedProductData.ProductEntities[index].Enabled === 'True' ? true : false);
     $('#EndOfSupportDate').val(cachedProductData.ProductEntities[index].EndOfSupportDate);
     $('#BalanceType').val(cachedProductData.ProductEntities[index].BalanceType);
     $('#SubProductBalanceType').val(cachedProductData.ProductEntities[index].SubProductBalanceType);
     $('#GroupType').val(cachedProductData.ProductEntities[index].GroupType);
     $('#CasinoType').val(cachedProductData.ProductEntities[index].CasinoType);
-    $('#IsOfferPlayForFun').val(cachedProductData.ProductEntities[index].IsOfferPlayForFun);
+    $('#IsOfferPlayForFun').prop('checked', cachedProductData.ProductEntities[index].IsOfferPlayForFun === 'True' ? true : false);
     $('#VendorId').val(cachedProductData.ProductEntities[index].VendorId);
     $('#OrderNo').val(cachedProductData.ProductEntities[index].OrderNo);
     $('#edit-product-form').dialog({
         title: 'Edit Product',
         modal: true,
         width: 700,
-        height: 700,
+        height: 400,
     });
     SetupCalendar();
 }
@@ -124,13 +128,13 @@ function UpdateProduct() {
             ProductName: $('#ProductName').val(),
             Description: $('#Description').val(),
             ProductPrefix: $('#ProductPrefix').val(),
-            Enabled: $('#Enabled').val(),
+            Enabled: $('#Enabled').is(":checked"),
             EndOfSupportDate: $('#EndOfSupportDate ').val(),
             BalanceType: $('#BalanceType').val(),
             SubProductBalanceType: encodeURI($('#SubProductBalanceType').val()),
             GroupType: $('#GroupType').val(),
             CasinoType: $('#CasinoType').val(),
-            IsOfferPlayForFun: $('#IsOfferPlayForFun').val(),
+            IsOfferPlayForFun: $('#IsOfferPlayForFun').is(":checked"),
             VendorId: $('#VendorId').val(),
             OrderNo: $('#OrderNo').val(),
         },
@@ -139,7 +143,7 @@ function UpdateProduct() {
             if (result.ErrorCode == 0) {
                 setTimeout(function () {
                     $('#edit-product-form').dialog('close');
-                    SearchProduct();
+                    SearchProduct(50, 1);
                 }, 3000);
             }
         },

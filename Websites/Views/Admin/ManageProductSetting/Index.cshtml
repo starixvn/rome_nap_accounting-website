@@ -2,7 +2,7 @@
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
 @{
-    var hasHostPermission = PermissionService.CheckHostPermission("ManageSportType/Insert", AppSession.AccId);
+    var hasHostPermission = PermissionService.CheckHostPermission("ManageProductSetting/Insert", AppSession.AccId);
 }
 <html>
 <head>
@@ -13,8 +13,10 @@
     <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/LeftPanel/left_panel.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <style>
         .floatLeft {
@@ -78,6 +80,8 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/jscal2.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/lang/en.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jquery.NAPNumericInput.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/UploadSetting.js?v=" + @WebSettings.Version)"></script>

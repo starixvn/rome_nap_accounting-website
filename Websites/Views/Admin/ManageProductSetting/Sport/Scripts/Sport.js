@@ -1,6 +1,6 @@
 ﻿var cachedSportData;
 
-function SearchSport() {
+function SearchSport(pageSize, pageIndex) {
     parent.BlockUI();
     $.ajax({
         url: 'SelectSport',
@@ -8,12 +8,12 @@ function SearchSport() {
         data: {
             SportType: $('#txtSportType').val(),
             SportName: $('#txtSportName').val(),
-            PageSize: $('#PageSportSize').val(),
-            PageIndex: $('#PageSportIndex').val()
+            PageSize: pageSize,
+            PageIndex: pageIndex
         },
         success: function (data) {
             cachedSportData = data;
-            RenderSportData(data);
+            RenderSportData(data, pageSize, pageIndex);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -24,7 +24,7 @@ function SearchSport() {
     });
 }
 
-function RenderSportData(data) {
+function RenderSportData(data, pageSize, pageIndex) {
     var bodyRows = [];
     var rowCount = data.SportTypeEntities.length;
     for (i = 0; i < rowCount; i++) {
@@ -39,34 +39,32 @@ function RenderSportData(data) {
     }
 
     var gridOptions =
-    {
-        columns: [
-            { HeaderText: "Sport Type", Width: 50, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Sport Name", Width: 300, Name: "SportName", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
-        ],
-        bodyRows: bodyRows,
-        gridExpandHeight: 200,
-        showPager: true,
-        customPager: true,
-        showDistinctRow: false,
-        pagerOption: {
-            itemsPerPage: parseInt($('#PageSportSize').val()),
-            currentPage: parseInt($('#PageSportIndex').val()) - 1,
-            itemsPerPageArray: [50, 100, 150, 200],
-            pagerSelectCallBack: reRenderSportAfterPaged,
-            totalItem: data.TotalRows
-        }
-    };
+        {
+            columns: [
+                { HeaderText: "Sport Type", Width: 50, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Sport Name", Width: 300, Name: "SportName", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
+            ],
+            bodyRows: bodyRows,
+            gridExpandHeight: 200,
+            showPager: true,
+            customPager: true,
+            showDistinctRow: false,
+            pagerOption: {
+                itemsPerPage: pageSize,
+                currentPage: pageIndex - 1,
+                itemsPerPageArray: [50, 100, 150, 200],
+                pagerSelectCallBack: reRenderSportAfterPaged,
+                totalItem: data.TotalRows
+            }
+        };
 
     $('#gridSportId').fanexGrid(gridOptions);
 }
 
 function reRenderSportAfterPaged(currentPageIndex, itemsPerPage) {
-    $('#PageSportSize').val(itemsPerPage);
-    $('#PageSportIndex').val(currentPageIndex + 1);
     parent.BlockUI();
-    SearchSport();
+    SearchSport(itemsPerPage, currentPageIndex + 1);
 }
 
 function EditSport(index) {
@@ -130,7 +128,7 @@ function UpdateSport() {
             if (result.ErrorCode == 0) {
                 setTimeout(function () {
                     $('#edit-sport-form').dialog('close');
-                    SearchSport();
+                    SearchSport(50, 1);
                 }, 3000);
             }
         },

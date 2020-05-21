@@ -2,14 +2,12 @@
 
 <div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
     <div class="filterContent">
-        <input id="PageSportSize" name="PageSize" type="hidden" value="50" />
-        <input id="PageSportIndex" name="PageIndex" type="hidden" value="1" />
         <div id="errSportMsg"></div>
         <div class="floatLeft"><label for="txtSportType">Sport Type</label></div>
-        <div class="floatLeft"><input id="txtSportType" type="text" /></div>
+        <div class="floatLeft"><input id="txtSportType" type="text" class="numeric-input-tinyint" /></div>
         <div class="floatLeft"><label for="txtSportName">Sport Name</label></div>
         <div class="floatLeft"><input id="txtSportName" type="text" /></div>
-        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSport()" /></div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSport(50, 1)" /></div>
         <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
     </div>
 </div>

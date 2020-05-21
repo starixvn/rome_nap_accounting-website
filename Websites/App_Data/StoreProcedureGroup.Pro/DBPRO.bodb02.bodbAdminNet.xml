@@ -19,5 +19,6 @@
     <Setting Key="Acc_SportBettypeMatrix_Sel" SpName="Acc_SportBettypeMatrix_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
     <Setting Key="Acc_SportBettypeMatrix_Upd" SpName="Acc_SportBettypeMatrix_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
     <Setting Key="Acc_SportBettypeMatrix_Ins" SpName="Acc_SportBettypeMatrix_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SportBettypeMatrix_Del" SpName="Acc_SportBettypeMatrix_Del" DbName="DBPRO.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

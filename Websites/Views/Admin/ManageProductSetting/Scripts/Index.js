@@ -1,6 +1,22 @@
 ﻿var cachedTabId;
 $(document).ready(function () {
     cachedTabId = "tab_1";
+
+    $('.numeric-input-int').NAPNumericInput({
+        numOfDecimal: 0,
+        minValue: 0,
+        maxValue: 2147483647
+    });
+    $('.numeric-input-smallint').NAPNumericInput({
+        numOfDecimal: 0,
+        minValue: 0,
+        maxValue: 32767
+    });
+    $('.numeric-input-tinyint').NAPNumericInput({
+        numOfDecimal: 0,
+        minValue: 0,
+        maxValue: 255
+    });
 });
 function SwitchTab(id, contentId) {
     cachedTabId = id;
@@ -14,16 +30,16 @@ function SwitchTab(id, contentId) {
 function Search() {
     switch (cachedTabId) {
         case "tab_1":
-            SearchProduct();
+            SearchProduct(50, 1);
             break;
         case "tab_2":
-            SearchSport();
+            SearchSport(50, 1);
             break;
         case "tab_3":
-            SearchBettype();
+            SearchBettype(50, 1);
             break;
         case "tab_4":
-            SearchSBM();
+            SearchSBM(50, 1);
             break;
     }
 }
@@ -45,6 +61,9 @@ function UpdateSampleUrl() {
 }
 
 function OpenInsertSetting() {
+    $('#errMsg').html('');
+    var $uploadFile = $('#uploadFile');
+    $uploadFile.replaceWith($uploadFile.val('').clone(true));
     $('#insert-setting').dialog({
         title: 'Import From Excel',
         modal: true,

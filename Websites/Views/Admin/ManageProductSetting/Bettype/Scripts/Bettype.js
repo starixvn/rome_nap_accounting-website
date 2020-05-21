@@ -1,6 +1,6 @@
 ﻿var cachedBettypeData;
 
-function SearchBettype() {
+function SearchBettype(pageSize, pageIndex) {
     parent.BlockUI();
     $.ajax({
         url: 'SelectBettype',
@@ -8,12 +8,12 @@ function SearchBettype() {
         data: {
             TypeId: $('#txtBettypeId').val(),
             TypeName: $('#txtBettypeNamee').val(),
-            PageSize: $('#PageBettypeSize').val(),
-            PageIndex: $('#PageBettypeIndex').val()
+            PageSize: pageSize,
+            PageIndex: pageIndex
         },
         success: function (data) {
             cachedBettypeData = data;
-            RenderBettypeData(data);
+            RenderBettypeData(data, pageSize, pageIndex);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -21,7 +21,7 @@ function SearchBettype() {
     });
 }
 
-function RenderBettypeData(data) {
+function RenderBettypeData(data, pageSize, pageIndex) {
     var bodyRows = [];
     var rowCount = data.BettypeEntities.length;
     for (i = 0; i < rowCount; i++) {
@@ -36,34 +36,32 @@ function RenderBettypeData(data) {
     }
 
     var gridOptions =
-    {
-        columns: [
-            { HeaderText: "TypeID", Width: 50, Name: "TypeID", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "TypeNameE", Width: 500, Name: "TypeNamee", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
-        ],
-        bodyRows: bodyRows,
-        gridExpandHeight: 200,
-        showPager: true,
-        customPager: true,
-        showDistinctRow: false,
-        pagerOption: {
-            itemsPerPage: parseInt($('#PageBettypeSize').val()),
-            currentPage: parseInt($('#PageBettypeIndex').val()) - 1,
-            itemsPerPageArray: [50, 100, 150, 200],
-            pagerSelectCallBack: reRenderAfterPaged,
-            totalItem: data.TotalRows
-        }
-    };
+        {
+            columns: [
+                { HeaderText: "TypeID", Width: 50, Name: "TypeID", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "TypeNameE", Width: 500, Name: "TypeNamee", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
+            ],
+            bodyRows: bodyRows,
+            gridExpandHeight: 200,
+            showPager: true,
+            customPager: true,
+            showDistinctRow: false,
+            pagerOption: {
+                itemsPerPage: pageSize,
+                currentPage: pageIndex - 1,
+                itemsPerPageArray: [50, 100, 150, 200],
+                pagerSelectCallBack: reRenderAfterPaged,
+                totalItem: data.TotalRows
+            }
+        };
 
     $('#gridBettypeId').fanexGrid(gridOptions);
 }
 
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
-    $('#PageBettypeSize').val(itemsPerPage);
-    $('#PageBettypeIndex').val(currentPageIndex + 1);
     parent.BlockUI();
-    SearchBettype();
+    SearchBettype(itemsPerPage, currentPageIndex + 1);
 }
 
 function EditBettype(index) {
@@ -135,7 +133,7 @@ function UpdateBettype() {
             if (result.ErrorCode == 0) {
                 setTimeout(function () {
                     $('#edit-bettype-form').dialog('close');
-                    SearchBettype();
+                    SearchBettype(50, 1);
                 }, 3000);
             }
         },
