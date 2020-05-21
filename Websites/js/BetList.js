@@ -803,12 +803,12 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 208:
         case 209:
         case 210: // RNG Casino.
-            return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
+            return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);        
 
-        case 211: // Allbet.
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
+        case 211: // Allbet.
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
