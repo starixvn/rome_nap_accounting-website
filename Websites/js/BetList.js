@@ -559,6 +559,18 @@ function showSAGamingDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showGTCasinoBetsDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "IBCBet Live Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 242, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showAGCasinoDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -576,6 +588,18 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Sabaclub Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
+}
+
+function showBBINBetDetails(refno, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "BBinBetList/BetDetails",
+        title: "BBIN - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, Refno: refno, CustId: custId, TransType: transType, SportType: 241, PageSize: 500 },
         width: 1030,
         height: 600
     };
@@ -782,13 +806,13 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
         case 211: // Allbet.
-            return getAllbetParam(transdesc, matchcode, bettype);
+        case 241: // BBIN
+            return getBBinParam(transdesc, matchcode, bettype);
 
+        case 242: // GTCasino.
         case 243: // SexyGaming.
-            return getSexyGamingParam(transdesc, matchcode, bettype);
-
         case 244: // SaGaming.
-            return getSAGamingParam(transdesc, matchcode, bettype);
+            return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
 
         case 212: // Macau Games.
             return getMacauGamesParam(matchcode, betcheck);
@@ -915,40 +939,39 @@ function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate
     };
 }
 
-function getAllbetParam(transdesc, betcheck, bettype) {
+function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
+    sporttypes["242"] = "IBCBet Live Casino Result";
     sporttypes["243"] = "Sexy Gaming Result";
     sporttypes["244"] = "SA Gaming Result";
+    var resultPageBySportTypes = {};
+    resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
+    resultPageBySportTypes["242"] = "Report/ViewGTCasinoResult.aspx";
+    resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
+    resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
+
+    var title = sporttypes[sporttype];
+    var url = resultPageBySportTypes[sporttype];
+
     return {
-        url: "Report/ViewAllbetCasinoResult.aspx",
-        title: "Allbet Result",
+        url: url,
+        title: title,
         jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
         width: 945,
         height: 500
     };
 }
 
-function getSAGamingParam(transdesc, betcheck, bettype) {
+function getBBinParam(transdesc, betcheck, bettype) {
     return {
-        url: "Report/ViewSAGamingResult.aspx",
-        title: "SA Gaming Result",
-        jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
+        url: "Report/ViewBBinResult.aspx",
+        title: "BBIN Result",
+        jsonParam: { transDesc: transdesc, betcheck: betcheck},
         width: 945,
         height: 500
     };
 }
-
-function getSexyGamingParam(transdesc, betcheck, bettype) {
-    return {
-        url: "Report/ViewSexyGamingResult.aspx",
-        title: "Sexy Gaming Result",
-        jsonParam: { transDesc: transdesc, matchCode: betcheck, betTypeId: bettype },
-        width: 945,
-        height: 500
-    };
-}
-
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Card Club";
     var bettypeNames = {};

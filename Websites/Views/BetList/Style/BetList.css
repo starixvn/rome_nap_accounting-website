@@ -514,14 +514,37 @@ span.ui-dialog-title-dialog-modal-TennisResult {
         color: #d66d35;
     }
 
-.allbet-bet-id { color: #bbb; }
-.allbet-bet-type-name { color: #696969; }
-.allbet-game-id { color: #01122b; }
-.offer-name-list { font-weight: bold; }
-.unit-stake { color: #003399; }
-.voidbridge-sporttypename { color: #0000FF; }
-.gamegroupname { color: #008000; }
-.gametypename { color: #696969; }
+.allbet-bet-id {
+    color: #bbb;
+}
+
+.allbet-bet-type-name {
+    color: #696969;
+}
+
+.allbet-game-id {
+    color: #01122b;
+}
+
+.offer-name-list {
+    font-weight: bold;
+}
+
+.unit-stake {
+    color: #003399;
+}
+
+.voidbridge-sporttypename {
+    color: #0000FF;
+}
+
+.gamegroupname {
+    color: #008000;
+}
+
+.gametypename {
+    color: #696969;
+}
 
 .bonus-icon {
     background: url(Images/bonus.png) no-repeat scroll center center transparent;
@@ -529,8 +552,14 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     height: 18px;
     width: 18px;
 }
-.bonus-icon:hover { cursor: pointer }
-.stake { display: block; }
+
+    .bonus-icon:hover {
+        cursor: pointer
+    }
+
+.stake {
+    display: block;
+}
 
 .bullfighting-match {
     color: #000;
@@ -549,14 +578,15 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     font-weight: bold;
 }
 
-.betbuilder{
-    color:#171717;
-    font-weight:normal;    
-    border-right:2px solid #171717;
-    padding-right:3px;
+.betbuilder {
+    color: #171717;
+    font-weight: normal;
+    border-right: 2px solid #171717;
+    padding-right: 3px;
     margin: 2px 10px 2px 0px;
     line-height: 15px;
 }
+
 .bettype-description {
     color: #003399;
     font-weight: normal;
@@ -594,5 +624,19 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 }
 
 .sexygaming-bet-type-name {
+    color: #696969;
+}
+
+.gtcasino-bet-id {
+    color: #bbb;
+}
+
+.gtcasino-bet-type-name {
+    color: #696969;
+}.bbin-bet-id {
+    color: #bbb;
+}
+
+.bbin-bet-type-name {
     color: #696969;
 }

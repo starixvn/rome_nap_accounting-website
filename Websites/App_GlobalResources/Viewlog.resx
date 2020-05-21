@@ -3243,4 +3243,10 @@
   <data name="Disable241_3300" xml:space="preserve">
     <value>Disabled BBin</value>
   </data>
+  <data name="GTCasino" xml:space="preserve">
+    <value>IBCBet Live Casino</value>
+  </data>
+  <data name="Disable242_3201" xml:space="preserve">
+    <value>Disabled IBCBet Live Casino</value>
+  </data>
 </root>

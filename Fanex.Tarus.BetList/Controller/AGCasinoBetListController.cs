@@ -7,7 +7,7 @@
 
     public class AGCasinoBetListController : Controller
     {
-        private readonly IAGCasinoService _agCasinoService;
+        private readonly IBBinService _agCasinoService;
 
         public AGCasinoBetListController()
         {

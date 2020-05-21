@@ -75,6 +75,70 @@
             return result;
         }
 
+        public IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria)
+        {
+            var result = new List<TicketDetail>();
+
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new TicketDetail
+                        {
+                            Ticket = new Ticket
+                            {
+                                TransId = Converter.To<long>(reader["transid"]),
+                                SportTypeId = Converter.ToInt(reader["SportType"]),
+                                BetTypeId = Converter.ToInt(reader["BetType"]),
+                                TransDate = Converter.ToDateTime(reader["transdate"]),
+                                WinlostDate = Converter.ToDateTime(reader["winlostdate"]),
+
+                                Status = Converter.ToString2(reader["status"]),
+                                StatusId = Converter.ToInt(reader["statusid"]),
+
+                                Odds = Converter.ToDecimal(reader["odds"]),
+                                Stake = Converter.ToDecimal(reader["stake"]),
+                                ActualStake = Converter.ToDecimal(reader["actual_stake"]),
+                                Winlost = Converter.ToDecimal(reader["WinLost"]),
+                                IP = Converter.ToString2(reader["ip"]),
+                                TransDesc = Converter.ToString2(reader["transdesc"]),
+
+                                PlayerComm = Converter.ToDecimal(reader["commission"]),
+                                AgentWinlost = Converter.ToDecimal(reader["awinlost"]),
+                                AgentPositionTaking = Converter.ToDecimal(reader["apositiontaking"]),
+                                Comm = Converter.ToDecimal(reader["comm"]),
+                                AgentDiscount = Converter.ToDecimal(reader["discount"]),
+
+                                MasterWinlost = Converter.ToDecimal(reader["mwinlost"]),
+                                MasterPositionTaking = Converter.ToDecimal(reader["mpositiontaking"]),
+                                AgentComm = Converter.ToDecimal(reader["acomm"]),
+                                MasterDiscount = Converter.ToDecimal(reader["adiscount"]),
+
+                                SuperWinlost = Converter.ToDecimal(reader["swinlost"]),
+                                SuperPositionTaking = Converter.ToDecimal(reader["spositiontaking"]),
+                                SuperComm = Converter.ToDecimal(reader["scomm"]),
+                                SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
+
+                                MatchCode = Converter.ToString2(reader["matchcode"]),
+                                BetCheck = Converter.ToString2(reader["betcheck"]),
+                                BetTeam = HasColumn(reader, "BetTeam") ? Converter.ToString2(reader["BetTeam"]) : string.Empty,
+                                Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["currency"]) : string.Empty
+                            },
+                            ChoiceHtml = string.Empty,
+                            OddHtml = string.Empty,
+                            StakeHtml = string.Empty
+                        });
+                    }
+                }
+
+                criteria.TotalRows = Converter.ToInt(objDb.GetOuputParams()["totalrows"]);
+            }
+
+            return result;
+        }
+
         private bool HasColumn(IDataRecord dataRecord, string columnName)
         {
             for (int i = 0; i < dataRecord.FieldCount; i++)

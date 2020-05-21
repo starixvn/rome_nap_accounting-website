@@ -349,7 +349,7 @@ namespace Fanex.Tarus.BetList.Business
 
             return new List<BetType>();
         }
-       
+
         public IList<TicketDetail> GetBetListByCustInfo_DateRange(
             int custId,
             DateTime fromDate,
@@ -1213,7 +1213,7 @@ namespace Fanex.Tarus.BetList.Business
 
                 if (betDetails != null)
                 {
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);                  
+                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
 
                     BetListHTMLFactory factory = new BetListHTMLFactory();
                     BetListHTMLBuilder builder = factory.CreateBuilder();
@@ -1353,7 +1353,7 @@ namespace Fanex.Tarus.BetList.Business
             else if (ReportService.IsGoldDeluxe(betTypeId))
             {
                 sportName = BetListResources.Gold_Deluxe;
-            }           
+            }
             else if (ReportService.IsAGCasino(betTypeId))
             {
                 sportName = BetListResources.AGCasino;
@@ -1387,6 +1387,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.SexyGaming);
             }
+            else if (ReportService.IsGTCasino(betTypeId))
+            {
+                sportName += ticketHelper.GetSportNameById(SportContants.GTCasino);
+            }
             else if (ReportService.IsVoidbridge(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.Voidbridge);
@@ -1416,11 +1420,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.CardClub);
             }
-            else if(ReportService.IsSpadegaming(betTypeId))
+            else if (ReportService.IsSpadegaming(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Spadegaming);
             }
-	        else if (ReportService.IsVirtualGames(betTypeId))
+            else if (ReportService.IsVirtualGames(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.VirtualGames);
             }
@@ -1428,7 +1432,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.TableGames);
             }
-            
+            else if (ReportService.IsBBin(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.BBin);
+            }
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
 

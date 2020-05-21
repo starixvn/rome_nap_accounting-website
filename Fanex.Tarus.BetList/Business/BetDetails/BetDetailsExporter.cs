@@ -11,6 +11,7 @@
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Module.RNGCasino.Criteria;
     using Fanex.Module.RNGCasino.Repositories;
+    using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Voidbridge.BetDetail.Criteria;
@@ -21,11 +22,18 @@
     using NPOI.SS.Util;
     using Resources;
     using Sunplus.Accounting.Business;
-    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
+        private readonly IRemotingRefService _remotingRefService;
+
+        public BetDetailsExporter()
+        {
+            _remotingRefService = new RemotingRefService();
+        }
+
         public string GetFileNameWithoutExtension(int sportType)
         {
             var fileNameMapper = new Dictionary<int, string>
@@ -33,6 +41,7 @@
                 {SportContants.AllBet, "Allbet_Details"},
                 {SportContants.SaGaming, "SAGaming_Details"},
                 {SportContants.SexyGaming, "SexyGaming_Details"},
+                {SportContants.GTCasino, "IBCBetLiveCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
                 {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
@@ -44,7 +53,9 @@
                 {SportContants.Sabaclub, "Sabaclub_Details"}
             };
 
-            return fileNameMapper.ContainsKey(sportType) ? fileNameMapper[sportType] : null;
+            return fileNameMapper.ContainsKey(sportType) ?
+                fileNameMapper[sportType] :
+                $"{_remotingRefService.GetSportName(sportType.ToString(), "en-US")}_Details";
         }
 
         public IEnumerable<TicketDetail> GetTicketDetails(
@@ -53,12 +64,17 @@
             int custId,
             byte transType)
         {
-
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
-                sportType == SportContants.SexyGaming)
+                sportType == SportContants.SexyGaming ||
+                sportType == SportContants.GTCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
+            }
+
+            if (sportType == SportContants.BBin)
+            {
+                return GetBBinTickets(refNo, custId, transType);
             }
 
             if (sportType == SportContants.Voidbridge ||
@@ -221,6 +237,22 @@
             return repository.BetDetails(criteria);
         }
 
+        private static IEnumerable<TicketDetail> GetBBinTickets(long refNo, int custId, byte transType)
+        {
+            var criteria = new GetBBinBetDetailsCriteria
+            {
+                Refno = refNo,
+                CustId = custId,
+                TransType = transType,
+                PageIndex = 1,
+                PageSize = int.MaxValue
+            };
+
+            IAGCasinoRepository repository = new AGCasinoRepository();
+
+            return repository.BetDetails(criteria);
+        }
+
         private static IEnumerable<TicketDetail> GetMacauGamesTickets(long refNo, int custId, byte transType)
         {
             var criteria = new GetVoidbridgeBetDetailsCriteria
@@ -256,6 +288,7 @@
 
             return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
         }
-        #endregion
+
+        #endregion Get Data functions
     }
 }
