@@ -101,8 +101,8 @@
         public const int CashOut = 911;
         public const int CashOutBought = 912;
 
-        public const int FishingGod = 4301;
-        public const int TigerWarrior = 4326;
+        public const int MinSpadeGamingBettype = 4301;
+        public const int MaxSpadeGamingBettype = 4600;
 
         public static bool IsJackpotContribution(int betType)
             => betType == 2198 || betType == 2398 || betType == 2998;
