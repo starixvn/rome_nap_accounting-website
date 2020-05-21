@@ -76,7 +76,10 @@
                         <button type="button" class="btn" id="btnSearch">Search</button>
                     </td>
                     <td>
-                        <button type="button" class="btn" id="btnAdd" hidden="@(!Model.IsHost)">Add New</button>
+                        @if (Model.IsHost)
+                        {
+                            <button type="button" class="btn" id="btnAdd">Add New</button>
+                        }
                     </td>
                 </tr>
             </table>
