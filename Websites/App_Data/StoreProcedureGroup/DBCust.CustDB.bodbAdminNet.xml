@@ -307,9 +307,9 @@
     <Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="NAP API - Update Dangerous Customers">
-    <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerCheckDangerCustList" SpName="Acc_CustomerCheckDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerCheckDangerCustList" SpName="Acc_CustomerCheckDangerCustList_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
