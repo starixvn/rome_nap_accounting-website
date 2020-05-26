@@ -982,9 +982,10 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     bettypeNames["1405"] = "Shortdeck 6+";
     bettypeNames["1499"] = "Gems bought";
     bettypeNames["1901"] = "Video Poker";
-    bettypeNames["1902"] = "Tai Xiu";
-    bettypeNames["1903"] = "Xoc Dia";
+    bettypeNames["1902"] = "BigSmall";
+    bettypeNames["1903"] = "OddEven";
     bettypeNames["1904"] = "Lotto3";
+    bettypeNames["1905"] = "11HiLo";
     var betTypeName = bettypeNames[gameTypeId];
     var title = sportName + " - " + betTypeName;
 
