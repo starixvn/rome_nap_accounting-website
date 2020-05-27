@@ -523,11 +523,11 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
-function showIONCasinoBetDetails(transId, winlossDate, custId, transType) {
+function showIONCasinoBetDetails(refno, winlossDate, custId, transType) {
     var param = {
         url: "AGCasinoBetList/BetDetails",
         title: "ION Live Casino - Bet List - Detail Tickets - " + winlossDate.split(" ")[0],
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 225, PageSize: 500 },
         width: 1030,
         height: 600,
         resizable: false
