@@ -26,3 +26,8 @@
 .capitalize {
     text-transform: uppercase;
 }
+
+.select-group-name {
+    width: 102px;
+    border: 1px solid Black;
+}

@@ -8,9 +8,6 @@
 @section Styles
 {
     <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Areas/Statement/Views/Guideline/Styles/Guideline.less?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Report/reportgrid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Views/Admin/ManageUsernamePrefix/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
 }
@@ -25,12 +22,10 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageUsernamePrefix/Scripts/Index.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
 }
 @helper GroupNameSelectFor789y(string header)
 {
-    <select name="GroupName" style="width: 102px; border: 1px solid Black">
+    <select name="GroupName" class="select-group-name">
         <option value="" selected="selected">@header</option>
         @foreach (var group in Constants.ListOf789yGroups)
         {
