@@ -61,7 +61,7 @@
                                 MatchCode = Converter.ToString2(reader["matchcode"]),
                                 BetCheck = Converter.ToString2(reader["betcheck"]),
                                 BetTeam = HasColumn(reader, "BetTeam") ? Converter.ToString2(reader["BetTeam"]) : string.Empty,
-                                Currency = HasColumn(reader, "Curency") ? Converter.ToString2(reader["Curency"]) : string.Empty
+                                Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["Currency"]) : string.Empty
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

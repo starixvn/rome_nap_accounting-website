@@ -513,7 +513,7 @@ function showSGDetails(transId, winlossDate, custId, transType) {
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
-        title: "Card Club - Bet List - Detail Tickets - " + winlossDate.split(" ")[0],
+        title: "Card Club - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1030,
         height: 600,
@@ -526,7 +526,7 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
 function showIONCasinoBetDetails(refno, winlossDate, custId, transType) {
     var param = {
         url: "AGCasinoBetList/BetDetails",
-        title: "ION Live Casino - Bet List - Detail Tickets - " + winlossDate.split(" ")[0],
+        title: "ION - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 225, PageSize: 500 },
         width: 1030,
         height: 600,
@@ -1054,7 +1054,7 @@ function getMacauGamesParam(matchcode, betcheck) {
 function getIONCasinoParam(matchcode, betcheck) {
     return {
         url: "ThirdParty/Result",
-        title: "ION Live Casino Result",
+        title: "ION Result",
         jsonParam: { custId: betcheck, gameId: matchcode, productId: 52 },
         width: 945,
         height: 500
