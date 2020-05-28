@@ -447,6 +447,18 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(rngCasinoParam);
 }
 
+function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "RNG War - Detailed Bet list -",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
+}
+
 function ViewBettradeDetails(transId, refNo) {
     var betTradeParam = {
         url: "Betlist/GetBetListBetTradeDetails",
@@ -805,6 +817,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 210: // RNG Casino.
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);        
 
+        case 224: //RNG War
+            return getRNGWarCasinoParam(matchcode, betcheck);
+
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
@@ -972,6 +987,17 @@ function getBBinParam(transdesc, betcheck, bettype) {
         height: 500
     };
 }
+
+function getRNGWarCasinoParam(matchcode, betcheck) {
+    return {
+        url: "ThirdParty/Result",
+        title: "RNG War Result",
+        jsonParam: { custId: betcheck, gameId: matchcode, productId: 50 },
+        width: 945,
+        height: 500
+    };
+}
+
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Card Club";
     var bettypeNames = {};
