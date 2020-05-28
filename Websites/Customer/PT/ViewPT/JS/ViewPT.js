@@ -711,6 +711,7 @@ var ViewPT = {
             case 220:
             case 207:
             case 222: // Table Game
+            case 224: //RNG War
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer
