@@ -1,0 +1,33 @@
+﻿.maincontent_box {
+    width: auto;
+}
+
+.grid-content {
+    margin-top: 5px;
+}
+
+.grid-content table {
+    border-top: 1px solid #7c98a4;
+}
+
+.grid-content table thead tr {
+    background-color: #cddef3;
+}
+
+.grid-content table tr .group-header-bg {
+    background-color: #cddef3;
+    padding: 0 5px;
+}
+
+#dialogAddNew td {
+    padding: 3px;
+}
+
+.capitalize {
+    text-transform: uppercase;
+}
+
+.select-group-name {
+    width: 102px;
+    border: 1px solid Black;
+}

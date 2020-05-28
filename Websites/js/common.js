@@ -1028,6 +1028,10 @@ function overlay(id) {
     //alert(el.style.display);
 }
 
+function hideAlertMessage(containerid) {
+    document.getElementById(containerid).innerHTML = "";
+}
+
 // Success=0, Error=1, Warning=2
 function showAlertMessage(containerid, msg, type) {
 
