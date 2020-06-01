@@ -450,7 +450,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
 function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "RNG War - Detailed Bet list -",
+        title: "RNG War - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
         width: 1030,
         height: 600

@@ -80,7 +80,8 @@
             if (sportType == SportContants.Voidbridge ||
                 sportType == SportContants.PP ||
                 sportType == SportContants.CardClub ||
-                sportType == SportContants.Spadegaming)
+                sportType == SportContants.Spadegaming ||
+                sportType == SportContants.RNGWar)
             {
                 return GetMacauGamesTickets(refNo, custId, transType);
             }

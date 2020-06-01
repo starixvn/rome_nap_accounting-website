@@ -75,5 +75,6 @@
         public const int Sabaclub = 200;
 
         public const int TableGames = 222;
+        public const int RNGWar = 224;
     }
 }
