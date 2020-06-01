@@ -213,6 +213,7 @@ function RenderMultiSelect(id) {
         showHeader: true,
         isCheckAll: true,
         showFooter: false,
+        showFilter: true,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "No item selected."

@@ -18,6 +18,8 @@ important
 
 .ui-multiselect-widget-content { border: 0px solid #dddddd; background: #FFFFFF ;  }
 .ui-multiselect-widget-header { border: 0px solid #e78f08; font-weight: bold; }
+.ui-multiselect-widget-header-filter { width: 95% }
+.ui-multiselect-filter-highlight { background-color: deepskyblue; }
 .ui-multiselect-state-default, .ui-multiselect-widget-content .ui-multiselect-state-default, .ui-multiselect-widget-header .ui-multiselect-state-default { border: 1px solid #BDC7D8; background: #FFFFFF; font-weight: normal; border-radius: 2px 2px 2px 2px; }
 .ui-multiselect-state-default { padding-left: 3px;}
 .ui-multiselect-div  label {font-weight: normal;  }
