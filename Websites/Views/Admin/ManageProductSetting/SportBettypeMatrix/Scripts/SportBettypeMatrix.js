@@ -121,7 +121,7 @@ function EditSBM(index) {
         title: 'Edit Sport Bettype Matrix',
         modal: true,
         width: 600,
-        height: 300,
+        height: 400,
     });
 }
 

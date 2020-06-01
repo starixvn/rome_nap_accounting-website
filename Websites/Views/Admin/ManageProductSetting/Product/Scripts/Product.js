@@ -106,7 +106,7 @@ function EditProduct(index) {
     $('#GroupType').val(cachedProductData.ProductEntities[index].GroupType);
     $('#CasinoType').val(cachedProductData.ProductEntities[index].CasinoType);
     $('#IsOfferPlayForFun').prop('checked', cachedProductData.ProductEntities[index].IsOfferPlayForFun === 'True' ? true : false);
-    $('#VendorId').val(cachedProductData.ProductEntities[index].VendorId);
+    $('#VendorId').val(cachedProductData.ProductEntities[index].VendorID);
     $('#OrderNo').val(cachedProductData.ProductEntities[index].OrderNo);
     $('#edit-product-form').dialog({
         title: 'Edit Product',
