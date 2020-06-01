@@ -228,7 +228,7 @@ function UpdateSingleAccountDanger() {
         } else {
             var customerDangerUpdateRequest = {
                 Customer: username,
-                UpdateDownline: $('#isSingleApplyAllDownlines').is(":checked"),
+                UpdateDownline: false,
                 DangerType: dangerType,
                 DangerLevel: singleLevelSellected,
             }
