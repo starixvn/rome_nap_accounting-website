@@ -41,9 +41,9 @@ function RenderSportData(data, pageSize, pageIndex) {
     var gridOptions =
         {
             columns: [
-                { HeaderText: "Sport Type", Width: 50, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Sport Name", Width: 300, Name: "SportName", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: "Sport Type", Width: 100, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Sport Name", Width: 500, Name: "SportName", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Edit", Width: 100, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
             ],
             bodyRows: bodyRows,
             gridExpandHeight: 200,

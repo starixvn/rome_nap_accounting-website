@@ -38,9 +38,9 @@ function RenderBettypeData(data, pageSize, pageIndex) {
     var gridOptions =
         {
             columns: [
-                { HeaderText: "TypeID", Width: 50, Name: "TypeID", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "TypeID", Width: 100, Name: "TypeID", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "TypeNameE", Width: 500, Name: "TypeNamee", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: "Edit", Width: 100, Name: "Edit", HeaderAlign: "center", CellAlign: "center" }
             ],
             bodyRows: bodyRows,
             gridExpandHeight: 200,
